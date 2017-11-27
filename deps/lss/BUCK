@@ -1,0 +1,11 @@
+if not THIS_IS_FBANDROID:
+    cxx_library(
+        name = "linux-syscall-support",
+        exported_headers = [
+            "linux_syscall_support.h",
+        ],
+        header_namespace = "",
+        visibility = [
+            "PUBLIC",
+        ],
+    )

@@ -1,0 +1,50 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "headers_linux",
+    header_namespace = "linux",
+    exported_headers = subdir_glob([
+        ("headers", "*.h"),
+    ]),
+)
+
+fb_xplat_cxx_library(
+    name = "yarn",
+    srcs = [
+        "Event.cpp",
+        "Records.cpp",
+        "Session.cpp",
+        "detail/AttachmentStrategy.cpp",
+        "detail/BufferParser.cpp",
+        "detail/RLimits.cpp",
+        "detail/Reader.cpp",
+        "jni.cpp",
+    ],
+    header_namespace = "yarn",
+    exported_headers = glob([
+        "*.h",
+        "detail/*.h",
+    ]),
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-fPIE",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"yarn\"",
+    ],
+    soname = "libloom_yarn.$(ext)",
+    visibility = [
+        loom_path("..."),
+        loom_path("cpp/yarn/..."),
+    ],
+    deps = [
+        ":headers_linux",
+        loom_path("cpp:constants"),
+        loom_path("cpp:loom"),
+        loom_path("cpp/logger:logger"),
+        loom_path("cpp/util:util"),
+        loom_path("deps/fb:fb"),
+    ],
+)

@@ -1,0 +1,34 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+cxx_test(
+    name = "forkjail",
+    srcs = [
+        "ForkJailTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    deps = [
+        loom_path("cpp/util:forkjail"),
+    ],
+)
+
+cxx_binary(
+    name = "procfs_perf",
+    srcs = [
+        "procfs_perf.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-DLOG_TAG=\"Loom\"",
+        "-g3",
+        "-fPIE",
+    ],
+    linker_flags = [
+        "-pie",
+    ],
+    deps = [
+        loom_path("cpp/util:util"),
+    ],
+)

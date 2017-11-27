@@ -1,0 +1,45 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("@xplat//configurations/buck/android:fb_android_library", "fb_android_library")
+
+fb_android_library(
+    name = "upload",
+    srcs = glob(["*.java"]),
+    annotation_processor_params = [
+    ],
+    tests = [
+        loom_path("facebook/java/test/com/facebook/loom/upload:upload"),
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        "//aidl/callercontext:callercontext",
+        "//aidl/http:http",
+        "//java/com/facebook/abtest/qe/bootstrap:bootstrap",
+        "//java/com/facebook/auth/annotations:annotations",
+        "//java/com/facebook/auth/login:login",
+        "//java/com/facebook/auth/module:module",
+        "//java/com/facebook/common/android:android",
+        "//java/com/facebook/common/errorreporting:errorreporting",
+        "//java/com/facebook/common/executors:executors",
+        "//java/com/facebook/common/json:json",
+        "//java/com/facebook/common/noncriticalinit:noncriticalinit",
+        "//java/com/facebook/common/time:time",
+        "//java/com/facebook/content:content",
+        "//java/com/facebook/debug/log:log",
+        "//java/com/facebook/device_id:device_id",
+        "//java/com/facebook/gk/listeners:listeners",
+        "//java/com/facebook/http:http",
+        "//java/com/facebook/http/entity/mime:mime",
+        "//java/com/facebook/inject:inject",
+        "//java/com/facebook/localstats:localstats",
+        "//java/com/facebook/prefs/shared:shared",
+        "//java/com/facebook/quicklog:quicklog",
+        "//java/com/facebook/quicklog/module:quicklog",
+        "//java/com/facebook/sequencelogger:sequencelogger",
+        loom_path("facebook/java/main/com/facebook/loom/config/json:json"),
+        loom_path("facebook/java/main/com/facebook/loom/module:constants"),
+        loom_path("java/main/com/facebook/loom/core:core"),
+        "//third-party/java/jackson:jackson",
+    ],
+)

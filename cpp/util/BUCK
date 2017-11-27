@@ -1,0 +1,79 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+FORKJAIL_EXPORTED_HEADERS = ["ForkJail.h"]
+
+fb_xplat_cxx_library(
+    name = "forkjail",
+    srcs = glob([
+        "ForkJail.cpp",
+    ]),
+    headers = glob(
+        ["*.h"],
+        excludes = FORKJAIL_EXPORTED_HEADERS,
+    ),
+    header_namespace = "util",
+    exported_headers = FORKJAIL_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-fPIC",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+)
+
+UTIL_EXPORTED_HEADERS = [
+    "common.h",
+    "ProcFs.h",
+]
+
+fb_xplat_cxx_library(
+    name = "util",
+    srcs = glob([
+        "common.cpp",
+        "ProcFs.cpp",
+    ]),
+    headers = glob(
+        ["*.h"],
+        excludes = UTIL_EXPORTED_HEADERS,
+    ),
+    header_namespace = "util",
+    exported_headers = UTIL_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-fPIC",
+        "-std=gnu++14",
+        "-Wall",
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "so_utils",
+    srcs = glob([
+        "SoUtils.cpp",
+    ]),
+    header_namespace = "util",
+    exported_headers = glob([
+        "SoUtils.h",
+    ]),
+    compiler_flags = [
+        "-fexceptions",
+        "-fPIC",
+        "-std=gnu++14",
+        "-Wall",
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("deps/linker:linker"),
+    ],
+)

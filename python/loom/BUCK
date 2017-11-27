@@ -1,0 +1,19 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+python_library(
+    name = "runner-lib",
+    srcs = glob(["*.py"]),
+    base_module = "loom",
+    deps = [
+        loom_path("python/loom/importer:importer"),
+        loom_path("python/loom/model:model"),
+    ],
+)
+
+python_binary(
+    name = "runner",
+    main_module = "loom",
+    deps = [
+        ":runner-lib",
+    ],
+)

@@ -1,0 +1,11 @@
+if not THIS_IS_FBANDROID:
+    cxx_library(
+        name = "dalvik-subset",
+        header_namespace = "dalvik-subset",
+        exported_headers = [
+            "internals.h",
+        ],
+        visibility = [
+            "PUBLIC",
+        ],
+    )

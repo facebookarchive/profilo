@@ -1,0 +1,10 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+python_test(
+    name = "tests",
+    srcs = glob(["*.py"]),
+    base_module = "loom.model.tests",
+    deps = [
+        loom_path("python/loom/model:model"),
+    ],
+)

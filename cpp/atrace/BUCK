@@ -1,0 +1,35 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "atrace",
+    srcs = [
+        "Atrace.cpp",
+        "jni.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+    ),
+    header_namespace = "loom/atrace",
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom/atrace\"",
+    ],
+    soname = "libloom_atrace.$(ext)",
+    supported_platforms_regex = "^android-(armv7|x86)$",
+    visibility = [
+        loom_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        loom_path("cpp:constants"),
+        loom_path("cpp:loom"),
+        loom_path("cpp/logger:logger"),
+        loom_path("deps/atomic:atomic"),
+        loom_path("deps/fb:fb"),
+        loom_path("deps/linker:linker"),
+        loom_path("deps/sigmux:sigmux"),
+    ],
+)

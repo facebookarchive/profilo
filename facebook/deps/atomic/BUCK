@@ -1,0 +1,11 @@
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "atomic",
+    exported_deps = [
+        "//native/third-party/android-ndk:atomic",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

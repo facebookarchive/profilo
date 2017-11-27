@@ -1,0 +1,19 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "yarn",
+    srcs = glob(["*.java"]),
+    visibility = [
+        "//instrumentation_tests/com/facebook/loom/...",
+        "//instrumentation_tests/com/facebook/quicklog/...",
+        loom_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        loom_path("cpp/yarn:yarn"),
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/proguard:annotations"),
+        loom_path("deps/soloader:soloader"),
+        loom_path("java/main/com/facebook/loom/core:core"),
+    ],
+)

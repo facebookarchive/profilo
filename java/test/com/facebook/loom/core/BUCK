@@ -1,0 +1,32 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:robolectric3_test", "robolectric3_test")
+
+robolectric3_test(
+    name = "core",
+    srcs = glob(["*Test.java"]),
+    contacts = ["oncall+loom@xmail.facebook.com"],
+    deps = [
+        "//java/com/facebook/acra:acra",
+        "//java/com/facebook/fbtrace:node",
+        "//java/com/facebook/quicklog:quicklog",
+        "//java/com/facebook/sequencelogger:interface",
+        "//java/com/facebook/testing/inject:inject",
+        "//java/com/facebook/testing/powermock:powermock",
+        "//java/com/facebook/testing/robolectric/v3:v3",
+        "//java/com/facebook/testing/util:util",
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/soloader:soloader"),
+        loom_path("facebook/java/main/com/facebook/loom/config/json:json"),
+        loom_path("facebook/java/main/com/facebook/loom/controllers:controllers"),
+        loom_path("java/main/com/facebook/loom/core:core"),
+        loom_path("java/test/com/facebook/loom/logger:utils"),
+        loom_path("java/test/com/facebook/loom/util:util"),
+        "//third-party/java/assertj:assertj-android",
+        "//third-party/java/assertj:assertj-core",
+        "//third-party/java/fest:fest",
+        "//third-party/java/fest:fest_android",
+        "//third-party/java/guava:guava",
+        "//third-party/java/junit:junit",
+        "//third-party/java/robolectric3/robolectric:robolectric",
+    ],
+)

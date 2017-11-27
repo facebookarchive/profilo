@@ -1,0 +1,22 @@
+if not THIS_IS_FBANDROID:
+    cxx_library(
+        name = "linker",
+        srcs = [
+            "linker.cpp",
+        ],
+        header_namespace = "linker",
+        exported_headers = glob(["*.h"]),
+        preferred_linkage = "static",
+        visibility = [
+            "PUBLIC",
+        ],
+        platform_preprocessor_flags = [
+            ("android-arm", ["-D__ARM__"]),
+            ("android-x86", ["-D__X86__"]),
+        ],
+        deps = [
+            loom_path("deps/cjni:cjni"),
+            loom_path("deps/sig_safe_write:sig_safe_write"),
+            loom_path("deps/sigmux:sigmux"),
+        ],
+    )

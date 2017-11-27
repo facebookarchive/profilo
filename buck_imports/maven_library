@@ -1,0 +1,33 @@
+def maven_library(
+        name,
+        group,
+        artifact,
+        version,
+        sha1,
+        visibility,
+        packaging='jar',
+        scope='compiled'):
+    """
+    Creates remote_file and prebuilt_jar rules for a maven artifact.
+    """
+    remote_file_name = '{}-remote'.format(name)
+    remote_file(
+        name=remote_file_name,
+        out='{}-{}.{}'.format(name, version, packaging),
+        url=':'.join(['mvn', group, artifact, packaging, version]),
+        sha1=sha1
+    )
+
+    if packaging == 'jar':
+        prebuilt_jar(
+            name=name,
+            binary_jar=':{}'.format(remote_file_name),
+            visibility=visibility
+        )
+    else:
+        android_prebuilt_aar(
+            name=name,
+            aar=':{}'.format(remote_file_name),
+            visibility=visibility
+        )
+

@@ -1,0 +1,20 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "ipc",
+    srcs = glob([
+        "*.java",
+    ]),
+    tests = [
+        loom_path("java/test/com/facebook/loom/config:config"),
+    ],
+    visibility = [
+        "//javatests/com/facebook/loom/...",
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("aidl:aidl"),
+        loom_path("java/main/com/facebook/loom/config:config"),
+        "//third-party/java/jsr-305:jsr-305",
+    ],
+)

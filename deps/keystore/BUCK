@@ -1,0 +1,7 @@
+if not THIS_IS_FBANDROID:
+    java_library(
+        name = "debug",
+        visibility = [
+            "PUBLIC",
+        ],
+    )

@@ -1,0 +1,15 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:robolectric3_test", "robolectric3_test")
+
+robolectric3_test(
+    name = "transientdata",
+    srcs = glob(["*Test.java"]),
+    # Please change the contact to the oncall of your team
+    contacts = ["oncall+transient_analysis@xmail.facebook.com"],
+    deps = [
+        "//java/com/facebook/cloudseeder/tracedata:tracedata",
+        "//java/com/facebook/testing/powermock:powermock",
+        loom_path("java/main/com/facebook/loom/core:core"),
+        loom_path("facebook/java/main/com/facebook/loom/provider/transientdata:transientdata"),
+    ],
+)

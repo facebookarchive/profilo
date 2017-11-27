@@ -1,0 +1,25 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "cpp",
+    srcs = glob(["*.cpp"]),
+    header_namespace = "loom/entries",
+    exported_headers = glob(["*.h"]),
+    compiler_flags = [
+        "-fexceptions",
+        "-ffunction-sections",
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+)
+
+java_library(
+    name = "java",
+    srcs = glob(["*.java"]),
+    visibility = [
+        loom_path("..."),
+    ],
+)

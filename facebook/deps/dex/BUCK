@@ -1,0 +1,9 @@
+java_library(
+    name = "dex",
+    exported_deps = [
+        "//third-party/android_src/android_src/dex:dex",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

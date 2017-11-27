@@ -1,0 +1,13 @@
+python_library(
+    name = "codegen-lib",
+    srcs = glob(["**/*.py"]),
+    base_module = "loom.codegen",
+)
+
+python_binary(
+    name = "codegen",
+    main_module = "loom.codegen",
+    deps = [
+        ":codegen-lib",
+    ],
+)

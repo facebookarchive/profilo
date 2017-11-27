@@ -1,0 +1,10 @@
+if not THIS_IS_FBANDROID:
+    java_library(
+        name = "buildconstants",
+        srcs = [
+            "BuildConstants.java",
+        ],
+        visibility = [
+            "PUBLIC",
+        ],
+    )

@@ -1,0 +1,36 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+CALLBACKS_SRC = ["NativeTraceWriterCallbacks.java"]
+
+android_library(
+    name = "writer",
+    srcs = glob(
+        ["*.java"],
+        excludes = CALLBACKS_SRC,
+    ),
+    exported_deps = [
+        ":writer_callbacks",
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("cpp:loom"),
+        loom_path("deps/jni:jni"),
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/proguard:annotations"),
+        loom_path("deps/soloader:soloader"),
+    ],
+)
+
+android_library(
+    name = "writer_callbacks",
+    srcs = glob(CALLBACKS_SRC),
+    visibility = [
+        loom_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        loom_path("deps/proguard:annotations"),
+    ],
+)

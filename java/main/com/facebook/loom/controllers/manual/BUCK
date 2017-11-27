@@ -1,0 +1,16 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "manual",
+    srcs = glob(["*.java"]),
+    visibility = [
+        "//javatests/com/facebook/loom/...",
+        loom_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("java/main/com/facebook/loom/config:config"),
+        loom_path("java/main/com/facebook/loom/core:core"),
+    ],
+)

@@ -1,0 +1,37 @@
+if not THIS_IS_FBANDROID:
+    cxx_library(
+        name = "fb",
+        exported_headers = subdir_glob([
+            ("include", "**/*.h"),
+        ]),
+        headers = subdir_glob([
+            ("include", "**/*.h"),
+        ]),
+        header_namespace = "",
+        compiler_flags = [
+            "-fexceptions",
+        ],
+        linker_flags = [
+            "-llog",
+        ],
+        exported_preprocessor_flags = [
+            "-DFBJNI_BACKWARD_COMPAT",
+        ],
+        preprocessor_flags = [
+            "-DDISABLE_CPUCAP",
+            "-DDISABLE_XPLAT",
+        ],
+        srcs = glob([
+            "**/*.cpp",
+        ],
+        excludes = [
+            "jni/android/*.cpp",
+        ]),
+        soname = "libfb.$(ext)",
+        deps = [
+            loom_path("deps/jni:jni"),
+        ],
+        visibility = [
+            "PUBLIC",
+        ],
+    )

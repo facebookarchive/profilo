@@ -1,0 +1,9 @@
+java_library(
+    name = "os",
+    exported_deps = [
+        "//java/com/facebook/androidinternals/android/os:os",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

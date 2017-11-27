@@ -1,0 +1,17 @@
+android_library(
+    name = "api",
+    srcs = glob(["*.java"]),
+    proguard_config = "proguard.pro",
+    provided_deps = [
+        loom_path("deps/proguard:annotations"),
+        loom_path("deps/quicklog:identifiers"),
+        loom_path("facebook/java/main/com/facebook/loom/logger:logger"),
+        loom_path("java/main/com/facebook/loom/core:constants"),
+        loom_path("java/main/com/facebook/loom/core:events"),
+        loom_path("java/main/com/facebook/loom/logger:logger"),
+    ],
+    visibility = ["PUBLIC"],
+    deps = [
+        loom_path("deps/classid:classid"),
+    ],
+)

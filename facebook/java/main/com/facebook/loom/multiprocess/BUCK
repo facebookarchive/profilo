@@ -1,0 +1,30 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "multiprocess",
+    srcs = glob(["*.java"]),
+    manifest = "AndroidManifest.xml",
+    visibility = [
+        "//java/com/facebook/katana/app:app",
+        "//java/com/facebook/messenger:messenger",
+        loom_path("..."),
+    ],
+    deps = [
+        "//java/com/facebook/quicklog/identifiers:identifiers",
+        loom_path("aidl:aidl"),
+        loom_path("facebook/java/main/com/facebook/loom/config/ipc:ipc"),
+        loom_path("facebook/java/main/com/facebook/loom/controllers:controllers"),
+        loom_path("facebook/java/main/com/facebook/loom/init:init"),
+        loom_path("java/main/com/facebook/loom/config:config"),
+        loom_path("java/main/com/facebook/loom/core:control"),
+        loom_path("java/main/com/facebook/loom/core:core"),
+        loom_path("java/main/com/facebook/loom/logger:logger"),
+        loom_path("java/main/com/facebook/loom/provider/atrace:atrace"),
+        loom_path("facebook/java/main/com/facebook/loom/provider/fbsystrace:fbsystrace"),
+        loom_path("java/main/com/facebook/loom/provider/stacktrace:stacktrace"),
+        loom_path("java/main/com/facebook/loom/provider/systemcounters:systemcounters"),
+        loom_path("java/main/com/facebook/loom/provider/threadmetadata:threadmetadata"),
+        loom_path("java/main/com/facebook/loom/provider/yarn:yarn"),
+        "//third-party/java/jsr-305:jsr-305",
+    ],
+)

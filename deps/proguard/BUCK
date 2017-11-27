@@ -1,0 +1,16 @@
+if not THIS_IS_FBANDROID:
+    java_library(
+        name = "annotations",
+        srcs = ["DoNotStrip.java"],
+        visibility = [
+            "PUBLIC",
+        ],
+    )
+
+    java_library(
+        name = "annotations-jni",
+        srcs = ["jni/DoNotStrip.java"],
+        visibility = [
+            "PUBLIC",
+        ],
+    )

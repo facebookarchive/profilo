@@ -1,0 +1,86 @@
+keystore(
+    name = "keystore",
+    properties = "sample.keystore.properties",
+    store = "sample.keystore",
+)
+
+PROVIDER_TO_RULE = {
+    "atrace": loom_path("java/main/com/facebook/loom/provider/atrace:atrace"),
+    "systemcounters": loom_path("java/main/com/facebook/loom/provider/systemcounters:systemcounters"),
+    "stacktrace": loom_path("java/main/com/facebook/loom/provider/stacktrace:stacktrace"),
+    "threadmetadata": loom_path("java/main/com/facebook/loom/provider/threadmetadata:threadmetadata"),
+    "yarn": loom_path("java/main/com/facebook/loom/provider/yarn:yarn"),
+}
+
+def loom_sample_app(providers):
+    if providers:
+        providers = sorted(providers)
+        providers_string = "-".join(providers)
+        providers_deps = [PROVIDER_TO_RULE[provider] for provider in providers]
+    else:
+        providers_string = "none"
+        providers_deps = []
+
+    android_build_config(
+      name = "sample-buildconfig-{}".format(providers_string),
+      package = "com.facebook.loom",
+      values = [
+        "String PROVIDERS = \"{}\"".format(providers_string),
+      ],
+    )
+
+    # We want all providers on the compile path but only package the ones that
+    # the current config enables. However, the provided_deps take precedence
+    # and targets specified in both provided and normal deps will be elided.
+    #
+    # Therefore, calculate the difference between the full set and the enabled
+    # set and put only that in the provided list.
+
+    provided_deps = [x for x in PROVIDER_TO_RULE.values()
+                     if x not in providers_deps]
+
+    android_library(
+        name = "sample-lib-{}".format(providers_string),
+        srcs = glob(["*.java"]),
+
+        provided_deps = provided_deps,
+        deps = [
+            ":sample-buildconfig-{}".format(providers_string),
+            loom_path("java/main/com/facebook/loom/config:config"),
+            loom_path("java/main/com/facebook/loom/controllers/manual:manual"),
+            loom_path("java/main/com/facebook/loom/core:core"),
+            loom_path("deps/soloader:soloader"),
+        ] + providers_deps,
+        visibility = [
+            "PUBLIC",
+        ],
+    )
+
+    android_aar(
+        name = "sample-aar-{}".format(providers_string),
+        deps = [
+            ":sample-lib-{}".format(providers_string),
+        ],
+        manifest_skeleton = "AndroidManifest.xml",
+        visibility = [
+            "PUBLIC",
+        ],
+    )
+
+    android_binary(
+        name = "sample-{}".format(providers_string),
+        keystore = ":keystore",
+        manifest = "AndroidManifest.xml",
+        deps = [
+            ":sample-lib-{}".format(providers_string),
+        ],
+    )
+
+loom_sample_app(None)
+
+loom_sample_app([
+    "atrace",
+    "stacktrace",
+    "systemcounters",
+    "threadmetadata",
+])

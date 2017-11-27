@@ -1,0 +1,18 @@
+if not THIS_IS_FBANDROID:
+    cxx_library(
+        name = "sig_safe_write",
+        srcs = [
+          "sig_safe_write.c",
+        ],
+        header_namespace = "sig_safe_write",
+        exported_headers = [
+          "sig_safe_write.h",
+        ],
+        preferred_linkage = "static",
+        visibility = [
+            "PUBLIC",
+        ],
+        deps = [
+            loom_path("deps/sigmux:sigmux"),
+        ],
+    )

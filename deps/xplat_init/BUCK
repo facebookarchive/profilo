@@ -1,0 +1,18 @@
+if not THIS_IS_FBANDROID:
+    cxx_library(
+        name = "xplat_init",
+        exported_headers = [
+            "xplat_init.h",
+        ],
+        srcs = [
+            "xplat_init.cpp",
+        ],
+        header_namespace = "fb",
+        preferred_linkage = "static",
+        visibility = [
+            "PUBLIC",
+        ],
+        deps = [
+            loom_path("deps/fb:fb"),
+        ],
+    )

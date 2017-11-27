@@ -1,0 +1,14 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "util",
+    srcs = glob(["*.java"]),
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        "//java/com/facebook/testing/powermock:powermock",
+        loom_path("java/main/com/facebook/loom/core:core"),
+        "//third-party/java/junit:junit",
+    ],
+)

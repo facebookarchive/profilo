@@ -1,0 +1,13 @@
+if not THIS_IS_FBANDROID:
+    maven_library(
+        name = "soloader",
+        artifact = "soloader",
+        group = "com.facebook.soloader",
+        scope = "compile",
+        packaging = "aar",
+        sha1 = "2f27b33862c38f8197536a189f7a8f0be0839561",
+        version = "0.2.0",
+        visibility = [
+            "PUBLIC",
+        ],
+    )

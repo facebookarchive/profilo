@@ -1,0 +1,9 @@
+java_library(
+    name = "jni",
+    exported_deps = [
+        "//java/com/facebook/jni:jni",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

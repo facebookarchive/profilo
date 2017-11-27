@@ -1,0 +1,24 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "aidl",
+    srcs = glob(["java/**/*.java"]) + [
+        ":ILoomMultiProcessTraceService",
+        ":ILoomMultiProcessTraceListener",
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+)
+
+gen_aidl(
+    name = "ILoomMultiProcessTraceService",
+    aidl = "java/com/facebook/loom/ipc/ILoomMultiProcessTraceService.aidl",
+    import_path = loom_path("aidl/java/").replace("//", ""),
+)
+
+gen_aidl(
+    name = "ILoomMultiProcessTraceListener",
+    aidl = "java/com/facebook/loom/ipc/ILoomMultiProcessTraceListener.aidl",
+    import_path = loom_path("aidl/java/").replace("//", ""),
+)

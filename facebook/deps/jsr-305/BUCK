@@ -1,0 +1,9 @@
+java_library(
+    name = "jsr-305",
+    exported_deps = [
+        "//third-party/java/jsr-305:jsr-305",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

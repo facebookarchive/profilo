@@ -1,0 +1,124 @@
+def tracer_library(version):
+    version_ = version.replace(".", "_")
+    version_num = version.replace(".", "")
+
+    exported_headers = [
+        "ArtCompatibility.h",
+        "ArtTracer.h",
+    ]
+    fb_xplat_cxx_library(
+        name = "tracer-{version}".format(version=version),
+        srcs = [
+            "ArtCompatibility.cpp",
+            "ArtTracer.cpp",
+        ],
+        compiler_flags = [
+            "-fvisibility=hidden",
+            "-fexceptions",
+            "-std=gnu++14",
+            "-DLOG_TAG=\"Loom/ArtCompat\"",
+            #'-DFBLOG_NDEBUG=0', # extra logging
+        ],
+        exported_headers = {
+            header.replace(".h", "_" + version_num + ".h"): header for header in exported_headers
+        },
+        exported_preprocessor_flags = [
+            "-DART_VERSION_{}".format(version_),
+        ],
+        force_static = True,
+        header_namespace = "profiler",
+        headers = glob(
+            ["*.h"],
+            excludes = exported_headers,
+        ),
+        reexport_all_header_dependencies = False,
+        soname = "libloomprofiler{version_num}.$(ext)".format(version_num=version_num),
+        visibility = [
+            loom_path("..."),
+        ],
+        deps = [
+            loom_path("deps/fb:fb"),
+            loom_path("deps/museum/{version}:{version}").format(version=version),
+            loom_path("cpp/logger:logger"),
+            loom_path("cpp/util:forkjail"),
+        ],
+    )
+
+tracer_library(version = "5.1.1")
+
+tracer_library(version = "6.0.1")
+
+tracer_library(version = "7.0.0")
+
+PROFILER_EXPORTED_HEADERS = [
+    "DalvikTracer.h",
+    "SamplingProfiler.h",
+]
+
+fb_xplat_cxx_library(
+    name = "constants",
+    header_namespace = "profiler",
+    exported_headers = [
+        "Constants.h",
+    ],
+    visibility = [
+        loom_path("cpp/writer/..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "base_tracer",
+    header_namespace = "profiler",
+    exported_headers = [
+        "BaseTracer.h",
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "profiler",
+    srcs = [
+        "DalvikTracer.cpp",
+        "SamplingProfiler.cpp",
+        "jni.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+        excludes = PROFILER_EXPORTED_HEADERS,
+    ),
+    header_namespace = "profiler",
+    exported_headers = PROFILER_EXPORTED_HEADERS,
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-DLOG_TAG=\"Loom/Profiler\"",
+        "-Wno-format-security",
+        "-Wno-unknown-attributes",
+        #'-DFBLOG_NDEBUG=0', # verbose logging
+        "-std=gnu++14",
+    ],
+    soname = "libloom_stacktrace.$(ext)",
+    supported_platforms_regex = "^android-(armv7|x86)$",
+    visibility = [
+        loom_path("java/main/com/facebook/loom/provider/stacktrace:"),
+    ],
+    deps = [
+        ":base_tracer",
+        ":constants",
+        ":tracer-5.1.1",
+        ":tracer-6.0.1",
+        ":tracer-7.0.0",
+        loom_path("cpp:constants"),
+        loom_path("cpp:loom"),
+        loom_path("cpp:providers"),
+        loom_path("cpp/logger:logger"),
+        loom_path("cpp/util:util"),
+        loom_path("deps/dalvik:dalvik-subset"),
+        loom_path("deps/fb:fb"),
+        loom_path("deps/museum:museum"),
+        loom_path("deps/sigmux:sigmux"),
+    ],
+)

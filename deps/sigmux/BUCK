@@ -1,0 +1,23 @@
+if not THIS_IS_FBANDROID:
+    cxx_library(
+        name = "sigmux",
+        exported_headers = [
+            "sigmux.h",
+        ],
+        srcs = [
+            "sigmux.c",
+            "phaser.c",
+        ],
+        header_namespace = "",
+        headers = [
+            "phaser.h",
+        ],
+        soname = "libsigmux.$(ext)",
+        preferred_linkage = "shared",
+        visibility = [
+            "PUBLIC",
+        ],
+        deps = [
+            loom_path("deps/lss:linux-syscall-support"),
+        ],
+    )

@@ -1,0 +1,140 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+cxx_test(
+    name = "providers",
+    srcs = [
+        "TraceProvidersTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        loom_path("cpp:providers"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "constants",
+    srcs = [
+        "LogConstantsTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    soname = "libloom-const-test.$(ext)",
+    visibility = ["PUBLIC"],
+    deps = [
+        loom_path("cpp/logger:logger_static"),
+        loom_path("deps/fb:fb"),
+    ],
+)
+
+cxx_test(
+    name = "codegen",
+    srcs = [
+        "EntryCodegenTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        loom_path("cpp/generated:cpp"),
+        loom_path("cpp/writer:print_visitor"),
+    ],
+)
+
+cxx_test(
+    name = "delta_visitor",
+    srcs = [
+        "DeltaEncodingVisitorTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        loom_path("cpp/writer:delta_visitor"),
+        loom_path("cpp/writer:print_visitor"),
+    ],
+)
+
+cxx_test(
+    name = "stack_visitor",
+    srcs = [
+        "StackTraceInvertingVisitorTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        loom_path("cpp/writer:print_visitor"),
+        loom_path("cpp/writer:stack_visitor"),
+    ],
+)
+
+cxx_test(
+    name = "packet_logger",
+    srcs = [
+        "PacketLoggerTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        "xplat//folly:test-util",
+        "xplat//third-party/gmock:gmock",
+        loom_path("cpp/logger:logger_static"),
+        loom_path("cpp/writer:packet_reassembler"),
+    ],
+)
+
+cxx_test(
+    name = "trace_writer",
+    srcs = [
+        "TraceWriterTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        "xplat//folly:test-util",
+        "xplat//third-party/gmock:gmock",
+        loom_path("cpp/logger:logger_static"),
+        loom_path("cpp/writer:writer"),
+    ],
+)

@@ -1,0 +1,19 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "systemcounters",
+    srcs = [
+        "SystemCounterLogger.java",
+        "SystemCounterThread.java",
+    ],
+    visibility = [loom_path("...")],
+    deps = [
+        loom_path("cpp/systemcounters:systemcounters"),
+        loom_path("deps/jni:jni"),
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/proguard:annotations"),
+        loom_path("deps/soloader:soloader"),
+        loom_path("java/main/com/facebook/loom/core:core"),
+        loom_path("java/main/com/facebook/loom/core:events"),
+    ],
+)

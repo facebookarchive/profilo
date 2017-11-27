@@ -1,0 +1,9 @@
+fb_xplat_cxx_library(
+  name = "xplat_init",
+  exported_deps = [
+    "//native/fb:fb",
+  ],
+  visibility = [
+    loom_path("..."),
+  ],
+)

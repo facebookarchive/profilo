@@ -1,0 +1,12 @@
+if not THIS_IS_FBANDROID:
+    maven_library(
+        name = "jsr-305",
+        artifact = "jsr305",
+        group = "com.google.code.findbugs",
+        scope = "provided",
+        sha1 = "5871fb60dc68d67da54a663c3fd636a10a532948",
+        version = "3.0.0",
+        visibility = [
+            "PUBLIC",
+        ],
+    )

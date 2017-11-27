@@ -1,0 +1,44 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "external_api",
+    srcs = [
+        "ExternalApi.cpp",
+    ],
+    header_namespace = "loom",
+    exported_headers = [
+        "ExternalApi.h",
+    ],
+    force_static = True,
+    supported_platforms_regex = "^android-(arm|armv7|x86)$",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        loom_path("cpp/util:so_utils"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "external_api_impl",
+    srcs = [
+        "ExternalApiImpl.cpp",
+    ],
+    compiler_flags = [
+        "-DLOG_TAG=\"Loom/ExternalApi\"",
+        #"-DFBLOG_NDEBUG=0",  # verbose logging
+        "-DIS_LOOM",
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        ":external_api",
+        loom_path("cpp:constants"),
+        loom_path("cpp:providers"),
+        loom_path("cpp/logger:logger"),
+        loom_path("deps/fb:fb"),
+    ],
+)

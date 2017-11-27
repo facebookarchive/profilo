@@ -1,0 +1,112 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+CONSTANTS = [
+    "Identifiers.java",
+    "LoomConstants.java",
+]
+
+EVENTS = [
+    "TraceEvents.java",
+]
+
+CONTROL = [
+    "ControllerWithQPLChecks.java",
+    "TraceControl.java",
+    "TraceController.java",
+    "TraceControlHandler.java",
+    "TraceControlThreadHolder.java",
+]
+
+android_library(
+    name = "constants",
+    srcs = CONSTANTS,
+    tests = [
+        "//instrumentation_tests/com/facebook/loom:loom",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        loom_path("deps/fbtrace:utils"),
+        loom_path("deps/jsr-305:jsr-305"),
+    ],
+)
+
+android_library(
+    name = "events",
+    srcs = EVENTS,
+    exported_deps = [
+        ":constants",
+    ],
+    visibility = [
+        "//instrumentation_tests/com/facebook/loom/...",
+        "//javatests/com/facebook/loom/...",
+        loom_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/soloader:soloader"),
+    ],
+)
+
+android_library(
+    name = "control",
+    srcs = CONTROL,
+    exported_deps = [
+        ":constants",
+        loom_path("aidl:aidl"),
+        loom_path("java/main/com/facebook/loom/config:config"),
+        loom_path("java/main/com/facebook/loom/logger:logger"),
+    ],
+    required_for_source_only_abi = True,
+    visibility = [
+        loom_path("..."),
+        "//javatests/com/facebook/cloudseeder:cloudseeder",
+        "//javatests/com/facebook/debug/fps:fps",
+        "//javatests/com/facebook/stall:stall",
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        ":constants",
+        loom_path("deps/androidinternals:os"),
+        loom_path("deps/buildconstants:buildconstants"),
+        loom_path("deps/fbtrace:utils"),
+        loom_path("deps/jsr-305:jsr-305"),
+    ],
+)
+
+android_library(
+    name = "core",
+    srcs = glob(
+        ["*.java"],
+        excludes = CONSTANTS + EVENTS + CONTROL,
+    ),
+    exported_deps = [
+        ":constants",
+        ":control",
+        ":events",
+        loom_path("java/main/com/facebook/loom/config:config"),
+        loom_path("java/main/com/facebook/loom/writer:writer_callbacks"),
+    ],
+    tests = [
+        loom_path("java/test/com/facebook/loom/core:core"),
+    ],
+    visibility = [
+        "//java/com/facebook/cloudseeder:cloudseeder",
+        "//java/com/facebook/fab/dumper/plugins:plugins",
+        "//java/com/facebook/katana/activity:activity",
+        "//java/com/facebook/katana/app:app",
+        "//java/com/facebook/messenger:messenger",
+        "//java/com/facebook/tools/dextr/...",
+        "//java/com/instagram/android/...",
+        "//javatests/com/facebook/cloudseeder:cloudseeder",
+        "//javatests/com/facebook/tools/dextr/...",
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/zip:zip"),
+        loom_path("java/main/com/facebook/loom/logger:logger"),
+    ],
+)

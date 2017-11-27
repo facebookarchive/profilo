@@ -1,0 +1,1 @@
+-dontwarn com.facebook.common.dextricks.classid.ClassId

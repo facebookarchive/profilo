@@ -1,0 +1,10 @@
+if not THIS_IS_FBANDROID:
+    android_library(
+        name = "zip",
+        srcs = [
+            "ZipHelper.java",
+        ],
+        visibility = [
+            "PUBLIC",
+        ],
+    )

@@ -1,0 +1,32 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "logger",
+    srcs = glob(["*.java"]),
+    exported_deps = [
+        loom_path("cpp/generated:java"),
+    ],
+    tests = [
+        "//instrumentation_tests/com/facebook/loom:loom",
+        loom_path("java/test/com/facebook/loom/logger:logger"),
+    ],
+    visibility = [
+        "//instrumentation_tests/com/facebook/loom/...",
+        "//java/com/facebook/quicklog/...",
+        "//java/com/facebook/tools/dextr/...",
+        "//javatests/com/facebook/tools/dextr/...",
+        loom_path("..."),
+        "//perftests/benchmarks/...",
+    ],
+    deps = [
+        loom_path("cpp:loom"),
+        loom_path("deps/buildconstants:buildconstants"),
+        loom_path("deps/fbtrace:utils"),
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/proguard:annotations"),
+        loom_path("deps/soloader:soloader"),
+        loom_path("java/main/com/facebook/loom/core:constants"),
+        loom_path("java/main/com/facebook/loom/core:events"),
+        loom_path("java/main/com/facebook/loom/writer:writer"),
+    ],
+)

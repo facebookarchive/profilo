@@ -1,0 +1,70 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "logger",
+    headers = glob(
+        ["*.h"],
+    ),
+    header_namespace = "loom",
+    exported_headers = [
+        "Logger.h",
+        "Packet.h",
+        "PacketLogger.h",
+        "RingBuffer.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    exported_deps = [
+        loom_path("cpp/generated:cpp"),
+        loom_path("cpp/logger/lfrb:lfrb"),
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("cpp:constants"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "logger_static",
+    srcs = [
+        "Logger.cpp",
+        "PacketLogger.cpp",
+        "RingBuffer.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+    ),
+    header_namespace = "loom",
+    exported_headers = [
+        "Logger.h",
+        "Packet.h",
+        "PacketLogger.h",
+        "RingBuffer.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-O3",
+        "-DLOG_TAG=\"Loom\"",
+    ],
+    force_static = True,
+    tests = [
+        loom_path("cpp/test:packet_logger"),
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("cpp:constants"),
+        loom_path("cpp/generated:cpp"),
+        loom_path("cpp/logger/lfrb:lfrb"),
+    ],
+)

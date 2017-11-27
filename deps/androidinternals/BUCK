@@ -1,0 +1,14 @@
+if not THIS_IS_FBANDROID:
+    android_library(
+        name = "os",
+        srcs = [
+            "ReflectionHelper.java",
+            "android/os/SystemPropertiesInternal.java",
+        ],
+        visibility = [
+            "PUBLIC",
+        ],
+        deps = [
+            "//deps/jsr-305:jsr-305",
+        ],
+    )

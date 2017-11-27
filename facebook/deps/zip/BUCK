@@ -1,0 +1,9 @@
+java_library(
+    name = "zip",
+    exported_deps = [
+        "//java/com/facebook/file/zip:zip",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

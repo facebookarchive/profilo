@@ -1,0 +1,19 @@
+fb_xplat_cxx_library(
+    name = "lfrb",
+    srcs = [
+        "Futex.cpp",
+    ],
+    header_namespace = "loom/logger/lfrb",
+    exported_headers = glob([
+        "*.h",
+    ]),
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        loom_path("..."),
+    ],
+)

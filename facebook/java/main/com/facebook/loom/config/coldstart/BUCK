@@ -1,0 +1,22 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+
+android_library(
+    name = "coldstart",
+    srcs = glob([
+        "*.java",
+    ]),
+    tests = [
+        loom_path("java/test/com/facebook/loom/config:config"),
+    ],
+    visibility = [
+        "//javatests/com/facebook/loom/...",
+        loom_path("..."),
+    ],
+    deps = [
+        "//java/com/facebook/debug/log:log",
+        loom_path("facebook/java/main/com/facebook/loom/config/json:json"),
+        loom_path("java/main/com/facebook/loom/config:config"),
+        loom_path("java/main/com/facebook/loom/core:constants"),
+        "//third-party/java/jsr-305:jsr-305",
+    ],
+)

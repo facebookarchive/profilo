@@ -1,0 +1,9 @@
+java_library(
+    name = "buildconstants",
+    exported_deps = [
+        "//java/com/facebook/common/build:buildconstants",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

@@ -1,0 +1,34 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+SYSTEM_COUNTERS_EXPORTED_HEADERS = ["SystemCounterThread.h"]
+
+fb_xplat_cxx_library(
+    name = "systemcounters",
+    srcs = [
+        "SystemCounterThread.cpp",
+        "jni.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+        excludes = SYSTEM_COUNTERS_EXPORTED_HEADERS,
+    ),
+    header_namespace = "loom/systemcounters",
+    exported_headers = SYSTEM_COUNTERS_EXPORTED_HEADERS,
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+    ],
+    soname = "libloom_systemcounters.$(ext)",
+    visibility = [
+        loom_path("java/main/com/facebook/loom/provider/systemcounters:"),
+    ],
+    deps = [
+        loom_path("cpp:loom"),
+        loom_path("cpp/logger:logger"),
+        loom_path("cpp/util:util"),
+        loom_path("deps/fb:fb"),
+    ],
+)

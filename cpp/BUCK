@@ -1,0 +1,93 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+PROVIDER_EXPORTED_HEADERS = ["TraceProviders.h"]
+
+fb_xplat_cxx_library(
+    name = "providers",
+    srcs = [
+        "TraceProviders.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+        excludes = PROVIDER_EXPORTED_HEADERS,
+    ),
+    header_namespace = "loom",
+    exported_headers = PROVIDER_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    tests = [
+        loom_path("cpp/test:providers"),
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+)
+
+CONSTS_EXPORTED_HEADERS = ["LogEntry.h"]
+
+fb_xplat_cxx_library(
+    name = "constants",
+    headers = glob(
+        ["*.h"],
+        excludes = CONSTS_EXPORTED_HEADERS,
+    ),
+    header_namespace = "loom",
+    exported_headers = CONSTS_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("cpp/generated:cpp"),
+        loom_path("cpp/util:util"),
+    ],
+)
+
+LOOM_EXPORTED_HEADERS = [
+    "log.h",
+] + PROVIDER_EXPORTED_HEADERS
+
+fb_xplat_cxx_library(
+    name = "loom",
+    srcs = [
+        "JNIOnLoad.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+        excludes = LOOM_EXPORTED_HEADERS,
+    ),
+    header_namespace = "loom",
+    exported_headers = LOOM_EXPORTED_HEADERS,
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fexceptions",
+        "-DLOG_TAG=\"Loom\"",
+        "-std=gnu++14",
+    ],
+    soname = "libloom.$(ext)",
+    supported_platforms_regex = "^android-(armv7|x86)$",
+    visibility = [
+        loom_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        ":constants",
+        ":providers",
+        loom_path("cpp/api:external_api_impl"),
+        loom_path("cpp/jni:jni"),
+        loom_path("cpp/logger:logger_static"),
+        loom_path("cpp/util:util"),
+        loom_path("deps/atomic:atomic"),
+        loom_path("deps/fb:fb"),
+        loom_path("deps/sigmux:sigmux"),
+        loom_path("deps/xplat_init:xplat_init"),
+    ],
+)

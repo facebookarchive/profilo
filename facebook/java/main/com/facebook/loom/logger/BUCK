@@ -1,0 +1,19 @@
+android_library(
+    name = "logger",
+    srcs = glob(["*.java"]),
+    exported_deps = [
+        loom_path("cpp/generated:java"),
+    ],
+    tests = [
+        "//instrumentation_tests/com/facebook/loom:loom",
+        loom_path("java/test/com/facebook/loom/logger:logger"),
+    ],
+    visibility = [
+        loom_path("..."),
+    ],
+    deps = [
+        loom_path("deps/classid:classid"),
+        loom_path("java/main/com/facebook/loom/core:constants"),
+        loom_path("java/main/com/facebook/loom/logger:logger"),
+    ],
+)

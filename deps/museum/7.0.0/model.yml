@@ -1,0 +1,30 @@
+# Copyright 2004-present Facebook. All Rights Reserved.
+# See //native/museum/gen_cc.mustache for schema
+
+---
+headers:
+- dex_file.h
+- base/logging.h
+- base/mutex.h
+- class_linker.h
+- indirect_reference_table.h
+- jni_env_ext.h
+- runtime.h
+- thread.h
+- utf.h
+
+classes:
+- className: Runtime
+  symbols:
+  - symbolName: IsShuttingDown
+    params:
+    - Thread*
+    returnType: bool
+    mangledNames:
+    - _ZN3art7Runtime14IsShuttingDownEPNS_6ThreadE
+  - symbolName: instance_
+    isStaticVar: true
+    skipMethodWrap: true
+    returnType: Runtime*
+    mangledNames:
+    - _ZN3art7Runtime9instance_E

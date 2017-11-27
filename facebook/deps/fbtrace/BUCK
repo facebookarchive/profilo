@@ -1,0 +1,9 @@
+java_library(
+    name = "utils",
+    exported_deps = [
+        "//java/com/facebook/fbtrace/utils:utils",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

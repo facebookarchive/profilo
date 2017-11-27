@@ -1,0 +1,27 @@
+load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "jni",
+    srcs = [
+        "NativeTraceWriter.cpp",
+    ],
+    header_namespace = "loom/jni",
+    exported_headers = [
+        "NativeTraceWriter.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Loom/Writer\"",
+    ],
+    exported_deps = [
+        loom_path("cpp/writer:writer"),
+        loom_path("deps/fb:fb"),
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+)
