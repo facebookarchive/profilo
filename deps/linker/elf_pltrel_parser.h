@@ -86,7 +86,7 @@ class EltPLTRelParser {
         const uint8_t*& load_bias,
         const Elf32_Dyn*& dynamic_table) {
       bool load_bias_found = false;
-      Elf32_Addr dynamic_vaddr;
+      Elf32_Addr dynamic_vaddr = 0;
       bool dynamic_found = false;
 
       for (int i = 0; i < phnum; ++i) {
