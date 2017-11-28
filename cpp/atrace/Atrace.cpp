@@ -164,7 +164,7 @@ void hookLoadedLibs() {
       }
 
       int res =
-          hook_plt_method(si, "write", reinterpret_cast<void*>(&write_hook));
+          hook_plt_method(si, libname.c_str(), "write", reinterpret_cast<void*>(&write_hook));
       if (res) {
         FBLOGV("could not hook write(2) in %s", libname.c_str());
         continue;

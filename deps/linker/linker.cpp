@@ -4,6 +4,7 @@
 #define _Bool bool
 #include "bionic_linker.h"
 #include "linker.h"
+#include "elf_pltrel_parser.h"
 
 #include <assert.h>
 #include <dlfcn.h>
@@ -23,6 +24,7 @@
 #include <cjni/log.h>
 #include <sigmux.h>
 
+#include <cinttypes>
 #include <map>
 #include <unordered_map>
 
@@ -175,20 +177,68 @@ find_got_entry_for_plt_function(
   return nullptr;
 }
 
+bool
+ends_with(const char* str, const char* ending) {
+  size_t str_len = strlen(str);
+  size_t ending_len = strlen(ending);
+
+  if (ending_len > str_len) {
+    return false;
+  }
+  return strcmp(str + (str_len - ending_len), ending) == 0;
+}
+
+/*
+ * Looks inside /proc/self/maps for a entry ending in /<libname.so> and offset 0
+ *
+ * NOTE: this function won't work with libs with spaces in theirs names like
+ *       "lib name.so"
+ */
+void*
+get_library_mapping_address(const char* libname) {
+  if (nullptr == libname || strlen(libname) == 0) {
+    return nullptr;
+  }
+
+  FILE* maps = fopen("/proc/self/maps", "r");
+  if (maps == nullptr) {
+    return nullptr;
+  }
+
+  void* mapping_address = nullptr;
+
+  char line[256]{};
+  uint64_t range_begin;
+  uint32_t offset;
+  char mapname[256]{};
+
+  while (fgets(line, 256, maps) != nullptr) {
+    sscanf(
+      line,
+      "%lld-%*x %*s %x %*s %*d %s",
+      &range_begin,
+      &offset,
+      mapname
+    );
+
+    char slash_libname[64];
+    snprintf(slash_libname, sizeof(slash_libname), "/%s", libname);
+    if (0 == offset && ends_with(mapname, slash_libname)) {
+      mapping_address = (void*)range_begin;
+      break;
+    }
+  }
+
+  fclose(maps);
+
+  return mapping_address;
+}
+
 } // namespace (anonymous)
 
 int
 linker_initialize()
 {
-  // We can't perform any of these tricks on N or above - dlopen(3) returns a
-  // handle and not a bare pointer starting with N.
-  bool is_n_or_above = get_sdk_version() >= 24;
-
-  if(is_n_or_above) {
-    errno = ENOTSUP;
-    return 1;
-  }
-
   if (sigmux_init(SIGSEGV) ||
       sigmux_init(SIGBUS))
   {
@@ -208,14 +258,21 @@ linker_initialize()
 }
 
 int
-hook_plt_method_impl(void* dlhandle, const char* name, void* hook)
+hook_plt_method_impl(void* dlhandle, const char* libname, const char* name, void* hook)
 {
   if (orig_functions == nullptr) {
     errno = EPERM;
     return 1;
   }
 
-  void* plt_got_entry = find_got_entry_for_plt_function(dlhandle, name);
+  void* plt_got_entry = nullptr;
+  if (get_sdk_version() >= 24) { // Android N+
+    plt_got_entry =
+      EltPLTRelParser(get_library_mapping_address(libname)).getPltGotEntry(name);
+  } else {
+    plt_got_entry = find_got_entry_for_plt_function(dlhandle, name);
+  }
+
   if (plt_got_entry == nullptr) {
     return 1;
   }
@@ -253,9 +310,9 @@ hook_plt_method_impl(void* dlhandle, const char* name, void* hook)
 }
 
 int
-hook_plt_method(void* dlhandle, const char* name, void* hook) {
+hook_plt_method(void* dlhandle, const char* libname, const char* name, void* hook) {
   WriterLock wl(&plt_mutex);
-  return hook_plt_method_impl(dlhandle, name, hook);
+  return hook_plt_method_impl(dlhandle, libname, name, hook);
 }
 
 void
@@ -271,7 +328,7 @@ hook_plt_methods(plt_hook_spec* hook_specs, size_t num_hook_specs) {
     }
 
     spec.dlopen_result = 0;
-    spec.hook_result = hook_plt_method_impl(handle, spec.fn_name, spec.hook_fn);
+    spec.hook_result = hook_plt_method_impl(handle, spec.lib_name, spec.fn_name, spec.hook_fn);
     dlclose(handle);
   }
 }

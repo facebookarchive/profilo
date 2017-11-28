@@ -20,10 +20,9 @@ TEST(PltHook, testHook) {
 
   call_clock_fn fn = (call_clock_fn) dlsym(handle, "call_clock");
 
-  EXPECT_EQ(0, hook_plt_method(handle, "clock", (void*) hook_call_clock));
+  EXPECT_EQ(0, hook_plt_method(handle, "libtarget.so", "clock", (void*) hook_call_clock));
 
   EXPECT_EQ(0xface, fn());
 
   dlclose(handle);
 }
-

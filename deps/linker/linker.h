@@ -20,7 +20,7 @@ linker_initialize();
  * In case of failure non-zero value is returned and errno is set.
  */
 int
-hook_plt_method(void* dlhandle, const char* name, void* hook);
+hook_plt_method(void* dlhandle, const char* libname, const char* name, void* hook);
 
 /**
  * Overwrites GOT entry for a set of functions & hooks.
