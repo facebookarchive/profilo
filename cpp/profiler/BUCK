@@ -1,4 +1,5 @@
 load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:xplat", "fb_xplat_cxx_library")
 
 def tracer_library(version):
     version_ = version.replace(".", "_")
