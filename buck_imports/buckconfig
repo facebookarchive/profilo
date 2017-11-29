@@ -1,6 +1,3 @@
-[buildfile]
-    includes = //buck_imports/defaults
-
 [java]
     source_level = 7
     target_level = 7

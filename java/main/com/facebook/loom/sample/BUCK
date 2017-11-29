@@ -1,3 +1,5 @@
+load("//buck_imports:loom_path.bzl", "loom_path")
+
 keystore(
     name = "keystore",
     properties = "sample.keystore.properties",

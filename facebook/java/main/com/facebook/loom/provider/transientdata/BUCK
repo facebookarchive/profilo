@@ -1,4 +1,4 @@
-load("//libraries/loom/buck_imports:deps", "loom_path")
+load("//buck_imports:loom_path.bzl", "loom_path")
 
 android_library(
     name = "transientdata",

@@ -1,3 +1,0 @@
-include_defs("//buck_imports/deps")
-include_defs("//buck_imports/maven_library")
-

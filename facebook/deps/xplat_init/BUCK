@@ -1,3 +1,5 @@
+load("//buck_imports:loom_path.bzl", "loom_path")
+
 fb_xplat_cxx_library(
   name = "xplat_init",
   exported_deps = [

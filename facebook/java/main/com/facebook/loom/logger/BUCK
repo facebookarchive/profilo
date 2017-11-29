@@ -1,3 +1,5 @@
+load("//buck_imports:loom_path.bzl", "loom_path")
+
 android_library(
     name = "logger",
     srcs = glob(["*.java"]),

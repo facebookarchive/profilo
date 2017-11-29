@@ -1,3 +1,5 @@
+load("//buck_imports:loom_path.bzl", "loom_path")
+
 audit_dependencies_test(
     name = "sample_core_deps_test",
     blacklist_patterns = [

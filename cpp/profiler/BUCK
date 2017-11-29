@@ -1,3 +1,5 @@
+load("//buck_imports:loom_path.bzl", "loom_path")
+
 def tracer_library(version):
     version_ = version.replace(".", "_")
     version_num = version.replace(".", "")

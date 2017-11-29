@@ -1,3 +1,5 @@
+include_defs("//buck_imports/xplat")  # THIS_IS_FBANDROID
+
 if not THIS_IS_FBANDROID:
     cxx_library(
         name = "atomic",
