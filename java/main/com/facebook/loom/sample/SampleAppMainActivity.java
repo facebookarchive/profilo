@@ -11,7 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 import com.facebook.loom.BuildConfig;
-import com.facebook.loom.controllers.manual.ManualTraceController;
+import com.facebook.loom.controllers.external.ExternalController;
+import com.facebook.loom.controllers.external.api.ExternalTraceControl;
 import com.facebook.loom.core.LoomConstants;
 import com.facebook.loom.core.TraceControl;
 import com.facebook.loom.core.TraceController;
@@ -58,25 +59,23 @@ public class SampleAppMainActivity extends Activity {
     };
 
     mWorkerThread.start();
-    mTracingButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        if (mTracingButton.isChecked()) {
-          TraceControl.get().startTrace(
-              LoomConstants.TRIGGER_MANUAL,
-              Trace.FLAG_MANUAL,
-              null,
-              0);
-          mProgressBar.setVisibility(View.VISIBLE);
-        } else {
-          TraceControl.get().stopTrace(
-              LoomConstants.TRIGGER_MANUAL,
-              null,
-              0);
-          mProgressBar.setVisibility(View.INVISIBLE);
-        }
-      }
-    });
+    mTracingButton.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            if (mTracingButton.isChecked()) {
+              ExternalTraceControl.startTrace(
+                  LoomConstants.PROVIDER_STACK_FRAME
+                      | LoomConstants.PROVIDER_SYSTEM_COUNTERS
+                      | LoomConstants.PROVIDER_OTHER,
+                  /*cpuSamplingRateMs*/ 10);
+              mProgressBar.setVisibility(View.VISIBLE);
+            } else {
+              ExternalTraceControl.stopTrace();
+              mProgressBar.setVisibility(View.INVISIBLE);
+            }
+          }
+        });
   }
 
   private void initializeLoom() {
@@ -87,7 +86,7 @@ public class SampleAppMainActivity extends Activity {
     }
 
     SparseArray<TraceController> controllers = new SparseArray<>(1);
-    controllers.put(LoomConstants.TRIGGER_MANUAL, new ManualTraceController());
+    controllers.put(LoomConstants.TRIGGER_EXTERNAL, new ExternalController());
 
     TraceOrchestrator.initialize(
         this.getApplicationContext(),
