@@ -12,8 +12,23 @@ script:
 - docker run -t loom:16.10 /usr/bin/env TERM=dumb bash /repo/build/build.sh
 - build/copy_artifacts_to_host.sh
 
+before_deploy:
+- export TRAVIS_TAG="release-$(git rev-parse --short ${TRAVIS_COMMIT})"
+- echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+- git config --local user.name "Facebook Community Bot"
+- git config --local user.email "nobody@nobody.com"
+- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+
 deploy:
   provider: releases
+  tag_name: $TRAVIS_TAG
+
+  # This is important as the tag doesn't exist in the remote repo yet. GitHub needs to know where to create it.
+  # If we don't specify the target explicitly, github will create the tag at
+  # the tip of master, which is obviously incorrect.
+  target_commitish: $TRAVIS_COMMIT
+
+  overwrite: true
   skip_cleanup: true
   api_key:
     secure: Ty7ZRmeLcor3Ljlnk2eeBhiYouJG/dnjCDbMBBrMD25m/+VmU7XC+C0Ch4gKVqAdHyzUQVOrtNep3e+28D9Nze6I9oAJqIRkaND+Ogq05rwpftKBNKpfdL4+IXg3uLcXVFTbKBKJ/KSTNZcp0uxHZTxiquiIGFt7EKEQDNldwWIJeFzUHePLs/+orBskzVxH7iq+gZItNuyUjbaosmZQ5NW/zjJJkf7Ss0EEZjLtudCbA2wjfJgYLwRsdWbeRo0yzAW49mTI4MDnZnS4ltSViILs6Yjby1GTWKMxD8EXqjHZTqeNRgTW631qnou6EMmLBBTWl8NTPTsm1MmA5ncy9WfyPL92DfGuQ/0KMjXvJNYsWR4/4tBrxVtd0U7WX8v7xN75jtrOI/k8B2F+RHADESdk9AwA+0WipFw+9YHaHxi9alqoNImlFFvMpSHr3WrE7//6+1hMJ4iPMm/cqy5QUjO+3tVB+jvZZNkDYdtOt3p3cw3IAf4FFrZp4HPHGYGiw+tb1ZfPT0d+AZBSMKV5JJgegLEVbZ1h4agMX/09Qt6iXHeA0FvdfcAH3XHgaZZyNI5W/YIVLTTCGpB6G60LJ3ZA2iZOyWVaaH52iWe5a3u1YcImSwchgn3gOdl2iGCT+b6VjluNB9HGCpQSI9/4Nl1AuGdWkkJfd3hMWXtk1Co=
@@ -22,3 +37,7 @@ deploy:
   on:
     all_branches: true
     repo: facebookexternal/loom
+
+branches:
+  except:
+    - /^release-[0-9a-z\-]*/
