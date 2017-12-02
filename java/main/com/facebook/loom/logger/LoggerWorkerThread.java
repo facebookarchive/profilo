@@ -2,7 +2,6 @@
 
 package com.facebook.loom.logger;
 
-
 import android.os.Process;
 import com.facebook.loom.writer.NativeTraceWriter;
 
@@ -16,7 +15,7 @@ class LoggerWorkerThread extends Thread {
   }
 
   public void run() {
-    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND - 1);
+    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND - 5);
 
     mTraceWriter.loop();
   }
