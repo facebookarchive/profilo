@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
+import java.security.InvalidParameterException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -20,6 +22,11 @@ public class ClassId {
   public static final boolean sInitialized;
   public static final long CLASS_ID_NOT_FOUND = -1L;
 
+  public enum TestMode {
+    /** forces pure java dex signature computation for comparison purposes */
+    JAVA_DEX_SIGNATURE
+  }
+
   private static final ConcurrentHashMap<Object, Integer> sDexKeyToDexSignature;
   private static Field javaLangClass_dexClassDefIndex;
   private static Field javaLangClass_dexCache;
@@ -27,6 +34,7 @@ public class ClassId {
   private static Field javaLangDexCache_dexFile;
   private static Method javaLangClass_getDexClassDefIndex;
   private static Method javaLangClass_getDex;
+  private static Field comAndroidDexDex_data;
 
   static {
     SoLoader.loadLibrary("classid");
@@ -37,6 +45,17 @@ public class ClassId {
 
   static synchronized boolean initialize() {
     Class<?> jlClass = Class.class;
+
+    try {
+      Class<?> cadDex = Class.forName("com.android.dex.Dex");
+
+      Field dataField = cadDex.getDeclaredField("data");
+      dataField.setAccessible(true);
+      comAndroidDexDex_data = dataField;
+    } catch (Exception e) {
+      // intentionally ignored
+    }
+
     try {
       // Should work on ART
       Field dexClassdefIndex = jlClass.getDeclaredField("dexClassDefIndex");
@@ -101,6 +120,15 @@ public class ClassId {
     final long signature = ((long) getDexSignature(cls)) & 0xFFFFFFFFL;
     final long id = ((long) getClassDef(cls) << 32) | signature;
     return id;
+  }
+
+  static void setTestMode(TestMode testMode) {
+    if (testMode == TestMode.JAVA_DEX_SIGNATURE) {
+      ClassId.sDexKeyToDexSignature.clear();
+      ClassId.comAndroidDexDex_data = null;
+    } else {
+      throw new InvalidParameterException();
+    }
   }
 
   private static int getClassDef(Class<?> cls) {
@@ -192,10 +220,20 @@ public class ClassId {
 
   private static int getSignatureForDex(Dex dex)
       throws IllegalAccessException, InvocationTargetException {
+    if (comAndroidDexDex_data != null) { // update setTestMode if changed
+      ByteBuffer data = (ByteBuffer) comAndroidDexDex_data.get(dex);
+      int signature = getSignatureFromDexData(data);
+      if (signature != 0) {
+        return signature;
+      }
+    }
+
     final int SIGNATURE_OFFSET = 12;
     Dex.Section signatureSection = dex.open(SIGNATURE_OFFSET);
     return signatureSection.readInt();
   }
 
   private static native int getSignatureFromDexFile(long dexFilePointer);
+
+  private static native int getSignatureFromDexData(ByteBuffer data);
 }
