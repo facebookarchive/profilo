@@ -27,10 +27,11 @@ final public class LoomConstants {
   public static final int PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS = 1 << 16;
   public static final int PROVIDER_TRANSIENT_NETWORK_DATA = 1 << 17;
   public static final int PROVIDER_WALL_TIME_STACK_TRACE = 1 << 18;
+  public static final int PROVIDER_LIBC_IO = 1 << 19;
   // Should your new provider be added to ManualTraceController#evaluateConfig ?
 
   // WARNING: Update PROVIDER_MAX whenever you add a provider!
-  public static final int PROVIDER_MAX = PROVIDER_WALL_TIME_STACK_TRACE;
+  public static final int PROVIDER_MAX = PROVIDER_LIBC_IO;
   // Bit mask of all configurable providers
   public static final int ALL_CONFIGURABLE_PROVIDERS = (PROVIDER_MAX << 1) - 1;  // 0x3F
 
@@ -64,6 +65,7 @@ final public class LoomConstants {
       "high_freq_main_thread_counters";
   public static final String PROVIDER_TRANSIENT_NETWORK_DATA_NAME = "transient_network_data";
   public static final String PROVIDER_WALL_TIME_STACK_TRACE_NAME = "wall_time_stack_trace";
+  public static final String PROVIDER_LIBC_IO_NAME = "libc_io";
 
   public static final int NO_TRACE = 0;
   public static final String ENCODED_NO_TRACE = FbTraceId.NULL_ID;
@@ -104,6 +106,7 @@ final public class LoomConstants {
         PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS, PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS_NAME);
     array.put(PROVIDER_TRANSIENT_NETWORK_DATA, PROVIDER_TRANSIENT_NETWORK_DATA_NAME);
     array.put(PROVIDER_WALL_TIME_STACK_TRACE, PROVIDER_WALL_TIME_STACK_TRACE_NAME);
+    array.put(PROVIDER_LIBC_IO, PROVIDER_LIBC_IO_NAME);
     DATA_PROVIDER_TO_NAME = array;
   }
 }

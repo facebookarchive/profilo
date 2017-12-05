@@ -304,6 +304,30 @@ hook_plt_method_impl(void* dlhandle, const char* libname, const char* name, void
 
   if (!rc) {
     (*orig_functions)[hook][info.dli_fbase] = old_got_entry;
+
+    /**
+      * "Chaining" mechanism:
+      * This library allows us to "link" hooks, that is,
+      * func() -> hook_n() -> hook_n-1() ... -> hook_1() -> actual_func()
+      * To account for the case where hook_n() lives in a library that has
+      * noot been hooked (and thus doesn't have an entry in the <orig_functions>
+      * map) insert said entry here, so that the "chain" of hooks is never
+      * broken.
+      */
+    auto oldHookEntry = orig_functions->find(old_got_entry);
+    if (oldHookEntry != orig_functions->end()) {
+      auto oldLibEntry = oldHookEntry->second.find(info.dli_fbase);
+      if (oldLibEntry != oldHookEntry->second.end()) {
+        // <oldHookEntry, oldLibEntry> already exists. Insert an entry for
+        // <oldHookEntry, newLib> into our map.
+        Dl_info info2;
+        if (!dladdr(hook, &info2)) {
+          return 1;
+        }
+        (*orig_functions)[old_got_entry][info2.dli_fbase] =
+            (*orig_functions)[old_got_entry][info.dli_fbase];
+      }
+    }
   }
 
   return rc;
