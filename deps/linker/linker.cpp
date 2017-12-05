@@ -208,14 +208,13 @@ get_library_mapping_address(const char* libname) {
   void* mapping_address = nullptr;
 
   char line[256]{};
-  uint64_t range_begin;
-  uint32_t offset;
-  char mapname[256]{};
-
   while (fgets(line, 256, maps) != nullptr) {
+    uint64_t range_begin;
+    uint32_t offset;
+    char mapname[256]{};
     sscanf(
       line,
-      "%lld-%*x %*s %x %*s %*d %s",
+      "%llx-%*x %*s %x %*s %*d %s",
       &range_begin,
       &offset,
       mapname
