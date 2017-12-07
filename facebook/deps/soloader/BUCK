@@ -1,9 +1,0 @@
-java_library(
-    name = "soloader",
-    exported_deps = [
-        "//libraries/soloader/java/com/facebook/soloader:soloader",
-    ],
-    visibility = [
-        "PUBLIC",
-    ],
-)

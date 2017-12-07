@@ -1,9 +1,0 @@
-java_library(
-    name = "identifiers",
-    exported_deps = [
-        "//java/com/facebook/quicklog/identifiers:identifiers",
-    ],
-    visibility = [
-        "PUBLIC",
-    ],
-)

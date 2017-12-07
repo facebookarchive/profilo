@@ -1,9 +1,0 @@
-java_library(
-    name = "log",
-    exported_deps = [
-        "//java/com/facebook/debug/log:log",
-    ],
-    visibility = [
-        "PUBLIC",
-    ],
-)

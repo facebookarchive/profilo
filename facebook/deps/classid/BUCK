@@ -1,9 +1,0 @@
-java_library(
-    name = "classid",
-    exported_deps = [
-        "//java/com/facebook/common/dextricks/classid:classid",
-    ],
-    visibility = [
-        "PUBLIC",
-    ],
-)
