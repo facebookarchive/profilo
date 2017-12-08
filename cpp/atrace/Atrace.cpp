@@ -88,12 +88,18 @@ void log_systrace(int fd, const void *buf, size_t count) {
 
     int32_t id = logger.write(std::move(entry));
     if (type != entries::MARK_POP) {
-      const char *name = strrchr(msg, '|');
+      // Format is B|<pid>|<name>.
+      // Skip "B|" trivially, find next '|' with memchr. We cannot use strchr
+      // since we can't trust the message to have a null terminator.
+      constexpr auto kPrefixLength = 2; //length of "B|";
+
+      const char* name = reinterpret_cast<const char*>(
+        memchr(msg + kPrefixLength, '|', count - kPrefixLength));
       if (name == nullptr) {
         return;
       }
       name++; // skip '|' to the next character
-      size_t len = strlen(name);
+      size_t len = msg + count - name;
       if (len > 0) {
         id = logger.writeBytes(
           entries::STRING_KEY,
