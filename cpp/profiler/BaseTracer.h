@@ -27,17 +27,17 @@ public:
     ucontext_t* ucontext,
     int64_t* frames,
     uint8_t& depth,
-    uint8_t max_depth);
+    uint8_t max_depth) = 0;
 
   virtual void flushStack(
     int64_t* frames,
     uint8_t depth,
     int tid,
-    int64_t time_);
+    int64_t time_) = 0;
 
-  virtual void startTracing();
+  virtual void startTracing() = 0;
 
-  virtual void stopTracing();
+  virtual void stopTracing() = 0;
 };
 
 } // namespace profiler
