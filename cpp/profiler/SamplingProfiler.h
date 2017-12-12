@@ -28,11 +28,10 @@ enum StackSlotState: uint8_t {
 };
 
 struct StackSlot {
-  std::atomic<uint8_t> state;
+  std::atomic<uint32_t> state;
   uint8_t depth;
   int64_t time;
   jmp_buf sig_jmp_buf;
-  std::atomic<int> tid;
   uint32_t profilerType;
   int64_t frames[MAX_STACK_DEPTH]; // frame pointer addresses
 #ifdef PROFILER_COLLECT_PC

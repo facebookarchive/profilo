@@ -79,13 +79,14 @@ sigmux_action sigcatch_handler(struct sigmux_siginfo* siginfo, void* handler_dat
 
   // We know the thread that raised the signal was unwinding, find its slot and
   // jump to the saved state there.
+  uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
   for (int i = 0; i < MAX_STACKS_COUNT; i++) {
     auto& slot = profileState.stacks[i];
-    if (StackSlotState::BUSY == slot.state.load() && slot.tid.load() == tid) {
-      // Clear the slot, increase error count, continue
-      slot.state.store(StackSlotState::FREE);
+    // If slot matches free it, increase error count and jump out
+    if (slot.state.compare_exchange_strong(
+        targetBusyState,
+        StackSlotState::FREE)) {
       profileState.errSigCrashes.fetch_add(1);
-
       sigmux_longjmp(siginfo, slot.sig_jmp_buf, 1);
     }
   }
@@ -128,6 +129,7 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
     pthread_setspecific(profileState.threadIsProfilingKey, (void*) 1);
   }
 
+  auto tid = threadID();
   for (const auto& tracerEntry : profileState.tracersMap) {
     auto tracerType = tracerEntry.first;
     if (!(tracerType & profileState.currentTracers)) {
@@ -135,6 +137,8 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
     }
     auto slotIndex = profileState.currentSlot.fetch_add(1);
     bool slot_found = false;
+    // Busy state includes thread id to avoid race condition on slot's tid.
+    uint32_t busyState = StackSlotState::BUSY | (tid << 16);
 
     for (int i = 0; i < MAX_STACKS_COUNT; i++) {
       auto nextSlotIndex = (slotIndex + i) % MAX_STACKS_COUNT;
@@ -143,8 +147,8 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
       // Verify if the slot is actually in FREE state and switch it
       // to BUSY atomically. If slot is not FREE then just exit.
       // Normally free slot will be available from the first iteration.
-      uint8_t expected = StackSlotState::FREE;
-      if (slot.state.compare_exchange_strong(expected, StackSlotState::BUSY)) {
+      uint32_t expected = StackSlotState::FREE;
+      if (slot.state.compare_exchange_strong(expected, busyState)) {
         slotIndex = nextSlotIndex;
         slot_found = true;
         break;
@@ -157,7 +161,6 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
     }
 
     auto& slot = profileState.stacks[slotIndex];
-    slot.tid = threadID();
 
     // Can finally occupy the slot
     if (sigsetjmp(slot.sig_jmp_buf, 1) == 0) {
@@ -174,10 +177,11 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
         profileState.errStackOverflows.fetch_add(1);
       }
 
-      uint8_t expected = StackSlotState::BUSY;
       if (!slot.state.compare_exchange_strong(
-              expected,
-              success ? StackSlotState::FULL : StackSlotState::FREE)) {
+              busyState,
+              success ?
+                ((tid << 16) | StackSlotState::FULL) :
+                StackSlotState::FREE)) {
         // Slot was overwritten by another thread.
         // This is an ordering violation, so abort.
         abort();
@@ -289,17 +293,20 @@ void flushStackTraces() {
     for (size_t i = 0; i < MAX_STACKS_COUNT; i++) {
       auto& slot = profileState.stacks[i];
 
-      if (StackSlotState::FULL != slot.state.load()) {
+      uint32_t slotStateCombo = slot.state.load();
+      uint32_t slotState = slotStateCombo & 0xffff;
+      if (StackSlotState::FULL != slotState) {
         continue;
       }
 
       // Ignore remains from a previous trace
       if (slot.time > profileState.profileStartTime) {
         auto& tracer = profileState.tracersMap[slot.profilerType];
-        tracer->flushStack(slot.frames, slot.depth, slot.tid.load(), slot.time);
+        auto tid = slotStateCombo >> 16;
+        tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
       }
 
-      uint8_t expected = StackSlotState::FULL;
+      uint32_t expected = slotStateCombo;
       // Release the slot
       if (!slot.state.compare_exchange_strong(expected, StackSlotState::FREE)) {
         // Slot was re-used in the middle of the processing by another thread. Aborting.
