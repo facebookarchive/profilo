@@ -10,4 +10,9 @@ interface ILoomMultiProcessTraceService {
    */
   void registerListener(ILoomMultiProcessTraceListener listener);
 
+  /** 
+   * Notifies the service that a trace this listener has started has
+   * been aborted.
+   */
+  void onTraceAbortedInSecondary(in long traceId, in int abortReason);
 }

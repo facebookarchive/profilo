@@ -2,7 +2,6 @@
 
 package com.facebook.loom.core;
 
-import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
 
 final public class LoomConstants {
@@ -82,4 +81,5 @@ final public class LoomConstants {
   public static final int ABORT_REASON_MISSED_EVENT = 3;
   public static final int ABORT_REASON_TIMEOUT = 4;
   public static final int ABORT_REASON_NEW_START = 5;
+  public static final int ABORT_REASON_REMOTE_PROCESS = 6;
 }

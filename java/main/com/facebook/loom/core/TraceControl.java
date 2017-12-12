@@ -330,11 +330,21 @@ final public class TraceControl {
   }
 
   public void stopTrace(int controllerMask, @Nullable Object context, int intContext) {
-    stopTrace(controllerMask, context, TraceStopReason.STOP, intContext);
+    stopTrace(controllerMask, context, TraceStopReason.STOP, intContext, /*abortReason*/ 0);
   }
 
   public void abortTrace(int controllerMask, @Nullable Object context, int intContext) {
-    stopTrace(controllerMask, context, TraceStopReason.ABORT, intContext);
+    stopTrace(
+        controllerMask,
+        context,
+        TraceStopReason.ABORT,
+        intContext,
+        LoomConstants.ABORT_REASON_CONTROLLER_INITIATED);
+  }
+
+  public void abortTraceWithReason(
+      int controllerMask, @Nullable Object context, int intContext, int abortReason) {
+    stopTrace(controllerMask, context, TraceStopReason.ABORT, intContext, abortReason);
   }
 
   /**
@@ -354,7 +364,8 @@ final public class TraceControl {
       int controllerMask,
       @Nullable Object context,
       @TraceStopReason int stopReason,
-      int intContext) {
+      int intContext,
+      int abortReason) {
     TraceContext traceContext = findCurrentTraceByContext(controllerMask, intContext, context);
     if (traceContext == null) {
       // no trace, nothing to do
@@ -369,8 +380,7 @@ final public class TraceControl {
       switch (stopReason) {
         case TraceStopReason.ABORT:
           Logger.postAbortTrace(traceContext.traceId);
-          mTraceControlHandler.onTraceAbort(
-              new TraceContext(traceContext, LoomConstants.ABORT_REASON_CONTROLLER_INITIATED));
+          mTraceControlHandler.onTraceAbort(new TraceContext(traceContext, abortReason));
           break;
         case TraceStopReason.STOP:
           mTraceControlHandler.onTraceStop(traceContext);

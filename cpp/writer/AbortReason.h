@@ -12,6 +12,7 @@ enum AbortReason {
   MISSED_EVENT = 3,
   TIMEOUT = 4,
   NEW_START = 5,
+  REMOTE_PROCESS = 6,
 };
 
 } // namespace writer
