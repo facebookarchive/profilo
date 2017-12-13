@@ -79,9 +79,10 @@ sigmux_action sigcatch_handler(struct sigmux_siginfo* siginfo, void* handler_dat
 
   // We know the thread that raised the signal was unwinding, find its slot and
   // jump to the saved state there.
-  uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
   for (int i = 0; i < MAX_STACKS_COUNT; i++) {
     auto& slot = profileState.stacks[i];
+
+    uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
     // If slot matches free it, increase error count and jump out
     if (slot.state.compare_exchange_strong(
         targetBusyState,
