@@ -29,11 +29,12 @@
 #include "log_severity.h"
 
 #define CHECK(x) \
-  if (UNLIKELY(!(x))) \
+  if (false) \
     ::art::LogMessage(__FILE__, __LINE__, FATAL, -1).stream() \
         << "Check failed: " #x << " "
 
 #define CHECK_OP(LHS, RHS, OP) \
+  if (false) \
   for (auto _values = ::art::MakeEagerEvaluator(LHS, RHS); \
        UNLIKELY(!(_values.lhs OP _values.rhs)); /* empty */) \
     ::art::LogMessage(__FILE__, __LINE__, FATAL, -1).stream() \
@@ -48,7 +49,7 @@
 #define CHECK_GT(x, y) CHECK_OP(x, y, >)
 
 #define CHECK_STROP(s1, s2, sense) \
-  if (UNLIKELY((strcmp(s1, s2) == 0) != sense)) \
+  if (false) \
     LOG(FATAL) << "Check failed: " \
                << "\"" << s1 << "\"" \
                << (sense ? " == " : " != ") \

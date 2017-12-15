@@ -116,12 +116,13 @@ extern const char* ProgramInvocationShortName();
 // evaluated once. Extra logging can be appended using << after. For example,
 // CHECK(false == true) results in a log message of "Check failed: false == true".
 #define CHECK(x) \
-  if (UNLIKELY(!(x))) \
+  if (false) \
     ::art::LogMessage(__FILE__, __LINE__, ::art::FATAL, -1).stream() \
         << "Check failed: " #x << " "
 
 // Helper for CHECK_xx(x,y) macros.
 #define CHECK_OP(LHS, RHS, OP) \
+  if (false) \
   for (auto _values = ::art::MakeEagerEvaluator(LHS, RHS); \
        UNLIKELY(!(_values.lhs OP _values.rhs)); /* empty */) \
     ::art::LogMessage(__FILE__, __LINE__, ::art::FATAL, -1).stream() \
@@ -141,7 +142,7 @@ extern const char* ProgramInvocationShortName();
 
 // Helper for CHECK_STRxx(s1,s2) macros.
 #define CHECK_STROP(s1, s2, sense) \
-  if (UNLIKELY((strcmp(s1, s2) == 0) != sense)) \
+  if (false) \
     LOG(::art::FATAL) << "Check failed: " \
         << "\"" << s1 << "\"" \
         << (sense ? " == " : " != ") \
