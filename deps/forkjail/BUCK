@@ -1,0 +1,26 @@
+include_defs("//buck_imports/xplat")  # THIS_IS_FBANDROID
+
+if not THIS_IS_FBANDROID:
+    FORKJAIL_EXPORTED_HEADERS = ["ForkJail.h"]
+
+    fb_xplat_cxx_library(
+        name = "forkjail",
+        srcs = glob([
+            "ForkJail.cpp",
+        ]),
+        compiler_flags = [
+            "-fexceptions",
+            "-fPIC",
+            "-std=gnu++14",
+        ],
+        exported_headers = FORKJAIL_EXPORTED_HEADERS,
+        force_static = True,
+        header_namespace = "forkjail",
+        headers = glob(
+            ["*.h"],
+            excludes = FORKJAIL_EXPORTED_HEADERS,
+        ),
+        visibility = [
+            "PUBLIC",
+        ],
+    )

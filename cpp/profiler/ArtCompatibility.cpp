@@ -29,7 +29,7 @@
   #error "Invalid ART version"
 #endif
 
-#include <util/ForkJail.h>
+#include <forkjail/ForkJail.h>
 
 namespace fbjni = facebook::jni;
 
@@ -223,7 +223,7 @@ jboolean check(JNIEnv* env, jclass) {
     facebook::art::InitRuntime();
 #endif
 
-    util::ForkJail jail([
+    forkjail::ForkJail jail([
       &javaStack,
       env,
       nativeThread] {

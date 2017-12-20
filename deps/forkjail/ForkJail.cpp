@@ -11,8 +11,7 @@
 #include <string>
 
 namespace facebook {
-namespace loom {
-namespace util {
+namespace forkjail {
 
 namespace {
 class SignalMask {
@@ -34,7 +33,7 @@ private:
   sigset_t old_;
 };
 
-inline static std::system_error errno_error(std::string error){
+inline static std::system_error errno_error(std::string error) {
   return std::system_error(errno, std::system_category(), error);
 }
 
@@ -185,6 +184,5 @@ void ForkJail::alarm_handler(int signum){
   _exit(kChildTimeoutExitCode);
 }
 
-} // util
-} // loom
+} // forkjail
 } // facebook
