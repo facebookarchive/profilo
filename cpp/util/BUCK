@@ -1,6 +1,30 @@
 load("//buck_imports:loom_path.bzl", "loom_path")
 load("//buck_imports:xplat", "fb_xplat_cxx_library")
 
+FORKJAIL_EXPORTED_HEADERS = ["ForkJail.h"]
+
+fb_xplat_cxx_library(
+    name = "forkjail",
+    srcs = glob([
+        "ForkJail.cpp",
+    ]),
+    headers = glob(
+        ["*.h"],
+        excludes = FORKJAIL_EXPORTED_HEADERS,
+    ),
+    header_namespace = "util",
+    exported_headers = FORKJAIL_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-fPIC",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    visibility = [
+        loom_path("..."),
+    ],
+)
+
 UTIL_EXPORTED_HEADERS = [
     "common.h",
     "ProcFs.h",

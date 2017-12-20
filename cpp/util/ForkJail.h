@@ -7,9 +7,10 @@
 #include <functional>
 
 namespace facebook {
-namespace forkjail {
+namespace loom {
+namespace util {
 
-// A utility class that forks and resets signal handlers in order to prevent a
+// A utility class that forks and resets signal handlers in order to prevent a 
 // dangerous operation from taking down our own process.
 class ForkJail {
 
@@ -45,5 +46,6 @@ public:
   static void alarm_handler(int signum);
 };
 
-} // forkjail
+} // util
+} // loom
 } // facebook
