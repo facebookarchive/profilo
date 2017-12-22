@@ -1,7 +1,7 @@
 load("//buck_imports:loom_path.bzl", "loom_path")
-load("//buck_imports:xplat", "fb_xplat_cxx_library")
+load("//buck_imports:xplat.bzl", "fb_xplat_cxx_library")
 
-include_defs("//buck_imports/xplat")  # THIS_IS_FBANDROID
+include_defs("//buck_imports/xplat.bzl")  # THIS_IS_FBANDROID
 
 if not THIS_IS_FBANDROID:
     fb_xplat_cxx_library(
