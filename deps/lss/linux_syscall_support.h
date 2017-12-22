@@ -1599,6 +1599,16 @@ struct kernel_statfs {
    } while (0)
   #endif
   #if defined(__i386__)
+    #if __llvm__
+      /*
+       * Sidestep this longstanding LLVM bug:
+       * https://bugs.llvm.org/show_bug.cgi?id=27183
+       * It affects _syscall[456] when inlined, so force them to be outlined.
+       */
+      #define LSS_OUTLINE __attribute__((noinline))
+    #else
+      #define LSS_OUTLINE
+    #endif
     /* In PIC mode (e.g. when building shared libraries), gcc for i386
      * reserves ebx. Unfortunately, most distribution ship with implementations
      * of _syscallX() which clobber ebx.
@@ -1696,7 +1706,8 @@ struct kernel_statfs {
       }
     #undef  _syscall4
     #define _syscall4(type,name,type1,arg1,type2,arg2,type3,arg3,type4,arg4)  \
-      type LSS_NAME(name)(type1 arg1, type2 arg2, type3 arg3, type4 arg4) {   \
+      type LSS_OUTLINE                                                        \
+           LSS_NAME(name)(type1 arg1, type2 arg2, type3 arg3, type4 arg4) {   \
         LSS_BODY(type,                                                        \
              : "=a" (__res)                                                   \
              : "0" (__NR_##name), "ri" ((long)(arg1)), "c" ((long)(arg2)),    \
@@ -1705,7 +1716,8 @@ struct kernel_statfs {
     #undef  _syscall5
     #define _syscall5(type,name,type1,arg1,type2,arg2,type3,arg3,type4,arg4,  \
                       type5,arg5)                                             \
-      type LSS_NAME(name)(type1 arg1, type2 arg2, type3 arg3, type4 arg4,     \
+      type LSS_OUTLINE                                                        \
+           LSS_NAME(name)(type1 arg1, type2 arg2, type3 arg3, type4 arg4,     \
                           type5 arg5) {                                       \
         long __res;                                                           \
         __asm__ __volatile__("push %%ebx\n"                                   \
@@ -1723,7 +1735,8 @@ struct kernel_statfs {
     #undef  _syscall6
     #define _syscall6(type,name,type1,arg1,type2,arg2,type3,arg3,type4,arg4,  \
                       type5,arg5,type6,arg6)                                  \
-      type LSS_NAME(name)(type1 arg1, type2 arg2, type3 arg3, type4 arg4,     \
+      type LSS_OUTLINE                                                        \
+           LSS_NAME(name)(type1 arg1, type2 arg2, type3 arg3, type4 arg4,     \
                           type5 arg5, type6 arg6) {                           \
         long __res;                                                           \
         struct { long __a1; long __a6; } __s = { (long)arg1, (long) arg6 };   \
