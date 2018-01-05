@@ -3,7 +3,7 @@ load("//buck_imports:loom_path.bzl", "loom_path")
 include_defs("//buck_imports/xplat.bzl")  # THIS_IS_FBANDROID
 
 if not THIS_IS_FBANDROID:
-    fb_xplat_cxx_library(
+    cxx_library(
         name = "fb",
         exported_headers = subdir_glob([
             ("include", "**/*.h"),
