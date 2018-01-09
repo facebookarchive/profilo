@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#include <util/ForkJail.h>
+#include <forkjail/ForkJail.h>
 #include <gtest/gtest.h>
 
 #include <system_error>
@@ -12,8 +12,7 @@
 #include <iostream>
 
 namespace facebook {
-namespace loom {
-namespace util {
+namespace forkjail {
 
 namespace {
 
@@ -115,6 +114,5 @@ TEST(ForkJail, testProcessGroupChanged) {
   EXPECT_CHILD_STATUS(jail, kExitCodeSuccess);
 }
 
-} // util
-} // loom
+} // forkjail
 } // facebook

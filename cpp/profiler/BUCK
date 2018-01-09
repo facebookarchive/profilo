@@ -41,9 +41,9 @@ def tracer_library(version):
         ],
         deps = [
             loom_path("deps/fb:fb"),
+            loom_path("deps/forkjail:forkjail"),
             loom_path("deps/museum/{version}:{version}").format(version=version),
             loom_path("cpp/logger:logger"),
-            loom_path("cpp/util:forkjail"),
         ],
     )
 
