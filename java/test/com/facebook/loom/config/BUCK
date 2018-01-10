@@ -1,5 +1,5 @@
 load("//buck_imports:loom_path.bzl", "loom_path")
-load("//buck_imports:robolectric3_test.bzl", "robolectric3_test")
+load("//tools/build_defs:robolectric3_test.bzl", "robolectric3_test")
 
 robolectric3_test(
     name = "config",
