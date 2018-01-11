@@ -69,7 +69,7 @@ sigmux_action sigcatch_handler(struct sigmux_siginfo* siginfo, void* handler_dat
   int32_t tid = threadID();
   auto& profileState = getProfileState();
 
-  if (tid == profileState.flushTid.load()) {
+  if (!threadIsUnwinding() && tid == profileState.flushTid.load()) {
     sigmux_longjmp(siginfo, profileState.flushSigJmpBuf, 1);
   }
 
