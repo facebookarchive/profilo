@@ -1,5 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<5674f45969483845416b6e1967c2a8c2>>
+// @generated SignedSource<<0b45d3d34ec65824c327403fa065f1ab>>
 
 #pragma once
 
@@ -90,6 +90,7 @@ enum EntryType {
   HTTP2_FRAME_HEADER = 80,
   HTTP2_WINDOW_UPDATE = 81,
   HTTP2_PRIORITY = 82,
+  PROCESS_LIST = 83,
 };
 
 

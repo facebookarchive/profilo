@@ -17,8 +17,8 @@ import com.facebook.loom.core.LoomConstants;
 import com.facebook.loom.core.TraceControl;
 import com.facebook.loom.core.TraceController;
 import com.facebook.loom.core.TraceOrchestrator;
-import com.facebook.loom.logger.Trace;
 import com.facebook.loom.provider.atrace.SystraceProvider;
+import com.facebook.loom.provider.processmetadata.ProcessMetadataProvider;
 import com.facebook.loom.provider.stacktrace.StackFrameThread;
 import com.facebook.loom.provider.systemcounters.SystemCounterThread;
 import com.facebook.loom.provider.threadmetadata.ThreadMetadataProvider;
@@ -152,6 +152,9 @@ public class SampleAppMainActivity extends Activity {
           break;
         case "threadmetadata":
           result[idx++] = new ThreadMetadataProvider();
+          break;
+        case "processmetadata":
+          result[idx++] = new ProcessMetadataProvider();
           break;
         case "yarn":
           result[idx++] = new PerfEventsProvider();

@@ -5,9 +5,7 @@ from __future__ import unicode_literals
 from ..codegen import EntryDescription
 from ..codegen import MemoryDescription
 from ..types import Types
-from ..types import ArrayType
 from ..types import DynamicArrayType
-from ..types import PointerType
 
 NAMES = [
     'UNKNOWN_TYPE',
@@ -123,6 +121,8 @@ NAMES = [
     'HTTP2_FRAME_HEADER',
     'HTTP2_WINDOW_UPDATE',
     'HTTP2_PRIORITY',
+
+    'PROCESS_LIST',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

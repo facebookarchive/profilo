@@ -11,6 +11,7 @@ PROVIDER_TO_RULE = {
     "systemcounters": loom_path("java/main/com/facebook/loom/provider/systemcounters:systemcounters"),
     "stacktrace": loom_path("java/main/com/facebook/loom/provider/stacktrace:stacktrace"),
     "threadmetadata": loom_path("java/main/com/facebook/loom/provider/threadmetadata:threadmetadata"),
+    "processmetadata": loom_path("java/main/com/facebook/loom/provider/processmetadata:processmetadata"),
     "yarn": loom_path("java/main/com/facebook/loom/provider/yarn:yarn"),
 }
 
@@ -86,4 +87,5 @@ loom_sample_app([
     "stacktrace",
     "systemcounters",
     "threadmetadata",
+    "processmetadata",
 ])
