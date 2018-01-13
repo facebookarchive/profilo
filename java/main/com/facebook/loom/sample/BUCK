@@ -82,6 +82,14 @@ def loom_sample_app(providers):
 
 loom_sample_app(None)
 
+# Referred to by open source buckconfig, don't forget to update it there.
+loom_sample_app([
+    "atrace",
+    "stacktrace",
+    "systemcounters",
+    "threadmetadata",
+])
+
 loom_sample_app([
     "atrace",
     "stacktrace",
