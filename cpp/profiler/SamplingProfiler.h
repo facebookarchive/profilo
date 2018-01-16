@@ -7,6 +7,10 @@
 #include <signal.h>
 #include <unordered_map>
 
+#if !defined(__GLIBCXX__)
+#include <__threading_support>
+#endif
+
 #include <fb/fbjni.h>
 
 #include <profiler/Constants.h>
@@ -14,6 +18,7 @@
 #include "DalvikTracer.h"
 #include "loom/LogEntry.h"
 #include "util/ProcFs.h"
+
 
 namespace fbjni = facebook::jni;
 
