@@ -18,6 +18,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <cstdlib>
 
 #include <loom/logger/lfrb/Futex.h>
 
