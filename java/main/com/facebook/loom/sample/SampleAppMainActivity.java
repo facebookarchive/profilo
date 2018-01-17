@@ -14,7 +14,6 @@ import com.facebook.loom.BuildConfig;
 import com.facebook.loom.controllers.external.ExternalController;
 import com.facebook.loom.controllers.external.api.ExternalTraceControl;
 import com.facebook.loom.core.LoomConstants;
-import com.facebook.loom.core.TraceControl;
 import com.facebook.loom.core.TraceController;
 import com.facebook.loom.core.TraceOrchestrator;
 import com.facebook.loom.provider.atrace.SystraceProvider;
@@ -28,7 +27,7 @@ import java.io.IOException;
 
 public class SampleAppMainActivity extends Activity {
 
-  private Thread mWorkerThread;
+  private WorkloadThread mWorkerThread;
   private ToggleButton mTracingButton;
   private ProgressBar mProgressBar;
 
@@ -40,24 +39,7 @@ public class SampleAppMainActivity extends Activity {
 
     createLayout();
 
-    mWorkerThread = new Thread("busy-thread") {
-      @Override
-      public void run() {
-        int foo = 0xface;
-        while (true) {
-          while (!TraceControl.get().isInsideTrace()) {
-            try {
-              Thread.sleep(500, 0);
-            } catch (InterruptedException e) {
-            }
-          }
-          while (TraceControl.get().isInsideTrace()) {
-            foo *= 0xb00c;
-          }
-        }
-      }
-    };
-
+    mWorkerThread = new WorkloadThread("busy-thread");
     mWorkerThread.start();
     mTracingButton.setOnClickListener(
         new View.OnClickListener() {

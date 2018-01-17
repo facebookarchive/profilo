@@ -55,7 +55,7 @@ class Properties(tt.Properties):
         self.stackTraces = stacktraces if stacktraces else {}
 
     def add_counter(self, name, value, counter_unit=tt.CounterUnit.ITEMS):
-        self.counterProps.setdefault(str(counter_unit), {})[name] = value
+        self.counterProps.setdefault(counter_unit, {})[name] = value
 
 class Edge(tt.Edge):
     def __init__(self, trace, sourcePoint=None, targetPoint=None):

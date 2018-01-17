@@ -1,0 +1,1814 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1200" height="710" onload="init(evt)" viewBox="0 0 1200 710" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES:  -->
+<defs >
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	.func_g:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	var details, searchbtn, matchedtxt, svg;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+	}
+
+	// mouse-over for info
+	function s(node) {		// show
+		info = g_to_text(node);
+		details.nodeValue = "Function: " + info;
+	}
+	function c() {			// clear
+		details.nodeValue = ' ';
+	}
+
+	// ctrl-F for search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+	})
+
+	// functions
+	function find_child(parent, name, attr) {
+		var children = parent.childNodes;
+		for (var i=0; i<children.length;i++) {
+			if (children[i].tagName == name)
+				return (attr != undefined) ? children[i].attributes[attr].value : children[i];
+		}
+		return;
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_"+attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_"+attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_"+attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes["width"].value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes["x"].value = parseFloat(r.attributes["x"].value) +3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2*12*0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		// Fit in full text width
+		if (/^ *$/.test(txt) || t.getSubStringLength(0, txt.length) < w)
+			return;
+
+		for (var x=txt.length-2; x>0; x--) {
+			if (t.getSubStringLength(0, x+2) <= w) {
+				t.textContent = txt.substring(0,x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for(var i=0, c=e.childNodes; i<c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes["x"] != undefined) {
+				orig_save(e, "x");
+				e.attributes["x"].value = (parseFloat(e.attributes["x"].value) - x - 10) * ratio + 10;
+				if(e.tagName == "text") e.attributes["x"].value = find_child(e.parentNode, "rect", "x") + 3;
+			}
+			if (e.attributes["width"] != undefined) {
+				orig_save(e, "width");
+				e.attributes["width"].value = parseFloat(e.attributes["width"].value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for(var i=0, c=e.childNodes; i<c.length; i++) {
+			zoom_child(c[i], x-10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes["x"] != undefined) {
+				orig_save(e, "x");
+				e.attributes["x"].value = 10;
+			}
+			if (e.attributes["width"] != undefined) {
+				orig_save(e, "width");
+				e.attributes["width"].value = parseInt(svg.width.baseVal.value) - (10*2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for(var i=0, c=e.childNodes; i<c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr["width"].value);
+		var xmin = parseFloat(attr["x"].value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr["y"].value);
+		var ratio = (svg.width.baseVal.value - 2*10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		var unzoombtn = document.getElementById("unzoom");
+		unzoombtn.style["opacity"] = "1.0";
+
+		var el = document.getElementsByTagName("g");
+		for(var i=0;i<el.length;i++){
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a["x"].value);
+			var ew = parseFloat(a["width"].value);
+			// Is it an ancestor
+			if (0 == 0) {
+				var upstack = parseFloat(a["y"].value) > ymin;
+			} else {
+				var upstack = parseFloat(a["y"].value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.style["opacity"] = "0.5";
+					zoom_parent(e);
+					e.onclick = function(e){unzoom(); zoom(this);};
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.style["display"] = "none";
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.style["display"] = "none";
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					e.onclick = function(e){zoom(this);};
+					update_text(e);
+				}
+			}
+		}
+	}
+	function unzoom() {
+		var unzoombtn = document.getElementById("unzoom");
+		unzoombtn.style["opacity"] = "0.0";
+
+		var el = document.getElementsByTagName("g");
+		for(i=0;i<el.length;i++) {
+			el[i].style["display"] = "block";
+			el[i].style["opacity"] = "1";
+			zoom_reset(el[i]);
+			update_text(el[i]);
+		}
+	}
+
+	// search
+	function reset_search() {
+		var el = document.getElementsByTagName("rect");
+		for (var i=0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)", "");
+			if (term != null) {
+				search(term)
+			}
+		} else {
+			reset_search();
+			searching = 0;
+			searchbtn.style["opacity"] = "0.1";
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.style["opacity"] = "0.0";
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		var re = new RegExp(term);
+		var el = document.getElementsByTagName("g");
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			if (e.attributes["class"].value != "func_g")
+				continue;
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (rect == null) {
+				// the rect might be wrapped in an anchor
+				// if nameattr href is being used
+				if (rect = find_child(e, "a")) {
+				    rect = find_child(r, "rect");
+				}
+			}
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes["width"].value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes["x"].value);
+				orig_save(rect, "fill");
+				rect.attributes["fill"].value =
+				    "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+
+		searchbtn.style["opacity"] = "1.0";
+		searchbtn.firstChild.nodeValue = "Reset Search"
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.style["opacity"] = "1.0";
+		pct = 100 * count / maxwidth;
+		if (pct == 100)
+			pct = "100"
+		else
+			pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+	function searchover(e) {
+		searchbtn.style["opacity"] = "1.0";
+	}
+	function searchout(e) {
+		if (searching) {
+			searchbtn.style["opacity"] = "1.0";
+		} else {
+			searchbtn.style["opacity"] = "0.1";
+		}
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="1200.0" height="710.0" fill="url(#background)"  />
+<text text-anchor="middle" x="600.00" y="24" font-size="17" font-family="Verdana" fill="rgb(0,0,0)"  >Flame Graph</text>
+<text text-anchor="" x="10.00" y="693" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="details" > </text>
+<text text-anchor="" x="10.00" y="24" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="unzoom" onclick="unzoom()" style="opacity:0.0;cursor:pointer" >Reset Zoom</text>
+<text text-anchor="" x="1090.00" y="24" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="search" onmouseover="searchover()" onmouseout="searchout()" onclick="search_prompt()" style="opacity:0.1;cursor:pointer" >Search</text>
+<text text-anchor="" x="1090.00" y="693" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="matched" > </text>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (16 samples, 3.05%)</title><rect x="678.8" y="549" width="36.0" height="15.0" fill="rgb(254,199,43)" rx="2" ry="2" />
+<text text-anchor="" x="681.82" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (29 samples, 5.53%)</title><rect x="482.9" y="613" width="65.3" height="15.0" fill="rgb(221,144,9)" rx="2" ry="2" />
+<text text-anchor="" x="485.90" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.fac..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1043.6" y="549" width="2.3" height="15.0" fill="rgb(206,205,16)" rx="2" ry="2" />
+<text text-anchor="" x="1046.63" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="757.6" y="549" width="4.5" height="15.0" fill="rgb(221,80,2)" rx="2" ry="2" />
+<text text-anchor="" x="760.63" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191669029525548 (2 samples, 0.38%)</title><rect x="244.2" y="389" width="4.5" height="15.0" fill="rgb(232,110,30)" rx="2" ry="2" />
+<text text-anchor="" x="247.20" y="399.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254577415510060 (1 samples, 0.19%)</title><rect x="282.5" y="373" width="2.2" height="15.0" fill="rgb(213,86,32)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="383.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (6 samples, 1.15%)</title><rect x="1172.0" y="517" width="13.5" height="15.0" fill="rgb(230,143,8)" rx="2" ry="2" />
+<text text-anchor="" x="1174.98" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (7 samples, 1.34%)</title><rect x="568.5" y="533" width="15.7" height="15.0" fill="rgb(251,145,45)" rx="2" ry="2" />
+<text text-anchor="" x="571.47" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="750.9" y="565" width="6.7" height="15.0" fill="rgb(215,106,23)" rx="2" ry="2" />
+<text text-anchor="" x="753.88" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_255058451847212 (2 samples, 0.38%)</title><rect x="293.7" y="229" width="4.5" height="15.0" fill="rgb(251,53,23)" rx="2" ry="2" />
+<text text-anchor="" x="296.74" y="239.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (2 samples, 0.38%)</title><rect x="1145.0" y="421" width="4.5" height="15.0" fill="rgb(251,73,1)" rx="2" ry="2" />
+<text text-anchor="" x="1147.96" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_57452253075144 (1 samples, 0.19%)</title><rect x="278.0" y="101" width="2.2" height="15.0" fill="rgb(251,187,29)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="111.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191660439590956 (2 samples, 0.38%)</title><rect x="253.2" y="341" width="4.5" height="15.0" fill="rgb(237,209,35)" rx="2" ry="2" />
+<text text-anchor="" x="256.21" y="351.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (4 samples, 0.76%)</title><rect x="1176.5" y="485" width="9.0" height="15.0" fill="rgb(205,193,42)" rx="2" ry="2" />
+<text text-anchor="" x="1179.49" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_89040785987628 (1 samples, 0.19%)</title><rect x="282.5" y="453" width="2.2" height="15.0" fill="rgb(245,168,26)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58612990443566 (6 samples, 1.15%)</title><rect x="345.5" y="485" width="13.5" height="15.0" fill="rgb(229,160,24)" rx="2" ry="2" />
+<text text-anchor="" x="348.53" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="523.4" y="469" width="4.5" height="15.0" fill="rgb(207,103,42)" rx="2" ry="2" />
+<text text-anchor="" x="526.44" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="557.2" y="565" width="6.8" height="15.0" fill="rgb(219,123,49)" rx="2" ry="2" />
+<text text-anchor="" x="560.21" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (13 samples, 2.48%)</title><rect x="741.9" y="597" width="29.2" height="15.0" fill="rgb(252,19,30)" rx="2" ry="2" />
+<text text-anchor="" x="744.87" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191690504362028 (9 samples, 1.72%)</title><rect x="257.7" y="357" width="20.3" height="15.0" fill="rgb(232,223,35)" rx="2" ry="2" />
+<text text-anchor="" x="260.71" y="367.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="827.4" y="437" width="2.3" height="15.0" fill="rgb(241,181,30)" rx="2" ry="2" />
+<text text-anchor="" x="830.44" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="582.0" y="469" width="2.2" height="15.0" fill="rgb(213,220,54)" rx="2" ry="2" />
+<text text-anchor="" x="584.98" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (15 samples, 2.86%)</title><rect x="1115.7" y="565" width="33.8" height="15.0" fill="rgb(210,60,35)" rx="2" ry="2" />
+<text text-anchor="" x="1118.69" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (11 samples, 2.10%)</title><rect x="1124.7" y="517" width="24.8" height="15.0" fill="rgb(224,138,5)" rx="2" ry="2" />
+<text text-anchor="" x="1127.69" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_84131638368300 (1 samples, 0.19%)</title><rect x="278.0" y="37" width="2.2" height="15.0" fill="rgb(208,112,20)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="47.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="543.7" y="501" width="4.5" height="15.0" fill="rgb(248,8,39)" rx="2" ry="2" />
+<text text-anchor="" x="546.70" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (1 samples, 0.19%)</title><rect x="1007.6" y="533" width="2.2" height="15.0" fill="rgb(218,50,49)" rx="2" ry="2" />
+<text text-anchor="" x="1010.60" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1156.2" y="565" width="4.5" height="15.0" fill="rgb(221,18,44)" rx="2" ry="2" />
+<text text-anchor="" x="1159.22" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (7 samples, 1.34%)</title><rect x="532.4" y="581" width="15.8" height="15.0" fill="rgb(229,208,22)" rx="2" ry="2" />
+<text text-anchor="" x="535.44" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="723.9" y="501" width="2.2" height="15.0" fill="rgb(214,80,6)" rx="2" ry="2" />
+<text text-anchor="" x="726.85" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (6 samples, 1.15%)</title><rect x="1136.0" y="469" width="13.5" height="15.0" fill="rgb(236,90,4)" rx="2" ry="2" />
+<text text-anchor="" x="1138.95" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (5 samples, 0.95%)</title><rect x="482.9" y="597" width="11.3" height="15.0" fill="rgb(230,225,14)" rx="2" ry="2" />
+<text text-anchor="" x="485.90" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_255071336749100 (2 samples, 0.38%)</title><rect x="293.7" y="245" width="4.5" height="15.0" fill="rgb(225,156,12)" rx="2" ry="2" />
+<text text-anchor="" x="296.74" y="255.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1048.1" y="517" width="2.3" height="15.0" fill="rgb(217,43,44)" rx="2" ry="2" />
+<text text-anchor="" x="1051.13" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1032.4" y="469" width="4.5" height="15.0" fill="rgb(229,195,14)" rx="2" ry="2" />
+<text text-anchor="" x="1035.37" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (14 samples, 2.67%)</title><rect x="1117.9" y="549" width="31.6" height="15.0" fill="rgb(218,94,22)" rx="2" ry="2" />
+<text text-anchor="" x="1120.94" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20627203479240 (6 samples, 1.15%)</title><rect x="284.7" y="373" width="13.5" height="15.0" fill="rgb(215,189,23)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="383.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1154.0" y="533" width="2.2" height="15.0" fill="rgb(243,145,50)" rx="2" ry="2" />
+<text text-anchor="" x="1156.97" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1014.4" y="533" width="4.5" height="15.0" fill="rgb(222,189,19)" rx="2" ry="2" />
+<text text-anchor="" x="1017.35" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_18015863363272 (2 samples, 0.38%)</title><rect x="278.0" y="213" width="4.5" height="15.0" fill="rgb(219,28,44)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="223.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_57611166865096 (6 samples, 1.15%)</title><rect x="284.7" y="437" width="13.5" height="15.0" fill="rgb(206,100,44)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="960.3" y="565" width="2.3" height="15.0" fill="rgb(253,8,50)" rx="2" ry="2" />
+<text text-anchor="" x="963.31" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::run (328 samples, 62.60%)</title><rect x="451.4" y="645" width="738.6" height="15.0" fill="rgb(227,133,14)" rx="2" ry="2" />
+<text text-anchor="" x="454.37" y="655.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loom.sample.WorkloadThread::run</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (15 samples, 2.86%)</title><rect x="681.1" y="533" width="33.7" height="15.0" fill="rgb(207,135,47)" rx="2" ry="2" />
+<text text-anchor="" x="684.07" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20704512890568 (1 samples, 0.19%)</title><rect x="289.2" y="325" width="2.3" height="15.0" fill="rgb(231,189,11)" rx="2" ry="2" />
+<text text-anchor="" x="292.24" y="335.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.provider.systemcounters.SystemCounterLogger::logProcessCounters (10 samples, 1.91%)</title><rect x="19.0" y="549" width="22.5" height="15.0" fill="rgb(210,167,0)" rx="2" ry="2" />
+<text text-anchor="" x="22.01" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_15662221285064 (2 samples, 0.38%)</title><rect x="278.0" y="149" width="4.5" height="15.0" fill="rgb(230,67,36)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="159.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191669029525548 (9 samples, 1.72%)</title><rect x="257.7" y="341" width="20.3" height="15.0" fill="rgb(246,153,12)" rx="2" ry="2" />
+<text text-anchor="" x="260.71" y="351.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1142.7" y="421" width="2.3" height="15.0" fill="rgb(227,12,33)" rx="2" ry="2" />
+<text text-anchor="" x="1145.71" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="809.4" y="533" width="2.3" height="15.0" fill="rgb(230,97,26)" rx="2" ry="2" />
+<text text-anchor="" x="812.43" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58612990443566 (4 samples, 0.76%)</title><rect x="408.6" y="501" width="9.0" height="15.0" fill="rgb(234,148,36)" rx="2" ry="2" />
+<text text-anchor="" x="411.59" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="811.7" y="517" width="4.5" height="15.0" fill="rgb(225,11,51)" rx="2" ry="2" />
+<text text-anchor="" x="814.68" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1117.9" y="533" width="2.3" height="15.0" fill="rgb(217,43,6)" rx="2" ry="2" />
+<text text-anchor="" x="1120.94" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (4 samples, 0.76%)</title><rect x="762.1" y="565" width="9.0" height="15.0" fill="rgb(217,180,27)" rx="2" ry="2" />
+<text text-anchor="" x="765.14" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (10 samples, 1.91%)</title><rect x="1014.4" y="549" width="22.5" height="15.0" fill="rgb(240,172,48)" rx="2" ry="2" />
+<text text-anchor="" x="1017.35" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="807.2" y="549" width="2.2" height="15.0" fill="rgb(248,26,18)" rx="2" ry="2" />
+<text text-anchor="" x="810.18" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (22 samples, 4.20%)</title><rect x="1106.7" y="581" width="49.5" height="15.0" fill="rgb(237,134,36)" rx="2" ry="2" />
+<text text-anchor="" x="1109.68" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com...</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_184015397804076 (91 samples, 17.37%)</title><rect x="167.6" y="549" width="205.0" height="15.0" fill="rgb(238,96,38)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_184015397804076</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (5 samples, 0.95%)</title><rect x="838.7" y="581" width="11.3" height="15.0" fill="rgb(240,7,11)" rx="2" ry="2" />
+<text text-anchor="" x="841.70" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1120.2" y="517" width="4.5" height="15.0" fill="rgb(205,4,11)" rx="2" ry="2" />
+<text text-anchor="" x="1123.19" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (7 samples, 1.34%)</title><rect x="951.3" y="597" width="15.8" height="15.0" fill="rgb(206,68,44)" rx="2" ry="2" />
+<text text-anchor="" x="954.30" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_255758531516460 (6 samples, 1.15%)</title><rect x="345.5" y="501" width="13.5" height="15.0" fill="rgb(244,49,22)" rx="2" ry="2" />
+<text text-anchor="" x="348.53" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20764642432712 (18 samples, 3.44%)</title><rect x="241.9" y="421" width="40.6" height="15.0" fill="rgb(227,199,13)" rx="2" ry="2" />
+<text text-anchor="" x="244.95" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_20..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="534.7" y="549" width="2.2" height="15.0" fill="rgb(230,59,31)" rx="2" ry="2" />
+<text text-anchor="" x="537.69" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="820.7" y="469" width="2.2" height="15.0" fill="rgb(243,106,36)" rx="2" ry="2" />
+<text text-anchor="" x="823.69" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (18 samples, 3.44%)</title><rect x="791.4" y="581" width="40.5" height="15.0" fill="rgb(244,194,2)" rx="2" ry="2" />
+<text text-anchor="" x="794.41" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1124.7" y="501" width="4.5" height="15.0" fill="rgb(209,42,10)" rx="2" ry="2" />
+<text text-anchor="" x="1127.69" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_187077709486124 (70 samples, 13.36%)</title><rect x="10.0" y="629" width="157.6" height="15.0" fill="rgb(227,150,30)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="639.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_187077709486124</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_83826695690284 (1 samples, 0.19%)</title><rect x="278.0" y="53" width="2.2" height="15.0" fill="rgb(254,100,12)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="63.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (8 samples, 1.53%)</title><rect x="566.2" y="549" width="18.0" height="15.0" fill="rgb(240,102,41)" rx="2" ry="2" />
+<text text-anchor="" x="569.22" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="568.5" y="517" width="4.5" height="15.0" fill="rgb(214,117,15)" rx="2" ry="2" />
+<text text-anchor="" x="571.47" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="735.1" y="469" width="6.8" height="15.0" fill="rgb(225,215,45)" rx="2" ry="2" />
+<text text-anchor="" x="738.11" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (4 samples, 0.76%)</title><rect x="741.9" y="581" width="9.0" height="15.0" fill="rgb(228,87,52)" rx="2" ry="2" />
+<text text-anchor="" x="744.87" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191669029525548 (14 samples, 2.67%)</title><rect x="210.4" y="469" width="31.5" height="15.0" fill="rgb(211,97,47)" rx="2" ry="2" />
+<text text-anchor="" x="213.42" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_1..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (1 samples, 0.19%)</title><rect x="829.7" y="437" width="2.2" height="15.0" fill="rgb(223,183,46)" rx="2" ry="2" />
+<text text-anchor="" x="832.69" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (5 samples, 0.95%)</title><rect x="521.2" y="501" width="11.2" height="15.0" fill="rgb(234,11,49)" rx="2" ry="2" />
+<text text-anchor="" x="524.18" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_57649821570760 (1 samples, 0.19%)</title><rect x="278.0" y="117" width="2.2" height="15.0" fill="rgb(205,49,0)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="127.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1178.7" y="453" width="2.3" height="15.0" fill="rgb(244,116,24)" rx="2" ry="2" />
+<text text-anchor="" x="1181.74" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.provider.systemcounters.SystemCounterLogger::logProcessCounter (9 samples, 1.72%)</title><rect x="21.3" y="533" width="20.2" height="15.0" fill="rgb(225,203,14)" rx="2" ry="2" />
+<text text-anchor="" x="24.26" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="798.2" y="549" width="2.2" height="15.0" fill="rgb(208,102,27)" rx="2" ry="2" />
+<text text-anchor="" x="801.17" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254439976556588 (4 samples, 0.76%)</title><rect x="408.6" y="517" width="9.0" height="15.0" fill="rgb(249,3,52)" rx="2" ry="2" />
+<text text-anchor="" x="411.59" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (7 samples, 1.34%)</title><rect x="771.1" y="597" width="15.8" height="15.0" fill="rgb(229,80,25)" rx="2" ry="2" />
+<text text-anchor="" x="774.15" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="800.4" y="549" width="6.8" height="15.0" fill="rgb(221,103,11)" rx="2" ry="2" />
+<text text-anchor="" x="803.42" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_17629316306632 (6 samples, 1.15%)</title><rect x="284.7" y="389" width="13.5" height="15.0" fill="rgb(239,143,39)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="399.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_187528681052204 (20 samples, 3.82%)</title><rect x="372.6" y="549" width="45.0" height="15.0" fill="rgb(224,23,47)" rx="2" ry="2" />
+<text text-anchor="" x="375.56" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_187..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (9 samples, 1.72%)</title><rect x="1129.2" y="501" width="20.3" height="15.0" fill="rgb(244,208,24)" rx="2" ry="2" />
+<text text-anchor="" x="1132.20" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191660439590956 (1 samples, 0.19%)</title><rect x="241.9" y="389" width="2.3" height="15.0" fill="rgb(214,205,37)" rx="2" ry="2" />
+<text text-anchor="" x="244.95" y="399.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191660439590956 (5 samples, 0.95%)</title><rect x="167.6" y="485" width="11.3" height="15.0" fill="rgb(249,20,33)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="766.6" y="533" width="4.5" height="15.0" fill="rgb(224,203,33)" rx="2" ry="2" />
+<text text-anchor="" x="769.64" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="663.1" y="581" width="4.5" height="15.0" fill="rgb(217,28,27)" rx="2" ry="2" />
+<text text-anchor="" x="666.05" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="816.2" y="501" width="2.2" height="15.0" fill="rgb(216,166,18)" rx="2" ry="2" />
+<text text-anchor="" x="819.18" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_264619049048108 (1 samples, 0.19%)</title><rect x="289.2" y="309" width="2.3" height="15.0" fill="rgb(251,13,18)" rx="2" ry="2" />
+<text text-anchor="" x="292.24" y="319.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_13995773974216 (6 samples, 1.15%)</title><rect x="284.7" y="405" width="13.5" height="15.0" fill="rgb(230,39,5)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_89015016183852 (7 samples, 1.34%)</title><rect x="282.5" y="469" width="15.7" height="15.0" fill="rgb(229,1,44)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254611775248428 (2 samples, 0.38%)</title><rect x="293.7" y="261" width="4.5" height="15.0" fill="rgb(223,38,17)" rx="2" ry="2" />
+<text text-anchor="" x="296.74" y="271.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="681.1" y="517" width="4.5" height="15.0" fill="rgb(236,178,41)" rx="2" ry="2" />
+<text text-anchor="" x="684.07" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="847.7" y="549" width="2.3" height="15.0" fill="rgb(207,12,54)" rx="2" ry="2" />
+<text text-anchor="" x="850.71" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="548.2" y="597" width="4.5" height="15.0" fill="rgb(208,181,2)" rx="2" ry="2" />
+<text text-anchor="" x="551.21" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1149.5" y="549" width="4.5" height="15.0" fill="rgb(206,146,41)" rx="2" ry="2" />
+<text text-anchor="" x="1152.47" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (11 samples, 2.10%)</title><rect x="717.1" y="549" width="24.8" height="15.0" fill="rgb(223,147,34)" rx="2" ry="2" />
+<text text-anchor="" x="720.10" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_187528681052204 (2 samples, 0.38%)</title><rect x="156.4" y="597" width="4.5" height="15.0" fill="rgb(254,53,32)" rx="2" ry="2" />
+<text text-anchor="" x="159.37" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (12 samples, 2.29%)</title><rect x="1009.8" y="565" width="27.1" height="15.0" fill="rgb(220,119,40)" rx="2" ry="2" />
+<text text-anchor="" x="1012.85" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1129.2" y="485" width="2.3" height="15.0" fill="rgb(244,39,6)" rx="2" ry="2" />
+<text text-anchor="" x="1132.20" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (10 samples, 1.91%)</title><rect x="1163.0" y="549" width="22.5" height="15.0" fill="rgb(215,113,46)" rx="2" ry="2" />
+<text text-anchor="" x="1165.98" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="822.9" y="453" width="4.5" height="15.0" fill="rgb(225,118,51)" rx="2" ry="2" />
+<text text-anchor="" x="825.94" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="690.1" y="485" width="4.5" height="15.0" fill="rgb(207,218,10)" rx="2" ry="2" />
+<text text-anchor="" x="693.08" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="818.4" y="485" width="2.3" height="15.0" fill="rgb(230,223,26)" rx="2" ry="2" />
+<text text-anchor="" x="821.44" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1027.9" y="485" width="4.5" height="15.0" fill="rgb(209,28,44)" rx="2" ry="2" />
+<text text-anchor="" x="1030.86" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (37 samples, 7.06%)</title><rect x="967.1" y="597" width="83.3" height="15.0" fill="rgb(216,95,35)" rx="2" ry="2" />
+<text text-anchor="" x="970.06" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.faceb..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (11 samples, 2.10%)</title><rect x="507.7" y="581" width="24.7" height="15.0" fill="rgb(238,197,17)" rx="2" ry="2" />
+<text text-anchor="" x="510.67" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (2 samples, 0.38%)</title><rect x="962.6" y="565" width="4.5" height="15.0" fill="rgb(216,119,51)" rx="2" ry="2" />
+<text text-anchor="" x="965.56" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_15662221285064 (2 samples, 0.38%)</title><rect x="278.0" y="293" width="4.5" height="15.0" fill="rgb(218,144,19)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="303.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_18015863363272 (2 samples, 0.38%)</title><rect x="278.0" y="165" width="4.5" height="15.0" fill="rgb(253,0,12)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="175.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (9 samples, 1.72%)</title><rect x="811.7" y="533" width="20.2" height="15.0" fill="rgb(232,132,12)" rx="2" ry="2" />
+<text text-anchor="" x="814.68" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (1 samples, 0.19%)</title><rect x="498.7" y="581" width="2.2" height="15.0" fill="rgb(225,67,45)" rx="2" ry="2" />
+<text text-anchor="" x="501.66" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191660439590956 (10 samples, 1.91%)</title><rect x="187.9" y="469" width="22.5" height="15.0" fill="rgb(206,118,1)" rx="2" ry="2" />
+<text text-anchor="" x="190.90" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="951.3" y="581" width="4.5" height="15.0" fill="rgb(253,199,34)" rx="2" ry="2" />
+<text text-anchor="" x="954.30" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (7 samples, 1.34%)</title><rect x="994.1" y="565" width="15.7" height="15.0" fill="rgb(249,103,6)" rx="2" ry="2" />
+<text text-anchor="" x="997.08" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (38 samples, 7.25%)</title><rect x="656.3" y="597" width="85.6" height="15.0" fill="rgb(238,128,27)" rx="2" ry="2" />
+<text text-anchor="" x="659.30" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebo..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191316842207276 (4 samples, 0.76%)</title><rect x="10.0" y="549" width="9.0" height="15.0" fill="rgb(241,165,40)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_262080723376172 (1 samples, 0.19%)</title><rect x="280.2" y="133" width="2.3" height="15.0" fill="rgb(231,111,25)" rx="2" ry="2" />
+<text text-anchor="" x="283.23" y="143.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (59 samples, 11.26%)</title><rect x="917.5" y="613" width="132.9" height="15.0" fill="rgb(232,192,32)" rx="2" ry="2" />
+<text text-anchor="" x="920.52" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loo..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (6 samples, 1.15%)</title><rect x="518.9" y="517" width="13.5" height="15.0" fill="rgb(243,36,19)" rx="2" ry="2" />
+<text text-anchor="" x="521.93" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (8 samples, 1.53%)</title><rect x="1167.5" y="533" width="18.0" height="15.0" fill="rgb(252,68,1)" rx="2" ry="2" />
+<text text-anchor="" x="1170.48" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="730.6" y="469" width="4.5" height="15.0" fill="rgb(253,129,17)" rx="2" ry="2" />
+<text text-anchor="" x="733.61" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191690504362028 (14 samples, 2.67%)</title><rect x="210.4" y="485" width="31.5" height="15.0" fill="rgb(207,151,3)" rx="2" ry="2" />
+<text text-anchor="" x="213.42" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_1..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_90007153629228 (1 samples, 0.19%)</title><rect x="278.0" y="69" width="2.2" height="15.0" fill="rgb(238,220,28)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="79.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="1045.9" y="549" width="4.5" height="15.0" fill="rgb(242,213,42)" rx="2" ry="2" />
+<text text-anchor="" x="1048.88" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.provider.systemcounters.SystemCounterThread::logCounters (51 samples, 9.73%)</title><rect x="41.5" y="565" width="114.9" height="15.0" fill="rgb(226,2,54)" rx="2" ry="2" />
+<text text-anchor="" x="44.53" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.l..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (11 samples, 2.10%)</title><rect x="1160.7" y="565" width="24.8" height="15.0" fill="rgb(242,38,54)" rx="2" ry="2" />
+<text text-anchor="" x="1163.73" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58612990443566 (2 samples, 0.38%)</title><rect x="368.1" y="501" width="4.5" height="15.0" fill="rgb(218,6,43)" rx="2" ry="2" />
+<text text-anchor="" x="371.05" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1009.8" y="549" width="4.6" height="15.0" fill="rgb(211,101,33)" rx="2" ry="2" />
+<text text-anchor="" x="1012.85" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1018.9" y="517" width="4.5" height="15.0" fill="rgb(229,56,23)" rx="2" ry="2" />
+<text text-anchor="" x="1021.85" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="960.3" y="581" width="6.8" height="15.0" fill="rgb(253,86,11)" rx="2" ry="2" />
+<text text-anchor="" x="963.31" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_255032682043436 (4 samples, 0.76%)</title><rect x="408.6" y="533" width="9.0" height="15.0" fill="rgb(222,193,34)" rx="2" ry="2" />
+<text text-anchor="" x="411.59" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_46088865808430 (1 samples, 0.19%)</title><rect x="19.0" y="517" width="2.3" height="15.0" fill="rgb(238,222,19)" rx="2" ry="2" />
+<text text-anchor="" x="22.01" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254607480281132 (2 samples, 0.38%)</title><rect x="293.7" y="277" width="4.5" height="15.0" fill="rgb(223,102,3)" rx="2" ry="2" />
+<text text-anchor="" x="296.74" y="287.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (5 samples, 0.95%)</title><rect x="1095.4" y="581" width="11.3" height="15.0" fill="rgb(206,26,42)" rx="2" ry="2" />
+<text text-anchor="" x="1098.42" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_187541565954092 (5 samples, 0.95%)</title><rect x="156.4" y="613" width="11.2" height="15.0" fill="rgb(215,33,40)" rx="2" ry="2" />
+<text text-anchor="" x="159.37" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (13 samples, 2.48%)</title><rect x="685.6" y="517" width="29.2" height="15.0" fill="rgb(246,96,11)" rx="2" ry="2" />
+<text text-anchor="" x="688.57" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="739.6" y="437" width="2.3" height="15.0" fill="rgb(252,64,37)" rx="2" ry="2" />
+<text text-anchor="" x="742.62" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.logger.Logger::writeEntryWithCursor (9 samples, 1.72%)</title><rect x="21.3" y="501" width="20.2" height="15.0" fill="rgb(253,6,5)" rx="2" ry="2" />
+<text text-anchor="" x="24.26" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="791.4" y="565" width="6.8" height="15.0" fill="rgb(216,167,37)" rx="2" ry="2" />
+<text text-anchor="" x="794.41" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (40 samples, 7.63%)</title><rect x="1095.4" y="597" width="90.1" height="15.0" fill="rgb(209,130,34)" rx="2" ry="2" />
+<text text-anchor="" x="1098.42" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebo..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_14923486910152 (1 samples, 0.19%)</title><rect x="282.5" y="405" width="2.2" height="15.0" fill="rgb(218,128,9)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58612990443566 (4 samples, 0.76%)</title><rect x="359.0" y="485" width="9.1" height="15.0" fill="rgb(237,156,28)" rx="2" ry="2" />
+<text text-anchor="" x="362.05" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="1181.0" y="453" width="4.5" height="15.0" fill="rgb(210,148,49)" rx="2" ry="2" />
+<text text-anchor="" x="1183.99" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="955.8" y="565" width="4.5" height="15.0" fill="rgb(245,227,40)" rx="2" ry="2" />
+<text text-anchor="" x="958.80" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="577.5" y="485" width="4.5" height="15.0" fill="rgb(218,158,26)" rx="2" ry="2" />
+<text text-anchor="" x="580.48" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="532.4" y="565" width="2.3" height="15.0" fill="rgb(223,121,25)" rx="2" ry="2" />
+<text text-anchor="" x="535.44" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (1 samples, 0.19%)</title><rect x="530.2" y="453" width="2.2" height="15.0" fill="rgb(248,36,19)" rx="2" ry="2" />
+<text text-anchor="" x="533.19" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (8 samples, 1.53%)</title><rect x="514.4" y="533" width="18.0" height="15.0" fill="rgb(218,149,22)" rx="2" ry="2" />
+<text text-anchor="" x="517.43" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1167.5" y="517" width="4.5" height="15.0" fill="rgb(213,39,29)" rx="2" ry="2" />
+<text text-anchor="" x="1170.48" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254517285967916 (91 samples, 17.37%)</title><rect x="167.6" y="517" width="205.0" height="15.0" fill="rgb(209,105,53)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_254517285967916</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58947997892654 (1 samples, 0.19%)</title><rect x="737.4" y="421" width="2.2" height="15.0" fill="rgb(245,158,26)" rx="2" ry="2" />
+<text text-anchor="" x="740.37" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (8 samples, 1.53%)</title><rect x="1018.9" y="533" width="18.0" height="15.0" fill="rgb(216,221,32)" rx="2" ry="2" />
+<text text-anchor="" x="1021.85" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="694.6" y="469" width="2.2" height="15.0" fill="rgb(213,166,23)" rx="2" ry="2" />
+<text text-anchor="" x="697.58" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>all (524 samples, 100%)</title><rect x="10.0" y="661" width="1180.0" height="15.0" fill="rgb(230,100,43)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="671.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="701.3" y="437" width="2.3" height="15.0" fill="rgb(244,151,52)" rx="2" ry="2" />
+<text text-anchor="" x="704.34" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="714.8" y="549" width="2.3" height="15.0" fill="rgb(251,114,50)" rx="2" ry="2" />
+<text text-anchor="" x="717.85" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191316842207276 (3 samples, 0.57%)</title><rect x="160.9" y="597" width="6.7" height="15.0" fill="rgb(208,109,45)" rx="2" ry="2" />
+<text text-anchor="" x="163.88" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_90784542709804 (1 samples, 0.19%)</title><rect x="282.5" y="421" width="2.2" height="15.0" fill="rgb(220,23,1)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (2 samples, 0.38%)</title><rect x="710.3" y="405" width="4.5" height="15.0" fill="rgb(224,117,0)" rx="2" ry="2" />
+<text text-anchor="" x="713.34" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1023.4" y="501" width="4.5" height="15.0" fill="rgb(237,120,24)" rx="2" ry="2" />
+<text text-anchor="" x="1026.36" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191316842207276 (1 samples, 0.19%)</title><rect x="291.5" y="277" width="2.2" height="15.0" fill="rgb(248,114,50)" rx="2" ry="2" />
+<text text-anchor="" x="294.49" y="287.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (9 samples, 1.72%)</title><rect x="721.6" y="533" width="20.3" height="15.0" fill="rgb(251,119,50)" rx="2" ry="2" />
+<text text-anchor="" x="724.60" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191669029525548 (4 samples, 0.76%)</title><rect x="178.9" y="485" width="9.0" height="15.0" fill="rgb(229,41,49)" rx="2" ry="2" />
+<text text-anchor="" x="181.89" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191316842207276 (8 samples, 1.53%)</title><rect x="417.6" y="549" width="18.0" height="15.0" fill="rgb(208,199,0)" rx="2" ry="2" />
+<text text-anchor="" x="420.60" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="663.1" y="565" width="4.5" height="15.0" fill="rgb(245,71,42)" rx="2" ry="2" />
+<text text-anchor="" x="666.05" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="710.3" y="389" width="4.5" height="15.0" fill="rgb(207,127,6)" rx="2" ry="2" />
+<text text-anchor="" x="713.34" y="399.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (11 samples, 2.10%)</title><rect x="631.5" y="597" width="24.8" height="15.0" fill="rgb(237,143,54)" rx="2" ry="2" />
+<text text-anchor="" x="634.53" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1181.0" y="437" width="4.5" height="15.0" fill="rgb(234,166,9)" rx="2" ry="2" />
+<text text-anchor="" x="1183.99" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254512991000620 (66 samples, 12.60%)</title><rect x="187.9" y="501" width="148.6" height="15.0" fill="rgb(223,106,51)" rx="2" ry="2" />
+<text text-anchor="" x="190.90" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_254512991000620</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.logger.Logger::loggerWrite (9 samples, 1.72%)</title><rect x="21.3" y="485" width="20.2" height="15.0" fill="rgb(251,1,41)" rx="2" ry="2" />
+<text text-anchor="" x="24.26" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_255749941581868 (4 samples, 0.76%)</title><rect x="336.5" y="501" width="9.0" height="15.0" fill="rgb(234,193,10)" rx="2" ry="2" />
+<text text-anchor="" x="339.53" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1007.6" y="517" width="2.2" height="15.0" fill="rgb(243,212,6)" rx="2" ry="2" />
+<text text-anchor="" x="1010.60" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="507.7" y="565" width="2.2" height="15.0" fill="rgb(217,3,29)" rx="2" ry="2" />
+<text text-anchor="" x="510.67" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1160.7" y="549" width="2.3" height="15.0" fill="rgb(252,192,41)" rx="2" ry="2" />
+<text text-anchor="" x="1163.73" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (5 samples, 0.95%)</title><rect x="536.9" y="549" width="11.3" height="15.0" fill="rgb(206,115,0)" rx="2" ry="2" />
+<text text-anchor="" x="539.95" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="674.3" y="549" width="4.5" height="15.0" fill="rgb(215,202,30)" rx="2" ry="2" />
+<text text-anchor="" x="677.31" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1185.5" y="581" width="4.5" height="15.0" fill="rgb(218,57,8)" rx="2" ry="2" />
+<text text-anchor="" x="1188.50" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="827.4" y="453" width="4.5" height="15.0" fill="rgb(244,180,22)" rx="2" ry="2" />
+<text text-anchor="" x="830.44" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191316842207276 (2 samples, 0.38%)</title><rect x="284.7" y="309" width="4.5" height="15.0" fill="rgb(225,71,50)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="319.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="500.9" y="581" width="6.8" height="15.0" fill="rgb(215,34,1)" rx="2" ry="2" />
+<text text-anchor="" x="503.92" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191681914427436 (1 samples, 0.19%)</title><rect x="241.9" y="405" width="2.3" height="15.0" fill="rgb(246,128,32)" rx="2" ry="2" />
+<text text-anchor="" x="244.95" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="762.1" y="549" width="4.5" height="15.0" fill="rgb(235,61,53)" rx="2" ry="2" />
+<text text-anchor="" x="765.14" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="696.8" y="453" width="4.5" height="15.0" fill="rgb(210,94,26)" rx="2" ry="2" />
+<text text-anchor="" x="699.83" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (9 samples, 1.72%)</title><rect x="564.0" y="565" width="20.2" height="15.0" fill="rgb(239,67,6)" rx="2" ry="2" />
+<text text-anchor="" x="566.97" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (11 samples, 2.10%)</title><rect x="690.1" y="501" width="24.7" height="15.0" fill="rgb(214,26,30)" rx="2" ry="2" />
+<text text-anchor="" x="693.08" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="521.2" y="485" width="2.2" height="15.0" fill="rgb(252,31,27)" rx="2" ry="2" />
+<text text-anchor="" x="524.18" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="786.9" y="581" width="4.5" height="15.0" fill="rgb(234,168,14)" rx="2" ry="2" />
+<text text-anchor="" x="789.91" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="717.1" y="533" width="4.5" height="15.0" fill="rgb(205,6,41)" rx="2" ry="2" />
+<text text-anchor="" x="720.10" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1172.0" y="501" width="2.2" height="15.0" fill="rgb(253,229,0)" rx="2" ry="2" />
+<text text-anchor="" x="1174.98" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="726.1" y="485" width="4.5" height="15.0" fill="rgb(222,130,43)" rx="2" ry="2" />
+<text text-anchor="" x="729.11" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_183976743098412 (65 samples, 12.40%)</title><rect x="10.0" y="613" width="146.4" height="15.0" fill="rgb(209,210,31)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_183976743098412</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (5 samples, 0.95%)</title><rect x="820.7" y="485" width="11.2" height="15.0" fill="rgb(212,114,47)" rx="2" ry="2" />
+<text text-anchor="" x="823.69" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58612990443566 (17 samples, 3.24%)</title><rect x="298.2" y="485" width="38.3" height="15.0" fill="rgb(219,72,46)" rx="2" ry="2" />
+<text text-anchor="" x="301.24" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_58..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254573120542764 (3 samples, 0.57%)</title><rect x="291.5" y="309" width="6.7" height="15.0" fill="rgb(249,166,51)" rx="2" ry="2" />
+<text text-anchor="" x="294.49" y="319.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (6 samples, 1.15%)</title><rect x="1036.9" y="581" width="13.5" height="15.0" fill="rgb(231,128,9)" rx="2" ry="2" />
+<text text-anchor="" x="1039.87" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254444271523884 (91 samples, 17.37%)</title><rect x="167.6" y="533" width="205.0" height="15.0" fill="rgb(228,45,29)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_254444271523884</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (23 samples, 4.39%)</title><rect x="985.1" y="581" width="51.8" height="15.0" fill="rgb(213,176,35)" rx="2" ry="2" />
+<text text-anchor="" x="988.08" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.f..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_18015863363272 (2 samples, 0.38%)</title><rect x="278.0" y="309" width="4.5" height="15.0" fill="rgb(233,117,32)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="319.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254577415510060 (3 samples, 0.57%)</title><rect x="291.5" y="293" width="6.7" height="15.0" fill="rgb(243,22,38)" rx="2" ry="2" />
+<text text-anchor="" x="294.49" y="303.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="518.9" y="501" width="2.3" height="15.0" fill="rgb(243,154,27)" rx="2" ry="2" />
+<text text-anchor="" x="521.93" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.logger.Logger::writeEntryWithoutMatch (9 samples, 1.72%)</title><rect x="21.3" y="517" width="20.2" height="15.0" fill="rgb(231,229,44)" rx="2" ry="2" />
+<text text-anchor="" x="24.26" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (14 samples, 2.67%)</title><rect x="451.4" y="613" width="31.5" height="15.0" fill="rgb(228,39,5)" rx="2" ry="2" />
+<text text-anchor="" x="454.37" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_9..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191316842207276 (1 samples, 0.19%)</title><rect x="282.5" y="357" width="2.2" height="15.0" fill="rgb(223,28,54)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="367.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_187077709486124 (119 samples, 22.71%)</title><rect x="167.6" y="581" width="268.0" height="15.0" fill="rgb(248,49,12)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_187077709486124</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (13 samples, 2.48%)</title><rect x="1156.2" y="581" width="29.3" height="15.0" fill="rgb(236,25,1)" rx="2" ry="2" />
+<text text-anchor="" x="1159.22" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="955.8" y="581" width="4.5" height="15.0" fill="rgb(227,153,45)" rx="2" ry="2" />
+<text text-anchor="" x="958.80" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_255762826483756 (4 samples, 0.76%)</title><rect x="359.0" y="501" width="9.1" height="15.0" fill="rgb(241,19,8)" rx="2" ry="2" />
+<text text-anchor="" x="362.05" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="667.6" y="565" width="6.7" height="15.0" fill="rgb(211,74,16)" rx="2" ry="2" />
+<text text-anchor="" x="670.56" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="552.7" y="581" width="4.5" height="15.0" fill="rgb(231,131,38)" rx="2" ry="2" />
+<text text-anchor="" x="555.71" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.logger.LoggerWorkerThread::run (7 samples, 1.34%)</title><rect x="435.6" y="645" width="15.8" height="15.0" fill="rgb(209,171,8)" rx="2" ry="2" />
+<text text-anchor="" x="438.61" y="655.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_18015863363272 (2 samples, 0.38%)</title><rect x="278.0" y="261" width="4.5" height="15.0" fill="rgb(241,56,23)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="271.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="514.4" y="517" width="4.5" height="15.0" fill="rgb(214,135,35)" rx="2" ry="2" />
+<text text-anchor="" x="517.43" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254573120542764 (1 samples, 0.19%)</title><rect x="282.5" y="389" width="2.2" height="15.0" fill="rgb(242,191,50)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="399.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="766.6" y="549" width="4.5" height="15.0" fill="rgb(222,14,46)" rx="2" ry="2" />
+<text text-anchor="" x="769.64" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (6 samples, 1.15%)</title><rect x="818.4" y="501" width="13.5" height="15.0" fill="rgb(232,21,10)" rx="2" ry="2" />
+<text text-anchor="" x="821.44" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="541.5" y="517" width="2.2" height="15.0" fill="rgb(222,92,36)" rx="2" ry="2" />
+<text text-anchor="" x="544.45" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (6 samples, 1.15%)</title><rect x="701.3" y="453" width="13.5" height="15.0" fill="rgb(225,101,29)" rx="2" ry="2" />
+<text text-anchor="" x="704.34" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_60554315661358 (119 samples, 22.71%)</title><rect x="167.6" y="613" width="268.0" height="15.0" fill="rgb(229,119,13)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_60554315661358</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="573.0" y="501" width="4.5" height="15.0" fill="rgb(216,132,18)" rx="2" ry="2" />
+<text text-anchor="" x="575.98" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (14 samples, 2.67%)</title><rect x="552.7" y="597" width="31.5" height="15.0" fill="rgb(231,190,6)" rx="2" ry="2" />
+<text text-anchor="" x="555.71" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="1036.9" y="565" width="6.7" height="15.0" fill="rgb(252,200,50)" rx="2" ry="2" />
+<text text-anchor="" x="1039.87" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_184131361921068 (4 samples, 0.76%)</title><rect x="10.0" y="565" width="9.0" height="15.0" fill="rgb(252,148,22)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (21 samples, 4.01%)</title><rect x="500.9" y="597" width="47.3" height="15.0" fill="rgb(242,155,17)" rx="2" ry="2" />
+<text text-anchor="" x="503.92" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com...</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (6 samples, 1.15%)</title><rect x="534.7" y="565" width="13.5" height="15.0" fill="rgb(244,46,49)" rx="2" ry="2" />
+<text text-anchor="" x="537.69" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_183976743098412 (91 samples, 17.37%)</title><rect x="167.6" y="565" width="205.0" height="15.0" fill="rgb(228,124,51)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_183976743098412</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (4 samples, 0.76%)</title><rect x="838.7" y="565" width="9.0" height="15.0" fill="rgb(220,195,10)" rx="2" ry="2" />
+<text text-anchor="" x="841.70" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="1178.7" y="469" width="6.8" height="15.0" fill="rgb(212,157,17)" rx="2" ry="2" />
+<text text-anchor="" x="1181.74" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="1043.6" y="565" width="6.8" height="15.0" fill="rgb(247,139,25)" rx="2" ry="2" />
+<text text-anchor="" x="1046.63" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (3 samples, 0.57%)</title><rect x="494.2" y="597" width="6.7" height="15.0" fill="rgb(247,88,1)" rx="2" ry="2" />
+<text text-anchor="" x="497.16" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="498.7" y="565" width="2.2" height="15.0" fill="rgb(227,11,48)" rx="2" ry="2" />
+<text text-anchor="" x="501.66" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (11 samples, 2.10%)</title><rect x="807.2" y="565" width="24.7" height="15.0" fill="rgb(252,65,24)" rx="2" ry="2" />
+<text text-anchor="" x="810.18" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="708.1" y="405" width="2.2" height="15.0" fill="rgb(233,36,50)" rx="2" ry="2" />
+<text text-anchor="" x="711.09" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (1 samples, 0.19%)</title><rect x="1154.0" y="549" width="2.2" height="15.0" fill="rgb(238,151,34)" rx="2" ry="2" />
+<text text-anchor="" x="1156.97" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (30 samples, 5.73%)</title><rect x="850.0" y="613" width="67.5" height="15.0" fill="rgb(241,198,45)" rx="2" ry="2" />
+<text text-anchor="" x="852.96" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_944330..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (151 samples, 28.82%)</title><rect x="850.0" y="629" width="340.0" height="15.0" fill="rgb(209,71,16)" rx="2" ry="2" />
+<text text-anchor="" x="852.96" y="639.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loom.sample.WorkloadThread::path_3</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_90720118200364 (6 samples, 1.15%)</title><rect x="284.7" y="453" width="13.5" height="15.0" fill="rgb(246,163,8)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="735.1" y="453" width="2.3" height="15.0" fill="rgb(253,205,17)" rx="2" ry="2" />
+<text text-anchor="" x="738.11" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (2 samples, 0.38%)</title><rect x="527.9" y="469" width="4.5" height="15.0" fill="rgb(217,68,1)" rx="2" ry="2" />
+<text text-anchor="" x="530.94" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="494.2" y="581" width="4.5" height="15.0" fill="rgb(214,197,6)" rx="2" ry="2" />
+<text text-anchor="" x="497.16" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (4 samples, 0.76%)</title><rect x="798.2" y="565" width="9.0" height="15.0" fill="rgb(220,131,37)" rx="2" ry="2" />
+<text text-anchor="" x="801.17" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_17079560492744 (2 samples, 0.38%)</title><rect x="278.0" y="277" width="4.5" height="15.0" fill="rgb(252,112,40)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="287.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1163.0" y="533" width="4.5" height="15.0" fill="rgb(240,109,2)" rx="2" ry="2" />
+<text text-anchor="" x="1165.98" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (9 samples, 1.72%)</title><rect x="694.6" y="485" width="20.2" height="15.0" fill="rgb(228,115,3)" rx="2" ry="2" />
+<text text-anchor="" x="697.58" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20884901517000 (6 samples, 1.15%)</title><rect x="284.7" y="341" width="13.5" height="15.0" fill="rgb(219,156,19)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="351.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_17079560492744 (2 samples, 0.38%)</title><rect x="278.0" y="325" width="4.5" height="15.0" fill="rgb(242,143,48)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="335.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_89062260824108 (1 samples, 0.19%)</title><rect x="278.0" y="85" width="2.2" height="15.0" fill="rgb(205,191,52)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="95.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1131.5" y="469" width="4.5" height="15.0" fill="rgb(242,84,24)" rx="2" ry="2" />
+<text text-anchor="" x="1134.45" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (2 samples, 0.38%)</title><rect x="757.6" y="565" width="4.5" height="15.0" fill="rgb(226,139,7)" rx="2" ry="2" />
+<text text-anchor="" x="760.63" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58612990443566 (1 samples, 0.19%)</title><rect x="737.4" y="405" width="2.2" height="15.0" fill="rgb(221,55,38)" rx="2" ry="2" />
+<text text-anchor="" x="740.37" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_17079560492744 (2 samples, 0.38%)</title><rect x="278.0" y="229" width="4.5" height="15.0" fill="rgb(244,95,41)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="239.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1136.0" y="453" width="2.2" height="15.0" fill="rgb(217,134,49)" rx="2" ry="2" />
+<text text-anchor="" x="1138.95" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="566.2" y="533" width="2.3" height="15.0" fill="rgb(233,42,28)" rx="2" ry="2" />
+<text text-anchor="" x="569.22" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (4 samples, 0.76%)</title><rect x="523.4" y="485" width="9.0" height="15.0" fill="rgb(226,98,35)" rx="2" ry="2" />
+<text text-anchor="" x="526.44" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="831.9" y="581" width="6.8" height="15.0" fill="rgb(210,157,13)" rx="2" ry="2" />
+<text text-anchor="" x="834.95" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_187541565954092 (28 samples, 5.34%)</title><rect x="372.6" y="565" width="63.0" height="15.0" fill="rgb(245,190,38)" rx="2" ry="2" />
+<text text-anchor="" x="375.56" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_18754..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_15662221285064 (2 samples, 0.38%)</title><rect x="278.0" y="197" width="4.5" height="15.0" fill="rgb(235,146,47)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="207.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_264434365454380 (15 samples, 2.86%)</title><rect x="248.7" y="389" width="33.8" height="15.0" fill="rgb(221,42,26)" rx="2" ry="2" />
+<text text-anchor="" x="251.70" y="399.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_2..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="1000.8" y="533" width="6.8" height="15.0" fill="rgb(230,163,26)" rx="2" ry="2" />
+<text text-anchor="" x="1003.84" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="656.3" y="581" width="6.8" height="15.0" fill="rgb(215,54,23)" rx="2" ry="2" />
+<text text-anchor="" x="659.30" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (1 samples, 0.19%)</title><rect x="1048.1" y="533" width="2.3" height="15.0" fill="rgb(226,25,12)" rx="2" ry="2" />
+<text text-anchor="" x="1051.13" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (20 samples, 3.82%)</title><rect x="1050.4" y="597" width="45.0" height="15.0" fill="rgb(213,194,44)" rx="2" ry="2" />
+<text text-anchor="" x="1053.38" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_944..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20631498446536 (6 samples, 1.15%)</title><rect x="284.7" y="357" width="13.5" height="15.0" fill="rgb(226,122,1)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="367.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="509.9" y="549" width="2.3" height="15.0" fill="rgb(224,113,16)" rx="2" ry="2" />
+<text text-anchor="" x="512.92" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (9 samples, 1.72%)</title><rect x="512.2" y="549" width="20.2" height="15.0" fill="rgb(220,225,21)" rx="2" ry="2" />
+<text text-anchor="" x="515.18" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="564.0" y="549" width="2.2" height="15.0" fill="rgb(224,155,5)" rx="2" ry="2" />
+<text text-anchor="" x="566.97" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1045.9" y="533" width="2.2" height="15.0" fill="rgb(254,87,32)" rx="2" ry="2" />
+<text text-anchor="" x="1048.88" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (33 samples, 6.30%)</title><rect x="667.6" y="581" width="74.3" height="15.0" fill="rgb(216,16,30)" rx="2" ry="2" />
+<text text-anchor="" x="670.56" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.face..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="512.2" y="533" width="2.2" height="15.0" fill="rgb(218,60,20)" rx="2" ry="2" />
+<text text-anchor="" x="515.18" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="737.4" y="453" width="4.5" height="15.0" fill="rgb(230,74,31)" rx="2" ry="2" />
+<text text-anchor="" x="740.37" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="541.5" y="533" width="6.7" height="15.0" fill="rgb(241,223,31)" rx="2" ry="2" />
+<text text-anchor="" x="544.45" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="536.9" y="533" width="4.6" height="15.0" fill="rgb(239,90,30)" rx="2" ry="2" />
+<text text-anchor="" x="539.95" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1176.5" y="469" width="2.2" height="15.0" fill="rgb(215,96,13)" rx="2" ry="2" />
+<text text-anchor="" x="1179.49" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (5 samples, 0.95%)</title><rect x="573.0" y="517" width="11.2" height="15.0" fill="rgb(251,77,54)" rx="2" ry="2" />
+<text text-anchor="" x="575.98" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191681914427436 (2 samples, 0.38%)</title><rect x="253.2" y="357" width="4.5" height="15.0" fill="rgb(217,19,15)" rx="2" ry="2" />
+<text text-anchor="" x="256.21" y="367.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (8 samples, 1.53%)</title><rect x="696.8" y="469" width="18.0" height="15.0" fill="rgb(230,87,11)" rx="2" ry="2" />
+<text text-anchor="" x="699.83" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="721.6" y="517" width="2.3" height="15.0" fill="rgb(233,8,52)" rx="2" ry="2" />
+<text text-anchor="" x="724.60" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_13974299137736 (6 samples, 1.15%)</title><rect x="284.7" y="421" width="13.5" height="15.0" fill="rgb(240,105,7)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (6 samples, 1.15%)</title><rect x="1023.4" y="517" width="13.5" height="15.0" fill="rgb(217,94,37)" rx="2" ry="2" />
+<text text-anchor="" x="1026.36" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.provider.systemcounters.SystemCounterLogger::logSystemCounters (10 samples, 1.91%)</title><rect x="19.0" y="565" width="22.5" height="15.0" fill="rgb(253,126,13)" rx="2" ry="2" />
+<text text-anchor="" x="22.01" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="962.6" y="549" width="4.5" height="15.0" fill="rgb(230,169,0)" rx="2" ry="2" />
+<text text-anchor="" x="965.56" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (3 samples, 0.57%)</title><rect x="577.5" y="501" width="6.7" height="15.0" fill="rgb(238,124,2)" rx="2" ry="2" />
+<text text-anchor="" x="580.48" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_15662221285064 (2 samples, 0.38%)</title><rect x="278.0" y="341" width="4.5" height="15.0" fill="rgb(234,2,21)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="351.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (16 samples, 3.05%)</title><rect x="548.2" y="613" width="36.0" height="15.0" fill="rgb(218,192,17)" rx="2" ry="2" />
+<text text-anchor="" x="551.21" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (1 samples, 0.19%)</title><rect x="847.7" y="565" width="2.3" height="15.0" fill="rgb(245,42,30)" rx="2" ry="2" />
+<text text-anchor="" x="850.71" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (7 samples, 1.34%)</title><rect x="816.2" y="517" width="15.7" height="15.0" fill="rgb(228,197,27)" rx="2" ry="2" />
+<text text-anchor="" x="819.18" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (20 samples, 3.82%)</title><rect x="786.9" y="597" width="45.0" height="15.0" fill="rgb(210,187,51)" rx="2" ry="2" />
+<text text-anchor="" x="789.91" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com...</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="678.8" y="533" width="2.3" height="15.0" fill="rgb(252,137,13)" rx="2" ry="2" />
+<text text-anchor="" x="681.82" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (21 samples, 4.01%)</title><rect x="584.2" y="613" width="47.3" height="15.0" fill="rgb(248,60,12)" rx="2" ry="2" />
+<text text-anchor="" x="587.24" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_944..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20386685310664 (15 samples, 2.86%)</title><rect x="248.7" y="405" width="33.8" height="15.0" fill="rgb(238,228,54)" rx="2" ry="2" />
+<text text-anchor="" x="251.70" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_2..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="1142.7" y="437" width="6.8" height="15.0" fill="rgb(220,130,52)" rx="2" ry="2" />
+<text text-anchor="" x="1145.71" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1145.0" y="405" width="4.5" height="15.0" fill="rgb(205,4,4)" rx="2" ry="2" />
+<text text-anchor="" x="1147.96" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (35 samples, 6.68%)</title><rect x="771.1" y="613" width="78.9" height="15.0" fill="rgb(242,195,3)" rx="2" ry="2" />
+<text text-anchor="" x="774.15" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.faceb..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_182980310685740 (1 samples, 0.19%)</title><rect x="19.0" y="533" width="2.3" height="15.0" fill="rgb(209,128,35)" rx="2" ry="2" />
+<text text-anchor="" x="22.01" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (2 samples, 0.38%)</title><rect x="543.7" y="517" width="4.5" height="15.0" fill="rgb(206,194,46)" rx="2" ry="2" />
+<text text-anchor="" x="546.70" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_12775051712556 (119 samples, 22.71%)</title><rect x="167.6" y="597" width="268.0" height="15.0" fill="rgb(227,150,1)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_12775051712556</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (4 samples, 0.76%)</title><rect x="1000.8" y="549" width="9.0" height="15.0" fill="rgb(245,40,14)" rx="2" ry="2" />
+<text text-anchor="" x="1003.84" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (10 samples, 1.91%)</title><rect x="809.4" y="549" width="22.5" height="15.0" fill="rgb(237,40,39)" rx="2" ry="2" />
+<text text-anchor="" x="812.43" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (8 samples, 1.53%)</title><rect x="967.1" y="581" width="18.0" height="15.0" fill="rgb(222,222,38)" rx="2" ry="2" />
+<text text-anchor="" x="970.06" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1115.7" y="549" width="2.2" height="15.0" fill="rgb(208,187,54)" rx="2" ry="2" />
+<text text-anchor="" x="1118.69" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (1 samples, 0.19%)</title><rect x="582.0" y="485" width="2.2" height="15.0" fill="rgb(220,126,48)" rx="2" ry="2" />
+<text text-anchor="" x="584.98" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (5 samples, 0.95%)</title><rect x="703.6" y="437" width="11.2" height="15.0" fill="rgb(217,32,47)" rx="2" ry="2" />
+<text text-anchor="" x="706.59" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (5 samples, 0.95%)</title><rect x="730.6" y="485" width="11.3" height="15.0" fill="rgb(217,193,54)" rx="2" ry="2" />
+<text text-anchor="" x="733.61" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (5 samples, 0.95%)</title><rect x="1138.2" y="453" width="11.3" height="15.0" fill="rgb(229,130,11)" rx="2" ry="2" />
+<text text-anchor="" x="1141.21" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191690504362028 (2 samples, 0.38%)</title><rect x="244.2" y="405" width="4.5" height="15.0" fill="rgb(213,170,7)" rx="2" ry="2" />
+<text text-anchor="" x="247.20" y="415.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_255397754263596 (1 samples, 0.19%)</title><rect x="280.2" y="117" width="2.3" height="15.0" fill="rgb(239,69,19)" rx="2" ry="2" />
+<text text-anchor="" x="283.23" y="127.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="800.4" y="533" width="4.5" height="15.0" fill="rgb(222,117,19)" rx="2" ry="2" />
+<text text-anchor="" x="803.42" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="1174.2" y="485" width="2.3" height="15.0" fill="rgb(228,157,54)" rx="2" ry="2" />
+<text text-anchor="" x="1177.24" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.provider.systemcounters.SystemCounterThread$1::handleMessage (65 samples, 12.40%)</title><rect x="10.0" y="597" width="146.4" height="15.0" fill="rgb(252,111,2)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loom...</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_264692063492140 (2 samples, 0.38%)</title><rect x="278.0" y="357" width="4.5" height="15.0" fill="rgb(247,86,26)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="367.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (12 samples, 2.29%)</title><rect x="714.8" y="565" width="27.1" height="15.0" fill="rgb(207,147,54)" rx="2" ry="2" />
+<text text-anchor="" x="717.85" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191681914427436 (5 samples, 0.95%)</title><rect x="167.6" y="501" width="11.3" height="15.0" fill="rgb(239,171,23)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.provider.systemcounters.SystemCounterThread::postThreadWork (65 samples, 12.40%)</title><rect x="10.0" y="581" width="146.4" height="15.0" fill="rgb(222,210,44)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loom...</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (9 samples, 1.72%)</title><rect x="750.9" y="581" width="20.2" height="15.0" fill="rgb(226,7,30)" rx="2" ry="2" />
+<text text-anchor="" x="753.88" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (1 samples, 0.19%)</title><rect x="804.9" y="533" width="2.3" height="15.0" fill="rgb(209,198,29)" rx="2" ry="2" />
+<text text-anchor="" x="807.92" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (3 samples, 0.57%)</title><rect x="1149.5" y="565" width="6.7" height="15.0" fill="rgb(251,219,9)" rx="2" ry="2" />
+<text text-anchor="" x="1152.47" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (62 samples, 11.83%)</title><rect x="631.5" y="613" width="139.6" height="15.0" fill="rgb(224,166,38)" rx="2" ry="2" />
+<text text-anchor="" x="634.53" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loom..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="703.6" y="421" width="4.5" height="15.0" fill="rgb(234,226,44)" rx="2" ry="2" />
+<text text-anchor="" x="706.59" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20781822301896 (18 samples, 3.44%)</title><rect x="241.9" y="437" width="40.6" height="15.0" fill="rgb(205,80,14)" rx="2" ry="2" />
+<text text-anchor="" x="244.95" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_20..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (5 samples, 0.95%)</title><rect x="1174.2" y="501" width="11.3" height="15.0" fill="rgb(213,18,4)" rx="2" ry="2" />
+<text text-anchor="" x="1177.24" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (8 samples, 1.53%)</title><rect x="1131.5" y="485" width="18.0" height="15.0" fill="rgb(217,22,47)" rx="2" ry="2" />
+<text text-anchor="" x="1134.45" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_264683473557548 (13 samples, 2.48%)</title><rect x="253.2" y="373" width="29.3" height="15.0" fill="rgb(242,110,7)" rx="2" ry="2" />
+<text text-anchor="" x="256.21" y="383.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_2..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (59 samples, 11.26%)</title><rect x="451.4" y="629" width="132.8" height="15.0" fill="rgb(235,140,2)" rx="2" ry="2" />
+<text text-anchor="" x="454.37" y="639.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loo..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (4 samples, 0.76%)</title><rect x="1027.9" y="501" width="9.0" height="15.0" fill="rgb(241,34,38)" rx="2" ry="2" />
+<text text-anchor="" x="1030.86" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="527.9" y="453" width="2.3" height="15.0" fill="rgb(245,77,14)" rx="2" ry="2" />
+<text text-anchor="" x="530.94" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58612990443566 (4 samples, 0.76%)</title><rect x="336.5" y="485" width="9.0" height="15.0" fill="rgb(252,28,28)" rx="2" ry="2" />
+<text text-anchor="" x="339.53" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254568825575468 (3 samples, 0.57%)</title><rect x="291.5" y="325" width="6.7" height="15.0" fill="rgb(242,201,44)" rx="2" ry="2" />
+<text text-anchor="" x="294.49" y="335.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_19901354006216 (18 samples, 3.44%)</title><rect x="241.9" y="469" width="40.6" height="15.0" fill="rgb(221,71,34)" rx="2" ry="2" />
+<text text-anchor="" x="244.95" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_19..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (118 samples, 22.52%)</title><rect x="584.2" y="629" width="265.8" height="15.0" fill="rgb(210,140,38)" rx="2" ry="2" />
+<text text-anchor="" x="587.24" y="639.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loom.sample.WorkloadTh..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_254427091654700 (25 samples, 4.77%)</title><rect x="241.9" y="485" width="56.3" height="15.0" fill="rgb(232,226,12)" rx="2" ry="2" />
+<text text-anchor="" x="244.95" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_2544..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (3 samples, 0.57%)</title><rect x="708.1" y="421" width="6.7" height="15.0" fill="rgb(245,43,54)" rx="2" ry="2" />
+<text text-anchor="" x="711.09" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191690504362028 (4 samples, 0.76%)</title><rect x="178.9" y="501" width="9.0" height="15.0" fill="rgb(229,100,28)" rx="2" ry="2" />
+<text text-anchor="" x="181.89" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (62 samples, 11.83%)</title><rect x="1050.4" y="613" width="139.6" height="15.0" fill="rgb(224,49,22)" rx="2" ry="2" />
+<text text-anchor="" x="1053.38" y="623.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com.facebook.loom..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="685.6" y="501" width="4.5" height="15.0" fill="rgb(228,104,8)" rx="2" ry="2" />
+<text text-anchor="" x="688.57" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="530.2" y="437" width="2.2" height="15.0" fill="rgb(206,83,16)" rx="2" ry="2" />
+<text text-anchor="" x="533.19" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (2 samples, 0.38%)</title><rect x="1185.5" y="597" width="4.5" height="15.0" fill="rgb(252,131,49)" rx="2" ry="2" />
+<text text-anchor="" x="1188.50" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_12964981823176 (1 samples, 0.19%)</title><rect x="278.0" y="133" width="2.2" height="15.0" fill="rgb(220,129,40)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="143.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (3 samples, 0.57%)</title><rect x="994.1" y="549" width="6.7" height="15.0" fill="rgb(241,215,9)" rx="2" ry="2" />
+<text text-anchor="" x="997.08" y="559.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (15 samples, 2.86%)</title><rect x="917.5" y="597" width="33.8" height="15.0" fill="rgb(225,35,9)" rx="2" ry="2" />
+<text text-anchor="" x="920.52" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_9..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_20382390343368 (18 samples, 3.44%)</title><rect x="241.9" y="453" width="40.6" height="15.0" fill="rgb(247,47,46)" rx="2" ry="2" />
+<text text-anchor="" x="244.95" y="463.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_20..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_89088030627884 (1 samples, 0.19%)</title><rect x="282.5" y="437" width="2.2" height="15.0" fill="rgb(215,153,9)" rx="2" ry="2" />
+<text text-anchor="" x="285.48" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (2 samples, 0.38%)</title><rect x="1138.2" y="437" width="4.5" height="15.0" fill="rgb(226,25,12)" rx="2" ry="2" />
+<text text-anchor="" x="1141.21" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (12 samples, 2.29%)</title><rect x="557.2" y="581" width="27.0" height="15.0" fill="rgb(229,127,36)" rx="2" ry="2" />
+<text text-anchor="" x="560.21" y="591.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_187545860921388 (2 samples, 0.38%)</title><rect x="284.7" y="325" width="4.5" height="15.0" fill="rgb(228,142,22)" rx="2" ry="2" />
+<text text-anchor="" x="287.73" y="335.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_17079560492744 (2 samples, 0.38%)</title><rect x="278.0" y="181" width="4.5" height="15.0" fill="rgb(250,69,18)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="191.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="829.7" y="421" width="2.2" height="15.0" fill="rgb(206,73,52)" rx="2" ry="2" />
+<text text-anchor="" x="832.69" y="431.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_184191491463212 (70 samples, 13.36%)</title><rect x="10.0" y="645" width="157.6" height="15.0" fill="rgb(210,10,39)" rx="2" ry="2" />
+<text text-anchor="" x="13.00" y="655.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_184191491463212</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (8 samples, 1.53%)</title><rect x="831.9" y="597" width="18.1" height="15.0" fill="rgb(227,134,1)" rx="2" ry="2" />
+<text text-anchor="" x="834.95" y="607.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (4 samples, 0.76%)</title><rect x="1106.7" y="565" width="9.0" height="15.0" fill="rgb(217,43,5)" rx="2" ry="2" />
+<text text-anchor="" x="1109.68" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (4 samples, 0.76%)</title><rect x="822.9" y="469" width="9.0" height="15.0" fill="rgb(249,123,15)" rx="2" ry="2" />
+<text text-anchor="" x="825.94" y="479.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_90454781777608 (119 samples, 22.71%)</title><rect x="167.6" y="629" width="268.0" height="15.0" fill="rgb(209,129,12)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="639.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_90454781777608</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (2 samples, 0.38%)</title><rect x="1032.4" y="485" width="4.5" height="15.0" fill="rgb(245,111,39)" rx="2" ry="2" />
+<text text-anchor="" x="1035.37" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_2 (8 samples, 1.53%)</title><rect x="723.9" y="517" width="18.0" height="15.0" fill="rgb(248,52,13)" rx="2" ry="2" />
+<text text-anchor="" x="726.85" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_264606164146220 (2 samples, 0.38%)</title><rect x="248.7" y="373" width="4.5" height="15.0" fill="rgb(249,185,43)" rx="2" ry="2" />
+<text text-anchor="" x="251.70" y="383.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_191681914427436 (10 samples, 1.91%)</title><rect x="187.9" y="485" width="22.5" height="15.0" fill="rgb(229,20,2)" rx="2" ry="2" />
+<text text-anchor="" x="190.90" y="495.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (4 samples, 0.76%)</title><rect x="985.1" y="565" width="9.0" height="15.0" fill="rgb(223,167,24)" rx="2" ry="2" />
+<text text-anchor="" x="988.08" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_58943702925358 (1 samples, 0.19%)</title><rect x="737.4" y="437" width="2.2" height="15.0" fill="rgb(208,184,13)" rx="2" ry="2" />
+<text text-anchor="" x="740.37" y="447.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.writer.NativeTraceWriter::loop (7 samples, 1.34%)</title><rect x="435.6" y="629" width="15.8" height="15.0" fill="rgb(206,28,31)" rx="2" ry="2" />
+<text text-anchor="" x="438.61" y="639.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (7 samples, 1.34%)</title><rect x="726.1" y="501" width="15.8" height="15.0" fill="rgb(244,171,12)" rx="2" ry="2" />
+<text text-anchor="" x="729.11" y="511.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_264554624538668 (1 samples, 0.19%)</title><rect x="289.2" y="293" width="2.3" height="15.0" fill="rgb(252,12,34)" rx="2" ry="2" />
+<text text-anchor="" x="292.24" y="303.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (13 samples, 2.48%)</title><rect x="1120.2" y="533" width="29.3" height="15.0" fill="rgb(251,62,44)" rx="2" ry="2" />
+<text text-anchor="" x="1123.19" y="543.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >co..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_90489141515976 (119 samples, 22.71%)</title><rect x="167.6" y="645" width="268.0" height="15.0" fill="rgb(205,43,8)" rx="2" ry="2" />
+<text text-anchor="" x="170.63" y="655.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >_90489141515976</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_1 (18 samples, 3.44%)</title><rect x="674.3" y="565" width="40.5" height="15.0" fill="rgb(217,65,14)" rx="2" ry="2" />
+<text text-anchor="" x="677.31" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >com..</text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_15662221285064 (2 samples, 0.38%)</title><rect x="278.0" y="245" width="4.5" height="15.0" fill="rgb(217,99,45)" rx="2" ry="2" />
+<text text-anchor="" x="280.98" y="255.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>_94433017692206 (1 samples, 0.19%)</title><rect x="804.9" y="517" width="2.3" height="15.0" fill="rgb(219,99,35)" rx="2" ry="2" />
+<text text-anchor="" x="807.92" y="527.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s(this)" onmouseout="c()" onclick="zoom(this)">
+<title>com.facebook.loom.sample.WorkloadThread::path_3 (10 samples, 1.91%)</title><rect x="509.9" y="565" width="22.5" height="15.0" fill="rgb(215,131,4)" rx="2" ry="2" />
+<text text-anchor="" x="512.92" y="575.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >c..</text>
+</g>
+</svg>

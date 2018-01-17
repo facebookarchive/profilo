@@ -45,3 +45,9 @@ Currently, none of the APIs are stable and they *will* change (mostly so that th
 The sample app in `java/main/com/facebook/loom/sample` shows the most basic usage of the APIs.
 
 You can also find these apks in the Releases section.
+
+## Demos
+
+A demo script can be found in `python/loom/workflow_demo.py`. It contains examples of simple
+analysis that can be run on Loom traces. For more information see the README
+`python/demos/README.md`

@@ -1,0 +1,31 @@
+,IsMain,tid,event,mean,median,std
+0,False,12648,computeOrdering,75178.1512605,47000.0,89653.9295606
+1,False,12648,dequeueBuffer,317208.403361,262000.0,198960.255978
+2,False,12648,DrawFrame,3745766.38655,3640000.0,751806.859392
+3,False,12648,syncFrameState,214729.411765,154000.0,188158.736112
+4,False,12648,eglBeginFrame,142542.857143,103000.0,146018.599351
+5,False,12648,notifyFramePending,100240.336134,61000.0,114552.43291
+6,False,12648,prepareTree,52830.2521008,36000.0,62360.9155697
+7,False,12648,Precache Glyphs,44000.0,44000.0,5000.0
+8,False,12648,flush drawing commands,127289.07563,107000.0,75162.9297933
+9,False,12648,eglSwapBuffersWithDamageKHR,2027862.18487,1917000.0,515462.769481
+10,False,12648,query,25816.8067227,15000.0,47444.8469177
+11,False,12648,queueBuffer,652322.689076,610000.0,260636.531887
+12,True,12634,draw,873292.436975,792000.0,355998.761012
+13,True,12634,Choreographer#doFrame,1418199.49495,1348500.0,900631.771206
+14,True,12634,Lock contention on a monitor lock (owner tid: 12795),31000.0,31000.0,0.0
+15,True,12634,traversal,1056581.51261,973000.0,402920.624826
+16,True,12634,animation,491804.384486,425000.0,266776.230225
+17,True,12634,input,98682.3529412,60000.0,132204.571329
+18,True,12634,Record View#draw(),109873.94958,86000.0,89273.2520022
+19,True,12634,Full suspend check,354000.0,354000.0,0.0
+20,False,12795,Mutator threads suspended for SetEntrypointsInstrumented,34000.0,34000.0,0.0
+21,False,12795,Resuming mutator threads,74000.0,74000.0,0.0
+22,False,12795,SuspendThreadByThreadId suspended main id=1,26000.0,26000.0,5000.0
+23,False,12795,Suspending mutator threads,763000.0,763000.0,0.0
+24,False,12795,Lock contention on a monitor lock (owner tid: 12634),29000.0,29000.0,0.0
+25,False,12795,Lock contention on mutator lock (owner tid: 18446744073709551615),616000.0,616000.0,0.0
+26,False,12795,Contended on monitor with owner main,299500.0,299500.0,126500.0
+27,False,12796,Full suspend check,489000.0,489000.0,0.0
+28,False,12797,Lock contention on runtime shutdown lock (owner tid: 12796),122000.0,122000.0,0.0
+

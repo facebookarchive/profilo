@@ -54,10 +54,11 @@ class BlockEntries(object):
 
 class TraceFileInterpreter(object):
 
-    def __init__(self, trace_file):
+    def __init__(self, trace_file, symbols=None):
         self.trace_file = trace_file
         self.units = {}
         self.block_entries = {}
+        self.symbols = symbols
 
     def __calculate_parents_children(self):
         """Calculate the parent-child relationships of all entries"""
@@ -82,6 +83,7 @@ class TraceFileInterpreter(object):
 
     def interpret(self):
         self.parents, self.children = self.__calculate_parents_children()
+
         self.trace = Trace(
             begin = min(
                 (x.timestamp for x in self.trace_file.entries
@@ -161,7 +163,10 @@ class TraceFileInterpreter(object):
                         ])
                         stacktrace = StackTrace()
                         for frame in stacks[entry.timestamp]:
-                            stacktrace.append(identifier=frame)
+                            symbol = None
+                            if self.symbols:
+                                symbol = self.symbols.method_index.get(frame, None)
+                            stacktrace.append(identifier=frame, symbol=symbol)
 
                         item.properties.stackTraces.update({
                             'stacks': stacktrace,
