@@ -2,7 +2,6 @@
 
 package com.facebook.loom.core;
 
-
 import com.facebook.loom.ipc.TraceContext;
 import java.io.File;
 import java.util.Iterator;
@@ -91,10 +90,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceWriteEnd(long traceId) {
+  public void onTraceWriteEnd(long traceId, int crc) {
     Iterator<TraceOrchestrator.LoomListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteEnd(traceId);
+      iterator.next().onTraceWriteEnd(traceId, crc);
     }
   }
 

@@ -11,7 +11,7 @@ public interface NativeTraceWriterCallbacks {
   void onTraceWriteStart(long traceId, int flags, String file);
 
   @DoNotStrip
-  void onTraceWriteEnd(long traceId);
+  void onTraceWriteEnd(long traceId, int crc);
 
   @DoNotStrip
   void onTraceWriteAbort(long traceId, int abortReason);

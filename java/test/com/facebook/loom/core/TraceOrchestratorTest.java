@@ -41,6 +41,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
@@ -320,7 +321,7 @@ public class TraceOrchestratorTest {
   public void testWriterCallbacksLifecycle() {
     final long traceId = 0xFACEB00C;
     mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-loom-test");
-    mOrchestrator.onTraceWriteEnd(traceId);
+    mOrchestrator.onTraceWriteEnd(traceId, 0);
     mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-loom-test");
     // Assert that onTraceWriteStart doesn't throw
   }
@@ -347,7 +348,7 @@ public class TraceOrchestratorTest {
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
-    mOrchestrator.onTraceWriteEnd(traceId);
+    mOrchestrator.onTraceWriteEnd(traceId, 0);
     mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-loom-test");
     // Assert that onTraceWriteStart doesn't throw
   }
@@ -402,6 +403,30 @@ public class TraceOrchestratorTest {
     verify(mBaseTraceProvider, never()).disable();
     mOrchestrator.onTraceStop(anotherContext);
     verify(mBaseTraceProvider).disable();
+  }
+
+  @Test
+  public void testTraceFileChecksumRename() throws IOException {
+    final long traceId = 0xFACEB00C;
+    final int crc = 0xC00BECAF;
+    File tempDirectory = new File(DEFAULT_TEMP_DIR);
+    tempDirectory.mkdirs();
+    File traceFile = File.createTempFile("tmp", "tmp.log", tempDirectory);
+    TraceOrchestrator.LoomListener fileListener = mock(TraceOrchestrator.LoomListener.class);
+    mOrchestrator.addListener(fileListener);
+
+    mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
+    mOrchestrator.onTraceWriteEnd(traceId, crc);
+
+    ArgumentCaptor<File> fileCaptor = ArgumentCaptor.forClass(File.class);
+    verify(fileListener).onTraceFlushed(fileCaptor.capture());
+    String filename = fileCaptor.getValue().getName();
+    String filenameNoExt = filename.substring(0, filename.lastIndexOf('.'));
+    String result_crc =
+        filenameNoExt.substring(
+            filenameNoExt.lastIndexOf(TraceOrchestrator.CHECKSUM_DELIM)
+                + TraceOrchestrator.CHECKSUM_DELIM.length());
+    assertThat(result_crc).isEqualTo(Integer.toHexString(crc));
   }
 
   private void verifyProvidersDisabled() {

@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <system_error>
+#include <zlib.h>
+#include <stdio.h>
 
 #include <loom/writer/DeltaEncodingVisitor.h>
 #include <loom/writer/TraceLifecycleVisitor.h>
@@ -17,6 +19,64 @@ namespace facebook { namespace loom { namespace writer {
 using namespace facebook::loom::entries;
 
 namespace {
+
+const int kTraceOutputBufSize = 1 << 19; // 512K
+
+/**
+ * Buffer which extends zstr:ostreambuf to intercept buffer overflows and
+ * calculate crc32 checksum.
+ */
+class crc_ofstreambuf : public zstr::ostreambuf {
+public:
+  explicit crc_ofstreambuf(std::streambuf* _sbuf_p, uint32_t& crc)
+      : zstr::ostreambuf(_sbuf_p, kTraceOutputBufSize, Z_DEFAULT_COMPRESSION),
+        crc_(crc) {
+    crc_ = crc32(0, Z_NULL, 0);
+  }
+
+  virtual ~crc_ofstreambuf() {
+    sync();
+  }
+
+protected:
+  virtual std::streambuf::int_type overflow(
+      std::streambuf::int_type ch = traits_type::eof()) {
+    crc_ = crc32(
+        crc_,
+        reinterpret_cast<const unsigned char*>(
+          pbase()),
+          pptr() - pbase());
+    return zstr::ostreambuf::overflow(ch);
+  }
+
+  uint32_t& crc_;
+};
+
+/**
+ * File output stream with custom buffer implementation crc_ofstreambuf which
+ * computes crc32 checksum of all the data written to it.
+ */
+class crc_ofstream
+    : private zstr::detail::strict_fstream_holder<strict_fstream::ofstream>,
+      public std::ostream {
+public:
+
+  explicit crc_ofstream(
+      const std::string& filename,
+      uint32_t& crc,
+      std::ios_base::openmode mode = std::ios_base::out)
+      : zstr::detail::strict_fstream_holder<strict_fstream::ofstream>(
+            filename,
+            mode | std::ios_base::binary),
+        std::ostream(new crc_ofstreambuf(_fs.rdbuf(), crc)) {
+    exceptions(std::ios_base::badbit);
+  }
+
+  virtual ~crc_ofstream() {
+    if (!rdbuf()) return;
+    delete rdbuf();
+  }
+};
 
 std::string getTraceID(int64_t trace_id) {
   const char* kBase64Alphabet =
@@ -116,6 +176,7 @@ TraceLifecycleVisitor::TraceLifecycleVisitor(
   trace_prefix_(trace_prefix),
   trace_headers_(headers),
   output_(nullptr),
+  crc_(0),
   delegates_(),
   expected_trace_(trace_id),
   callbacks_(callbacks),
@@ -234,8 +295,7 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
 
   std::string trace_file = path_stream.str();
 
-  output_ = std::unique_ptr<zstr::ofstream>(
-    new zstr::ofstream(trace_file));
+  output_ = std::unique_ptr<std::ostream>(new crc_ofstream(trace_file, crc_));
 
   writeHeaders(*output_, trace_id_string);
 
@@ -267,7 +327,7 @@ void TraceLifecycleVisitor::onTraceEnd(int64_t trace_id) {
   done_ = true;
   cleanupState();
   if (callbacks_.get() != nullptr) {
-    callbacks_->onTraceEnd(trace_id);
+    callbacks_->onTraceEnd(trace_id, crc_);
   }
 }
 

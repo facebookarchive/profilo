@@ -19,8 +19,8 @@ struct TraceCallbacks {
     std::string trace_file
   ) = 0;
 
-  virtual void onTraceEnd(int64_t trace_id) = 0;
-  
+  virtual void onTraceEnd(int64_t trace_id, uint32_t crc) = 0;
+
   virtual void onTraceAbort(int64_t trace_id, AbortReason reason) = 0;
 };
 

@@ -39,6 +39,8 @@ public final class TraceOrchestrator
 
   public static final String EXTRA_DATA_FOLDER_NAME = "extra";
 
+  static final String CHECKSUM_DELIM = "-cs-";
+
   public interface LoomListener
       extends NativeTraceWriterCallbacks,
           BackgroundUploadService.BackgroundUploadListener,
@@ -428,21 +430,34 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onTraceWriteEnd(long traceId) {
+  public void onTraceWriteEnd(long traceId, int crc) {
     Trace trace = mTraces.get(traceId);
     if (trace == null) {
       throw new IllegalStateException("onTraceWriteEnd can't be called without onTraceWriteStart");
     }
     mTraces.remove(traceId);
-    mListenerManager.onTraceWriteEnd(traceId);
-
-    if (!mIsMainProcess) {
-      // any file clean up will happen on the main process
-      return;
-    }
+    mListenerManager.onTraceWriteEnd(traceId, crc);
 
     File logFile = trace.getLogFile();
     if (!logFile.exists()) {
+      return;
+    }
+
+    String logFileName = logFile.getName();
+    int extIndex = logFileName.lastIndexOf('.');
+    String checksumSuffix = CHECKSUM_DELIM + Integer.toHexString(crc);
+    File logFileWithCrc =
+        new File(
+            logFile.getParent(),
+            (extIndex > 0 ? logFileName.substring(0, extIndex) : logFileName)
+                + checksumSuffix
+                + (extIndex > 0 ? logFileName.substring(extIndex) : ""));
+    if (logFile.renameTo(logFileWithCrc)) {
+      logFile = logFileWithCrc;
+    }
+
+    if (!mIsMainProcess) {
+      // any file clean up will happen on the main process
       return;
     }
 

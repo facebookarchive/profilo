@@ -42,8 +42,8 @@ struct NativeTraceWriterCallbacksProxy: public TraceCallbacks {
     javaCallbacks_->onTraceStart(trace_id, flags, file);
   }
 
-  virtual void onTraceEnd(int64_t trace_id) override {
-    javaCallbacks_->onTraceEnd(trace_id);
+  virtual void onTraceEnd(int64_t trace_id, uint32_t crc) override {
+    javaCallbacks_->onTraceEnd(trace_id, crc);
   }
 
   virtual void onTraceAbort(int64_t trace_id, AbortReason reason) override {
@@ -68,12 +68,12 @@ void JNativeTraceWriterCallbacks::onTraceStart(
   onTraceStartMethod(self(), trace_id, flags, file);
 }
 
-void JNativeTraceWriterCallbacks::onTraceEnd(int64_t trace_id) {
+void JNativeTraceWriterCallbacks::onTraceEnd(int64_t trace_id, uint32_t crc) {
 
   static auto onTraceEndMethod = javaClassStatic()
-    ->getMethod<void(jlong)>("onTraceWriteEnd");
+    ->getMethod<void(jlong, jint)>("onTraceWriteEnd");
 
-  onTraceEndMethod(self(), trace_id);
+  onTraceEndMethod(self(), trace_id, crc);
 }
 
 void JNativeTraceWriterCallbacks::onTraceAbort(

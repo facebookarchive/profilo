@@ -49,6 +49,10 @@ int32_t systemClockTickIntervalMs() {
   }
   return std::max(1000 / clockTick, 1);
 }
+#elif __MACH__
+int32_t systemClockTickIntervalMs() {
+  return 10; // Plain value to support tests running on OSX.
+}
 #else
 #error "Do not have systemClockTickIntervalMs implementation for this platform"
 #endif
