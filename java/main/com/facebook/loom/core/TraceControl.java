@@ -329,8 +329,8 @@ final public class TraceControl {
     return true;
   }
 
-  public void stopTrace(int controllerMask, @Nullable Object context, int intContext) {
-    stopTrace(controllerMask, context, TraceStopReason.STOP, intContext, /*abortReason*/ 0);
+  public boolean stopTrace(int controllerMask, @Nullable Object context, int intContext) {
+    return stopTrace(controllerMask, context, TraceStopReason.STOP, intContext, /*abortReason*/ 0);
   }
 
   public void abortTrace(int controllerMask, @Nullable Object context, int intContext) {
@@ -360,7 +360,7 @@ final public class TraceControl {
     cleanupTraceContextByID(traceId, LoomConstants.ABORT_REASON_TIMEOUT);
   }
 
-  private void stopTrace(
+  private boolean stopTrace(
       int controllerMask,
       @Nullable Object context,
       @TraceStopReason int stopReason,
@@ -369,7 +369,7 @@ final public class TraceControl {
     TraceContext traceContext = findCurrentTraceByContext(controllerMask, intContext, context);
     if (traceContext == null) {
       // no trace, nothing to do
-      return;
+      return false;
     }
 
     removeTraceContext(traceContext);
@@ -387,6 +387,7 @@ final public class TraceControl {
           break;
       }
     }
+    return true;
   }
 
   /**
