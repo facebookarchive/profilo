@@ -5,11 +5,11 @@ services:
 - docker
 
 install:
-- docker build -t loom:16.10 -f build/Dockerfile .
+- docker build -t loom:17.10 -f build/Dockerfile .
 
 script:
 - set -e
-- docker run -t loom:16.10 /usr/bin/env TERM=dumb bash /repo/build/build.sh
+- docker run -t loom:17.10 /usr/bin/env TERM=dumb bash /repo/build/build.sh
 - build/copy_artifacts_to_host.sh
 
 before_deploy:
