@@ -8,7 +8,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 import com.facebook.loom.config.json.QPLControllerConfig;
 import com.facebook.loom.config.json.QPLTraceControlConfiguration;
-import com.facebook.loom.controllers.SequenceLoggerTraceController;
+import com.facebook.loom.controllers.sequencelogger.SequenceLoggerTraceController;
 import com.facebook.sequencelogger.SequenceDefinition;
 import org.junit.Before;
 import org.junit.Test;

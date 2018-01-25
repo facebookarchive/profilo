@@ -18,6 +18,7 @@ robolectric3_test(
         loom_path("deps/soloader:soloader"),
         loom_path("facebook/java/main/com/facebook/loom/config/json:json"),
         loom_path("facebook/java/main/com/facebook/loom/controllers:controllers"),
+        loom_path("facebook/java/main/com/facebook/loom/controllers/sequencelogger:sequencelogger"),
         loom_path("java/main/com/facebook/loom/core:core"),
         loom_path("java/test/com/facebook/loom/logger:utils"),
         loom_path("java/test/com/facebook/loom/util:util"),
