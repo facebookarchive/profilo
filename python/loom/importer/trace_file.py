@@ -1,7 +1,3 @@
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
 
 from collections import namedtuple
 
@@ -114,7 +110,7 @@ class TraceFile(object):
     @staticmethod
     def from_file(fd):
         with fd:
-            data = fd.read()
+            data = fd.read().decode("utf-8")
             return TraceFile.from_string(data)
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ python_library(
 python_binary(
     name = "runner",
     main_module = "loom",
+    platform = "py3any",
     deps = [
         ":runner-lib",
     ],

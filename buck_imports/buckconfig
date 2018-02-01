@@ -33,6 +33,9 @@
         -std=gnu++14 \
         -pthread
 
+[python#py3any]
+    interpreter = python3
+
 [alias]
     sample = //java/main/com/facebook/loom/sample:sample-atrace-stacktrace-systemcounters-threadmetadata
     aar = //java/main/com/facebook/loom/sample:sample-aar-atrace-stacktrace-systemcounters-threadmetadata

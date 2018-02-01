@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
 
 from .importer.trace_file import TraceFile
 from .importer.interpreter import TraceFileInterpreter
@@ -32,7 +28,7 @@ def blocks(tracefile, args):
 
     main_thread = -1
 
-    for unit in trace.executionUnits.itervalues():
+    for unit in trace.executionUnits.values():
         tid = int(unit.properties.customProps['tid'])
         name = unit.properties.coreProps['name']
         if 'Main' in name:
@@ -49,7 +45,7 @@ def blocks(tracefile, args):
 
     # Group block durations by function name
     thread_functions = {}   # tid -> block_name -> [counts]
-    for tid, blocks in thread_blocks.iteritems():
+    for tid, blocks in thread_blocks.items():
         thread_functions[tid] = defaultdict(lambda: [])
         for block in blocks:
             thread_functions[tid][block[0]].append(block[1])
@@ -58,8 +54,8 @@ def blocks(tracefile, args):
 
     stats = defaultdict(lambda: {})  # tid -> block_name -> Statistics
 
-    for tid, functions in thread_functions.iteritems():
-        for func, counts in functions.iteritems():
+    for tid, functions in thread_functions.items():
+        for func, counts in functions.items():
             mean = np.mean(counts)
             median = np.median(counts)
             std = np.std(counts)
@@ -69,8 +65,8 @@ def blocks(tracefile, args):
     df_dict = {'IsMain': [], 'tid': [], 'event': [], 'mean': [], 'median': [],
                'std': []}
 
-    for tid, functions in stats.iteritems():
-        for func, stat in functions.iteritems():
+    for tid, functions in stats.items():
+        for func, stat in functions.items():
             df_dict['IsMain'].append('True' if tid == main_thread else 'False')
             df_dict['tid'].append(tid)
             df_dict['event'].append(func)
@@ -91,10 +87,10 @@ def rescale(lst):
     lst = [(timestamp, count)]
     """
 
-    ts, counts = zip(*lst)
+    ts, counts = list(zip(*lst))
     ts = np.array(ts)
     rescaled = 100 * ((ts - ts.min()) / (1 + (float(ts.max()) - float(ts.min()))))
-    return zip(rescaled, counts)
+    return list(zip(rescaled, counts))
 
 
 def syscounters(tracefile, args):
@@ -113,29 +109,29 @@ def syscounters(tracefile, args):
 
     counters = defaultdict(lambda: [])  # counter_type -> [(timestamp, counter)]
 
-    for unit in trace.executionUnits.itervalues():
+    for unit in trace.executionUnits.values():
         for block_id in unit.blocks:
             block = trace.blocks[block_id]
             for point in block.points:
                 counter = point.properties.counterProps.get(tt.CounterUnit.ITEMS, None)
                 if not counter:
                     continue
-                for counterType, count in counter.iteritems():
+                for counterType, count in counter.items():
                     counters[counterType].append((point.timestamp, count))
 
-    for counterType, series in counters.iteritems():
+    for counterType, series in counters.items():
         counters[counterType] = rescale(counters[counterType])
         counters[counterType].sort(key=lambda x: x[0])
 
     # Now <counters> is a time series for each counter type. We can plot a few
     # of them
     import matplotlib.pyplot as plt
-    test_counters = [u'NUM_PROCS', u'PROC_CPU_TIME', u'GLOBAL_ALLOC_SIZE',
-                     u'ALLOC_FREE_BYTES']
+    test_counters = ['NUM_PROCS', 'PROC_CPU_TIME', 'GLOBAL_ALLOC_SIZE',
+                     'ALLOC_FREE_BYTES']
 
     for tc in test_counters:
         data = counters[tc]
-        x, y = zip(*data)
+        x, y = list(zip(*data))
         plt.xlabel('time')
         plt.ylabel(tc.lower())
         plt.plot(x, y)
@@ -164,7 +160,7 @@ def stacks(tracefile, args):
     trace = interpreter.interpret()
     stacks = defaultdict(int)   # [frame] -> int (count)
 
-    for unit in trace.executionUnits.itervalues():
+    for unit in trace.executionUnits.values():
         for block_id in unit.blocks:
             block = trace.blocks[block_id]
             for point in block.points:
@@ -184,7 +180,7 @@ def stacks(tracefile, args):
 
     # DTrace collapser ignores the first three lines
     print("\n\n\n")
-    for k, v in stacks.iteritems():
+    for k, v in stacks.items():
         for frame in k:
             if str(frame).isdigit():
                 print("_", frame, sep='')

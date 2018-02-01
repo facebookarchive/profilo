@@ -1,4 +1,3 @@
-from __future__ import print_function
 
 import collections
 import subprocess
@@ -7,7 +6,7 @@ import datetime
 import sys
 import gzip
 import zipfile
-from StringIO import StringIO
+from io import StringIO
 
 # FileManager#getBaseFolder has the logic for where Loom traces will exist. For
 # now we assume that the traces will exist inside the internal data dir of our
@@ -144,16 +143,15 @@ def list_traces(package):
     data_dir_path = _get_data_dir_full_path(package)
 
     command = list(_ADB_CMD_BASE) + [package] + list(_GET_TRACES_CMD)
-    trace_files = subprocess.check_output(command).split('\n')
-    trace_files = map(lambda x: x.strip(), trace_files)
-    trace_files = filter(None, trace_files)
+    trace_files = subprocess.check_output(command).decode("utf-8").split('\n')
+    trace_files = [x.strip() for x in trace_files]
+    trace_files = [_f for _f in trace_files if _f]
 
     # Due to the generality of the trace file expression, we might get stuff
     # that isn't actually a trace. Thus, do some validation.
-    trace_files = filter(lambda x: _validate_trace(package, data_dir_path, x),
-                         trace_files)
-    traces = map(lambda x: _create_trace(package, data_dir_path, x), trace_files)
-    traces = filter(None, traces)
+    trace_files = [x for x in trace_files if _validate_trace(package, data_dir_path, x)]
+    traces = [_create_trace(package, data_dir_path, x) for x in trace_files]
+    traces = [_f for _f in traces if _f]
     return traces
 
 

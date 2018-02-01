@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
 
 from .importer.trace_file import TraceFile
 from .importer.interpreter import TraceFileInterpreter
@@ -14,7 +10,7 @@ if __name__ == "__main__":
         interpreter = TraceFileInterpreter(tracefile)
         trace = interpreter.interpret()
 
-        for unit in trace.executionUnits.itervalues():
+        for unit in trace.executionUnits.values():
             print (repr(unit))
             for block_id in unit.blocks:
                 block = trace.blocks[block_id]

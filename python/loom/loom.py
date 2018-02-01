@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 
 import argparse
 from .device.device import pull_last_trace

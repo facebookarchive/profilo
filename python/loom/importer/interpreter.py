@@ -1,11 +1,9 @@
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import absolute_import
 
 from ..model.build import Trace, StackTrace
 from .trace_file import StandardEntry, BytesEntry
 from .constants import COUNTER_NAMES
+
+from functools import cmp_to_key
 
 def entry_compare(x, y):
     """Comparison function for two StandardEntries.
@@ -101,8 +99,10 @@ class TraceFileInterpreter(object):
                 thread_items.setdefault(entry.tid, []).append(entry)
             # BytesEntries will be processed as children of the above.
 
-        for tid, items in thread_items.iteritems():
-            entries = list(sorted(items, cmp=entry_compare))
+        for tid, items in thread_items.items():
+            entries = list(
+                sorted(items, key=cmp_to_key(entry_compare))
+            )
             unit = self.ensure_unit(tid)
 
             stacks = {}  # timestamp -> [addresses]
