@@ -2,7 +2,7 @@
 
 package com.facebook.jni;
 
-import com.facebook.jni.annotations.DoNotStrip;
+import com.facebook.proguard.annotations.DoNotStrip;
 
 @DoNotStrip
 public class JniTerminateHandler {

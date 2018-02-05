@@ -6,7 +6,7 @@
 #ifdef FBJNI_BACKWARD_COMPAT
 # include <jni/LocalString.h>
 #else
-# include <fb/fbjni/utf8.h>
+# include <fbjni/detail/utf8.h>
 #endif
 #include <fb/ALog.h>
 #include <fb/xplat_init.h>
