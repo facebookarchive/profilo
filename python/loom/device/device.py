@@ -6,7 +6,7 @@ import datetime
 import sys
 import gzip
 import zipfile
-from io import StringIO
+from io import BytesIO
 
 # FileManager#getBaseFolder has the logic for where Loom traces will exist. For
 # now we assume that the traces will exist inside the internal data dir of our
@@ -14,7 +14,7 @@ from io import StringIO
 _LOOM_DIR = 'cache/'
 _TRACE_FILE_EXT = ".log"
 _TRACE_FILE_EXPRESSION = '*' + _TRACE_FILE_EXT
-_LOOM_HEADER_START = 'dt\n'
+_LOOM_HEADER_START = 'dt\n'.encode("utf-8")
 
 # -t to order by modified time for a nice default ordering.
 _ADB_CMD_BASE = ['adb', 'shell', 'run-as']
@@ -41,7 +41,7 @@ def _get_file_modified_unix_time(package, path):
 
 def _get_data_dir_full_path(package):
     command = list(_ADB_CMD_BASE) + [package] + list(_GET_DATA_DIR_FULL_PATH_CMD)
-    return subprocess.check_output(command).strip()
+    return subprocess.check_output(command).decode("utf-8").strip()
 
 
 def _is_loom_trace(gzip_file):
@@ -72,7 +72,7 @@ def _validate_trace(package, data_dir_path, file_path):
                 package=package, path=file_path)
     command = list(_CAT_TRACE_CMD) + [full_path]
     content = subprocess.check_output(command)
-    file_like = StringIO(content)
+    file_like = BytesIO(content)
     if zipfile.is_zipfile(file_like):
         with zipfile.ZipFile(file_like) as zipped:
             info = zipped.infolist()
@@ -81,11 +81,11 @@ def _validate_trace(package, data_dir_path, file_path):
                 if info_file.filename.endswith(".tnd"):
                     continue
                 f = zipped.open(info_file)
-                gz = gzip.GzipFile(fileobj=StringIO(f.read()))
+                gz = gzip.GzipFile(fileobj=BytesIO(f.read()))
                 if not _is_loom_trace(gz):
                     return False
     else:
-        gz = gzip.GzipFile(fileobj=StringIO(content))
+        gz = gzip.GzipFile(fileobj=BytesIO(content))
         if not _is_loom_trace(gz):
             return False
 
