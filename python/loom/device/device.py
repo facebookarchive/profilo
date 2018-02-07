@@ -24,7 +24,8 @@ _GET_FILE_MODIFIED_UNIX_TIME_CMD = ['stat', '-c', '%Y']
 _GET_FILE_SIZE_CMD = ['stat', '-c', '%s']
 # I'd rather use `test -d $dir` but we need a binary to run within `run-as`
 _CHECK_LOOM_DIR_EXISTS_CMD = ['ls', _LOOM_DIR]
-_CAT_TRACE_CMD = ['adb', 'exec-out', 'cat']
+_ADB_EXEC_OUT_CMD_BASE = ['adb', 'exec-out', 'run-as']
+_CAT_CMD = ['cat']
 
 
 DeviceTrace = collections.namedtuple('DeviceTrace', ['file_name', 'full_path',
@@ -70,7 +71,7 @@ def _validate_trace(package, data_dir_path, file_path):
     """
     full_path = "/data/data/{package}/{path}".format(
                 package=package, path=file_path)
-    command = list(_CAT_TRACE_CMD) + [full_path]
+    command = list(_ADB_EXEC_OUT_CMD_BASE) + [package] + list(_CAT_CMD) + [full_path]
     content = subprocess.check_output(command)
     file_like = BytesIO(content)
     if zipfile.is_zipfile(file_like):
@@ -123,7 +124,7 @@ def _pull_trace(package, trace):
     # adb pull :( So we just `cat` the file and write it out to a local file
     # with the same trace name.
     with open(trace.file_name, 'w') as trace_file:
-        command = list(_CAT_TRACE_CMD) + [trace.full_path]
+        command = list(_ADB_EXEC_OUT_CMD_BASE) + [package] + list(_CAT_CMD) + [trace.full_path]
         popen = subprocess.Popen(command, stdout=trace_file)
         return popen.wait() == 0
 
@@ -158,9 +159,16 @@ def list_traces(package):
 def pull_last_trace(package):
     traces = list_traces(package)
     if not traces:
-        print("Could not find any traces for package", package)
-        return False
+        print("Could not find any traces for package", package, file=sys.stderr)
+        return None
 
     last_trace = max(traces, key=lambda x: x.modified_time)
 
-    return _pull_trace(package, last_trace)
+    if _pull_trace(package, last_trace):
+        # HACK: print out trace file name so that fbsystrace can read output to find which
+        # was pulled. This should be removed after fbsystrace upgrade to python3 so that
+        # we can directly call this function from fbsystrace.
+        print(last_trace.file_name)
+        return last_trace.file_name
+    else:
+        return None
