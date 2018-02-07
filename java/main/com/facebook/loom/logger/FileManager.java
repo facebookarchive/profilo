@@ -104,17 +104,6 @@ public class FileManager {
     File internalCacheDir = context.getCacheDir();
     File internalDataDir = context.getFilesDir();
 
-    // Debug builds use external storage, non-debug builds use internal cache or data folder.
-    if (BuildConstants.isInternalBuild() &&
-        Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-      // only access the external cache dir if the storage is mounted
-      File externalCacheDir = context.getExternalCacheDir();
-      if (externalCacheDir != null &&
-          (externalCacheDir.exists() || externalCacheDir.mkdirs())) {
-        return externalCacheDir;
-      }
-    }
-
     if (internalCacheDir != null &&
         (internalCacheDir.exists() || internalCacheDir.mkdirs())) {
       return internalCacheDir;
