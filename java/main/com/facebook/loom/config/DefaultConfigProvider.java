@@ -26,7 +26,8 @@ public class DefaultConfigProvider implements ConfigProvider {
             @Nullable
             public ControllerConfig getConfigForController(int controller) {
               if (controller == LoomConstants.TRIGGER_MANUAL
-                  || controller == LoomConstants.TRIGGER_EXTERNAL) {
+                  || controller == LoomConstants.TRIGGER_EXTERNAL
+                  || controller == LoomConstants.TRIGGER_VIDEO_PROFILER) {
                 return mControllerConfig;
               }
               return null;
