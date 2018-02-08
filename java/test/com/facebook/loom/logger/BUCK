@@ -28,7 +28,7 @@ robolectric3_test(
         "//java/com/facebook/controllercallbacks:controllercallbacks",
         "//java/com/facebook/quicklog/module:quicklog",
         "//java/com/facebook/testing/powermock:powermock",
-        "//java/com/facebook/testing/robolectric:robolectric-v3",
+        "//java/com/facebook/testing/robolectric:robolectric",
         "//java/com/facebook/testing/robolectric/v3:v3",
         "//java/com/facebook/testing/robolectric/v3/shadows:shadows",
         loom_path("deps/jsr-305:jsr-305"),
