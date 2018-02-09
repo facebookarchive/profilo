@@ -6,24 +6,24 @@ if not THIS_IS_FBANDROID:
         "ShmErrorMsg.h",
     ]
 
-    cxx_library(
+    fb_xplat_cxx_library(
         name = "forkjail",
         srcs = glob([
             "ForkJail.cpp",
             "ShmErrorMsg.cpp",
         ]),
-        headers = glob(
-            ["*.h"],
-            excludes = FORKJAIL_EXPORTED_HEADERS,
-        ),
-        header_namespace = "forkjail",
-        exported_headers = FORKJAIL_EXPORTED_HEADERS,
         compiler_flags = [
             "-fexceptions",
             "-fPIC",
             "-std=gnu++14",
         ],
+        exported_headers = FORKJAIL_EXPORTED_HEADERS,
         force_static = True,
+        header_namespace = "forkjail",
+        headers = glob(
+            ["*.h"],
+            excludes = FORKJAIL_EXPORTED_HEADERS,
+        ),
         visibility = [
             "PUBLIC",
         ],
