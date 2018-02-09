@@ -1,12 +1,16 @@
 include_defs("//buck_imports/xplat.bzl")  # THIS_IS_FBANDROID
 
 if not THIS_IS_FBANDROID:
-    FORKJAIL_EXPORTED_HEADERS = ["ForkJail.h"]
+    FORKJAIL_EXPORTED_HEADERS = [
+        "ForkJail.h",
+        "ShmErrorMsg.h",
+    ]
 
     fb_xplat_cxx_library(
         name = "forkjail",
         srcs = glob([
             "ForkJail.cpp",
+            "ShmErrorMsg.cpp",
         ]),
         compiler_flags = [
             "-fexceptions",
