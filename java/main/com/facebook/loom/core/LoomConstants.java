@@ -24,6 +24,7 @@ final public class LoomConstants {
   public static final int PROVIDER_TRANSIENT_NETWORK_DATA = 1 << 17;
   public static final int PROVIDER_WALL_TIME_STACK_TRACE = 1 << 18;
   public static final int PROVIDER_LIBC_IO = 1 << 19;
+  public static final int PROVIDER_UI_THREAD_RESPONSIVENESS = 1 << 20;
 
   public static final int PROVIDER_LOOM_SYSTEM = 0xFFFFFFFF;
 
