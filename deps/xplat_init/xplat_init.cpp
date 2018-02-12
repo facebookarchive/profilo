@@ -1,7 +1,7 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include <fb/Environment.h>
-#include <fb/fbjni.h>
+#include <fbjni/detail/Environment.h>
+#include <fbjni/fbjni.h>
 
 namespace facebook { namespace xplat {
 

@@ -2,12 +2,8 @@
 
 
 #include <jni.h>
-#include <fb/fbjni.h>
-#ifdef FBJNI_BACKWARD_COMPAT
-# include <jni/LocalString.h>
-#else
-# include <fbjni/detail/utf8.h>
-#endif
+#include <fbjni/fbjni.h>
+#include <fbjni/detail/utf8.h>
 #include <fb/ALog.h>
 #include <fb/xplat_init.h>
 

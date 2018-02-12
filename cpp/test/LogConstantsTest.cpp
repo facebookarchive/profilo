@@ -1,7 +1,7 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
 #include <jni.h>
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 
 #include <loom/LogEntry.h>
 

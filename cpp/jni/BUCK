@@ -18,7 +18,7 @@ fb_xplat_cxx_library(
     ],
     exported_deps = [
         loom_path("cpp/writer:writer"),
-        loom_path("deps/fb:fb"),
+        loom_path("deps/fbjni:fbjni"),
     ],
     force_static = True,
     visibility = [

@@ -87,6 +87,7 @@ fb_xplat_cxx_library(
         loom_path("cpp/util:util"),
         loom_path("deps/atomic:atomic"),
         loom_path("deps/fb:fb"),
+        loom_path("deps/fbjni:fbjni"),
         loom_path("deps/sigmux:sigmux"),
         loom_path("deps/xplat_init:xplat_init"),
     ],

@@ -16,7 +16,7 @@ android_library(
     ],
     deps = [
         loom_path("cpp:loom"),
-        loom_path("deps/jni:jni"),
+        loom_path("deps/fbjni:fbjni-java"),
         loom_path("deps/jsr-305:jsr-305"),
         loom_path("deps/proguard:annotations"),
         loom_path("deps/soloader:soloader"),

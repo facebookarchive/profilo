@@ -4,7 +4,7 @@
 #include <vector>
 
 #include <jni.h>
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 #include <fb/log.h>
 #include <fb/xplat_init.h>
 #include <loom/LogEntry.h>

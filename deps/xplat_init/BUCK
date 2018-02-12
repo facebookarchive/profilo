@@ -17,6 +17,6 @@ if not THIS_IS_FBANDROID:
             "PUBLIC",
         ],
         deps = [
-            loom_path("deps/fb:fb"),
+            loom_path("deps/fbjni:fbjni"),
         ],
     )

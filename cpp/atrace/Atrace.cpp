@@ -10,7 +10,7 @@
 #include <unordered_set>
 
 #include <fb/Build.h>
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 #include <fb/log.h>
 #include <fb/xplat_init.h>
 #include <linker/linker.h>

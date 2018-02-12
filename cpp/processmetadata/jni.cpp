@@ -1,7 +1,7 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
 #include <jni.h>
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 #include <fb/xplat_init.h>
 
 #include <loom/processmetadata/ProcessMetadata.h>

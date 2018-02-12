@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 #include <fb/log.h>
 #include <ios>
 #include <thread>

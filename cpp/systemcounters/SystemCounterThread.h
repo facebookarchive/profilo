@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 #include <util/ProcFs.h>
 
 #include <mutex>

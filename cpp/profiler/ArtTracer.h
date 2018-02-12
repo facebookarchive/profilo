@@ -4,7 +4,7 @@
 
 #include <unistd.h>
 
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 #include "profiler/BaseTracer.h"
 #include "loom/Logger.h"
 

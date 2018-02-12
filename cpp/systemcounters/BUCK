@@ -30,5 +30,6 @@ fb_xplat_cxx_library(
         loom_path("cpp/logger:logger"),
         loom_path("cpp/util:util"),
         loom_path("deps/fb:fb"),
+        loom_path("deps/fbjni:fbjni"),
     ],
 )

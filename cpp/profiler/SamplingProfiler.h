@@ -11,7 +11,7 @@
 #include <__threading_support>
 #endif
 
-#include <fb/fbjni.h>
+#include <fbjni/fbjni.h>
 
 #include <profiler/Constants.h>
 
