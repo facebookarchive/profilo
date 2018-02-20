@@ -136,7 +136,7 @@ public class SampleAppMainActivity extends Activity {
           result[idx++] = new ThreadMetadataProvider();
           break;
         case "processmetadata":
-          result[idx++] = new ProcessMetadataProvider();
+          result[idx++] = new ProcessMetadataProvider(this.getApplicationContext());
           break;
         case "yarn":
           result[idx++] = new PerfEventsProvider();
