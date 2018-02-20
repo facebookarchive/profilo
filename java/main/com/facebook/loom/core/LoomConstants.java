@@ -36,6 +36,7 @@ final public class LoomConstants {
   public static final int TRIGGER_EXTERNAL = 1 << 5;
   public static final int TRIGGER_BLACK_BOX = 1 << 6;
   public static final int TRIGGER_VIDEO_PROFILER = 1 << 7;
+  public static final int TRIGGER_LITE = 1 << 8;
 
   public static final int NO_CALLSITE = 0;
   public static final int NO_MATCH = 0;
