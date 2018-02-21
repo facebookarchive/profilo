@@ -113,6 +113,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
     }
   }
 
+  @Override
+  public void onProvidersInitialized(TraceContext ctx) {
+    Iterator<TraceOrchestrator.LoomListener> iterator = getIterator();
+    while (iterator.hasNext()) {
+      iterator.next().onProvidersInitialized(ctx);
+    }
+  }
+
   public void addEventListener(TraceOrchestrator.LoomListener listener) {
     mEventListeners.add(listener);
   }

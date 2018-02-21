@@ -53,6 +53,8 @@ public final class TraceOrchestrator
         int trimmedFromAge,
         int filesAddedToUpload);
     void onConfigChanged();
+
+    void onProvidersInitialized(TraceContext ctx);
   }
 
   public interface TraceProvider {
@@ -371,6 +373,7 @@ public final class TraceOrchestrator
     for (TraceProvider provider : providers) {
       provider.onEnable(context, folder);
     }
+    mListenerManager.onProvidersInitialized(context);
   }
 
   @Override
