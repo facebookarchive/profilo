@@ -1,0 +1,80 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+package com.facebook.loom.core;
+
+import com.facebook.proguard.annotations.DoNotStrip;
+import java.util.ArrayList;
+
+/**
+ * Maintains a one-to-many mapping between strings and integer identifiers.
+ *
+ * <p>A config will refer to providers using their names but at runtime it's more efficient to check
+ * for bits in an integer. This is where we store the mapping between the two.
+ *
+ * <p>The general pattern is:
+ *
+ * <pre>
+ *   class MyProvider extends TraceOrchestrator.TraceProvider {
+ *   public static final int PROVIDER_MYPROVIDER = ProviderRegistry.newProvider("myprovider");
+ *   ...
+ *   }
+ * </pre>
+ */
+@DoNotStrip
+public final class ProvidersRegistry {
+
+  @javax.annotation.concurrent.GuardedBy("sProviders")
+  static int sNextProviderBitShift = 0;
+
+  @javax.annotation.concurrent.GuardedBy("sProviders")
+  static final ArrayList<String> sProviders = new ArrayList<>();
+
+  /**
+   * Assigns a new integer identifier to {@code provider}.
+   *
+   * <p>You can register the same name more than once and receive unique IDs for each call.
+   */
+  public static int newProvider(String provider) {
+    synchronized (sProviders) {
+      if (sNextProviderBitShift >= 32) {
+        throw new IllegalStateException("Attempting to newProvider more than 32 providers.");
+      }
+      sProviders.add(provider);
+      int providerIdx = 1 << sNextProviderBitShift;
+      sNextProviderBitShift++;
+
+      return providerIdx;
+    }
+  }
+
+  /**
+   * Retrieve the bitmask for the given provider name.
+   *
+   * <p>Called from JNI.
+   */
+  @DoNotStrip
+  public static int getBitMaskFor(String provider) {
+    int result = 0;
+    synchronized (sProviders) {
+      int idx = 0;
+      for (String registered : sProviders) {
+        if (registered.equals(provider)) {
+          result |= 1 << idx;
+        }
+        idx++;
+      }
+    }
+    return result;
+  }
+
+  /** Retrieve the bitmask for the given providers. */
+  public static int getBitMaskFor(Iterable<String> providers) {
+    int result = 0;
+    synchronized (sProviders) {
+      for (String provider : providers) {
+        result |= getBitMaskFor(provider);
+      }
+    }
+    return result;
+  }
+}

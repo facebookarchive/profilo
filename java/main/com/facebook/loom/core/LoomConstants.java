@@ -4,28 +4,6 @@ package com.facebook.loom.core;
 
 final public class LoomConstants {
 
-  public static final int PROVIDER_ASYNC =           1;
-  public static final int PROVIDER_LIFECYCLE =       1 << 1;
-  public static final int PROVIDER_QPL =             1 << 2;
-  public static final int PROVIDER_OTHER =           1 << 3;
-  public static final int PROVIDER_USER_COUNTERS =   1 << 4;
-  public static final int PROVIDER_SYSTEM_COUNTERS = 1 << 5;
-  public static final int PROVIDER_STACK_FRAME =     1 << 6;
-  public static final int PROVIDER_LIGER =           1 << 7;
-  public static final int PROVIDER_MAJOR_FAULTS =    1 << 8;
-  public static final int PROVIDER_THREAD_SCHEDULE = 1 << 9;
-  public static final int PROVIDER_CLASS_LOAD =      1 << 10;
-  public static final int PROVIDER_NATIVE_STACK_TRACE =    1 << 11;
-  public static final int PROVIDER_JAVASCRIPT_STACK_TRACE =  1 << 12;
-  public static final int PROVIDER_MAIN_THREAD_MESSAGES =  1 << 13;
-  public static final int PROVIDER_LIGER_HTTP2 = 1 << 14;
-  public static final int PROVIDER_FBSYSTRACE = 1 << 15;
-  public static final int PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS = 1 << 16;
-  public static final int PROVIDER_TRANSIENT_NETWORK_DATA = 1 << 17;
-  public static final int PROVIDER_WALL_TIME_STACK_TRACE = 1 << 18;
-  public static final int PROVIDER_LIBC_IO = 1 << 19;
-  public static final int PROVIDER_UI_THREAD_RESPONSIVENESS = 1 << 20;
-
   public static final int PROVIDER_LOOM_SYSTEM = 0xFFFFFFFF;
 
   public static final int TRIGGER_QPL =             1;

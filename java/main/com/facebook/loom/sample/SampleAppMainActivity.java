@@ -47,9 +47,9 @@ public class SampleAppMainActivity extends Activity {
           public void onClick(View view) {
             if (mTracingButton.isChecked()) {
               ExternalTraceControl.startTrace(
-                  LoomConstants.PROVIDER_STACK_FRAME
-                      | LoomConstants.PROVIDER_SYSTEM_COUNTERS
-                      | LoomConstants.PROVIDER_OTHER,
+                  StackFrameThread.PROVIDER_STACK_FRAME
+                      | SystemCounterThread.PROVIDER_SYSTEM_COUNTERS
+                      | SystraceProvider.PROVIDER_ATRACE,
                   /*cpuSamplingRateMs*/ 10);
               mProgressBar.setVisibility(View.VISIBLE);
             } else {

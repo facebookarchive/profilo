@@ -9,6 +9,7 @@ import android.os.Process;
 import android.util.Log;
 import com.facebook.loom.core.Identifiers;
 import com.facebook.loom.core.LoomConstants;
+import com.facebook.loom.core.ProvidersRegistry;
 import com.facebook.loom.core.TraceOrchestrator;
 import com.facebook.loom.entries.EntryType;
 import com.facebook.loom.ipc.TraceContext;
@@ -24,6 +25,12 @@ public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
   static {
     SoLoader.loadLibrary("loom_stacktrace");
   }
+
+  public static final int PROVIDER_STACK_FRAME = ProvidersRegistry.newProvider("stack_trace");
+  public static final int PROVIDER_WALL_TIME_STACK_TRACE =
+      ProvidersRegistry.newProvider("wall_time_stack_trace");
+  public static final int PROVIDER_NATIVE_STACK_TRACE =
+      ProvidersRegistry.newProvider("native_stack_trace");
 
   private static final String LOG_TAG = "StackFrameThread";
   private static final int ALL_THREADS = 0;
@@ -50,15 +57,14 @@ public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
    */
   private static int providersToTracers(int providers) {
     int tracers = 0;
-    if ((providers
-            & (LoomConstants.PROVIDER_STACK_FRAME |
-                  LoomConstants.PROVIDER_WALL_TIME_STACK_TRACE)) != 0) {
-      tracers |= CPUProfiler.TRACER_DALVIK |
-        CPUProfiler.TRACER_ART_7_0 |
-        CPUProfiler.TRACER_ART_6_0 |
-        CPUProfiler.TRACER_ART_5_1;
+    if ((providers & (PROVIDER_STACK_FRAME | PROVIDER_WALL_TIME_STACK_TRACE)) != 0) {
+      tracers |=
+          CPUProfiler.TRACER_DALVIK
+              | CPUProfiler.TRACER_ART_7_0
+              | CPUProfiler.TRACER_ART_6_0
+              | CPUProfiler.TRACER_ART_5_1;
     }
-    if ((providers & LoomConstants.PROVIDER_NATIVE_STACK_TRACE) != 0) {
+    if ((providers & PROVIDER_NATIVE_STACK_TRACE) != 0) {
       tracers |= CPUProfiler.TRACER_NATIVE;
     }
     return tracers;
@@ -66,6 +72,7 @@ public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
 
   /**
    * Inits {@link CPUProfiler} and the profiler handler.
+   *
    * @return <code>true</code> if initProfiler was successful and <code>false</code> otherwise.
    */
   private synchronized boolean initProfiler() {
@@ -89,7 +96,7 @@ public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
     // Default to get stack traces from all threads, override for wall time
     // stack profiling of main thread on-demand.
     int tids = ALL_THREADS;
-    if ((enabledProviders & LoomConstants.PROVIDER_WALL_TIME_STACK_TRACE) != 0) {
+    if ((enabledProviders & PROVIDER_WALL_TIME_STACK_TRACE) != 0) {
       tids = Process.myPid();
     } else {
       if (mSystemClockTimeIntervalMs == -1) {

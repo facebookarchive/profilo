@@ -13,28 +13,6 @@
 namespace facebook {
 namespace loom {
 
-/**
- * Warning: Update test "LogConstantsTest.cpp" after adding new constants
- */
-enum LogProvider {
-  PROVIDER_ASYNC =            1,
-  PROVIDER_LIFECYCLE =        1 << 1,
-  PROVIDER_QPL =              1 << 2,
-  PROVIDER_OTHER =            1 << 3,
-  PROVIDER_USER_COUNTER =     1 << 4,
-  PROVIDER_SYSTEM_COUNTERS =  1 << 5,
-  PROVIDER_STACK_FRAME =      1 << 6,
-  PROVIDER_LIGER =            1 << 7,
-  PROVIDER_MAJOR_FAULTS =     1 << 8,
-  PROVIDER_THREAD_SCHEDULE =  1 << 9,
-  PROVIDER_CLASS_LOAD =       1 << 10,
-  PROVIDER_NATIVE_STACK_TRACE = 1 << 11,
-  PROVIDER_JAVASCRIPT_STACK_TRACE =  1 << 12,
-  PROVIDER_MAIN_THREAD_MESSAGES =  1 << 13,
-  PROVIDER_LIGER_HTTP2 =  1 << 14,
-  PROVIDER_FBSYSTRACE = 1 << 15,
-};
-
 enum LoomQuickLogConstants {
   PROF_ERR_SIG_CRASHES = 8126464 | 27,  // = 8126491
   PROF_ERR_SLOT_MISSES = 8126464 | 28,  // = 8126492

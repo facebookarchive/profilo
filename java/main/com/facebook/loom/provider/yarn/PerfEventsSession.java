@@ -5,7 +5,6 @@ package com.facebook.loom.provider.yarn;
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
 import static android.os.Process.setThreadPriority;
 
-import com.facebook.loom.core.LoomConstants;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 import javax.annotation.concurrent.GuardedBy;
@@ -54,13 +53,15 @@ public class PerfEventsSession {
     if (mNativeHandle != 0) {
       throw new IllegalStateException("Already attached");
     }
-    if ((providers & LoomConstants.PROVIDER_MAJOR_FAULTS) != 0 ||
-        (providers & LoomConstants.PROVIDER_THREAD_SCHEDULE) != 0) {
-      mNativeHandle = nativeAttach(
-          providers,
-          FALLBACK_RAISE_RLIMIT,
-          MAX_ATTACH_ITERATIONS,
-          MAX_ATTACHED_FDS_OPEN_RATIO);
+    boolean majorFaults = (providers & PerfEventsProvider.PROVIDER_MAJOR_FAULTS) != 0;
+    boolean threadSchedule = (providers & PerfEventsProvider.PROVIDER_THREAD_SCHEDULE) != 0;
+    if (majorFaults || threadSchedule) {
+      mNativeHandle =
+          nativeAttach(
+              majorFaults,
+              FALLBACK_RAISE_RLIMIT,
+              MAX_ATTACH_ITERATIONS,
+              MAX_ATTACHED_FDS_OPEN_RATIO);
     }
     return mNativeHandle != 0;
   }
@@ -119,10 +120,7 @@ public class PerfEventsSession {
   }
 
   private static native long nativeAttach(
-      int providers,
-      int fallbacks,
-      int maxAttachIterations,
-      float maxAttachedFdsOpenRatio);
+      boolean majorFaults, int fallbacks, int maxAttachIterations, float maxAttachedFdsOpenRatio);
 
   private static native void nativeDetach(long handle);
 

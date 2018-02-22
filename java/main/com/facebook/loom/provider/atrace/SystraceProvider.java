@@ -3,9 +3,11 @@
 package com.facebook.loom.provider.atrace;
 
 import com.facebook.loom.core.BaseTraceProvider;
-import com.facebook.loom.core.LoomConstants;
+import com.facebook.loom.core.ProvidersRegistry;
 
 public final class SystraceProvider extends BaseTraceProvider {
+
+  public static final int PROVIDER_ATRACE = ProvidersRegistry.newProvider("other");
 
   @Override
   protected void enable() {
@@ -19,6 +21,6 @@ public final class SystraceProvider extends BaseTraceProvider {
 
   @Override
   protected int getSupportedProviders() {
-    return LoomConstants.PROVIDER_OTHER;
+    return PROVIDER_ATRACE;
   }
 }

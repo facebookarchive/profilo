@@ -9,7 +9,7 @@ import android.os.HandlerThread;
 import android.os.Message;
 import com.facebook.jni.HybridData;
 import com.facebook.loom.core.BaseTraceProvider;
-import com.facebook.loom.core.LoomConstants;
+import com.facebook.loom.core.ProvidersRegistry;
 import com.facebook.loom.core.TraceEvents;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
@@ -25,6 +25,11 @@ public final class SystemCounterThread extends BaseTraceProvider {
   static {
     SoLoader.loadLibrary("loom_systemcounters");
   }
+
+  public static final int PROVIDER_SYSTEM_COUNTERS =
+      ProvidersRegistry.newProvider("system_counters");
+  public static final int PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS =
+      ProvidersRegistry.newProvider("high_freq_main_thread_counters");
 
   private static final int MSG_SYSTEM_COUNTERS = 1;
   private static final int MSG_MAIN_THREAD_COUNTERS = 2;
@@ -116,14 +121,14 @@ public final class SystemCounterThread extends BaseTraceProvider {
     mHybridData = initHybrid();
     mEnabled = true;
     initHandler();
-    if (TraceEvents.isEnabled(LoomConstants.PROVIDER_SYSTEM_COUNTERS)) {
+    if (TraceEvents.isEnabled(PROVIDER_SYSTEM_COUNTERS)) {
       mAllThreadsMode = true;
       Debug.startAllocCounting();
       mHandler
           .obtainMessage(MSG_SYSTEM_COUNTERS, DEFAULT_COUNTER_PERIODIC_TIME_MS, -1)
           .sendToTarget();
     }
-    if (TraceEvents.isEnabled(LoomConstants.PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS)) {
+    if (TraceEvents.isEnabled(PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS)) {
       int mainTid = android.os.Process.myPid();
       mHighFrequencyTid = mainTid;
       mHandler
@@ -163,7 +168,6 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   @Override
   protected int getSupportedProviders() {
-    return LoomConstants.PROVIDER_SYSTEM_COUNTERS
-        | LoomConstants.PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS;
+    return PROVIDER_SYSTEM_COUNTERS | PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS;
   }
 }

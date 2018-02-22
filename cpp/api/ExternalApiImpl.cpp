@@ -10,8 +10,8 @@
 
 using namespace facebook::loom;
 
-void loom_internal_mark_start(uint32_t provider, const char* msg);
-void loom_internal_mark_end(uint32_t provider);
+void loom_internal_mark_start(const char* provider, const char* msg);
+void loom_internal_mark_end(const char* provider);
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,7 +28,7 @@ LOOM_EXPORT LoomApi loom_api_int {
 } // extern "C"
 #endif
 
-void loom_internal_mark_start(uint32_t provider, const char* msg) {
+void loom_internal_mark_start(const char* provider, const char* msg) {
   if (!TraceProviders::get().isEnabled(provider) || msg == nullptr) {
     return;
   }
@@ -56,7 +56,7 @@ void loom_internal_mark_start(uint32_t provider, const char* msg) {
   }
 }
 
-void loom_internal_mark_end(uint32_t provider) {
+void loom_internal_mark_end(const char* provider) {
   if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }

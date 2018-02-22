@@ -13,30 +13,10 @@ cxx_test(
     ],
     linker_flags = [
         "-pthread",
+        "-ldl",
     ],
     deps = [
         loom_path("cpp:providers"),
-    ],
-)
-
-fb_xplat_cxx_library(
-    name = "constants",
-    srcs = [
-        "LogConstantsTest.cpp",
-    ],
-    compiler_flags = [
-        "-fexceptions",
-        "-std=gnu++14",
-        "-DLOG_TAG=\"Loom\"",
-    ],
-    linker_flags = [
-        "-pthread",
-    ],
-    soname = "libloom-const-test.$(ext)",
-    visibility = ["PUBLIC"],
-    deps = [
-        loom_path("cpp/logger:logger_static"),
-        loom_path("deps/fbjni:fbjni"),
     ],
 )
 

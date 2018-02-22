@@ -4,7 +4,6 @@ package com.facebook.loom.provider.systemcounters;
 
 import android.os.Debug;
 import com.facebook.loom.core.Identifiers;
-import com.facebook.loom.core.LoomConstants;
 import com.facebook.loom.entries.EntryType;
 import com.facebook.loom.logger.Logger;
 
@@ -37,9 +36,6 @@ public class SystemCounterLogger {
 
   private static void logProcessCounter(int key, long value) {
     Logger.writeEntryWithoutMatch(
-        LoomConstants.PROVIDER_SYSTEM_COUNTERS,
-        EntryType.COUNTER,
-        key,
-        value);
+        SystemCounterThread.PROVIDER_SYSTEM_COUNTERS, EntryType.COUNTER, key, value);
   }
 }

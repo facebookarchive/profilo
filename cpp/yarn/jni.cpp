@@ -18,9 +18,9 @@ const char* kPerfSessionType = "com/facebook/loom/provider/yarn/PerfEventsSessio
 namespace facebook {
 namespace yarn {
 
-static std::vector<EventSpec> providersToSpecs(jint providers) {
+static std::vector<EventSpec> providersToSpecs(jboolean majorFaults) {
   auto specs = std::vector<EventSpec>{};
-  if ((providers & loom::PROVIDER_MAJOR_FAULTS) != 0) {
+  if (majorFaults) {
     EventSpec spec = {
       .type = EVENT_TYPE_MAJOR_FAULTS,
       .tid = EventSpec::kAllThreads
@@ -93,12 +93,12 @@ public:
 static jlong nativeAttach(
   JNIEnv*,
   jobject cls,
-  jint providers,
+  jboolean majorFaults,
   jint fallbacks,
   jint maxIterations,
   jfloat maxAttachedFdsRatio
 ){
-  auto specs = providersToSpecs(providers);
+  auto specs = providersToSpecs(majorFaults);
   if (specs.empty()) {
     throw std::invalid_argument("Could not convert providers");
   }

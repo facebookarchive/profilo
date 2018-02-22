@@ -5,6 +5,8 @@
 #include <array>
 #include <atomic>
 #include <mutex>
+#include <shared_mutex>
+#include <unordered_map>
 
 namespace facebook {
 namespace loom {
@@ -20,6 +22,8 @@ class TraceProviders {
       return (providers_.load(std::memory_order_relaxed) & provider) == provider;
     }
 
+    bool isEnabled(const std::string& provider);
+
     inline uint32_t enabledMask(uint32_t providers) {
       return providers_.load(std::memory_order_relaxed) & providers;
     }
@@ -33,6 +37,9 @@ class TraceProviders {
     std::mutex mutex_; // Guards providers modifications
     std::atomic<uint32_t> providers_;
     std::array<uint8_t, 32> provider_counts_;
+
+    std::shared_timed_mutex name_lookup_mutex_; // Guards provider name lookup.
+    std::unordered_map<std::string, uint32_t> name_lookup_cache_;
 };
 
 } // namespace loom

@@ -22,7 +22,7 @@ LoomApi* get_loom_api_int() {
   return loom_api;
 }
 
-void loom_api_mark_start(uint32_t provider, const char* name) {
+void loom_api_mark_start(const char* provider, const char* name) {
   auto loom_api = get_loom_api_int();
   if (loom_api == nullptr) {
     return;
@@ -30,7 +30,7 @@ void loom_api_mark_start(uint32_t provider, const char* name) {
   loom_api->mark_start(provider, name);
 }
 
-void loom_api_mark_end(uint32_t provider) {
+void loom_api_mark_end(const char* provider) {
   auto loom_api = get_loom_api_int();
   if (loom_api == nullptr) {
     return;

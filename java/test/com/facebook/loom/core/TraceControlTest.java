@@ -47,6 +47,8 @@ public class TraceControlTest {
   private static final int TEST_TRACE_TIMEOUT_MS = 7000;
   private static final long TEST_TRACE_ID = 10000l;
 
+  private static final int PROVIDER_TEST = ProvidersRegistry.newProvider("test");
+
   private TraceControl mTraceControl;
   private SparseArray<TraceController> mControllers;
   private TraceController mController;
@@ -83,7 +85,7 @@ public class TraceControlTest {
     mController = mock(TraceController.class);
 
     when(mController.evaluateConfig(anyObject(), same(mControllerConfig)))
-        .thenReturn(LoomConstants.PROVIDER_QPL);
+        .thenReturn(PROVIDER_TEST);
     when(mController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
     //noinspection unchecked
@@ -98,16 +100,17 @@ public class TraceControlTest {
     mTraceControlHandler = mock(TraceControlHandler.class);
     Whitebox.setInternalState(mTraceControl, "mTraceControlHandler", mTraceControlHandler);
 
-    mTraceContext = new TraceContext(
-        TEST_TRACE_ID,
-        FbTraceId.encode(TEST_TRACE_ID),
-        1111,
-        new Object(),
-        new Object(),
-        1,
-        LoomConstants.PROVIDER_OTHER,
-        100,
-        1);
+    mTraceContext =
+        new TraceContext(
+            TEST_TRACE_ID,
+            FbTraceId.encode(TEST_TRACE_ID),
+            1111,
+            new Object(),
+            new Object(),
+            1,
+            PROVIDER_TEST,
+            100,
+            1);
   }
 
   @Test
@@ -162,7 +165,7 @@ public class TraceControlTest {
     assertNotTracing();
 
     when(mController.evaluateConfig(anyObject(), any(ControllerConfig.class)))
-        .thenReturn(LoomConstants.PROVIDER_QPL);
+        .thenReturn(PROVIDER_TEST);
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0))
         .isTrue();
     assertTracing();

@@ -25,6 +25,9 @@ fb_xplat_cxx_library(
     visibility = [
         loom_path("..."),
     ],
+    deps = [
+        loom_path("deps/fbjni:fbjni"),
+    ],
 )
 
 CONSTS_EXPORTED_HEADERS = ["LogEntry.h"]

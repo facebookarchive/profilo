@@ -38,14 +38,8 @@
 extern "C" {
 #endif
 
-typedef void (*loom_int_mark_start)(uint32_t provider, const char* msg);
-typedef void (*loom_int_mark_end)(uint32_t provider);
-
-#ifndef IS_LOOM
-// Exposed providers
-const uint32_t LOOM_PROVIDER_OTHER = 1 << 3;
-const uint32_t LOOM_PROVIDER_FBSYSTRACE = 1 << 15;
-#endif
+typedef void (*loom_int_mark_start)(const char* provider, const char* msg);
+typedef void (*loom_int_mark_end)(const char* provider);
 
 typedef struct LoomApi {
   loom_int_mark_start mark_start;

@@ -5,9 +5,6 @@ package com.facebook.loom.provider.atrace;
 import android.os.Trace;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
-import java.lang.IllegalAccessException;
-import java.lang.NoSuchFieldException;
-import java.lang.NoSuchMethodException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,14 +15,12 @@ public final class Atrace {
     SoLoader.loadLibrary("loom_atrace");
   }
 
-  private static final String TAG = "Loom/atrace";
-
   private static boolean sHasHook = false;
   private static boolean sHookFailed = false;
 
   public static synchronized boolean hasHacks() {
     if (!sHasHook && !sHookFailed) {
-      sHasHook = installSystraceHook();
+      sHasHook = installSystraceHook(SystraceProvider.PROVIDER_ATRACE);
 
       // Record that we failed, so we don't try again.
       sHookFailed = !sHasHook;
@@ -33,7 +28,7 @@ public final class Atrace {
     return sHasHook;
   }
 
-  private static native boolean installSystraceHook();
+  private static native boolean installSystraceHook(int mask);
 
   public static void enableSystrace() {
     if (!hasHacks()) {

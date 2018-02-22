@@ -97,3 +97,7 @@ loom_sample_app([
     "threadmetadata",
     "processmetadata",
 ])
+
+# Generate a target for each individual provider
+for provider in PROVIDER_TO_RULE.keys():
+    loom_sample_app([provider])

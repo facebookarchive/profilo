@@ -50,6 +50,7 @@ int *atrace_marker_fd = nullptr;
 std::atomic<uint64_t> *atrace_enabled_tags = nullptr;
 std::atomic<uint64_t> original_tags(UINT64_MAX);
 std::atomic<bool> systrace_installed;
+std::atomic<uint32_t> provider_mask;
 bool first_enable = true;
 
 namespace {
@@ -58,7 +59,7 @@ void log_systrace(int fd, const void *buf, size_t count) {
   if (systrace_installed &&
       fd == *atrace_marker_fd &&
       count > 0 &&
-      TraceProviders::get().isEnabled(PROVIDER_OTHER)) {
+      TraceProviders::get().isEnabled(provider_mask.load())) {
 
     const char *msg = reinterpret_cast<const char *>(buf);
 
@@ -182,7 +183,7 @@ void hookLoadedLibs() {
   }
 }
 
-void installSystraceSnooper() {
+void installSystraceSnooper(int providerMask) {
   auto sdk = build::Build::getAndroidSdk();
   if (sdk > 23 /*Marshmallow*/) {
     FBLOGI("skipping installSystraceSnooper for sdk %i", sdk);
@@ -229,6 +230,7 @@ void installSystraceSnooper() {
   hookLoadedLibs();
 
   systrace_installed = true;
+  provider_mask = providerMask;
   FBLOGI("write(atrace_marker_fd) hook installed");
 }
 
@@ -265,9 +267,9 @@ void restoreSystrace() {
   }
 }
 
-bool installSystraceHook() {
+bool installSystraceHook(int mask) {
   try {
-    installSystraceSnooper();
+    installSystraceSnooper(mask);
 
     return true;
   } catch (const std::runtime_error& e) {
@@ -278,8 +280,8 @@ bool installSystraceHook() {
 
 } // anonymous
 
-bool JNI_installSystraceHook(JNIEnv*, jobject) {
-  return installSystraceHook();
+bool JNI_installSystraceHook(JNIEnv*, jobject, jint mask) {
+  return installSystraceHook(mask);
 }
 
 void JNI_enableSystraceNative(JNIEnv*, jobject) {
@@ -296,7 +298,7 @@ void registerNatives() {
   fbjni::registerNatives(
     "com/facebook/loom/provider/atrace/Atrace",
     {
-      makeNativeMethod("installSystraceHook", "()Z", JNI_installSystraceHook),
+      makeNativeMethod("installSystraceHook", "(I)Z", JNI_installSystraceHook),
       makeNativeMethod("enableSystraceNative", "()V", JNI_enableSystraceNative),
       makeNativeMethod("restoreSystraceNative", "()V", JNI_restoreSystraceNative),
     });

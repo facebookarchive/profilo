@@ -17,6 +17,22 @@ CONTROL = [
     "TraceControlThreadHolder.java",
 ]
 
+REGISTRY = [
+    "ProvidersRegistry.java",
+]
+
+android_library(
+    name = "providersregistry",
+    srcs = REGISTRY,
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        loom_path("deps/jsr-305:jsr-305"),
+        loom_path("deps/proguard:annotations"),
+    ],
+)
+
 android_library(
     name = "constants",
     srcs = CONSTANTS,
@@ -80,12 +96,13 @@ android_library(
     name = "core",
     srcs = glob(
         ["*.java"],
-        excludes = CONSTANTS + EVENTS + CONTROL,
+        excludes = CONSTANTS + EVENTS + CONTROL + REGISTRY,
     ),
     exported_deps = [
         ":constants",
         ":control",
         ":events",
+        ":providersregistry",
         loom_path("java/main/com/facebook/loom/config:config"),
         loom_path("java/main/com/facebook/loom/writer:writer_callbacks"),
     ],
