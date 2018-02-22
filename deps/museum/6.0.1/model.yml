@@ -3,14 +3,15 @@
 
 ---
 headers:
-- dex_file.h
 - base/logging.h
 - base/logging-inl.h
 - base/mutex.h
 - class_linker.h
+- dex_file.h
 - indirect_reference_table.h
 - jni_env_ext.h
 - runtime.h
+- stack_map.h
 - thread.h
 - utf.h
 
@@ -248,6 +249,44 @@ classes:
     isStaticVar: true
     mangledNames:
     - _ZN3art6Thread17pthread_key_self_E
+
+- className: StackMap
+  symbols:
+  - symbolName: GetDexPc
+    params:
+    - CodeInfo const&
+    returnType: uint32_t
+    cvFlags: const
+    mangledNames:
+    - _ZNK3art8StackMap8GetDexPcERKNS_8CodeInfoE
+  - symbolName: GetNativePcOffset
+    params:
+    - CodeInfo const&
+    returnType: uint32_t
+    cvFlags: const
+    mangledNames:
+    - _ZNK3art8StackMap17GetNativePcOffsetERKNS_8CodeInfoE
+  - symbolName: ComputeStackMapSizeInternal
+    params:
+    - size_t
+    - size_t
+    - size_t
+    - size_t
+    - size_t
+    - size_t
+    isStaticVar: true
+    skipMethodWrap: true
+    returnType: size_t
+    mangledNames:
+    - _ZN3art8StackMap27ComputeStackMapSizeInternalEjjjjjj
+
+- className: StackVisitor
+  symbols:
+  - symbolName: GetThisObject
+    returnType: mirror::Object*
+    cvFlags: const
+    mangledNames:
+    - _ZNK3art12StackVisitor13GetThisObjectEv
 
 # Special set: Unattached methods. Give them an empty className, and poof.
 - className:

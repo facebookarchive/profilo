@@ -1,11 +1,9 @@
 #include <string>
 
 namespace art {
-  namespace mirror {
-    class ArtMethod;
-  }
+  class ArtMethod;
 
-  std::string PrettyMethod(mirror::ArtMethod* p1, bool p2)  {
+  std::string PrettyMethod(ArtMethod* p1, bool p2)  {
     return ""; // don't bother faking diff-STL std::string magic, this isn't important enough
   }
 
