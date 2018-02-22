@@ -4,7 +4,6 @@ android_library(
     name = "yarn",
     srcs = glob(["*.java"]),
     visibility = [
-        "//instrumentation_tests/com/facebook/loom/...",
         "//instrumentation_tests/com/facebook/quicklog/...",
         loom_path("..."),
         "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",

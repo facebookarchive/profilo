@@ -10,7 +10,6 @@ android_library(
         loom_path("java/test/com/facebook/loom/logger:logger"),
     ],
     visibility = [
-        "//instrumentation_tests/com/facebook/loom/...",
         "//java/com/facebook/quicklog/...",
         "//java/com/facebook/tools/dextr/...",
         "//javatests/com/facebook/tools/dextr/...",

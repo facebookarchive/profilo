@@ -3,7 +3,6 @@ load("//buck_imports:loom_path.bzl", "loom_path")
 android_library(
     name = "provider",
     visibility = [
-        "//instrumentation_tests/com/facebook/loom/...",
         "//java/com/facebook/cloudseeder:cloudseeder",
         "//javatests/com/facebook/cloudseeder:cloudseeder",
         loom_path("..."),

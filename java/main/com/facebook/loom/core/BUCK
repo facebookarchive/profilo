@@ -52,7 +52,6 @@ android_library(
         ":constants",
     ],
     visibility = [
-        "//instrumentation_tests/com/facebook/loom/...",
         "//javatests/com/facebook/loom/...",
         loom_path("..."),
         "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
