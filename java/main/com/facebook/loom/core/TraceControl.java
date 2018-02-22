@@ -226,14 +226,6 @@ final public class TraceControl {
     return traces;
   }
 
-  public boolean startBlackBoxTrace() {
-    return startTrace(LoomConstants.TRIGGER_BLACK_BOX, Trace.FLAG_MEMORY_ONLY, null, 0);
-  }
-
-  public void stopBlackBoxTrace() {
-    stopTrace(LoomConstants.TRIGGER_BLACK_BOX, null, 0);
-  }
-
   public boolean startTrace(int controller, int flags, @Nullable Object context, int intContext) {
     if (findLowestFreeBit(mCurrentTracesMask.get(), MAX_TRACES) == 0) {
       // Reached max traces
