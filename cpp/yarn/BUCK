@@ -1,5 +1,5 @@
 load("//buck_imports:loom_path.bzl", "loom_path")
-load("//buck_imports:xplat.bzl", "fb_xplat_cxx_library")
+load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 fb_xplat_cxx_library(
     name = "headers_linux",

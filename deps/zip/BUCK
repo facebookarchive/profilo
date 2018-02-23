@@ -1,4 +1,4 @@
-include_defs("//buck_imports/xplat.bzl")  # THIS_IS_FBANDROID
+include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
 
 if not THIS_IS_FBANDROID:
     android_library(
