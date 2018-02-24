@@ -7,6 +7,7 @@
 #include <mutex>
 #include <shared_mutex>
 #include <unordered_map>
+#include <string>
 
 namespace facebook {
 namespace loom {
