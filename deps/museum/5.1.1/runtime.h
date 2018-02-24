@@ -84,6 +84,12 @@ enum VisitRootFlags : uint8_t {
   kVisitRootFlagClearRootLog = 0x10,
 };
 
+#if defined(__GLIBCXX__)
+  #define PAD(name, size) char junk_##name[size];
+#else
+  #define PAD(name, size) 
+#endif
+
 class Runtime {
  public:
   // Creates and initializes a new runtime.
@@ -539,14 +545,14 @@ class Runtime {
   bool dex2oat_enabled_;
   bool image_dex2oat_enabled_;
 
-  std::string compiler_executable_; char junk1[8];
-  std::string patchoat_executable_; char junk2[8];
+  std::string compiler_executable_; PAD(compiler_executable_, 8)
+  std::string patchoat_executable_; PAD(patchoat_executable_, 8)
   std::vector<std::string> compiler_options_;
   std::vector<std::string> image_compiler_options_;
-  std::string image_location_; char junk3[8];
+  std::string image_location_;  PAD(image_location_, 8)
 
-  std::string boot_class_path_string_; char junk4[8];
-  std::string class_path_string_; char junk5[8];
+  std::string boot_class_path_string_; PAD(boot_class_path_string_, 8)
+  std::string class_path_string_; PAD(class_path_string_, 8)
   std::vector<std::string> properties_;
 
   // The default stack size for managed threads created by the runtime.
@@ -566,13 +572,13 @@ class Runtime {
   ClassLinker* class_linker_;
 
   SignalCatcher* signal_catcher_;
-  std::string stack_trace_file_; char junk6[8];
+  std::string stack_trace_file_; PAD(stack_trace_file_, 8)
 
   JavaVMExt* java_vm_;
 
   // Fault message, printed when we get a SIGSEGV.
   Mutex fault_message_lock_ DEFAULT_MUTEX_ACQUIRED_AFTER;
-  std::string fault_message_ GUARDED_BY(fault_message_lock_); char junk7[8];
+  std::string fault_message_ GUARDED_BY(fault_message_lock_); PAD(fault_message_, 8)
 
   // Method verifier set, used so that we can update their GC roots.
   Mutex method_verifier_lock_ DEFAULT_MUTEX_ACQUIRED_AFTER;
@@ -608,12 +614,12 @@ class Runtime {
 
   const bool running_on_valgrind_;
 
-  std::string profile_output_filename_; char junk8[8];
+  std::string profile_output_filename_; PAD(profile_output_filename_, 8)
   ProfilerOptions profiler_options_;
   bool profiler_started_;
 
   bool method_trace_;
-  std::string method_trace_file_; char junk9[8];
+  std::string method_trace_file_; PAD(method_trace_file_, 8)
   size_t method_trace_file_size_;
   instrumentation::Instrumentation instrumentation_;
 
