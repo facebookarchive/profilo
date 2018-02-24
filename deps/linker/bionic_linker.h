@@ -52,6 +52,7 @@
 
 typedef void (*linker_function_t)();
 
+#if (__ANDROID_API__ < 21)
 struct link_map {
   ElfW(Addr) l_addr;
   char* l_name;
@@ -60,6 +61,7 @@ struct link_map {
   struct link_map* l_prev;
 };
 typedef struct link_map link_map;
+#endif
 
 struct soinfo;
 typedef struct soinfo soinfo;
