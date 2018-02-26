@@ -1,10 +1,10 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<0b45d3d34ec65824c327403fa065f1ab>>
+// @generated SignedSource<<63e8a9a73587f46828cc3159c661d711>>
 
 #pragma once
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 enum EntryType {
   UNKNOWN_TYPE = 0,
@@ -96,5 +96,5 @@ enum EntryType {
 
 const char* to_string(EntryType type);
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

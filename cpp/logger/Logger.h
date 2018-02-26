@@ -12,7 +12,7 @@
 #define LOOMEXPORT __attribute__((visibility("default")))
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 using namespace entries;
 
@@ -84,5 +84,5 @@ public:
   }
 };
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

@@ -14,9 +14,9 @@
 #include <loom/writer/StackTraceInvertingVisitor.h>
 #include <loom/writer/TimestampTruncatingVisitor.h>
 
-namespace facebook { namespace loom { namespace writer {
+namespace facebook { namespace profilo { namespace writer {
 
-using namespace facebook::loom::entries;
+using namespace facebook::profilo::entries;
 
 namespace {
 
@@ -351,5 +351,5 @@ void TraceLifecycleVisitor::writeHeaders(std::ostream& output, std::string id) {
 }
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

@@ -8,7 +8,7 @@
 #include <loom/writer/StackTraceInvertingVisitor.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 StackTraceInvertingVisitor::StackTraceInvertingVisitor(
@@ -51,5 +51,5 @@ void StackTraceInvertingVisitor::visit(const BytesEntry& entry) {
 }
 
 } // writer
-} // loom
+} // profilo
 } // facebook

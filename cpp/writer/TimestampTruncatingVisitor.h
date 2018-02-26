@@ -5,7 +5,7 @@
 #include <loom/entries/EntryParser.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 using namespace entries;
@@ -34,5 +34,5 @@ private:
 };
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

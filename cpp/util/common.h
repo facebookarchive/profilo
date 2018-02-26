@@ -5,12 +5,12 @@
 #include <unistd.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 int64_t monotonicTime();
 int32_t threadID();
 // Returns 0 if value was not found, and 1 if value <= 1, actual value otherwise
 int32_t systemClockTickIntervalMs();
 
-} // loom
+} // profilo
 } // facebook

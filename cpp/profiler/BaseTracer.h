@@ -8,7 +8,7 @@
 static constexpr const uint32_t kSystemDexId = 0xFFFFFFFF;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace profiler {
 
 namespace tracers {
@@ -41,5 +41,5 @@ public:
 };
 
 } // namespace profiler
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

@@ -10,7 +10,7 @@
 #define LOOMEXPORT __attribute__((visibility("default")))
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 using LoomBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
 
@@ -22,5 +22,5 @@ class RingBuffer {
   LOOMEXPORT static LoomBuffer& get(size_t sz = DEFAULT_SLOT_COUNT);
 };
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

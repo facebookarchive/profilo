@@ -21,7 +21,7 @@
 #include <chrono>
 #include <limits>
 
-namespace facebook { namespace loom { namespace logger { namespace lfrb {
+namespace facebook { namespace profilo { namespace logger { namespace lfrb {
 
 enum class FutexResult {
   VALUE_CHANGED, /* Futex value didn't match expected */
@@ -164,5 +164,5 @@ FutexResult Futex<EmulatedFutexAtomic>::futexWaitImpl(
 
 } // namespace lfrb
 } // namespace logger
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

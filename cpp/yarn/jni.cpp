@@ -46,10 +46,10 @@ public:
 
   virtual void onSample(const EventType type, const RecordSample& record) {
     if (type == EVENT_TYPE_MAJOR_FAULTS) {
-      loom::Logger::get().write(
-        loom::entries::StandardEntry {
+      profilo::Logger::get().write(
+        profilo::entries::StandardEntry {
           .id = 0,
-          .type = loom::entries::MAJOR_FAULT,
+          .type = profilo::entries::MAJOR_FAULT,
           .timestamp = (int64_t)record.time(),
           .tid = (int32_t)record.tid(),
           .callid = 0,
@@ -72,12 +72,12 @@ public:
   }
 
   virtual void onLost(const RecordLost& record) {
-    loom::Logger::get().write(
-      loom::entries::StandardEntry {
+    profilo::Logger::get().write(
+      profilo::entries::StandardEntry {
         .id = 0,
-        .type = loom::entries::YARN_LOST_RECORDS,
-        .timestamp = loom::monotonicTime(),
-        .tid = loom::threadID(),
+        .type = profilo::entries::YARN_LOST_RECORDS,
+        .timestamp = profilo::monotonicTime(),
+        .tid = profilo::threadID(),
         .callid = 0,
         .matchid = 0,
         .extra = (int64_t)record.lost,

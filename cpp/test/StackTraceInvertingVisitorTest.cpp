@@ -9,11 +9,11 @@
 #include <loom/writer/PrintEntryVisitor.h>
 #include <loom/writer/StackTraceInvertingVisitor.h>
 
-using namespace facebook::loom::entries;
-using namespace facebook::loom::writer;
+using namespace facebook::profilo::entries;
+using namespace facebook::profilo::writer;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 TEST(StackInvertingVisitorTest, testStacksAreInverted) {
   std::stringstream stream;
@@ -55,5 +55,5 @@ TEST(StackInvertingVisitorTest, testStacksAreInverted) {
   );
 }
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

@@ -25,7 +25,7 @@
 #include <loom/logger/lfrb/TurnSequencer.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace logger {
 namespace lfrb {
 
@@ -237,6 +237,6 @@ class RingBufferSlot {
 
 } // namespace logger
 
-} // namespace loom
+} // namespace profilo
 
 } // namespace facebook

@@ -11,7 +11,7 @@
 #include <loom/writer/PrintEntryVisitor.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 using namespace writer;
@@ -293,5 +293,5 @@ TEST(EntryCodegen, testPackTooSmallThrows) {
 }
 
 } // entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

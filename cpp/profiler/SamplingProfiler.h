@@ -23,7 +23,7 @@
 namespace fbjni = facebook::jni;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace profiler {
 
 enum StackSlotState: uint8_t {
@@ -94,5 +94,5 @@ bool startProfiling(
   int targetThread);
 
 } // namespace profiler
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

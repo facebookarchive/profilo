@@ -5,11 +5,11 @@
 #include <jni.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace atrace {
 
 void registerNatives();
 
 } // atrace
-} // loom
+} // profilo
 } // facebook

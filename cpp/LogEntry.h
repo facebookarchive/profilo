@@ -11,7 +11,7 @@
 #include <loom/entries/Entry.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 enum LoomQuickLogConstants {
   PROF_ERR_SIG_CRASHES = 8126464 | 27,  // = 8126491
@@ -41,5 +41,5 @@ enum LoomQuickLogConstants {
   AVAILABLE_COUNTERS = 8126464 | 37,  // = 8126501
 };
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

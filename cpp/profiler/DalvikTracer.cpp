@@ -12,7 +12,7 @@
 #define SAVEAREA_FROM_FP(fp) ((StackSaveArea*)(((u4*)(fp)) - STACK_SAVE_AREA_OFFSET))
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace profiler {
 
 namespace {
@@ -266,5 +266,5 @@ void DalvikTracer::stopTracing() {
 }
 
 } // namespace profiler
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

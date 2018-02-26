@@ -17,7 +17,7 @@
 #include <loom/writer/PacketReassembler.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 class TraceWriter {
@@ -76,5 +76,5 @@ private:
 };
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

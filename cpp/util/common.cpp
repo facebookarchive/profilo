@@ -12,7 +12,7 @@
 #endif
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 static const int64_t kSecondNanos = 1000000000;
 
@@ -57,5 +57,5 @@ int32_t systemClockTickIntervalMs() {
 #error "Do not have systemClockTickIntervalMs implementation for this platform"
 #endif
 
-} // loom
+} // profilo
 } // facebook

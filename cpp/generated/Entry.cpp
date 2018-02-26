@@ -1,12 +1,12 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<f763974fdc7595dd259410699c77dfb5>>
+// @generated SignedSource<<0ea892f28bd9a234a0b2a50ee5babc60>>
 
 #include <cstring>
 #include <stdexcept>
 #include <loom/entries/Entry.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 /* Alignment requirement: dst must be 4-byte aligned. */
@@ -314,5 +314,5 @@ uint8_t peek_type(const void* src, size_t len) {
 }
 
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

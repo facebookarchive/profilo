@@ -5,7 +5,7 @@
 #include <loom/logger/lfrb/LockFreeRingBuffer.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace logger {
 
 using StreamID = uint32_t;
@@ -33,4 +33,4 @@ struct check_size_0 {
   check_size<lfrb::detail::RingBufferSlot<Packet, std::atomic>> check;
 };
 
-} } } // facebook::loom::logger
+} } } // facebook::profilo::logger

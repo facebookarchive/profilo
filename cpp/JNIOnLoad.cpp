@@ -17,7 +17,7 @@
 namespace fbjni = facebook::jni;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 const char* TraceEventsType = "com/facebook/loom/core/TraceEvents";
 const char* LoggerType = "com/facebook/loom/logger/Logger";
@@ -169,7 +169,7 @@ static void clearAllProviders(JNIEnv* env, jobject cls) {
   TraceProviders::get().clearAllProviders();
 }
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook
 
 using namespace facebook;
@@ -177,25 +177,25 @@ using namespace facebook;
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return xplat::initialize(vm, [] {
     fbjni::registerNatives(
-      loom::TraceEventsType,
+      profilo::TraceEventsType,
       {
-        makeNativeMethod("nativeIsEnabled", loom::isProviderEnabled),
-        makeNativeMethod("nativeEnabledMask", loom::enabledProvidersMask),
-        makeNativeMethod("enableProviders", loom::enableProviders),
-        makeNativeMethod("disableProviders", loom::disableProviders),
-        makeNativeMethod("clearAllProviders", loom::clearAllProviders),
+        makeNativeMethod("nativeIsEnabled", profilo::isProviderEnabled),
+        makeNativeMethod("nativeEnabledMask", profilo::enabledProvidersMask),
+        makeNativeMethod("enableProviders", profilo::enableProviders),
+        makeNativeMethod("disableProviders", profilo::disableProviders),
+        makeNativeMethod("clearAllProviders", profilo::clearAllProviders),
       });
 
     fbjni::registerNatives(
-      loom::LoggerType,
+      profilo::LoggerType,
       {
-        makeNativeMethod("loggerWrite", loom::loggerWrite),
-        makeNativeMethod("loggerWriteWithMonotonicTime", loom::loggerWriteWithMonotonicTime),
-        makeNativeMethod("loggerWriteForThread", loom::loggerWriteForThread),
-        makeNativeMethod("loggerWriteString", loom::loggerWriteString),
-        makeNativeMethod("loggerWriteAndWakeupTraceWriter", loom::loggerWriteAndWakeupTraceWriter),
+        makeNativeMethod("loggerWrite", profilo::loggerWrite),
+        makeNativeMethod("loggerWriteWithMonotonicTime", profilo::loggerWriteWithMonotonicTime),
+        makeNativeMethod("loggerWriteForThread", profilo::loggerWriteForThread),
+        makeNativeMethod("loggerWriteString", profilo::loggerWriteString),
+        makeNativeMethod("loggerWriteAndWakeupTraceWriter", profilo::loggerWriteAndWakeupTraceWriter),
       });
 
-    loom::writer::NativeTraceWriter::registerNatives();
+    profilo::writer::NativeTraceWriter::registerNatives();
   });
 }

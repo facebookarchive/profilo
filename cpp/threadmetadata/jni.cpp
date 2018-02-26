@@ -6,7 +6,7 @@
 
 #include <loom/threadmetadata/ThreadMetadata.h>
 
-using namespace facebook::loom;
+using namespace facebook::profilo;
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return facebook::xplat::initialize(vm, [] {

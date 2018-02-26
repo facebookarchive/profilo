@@ -9,11 +9,11 @@
 #include <loom/writer/PrintEntryVisitor.h>
 #include <loom/writer/DeltaEncodingVisitor.h>
 
-using namespace facebook::loom::entries;
-using namespace facebook::loom::writer;
+using namespace facebook::profilo::entries;
+using namespace facebook::profilo::writer;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 TEST(DeltaEncodingVisitorTest, testDeltaEncodeStandardEntry) {
   std::stringstream stream;
@@ -167,5 +167,5 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
   );
 }
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

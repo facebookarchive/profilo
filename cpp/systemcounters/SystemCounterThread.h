@@ -9,7 +9,7 @@
 #include <unordered_map>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 class SystemCounterThread : public facebook::jni::HybridClass<SystemCounterThread> {
  public:
@@ -34,5 +34,5 @@ class SystemCounterThread : public facebook::jni::HybridClass<SystemCounterThrea
   void logProcessCounters();
 };
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

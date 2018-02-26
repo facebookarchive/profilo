@@ -4,7 +4,7 @@
 
 #include <loom/entries/EntryParser.h>
 
-namespace facebook { namespace loom { namespace writer {
+namespace facebook { namespace profilo { namespace writer {
 
 using namespace entries;
 
@@ -24,4 +24,4 @@ private:
   std::ostream& stream_;
 };
 
-} } } // facebook::loom::writer
+} } } // facebook::profilo::writer

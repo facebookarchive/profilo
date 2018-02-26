@@ -13,9 +13,9 @@
 #include <loom/writer/TraceLifecycleVisitor.h>
 #include <loom/writer/PacketReassembler.h>
 
-namespace facebook { namespace loom { namespace writer {
+namespace facebook { namespace profilo { namespace writer {
 
-using namespace facebook::loom::entries;
+using namespace facebook::profilo::entries;
 
 MultiTraceLifecycleVisitor::MultiTraceLifecycleVisitor(
   const std::string& folder,
@@ -105,5 +105,5 @@ std::unordered_set<int64_t> MultiTraceLifecycleVisitor::getConsumedTraces() {
 }
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

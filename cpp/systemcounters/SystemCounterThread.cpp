@@ -16,7 +16,7 @@ using facebook::jni::alias_ref;
 using facebook::jni::local_ref;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 namespace {
 
@@ -310,5 +310,5 @@ void SystemCounterThread::logProcessCounters() {
   }
 }
 
-} // loom
+} // profilo
 } // facebook

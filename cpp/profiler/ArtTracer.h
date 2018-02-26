@@ -9,7 +9,7 @@
 #include "loom/Logger.h"
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace profiler {
 
 enum ArtVersion {
@@ -57,5 +57,5 @@ using Art70Tracer = ArtTracer<kArt700>;
 #endif
 
 } // namespace profiler
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

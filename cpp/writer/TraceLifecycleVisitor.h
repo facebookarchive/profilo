@@ -16,10 +16,10 @@
 #include <zstr/zstr.hpp>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
-using namespace facebook::loom::entries;
+using namespace facebook::profilo::entries;
 
 class TraceLifecycleVisitor: public EntryVisitor {
 public:
@@ -71,5 +71,5 @@ private:
 };
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

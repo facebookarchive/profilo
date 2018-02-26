@@ -33,7 +33,7 @@
 using namespace std::chrono;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace logger {
 namespace lfrb {
 
@@ -326,5 +326,5 @@ Futex<EmulatedFutexAtomic>::futexWaitImpl(
 
 } // namespace lfrb
 } // namespace logger
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

@@ -3,7 +3,7 @@
 #pragma once
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 enum AbortReason {
@@ -16,5 +16,5 @@ enum AbortReason {
 };
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

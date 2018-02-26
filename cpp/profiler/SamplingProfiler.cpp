@@ -33,10 +33,10 @@
 #include "util/common.h"
 
 using namespace facebook::jni;
-using namespace facebook::loom::util;
+using namespace facebook::profilo::util;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace profiler {
 
 namespace {
@@ -544,5 +544,5 @@ void stopProfiling(fbjni::alias_ref<jobject> obj) {
 }
 
 } // namespace profiler
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

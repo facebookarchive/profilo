@@ -1,11 +1,11 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<adf6aa561d065b288bedcbd18deb5258>>
+// @generated SignedSource<<af0c34eb1176e5b809858e76e8ef47cf>>
 
 #include <stdexcept>
 #include <loom/entries/EntryType.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 const char* to_string(EntryType type) {
@@ -99,5 +99,5 @@ const char* to_string(EntryType type) {
 }
 
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

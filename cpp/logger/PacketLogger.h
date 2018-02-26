@@ -10,7 +10,7 @@
 #define LOOMEXPORT __attribute__((visibility("default")))
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 class Logger;
 
 namespace logger {
@@ -33,4 +33,4 @@ private:
   PacketBufferProvider provider_;
 };
 
-} } } // facebook::loom::logger
+} } } // facebook::profilo::logger

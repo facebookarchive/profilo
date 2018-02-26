@@ -21,13 +21,13 @@
 #include <loom/PacketLogger.h>
 #include <loom/RingBuffer.h>
 
-using namespace facebook::loom::logger;
-using namespace facebook::loom::writer;
-using namespace facebook::loom::entries;
+using namespace facebook::profilo::logger;
+using namespace facebook::profilo::writer;
+using namespace facebook::profilo::entries;
 namespace test = folly::test;
 namespace fs = boost::filesystem;
 
-namespace facebook { namespace loom {
+namespace facebook { namespace profilo {
 
 const int64_t kTraceID = 1;
 const int64_t kSecondTraceID = 2;
@@ -480,5 +480,5 @@ TEST_F(TraceWriterTest, testTraceCRC32Checksum) {
   EXPECT_EQ(result_crc, crc);
 }
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

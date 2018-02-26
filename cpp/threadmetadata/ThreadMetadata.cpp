@@ -11,7 +11,7 @@
 #include <sys/resource.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace threadmetadata {
 
 static int32_t logAnnotation(
@@ -88,5 +88,5 @@ void logThreadMetadata(JNIEnv*, jobject) {
 }
 
 } // threadmetadata
-} // loom
+} // profilo
 } // facebook

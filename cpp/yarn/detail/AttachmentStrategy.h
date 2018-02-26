@@ -20,7 +20,7 @@ namespace facebook {
 namespace yarn {
 namespace detail {
 
-using namespace facebook::loom::util;
+using namespace facebook::profilo::util;
 
 using EventList = std::vector<Event>;
 

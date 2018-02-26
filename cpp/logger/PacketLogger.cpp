@@ -4,7 +4,7 @@
 
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace logger {
 
 PacketLogger::PacketLogger(PacketBufferProvider provider)
@@ -65,4 +65,4 @@ PacketBuffer::Cursor PacketLogger::writeAndGetCursor(
   return cursor;
 }
 
-} } } // facebook::loom::logger
+} } } // facebook::profilo::logger

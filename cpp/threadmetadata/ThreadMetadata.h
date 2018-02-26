@@ -6,11 +6,11 @@
 #include <sys/types.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace threadmetadata {
 
 void logThreadMetadata(JNIEnv*, jobject);
 
 } // threadmetadata
-} // loom
+} // profilo
 } // facebook

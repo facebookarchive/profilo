@@ -14,7 +14,7 @@ namespace {
 
 LoomApi* resolve_loom_api_int() {
   return reinterpret_cast<LoomApi*>(
-    facebook::loom::util::resolve_symbol("loom_api_int"));
+    facebook::profilo::util::resolve_symbol("loom_api_int"));
 }
 
 LoomApi* get_loom_api_int() {

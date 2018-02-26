@@ -25,7 +25,7 @@
 #include "Atrace.h"
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace atrace {
 
 namespace {
@@ -305,5 +305,5 @@ void registerNatives() {
 }
 
 } // atrace
-} // loom
+} // profilo
 } // facebook

@@ -19,7 +19,7 @@
 #include <vector>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace util {
 
 // May not be needed afterwards
@@ -269,5 +269,5 @@ private:
 };
 
 } // util
-} // loom
+} // profilo
 } // facebook

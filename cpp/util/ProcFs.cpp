@@ -9,7 +9,7 @@
 #include <algorithm>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace util {
 
 static constexpr int kMaxProcFileLength = 64;
@@ -555,5 +555,5 @@ void ThreadCache::clear() {
 }
 
 } // util
-} // loom
+} // profilo
 } // facebook

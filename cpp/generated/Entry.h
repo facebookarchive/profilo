@@ -1,5 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<035fe5f5db869eebc3ebf0b7dc02009a>>
+// @generated SignedSource<<bf96144f417277569d6217a3c4b0a05c>>
 
 #include <cstdint>
 #include <cstring>
@@ -9,7 +9,7 @@
 #pragma once
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 struct __attribute__((packed)) StandardEntry {
@@ -71,5 +71,5 @@ struct __attribute__((packed)) BytesEntry {
 uint8_t peek_type(const void* src, size_t len);
 
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

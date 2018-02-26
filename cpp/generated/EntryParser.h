@@ -1,5 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<e7196be333500e2941feb83600fdb4d1>>
+// @generated SignedSource<<4c156e08fa1208cad570e4bc93e0a96c>>
 
 #pragma once
 
@@ -14,7 +14,7 @@
 #include <loom/entries/Entry.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 class EntryVisitor {
@@ -59,5 +59,5 @@ public:
 };
 
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

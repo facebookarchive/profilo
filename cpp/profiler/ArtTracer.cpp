@@ -34,7 +34,7 @@
 namespace fbjni = facebook::jni;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace profiler {
 
 namespace {
@@ -176,5 +176,5 @@ template<> void ArtTracer<kVersion>::stopTracing() {
 }
 
 } // profiler
-} // loom
+} // profilo
 } // facebook

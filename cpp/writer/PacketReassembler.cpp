@@ -5,7 +5,7 @@
 #include <algorithm>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 using detail::PacketStream;
@@ -145,4 +145,4 @@ void PacketReassembler::processBackwards(Packet const& packet) {
   }
 }
 
-} } } // facebook::loom::writer
+} } } // facebook::profilo::writer

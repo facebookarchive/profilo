@@ -10,7 +10,7 @@
 #include <linker/bionic_linker.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace util {
 
 namespace {
@@ -45,5 +45,5 @@ void* resolve_symbol(const char* name) {
 }
 
 } // util
-} // loom
+} // profilo
 } // facebook

@@ -9,7 +9,7 @@
 #include <gtest/gtest.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 using namespace logger;
 using namespace writer;
@@ -104,4 +104,4 @@ TEST(Logger, testPacketizedWriteBackwards) {
   }
 }
 
-} } // facebook::loom
+} } // facebook::profilo

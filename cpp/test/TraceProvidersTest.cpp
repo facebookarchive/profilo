@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 TEST(TraceProviders, testAdd) {
   auto& tp = TraceProviders::get();
@@ -90,5 +90,5 @@ TEST(TraceProviders, testClearAllProviders) {
   EXPECT_FALSE(tp.isEnabled(0b1000));
 }
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

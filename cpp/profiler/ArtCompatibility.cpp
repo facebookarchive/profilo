@@ -34,7 +34,7 @@
 namespace fbjni = facebook::jni;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace artcompat {
 
 namespace {
@@ -298,5 +298,5 @@ void registerNatives_7_0_0() {
 }
 
 } // artcompat
-} // loom
+} // profilo
 } // facebook

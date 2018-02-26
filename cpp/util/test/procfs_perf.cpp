@@ -6,7 +6,7 @@
 
 #include <util/ProcFs.h>
 
-using namespace facebook::loom;
+using namespace facebook::profilo;
 
 int main() {
 

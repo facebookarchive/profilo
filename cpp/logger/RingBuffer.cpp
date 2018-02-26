@@ -2,11 +2,11 @@
 
 #include <loom/RingBuffer.h>
 
-namespace facebook { namespace loom {
+namespace facebook { namespace profilo {
 
 LoomBuffer& RingBuffer::get(size_t sz) {
   static LoomBuffer instance(sz);
   return instance;
 }
 
-} } // namespace facebook::loom
+} } // namespace facebook::profilo

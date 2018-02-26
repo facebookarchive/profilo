@@ -11,7 +11,7 @@
 #include "loom/Logger.h"
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace profiler {
 
 using dvmThreadSelf_t = Thread*(*)();
@@ -47,5 +47,5 @@ private:
 };
 
 } // namespace profiler
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

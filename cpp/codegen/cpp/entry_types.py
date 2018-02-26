@@ -24,13 +24,13 @@ class CppEntryTypesCodegen(Codegen):
 #pragma once
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 %%ENTRIES_ENUM%%
 
 const char* to_string(EntryType type);
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook
 """.lstrip()
 
@@ -72,12 +72,12 @@ class CppEntryTypesCppCodegen(Codegen):
 #include <loom/entries/EntryType.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 %%TO_STRING%%
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook
 """.lstrip()
 

@@ -5,7 +5,7 @@
 #include "TraceProviders.h"
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 TraceProviders& TraceProviders::get() {
   static TraceProviders providers{};
@@ -73,5 +73,5 @@ void TraceProviders::clearAllProviders() {
   providers_ = 0;
 }
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

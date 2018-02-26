@@ -9,7 +9,7 @@
 namespace fbjni = facebook::jni;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 struct JNativeTraceWriterCallbacks:
@@ -57,5 +57,5 @@ class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
 };
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

@@ -5,7 +5,7 @@
 #include <loom/writer/DeltaEncodingVisitor.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 DeltaEncodingVisitor::DeltaEncodingVisitor(EntryVisitor& delegate):
@@ -73,5 +73,5 @@ void DeltaEncodingVisitor::visit(const BytesEntry& entry) {
 }
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

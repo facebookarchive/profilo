@@ -28,7 +28,7 @@
 
 namespace facebook {
 
-namespace loom {
+namespace profilo {
 
 namespace logger {
 
@@ -268,5 +268,5 @@ struct TurnSequencer {
 
 } // namespace lfrb
 } // namespace logger
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

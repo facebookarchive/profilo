@@ -7,7 +7,7 @@
 #include <cstring>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 using namespace entries;
 

@@ -6,7 +6,7 @@
 #include <loom/writer/AbortReason.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 struct TraceCallbacks {
@@ -25,5 +25,5 @@ struct TraceCallbacks {
 };
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

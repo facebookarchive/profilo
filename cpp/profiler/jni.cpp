@@ -10,7 +10,7 @@
 #include "SamplingProfiler.h"
 #include "util/common.h"
 
-using namespace facebook::loom;
+using namespace facebook::profilo;
 
 const char* CPUProfilerType = "com/facebook/loom/provider/stacktrace/CPUProfiler";
 const char* StackFrameThreadType = "com/facebook/loom/provider/stacktrace/StackFrameThread";

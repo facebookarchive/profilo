@@ -2,7 +2,7 @@
 
 #include <loom/writer/PrintEntryVisitor.h>
 
-namespace facebook { namespace loom { namespace writer {
+namespace facebook { namespace profilo { namespace writer {
 
 PrintEntryVisitor::PrintEntryVisitor(std::ostream& stream):
   stream_(stream) {}
@@ -56,4 +56,4 @@ void PrintEntryVisitor::visit(const BytesEntry& data) {
   stream_ << '\n';
 }
 
-} } } // facebook::loom::writer
+} } } // facebook::profilo::writer

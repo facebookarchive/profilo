@@ -17,7 +17,7 @@ using facebook::jni::local_ref;
 namespace fbjni = facebook::jni;
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 namespace {
@@ -181,5 +181,5 @@ void NativeTraceWriter::registerNatives() {
 }
 
 } // writer
-} // loom
+} // profilo
 } // facebook

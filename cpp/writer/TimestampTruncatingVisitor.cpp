@@ -5,7 +5,7 @@
 #include <loom/writer/TimestampTruncatingVisitor.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace writer {
 
 namespace {
@@ -58,5 +58,5 @@ void TimestampTruncatingVisitor::visit(const BytesEntry& entry) {
 }
 
 } // writer
-} // loom
+} // profilo
 } // facebook

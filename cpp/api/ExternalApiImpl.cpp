@@ -8,7 +8,7 @@
 #include <loom/LogEntry.h>
 #include <loom/TraceProviders.h>
 
-using namespace facebook::loom;
+using namespace facebook::profilo;
 
 void loom_internal_mark_start(const char* provider, const char* msg);
 void loom_internal_mark_end(const char* provider);

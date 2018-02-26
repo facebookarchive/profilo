@@ -3,7 +3,7 @@
 #pragma once
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace artcompat {
 
 #if defined(ART_VERSION_5_1_1)
@@ -17,5 +17,5 @@ void registerNatives_7_0_0();
 #endif
 
 } // artcompat
-} // loom
+} // profilo
 } // facebook

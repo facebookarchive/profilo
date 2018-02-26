@@ -36,7 +36,7 @@ class CppParserCodegen(Codegen):
 #include <loom/entries/Entry.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 class EntryVisitor {
@@ -52,7 +52,7 @@ public:
 };
 
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook
 """.lstrip()
 

@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 using namespace logger;
 
@@ -49,4 +49,4 @@ private:
   void recycleStream(detail::PacketStream stream);
 };
 
-} } } // facebook::loom::writer
+} } } // facebook::profilo::writer

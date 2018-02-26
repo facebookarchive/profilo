@@ -33,7 +33,7 @@ class CppEntryStructsCodegen(Codegen):
 #pragma once
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 %%ENTRIES_STRUCTS%%
@@ -41,7 +41,7 @@ namespace entries {
 uint8_t peek_type(const void* src, size_t len);
 
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook
 """.lstrip()
 
@@ -110,7 +110,7 @@ class CppEntryStructsCppCodegen(Codegen):
 #include <loom/entries/Entry.h>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 namespace entries {
 
 %%ENTRIES_CODE%%
@@ -121,7 +121,7 @@ uint8_t peek_type(const void* src, size_t len) {
 }
 
 } // namespace entries
-} // namespace loom
+} // namespace profilo
 } // namespace facebook
 """.lstrip()
 

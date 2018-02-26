@@ -10,7 +10,7 @@
 #include <string>
 
 namespace facebook {
-namespace loom {
+namespace profilo {
 
 class TraceProviders {
   public:
@@ -43,5 +43,5 @@ class TraceProviders {
     std::unordered_map<std::string, uint32_t> name_lookup_cache_;
 };
 
-} // namespace loom
+} // namespace profilo
 } // namespace facebook

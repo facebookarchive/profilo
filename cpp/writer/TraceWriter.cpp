@@ -20,7 +20,7 @@
 
 #include <loom/LogEntry.h>
 
-namespace facebook { namespace loom { namespace writer {
+namespace facebook { namespace profilo { namespace writer {
 
 namespace {
 
@@ -141,5 +141,5 @@ void TraceWriter::submit(int64_t trace_id) {
 }
 
 } // namespace writer
-} // namespace loom
+} // namespace profilo
 } // namespace facebook
