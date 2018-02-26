@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 CONSTANTS = [
     "Identifiers.java",
@@ -28,8 +28,8 @@ android_library(
         "PUBLIC",
     ],
     deps = [
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("deps/proguard:annotations"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
     ],
 )
 
@@ -40,8 +40,8 @@ android_library(
         "PUBLIC",
     ],
     deps = [
-        loom_path("deps/fbtrace:utils"),
-        loom_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/fbtrace:utils"),
+        profilo_path("deps/jsr-305:jsr-305"),
     ],
 )
 
@@ -53,12 +53,12 @@ android_library(
     ],
     visibility = [
         "//javatests/com/facebook/loom/...",
-        loom_path("..."),
+        profilo_path("..."),
         "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
     ],
     deps = [
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("deps/soloader:soloader"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/soloader:soloader"),
     ],
 )
 
@@ -67,13 +67,13 @@ android_library(
     srcs = CONTROL,
     exported_deps = [
         ":constants",
-        loom_path("aidl:aidl"),
-        loom_path("java/main/com/facebook/loom/config:config"),
-        loom_path("java/main/com/facebook/loom/logger:logger"),
+        profilo_path("aidl:aidl"),
+        profilo_path("java/main/com/facebook/loom/config:config"),
+        profilo_path("java/main/com/facebook/loom/logger:logger"),
     ],
     required_for_source_only_abi = True,
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
         "//javatests/com/facebook/cloudseeder:cloudseeder",
         "//javatests/com/facebook/debug/fps:fps",
         "//javatests/com/facebook/stall:stall",
@@ -81,10 +81,10 @@ android_library(
     ],
     deps = [
         ":constants",
-        loom_path("deps/androidinternals:os"),
-        loom_path("deps/buildconstants:buildconstants"),
-        loom_path("deps/fbtrace:utils"),
-        loom_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/androidinternals:os"),
+        profilo_path("deps/buildconstants:buildconstants"),
+        profilo_path("deps/fbtrace:utils"),
+        profilo_path("deps/jsr-305:jsr-305"),
     ],
 )
 
@@ -99,11 +99,11 @@ android_library(
         ":control",
         ":events",
         ":providersregistry",
-        loom_path("java/main/com/facebook/loom/config:config"),
-        loom_path("java/main/com/facebook/loom/writer:writer_callbacks"),
+        profilo_path("java/main/com/facebook/loom/config:config"),
+        profilo_path("java/main/com/facebook/loom/writer:writer_callbacks"),
     ],
     tests = [
-        loom_path("java/test/com/facebook/loom/core:core"),
+        profilo_path("java/test/com/facebook/loom/core:core"),
     ],
     visibility = [
         "//java/com/facebook/cloudseeder:cloudseeder",
@@ -116,11 +116,11 @@ android_library(
         "//java/com/instagram/android/...",
         "//javatests/com/facebook/cloudseeder:cloudseeder",
         "//javatests/com/facebook/tools/dextr/...",
-        loom_path("..."),
+        profilo_path("..."),
     ],
     deps = [
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("deps/zip:zip"),
-        loom_path("java/main/com/facebook/loom/logger:logger"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/zip:zip"),
+        profilo_path("java/main/com/facebook/loom/logger:logger"),
     ],
 )

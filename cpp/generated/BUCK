@@ -1,5 +1,5 @@
 load("//build_defs:fb_java_library.bzl", "fb_java_library")
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 fb_xplat_cxx_library(
@@ -13,7 +13,7 @@ fb_xplat_cxx_library(
     ],
     force_static = True,
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
 )
 
@@ -21,6 +21,6 @@ fb_java_library(
     name = "java",
     srcs = glob(["*.java"]),
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
 )

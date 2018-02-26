@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//tools/build_defs:robolectric3_test.bzl", "robolectric3_test")
 
 android_library(
@@ -8,13 +8,13 @@ android_library(
         excludes = ["*Test.java"],
     ),
     visibility = [
-        loom_path("java/test/com/facebook/loom/core:core"),
+        profilo_path("java/test/com/facebook/loom/core:core"),
     ],
     deps = [
         "//java/com/facebook/testing/powermock:powermock",
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("deps/proguard:annotations"),
-        loom_path("java/main/com/facebook/loom/logger:logger"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("java/main/com/facebook/loom/logger:logger"),
         "//third-party/java/junit:junit",
     ],
 )
@@ -31,10 +31,10 @@ robolectric3_test(
         "//java/com/facebook/testing/robolectric:robolectric",
         "//java/com/facebook/testing/robolectric/v3:v3",
         "//java/com/facebook/testing/robolectric/v3/shadows:shadows",
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("java/main/com/facebook/loom/core:core"),
-        loom_path("java/main/com/facebook/loom/core:events"),
-        loom_path("java/main/com/facebook/loom/logger:logger"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("java/main/com/facebook/loom/core:core"),
+        profilo_path("java/main/com/facebook/loom/core:events"),
+        profilo_path("java/main/com/facebook/loom/logger:logger"),
         "//third-party/java/assertj:assertj-android",
         "//third-party/java/assertj:assertj-core",
         "//third-party/java/fest:fest",

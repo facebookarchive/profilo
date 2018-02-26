@@ -1,13 +1,13 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 python_library(
     name = "importer",
     srcs = glob(["*.py"]),
     base_module = "loom.importer",
     visibility = [
-        loom_path("python/..."),
+        profilo_path("python/..."),
     ],
     deps = [
-        loom_path("python/loom/model:model"),
+        profilo_path("python/loom/model:model"),
     ],
 )

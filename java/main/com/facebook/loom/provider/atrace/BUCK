@@ -1,16 +1,16 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 android_library(
     name = "atrace",
     srcs = glob(["*.java"]),
     visibility = [
         "//javatests/com/facebook/loom/...",
-        loom_path("..."),
+        profilo_path("..."),
     ],
     deps = [
-        loom_path("cpp/atrace:atrace"),
-        loom_path("deps/proguard:annotations"),
-        loom_path("deps/soloader:soloader"),
-        loom_path("java/main/com/facebook/loom/core:core"),
+        profilo_path("cpp/atrace:atrace"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
+        profilo_path("java/main/com/facebook/loom/core:core"),
     ],
 )

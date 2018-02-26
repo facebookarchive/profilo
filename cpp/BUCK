@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 PROVIDER_EXPORTED_HEADERS = ["TraceProviders.h"]
@@ -20,13 +20,13 @@ fb_xplat_cxx_library(
     ],
     force_static = True,
     tests = [
-        loom_path("cpp/test:providers"),
+        profilo_path("cpp/test:providers"),
     ],
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
     deps = [
-        loom_path("deps/fbjni:fbjni"),
+        profilo_path("deps/fbjni:fbjni"),
     ],
 )
 
@@ -46,11 +46,11 @@ fb_xplat_cxx_library(
     ],
     force_static = True,
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
     deps = [
-        loom_path("cpp/generated:cpp"),
-        loom_path("cpp/util:util"),
+        profilo_path("cpp/generated:cpp"),
+        profilo_path("cpp/util:util"),
     ],
 )
 
@@ -78,20 +78,20 @@ fb_xplat_cxx_library(
     soname = "libloom.$(ext)",
     supported_platforms_regex = "^android-(armv7|x86)$",
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
         "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
     ],
     deps = [
         ":constants",
         ":providers",
-        loom_path("cpp/api:external_api_impl"),
-        loom_path("cpp/jni:jni"),
-        loom_path("cpp/logger:logger_static"),
-        loom_path("cpp/util:util"),
-        loom_path("deps/atomic:atomic"),
-        loom_path("deps/fb:fb"),
-        loom_path("deps/fbjni:fbjni"),
-        loom_path("deps/sigmux:sigmux"),
-        loom_path("deps/xplat_init:xplat_init"),
+        profilo_path("cpp/api:external_api_impl"),
+        profilo_path("cpp/jni:jni"),
+        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/atomic:atomic"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
+        profilo_path("deps/sigmux:sigmux"),
+        profilo_path("deps/xplat_init:xplat_init"),
     ],
 )

@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 keystore(
     name = "keystore",
@@ -7,12 +7,12 @@ keystore(
 )
 
 PROVIDER_TO_RULE = {
-    "atrace": loom_path("java/main/com/facebook/loom/provider/atrace:atrace"),
-    "systemcounters": loom_path("java/main/com/facebook/loom/provider/systemcounters:systemcounters"),
-    "stacktrace": loom_path("java/main/com/facebook/loom/provider/stacktrace:stacktrace"),
-    "threadmetadata": loom_path("java/main/com/facebook/loom/provider/threadmetadata:threadmetadata"),
-    "processmetadata": loom_path("java/main/com/facebook/loom/provider/processmetadata:processmetadata"),
-    "yarn": loom_path("java/main/com/facebook/loom/provider/yarn:yarn"),
+    "atrace": profilo_path("java/main/com/facebook/loom/provider/atrace:atrace"),
+    "systemcounters": profilo_path("java/main/com/facebook/loom/provider/systemcounters:systemcounters"),
+    "stacktrace": profilo_path("java/main/com/facebook/loom/provider/stacktrace:stacktrace"),
+    "threadmetadata": profilo_path("java/main/com/facebook/loom/provider/threadmetadata:threadmetadata"),
+    "processmetadata": profilo_path("java/main/com/facebook/loom/provider/processmetadata:processmetadata"),
+    "yarn": profilo_path("java/main/com/facebook/loom/provider/yarn:yarn"),
 }
 
 def loom_sample_app(providers):
@@ -49,11 +49,11 @@ def loom_sample_app(providers):
         provided_deps = provided_deps,
         deps = [
             ":sample-buildconfig-{}".format(providers_string),
-            loom_path("java/main/com/facebook/loom/config:config"),
-            loom_path("java/main/com/facebook/loom/controllers/external:external"),
-            loom_path("java/main/com/facebook/loom/controllers/external/api:api"),
-            loom_path("java/main/com/facebook/loom/core:core"),
-            loom_path("deps/soloader:soloader"),
+            profilo_path("java/main/com/facebook/loom/config:config"),
+            profilo_path("java/main/com/facebook/loom/controllers/external:external"),
+            profilo_path("java/main/com/facebook/loom/controllers/external/api:api"),
+            profilo_path("java/main/com/facebook/loom/core:core"),
+            profilo_path("deps/soloader:soloader"),
         ] + providers_deps,
         visibility = [
             "PUBLIC",

@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 cxx_test(
@@ -16,7 +16,7 @@ cxx_test(
         "-ldl",
     ],
     deps = [
-        loom_path("cpp:providers"),
+        profilo_path("cpp:providers"),
     ],
 )
 
@@ -34,8 +34,8 @@ cxx_test(
         "-pthread",
     ],
     deps = [
-        loom_path("cpp/generated:cpp"),
-        loom_path("cpp/writer:print_visitor"),
+        profilo_path("cpp/generated:cpp"),
+        profilo_path("cpp/writer:print_visitor"),
     ],
 )
 
@@ -53,8 +53,8 @@ cxx_test(
         "-pthread",
     ],
     deps = [
-        loom_path("cpp/writer:delta_visitor"),
-        loom_path("cpp/writer:print_visitor"),
+        profilo_path("cpp/writer:delta_visitor"),
+        profilo_path("cpp/writer:print_visitor"),
     ],
 )
 
@@ -72,8 +72,8 @@ cxx_test(
         "-pthread",
     ],
     deps = [
-        loom_path("cpp/writer:print_visitor"),
-        loom_path("cpp/writer:stack_visitor"),
+        profilo_path("cpp/writer:print_visitor"),
+        profilo_path("cpp/writer:stack_visitor"),
     ],
 )
 
@@ -93,8 +93,8 @@ cxx_test(
     deps = [
         "xplat//folly:test-util",
         "xplat//third-party/gmock:gmock",
-        loom_path("cpp/logger:logger_static"),
-        loom_path("cpp/writer:packet_reassembler"),
+        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/writer:packet_reassembler"),
     ],
 )
 
@@ -114,7 +114,7 @@ cxx_test(
     deps = [
         "xplat//folly:test-util",
         "xplat//third-party/gmock:gmock",
-        loom_path("cpp/logger:logger_static"),
-        loom_path("cpp/writer:writer"),
+        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/writer:writer"),
     ],
 )

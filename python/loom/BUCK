@@ -1,12 +1,12 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 python_library(
     name = "runner-lib",
     srcs = glob(["*.py"]),
     base_module = "loom",
     deps = [
-        loom_path("python/loom/importer:importer"),
-        loom_path("python/loom/model:model"),
+        profilo_path("python/loom/importer:importer"),
+        profilo_path("python/loom/model:model"),
     ],
 )
 

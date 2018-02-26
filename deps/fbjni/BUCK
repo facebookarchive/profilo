@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
 

@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 CALLBACKS_SRC = ["NativeTraceWriterCallbacks.java"]
 
@@ -12,14 +12,14 @@ android_library(
         ":writer_callbacks",
     ],
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
     deps = [
-        loom_path("cpp:loom"),
-        loom_path("deps/fbjni:fbjni-java"),
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("deps/proguard:annotations"),
-        loom_path("deps/soloader:soloader"),
+        profilo_path("cpp:loom"),
+        profilo_path("deps/fbjni:fbjni-java"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
     ],
 )
 
@@ -27,10 +27,10 @@ android_library(
     name = "writer_callbacks",
     srcs = glob(CALLBACKS_SRC),
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
         "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
     ],
     deps = [
-        loom_path("deps/proguard:annotations"),
+        profilo_path("deps/proguard:annotations"),
     ],
 )

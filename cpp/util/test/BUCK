@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 cxx_binary(
     name = "procfs_perf",
@@ -15,6 +15,6 @@ cxx_binary(
         "-pie",
     ],
     deps = [
-        loom_path("cpp/util:util"),
+        profilo_path("cpp/util:util"),
     ],
 )

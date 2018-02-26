@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 SYSTEM_COUNTERS_EXPORTED_HEADERS = ["SystemCounterThread.h"]
@@ -23,13 +23,13 @@ fb_xplat_cxx_library(
     ],
     soname = "libloom_systemcounters.$(ext)",
     visibility = [
-        loom_path("java/main/com/facebook/loom/provider/systemcounters:"),
+        profilo_path("java/main/com/facebook/loom/provider/systemcounters:"),
     ],
     deps = [
-        loom_path("cpp:loom"),
-        loom_path("cpp/logger:logger"),
-        loom_path("cpp/util:util"),
-        loom_path("deps/fb:fb"),
-        loom_path("deps/fbjni:fbjni"),
+        profilo_path("cpp:loom"),
+        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
     ],
 )

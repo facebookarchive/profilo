@@ -1,10 +1,10 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 python_test(
     name = "tests",
     srcs = glob(["*.py"]),
     base_module = "loom.model.tests",
     deps = [
-        loom_path("python/loom/model:model"),
+        profilo_path("python/loom/model:model"),
     ],
 )

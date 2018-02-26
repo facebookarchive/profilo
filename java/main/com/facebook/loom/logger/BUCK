@@ -1,30 +1,30 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 android_library(
     name = "logger",
     srcs = glob(["*.java"]),
     exported_deps = [
-        loom_path("cpp/generated:java"),
+        profilo_path("cpp/generated:java"),
     ],
     tests = [
-        loom_path("java/test/com/facebook/loom/logger:logger"),
+        profilo_path("java/test/com/facebook/loom/logger:logger"),
     ],
     visibility = [
         "//java/com/facebook/quicklog/...",
         "//java/com/facebook/tools/dextr/...",
         "//javatests/com/facebook/tools/dextr/...",
-        loom_path("..."),
+        profilo_path("..."),
         "//perftests/benchmarks/...",
     ],
     deps = [
-        loom_path("cpp:loom"),
-        loom_path("deps/buildconstants:buildconstants"),
-        loom_path("deps/fbtrace:utils"),
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("deps/proguard:annotations"),
-        loom_path("deps/soloader:soloader"),
-        loom_path("java/main/com/facebook/loom/core:constants"),
-        loom_path("java/main/com/facebook/loom/core:events"),
-        loom_path("java/main/com/facebook/loom/writer:writer"),
+        profilo_path("cpp:loom"),
+        profilo_path("deps/buildconstants:buildconstants"),
+        profilo_path("deps/fbtrace:utils"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
+        profilo_path("java/main/com/facebook/loom/core:constants"),
+        profilo_path("java/main/com/facebook/loom/core:events"),
+        profilo_path("java/main/com/facebook/loom/writer:writer"),
     ],
 )

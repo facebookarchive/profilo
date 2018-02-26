@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 fb_xplat_cxx_library(
@@ -16,14 +16,14 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
-        loom_path("cpp/generated:cpp"),
+        profilo_path("cpp/generated:cpp"),
     ],
     preferred_linkage = "static",
     tests = [
-        loom_path("cpp/test:codegen"),
+        profilo_path("cpp/test:codegen"),
     ],
     visibility = [
-        loom_path("cpp/test/..."),
+        profilo_path("cpp/test/..."),
     ],
 )
 
@@ -44,14 +44,14 @@ fb_xplat_cxx_library(
         "-fwrapv",
     ],
     exported_deps = [
-        loom_path("cpp/generated:cpp"),
+        profilo_path("cpp/generated:cpp"),
     ],
     preferred_linkage = "static",
     tests = [
-        loom_path("cpp/test:delta_visitor"),
+        profilo_path("cpp/test:delta_visitor"),
     ],
     visibility = [
-        loom_path("cpp/test/..."),
+        profilo_path("cpp/test/..."),
     ],
 )
 
@@ -70,11 +70,11 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
-        loom_path("cpp/generated:cpp"),
+        profilo_path("cpp/generated:cpp"),
     ],
     preferred_linkage = "static",
     visibility = [
-        loom_path("cpp/test/..."),
+        profilo_path("cpp/test/..."),
     ],
 )
 
@@ -93,14 +93,14 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
-        loom_path("cpp/generated:cpp"),
+        profilo_path("cpp/generated:cpp"),
     ],
     preferred_linkage = "static",
     visibility = [
-        loom_path("cpp/test/..."),
+        profilo_path("cpp/test/..."),
     ],
     deps = [
-        loom_path("cpp/profiler:constants"),
+        profilo_path("cpp/profiler:constants"),
     ],
 )
 
@@ -119,11 +119,11 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
-        loom_path("cpp/logger:logger"),
+        profilo_path("cpp/logger:logger"),
     ],
     preferred_linkage = "static",
     visibility = [
-        loom_path("cpp/test/..."),
+        profilo_path("cpp/test/..."),
     ],
 )
 
@@ -150,15 +150,15 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
-        loom_path("cpp/generated:cpp"),
+        profilo_path("cpp/generated:cpp"),
     ],
     preferred_linkage = "static",
     tests = [
-        loom_path("cpp/test:trace_writer"),
+        profilo_path("cpp/test:trace_writer"),
     ],
     visibility = [
-        loom_path("cpp/jni/..."),
-        loom_path("cpp/test/..."),
+        profilo_path("cpp/jni/..."),
+        profilo_path("cpp/test/..."),
     ],
     deps = [
         ":delta_visitor",
@@ -166,7 +166,7 @@ fb_xplat_cxx_library(
         ":print_visitor",
         ":stack_visitor",
         ":timestamp_truncating_visitor",
-        loom_path("cpp/logger:logger"),
-        loom_path("deps/zstr:zstr"),
+        profilo_path("cpp/logger:logger"),
+        profilo_path("deps/zstr:zstr"),
     ],
 )

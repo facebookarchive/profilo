@@ -1,17 +1,17 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 android_library(
     name = "api",
     srcs = glob(["*.java"]),
     exported_deps = [
-        loom_path("java/main/com/facebook/loom/core:constants"),
+        profilo_path("java/main/com/facebook/loom/core:constants"),
     ],
     visibility = [
         "PUBLIC",
     ],
     deps = [
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("java/main/com/facebook/loom/controllers/external:external"),
-        loom_path("java/main/com/facebook/loom/core:core"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("java/main/com/facebook/loom/controllers/external:external"),
+        profilo_path("java/main/com/facebook/loom/core:core"),
     ],
 )

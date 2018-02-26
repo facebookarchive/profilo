@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
 
@@ -19,8 +19,8 @@ if not THIS_IS_FBANDROID:
             ("android-x86", ["-D__X86__"]),
         ],
         deps = [
-            loom_path("deps/cjni:cjni"),
-            loom_path("deps/sig_safe_write:sig_safe_write"),
-            loom_path("deps/sigmux:sigmux"),
+            profilo_path("deps/cjni:cjni"),
+            profilo_path("deps/sig_safe_write:sig_safe_write"),
+            profilo_path("deps/sigmux:sigmux"),
         ],
     )

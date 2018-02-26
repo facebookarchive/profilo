@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 fb_xplat_cxx_library(
@@ -36,16 +36,16 @@ fb_xplat_cxx_library(
     ],
     soname = "libloom_yarn.$(ext)",
     visibility = [
-        loom_path("..."),
-        loom_path("cpp/yarn/..."),
+        profilo_path("..."),
+        profilo_path("cpp/yarn/..."),
     ],
     deps = [
         ":headers_linux",
-        loom_path("cpp:constants"),
-        loom_path("cpp:loom"),
-        loom_path("cpp/logger:logger"),
-        loom_path("cpp/util:util"),
-        loom_path("deps/fb:fb"),
-        loom_path("deps/fbjni:fbjni"),
+        profilo_path("cpp:constants"),
+        profilo_path("cpp:loom"),
+        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
     ],
 )

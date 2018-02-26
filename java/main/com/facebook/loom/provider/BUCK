@@ -1,15 +1,15 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 android_library(
     name = "provider",
     visibility = [
         "//java/com/facebook/cloudseeder:cloudseeder",
         "//javatests/com/facebook/cloudseeder:cloudseeder",
-        loom_path("..."),
+        profilo_path("..."),
         "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
     ],
     deps = [
-        loom_path("java/main/com/facebook/loom/provider/stacktrace:stacktrace"),
-        loom_path("java/main/com/facebook/loom/provider/systemcounters:systemcounters"),
+        profilo_path("java/main/com/facebook/loom/provider/stacktrace:stacktrace"),
+        profilo_path("java/main/com/facebook/loom/provider/systemcounters:systemcounters"),
     ],
 )

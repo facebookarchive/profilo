@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 UTIL_EXPORTED_HEADERS = [
@@ -26,7 +26,7 @@ fb_xplat_cxx_library(
     ],
     force_static = True,
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
 )
 
@@ -47,9 +47,9 @@ fb_xplat_cxx_library(
     ],
     force_static = True,
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
     deps = [
-        loom_path("deps/linker:linker"),
+        profilo_path("deps/linker:linker"),
     ],
 )

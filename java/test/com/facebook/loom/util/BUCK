@@ -1,14 +1,14 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 android_library(
     name = "util",
     srcs = glob(["*.java"]),
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
     deps = [
         "//java/com/facebook/testing/powermock:powermock",
-        loom_path("java/main/com/facebook/loom/core:core"),
+        profilo_path("java/main/com/facebook/loom/core:core"),
         "//third-party/java/junit:junit",
     ],
 )

@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 fb_xplat_cxx_library(
@@ -17,11 +17,11 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
-        loom_path("cpp/writer:writer"),
-        loom_path("deps/fbjni:fbjni"),
+        profilo_path("cpp/writer:writer"),
+        profilo_path("deps/fbjni:fbjni"),
     ],
     force_static = True,
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
 )

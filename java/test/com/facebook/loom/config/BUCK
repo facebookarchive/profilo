@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//tools/build_defs:robolectric3_test.bzl", "robolectric3_test")
 
 robolectric3_test(
@@ -19,11 +19,11 @@ robolectric3_test(
         "//java/com/facebook/testing/powermock:powermock",
         "//java/com/facebook/testing/robolectric/v3:v3",
         "//java/com/facebook/testing/util:util",
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("facebook/java/main/com/facebook/loom/config/coldstart:coldstart"),
-        loom_path("facebook/java/main/com/facebook/loom/config/json:json"),
-        loom_path("java/main/com/facebook/loom/config:config"),
-        loom_path("java/main/com/facebook/loom/core:core"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("facebook/java/main/com/facebook/loom/config/coldstart:coldstart"),
+        profilo_path("facebook/java/main/com/facebook/loom/config/json:json"),
+        profilo_path("java/main/com/facebook/loom/config:config"),
+        profilo_path("java/main/com/facebook/loom/core:core"),
         "//third-party/java/assertj:assertj-core",
         "//third-party/java/fest:fest",
         "//third-party/java/fest:fest_util",

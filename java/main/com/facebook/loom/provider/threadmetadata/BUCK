@@ -1,15 +1,15 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 android_library(
     name = "threadmetadata",
     srcs = glob(["*.java"]),
-    visibility = [loom_path("...")],
+    visibility = [profilo_path("...")],
     deps = [
-        loom_path("cpp/threadmetadata:threadmetadata"),
-        loom_path("deps/jsr-305:jsr-305"),
-        loom_path("deps/proguard:annotations"),
-        loom_path("deps/soloader:soloader"),
-        loom_path("java/main/com/facebook/loom/core:core"),
-        loom_path("java/main/com/facebook/loom/logger:logger"),
+        profilo_path("cpp/threadmetadata:threadmetadata"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
+        profilo_path("java/main/com/facebook/loom/core:core"),
+        profilo_path("java/main/com/facebook/loom/logger:logger"),
     ],
 )

@@ -1,4 +1,4 @@
-load("//buck_imports:loom_path.bzl", "loom_path")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 
 def tracer_library(version):
@@ -37,14 +37,14 @@ def tracer_library(version):
         reexport_all_header_dependencies = False,
         soname = "libloomprofiler{version_num}.$(ext)".format(version_num=version_num),
         visibility = [
-            loom_path("..."),
+            profilo_path("..."),
         ],
         deps = [
-            loom_path("deps/fb:fb"),
-            loom_path("deps/fbjni:fbjni"),
-            loom_path("deps/forkjail:forkjail"),
-            loom_path("deps/museum/{version}:{version}").format(version=version),
-            loom_path("cpp/logger:logger"),
+            profilo_path("deps/fb:fb"),
+            profilo_path("deps/fbjni:fbjni"),
+            profilo_path("deps/forkjail:forkjail"),
+            profilo_path("deps/museum/{version}:{version}").format(version=version),
+            profilo_path("cpp/logger:logger"),
         ],
     )
 
@@ -66,7 +66,7 @@ fb_xplat_cxx_library(
         "Constants.h",
     ],
     visibility = [
-        loom_path("cpp/writer/..."),
+        profilo_path("cpp/writer/..."),
     ],
 )
 
@@ -77,7 +77,7 @@ fb_xplat_cxx_library(
         "BaseTracer.h",
     ],
     visibility = [
-        loom_path("..."),
+        profilo_path("..."),
     ],
 )
 
@@ -107,7 +107,7 @@ fb_xplat_cxx_library(
     soname = "libloom_stacktrace.$(ext)",
     supported_platforms_regex = "^android-(armv7|x86)$",
     visibility = [
-        loom_path("java/main/com/facebook/loom/provider/stacktrace:"),
+        profilo_path("java/main/com/facebook/loom/provider/stacktrace:"),
     ],
     deps = [
         ":base_tracer",
@@ -115,15 +115,15 @@ fb_xplat_cxx_library(
         ":tracer-5.1.1",
         ":tracer-6.0.1",
         ":tracer-7.0.0",
-        loom_path("cpp:constants"),
-        loom_path("cpp:loom"),
-        loom_path("cpp:providers"),
-        loom_path("cpp/logger:logger"),
-        loom_path("cpp/util:util"),
-        loom_path("deps/dalvik:dalvik-subset"),
-        loom_path("deps/fb:fb"),
-        loom_path("deps/fbjni:fbjni"),
-        loom_path("deps/museum:museum"),
-        loom_path("deps/sigmux:sigmux"),
+        profilo_path("cpp:constants"),
+        profilo_path("cpp:loom"),
+        profilo_path("cpp:providers"),
+        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/dalvik:dalvik-subset"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
+        profilo_path("deps/museum:museum"),
+        profilo_path("deps/sigmux:sigmux"),
     ],
 )
