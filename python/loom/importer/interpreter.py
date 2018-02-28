@@ -99,6 +99,9 @@ class TraceFileInterpreter(object):
                 thread_items.setdefault(entry.tid, []).append(entry)
             # BytesEntries will be processed as children of the above.
 
+        BLOCK_START_ENTRIES = ["MARK_PUSH", "IO_START"]
+        BLOCK_END_ENTRIES = ["MARK_POP", "IO_END"]
+
         for tid, items in thread_items.items():
             entries = list(
                 sorted(items, key=cmp_to_key(entry_compare))
@@ -110,11 +113,11 @@ class TraceFileInterpreter(object):
             # First, build blocks.
             for entry in entries:
                 block = None
-                if entry.type == "MARK_PUSH":
+                if entry.type in BLOCK_START_ENTRIES:
                     block = unit.push_block(entry.timestamp)
                     self.block_entries.setdefault(
                         block, BlockEntries()).begin = entry
-                elif entry.type == "MARK_POP":
+                elif entry.type in BLOCK_END_ENTRIES:
                     block = unit.pop_block(entry.timestamp)
                     self.block_entries.setdefault(
                         block, BlockEntries()).end = entry

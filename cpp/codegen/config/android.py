@@ -123,6 +123,9 @@ NAMES = [
     'HTTP2_PRIORITY',
 
     'PROCESS_LIST',
+
+    'IO_START',
+    'IO_END',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

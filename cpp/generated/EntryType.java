@@ -1,5 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<c66b639cf8fe8642fce06f1f155e2e01>>
+// @generated SignedSource<<76114335c80cd92e4650dc6fb554ca7d>>
 
 package com.facebook.loom.entries;
 
@@ -89,6 +89,8 @@ public class EntryType {
   public static final int HTTP2_WINDOW_UPDATE = 81;
   public static final int HTTP2_PRIORITY = 82;
   public static final int PROCESS_LIST = 83;
+  public static final int IO_START = 84;
+  public static final int IO_END = 85;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -175,5 +177,7 @@ public class EntryType {
     "HTTP2_WINDOW_UPDATE",
     "HTTP2_PRIORITY",
     "PROCESS_LIST",
+    "IO_START",
+    "IO_END",
   };
 }

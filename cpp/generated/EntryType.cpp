@@ -1,5 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<af0c34eb1176e5b809858e76e8ef47cf>>
+// @generated SignedSource<<13d80566de237fec9cd22730ab422fd1>>
 
 #include <stdexcept>
 #include <loom/entries/EntryType.h>
@@ -94,6 +94,8 @@ const char* to_string(EntryType type) {
     case HTTP2_WINDOW_UPDATE: return "HTTP2_WINDOW_UPDATE";
     case HTTP2_PRIORITY: return "HTTP2_PRIORITY";
     case PROCESS_LIST: return "PROCESS_LIST";
+    case IO_START: return "IO_START";
+    case IO_END: return "IO_END";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }
