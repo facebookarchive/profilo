@@ -296,7 +296,7 @@ namespace fbjni = facebook::jni;
 
 void registerNatives() {
   fbjni::registerNatives(
-    "com/facebook/loom/provider/atrace/Atrace",
+    "com/facebook/profilo/provider/atrace/Atrace",
     {
       makeNativeMethod("installSystraceHook", "(I)Z", JNI_installSystraceHook),
       makeNativeMethod("enableSystraceNative", "()V", JNI_enableSystraceNative),

@@ -13,12 +13,12 @@ android_library(
 
 gen_aidl(
     name = "ILoomMultiProcessTraceService",
-    aidl = "java/com/facebook/loom/ipc/ILoomMultiProcessTraceService.aidl",
+    aidl = "java/com/facebook/profilo/ipc/ILoomMultiProcessTraceService.aidl",
     import_path = profilo_path("aidl/java/").replace("//", ""),
 )
 
 gen_aidl(
     name = "ILoomMultiProcessTraceListener",
-    aidl = "java/com/facebook/loom/ipc/ILoomMultiProcessTraceListener.aidl",
+    aidl = "java/com/facebook/profilo/ipc/ILoomMultiProcessTraceListener.aidl",
     import_path = profilo_path("aidl/java/").replace("//", ""),
 )

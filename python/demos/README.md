@@ -1,7 +1,7 @@
 The complete flow for tracing-downloading-analyzing is as follows:
 
 1) Trace on the client. An example of how this can be achieved can be found on
-   `java/main/com/facebook/loom/sample/SampleAppMainActivity.java`
+   `java/main/com/facebook/profilo/sample/SampleAppMainActivity.java`
 
 2) Download the trace on a host. This can be done in a few ways:
    a) Navigate to python/ and run
@@ -9,7 +9,7 @@ The complete flow for tracing-downloading-analyzing is as follows:
 
       In this case:
 
-      `python -m loom.loom pull_last_trace com.facebook.loom.sample`
+      `python -m loom.loom pull_last_trace com.facebook.profilo.sample`
 
    b) Navigate to python/loom/device, start an interactive Python shell, and
       use the "device" module directly:

@@ -21,7 +21,7 @@ class JavaEntryTypesCodegen(Codegen):
 // Copyright 2004-present Facebook. All Rights Reserved.
 // %%SIGNED_SOURCE%%
 
-package com.facebook.loom.entries;
+package com.facebook.profilo.entries;
 
 public class EntryType {
 

@@ -107,7 +107,7 @@ fb_xplat_cxx_library(
     soname = "libprofilo_stacktrace.$(ext)",
     supported_platforms_regex = "^android-(armv7|x86)$",
     visibility = [
-        profilo_path("java/main/com/facebook/loom/provider/stacktrace:"),
+        profilo_path("java/main/com/facebook/profilo/provider/stacktrace:"),
     ],
     deps = [
         ":base_tracer",

@@ -19,7 +19,7 @@ fb_xplat_cxx_library(
     ],
     soname = "libprofilo_threadmetadata.$(ext)",
     visibility = [
-        profilo_path("java/main/com/facebook/loom/provider/threadmetadata:"),
+        profilo_path("java/main/com/facebook/profilo/provider/threadmetadata:"),
     ],
     deps = [
         profilo_path("cpp:profilo"),

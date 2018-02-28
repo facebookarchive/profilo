@@ -16,7 +16,7 @@ struct JNativeTraceWriterCallbacks:
   public fbjni::JavaClass<JNativeTraceWriterCallbacks> {
 
   static constexpr const char* kJavaDescriptor =
-    "Lcom/facebook/loom/writer/NativeTraceWriterCallbacks;";
+    "Lcom/facebook/profilo/writer/NativeTraceWriterCallbacks;";
 
   void onTraceStart(int64_t trace_id, int32_t flags, std::string file);
   void onTraceEnd(int64_t trace_id, uint32_t crc);
@@ -26,7 +26,7 @@ struct JNativeTraceWriterCallbacks:
 class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
  public:
   constexpr static auto kJavaDescriptor =
-    "Lcom/facebook/loom/writer/NativeTraceWriter;";
+    "Lcom/facebook/profilo/writer/NativeTraceWriter;";
 
   static fbjni::local_ref<jhybriddata> initHybrid(
     fbjni::alias_ref<jclass>,

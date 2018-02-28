@@ -1,0 +1,18 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+android_library(
+    name = "yarn",
+    srcs = glob(["*.java"]),
+    visibility = [
+        "//instrumentation_tests/com/facebook/quicklog/...",
+        profilo_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        profilo_path("cpp/yarn:yarn"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
+        profilo_path("java/main/com/facebook/profilo/core:core"),
+    ],
+)

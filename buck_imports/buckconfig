@@ -37,5 +37,5 @@
     interpreter = python3
 
 [alias]
-    sample = //java/main/com/facebook/loom/sample:sample-atrace-stacktrace-systemcounters-threadmetadata
-    aar = //java/main/com/facebook/loom/sample:sample-aar-atrace-stacktrace-systemcounters-threadmetadata
+    sample = //java/main/com/facebook/profilo/sample:sample-atrace-stacktrace-systemcounters-threadmetadata
+    aar = //java/main/com/facebook/profilo/sample:sample-aar-atrace-stacktrace-systemcounters-threadmetadata

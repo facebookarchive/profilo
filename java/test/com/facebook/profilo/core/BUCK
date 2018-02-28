@@ -1,0 +1,27 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//tools/build_defs:robolectric3_test.bzl", "robolectric3_test")
+
+robolectric3_test(
+    name = "core",
+    srcs = glob(["*Test.java"]),
+    contacts = ["oncall+loom@xmail.facebook.com"],
+    deps = [
+        "//java/com/facebook/testing/inject:inject",
+        "//java/com/facebook/testing/powermock:powermock",
+        "//java/com/facebook/testing/robolectric/v3:v3",
+        "//java/com/facebook/testing/util:util",
+        profilo_path("deps/fbtrace:utils"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/soloader:soloader"),
+        profilo_path("java/main/com/facebook/profilo/core:core"),
+        profilo_path("java/test/com/facebook/profilo/logger:utils"),
+        profilo_path("java/test/com/facebook/profilo/util:util"),
+        "//third-party/java/assertj:assertj-android",
+        "//third-party/java/assertj:assertj-core",
+        "//third-party/java/fest:fest",
+        "//third-party/java/fest:fest_android",
+        "//third-party/java/guava:guava",
+        "//third-party/java/junit:junit",
+        "//third-party/java/robolectric3/robolectric:robolectric",
+    ],
+)

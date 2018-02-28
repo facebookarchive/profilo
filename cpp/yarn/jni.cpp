@@ -13,7 +13,7 @@
 
 namespace fbjni = facebook::jni;
 
-const char* kPerfSessionType = "com/facebook/loom/provider/yarn/PerfEventsSession";
+const char* kPerfSessionType = "com/facebook/profilo/provider/yarn/PerfEventsSession";
 
 namespace facebook {
 namespace yarn {

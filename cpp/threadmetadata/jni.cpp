@@ -11,7 +11,7 @@ using namespace facebook::profilo;
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return facebook::xplat::initialize(vm, [] {
     facebook::jni::registerNatives(
-      "com/facebook/loom/provider/threadmetadata/ThreadMetadataProvider",
+      "com/facebook/profilo/provider/threadmetadata/ThreadMetadataProvider",
       {
         makeNativeMethod("nativeLogThreadMetadata", threadmetadata::logThreadMetadata),
       });

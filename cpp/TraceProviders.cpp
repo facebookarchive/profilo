@@ -17,7 +17,7 @@ bool TraceProviders::isEnabled(const std::string& provider) {
   // This function retrieves the mapping for a single provider and caches it, so future
   // accesses don't have to cross the JNI boundary.
 
-  static auto cls = jni::findClassStatic("com/facebook/loom/core/ProvidersRegistry");
+  static auto cls = jni::findClassStatic("com/facebook/profilo/core/ProvidersRegistry");
   static auto getBitMaskMethod = cls->getStaticMethod<jint(std::string)>("getBitMaskFor");
 
   {

@@ -282,7 +282,7 @@ void registerNatives_6_0_1() {
 #elif defined(ART_VERSION_7_0_0)
 void registerNatives_7_0_0() {
 #endif
-  constexpr auto kArtCompatibilityType = "com/facebook/loom/provider/stacktrace/ArtCompatibility";
+  constexpr auto kArtCompatibilityType = "com/facebook/profilo/provider/stacktrace/ArtCompatibility";
 
   fbjni::registerNatives(
     kArtCompatibilityType,

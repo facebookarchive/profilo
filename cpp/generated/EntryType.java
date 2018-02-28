@@ -1,7 +1,7 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<76114335c80cd92e4650dc6fb554ca7d>>
+// @generated SignedSource<<dd55ac6d5b705dbc1f472d54bcd0b831>>
 
-package com.facebook.loom.entries;
+package com.facebook.profilo.entries;
 
 public class EntryType {
 

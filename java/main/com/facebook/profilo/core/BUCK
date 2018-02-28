@@ -1,0 +1,126 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+CONSTANTS = [
+    "Identifiers.java",
+    "LoomConstants.java",
+]
+
+EVENTS = [
+    "TraceEvents.java",
+]
+
+CONTROL = [
+    "ControllerWithQPLChecks.java",
+    "TraceControl.java",
+    "TraceController.java",
+    "TraceControlHandler.java",
+    "TraceControlThreadHolder.java",
+]
+
+REGISTRY = [
+    "ProvidersRegistry.java",
+]
+
+android_library(
+    name = "providersregistry",
+    srcs = REGISTRY,
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
+    ],
+)
+
+android_library(
+    name = "constants",
+    srcs = CONSTANTS,
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/fbtrace:utils"),
+        profilo_path("deps/jsr-305:jsr-305"),
+    ],
+)
+
+android_library(
+    name = "events",
+    srcs = EVENTS,
+    exported_deps = [
+        ":constants",
+    ],
+    visibility = [
+        "//javatests/com/facebook/profilo/...",
+        profilo_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/soloader:soloader"),
+    ],
+)
+
+android_library(
+    name = "control",
+    srcs = CONTROL,
+    exported_deps = [
+        ":constants",
+        profilo_path("aidl:aidl"),
+        profilo_path("java/main/com/facebook/profilo/config:config"),
+        profilo_path("java/main/com/facebook/profilo/logger:logger"),
+    ],
+    required_for_source_only_abi = True,
+    visibility = [
+        profilo_path("..."),
+        "//javatests/com/facebook/cloudseeder:cloudseeder",
+        "//javatests/com/facebook/debug/fps:fps",
+        "//javatests/com/facebook/stall:stall",
+        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+    ],
+    deps = [
+        ":constants",
+        profilo_path("deps/androidinternals:os"),
+        profilo_path("deps/buildconstants:buildconstants"),
+        profilo_path("deps/fbtrace:utils"),
+        profilo_path("deps/jsr-305:jsr-305"),
+    ],
+)
+
+android_library(
+    name = "core",
+    srcs = glob(
+        ["*.java"],
+        excludes = CONSTANTS + EVENTS + CONTROL + REGISTRY,
+    ),
+    exported_deps = [
+        ":constants",
+        ":control",
+        ":events",
+        ":providersregistry",
+        profilo_path("java/main/com/facebook/profilo/config:config"),
+        profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
+    ],
+    tests = [
+        profilo_path("java/test/com/facebook/profilo/core:core"),
+    ],
+    visibility = [
+        "//java/com/facebook/cloudseeder:cloudseeder",
+        "//java/com/facebook/fab/dumper/plugins:plugins",
+        "//java/com/facebook/katana/activity:activity",
+        "//java/com/facebook/katana/app:app",
+        "//java/com/facebook/messenger:messenger",
+        "//java/com/facebook/tools/dextr/...",
+        "//java/com/facebook/video/profiler/systrace:systrace",
+        "//java/com/instagram/android/...",
+        "//javatests/com/facebook/cloudseeder:cloudseeder",
+        "//javatests/com/facebook/tools/dextr/...",
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/zip:zip"),
+        profilo_path("java/main/com/facebook/profilo/logger:logger"),
+    ],
+)

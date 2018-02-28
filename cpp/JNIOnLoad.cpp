@@ -19,8 +19,8 @@ namespace fbjni = facebook::jni;
 namespace facebook {
 namespace profilo {
 
-const char* TraceEventsType = "com/facebook/loom/core/TraceEvents";
-const char* LoggerType = "com/facebook/loom/logger/Logger";
+const char* TraceEventsType = "com/facebook/profilo/core/TraceEvents";
+const char* LoggerType = "com/facebook/profilo/logger/Logger";
 
 ///
 /// product write APIs

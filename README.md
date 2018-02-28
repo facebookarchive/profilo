@@ -42,7 +42,7 @@ Currently, none of the APIs are stable and they *will* change (mostly so that th
 
 ## Sample usage
 
-The sample app in `java/main/com/facebook/loom/sample` shows the most basic usage of the APIs.
+The sample app in `java/main/com/facebook/profilo/sample` shows the most basic usage of the APIs.
 
 You can also find these apks in the Releases section.
 

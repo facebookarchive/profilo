@@ -12,8 +12,8 @@
 
 using namespace facebook::profilo;
 
-const char* CPUProfilerType = "com/facebook/loom/provider/stacktrace/CPUProfiler";
-const char* StackFrameThreadType = "com/facebook/loom/provider/stacktrace/StackFrameThread";
+const char* CPUProfilerType = "com/facebook/profilo/provider/stacktrace/CPUProfiler";
+const char* StackFrameThreadType = "com/facebook/profilo/provider/stacktrace/StackFrameThread";
 
 namespace {
 
