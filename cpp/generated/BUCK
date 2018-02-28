@@ -5,7 +5,7 @@ load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
 fb_xplat_cxx_library(
     name = "cpp",
     srcs = glob(["*.cpp"]),
-    header_namespace = "loom/entries",
+    header_namespace = "profilo/entries",
     exported_headers = glob(["*.h"]),
     compiler_flags = [
         "-fexceptions",

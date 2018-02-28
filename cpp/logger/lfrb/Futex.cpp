@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <loom/logger/lfrb/Futex.h>
+#include <profilo/logger/lfrb/Futex.h>
 #include <stdint.h>
 #include <string.h>
 #include <cerrno>

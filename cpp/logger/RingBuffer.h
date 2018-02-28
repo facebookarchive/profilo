@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include <loom/logger/lfrb/LockFreeRingBuffer.h>
-#include <loom/LogEntry.h>
+#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
+#include <profilo/LogEntry.h>
 
 #include "Packet.h"
 

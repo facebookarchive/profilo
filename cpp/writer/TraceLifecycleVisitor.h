@@ -8,10 +8,10 @@
 #include <vector>
 #include <errno.h>
 
-#include <loom/entries/Entry.h>
-#include <loom/entries/EntryParser.h>
-#include <loom/writer/AbortReason.h>
-#include <loom/writer/TraceCallbacks.h>
+#include <profilo/entries/Entry.h>
+#include <profilo/entries/EntryParser.h>
+#include <profilo/writer/AbortReason.h>
+#include <profilo/writer/TraceCallbacks.h>
 
 #include <zstr/zstr.hpp>
 

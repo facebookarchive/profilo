@@ -11,7 +11,7 @@
  *
  * 1. Direct usage example:
  *
- *   #include <loom/ExternalApi.h>
+ *   #include <profilo/ExternalApi.h>
  *
  *   loom_api()->mark_start(LOOM_PROVIDER_OTHER, "my_function");
  *   ...

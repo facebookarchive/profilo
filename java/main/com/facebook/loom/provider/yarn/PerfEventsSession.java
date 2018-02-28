@@ -13,7 +13,7 @@ import javax.annotation.concurrent.GuardedBy;
 public class PerfEventsSession {
 
   static {
-    SoLoader.loadLibrary("loom_yarn");
+    SoLoader.loadLibrary("profilo_yarn");
   }
 
   // Lower than UI (0), higher than BACKGROUND (10)

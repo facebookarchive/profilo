@@ -10,11 +10,11 @@
 #include <utility>
 #include <unistd.h>
 
-#include <loom/writer/TraceCallbacks.h>
-#include <loom/RingBuffer.h>
-#include <loom/LogEntry.h>
-#include <loom/entries/EntryParser.h>
-#include <loom/writer/PacketReassembler.h>
+#include <profilo/writer/TraceCallbacks.h>
+#include <profilo/RingBuffer.h>
+#include <profilo/LogEntry.h>
+#include <profilo/entries/EntryParser.h>
+#include <profilo/writer/PacketReassembler.h>
 
 namespace facebook {
 namespace profilo {

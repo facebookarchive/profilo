@@ -6,7 +6,7 @@ fb_xplat_cxx_library(
     srcs = [
         "ExternalApi.cpp",
     ],
-    header_namespace = "loom",
+    header_namespace = "profilo",
     exported_headers = [
         "ExternalApi.h",
     ],

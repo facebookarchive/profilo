@@ -4,7 +4,7 @@
 #include <fbjni/fbjni.h>
 #include <fb/xplat_init.h>
 
-#include <loom/threadmetadata/ThreadMetadata.h>
+#include <profilo/threadmetadata/ThreadMetadata.h>
 
 using namespace facebook::profilo;
 

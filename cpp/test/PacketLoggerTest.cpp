@@ -2,9 +2,9 @@
 
 #include <vector>
 
-#include <loom/logger/lfrb/LockFreeRingBuffer.h>
-#include <loom/PacketLogger.h>
-#include <loom/writer/PacketReassembler.h>
+#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
+#include <profilo/PacketLogger.h>
+#include <profilo/writer/PacketReassembler.h>
 
 #include <gtest/gtest.h>
 

@@ -5,9 +5,9 @@
 
 #include <gtest/gtest.h>
 
-#include <loom/entries/EntryParser.h>
-#include <loom/writer/PrintEntryVisitor.h>
-#include <loom/writer/DeltaEncodingVisitor.h>
+#include <profilo/entries/EntryParser.h>
+#include <profilo/writer/PrintEntryVisitor.h>
+#include <profilo/writer/DeltaEncodingVisitor.h>
 
 using namespace facebook::profilo::entries;
 using namespace facebook::profilo::writer;

@@ -1,6 +1,6 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include <loom/RingBuffer.h>
+#include <profilo/RingBuffer.h>
 
 namespace facebook { namespace profilo {
 

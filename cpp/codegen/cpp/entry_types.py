@@ -69,7 +69,7 @@ class CppEntryTypesCppCodegen(Codegen):
 // %%SIGNED_SOURCE%%
 
 #include <stdexcept>
-#include <loom/entries/EntryType.h>
+#include <profilo/entries/EntryType.h>
 
 namespace facebook {
 namespace profilo {

@@ -10,7 +10,7 @@ import java.io.File;
 public class ThreadMetadataProvider implements TraceOrchestrator.TraceProvider {
 
   static {
-    SoLoader.loadLibrary("loom_threadmetadata");
+    SoLoader.loadLibrary("profilo_threadmetadata");
   }
 
   @Override

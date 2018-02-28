@@ -22,7 +22,7 @@
 #include <memory>
 #include <type_traits>
 
-#include <loom/logger/lfrb/TurnSequencer.h>
+#include <profilo/logger/lfrb/TurnSequencer.h>
 
 namespace facebook {
 namespace profilo {

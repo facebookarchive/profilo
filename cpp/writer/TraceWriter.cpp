@@ -11,14 +11,14 @@
 #include <sys/stat.h>
 #include <system_error>
 
-#include <loom/entries/EntryParser.h>
-#include <loom/writer/DeltaEncodingVisitor.h>
-#include <loom/writer/PacketReassembler.h>
-#include <loom/writer/TraceWriter.h>
-#include <loom/writer/TraceLifecycleVisitor.h>
-#include <loom/writer/MultiTraceLifecycleVisitor.h>
+#include <profilo/entries/EntryParser.h>
+#include <profilo/writer/DeltaEncodingVisitor.h>
+#include <profilo/writer/PacketReassembler.h>
+#include <profilo/writer/TraceWriter.h>
+#include <profilo/writer/TraceLifecycleVisitor.h>
+#include <profilo/writer/MultiTraceLifecycleVisitor.h>
 
-#include <loom/LogEntry.h>
+#include <profilo/LogEntry.h>
 
 namespace facebook { namespace profilo { namespace writer {
 

@@ -8,7 +8,7 @@
 #include <dalvik-subset/internals.h>
 
 #include "BaseTracer.h"
-#include "loom/Logger.h"
+#include "profilo/Logger.h"
 
 namespace facebook {
 namespace profilo {

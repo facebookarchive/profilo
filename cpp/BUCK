@@ -12,7 +12,7 @@ fb_xplat_cxx_library(
         ["*.h"],
         excludes = PROVIDER_EXPORTED_HEADERS,
     ),
-    header_namespace = "loom",
+    header_namespace = "profilo",
     exported_headers = PROVIDER_EXPORTED_HEADERS,
     compiler_flags = [
         "-fexceptions",
@@ -38,7 +38,7 @@ fb_xplat_cxx_library(
         ["*.h"],
         excludes = CONSTS_EXPORTED_HEADERS,
     ),
-    header_namespace = "loom",
+    header_namespace = "profilo",
     exported_headers = CONSTS_EXPORTED_HEADERS,
     compiler_flags = [
         "-fexceptions",
@@ -59,7 +59,7 @@ LOOM_EXPORTED_HEADERS = [
 ] + PROVIDER_EXPORTED_HEADERS
 
 fb_xplat_cxx_library(
-    name = "loom",
+    name = "profilo",
     srcs = [
         "JNIOnLoad.cpp",
     ],
@@ -67,7 +67,7 @@ fb_xplat_cxx_library(
         ["*.h"],
         excludes = LOOM_EXPORTED_HEADERS,
     ),
-    header_namespace = "loom",
+    header_namespace = "profilo",
     exported_headers = LOOM_EXPORTED_HEADERS,
     allow_jni_merging = True,
     compiler_flags = [
@@ -75,7 +75,7 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Loom\"",
         "-std=gnu++14",
     ],
-    soname = "libloom.$(ext)",
+    soname = "libprofilo.$(ext)",
     supported_platforms_regex = "^android-(armv7|x86)$",
     visibility = [
         profilo_path("..."),

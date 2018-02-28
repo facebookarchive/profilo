@@ -13,13 +13,13 @@
 #include <zstr/zstr.hpp>
 #include <zlib.h>
 
-#include <loom/LogEntry.h>
-#include <loom/entries/Entry.h>
-#include <loom/entries/EntryType.h>
-#include <loom/writer/TraceWriter.h>
-#include <loom/writer/TraceCallbacks.h>
-#include <loom/PacketLogger.h>
-#include <loom/RingBuffer.h>
+#include <profilo/LogEntry.h>
+#include <profilo/entries/Entry.h>
+#include <profilo/entries/EntryType.h>
+#include <profilo/writer/TraceWriter.h>
+#include <profilo/writer/TraceCallbacks.h>
+#include <profilo/PacketLogger.h>
+#include <profilo/RingBuffer.h>
 
 using namespace facebook::profilo::logger;
 using namespace facebook::profilo::writer;

@@ -8,11 +8,11 @@
 #include <zlib.h>
 #include <stdio.h>
 
-#include <loom/writer/DeltaEncodingVisitor.h>
-#include <loom/writer/TraceLifecycleVisitor.h>
-#include <loom/writer/PrintEntryVisitor.h>
-#include <loom/writer/StackTraceInvertingVisitor.h>
-#include <loom/writer/TimestampTruncatingVisitor.h>
+#include <profilo/writer/DeltaEncodingVisitor.h>
+#include <profilo/writer/TraceLifecycleVisitor.h>
+#include <profilo/writer/PrintEntryVisitor.h>
+#include <profilo/writer/StackTraceInvertingVisitor.h>
+#include <profilo/writer/TimestampTruncatingVisitor.h>
 
 namespace facebook { namespace profilo { namespace writer {
 

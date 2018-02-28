@@ -5,7 +5,7 @@
 // Needed for MAX_STACK_DEPTH
 #include <profiler/Constants.h>
 
-#include <loom/writer/StackTraceInvertingVisitor.h>
+#include <profilo/writer/StackTraceInvertingVisitor.h>
 
 namespace facebook {
 namespace profilo {

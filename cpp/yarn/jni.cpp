@@ -7,8 +7,8 @@
 #include <fbjni/fbjni.h>
 #include <fb/log.h>
 #include <fb/xplat_init.h>
-#include <loom/LogEntry.h>
-#include <loom/Logger.h>
+#include <profilo/LogEntry.h>
+#include <profilo/Logger.h>
 #include <yarn/Session.h>
 
 namespace fbjni = facebook::jni;

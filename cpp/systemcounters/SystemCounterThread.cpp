@@ -1,9 +1,9 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
 #include "SystemCounterThread.h"
-#include <loom/Logger.h>
-#include <loom/LogEntry.h>
-#include <loom/log.h>
+#include <profilo/Logger.h>
+#include <profilo/LogEntry.h>
+#include <profilo/log.h>
 #include <fb/log.h>
 #include <util/common.h>
 

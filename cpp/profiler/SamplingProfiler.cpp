@@ -26,9 +26,9 @@
 #  include <profiler/NativeTracer.h>
 #endif
 
-#include "loom/Logger.h"
-#include "loom/LogEntry.h"
-#include "loom/TraceProviders.h"
+#include "profilo/Logger.h"
+#include "profilo/LogEntry.h"
+#include "profilo/TraceProviders.h"
 
 #include "util/common.h"
 

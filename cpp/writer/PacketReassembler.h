@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <loom/Packet.h>
+#include <profilo/Packet.h>
 
 #include <functional>
 #include <list>

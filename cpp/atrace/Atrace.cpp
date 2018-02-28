@@ -16,9 +16,9 @@
 #include <linker/linker.h>
 #include <linker/bionic_linker.h>
 
-#include <loom/Logger.h>
-#include <loom/LogEntry.h>
-#include <loom/TraceProviders.h>
+#include <profilo/Logger.h>
+#include <profilo/LogEntry.h>
+#include <profilo/TraceProviders.h>
 
 #include <unordered_set>
 

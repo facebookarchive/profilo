@@ -1,8 +1,8 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<13d80566de237fec9cd22730ab422fd1>>
+// @generated SignedSource<<97f4ec911f41ef2128b984e76f95622c>>
 
 #include <stdexcept>
-#include <loom/entries/EntryType.h>
+#include <profilo/entries/EntryType.h>
 
 namespace facebook {
 namespace profilo {

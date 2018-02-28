@@ -3,7 +3,7 @@
 #pragma once
 
 #include <functional>
-#include <loom/logger/lfrb/LockFreeRingBuffer.h>
+#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 
 #include "Packet.h"
 

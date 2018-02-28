@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <loom/writer/TimestampTruncatingVisitor.h>
+#include <profilo/writer/TimestampTruncatingVisitor.h>
 
 namespace facebook {
 namespace profilo {

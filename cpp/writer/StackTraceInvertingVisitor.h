@@ -4,7 +4,7 @@
 
 #include <memory>
 
-#include <loom/entries/EntryParser.h>
+#include <profilo/entries/EntryParser.h>
 
 namespace facebook {
 namespace profilo {

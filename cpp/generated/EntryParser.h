@@ -1,5 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<4c156e08fa1208cad570e4bc93e0a96c>>
+// @generated SignedSource<<119849008f2d7b3e385b4ebd1222922f>>
 
 #pragma once
 
@@ -10,8 +10,8 @@
 #include <stdexcept>
 #include <ostream>
 
-#include <loom/entries/EntryType.h>
-#include <loom/entries/Entry.h>
+#include <profilo/entries/EntryType.h>
+#include <profilo/entries/Entry.h>
 
 namespace facebook {
 namespace profilo {

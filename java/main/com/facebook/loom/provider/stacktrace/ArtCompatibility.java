@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ArtCompatibility {
 
   static {
-    SoLoader.loadLibrary("loom_stacktrace");
+    SoLoader.loadLibrary("profilo_stacktrace");
   }
 
   private static final AtomicReference<Boolean> sIsCompatible = new AtomicReference<>(null);

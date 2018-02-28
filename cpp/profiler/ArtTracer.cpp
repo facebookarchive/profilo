@@ -29,7 +29,7 @@
   #include "bionic/bionic_tls.h"
 #endif
 
-#include "loom/Logger.h"
+#include "profilo/Logger.h"
 
 namespace fbjni = facebook::jni;
 

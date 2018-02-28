@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 @DoNotStrip
 public final class Atrace {
   static {
-    SoLoader.loadLibrary("loom_atrace");
+    SoLoader.loadLibrary("profilo_atrace");
   }
 
   private static boolean sHasHook = false;

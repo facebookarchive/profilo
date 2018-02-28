@@ -6,7 +6,7 @@ fb_xplat_cxx_library(
     srcs = [
         "PrintEntryVisitor.cpp",
     ],
-    header_namespace = "loom/writer",
+    header_namespace = "profilo/writer",
     exported_headers = [
         "PrintEntryVisitor.h",
     ],
@@ -32,7 +32,7 @@ fb_xplat_cxx_library(
     srcs = [
         "DeltaEncodingVisitor.cpp",
     ],
-    header_namespace = "loom/writer",
+    header_namespace = "profilo/writer",
     exported_headers = [
         "DeltaEncodingVisitor.h",
     ],
@@ -60,7 +60,7 @@ fb_xplat_cxx_library(
     srcs = [
         "TimestampTruncatingVisitor.cpp",
     ],
-    header_namespace = "loom/writer",
+    header_namespace = "profilo/writer",
     exported_headers = [
         "TimestampTruncatingVisitor.h",
     ],
@@ -83,7 +83,7 @@ fb_xplat_cxx_library(
     srcs = [
         "StackTraceInvertingVisitor.cpp",
     ],
-    header_namespace = "loom/writer",
+    header_namespace = "profilo/writer",
     exported_headers = [
         "StackTraceInvertingVisitor.h",
     ],
@@ -109,7 +109,7 @@ fb_xplat_cxx_library(
     srcs = [
         "PacketReassembler.cpp",
     ],
-    header_namespace = "loom/writer",
+    header_namespace = "profilo/writer",
     exported_headers = [
         "PacketReassembler.h",
     ],
@@ -138,7 +138,7 @@ fb_xplat_cxx_library(
         "MultiTraceLifecycleVisitor.h",
         "TraceLifecycleVisitor.h",
     ],
-    header_namespace = "loom/writer",
+    header_namespace = "profilo/writer",
     exported_headers = [
         "AbortReason.h",
         "TraceCallbacks.h",

@@ -16,7 +16,7 @@
 #include <profiler/Constants.h>
 
 #include "DalvikTracer.h"
-#include "loom/LogEntry.h"
+#include "profilo/LogEntry.h"
 #include "util/ProcFs.h"
 
 

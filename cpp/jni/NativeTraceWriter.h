@@ -4,7 +4,7 @@
 
 #include <fbjni/fbjni.h>
 
-#include <loom/writer/TraceWriter.h>
+#include <profilo/writer/TraceWriter.h>
 
 namespace fbjni = facebook::jni;
 

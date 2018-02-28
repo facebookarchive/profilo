@@ -23,7 +23,7 @@ import javax.annotation.concurrent.GuardedBy;
 public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
 
   static {
-    SoLoader.loadLibrary("loom_stacktrace");
+    SoLoader.loadLibrary("profilo_stacktrace");
   }
 
   public static final int PROVIDER_STACK_FRAME = ProvidersRegistry.newProvider("stack_trace");

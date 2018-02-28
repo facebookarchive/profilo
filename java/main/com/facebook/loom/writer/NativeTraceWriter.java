@@ -9,7 +9,7 @@ import com.facebook.soloader.SoLoader;
 @DoNotStrip
 public final class NativeTraceWriter {
   static {
-    SoLoader.loadLibrary("loom");
+    SoLoader.loadLibrary("profilo");
   }
 
   @DoNotStrip

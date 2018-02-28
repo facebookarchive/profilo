@@ -13,7 +13,7 @@ fb_xplat_cxx_library(
         ["*.h"],
         excludes = SYSTEM_COUNTERS_EXPORTED_HEADERS,
     ),
-    header_namespace = "loom/systemcounters",
+    header_namespace = "profilo/systemcounters",
     exported_headers = SYSTEM_COUNTERS_EXPORTED_HEADERS,
     allow_jni_merging = True,
     compiler_flags = [
@@ -21,12 +21,12 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-std=gnu++14",
     ],
-    soname = "libloom_systemcounters.$(ext)",
+    soname = "libprofilo_systemcounters.$(ext)",
     visibility = [
         profilo_path("java/main/com/facebook/loom/provider/systemcounters:"),
     ],
     deps = [
-        profilo_path("cpp:loom"),
+        profilo_path("cpp:profilo"),
         profilo_path("cpp/logger:logger"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),

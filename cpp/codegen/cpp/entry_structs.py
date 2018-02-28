@@ -107,7 +107,7 @@ class CppEntryStructsCppCodegen(Codegen):
 
 #include <cstring>
 #include <stdexcept>
-#include <loom/entries/Entry.h>
+#include <profilo/entries/Entry.h>
 
 namespace facebook {
 namespace profilo {

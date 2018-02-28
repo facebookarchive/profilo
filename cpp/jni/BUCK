@@ -6,7 +6,7 @@ fb_xplat_cxx_library(
     srcs = [
         "NativeTraceWriter.cpp",
     ],
-    header_namespace = "loom/jni",
+    header_namespace = "profilo/jni",
     exported_headers = [
         "NativeTraceWriter.h",
     ],

@@ -1,6 +1,6 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include <loom/writer/PrintEntryVisitor.h>
+#include <profilo/writer/PrintEntryVisitor.h>
 
 namespace facebook { namespace profilo { namespace writer {
 

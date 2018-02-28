@@ -41,7 +41,7 @@ final public class Logger {
       String filePrefix,
       NativeTraceWriterCallbacks nativeTraceWriterCallbacks,
       LoggerCallbacks loggerCallbacks) {
-    SoLoader.loadLibrary("loom");
+    SoLoader.loadLibrary("profilo");
     TraceEvents.sInitialized = true;
 
     sInitialized = true;

@@ -3,10 +3,10 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include <loom/writer/AbortReason.h>
-#include <loom/writer/TraceCallbacks.h>
-#include <loom/writer/TraceLifecycleVisitor.h>
-#include <loom/RingBuffer.h>
+#include <profilo/writer/AbortReason.h>
+#include <profilo/writer/TraceCallbacks.h>
+#include <profilo/writer/TraceLifecycleVisitor.h>
+#include <profilo/RingBuffer.h>
 
 namespace facebook {
 namespace profilo {

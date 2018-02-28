@@ -2,9 +2,9 @@
 
 #include <cstring>
 
-#include <loom/threadmetadata/ThreadMetadata.h>
-#include <loom/Logger.h>
-#include <loom/LogEntry.h>
+#include <profilo/threadmetadata/ThreadMetadata.h>
+#include <profilo/Logger.h>
+#include <profilo/LogEntry.h>
 #include <util/common.h>
 #include <util/ProcFs.h>
 

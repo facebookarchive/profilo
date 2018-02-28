@@ -5,10 +5,10 @@
 
 #include <gtest/gtest.h>
 
-#include <loom/entries/EntryType.h>
-#include <loom/entries/Entry.h>
-#include <loom/entries/EntryParser.h>
-#include <loom/writer/PrintEntryVisitor.h>
+#include <profilo/entries/EntryType.h>
+#include <profilo/entries/Entry.h>
+#include <profilo/entries/EntryParser.h>
+#include <profilo/writer/PrintEntryVisitor.h>
 
 namespace facebook {
 namespace profilo {

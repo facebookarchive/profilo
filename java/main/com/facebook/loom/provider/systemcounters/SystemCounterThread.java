@@ -23,7 +23,7 @@ import javax.annotation.concurrent.GuardedBy;
 @DoNotStrip
 public final class SystemCounterThread extends BaseTraceProvider {
   static {
-    SoLoader.loadLibrary("loom_systemcounters");
+    SoLoader.loadLibrary("profilo_systemcounters");
   }
 
   public static final int PROVIDER_SYSTEM_COUNTERS =

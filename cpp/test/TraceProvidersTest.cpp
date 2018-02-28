@@ -2,7 +2,7 @@
 
 #include <limits>
 
-#include <loom/TraceProviders.h>
+#include <profilo/TraceProviders.h>
 #include <gtest/gtest.h>
 
 namespace facebook {

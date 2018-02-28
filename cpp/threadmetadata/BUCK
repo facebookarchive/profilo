@@ -10,19 +10,19 @@ fb_xplat_cxx_library(
     headers = glob(
         ["*.h"],
     ),
-    header_namespace = "loom/threadmetadata",
+    header_namespace = "profilo/threadmetadata",
     allow_jni_merging = True,
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
         "-std=gnu++14",
     ],
-    soname = "libloom_threadmetadata.$(ext)",
+    soname = "libprofilo_threadmetadata.$(ext)",
     visibility = [
         profilo_path("java/main/com/facebook/loom/provider/threadmetadata:"),
     ],
     deps = [
-        profilo_path("cpp:loom"),
+        profilo_path("cpp:profilo"),
         profilo_path("cpp/logger:logger"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),

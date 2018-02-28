@@ -1,6 +1,6 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include <loom/writer/MultiTraceLifecycleVisitor.h>
+#include <profilo/writer/MultiTraceLifecycleVisitor.h>
 
 #include <errno.h>
 #include <sys/stat.h>
@@ -10,8 +10,8 @@
 #include <sstream>
 #include <system_error>
 
-#include <loom/writer/TraceLifecycleVisitor.h>
-#include <loom/writer/PacketReassembler.h>
+#include <profilo/writer/TraceLifecycleVisitor.h>
+#include <profilo/writer/PacketReassembler.h>
 
 namespace facebook { namespace profilo { namespace writer {
 

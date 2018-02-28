@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <loom/LogEntry.h>
-#include <loom/entries/EntryType.h>
-#include <loom/entries/Entry.h>
+#include <profilo/LogEntry.h>
+#include <profilo/entries/EntryType.h>
+#include <profilo/entries/Entry.h>
 
 #include "PacketLogger.h"
 #include "RingBuffer.h"

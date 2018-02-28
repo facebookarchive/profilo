@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-#include <loom/writer/DeltaEncodingVisitor.h>
+#include <profilo/writer/DeltaEncodingVisitor.h>
 
 namespace facebook {
 namespace profilo {

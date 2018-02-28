@@ -5,8 +5,8 @@
 #include <dlfcn.h>
 #include <unistd.h>
 
-#include "loom/LogEntry.h"
-#include "loom/Logger.h"
+#include "profilo/LogEntry.h"
+#include "profilo/Logger.h"
 
 #define STACK_SAVE_AREA_OFFSET 5
 #define SAVEAREA_FROM_FP(fp) ((StackSaveArea*)(((u4*)(fp)) - STACK_SAVE_AREA_OFFSET))

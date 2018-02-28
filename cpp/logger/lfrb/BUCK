@@ -6,7 +6,7 @@ fb_xplat_cxx_library(
     srcs = [
         "Futex.cpp",
     ],
-    header_namespace = "loom/logger/lfrb",
+    header_namespace = "profilo/logger/lfrb",
     exported_headers = glob([
         "*.h",
     ]),

@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 #include <util/common.h>
-#include <loom/entries/Entry.h>
+#include <profilo/entries/Entry.h>
 
 namespace facebook {
 namespace profilo {

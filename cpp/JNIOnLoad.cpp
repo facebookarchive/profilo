@@ -9,9 +9,9 @@
 
 #include <cstring>
 
-#include <loom/Logger.h>
-#include <loom/RingBuffer.h>
-#include <loom/jni/NativeTraceWriter.h>
+#include <profilo/Logger.h>
+#include <profilo/RingBuffer.h>
+#include <profilo/jni/NativeTraceWriter.h>
 #include "TraceProviders.h"
 
 namespace fbjni = facebook::jni;

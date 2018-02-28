@@ -32,8 +32,8 @@ class CppParserCodegen(Codegen):
 #include <stdexcept>
 #include <ostream>
 
-#include <loom/entries/EntryType.h>
-#include <loom/entries/Entry.h>
+#include <profilo/entries/EntryType.h>
+#include <profilo/entries/Entry.h>
 
 namespace facebook {
 namespace profilo {

@@ -1,12 +1,12 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include <loom/ExternalApi.h>
+#include <profilo/ExternalApi.h>
 
 #include <unistd.h>
 
-#include <loom/Logger.h>
-#include <loom/LogEntry.h>
-#include <loom/TraceProviders.h>
+#include <profilo/Logger.h>
+#include <profilo/LogEntry.h>
+#include <profilo/TraceProviders.h>
 
 using namespace facebook::profilo;
 
