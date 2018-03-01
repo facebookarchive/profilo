@@ -73,7 +73,7 @@ protected:
     {}
 
   test::TemporaryDirectory trace_dir_;
-  TraceBuffer buffer_;
+  LoomBuffer buffer_;
   PacketLogger logger_;
   std::shared_ptr<::testing::NiceMock<MockCallbacks>> callbacks_;
   TraceWriter writer_;

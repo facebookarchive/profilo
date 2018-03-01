@@ -26,8 +26,9 @@ fb_xplat_cxx_library(
         "ExternalApiImpl.cpp",
     ],
     compiler_flags = [
-        "-DLOG_TAG=\"Profilo/ExternalApi\"",
+        "-DLOG_TAG=\"Loom/ExternalApi\"",
         #"-DFBLOG_NDEBUG=0",  # verbose logging
+        "-DIS_LOOM",
     ],
     force_static = True,
     visibility = [

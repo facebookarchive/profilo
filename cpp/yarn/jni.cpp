@@ -39,7 +39,7 @@ static Session* handleToSession(jlong handle) {
 
 namespace {
 
-class ProfiloWriterListener: public RecordListener {
+class LoomWriterListener: public RecordListener {
 public:
   virtual void onMmap(const RecordMmap& record) {
   }
@@ -113,7 +113,7 @@ static jlong nativeAttach(
       .maxAttachIterations = static_cast<uint16_t>(maxIterations),
       .maxAttachedFdsRatio = maxAttachedFdsRatio,
     },
-    std::unique_ptr<RecordListener>(new ProfiloWriterListener())
+    std::unique_ptr<RecordListener>(new LoomWriterListener())
   );
   if (!session->attach()) {
     delete session;

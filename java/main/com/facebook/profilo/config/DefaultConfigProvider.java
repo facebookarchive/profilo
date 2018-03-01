@@ -2,7 +2,7 @@
 
 package com.facebook.profilo.config;
 
-import com.facebook.profilo.core.ProfiloConstants;
+import com.facebook.profilo.core.LoomConstants;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
@@ -25,10 +25,10 @@ public class DefaultConfigProvider implements ConfigProvider {
             @Override
             @Nullable
             public ControllerConfig getConfigForController(int controller) {
-              if (controller == ProfiloConstants.TRIGGER_MANUAL
-                  || controller == ProfiloConstants.TRIGGER_EXTERNAL
-                  || controller == ProfiloConstants.TRIGGER_VIDEO_PROFILER
-                  || controller == ProfiloConstants.TRIGGER_LITE) {
+              if (controller == LoomConstants.TRIGGER_MANUAL
+                  || controller == LoomConstants.TRIGGER_EXTERNAL
+                  || controller == LoomConstants.TRIGGER_VIDEO_PROFILER
+                  || controller == LoomConstants.TRIGGER_LITE) {
                 return mControllerConfig;
               }
               return null;

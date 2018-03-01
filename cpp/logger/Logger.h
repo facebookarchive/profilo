@@ -9,7 +9,7 @@
 #include "PacketLogger.h"
 #include "RingBuffer.h"
 
-#define PROFILOEXPORT __attribute__((visibility("default")))
+#define LOOMEXPORT __attribute__((visibility("default")))
 
 namespace facebook {
 namespace profilo {
@@ -22,7 +22,7 @@ class Logger {
 public:
   const size_t kMaxVariableLengthEntry = 1024;
 
-  PROFILOEXPORT static Logger& get();
+  LOOMEXPORT static Logger& get();
 
   template<class T>
   int32_t write(T&& entry, uint16_t id_step = 1) {
@@ -39,7 +39,7 @@ public:
   template<class T>
   int32_t writeAndGetCursor(
     T&& entry,
-    TraceBuffer::Cursor& cursor) {
+    LoomBuffer::Cursor& cursor) {
     entry.id = nextID();
 
     auto size = T::calculateSize(entry);
@@ -50,13 +50,13 @@ public:
     return entry.id;
   }
 
-  PROFILOEXPORT int32_t writeBytes(
+  LOOMEXPORT int32_t writeBytes(
     EntryType type,
     int32_t arg1,
     const uint8_t* arg2,
     size_t len);
 
-  PROFILOEXPORT void writeStackFrames(
+  LOOMEXPORT void writeStackFrames(
       int32_t tid,
       int64_t time,
       const int64_t* methods,
@@ -64,7 +64,7 @@ public:
       EntryType entry_type = entries::STACK_FRAME);
 
 
-  PROFILOEXPORT void writeTraceAnnotation(int32_t key, int64_t value);
+  LOOMEXPORT void writeTraceAnnotation(int32_t key, int64_t value);
 
 
  private:

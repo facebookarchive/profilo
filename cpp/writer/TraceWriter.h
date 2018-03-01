@@ -35,7 +35,7 @@ public:
   TraceWriter(
     const std::string&& folder,
     const std::string&& trace_prefix,
-    TraceBuffer& buffer,
+    LoomBuffer& buffer,
     std::shared_ptr<TraceCallbacks> callbacks = nullptr,
     std::vector<std::pair<std::string, std::string>>&& headers =
       std::vector<std::pair<std::string, std::string>>()
@@ -53,7 +53,7 @@ public:
   // Call with trace_id = kStopLoopTraceID to terminate loop()
   // without processing a trace.
   //
-  void submit(TraceBuffer::Cursor cursor, int64_t trace_id);
+  void submit(LoomBuffer::Cursor cursor, int64_t trace_id);
 
   //
   // Equivalent to write(buffer_.currentTail(), trace_id).
@@ -65,11 +65,11 @@ public:
 private:
   std::mutex wakeup_mutex_;
   std::condition_variable wakeup_cv_;
-  std::queue<std::pair<TraceBuffer::Cursor, int64_t>> wakeup_trace_ids_;
+  std::queue<std::pair<LoomBuffer::Cursor, int64_t>> wakeup_trace_ids_;
 
   const std::string trace_folder_;
   const std::string trace_prefix_;
-  TraceBuffer& buffer_;
+  LoomBuffer& buffer_;
   std::vector<std::pair<std::string, std::string>> trace_headers_;
 
   std::shared_ptr<TraceCallbacks> callbacks_;

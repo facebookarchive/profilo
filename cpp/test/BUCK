@@ -9,7 +9,7 @@ cxx_test(
     compiler_flags = [
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     linker_flags = [
         "-pthread",
@@ -28,7 +28,7 @@ cxx_test(
     compiler_flags = [
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     linker_flags = [
         "-pthread",
@@ -47,7 +47,7 @@ cxx_test(
     compiler_flags = [
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     linker_flags = [
         "-pthread",
@@ -66,7 +66,7 @@ cxx_test(
     compiler_flags = [
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     linker_flags = [
         "-pthread",
@@ -85,7 +85,7 @@ cxx_test(
     compiler_flags = [
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     linker_flags = [
         "-pthread",
@@ -106,7 +106,7 @@ cxx_test(
     compiler_flags = [
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     linker_flags = [
         "-pthread",

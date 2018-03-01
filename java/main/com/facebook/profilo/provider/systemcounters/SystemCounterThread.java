@@ -77,7 +77,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
       return;
     }
 
-    mHandlerThread = new HandlerThread("Profilo:Counters");
+    mHandlerThread = new HandlerThread("Loom:Counters");
     mHandlerThread.start();
     mHandler =
         new Handler(mHandlerThread.getLooper()) {

@@ -7,7 +7,7 @@ cxx_binary(
     ],
     compiler_flags = [
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
         "-g3",
         "-fPIE",
     ],

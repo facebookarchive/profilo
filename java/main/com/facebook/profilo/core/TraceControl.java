@@ -32,7 +32,7 @@ import javax.annotation.concurrent.NotThreadSafe;
     "BadMethodUse-android.util.Log.w"})
 final public class TraceControl {
 
-  public static final String LOG_TAG = "Profilo/TraceControl";
+  public static final String LOG_TAG = "LoomTraceControl";
   private static final int TRACE_TIMEOUT_MS = 30000; // 30s
   private static final int MAX_TRACES = 2;
 
@@ -256,7 +256,7 @@ final public class TraceControl {
     }
 
     long traceId = nextTraceID();
-    Log.w(LOG_TAG, "START PROFILO_TRACEID: " + FbTraceId.encode(traceId));
+    Log.w(LOG_TAG, "START LOOM_TRACEID: " + FbTraceId.encode(traceId));
     TraceContext nextContext = new TraceContext(
           traceId,
           FbTraceId.encode(traceId),
@@ -331,7 +331,7 @@ final public class TraceControl {
         context,
         TraceStopReason.ABORT,
         intContext,
-        ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
+        LoomConstants.ABORT_REASON_CONTROLLER_INITIATED);
   }
 
   public void abortTraceWithReason(
@@ -349,7 +349,7 @@ final public class TraceControl {
       return;
     }
     Logger.postTimeoutTrace(traceId);
-    cleanupTraceContextByID(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
+    cleanupTraceContextByID(traceId, LoomConstants.ABORT_REASON_TIMEOUT);
   }
 
   private boolean stopTrace(
@@ -366,7 +366,7 @@ final public class TraceControl {
 
     removeTraceContext(traceContext);
 
-    Log.w(LOG_TAG, "STOP PROFILO_TRACEID: " + FbTraceId.encode(traceContext.traceId));
+    Log.w(LOG_TAG, "STOP LOOM_TRACEID: " + FbTraceId.encode(traceContext.traceId));
     synchronized (this) {
       ensureHandlerInitialized();
       switch (stopReason) {
@@ -431,7 +431,7 @@ final public class TraceControl {
 
   @Nullable
   public String getBlackBoxTraceEncodedId() {
-    TraceContext ctx = findCurrentTraceByContext(ProfiloConstants.TRIGGER_BLACK_BOX, 0, null);
+    TraceContext ctx = findCurrentTraceByContext(LoomConstants.TRIGGER_BLACK_BOX, 0, null);
     if (ctx == null) {
       return null;
     }
@@ -475,8 +475,8 @@ final public class TraceControl {
   }
 
   /**
-   * ONLY USE WITHIN com.facebook.profilo.* (Visibility cannot be restricted, must be usable from
-   * outside profilo.core)
+   * ONLY USE WITHIN com.facebook.profilo.*
+   * (Visibility cannot be restricted, must be usable from outside loom.core)
    */
   public int getCurrentTraceControllers() {
     if (mCurrentTracesMask.get() == 0) {

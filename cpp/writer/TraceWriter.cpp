@@ -26,13 +26,13 @@ namespace {
 
 void traceBackward(
   TraceLifecycleVisitor& visitor,
-  TraceBuffer& buffer,
-  TraceBuffer::Cursor& cursor) {
+  LoomBuffer& buffer,
+  LoomBuffer::Cursor& cursor) {
   PacketReassembler reassembler([&visitor](const void* data, size_t size) {
     EntryParser::parse(data, size, visitor);
   });
 
-  TraceBuffer::Cursor backCursor{cursor};
+  LoomBuffer::Cursor backCursor{cursor};
   backCursor.moveBackward(); // Move back before trace start
 
   alignas(4) Packet packet;
@@ -49,7 +49,7 @@ void traceBackward(
 TraceWriter::TraceWriter(
   const std::string&& folder,
   const std::string&& trace_prefix,
-  TraceBuffer& buffer,
+  LoomBuffer& buffer,
   std::shared_ptr<TraceCallbacks> callbacks,
   std::vector<std::pair<std::string, std::string>>&& headers
 ):
@@ -67,7 +67,7 @@ void TraceWriter::loop() {
   while (true) {
     int64_t trace_id;
     // dummy call, no default constructor
-    TraceBuffer::Cursor cursor = buffer_.currentTail();
+    LoomBuffer::Cursor cursor = buffer_.currentTail();
 
     {
       std::unique_lock<std::mutex> lock(wakeup_mutex_);
@@ -128,7 +128,7 @@ void TraceWriter::loop() {
   }
 }
 
-void TraceWriter::submit(TraceBuffer::Cursor cursor, int64_t trace_id) {
+void TraceWriter::submit(LoomBuffer::Cursor cursor, int64_t trace_id) {
   {
     std::lock_guard<std::mutex> lock(wakeup_mutex_);
     wakeup_trace_ids_.push(std::make_pair(cursor, trace_id));

@@ -40,7 +40,7 @@ class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
 
   void loop();
 
-  void submit(TraceBuffer::Cursor cursor, int64_t trace_id);
+  void submit(LoomBuffer::Cursor cursor, int64_t trace_id);
 
  private:
   friend HybridBase;

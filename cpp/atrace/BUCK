@@ -15,7 +15,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo/atrace\"",
+        "-DLOG_TAG=\"Loom/atrace\"",
     ],
     soname = "libprofilo_atrace.$(ext)",
     supported_platforms_regex = "^android-(armv7|x86)$",

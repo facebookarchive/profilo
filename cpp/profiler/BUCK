@@ -19,7 +19,7 @@ def tracer_library(version):
             "-fvisibility=hidden",
             "-fexceptions",
             "-std=gnu++14",
-            "-DLOG_TAG=\"Profilo/ArtCompat\"",
+            "-DLOG_TAG=\"Loom/ArtCompat\"",
             #'-DFBLOG_NDEBUG=0', # extra logging
         ],
         exported_headers = {
@@ -98,7 +98,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo/Profiler\"",
+        "-DLOG_TAG=\"Loom/Profiler\"",
         "-Wno-format-security",
         "-Wno-unknown-attributes",
         #'-DFBLOG_NDEBUG=0', # verbose logging

@@ -8,7 +8,7 @@ import android.content.Context;
 import android.os.Process;
 import android.util.Log;
 import com.facebook.profilo.core.Identifiers;
-import com.facebook.profilo.core.ProfiloConstants;
+import com.facebook.profilo.core.LoomConstants;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceOrchestrator;
 import com.facebook.profilo.entries.EntryType;
@@ -114,7 +114,7 @@ public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
     }
 
     Logger.writeEntryWithoutMatch(
-        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+        LoomConstants.PROVIDER_LOOM_SYSTEM,
         EntryType.TRACE_ANNOTATION,
         Identifiers.CPU_SAMPLING_INTERVAL_MS,
         sampleRateMs);
@@ -158,7 +158,7 @@ public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
                 }
               }
             },
-            "Profilo:Profiler");
+            "Loom:Profiler");
     mProfilerThread.start();
   }
 

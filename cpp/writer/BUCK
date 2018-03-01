@@ -13,7 +13,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo/Writer\"",
+        "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -39,7 +39,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo/Writer\"",
+        "-DLOG_TAG=\"Loom/Writer\"",
         # no __builtin_sub/add_overflow on gcc 4.9, so let's do this instead
         "-fwrapv",
     ],
@@ -67,7 +67,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo/Writer\"",
+        "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -90,7 +90,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo/Writer\"",
+        "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -116,7 +116,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo/Writer\"",
+        "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
         profilo_path("cpp/logger:logger"),
@@ -147,7 +147,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-DLOG_TAG=\"Profilo/Writer\"",
+        "-DLOG_TAG=\"Loom/Writer\"",
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),

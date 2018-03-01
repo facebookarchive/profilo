@@ -78,7 +78,7 @@ public class ArtCompatibility {
   }
 
   private static File getFileForRelease(Context context) {
-    return new File(context.getFilesDir(), "ProfiloArtProfiler_" + Build.VERSION.RELEASE);
+    return new File(context.getFilesDir(), "LoomArtProfiler_" + Build.VERSION.RELEASE);
   }
 
   private static boolean readCompatFile(File file) throws IOException {

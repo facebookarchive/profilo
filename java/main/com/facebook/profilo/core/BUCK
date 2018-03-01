@@ -2,7 +2,7 @@ load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 CONSTANTS = [
     "Identifiers.java",
-    "ProfiloConstants.java",
+    "LoomConstants.java",
 ]
 
 EVENTS = [

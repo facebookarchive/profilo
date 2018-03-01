@@ -17,7 +17,7 @@ fb_xplat_cxx_library(
         "-fvisibility=hidden",
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -53,7 +53,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-std=gnu++14",
         "-O3",
-        "-DLOG_TAG=\"Profilo\"",
+        "-DLOG_TAG=\"Loom\"",
     ],
     force_static = True,
     tests = [

@@ -251,7 +251,7 @@ void DalvikTracer::flushStack(
     method_ids[j] = getMethodIdForSymbolication(dalvikFrames[j]);
   }
 
-  // Write the data to profilo
+  // Write the data to loom
   Logger::get().writeStackFrames(
     tid,
     static_cast<int64_t>(time_),
