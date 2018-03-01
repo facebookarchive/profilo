@@ -10,25 +10,9 @@
 
 using namespace facebook::profilo;
 
-void loom_internal_mark_start(const char* provider, const char* msg);
-void loom_internal_mark_end(const char* provider);
+namespace {
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define LOOM_EXPORT __attribute__((visibility ("default")))
-
-LOOM_EXPORT LoomApi loom_api_int {
-  .mark_start = &loom_internal_mark_start,
-  .mark_end = &loom_internal_mark_end
-};
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
-
-void loom_internal_mark_start(const char* provider, const char* msg) {
+void internal_mark_start(const char* provider, const char* msg) {
   if (!TraceProviders::get().isEnabled(provider) || msg == nullptr) {
     return;
   }
@@ -44,19 +28,12 @@ void loom_internal_mark_start(const char* provider, const char* msg) {
 
   if (msg_len > 0) {
     id = logger.writeBytes(
-      entries::STRING_KEY,
-      id,
-      (const uint8_t *)kNameKey,
-      kNameLen);
-    logger.writeBytes(
-      entries::STRING_VALUE,
-      id,
-      (const uint8_t *)msg,
-      msg_len);
+        entries::STRING_KEY, id, (const uint8_t*)kNameKey, kNameLen);
+    logger.writeBytes(entries::STRING_VALUE, id, (const uint8_t*)msg, msg_len);
   }
 }
 
-void loom_internal_mark_end(const char* provider) {
+void internal_mark_end(const char* provider) {
   if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }
@@ -67,3 +44,20 @@ void loom_internal_mark_end(const char* provider) {
   entry.type = entries::MARK_POP;
   logger.write(std::move(entry));
 }
+
+} // namespace
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define PROFILO_EXPORT __attribute__((visibility ("default")))
+
+PROFILO_EXPORT ProfiloApi profilo_api_int {
+  .mark_start = &internal_mark_start,
+  .mark_end = &internal_mark_end
+};
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

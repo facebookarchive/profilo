@@ -1,11 +1,10 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
 /**
- * The API enables logging into Loom.
+ * The API enables logging into Profilo.
  *
- * It allows logging a code block into Loom wrapping it with "mark_start" and
- * "mark_end" functions. Provider id must be specified to each api call:
- * currently only LOOM_PROVIDER_OTHER is supported.
+ * It allows logging a code block into Profilo wrapping it with "mark_start" and
+ * "mark_end" functions. Provider name must be specified to each api call.
  *
  * There are two ways of using the API:
  *
@@ -13,9 +12,9 @@
  *
  *   #include <profilo/ExternalApi.h>
  *
- *   loom_api()->mark_start(LOOM_PROVIDER_OTHER, "my_function");
+ *   profilo_api()->mark_start("provider_name", "my_function");
  *   ...
- *   loom_api()->mark_end(LOOM_PROVIDER_OTHER);
+ *   profilo_api()->mark_end("provider_name");
  *
  *
  * 2. Using Fbsystrace:
@@ -27,7 +26,7 @@
  *     ...
  *   }
  *
- * NOTE: Loom library must be loaded prior usage for the API to work.
+ * NOTE: Profilo library must be loaded prior usage for the API to work.
  */
 
 #pragma once
@@ -38,15 +37,15 @@
 extern "C" {
 #endif
 
-typedef void (*loom_int_mark_start)(const char* provider, const char* msg);
-typedef void (*loom_int_mark_end)(const char* provider);
+typedef void (*profilo_int_mark_start)(const char* provider, const char* msg);
+typedef void (*profilo_int_mark_end)(const char* provider);
 
-typedef struct LoomApi {
-  loom_int_mark_start mark_start;
-  loom_int_mark_end mark_end;
-} LoomApi;
+typedef struct ProfiloApi {
+  profilo_int_mark_start mark_start;
+  profilo_int_mark_end mark_end;
+} ProfiloApi;
 
-LoomApi* loom_api();
+ProfiloApi* profilo_api();
 
 #ifdef __cplusplus
 } // extern "C"
