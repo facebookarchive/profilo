@@ -62,7 +62,7 @@ inline void logCPUTimeCounter(long prevCpuTime, long currCpuTime, int tid) {
     prevCpuTime,
     currCpuTime,
     tid,
-    LoomQuickLogConstants::THREAD_CPU_TIME,
+    QuickLogConstants::THREAD_CPU_TIME,
     kThresholdMs);
 }
 
@@ -74,7 +74,7 @@ inline void logThreadMajorFaults(
       prev_mfaults,
       curr_mfaults,
       tid,
-      LoomQuickLogConstants::QL_THREAD_FAULTS_MAJOR);
+      QuickLogConstants::QL_THREAD_FAULTS_MAJOR);
 }
 
 inline void logCPUWaitTimeCounter(
@@ -86,7 +86,7 @@ inline void logCPUWaitTimeCounter(
     prevCpuWaitTime,
     currCpuWaitTime,
     tid,
-    LoomQuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
+    QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
     kThresholdMs);
 }
 
@@ -106,42 +106,42 @@ void logSysinfo() {
 
   logCounter(
     logger,
-    LoomQuickLogConstants::LOADAVG_1M,
+    QuickLogConstants::LOADAVG_1M,
     loadDecimal(info.loads[0])
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::LOADAVG_5M,
+    QuickLogConstants::LOADAVG_5M,
     loadDecimal(info.loads[1])
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::LOADAVG_15M,
+    QuickLogConstants::LOADAVG_15M,
     loadDecimal(info.loads[2])
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::NUM_PROCS,
+    QuickLogConstants::NUM_PROCS,
     info.procs
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::TOTAL_MEM,
+    QuickLogConstants::TOTAL_MEM,
     (int64_t) info.totalram * (int64_t) info.mem_unit
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::FREE_MEM,
+    QuickLogConstants::FREE_MEM,
     (int64_t) info.freeram * (int64_t) info.mem_unit
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::SHARED_MEM,
+    QuickLogConstants::SHARED_MEM,
     (int64_t) info.sharedram * (int64_t) info.mem_unit
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::BUFFER_MEM,
+    QuickLogConstants::BUFFER_MEM,
     (int64_t) info.bufferram * (int64_t) info.mem_unit
   );
 }
@@ -152,22 +152,22 @@ void logMallinfo() {
 
   logCounter(
     logger,
-    LoomQuickLogConstants::ALLOC_MMAP_BYTES,
+    QuickLogConstants::ALLOC_MMAP_BYTES,
     info.hblkhd
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::ALLOC_MAX_BYTES,
+    QuickLogConstants::ALLOC_MAX_BYTES,
     info.usmblks
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::ALLOC_TOTAL_BYTES,
+    QuickLogConstants::ALLOC_TOTAL_BYTES,
     info.uordblks
   );
   logCounter(
     logger,
-    LoomQuickLogConstants::ALLOC_FREE_BYTES,
+    QuickLogConstants::ALLOC_FREE_BYTES,
     info.fordblks
   );
 }
@@ -201,28 +201,28 @@ void threadCountersCallback(
         prevInfo.nrVoluntarySwitches,
         currInfo.nrVoluntarySwitches,
         tid,
-        LoomQuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY);
+        QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY);
   }
   if (currInfo.availableStatsMask & util::StatType::NR_INVOLUNTARY_SWITCHES) {
     logMonotonicCounter(
         prevInfo.nrInvoluntarySwitches,
         currInfo.nrInvoluntarySwitches,
         tid,
-        LoomQuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY);
+        QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY);
   }
   if (currInfo.availableStatsMask & util::StatType::IOWAIT_SUM) {
     logMonotonicCounter(
         prevInfo.iowaitSum,
         currInfo.iowaitSum,
         tid,
-        LoomQuickLogConstants::IOWAIT_TIME);
+        QuickLogConstants::IOWAIT_TIME);
   }
   if (currInfo.availableStatsMask & util::StatType::IOWAIT_COUNT) {
     logMonotonicCounter(
         prevInfo.iowaitCount,
         currInfo.iowaitCount,
         tid,
-        LoomQuickLogConstants::IOWAIT_COUNT);
+        QuickLogConstants::IOWAIT_COUNT);
   }
 }
 } // anonymous
@@ -265,7 +265,7 @@ void SystemCounterThread::logThreadCounters(int tid) {
 void SystemCounterThread::logTraceAnnotations(int tid) {
   std::lock_guard<std::mutex> lock(mtx_);
   Logger::get().writeTraceAnnotation(
-      LoomQuickLogConstants::AVAILABLE_COUNTERS,
+      QuickLogConstants::AVAILABLE_COUNTERS,
       cache_.getStatsAvailablilty(tid));
 }
 
@@ -295,7 +295,7 @@ void SystemCounterThread::logProcessCounters() {
     if (currInfo.cpuTime > prevInfo.cpuTime + kThresholdMs) {
       logCounter(
         logger,
-        LoomQuickLogConstants::PROC_CPU_TIME,
+        QuickLogConstants::PROC_CPU_TIME,
         currInfo.cpuTime,
         threadID());
     }
@@ -304,7 +304,7 @@ void SystemCounterThread::logProcessCounters() {
   if (prevInfo.majorFaults != currInfo.majorFaults) {
     logCounter(
       logger,
-      LoomQuickLogConstants::PROC_SW_FAULTS_MAJOR,
+      QuickLogConstants::PROC_SW_FAULTS_MAJOR,
       currInfo.majorFaults,
       threadID());
   }

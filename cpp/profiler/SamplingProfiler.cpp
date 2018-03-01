@@ -480,7 +480,7 @@ bool startProfiling(
 }
 
 /**
-  * Stop the profiler. Write collected stack traces to loom
+  * Stop the profiler. Write collected stack traces to profilo
   * The value to write will be a 64 bit <method_id, dex_number>.
   * Unfortunately, DvmDex or DvmHeader doesn't contain a unique dex number that we could reuse.
   * Until this is possibly written custom by redex, we'll use checksum for the dex identification
@@ -517,13 +517,13 @@ void stopProfiling(fbjni::alias_ref<jobject> obj) {
 
   // Logging errors
   logProfilingErrAnnotation(
-    LoomQuickLogConstants::PROF_ERR_SIG_CRASHES,
+    QuickLogConstants::PROF_ERR_SIG_CRASHES,
     profileState.errSigCrashes);
   logProfilingErrAnnotation(
-    LoomQuickLogConstants::PROF_ERR_SLOT_MISSES,
+    QuickLogConstants::PROF_ERR_SLOT_MISSES,
     profileState.errSlotMisses);
   logProfilingErrAnnotation(
-    LoomQuickLogConstants::PROF_ERR_STACK_OVERFLOWS,
+    QuickLogConstants::PROF_ERR_STACK_OVERFLOWS,
     profileState.errStackOverflows);
 
   FBLOGV("Stack overflows = %d, Sig crashes = %d, Slot misses = %d",

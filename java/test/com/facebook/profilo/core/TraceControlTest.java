@@ -303,7 +303,7 @@ public class TraceControlTest {
   public void testCleanupByID() {
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isTrue();
     long id = mTraceControl.getCurrentTraceIDs()[0];
-    mTraceControl.cleanupTraceContextByID(id, LoomConstants.ABORT_REASON_CONTROLLER_INITIATED);
+    mTraceControl.cleanupTraceContextByID(id, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     assertNotTracing();
 

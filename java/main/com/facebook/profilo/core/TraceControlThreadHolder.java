@@ -15,7 +15,7 @@ public class TraceControlThreadHolder {
 
   private synchronized HandlerThread ensureThreadInitialized() {
     if (mHandlerThread == null) {
-      mHandlerThread = new HandlerThread("Loom/TraceCtrl");
+      mHandlerThread = new HandlerThread("Profilo/TraceCtrl");
       mHandlerThread.start();
     }
     return mHandlerThread;

@@ -260,7 +260,7 @@ public class TraceOrchestratorTest {
     mOrchestrator.onTraceStart(mTraceContext);
     assertThat(TraceEvents.isEnabled(DEFAULT_TRACING_PROVIDERS)).isTrue();
     TraceContext traceContext =
-        new TraceContext(mTraceContext, LoomConstants.ABORT_REASON_CONTROLLER_INITIATED);
+        new TraceContext(mTraceContext, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
     mOrchestrator.onTraceAbort(traceContext);
     assertThatAllProvidersDisabled();
     verifyProvidersDisabled();
@@ -273,23 +273,23 @@ public class TraceOrchestratorTest {
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
-    mOrchestrator.onTraceWriteAbort(traceId, LoomConstants.ABORT_REASON_CONTROLLER_INITIATED);
+    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
-    verify(mTraceControl).cleanupTraceContextByID(
-        eq(traceId),
-        eq(LoomConstants.ABORT_REASON_CONTROLLER_INITIATED));
+    verify(mTraceControl)
+        .cleanupTraceContextByID(
+            eq(traceId), eq(ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED));
   }
 
   @Test
   public void testAbortedNonexistentTraceCallAbortByID() throws IOException {
     /* This can happen if we never saw the trace start event and thus opened a real file. */
     final long traceId = 0xFACEB00C;
-    mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-loom-test");
-    mOrchestrator.onTraceWriteAbort(traceId, LoomConstants.ABORT_REASON_CONTROLLER_INITIATED);
+    mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-profilo-test");
+    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
-    verify(mTraceControl).cleanupTraceContextByID(
-        eq(traceId),
-        eq(LoomConstants.ABORT_REASON_CONTROLLER_INITIATED));
+    verify(mTraceControl)
+        .cleanupTraceContextByID(
+            eq(traceId), eq(ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED));
   }
 
   @Test
@@ -300,7 +300,7 @@ public class TraceOrchestratorTest {
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
-    mOrchestrator.onTraceWriteAbort(traceId, LoomConstants.ABORT_REASON_TIMEOUT);
+    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
 
     verify(mFileManager).addFileToUploads(any(File.class), anyBoolean());
   }
@@ -313,7 +313,7 @@ public class TraceOrchestratorTest {
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
-    mOrchestrator.onTraceWriteAbort(traceId, LoomConstants.ABORT_REASON_CONTROLLER_INITIATED);
+    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mFileManager, never()).addFileToUploads(any(File.class), anyBoolean());
   }
@@ -321,9 +321,9 @@ public class TraceOrchestratorTest {
   @Test
   public void testWriterCallbacksLifecycle() {
     final long traceId = 0xFACEB00C;
-    mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-loom-test");
+    mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-profilo-test");
     mOrchestrator.onTraceWriteEnd(traceId, 0);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-loom-test");
+    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
     // Assert that onTraceWriteStart doesn't throw
   }
 
@@ -335,8 +335,8 @@ public class TraceOrchestratorTest {
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
-    mOrchestrator.onTraceWriteAbort(traceId, LoomConstants.ABORT_REASON_TIMEOUT);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-loom-test");
+    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
+    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
     // Assert that onTraceWriteStart doesn't throw
   }
 
@@ -350,7 +350,7 @@ public class TraceOrchestratorTest {
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
     mOrchestrator.onTraceWriteEnd(traceId, 0);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-loom-test");
+    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
     // Assert that onTraceWriteStart doesn't throw
   }
 
@@ -413,7 +413,7 @@ public class TraceOrchestratorTest {
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp.log", tempDirectory);
-    TraceOrchestrator.LoomListener fileListener = mock(TraceOrchestrator.LoomListener.class);
+    TraceOrchestrator.TraceListener fileListener = mock(TraceOrchestrator.TraceListener.class);
     mOrchestrator.addListener(fileListener);
 
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());

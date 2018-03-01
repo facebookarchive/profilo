@@ -13,7 +13,7 @@
 namespace facebook {
 namespace profilo {
 
-enum LoomQuickLogConstants {
+enum QuickLogConstants {
   PROF_ERR_SIG_CRASHES = 8126464 | 27,  // = 8126491
   PROF_ERR_SLOT_MISSES = 8126464 | 28,  // = 8126492
   PROF_ERR_STACK_OVERFLOWS = 8126464 | 29,  // = 8126493

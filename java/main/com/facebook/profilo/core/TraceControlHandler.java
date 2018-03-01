@@ -27,12 +27,12 @@ import javax.annotation.concurrent.GuardedBy;
 })
 public class TraceControlHandler extends Handler {
 
-  private static final String LOG_TAG = "Loom/TraceControlThread";
+  private static final String LOG_TAG = "Profilo/TraceControlThread";
   private static final int MSG_TIMEOUT_TRACE = 0;
   private static final int MSG_STOP_TRACE = 2;
   private static final int MSG_ABORT_TRACE = 3;
   // Set this system property to enable logs.
-  private static final String LOOM_LOG_LEVEL_SYSTEM_PROPERTY = "com.facebook.profilo.log";
+  private static final String PROFILO_LOG_LEVEL_SYSTEM_PROPERTY = "com.facebook.profilo.log";
 
   @GuardedBy("this") private final @Nullable TraceControl.TraceControlListener mListener;
 
@@ -42,9 +42,8 @@ public class TraceControlHandler extends Handler {
   static class LogLevel {
     // Lazy load system properties.
     private static final boolean LOG_DEBUG_MESSAGE =
-      BuildConstants.isInternalBuild() ||
-        "debug".equals(
-          SystemPropertiesInternal.get(LOOM_LOG_LEVEL_SYSTEM_PROPERTY));
+        BuildConstants.isInternalBuild()
+            || "debug".equals(SystemPropertiesInternal.get(PROFILO_LOG_LEVEL_SYSTEM_PROPERTY));
   }
 
   public TraceControlHandler(@Nullable TraceControl.TraceControlListener listener, Looper looper) {

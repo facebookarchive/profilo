@@ -14,7 +14,7 @@ fb_xplat_cxx_library(
         "-fvisibility=hidden",
         "-fexceptions",
         "-std=gnu++14",
-        "-DLOG_TAG=\"Loom/Writer\"",
+        "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     exported_deps = [
         profilo_path("cpp/writer:writer"),

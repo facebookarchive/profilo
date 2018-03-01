@@ -7,7 +7,7 @@
       android:debuggable="true"
       android:hardwareAccelerated="true">
     <activity android:name=".SampleAppMainActivity"
-        android:label="Loom"
+        android:label="Profilo"
         android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>

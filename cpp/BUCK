@@ -54,7 +54,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-LOOM_EXPORTED_HEADERS = [
+PROFILO_EXPORTED_HEADERS = [
     "log.h",
 ] + PROVIDER_EXPORTED_HEADERS
 
@@ -65,14 +65,14 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
-        excludes = LOOM_EXPORTED_HEADERS,
+        excludes = PROFILO_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
-    exported_headers = LOOM_EXPORTED_HEADERS,
+    exported_headers = PROFILO_EXPORTED_HEADERS,
     allow_jni_merging = True,
     compiler_flags = [
         "-fexceptions",
-        "-DLOG_TAG=\"Loom\"",
+        "-DLOG_TAG=\"Profilo\"",
         "-std=gnu++14",
     ],
     soname = "libprofilo.$(ext)",

@@ -15,7 +15,7 @@ PROVIDER_TO_RULE = {
     "yarn": profilo_path("java/main/com/facebook/profilo/provider/yarn:yarn"),
 }
 
-def loom_sample_app(providers):
+def profilo_sample_app(providers):
     if providers:
         providers = sorted(providers)
         providers_string = "-".join(providers)
@@ -80,17 +80,17 @@ def loom_sample_app(providers):
         ],
     )
 
-loom_sample_app(None)
+profilo_sample_app(None)
 
 # Referred to by open source buckconfig, don't forget to update it there.
-loom_sample_app([
+profilo_sample_app([
     "atrace",
     "stacktrace",
     "systemcounters",
     "threadmetadata",
 ])
 
-loom_sample_app([
+profilo_sample_app([
     "atrace",
     "stacktrace",
     "systemcounters",
@@ -100,4 +100,4 @@ loom_sample_app([
 
 # Generate a target for each individual provider
 for provider in PROVIDER_TO_RULE.keys():
-    loom_sample_app([provider])
+    profilo_sample_app([provider])
