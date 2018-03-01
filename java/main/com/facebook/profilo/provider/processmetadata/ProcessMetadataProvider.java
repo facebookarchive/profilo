@@ -49,6 +49,9 @@ public class ProcessMetadataProvider implements TraceOrchestrator.TraceProvider 
       }
       processes = sb.toString();
     }
+    if (processes == null || processes.isEmpty()) {
+      processes = "PROCESS_METADATA_PROVIDER_FAILED_TO_GET_PROCESS_LIST";
+    }
     Logger.writeEntryWithStringWithNoMatch(
         LoomConstants.PROVIDER_LOOM_SYSTEM, EntryType.PROCESS_LIST, 0, 0, "processes", processes);
   }
