@@ -246,7 +246,8 @@ public final class TraceOrchestrator
     performConfigProviderTransition(newConfigProvider);
   }
 
-  synchronized public void setBackgroundUploadService(BackgroundUploadService uploadService) {
+  public synchronized void setBackgroundUploadService(
+      @Nullable BackgroundUploadService uploadService) {
     if (mBackgroundUploadService == uploadService) {
       return;
     }
