@@ -4,8 +4,8 @@
 
 namespace facebook { namespace profilo {
 
-LoomBuffer& RingBuffer::get(size_t sz) {
-  static LoomBuffer instance(sz);
+TraceBuffer& RingBuffer::get(size_t sz) {
+  static TraceBuffer instance(sz);
   return instance;
 }
 

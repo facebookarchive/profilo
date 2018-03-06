@@ -13,6 +13,6 @@
 #define MAX_STACKS_COUNT 24
 
 /**
-  * Number of full stacks upon which should flush stacks to the Loom buffer
+  * Number of full stacks upon which should flush stacks to the Profilo buffer
   */
 #define FLUSH_STACKS_COUNT 8

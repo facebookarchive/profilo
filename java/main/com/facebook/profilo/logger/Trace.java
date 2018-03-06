@@ -2,7 +2,7 @@
 
 package com.facebook.profilo.logger;
 
-import com.facebook.profilo.core.LoomConstants;
+import com.facebook.profilo.core.ProfiloConstants;
 import java.io.File;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -24,7 +24,7 @@ public final class Trace {
     mID = traceId;
     mFlags = flags;
     mLogFile = logFile;
-    mAbortReason = LoomConstants.ABORT_REASON_UNKNOWN;
+    mAbortReason = ProfiloConstants.ABORT_REASON_UNKNOWN;
   }
 
   public long getID() {
@@ -45,7 +45,7 @@ public final class Trace {
   }
 
   public synchronized boolean isAborted() {
-    return mAbortReason != LoomConstants.ABORT_REASON_UNKNOWN;
+    return mAbortReason != ProfiloConstants.ABORT_REASON_UNKNOWN;
   }
 
   public synchronized int getAbortReason() {

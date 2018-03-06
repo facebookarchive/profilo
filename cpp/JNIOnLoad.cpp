@@ -102,7 +102,7 @@ static jint loggerWriteAndWakeupTraceWriter(
   // We know the buffer is initialized, NativeTraceWriter is already using it.
   // Also, currentTail is only used because Cursor is not default constructible.
   //
-  LoomBuffer::Cursor cursor = RingBuffer::get().currentTail();
+  TraceBuffer::Cursor cursor = RingBuffer::get().currentTail();
   jint id = Logger::get().writeAndGetCursor(StandardEntry {
     .id = 0,
     .type = static_cast<decltype(StandardEntry::type)>(type),

@@ -13,7 +13,7 @@ import android.widget.ToggleButton;
 import com.facebook.profilo.BuildConfig;
 import com.facebook.profilo.controllers.external.ExternalController;
 import com.facebook.profilo.controllers.external.api.ExternalTraceControl;
-import com.facebook.profilo.core.LoomConstants;
+import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TraceOrchestrator;
 import com.facebook.profilo.provider.atrace.SystraceProvider;
@@ -35,7 +35,7 @@ public class SampleAppMainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    initializeLoom();
+    initializeProfilo();
 
     createLayout();
 
@@ -60,7 +60,7 @@ public class SampleAppMainActivity extends Activity {
         });
   }
 
-  private void initializeLoom() {
+  private void initializeProfilo() {
     try {
       SoLoader.init(this.getApplicationContext(), 0);
     } catch (IOException e) {
@@ -68,7 +68,7 @@ public class SampleAppMainActivity extends Activity {
     }
 
     SparseArray<TraceController> controllers = new SparseArray<>(1);
-    controllers.put(LoomConstants.TRIGGER_EXTERNAL, new ExternalController());
+    controllers.put(ProfiloConstants.TRIGGER_EXTERNAL, new ExternalController());
 
     TraceOrchestrator.initialize(
         this.getApplicationContext(),

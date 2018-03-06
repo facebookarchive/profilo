@@ -145,7 +145,7 @@ void hookLoadedLibs() {
   }
   std::string cur_module(info.dli_fname);
 
-  FBLOGV("hooking write(2) for loom systrace collection");
+  FBLOGV("hooking write(2) for profilo systrace collection");
   // Reading somain soinfo structure which will allow walking through other
   // global libs
   soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));

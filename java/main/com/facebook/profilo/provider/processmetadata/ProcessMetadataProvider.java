@@ -4,7 +4,7 @@ package com.facebook.profilo.provider.processmetadata;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import com.facebook.profilo.core.LoomConstants;
+import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.TraceOrchestrator;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
@@ -53,6 +53,11 @@ public class ProcessMetadataProvider implements TraceOrchestrator.TraceProvider 
       processes = "PROCESS_METADATA_PROVIDER_FAILED_TO_GET_PROCESS_LIST";
     }
     Logger.writeEntryWithStringWithNoMatch(
-        LoomConstants.PROVIDER_LOOM_SYSTEM, EntryType.PROCESS_LIST, 0, 0, "processes", processes);
+        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+        EntryType.PROCESS_LIST,
+        0,
+        0,
+        "processes",
+        processes);
   }
 }

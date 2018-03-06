@@ -3,7 +3,7 @@
 package com.facebook.profilo.logger;
 
 import android.annotation.SuppressLint;
-import com.facebook.profilo.core.LoomConstants;
+import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.TraceEvents;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.writer.NativeTraceWriter;
@@ -18,11 +18,10 @@ import javax.annotation.Nullable;
 final public class Logger {
 
   /**
-   * A reference to the underlying trace writer.
-   * The first time we make this wrapper, we may cause the loom
-   * buffer to be allocated, so delay that as much as possible.
+   * A reference to the underlying trace writer. The first time we make this wrapper, we may cause
+   * the profilo buffer to be allocated, so delay that as much as possible.
    *
-   * This variable starts as null but once assigned, it never goes back to null.
+   * <p>This variable starts as null but once assigned, it never goes back to null.
    */
   @Nullable private static volatile NativeTraceWriter sTraceWriter;
 
@@ -55,9 +54,9 @@ final public class Logger {
 
   public static int writeEntryWithoutMatch(int provider, int type, int callID) {
     if (!sInitialized) {
-      return LoomConstants.TRACING_DISABLED;
+      return ProfiloConstants.TRACING_DISABLED;
     }
-    return writeEntryWithCursor(provider, type, callID, LoomConstants.NO_MATCH, 0, null);
+    return writeEntryWithCursor(provider, type, callID, ProfiloConstants.NO_MATCH, 0, null);
   }
 
   public static int writeEntryWithoutMatch(
@@ -66,15 +65,9 @@ final public class Logger {
       int callID,
       long intExtra) {
     if (!sInitialized) {
-      return LoomConstants.TRACING_DISABLED;
+      return ProfiloConstants.TRACING_DISABLED;
     }
-    return writeEntryWithCursor(
-        provider,
-        type,
-        callID,
-        LoomConstants.NO_MATCH,
-        intExtra,
-        null);
+    return writeEntryWithCursor(provider, type, callID, ProfiloConstants.NO_MATCH, intExtra, null);
   }
 
   public static int writeEntryWithoutMatch(
@@ -83,16 +76,13 @@ final public class Logger {
       int callID,
       long intExtra,
       long monotonicTime) {
-    if (!sInitialized ||
-        (provider != LoomConstants.PROVIDER_LOOM_SYSTEM && !TraceEvents.isEnabled(provider))) {
-      return LoomConstants.TRACING_DISABLED;
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
     }
     return loggerWriteWithMonotonicTime(
-        type,
-        callID,
-        LoomConstants.NO_MATCH,
-        intExtra,
-        monotonicTime);
+        type, callID, ProfiloConstants.NO_MATCH, intExtra, monotonicTime);
   }
 
   /**
@@ -104,17 +94,18 @@ final public class Logger {
       int type,
       int callID,
       long intExtra) {
-    if (!sInitialized ||
-        (provider != LoomConstants.PROVIDER_LOOM_SYSTEM && !TraceEvents.isEnabled(provider))) {
-      return LoomConstants.TRACING_DISABLED;
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
     }
 
-    return loggerWriteForThread(tid, type, callID, LoomConstants.NO_MATCH, intExtra);
+    return loggerWriteForThread(tid, type, callID, ProfiloConstants.NO_MATCH, intExtra);
   }
 
   public static int writeEntry(int provider, int type, int callID, int matchID) {
     if (!sInitialized) {
-      return LoomConstants.TRACING_DISABLED;
+      return ProfiloConstants.TRACING_DISABLED;
     }
     return writeEntryWithCursor(
         provider,
@@ -132,7 +123,7 @@ final public class Logger {
       int matchID,
       long intExtra) {
     if (!sInitialized) {
-      return LoomConstants.TRACING_DISABLED;
+      return ProfiloConstants.TRACING_DISABLED;
     }
     return writeEntryWithCursor(
         provider,
@@ -149,7 +140,7 @@ final public class Logger {
       int matchID,
       String str) {
     if (!sInitialized) {
-      return LoomConstants.TRACING_DISABLED;
+      return ProfiloConstants.TRACING_DISABLED;
     }
     return writeEntryWithCursor(
         provider,
@@ -171,9 +162,10 @@ final public class Logger {
 
     // Early bailout for disabled providers too to avoid generating the
     // STRING_VALUE entries.
-    if (!sInitialized ||
-        (provider != LoomConstants.PROVIDER_LOOM_SYSTEM && !TraceEvents.isEnabled(provider))) {
-      return LoomConstants.TRACING_DISABLED;
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
     }
     int returnedMatchID = writeEntryWithCursor(
         provider,
@@ -192,17 +184,13 @@ final public class Logger {
       long intExtra,
       @Nullable String strKey,
       String strValue) {
-    if (!sInitialized ||
-        (provider != LoomConstants.PROVIDER_LOOM_SYSTEM && !TraceEvents.isEnabled(provider))) {
-      return LoomConstants.TRACING_DISABLED;
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
     }
-    int returnedMatchID = writeEntryWithCursor(
-        provider,
-        type,
-        callID,
-        LoomConstants.NO_MATCH,
-        intExtra,
-        null);
+    int returnedMatchID =
+        writeEntryWithCursor(provider, type, callID, ProfiloConstants.NO_MATCH, intExtra, null);
     return writeKeyValueStringWithMatch(provider, returnedMatchID, strKey, strValue);
   }
 
@@ -214,16 +202,14 @@ final public class Logger {
       @Nullable String strKey,
       String strValue,
       long monotonicTime) {
-    if (!sInitialized ||
-        (provider != LoomConstants.PROVIDER_LOOM_SYSTEM && !TraceEvents.isEnabled(provider))) {
-      return LoomConstants.TRACING_DISABLED;
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
     }
-    int returnedMatchID = loggerWriteWithMonotonicTime(
-        type,
-        callID,
-        LoomConstants.NO_MATCH,
-        intExtra,
-        monotonicTime);
+    int returnedMatchID =
+        loggerWriteWithMonotonicTime(
+            type, callID, ProfiloConstants.NO_MATCH, intExtra, monotonicTime);
     return writeKeyValueStringWithMatch(provider, returnedMatchID, strKey, strValue);
   }
 
@@ -285,7 +271,7 @@ final public class Logger {
       startWorkerThreadIfNecessary();
 
       loggerWriteAndWakeupTraceWriter(
-          sTraceWriter, traceId, EntryType.TRACE_BACKWARDS, 0, LoomConstants.NO_MATCH, traceId);
+          sTraceWriter, traceId, EntryType.TRACE_BACKWARDS, 0, ProfiloConstants.NO_MATCH, traceId);
     }
   }
 
@@ -308,10 +294,10 @@ final public class Logger {
   private static void postFinishTrace(int entryType, long traceId) {
     if (sInitialized) {
       writeEntryWithCursor(
-          LoomConstants.PROVIDER_LOOM_SYSTEM,
+          ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
           entryType,
-          LoomConstants.NO_CALLSITE,
-          LoomConstants.NO_MATCH,
+          ProfiloConstants.NO_CALLSITE,
+          ProfiloConstants.NO_MATCH,
           traceId,
           null);
     }
@@ -355,8 +341,8 @@ final public class Logger {
       long extra,
       @Nullable String str) {
 
-    if (provider != LoomConstants.PROVIDER_LOOM_SYSTEM && !TraceEvents.isEnabled(provider))  {
-      return LoomConstants.TRACING_DISABLED;
+    if (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM && !TraceEvents.isEnabled(provider)) {
+      return ProfiloConstants.TRACING_DISABLED;
     }
 
     if (str != null && !str.isEmpty()) {

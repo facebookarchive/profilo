@@ -7,7 +7,7 @@
 
 #include "Packet.h"
 
-#define LOOMEXPORT __attribute__((visibility("default")))
+#define PROFILOEXPORT __attribute__((visibility("default")))
 
 namespace facebook {
 namespace profilo {
@@ -23,8 +23,8 @@ public:
   PacketLogger(PacketBufferProvider provider);
   PacketLogger(const PacketLogger& other) = delete;
 
-  LOOMEXPORT void write(void* payload, size_t size);
-  LOOMEXPORT PacketBuffer::Cursor writeAndGetCursor(
+  PROFILOEXPORT void write(void* payload, size_t size);
+  PROFILOEXPORT PacketBuffer::Cursor writeAndGetCursor(
     void* payload,
     size_t size);
 

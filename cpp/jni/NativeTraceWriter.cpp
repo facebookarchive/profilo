@@ -156,7 +156,7 @@ void NativeTraceWriter::loop() {
   writer_.loop();
 }
 
-void NativeTraceWriter::submit(LoomBuffer::Cursor cursor, int64_t trace_id) {
+void NativeTraceWriter::submit(TraceBuffer::Cursor cursor, int64_t trace_id) {
   writer_.submit(cursor, trace_id);
 }
 

@@ -2,9 +2,9 @@
 
 package com.facebook.profilo.core;
 
-final public class LoomConstants {
+public final class ProfiloConstants {
 
-  public static final int PROVIDER_LOOM_SYSTEM = 0xFFFFFFFF;
+  public static final int PROVIDER_PROFILO_SYSTEM = 0xFFFFFFFF;
 
   public static final int TRIGGER_QPL =             1;
   public static final int TRIGGER_MANUAL =          1 << 1;

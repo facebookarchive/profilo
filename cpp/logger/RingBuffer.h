@@ -7,19 +7,19 @@
 
 #include "Packet.h"
 
-#define LOOMEXPORT __attribute__((visibility("default")))
+#define PROFILOEXPORT __attribute__((visibility("default")))
 
 namespace facebook {
 namespace profilo {
 
-using LoomBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
+using TraceBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
 
 class RingBuffer {
 
   static const size_t DEFAULT_SLOT_COUNT = 1000;
 
   public:
-  LOOMEXPORT static LoomBuffer& get(size_t sz = DEFAULT_SLOT_COUNT);
+  PROFILOEXPORT static TraceBuffer& get(size_t sz = DEFAULT_SLOT_COUNT);
 };
 
 } // namespace profilo

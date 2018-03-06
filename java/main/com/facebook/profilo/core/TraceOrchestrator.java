@@ -41,7 +41,7 @@ public final class TraceOrchestrator
 
   static final String CHECKSUM_DELIM = "-cs-";
 
-  public interface LoomListener
+  public interface TraceListener
       extends NativeTraceWriterCallbacks,
           BackgroundUploadService.BackgroundUploadListener,
           TraceControl.TraceControlListener,
@@ -76,10 +76,12 @@ public final class TraceOrchestrator
     void onDisable(TraceContext context, File extraDataFolder);
   }
 
-  public interface LoomBridgeFactory {
+  public interface ProfiloBridgeFactory {
     BackgroundUploadService getUploadService();
     ConfigProvider getProvider();
-    LoomListener getListener();
+
+    TraceListener getListener();
+
     boolean isMultiProcessTracingEnabled();
   }
 
@@ -104,7 +106,7 @@ public final class TraceOrchestrator
 
   public static final String MAIN_PROCESS_NAME = "main";
 
-  private static final String TAG = "Loom/TraceOrchestrator";
+  private static final String TAG = "Profilo/TraceOrchestrator";
   private static final int RING_BUFFER_SIZE = 5000;
   private boolean mHasReadFromBridge = false;
 
@@ -157,9 +159,14 @@ public final class TraceOrchestrator
   @GuardedBy("this") @Nullable ConfigProvider mNextConfigProvider;
   @GuardedBy("this") private FileManager mFileManager;
   @GuardedBy("this") @Nullable private BackgroundUploadService mBackgroundUploadService;
-  @GuardedBy("this") @Nullable private LoomBridgeFactory mLoomBridgeFactory;
+
+  @GuardedBy("this")
+  @Nullable
+  private ProfiloBridgeFactory mProfiloBridgeFactory;
+
   @GuardedBy("this") private TraceProvider[] mTraceProviders;
-  private final LoomListenerManager mListenerManager;
+
+  private final TraceListenerManager mListenerManager;
   private final boolean mIsMainProcess;
 
   private final Random mRandom;
@@ -178,7 +185,7 @@ public final class TraceOrchestrator
     mFileManager = new FileManager(context);
     mBackgroundUploadService = null;
     mRandom = new Random();
-    mListenerManager = new LoomListenerManager();
+    mListenerManager = new TraceListenerManager();
     mIsMainProcess = isMainProcess;
     mTraces = new HashMap<>(2);
   }
@@ -258,19 +265,19 @@ public final class TraceOrchestrator
     triggerUpload();
   }
 
-  synchronized public void setLoomBridgeFactory(LoomBridgeFactory loomFactory) {
-    mLoomBridgeFactory = loomFactory;
-    LoomListener listener = loomFactory.getListener();
+  public synchronized void setProfiloBridgeFactory(ProfiloBridgeFactory profiloFactory) {
+    mProfiloBridgeFactory = profiloFactory;
+    TraceListener listener = profiloFactory.getListener();
     if (listener != null) {
       mListenerManager.addEventListener(listener);
     }
   }
 
-  synchronized public void addListener(LoomListener listener) {
+  public synchronized void addListener(TraceListener listener) {
     mListenerManager.addEventListener(listener);
   }
 
-  synchronized public void removeListener(LoomListener listener) {
+  public synchronized void removeListener(TraceListener listener) {
     mListenerManager.removeEventListener(listener);
   }
 
@@ -352,7 +359,7 @@ public final class TraceOrchestrator
       TraceEvents.enableProviders(context.enabledProviders);
 
       Logger.writeEntryWithoutMatch(
-          LoomConstants.PROVIDER_LOOM_SYSTEM,
+          ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
           EntryType.TRACE_ANNOTATION,
           Identifiers.CONFIG_ID,
           config.getConfigID());
@@ -516,7 +523,7 @@ public final class TraceOrchestrator
       config = mConfig;
     }
 
-    if (config != null && abortReason == LoomConstants.ABORT_REASON_TIMEOUT) {
+    if (config != null && abortReason == ProfiloConstants.ABORT_REASON_TIMEOUT) {
       int sampleRate = config.getControllersConfig().getTimedOutUploadSampleRate();
       uploadTrace = sampleRate != 0 && mRandom.nextInt(sampleRate) == 0;
     }
@@ -601,14 +608,12 @@ public final class TraceOrchestrator
   }
 
   /**
-   * Every time the background upload service, loom listener, or config provider are touched,
-   * we need to make sure we've initialized them because they are lazy-instantiated during cold
-   * start.
+   * Every time the background upload service, profilo listener, or config provider are touched, we
+   * need to make sure we've initialized them because they are lazy-instantiated during cold start.
    */
-
-  synchronized private BackgroundUploadService getUploadService() {
-    if (mBackgroundUploadService == null && mLoomBridgeFactory != null) {
-      BackgroundUploadService backgroundUploadService = mLoomBridgeFactory.getUploadService();
+  private synchronized BackgroundUploadService getUploadService() {
+    if (mBackgroundUploadService == null && mProfiloBridgeFactory != null) {
+      BackgroundUploadService backgroundUploadService = mProfiloBridgeFactory.getUploadService();
       if (backgroundUploadService != null) {
         setBackgroundUploadService(backgroundUploadService);
       }
@@ -617,11 +622,11 @@ public final class TraceOrchestrator
   }
 
   synchronized private ConfigProvider getConfigProvider() {
-    if (mHasReadFromBridge == false && mLoomBridgeFactory != null) {
+    if (mHasReadFromBridge == false && mProfiloBridgeFactory != null) {
       // The config provider never starts as null, and overriding the config with the same config
       // has repercussions, so we need to make sure the config provider is only fetched from the
       // factory once.
-      ConfigProvider configProvider = mLoomBridgeFactory.getProvider();
+      ConfigProvider configProvider = mProfiloBridgeFactory.getProvider();
       mHasReadFromBridge = true;
 
       if (configProvider != null) {
