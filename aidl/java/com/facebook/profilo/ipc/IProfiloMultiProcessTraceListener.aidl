@@ -1,16 +1,16 @@
 package com.facebook.profilo.ipc;
 
-import com.facebook.profilo.ipc.ILoomMultiProcessTraceService;
+import com.facebook.profilo.ipc.IProfiloMultiProcessTraceService;
 import com.facebook.profilo.ipc.TraceConfigData;
 import com.facebook.profilo.ipc.TraceContext;
 
-interface ILoomMultiProcessTraceListener {
+interface IProfiloMultiProcessTraceListener {
 
   /**
-   * Called after the ILoomMultiProcessTraceService from another
+   * Called after the IProfiloMultiProcessTraceService from another
    * process has received the listener
    */
-  void onReceive(ILoomMultiProcessTraceService service);
+  void onReceive(IProfiloMultiProcessTraceService service);
 
   void onTraceStart(in TraceContext context);
 

@@ -1,16 +1,16 @@
 package com.facebook.profilo.ipc;
 
-import com.facebook.profilo.ipc.ILoomMultiProcessTraceListener;
+import com.facebook.profilo.ipc.IProfiloMultiProcessTraceListener;
 
-interface ILoomMultiProcessTraceService {
+interface IProfiloMultiProcessTraceService {
 
   /**
    * Registers a listener that will receive notifications
    * for future trace events
    */
-  void registerListener(ILoomMultiProcessTraceListener listener);
+  void registerListener(IProfiloMultiProcessTraceListener listener);
 
-  /** 
+  /**
    * Notifies the service that a trace this listener has started has
    * been aborted.
    */
