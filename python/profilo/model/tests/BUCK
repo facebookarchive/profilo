@@ -3,8 +3,8 @@ load("//buck_imports:profilo_path.bzl", "profilo_path")
 python_test(
     name = "tests",
     srcs = glob(["*.py"]),
-    base_module = "loom.model.tests",
+    base_module = "profilo.model.tests",
     deps = [
-        profilo_path("python/loom/model:model"),
+        profilo_path("python/profilo/model:model"),
     ],
 )

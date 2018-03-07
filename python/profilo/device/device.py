@@ -8,13 +8,13 @@ import gzip
 import zipfile
 from io import BytesIO
 
-# FileManager#getBaseFolder has the logic for where Loom traces will exist. For
+# FileManager#getBaseFolder has the logic for where Profilo traces will exist. For
 # now we assume that the traces will exist inside the internal data dir of our
 # package, under the cache/ folder.
-_LOOM_DIR = 'cache/'
+_PROFILO_DIR = 'cache/'
 _TRACE_FILE_EXT = ".log"
 _TRACE_FILE_EXPRESSION = '*' + _TRACE_FILE_EXT
-_LOOM_HEADER_START = 'dt\n'.encode("utf-8")
+_PROFILO_HEADER_START = 'dt\n'.encode("utf-8")
 
 # -t to order by modified time for a nice default ordering.
 _ADB_CMD_BASE = ['adb', 'shell', 'run-as']
@@ -23,7 +23,7 @@ _GET_TRACES_CMD = ['find', '.', '-name', _TRACE_FILE_EXPRESSION]
 _GET_FILE_MODIFIED_UNIX_TIME_CMD = ['stat', '-c', '%Y']
 _GET_FILE_SIZE_CMD = ['stat', '-c', '%s']
 # I'd rather use `test -d $dir` but we need a binary to run within `run-as`
-_CHECK_LOOM_DIR_EXISTS_CMD = ['ls', _LOOM_DIR]
+_CHECK_PROFILO_DIR_EXISTS_CMD = ['ls', _PROFILO_DIR]
 _ADB_EXEC_OUT_CMD_BASE = ['adb', 'exec-out', 'run-as']
 _CAT_CMD = ['cat']
 
@@ -45,10 +45,10 @@ def _get_data_dir_full_path(package):
     return subprocess.check_output(command).decode("utf-8").strip()
 
 
-def _is_loom_trace(gzip_file):
+def _is_profilo_trace(gzip_file):
     try:
         data = gzip_file.read()
-        if not data.startswith(_LOOM_HEADER_START):
+        if not data.startswith(_PROFILO_HEADER_START):
             return False
     except IOError:
         # Not a gzipped file
@@ -60,14 +60,14 @@ def _is_loom_trace(gzip_file):
 def _validate_trace(package, data_dir_path, file_path):
     """
     1) If the file is a zip file (not gzip) then this is a multiproc trace,
-       so unzip it and validate that all the files inside are loom traces
+       so unzip it and validate that all the files inside are profilo traces
        (skipping the "extra" files, which end in *.tnd).
-    2) If the file is not a zip file, validate that it is a loom trace
+    2) If the file is not a zip file, validate that it is a profilo trace
 
-    A file is a "loom trace" if:
+    A file is a "profilo trace" if:
 
         a) It is a gzipped file
-        b) It starts with the magic _LOOM_HEADER_START bytes
+        b) It starts with the magic _PROFILO_HEADER_START bytes
     """
     full_path = "/data/data/{package}/{path}".format(
                 package=package, path=file_path)
@@ -83,11 +83,11 @@ def _validate_trace(package, data_dir_path, file_path):
                     continue
                 f = zipped.open(info_file)
                 gz = gzip.GzipFile(fileobj=BytesIO(f.read()))
-                if not _is_loom_trace(gz):
+                if not _is_profilo_trace(gz):
                     return False
     else:
         gz = gzip.GzipFile(fileobj=BytesIO(content))
-        if not _is_loom_trace(gz):
+        if not _is_profilo_trace(gz):
             return False
 
     return True
@@ -129,15 +129,15 @@ def _pull_trace(package, trace):
         return popen.wait() == 0
 
 
-def _check_loom_dir_exists(package):
+def _check_profilo_dir_exists(package):
     dev_null = open(os.devnull, 'w')
-    command = list(_ADB_CMD_BASE) + [package] + list(_CHECK_LOOM_DIR_EXISTS_CMD)
+    command = list(_ADB_CMD_BASE) + [package] + list(_CHECK_PROFILO_DIR_EXISTS_CMD)
     return subprocess.call(command, stdout=dev_null) == 0
 
 
 def list_traces(package):
-    if not _check_loom_dir_exists(package):
-        print("Loom directory doesn't exist, looked for", _LOOM_DIR,
+    if not _check_profilo_dir_exists(package):
+        print("Profilo directory doesn't exist, looked for", _PROFILO_DIR,
             "inside package internal storage", file=sys.stderr)
         return []
 

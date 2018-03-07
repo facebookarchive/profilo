@@ -204,7 +204,7 @@ if __name__ == "__main__":
 
     # Top level parser. The trace file is common for all types of demos,
     # so parse it here.
-    parser = argparse.ArgumentParser(description="Loom workflow demo")
+    parser = argparse.ArgumentParser(description="Profilo workflow demo")
     parser.add_argument('trace', type=str, help="Path to downloaded trace")
 
     subparsers = parser.add_subparsers(help="Demo types")

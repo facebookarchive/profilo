@@ -3,7 +3,7 @@ load("//buck_imports:profilo_path.bzl", "profilo_path")
 python_library(
     name = "model",
     srcs = glob(["*.py"]),
-    base_module = "loom.model",
+    base_module = "profilo.model",
     visibility = [
         profilo_path("python/..."),
     ],
