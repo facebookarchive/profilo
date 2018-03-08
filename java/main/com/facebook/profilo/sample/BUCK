@@ -78,6 +78,7 @@ def profilo_sample_app(providers):
         deps = [
             ":sample-lib-{}".format(providers_string),
         ],
+        aapt_mode = "aapt2",
     )
 
 profilo_sample_app(None)
