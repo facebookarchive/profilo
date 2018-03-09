@@ -158,7 +158,7 @@ public final class StackFrameThread implements TraceOrchestrator.TraceProvider {
                 }
               }
             },
-            "Profilo:Profiler");
+            "Prflo:Profiler");
     mProfilerThread.start();
   }
 

@@ -81,7 +81,7 @@ public class PerfEventsSession {
     if (mThread != null) {
       throw new IllegalStateException("Thread is already running");
     }
-    Thread thread = new Thread(mSessionRunnable, "Profilo:Yarn");
+    Thread thread = new Thread(mSessionRunnable, "Prflo:Yarn");
     thread.start();
     mThread = thread;
   }

@@ -10,7 +10,7 @@ class LoggerWorkerThread extends Thread {
   private final NativeTraceWriter mTraceWriter;
 
   LoggerWorkerThread(NativeTraceWriter writer) {
-    super("dextr-worker");
+    super("Prflo:Logger");
     mTraceWriter = writer;
   }
 
