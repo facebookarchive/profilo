@@ -69,10 +69,6 @@ sigmux_action sigcatch_handler(struct sigmux_siginfo* siginfo, void* handler_dat
   int32_t tid = threadID();
   auto& profileState = getProfileState();
 
-  if (!threadIsUnwinding() && tid == profileState.flushTid.load()) {
-    sigmux_longjmp(siginfo, profileState.flushSigJmpBuf, 1);
-  }
-
   if (!threadIsUnwinding()) {
     return SIGMUX_CONTINUE_SEARCH;
   }
@@ -287,38 +283,34 @@ void initSignalHandlers() {
 
 void flushStackTraces() {
   auto& profileState = getProfileState();
-  profileState.flushTid.store(threadID());
 
   int processedCount = 0;
-  if (sigsetjmp(profileState.flushSigJmpBuf, 1) == 0) {
-    for (size_t i = 0; i < MAX_STACKS_COUNT; i++) {
-      auto& slot = profileState.stacks[i];
+  for (size_t i = 0; i < MAX_STACKS_COUNT; i++) {
+    auto& slot = profileState.stacks[i];
 
-      uint32_t slotStateCombo = slot.state.load();
-      uint32_t slotState = slotStateCombo & 0xffff;
-      if (StackSlotState::FULL != slotState) {
-        continue;
-      }
-
-      // Ignore remains from a previous trace
-      if (slot.time > profileState.profileStartTime) {
-        auto& tracer = profileState.tracersMap[slot.profilerType];
-        auto tid = slotStateCombo >> 16;
-        tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
-      }
-
-      uint32_t expected = slotStateCombo;
-      // Release the slot
-      if (!slot.state.compare_exchange_strong(expected, StackSlotState::FREE)) {
-        // Slot was re-used in the middle of the processing by another thread. Aborting.
-        abort();
-      }
-      processedCount++;
+    uint32_t slotStateCombo = slot.state.load();
+    uint32_t slotState = slotStateCombo & 0xffff;
+    if (StackSlotState::FULL != slotState) {
+      continue;
     }
-    FBLOGV("Stacks flush is done. Processed %d stacks", processedCount);
-  }
 
-  profileState.flushTid.store(0);
+    // Ignore remains from a previous trace
+    if (slot.time > profileState.profileStartTime) {
+      auto& tracer = profileState.tracersMap[slot.profilerType];
+      auto tid = slotStateCombo >> 16;
+      tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
+    }
+
+    uint32_t expected = slotStateCombo;
+    // Release the slot
+    if (!slot.state.compare_exchange_strong(expected, StackSlotState::FREE)) {
+      // Slot was re-used in the middle of the processing by another thread.
+      // Aborting.
+      abort();
+    }
+    processedCount++;
+  }
+  FBLOGV("Stacks flush is done. Processed %d stacks", processedCount);
 }
 
 void logProfilingErrAnnotation(int32_t key, uint16_t value) {

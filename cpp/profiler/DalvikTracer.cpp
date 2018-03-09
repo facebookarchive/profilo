@@ -228,8 +228,7 @@ bool DalvikTracer::collectStack(
     const Method* method = saveArea->method;
 
     if (method != nullptr) {
-      auto dalvikFrames = reinterpret_cast<Method**>(frames);
-      dalvikFrames[depth] = const_cast<Method*>(method);
+      frames[depth] = getMethodIdForSymbolication(method);
       depth++;
     }
 
@@ -245,17 +244,10 @@ void DalvikTracer::flushStack(
   int tid,
   int64_t time_) {
 
-  auto dalvikFrames = reinterpret_cast<Method**>(frames);
-  int64_t method_ids[depth];
-  for (int j = 0; j < depth; j++) {
-    method_ids[j] = getMethodIdForSymbolication(dalvikFrames[j]);
-  }
-
-  // Write the data to profilo
   Logger::get().writeStackFrames(
     tid,
     static_cast<int64_t>(time_),
-    method_ids,
+    frames,
     depth);
 }
 

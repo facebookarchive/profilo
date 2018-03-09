@@ -51,8 +51,6 @@ struct ProfileState {
   int availableTracers;
   int currentTracers;
   std::unordered_map<int32_t, std::unique_ptr<BaseTracer>> tracersMap;
-  std::atomic<int32_t> flushTid;
-  jmp_buf flushSigJmpBuf;
   StackSlot stacks[MAX_STACKS_COUNT];
   std::atomic<uint32_t> currentSlot;
   // Error stats
