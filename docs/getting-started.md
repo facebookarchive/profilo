@@ -35,7 +35,7 @@ try {
 SparseArray<TraceController> controllers = new SparseArray<>(1);
 
 // We want the "ExternalController" with the id specified by TRIGGER_EXTERNAL.
-controllers.put(LoomConstants.TRIGGER_EXTERNAL, new ExternalController());
+controllers.put(ProfiloConstants.TRIGGER_EXTERNAL, new ExternalController());
 
 TraceOrchestrator.TraceProvider[] providers = new TraceOrchestrator.TraceProvider[] {
     new SystemCounterThread(),

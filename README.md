@@ -21,6 +21,6 @@ You can also find the prebuilt apk in the Releases section.
 
 ## Demos
 
-A demo script can be found in `python/loom/workflow_demo.py`. It contains examples of simple
-analysis that can be run on Loom traces. For more information see the README
+A demo script can be found in `python/profilo/workflow_demo.py`. It contains examples of simple
+analysis that can be run on Profilo traces. For more information see the README
 `python/demos/README.md`

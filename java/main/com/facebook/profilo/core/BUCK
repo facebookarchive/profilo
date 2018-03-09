@@ -54,7 +54,7 @@ android_library(
     visibility = [
         "//javatests/com/facebook/profilo/...",
         profilo_path("..."),
-        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         profilo_path("deps/jsr-305:jsr-305"),
@@ -77,7 +77,7 @@ android_library(
         "//javatests/com/facebook/cloudseeder:cloudseeder",
         "//javatests/com/facebook/debug/fps:fps",
         "//javatests/com/facebook/stall:stall",
-        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         ":constants",

@@ -6,7 +6,7 @@ android_library(
         "//java/com/facebook/cloudseeder:cloudseeder",
         "//javatests/com/facebook/cloudseeder:cloudseeder",
         profilo_path("..."),
-        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),

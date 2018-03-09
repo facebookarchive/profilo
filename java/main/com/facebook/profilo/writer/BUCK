@@ -28,7 +28,7 @@ android_library(
     srcs = glob(CALLBACKS_SRC),
     visibility = [
         profilo_path("..."),
-        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         profilo_path("deps/proguard:annotations"),

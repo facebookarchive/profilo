@@ -6,7 +6,7 @@ android_library(
     visibility = [
         "//instrumentation_tests/com/facebook/quicklog/...",
         profilo_path("..."),
-        "//perftests/benchmarks/java/com/facebook/benchmarks/loom/...",
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         profilo_path("cpp/yarn:yarn"),
