@@ -1,38 +1,36 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_xplat_cxx_library")
 
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
-
-if not THIS_IS_FBANDROID:
-    fb_xplat_cxx_library(
-        name = "museum",
-        srcs = glob(
-            ["*.cpp"],
-        ),
-        headers = glob(
-            ["*.h"],
-        ),
-        header_namespace = "museum",
-        exported_headers = glob(
-            ["*.h"],
-        ),
-        compiler_flags = [
-            "-std=gnu++14",
-            "-fvisibility=hidden",
-            "-fexceptions",
-            "-Wextra",
-            "-Wno-unused-parameter",
-            "-Wno-format-security",
-            "-Wno-unused-local-typedef",
-            "-Wno-unused",
-            "-Wno-missing-field-initializers",
-            "-Wno-gnu-alignof-expression",
-            "-O3",
-        ],
-        preferred_linkage = "static",
-        deps = [
-            profilo_path("deps/cppdistract:cppdistract"),
-        ],
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_xplat_cxx_library(
+    name = "museum",
+    srcs = glob(
+        ["*.cpp"],
+    ),
+    headers = glob(
+        ["*.h"],
+    ),
+    header_namespace = "museum",
+    exported_headers = glob(
+        ["*.h"],
+    ),
+    compiler_flags = [
+        "-std=gnu++14",
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-Wextra",
+        "-Wno-unused-parameter",
+        "-Wno-format-security",
+        "-Wno-unused-local-typedef",
+        "-Wno-unused",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-alignof-expression",
+        "-O3",
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/cppdistract:cppdistract"),
+    ],
+)

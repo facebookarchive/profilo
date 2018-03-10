@@ -1,20 +1,19 @@
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
-if not THIS_IS_FBANDROID:
-    cxx_library(
-        name = "zstr",
-        header_namespace = "zstr",
-        exported_headers = subdir_glob([
-            ("src", "strict_fstream.hpp"),
-            ("src", "zstr.hpp"),
-        ]),
-        exported_linker_flags = [
-            "-lz",
-        ],
-        licenses = [
-            "LICENSE",
-        ],
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_cxx_library(
+    name = "zstr",
+    header_namespace = "zstr",
+    exported_headers = subdir_glob([
+        ("src", "strict_fstream.hpp"),
+        ("src", "zstr.hpp"),
+    ]),
+    exported_linker_flags = [
+        "-lz",
+    ],
+    licenses = [
+        "LICENSE",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

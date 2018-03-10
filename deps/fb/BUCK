@@ -1,35 +1,35 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
-
-if not THIS_IS_FBANDROID:
-    cxx_library(
-        name = "fb",
-        exported_headers = glob([
-            "**/*.h",
-        ]),
-        header_namespace = "fb",
-        compiler_flags = [
-            "-fexceptions",
-        ],
-        linker_flags = [
-            "-llog",
-        ],
-        preprocessor_flags = [
-            "-DDISABLE_CPUCAP",
-            "-DDISABLE_XPLAT",
-        ],
-        srcs = glob([
+profilo_oss_cxx_library(
+    name = "fb",
+    srcs = glob(
+        [
             "**/*.cpp",
         ],
         excludes = [
             "jni/android/*.cpp",
-        ]),
-        soname = "libfb.$(ext)",
-        deps = [
-            profilo_path("deps/fbjni:fbjni"),
         ],
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+    ),
+    header_namespace = "fb",
+    exported_headers = glob([
+        "**/*.h",
+    ]),
+    compiler_flags = [
+        "-fexceptions",
+    ],
+    linker_flags = [
+        "-llog",
+    ],
+    preprocessor_flags = [
+        "-DDISABLE_CPUCAP",
+        "-DDISABLE_XPLAT",
+    ],
+    soname = "libfb.$(ext)",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/fbjni:fbjni"),
+    ],
+)

@@ -1,16 +1,13 @@
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_maven_library")
 
-if not THIS_IS_FBANDROID:
-    load("//buck_imports:maven_library", "maven_library")
-
-    maven_library(
-        name = "jsr-305",
-        artifact = "jsr305",
-        group = "com.google.code.findbugs",
-        scope = "provided",
-        sha1 = "5871fb60dc68d67da54a663c3fd636a10a532948",
-        version = "3.0.0",
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_maven_library(
+    name = "jsr-305",
+    artifact = "jsr305",
+    group = "com.google.code.findbugs",
+    scope = "provided",
+    sha1 = "5871fb60dc68d67da54a663c3fd636a10a532948",
+    version = "3.0.0",
+    visibility = [
+        "PUBLIC",
+    ],
+)

@@ -1,19 +1,17 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
-
-if not THIS_IS_FBANDROID:
-    cxx_library(
-        name = "cppdistract",
-        srcs = [
-            "dso.cpp",
-        ],
-        exported_headers = [
-            "dso.h",
-        ],
-        header_namespace = "cppdistract",
-        preferred_linkage = "static",
-        visibility = [
-            profilo_path("..."),
-        ],
-    )
+profilo_oss_cxx_library(
+    name = "cppdistract",
+    srcs = [
+        "dso.cpp",
+    ],
+    header_namespace = "cppdistract",
+    exported_headers = [
+        "dso.h",
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        profilo_path("..."),
+    ],
+)

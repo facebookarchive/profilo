@@ -1,5 +1,4 @@
 """Provides OSS compatibility layer with internal FB macros."""
-THIS_IS_FBANDROID = False
 
 
 def fb_xplat_cxx_library(name, **kwargs):
@@ -15,4 +14,4 @@ def fb_xplat_cxx_library(name, **kwargs):
         compiler_flags.append("-std=c++14")
     kwargs["compiler_flags"] = compiler_flags
 
-    return cxx_library(name=name, **kwargs)
+    return native.cxx_library(name=name, **kwargs)

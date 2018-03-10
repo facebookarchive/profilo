@@ -1,13 +1,12 @@
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
-if not THIS_IS_FBANDROID:
-    cxx_library(
-        name = "linux-syscall-support",
-        exported_headers = [
-            "linux_syscall_support.h",
-        ],
-        header_namespace = "",
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_cxx_library(
+    name = "linux-syscall-support",
+    header_namespace = "",
+    exported_headers = [
+        "linux_syscall_support.h",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

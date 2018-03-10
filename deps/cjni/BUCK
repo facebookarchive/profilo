@@ -1,13 +1,12 @@
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
-if not THIS_IS_FBANDROID:
-    cxx_library(
-        name = "cjni",
-        header_namespace = "cjni",
-        exported_headers = glob(["*.h"]),
-        srcs = glob(["*.c"]),
-        preferred_linkage = "static",
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_cxx_library(
+    name = "cjni",
+    srcs = glob(["*.c"]),
+    header_namespace = "cjni",
+    exported_headers = glob(["*.h"]),
+    preferred_linkage = "static",
+    visibility = [
+        "PUBLIC",
+    ],
+)

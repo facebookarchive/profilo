@@ -1,27 +1,25 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
-
-if not THIS_IS_FBANDROID:
-    cxx_library(
-        name = "sigmux",
-        exported_headers = [
-            "sigmux.h",
-        ],
-        srcs = [
-            "sigmux.c",
-            "phaser.c",
-        ],
-        header_namespace = "",
-        headers = [
-            "phaser.h",
-        ],
-        soname = "libsigmux.$(ext)",
-        preferred_linkage = "shared",
-        visibility = [
-            "PUBLIC",
-        ],
-        deps = [
-            profilo_path("deps/lss:linux-syscall-support"),
-        ],
-    )
+profilo_oss_cxx_library(
+    name = "sigmux",
+    srcs = [
+        "phaser.c",
+        "sigmux.c",
+    ],
+    headers = [
+        "phaser.h",
+    ],
+    header_namespace = "",
+    exported_headers = [
+        "sigmux.h",
+    ],
+    preferred_linkage = "shared",
+    soname = "libsigmux.$(ext)",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/lss:linux-syscall-support"),
+    ],
+)

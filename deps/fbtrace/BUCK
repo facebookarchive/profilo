@@ -1,12 +1,9 @@
-load("//build_defs:fb_java_library.bzl", "fb_java_library")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_java_library")
 
-include_defs("//build_defs/fb_xplat_cxx.bzl")  # THIS_IS_FBANDROID
-
-if not THIS_IS_FBANDROID:
-    fb_java_library(
-        name = "utils",
-        srcs = ["FbTraceId.java"],
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_java_library(
+    name = "utils",
+    srcs = ["FbTraceId.java"],
+    visibility = [
+        "PUBLIC",
+    ],
+)
