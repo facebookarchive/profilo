@@ -36,7 +36,7 @@ deploy:
   file: out/*
   on:
     all_branches: true
-    repo: facebookexternal/loom
+    repo: facebookincubator/profilo
 
 branches:
   except:
