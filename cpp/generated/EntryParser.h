@@ -1,5 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<119849008f2d7b3e385b4ebd1222922f>>
+// @generated SignedSource<<0d8462c3167e514410dfe9924dc1670a>>
 
 #pragma once
 

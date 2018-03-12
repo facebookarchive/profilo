@@ -1,5 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<bf96144f417277569d6217a3c4b0a05c>>
+// @generated SignedSource<<fd7850188940a134a5e47dd2166834cd>>
 
 #include <cstdint>
 #include <cstring>

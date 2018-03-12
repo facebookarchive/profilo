@@ -1,5 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<301f9660d6f7f5dd33cf976b6b7a29b8>>
+// @generated SignedSource<<04a11582fb51403863026668f02d41df>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
