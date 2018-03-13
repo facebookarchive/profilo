@@ -1,4 +1,8 @@
-# Trace Processing
+---
+id: trace-processing
+title: Trace Processing
+sidebar_label: Trace Processing
+---
 
 ## Design
 
