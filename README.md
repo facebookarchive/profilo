@@ -24,3 +24,7 @@ You can also find the prebuilt apk in the Releases section.
 A demo script can be found in `python/profilo/workflow_demo.py`. It contains examples of simple
 analysis that can be run on Profilo traces. For more information see the README
 `python/demos/README.md`
+
+## License
+Profilo is Apache 2 licensed, as found in the LICENSE file.
+
