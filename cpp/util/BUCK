@@ -1,0 +1,55 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+UTIL_EXPORTED_HEADERS = [
+    "common.h",
+    "ProcFs.h",
+]
+
+fb_xplat_cxx_library(
+    name = "util",
+    srcs = glob([
+        "common.cpp",
+        "ProcFs.cpp",
+    ]),
+    headers = glob(
+        ["*.h"],
+        excludes = UTIL_EXPORTED_HEADERS,
+    ),
+    header_namespace = "util",
+    exported_headers = UTIL_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-fPIC",
+        "-std=gnu++14",
+        "-Wall",
+    ],
+    force_static = True,
+    visibility = [
+        profilo_path("..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "so_utils",
+    srcs = glob([
+        "SoUtils.cpp",
+    ]),
+    header_namespace = "util",
+    exported_headers = glob([
+        "SoUtils.h",
+    ]),
+    compiler_flags = [
+        "-fexceptions",
+        "-fPIC",
+        "-std=gnu++14",
+        "-Wall",
+    ],
+    force_static = True,
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/linker:linker"),
+    ],
+)

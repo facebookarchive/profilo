@@ -1,0 +1,26 @@
+load("//build_defs:fb_java_library.bzl", "fb_java_library")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "cpp",
+    srcs = glob(["*.cpp"]),
+    header_namespace = "profilo/entries",
+    exported_headers = glob(["*.h"]),
+    compiler_flags = [
+        "-fexceptions",
+        "-ffunction-sections",
+    ],
+    force_static = True,
+    visibility = [
+        profilo_path("..."),
+    ],
+)
+
+fb_java_library(
+    name = "java",
+    srcs = glob(["*.java"]),
+    visibility = [
+        profilo_path("..."),
+    ],
+)

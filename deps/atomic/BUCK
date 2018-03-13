@@ -1,0 +1,8 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "atomic",
+    visibility = [
+        "PUBLIC",
+    ],
+)

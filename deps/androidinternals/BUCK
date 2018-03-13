@@ -1,0 +1,15 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_android_library")
+
+profilo_oss_android_library(
+    name = "os",
+    srcs = [
+        "ReflectionHelper.java",
+        "android/os/SystemPropertiesInternal.java",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        "//deps/jsr-305:jsr-305",
+    ],
+)

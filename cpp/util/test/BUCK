@@ -1,0 +1,20 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+cxx_binary(
+    name = "procfs_perf",
+    srcs = [
+        "procfs_perf.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo\"",
+        "-g3",
+        "-fPIE",
+    ],
+    linker_flags = [
+        "-pie",
+    ],
+    deps = [
+        profilo_path("cpp/util:util"),
+    ],
+)

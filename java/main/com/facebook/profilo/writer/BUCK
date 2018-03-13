@@ -1,0 +1,36 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+CALLBACKS_SRC = ["NativeTraceWriterCallbacks.java"]
+
+android_library(
+    name = "writer",
+    srcs = glob(
+        ["*.java"],
+        excludes = CALLBACKS_SRC,
+    ),
+    exported_deps = [
+        ":writer_callbacks",
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("cpp:profilo"),
+        profilo_path("deps/fbjni:fbjni-java"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
+    ],
+)
+
+android_library(
+    name = "writer_callbacks",
+    srcs = glob(CALLBACKS_SRC),
+    visibility = [
+        profilo_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+    ],
+    deps = [
+        profilo_path("deps/proguard:annotations"),
+    ],
+)

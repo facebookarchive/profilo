@@ -1,0 +1,16 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+android_library(
+    name = "atrace",
+    srcs = glob(["*.java"]),
+    visibility = [
+        "//javatests/com/facebook/profilo/...",
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("cpp/atrace:atrace"),
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
+        profilo_path("java/main/com/facebook/profilo/core:core"),
+    ],
+)

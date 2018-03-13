@@ -1,0 +1,13 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+python_library(
+    name = "importer",
+    srcs = glob(["*.py"]),
+    base_module = "profilo.importer",
+    visibility = [
+        profilo_path("python/..."),
+    ],
+    deps = [
+        profilo_path("python/profilo/model:model"),
+    ],
+)

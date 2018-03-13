@@ -1,0 +1,20 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "xplat_init",
+    srcs = [
+        "xplat_init.cpp",
+    ],
+    header_namespace = "fb",
+    exported_headers = [
+        "xplat_init.h",
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/fbjni:fbjni"),
+    ],
+)

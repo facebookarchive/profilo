@@ -1,0 +1,97 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+PROVIDER_EXPORTED_HEADERS = ["TraceProviders.h"]
+
+fb_xplat_cxx_library(
+    name = "providers",
+    srcs = [
+        "TraceProviders.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+        excludes = PROVIDER_EXPORTED_HEADERS,
+    ),
+    header_namespace = "profilo",
+    exported_headers = PROVIDER_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    tests = [
+        profilo_path("cpp/test:providers"),
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/fbjni:fbjni"),
+    ],
+)
+
+CONSTS_EXPORTED_HEADERS = ["LogEntry.h"]
+
+fb_xplat_cxx_library(
+    name = "constants",
+    headers = glob(
+        ["*.h"],
+        excludes = CONSTS_EXPORTED_HEADERS,
+    ),
+    header_namespace = "profilo",
+    exported_headers = CONSTS_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("cpp/generated:cpp"),
+        profilo_path("cpp/util:util"),
+    ],
+)
+
+PROFILO_EXPORTED_HEADERS = [
+    "log.h",
+] + PROVIDER_EXPORTED_HEADERS
+
+fb_xplat_cxx_library(
+    name = "profilo",
+    srcs = [
+        "JNIOnLoad.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+        excludes = PROFILO_EXPORTED_HEADERS,
+    ),
+    header_namespace = "profilo",
+    exported_headers = PROFILO_EXPORTED_HEADERS,
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo\"",
+        "-std=gnu++14",
+    ],
+    soname = "libprofilo.$(ext)",
+    supported_platforms_regex = "^android-(armv7|x86)$",
+    visibility = [
+        profilo_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+    ],
+    deps = [
+        ":constants",
+        ":providers",
+        profilo_path("cpp/api:external_api_impl"),
+        profilo_path("cpp/jni:jni"),
+        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/atomic:atomic"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
+        profilo_path("deps/sigmux:sigmux"),
+        profilo_path("deps/xplat_init:xplat_init"),
+    ],
+)

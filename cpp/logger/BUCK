@@ -1,0 +1,70 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "logger",
+    headers = glob(
+        ["*.h"],
+    ),
+    header_namespace = "profilo",
+    exported_headers = [
+        "Logger.h",
+        "Packet.h",
+        "PacketLogger.h",
+        "RingBuffer.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
+        profilo_path("cpp/logger/lfrb:lfrb"),
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("cpp:constants"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "logger_static",
+    srcs = [
+        "Logger.cpp",
+        "PacketLogger.cpp",
+        "RingBuffer.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+    ),
+    header_namespace = "profilo",
+    exported_headers = [
+        "Logger.h",
+        "Packet.h",
+        "PacketLogger.h",
+        "RingBuffer.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-O3",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    force_static = True,
+    tests = [
+        profilo_path("cpp/test:packet_logger"),
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("cpp:constants"),
+        profilo_path("cpp/generated:cpp"),
+        profilo_path("cpp/logger/lfrb:lfrb"),
+    ],
+)

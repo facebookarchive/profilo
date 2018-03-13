@@ -1,0 +1,120 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+cxx_test(
+    name = "providers",
+    srcs = [
+        "TraceProvidersTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-pthread",
+        "-ldl",
+    ],
+    deps = [
+        profilo_path("cpp:providers"),
+    ],
+)
+
+cxx_test(
+    name = "codegen",
+    srcs = [
+        "EntryCodegenTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        profilo_path("cpp/generated:cpp"),
+        profilo_path("cpp/writer:print_visitor"),
+    ],
+)
+
+cxx_test(
+    name = "delta_visitor",
+    srcs = [
+        "DeltaEncodingVisitorTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        profilo_path("cpp/writer:delta_visitor"),
+        profilo_path("cpp/writer:print_visitor"),
+    ],
+)
+
+cxx_test(
+    name = "stack_visitor",
+    srcs = [
+        "StackTraceInvertingVisitorTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        profilo_path("cpp/writer:print_visitor"),
+        profilo_path("cpp/writer:stack_visitor"),
+    ],
+)
+
+cxx_test(
+    name = "packet_logger",
+    srcs = [
+        "PacketLoggerTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        "xplat//folly:test-util",
+        "xplat//third-party/gmock:gmock",
+        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/writer:packet_reassembler"),
+    ],
+)
+
+cxx_test(
+    name = "trace_writer",
+    srcs = [
+        "TraceWriterTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-pthread",
+    ],
+    deps = [
+        "xplat//folly:test-util",
+        "xplat//third-party/gmock:gmock",
+        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/writer:writer"),
+    ],
+)

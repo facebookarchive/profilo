@@ -1,0 +1,17 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "cppdistract",
+    srcs = [
+        "dso.cpp",
+    ],
+    header_namespace = "cppdistract",
+    exported_headers = [
+        "dso.h",
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        profilo_path("..."),
+    ],
+)

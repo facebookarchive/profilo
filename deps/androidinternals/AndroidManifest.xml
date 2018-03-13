@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file contains the manifest that we use for linting and shouldn't -->
+<!-- be used elsewhere. -->
+
+<!-- We need this file here because our project layout is non-standard, -->
+<!-- and thus Android Lint doesn't understand it.  The only way to get it -->
+<!-- to work was to create an empty directory with an AndroidManifest.xml -->
+<!-- file containing the relevant properties needed to lint. -->
+<!-- We then specify the source files and class files -->
+<!-- while 'linting' this directory. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.facebook"
+      android:versionCode="1"
+      android:versionName="1.0">
+
+  <uses-sdk
+    android:minSdkVersion="8"
+    android:targetSdkVersion="21"/>
+
+</manifest>

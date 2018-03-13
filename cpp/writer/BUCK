@@ -1,0 +1,172 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "print_visitor",
+    srcs = [
+        "PrintEntryVisitor.cpp",
+    ],
+    header_namespace = "profilo/writer",
+    exported_headers = [
+        "PrintEntryVisitor.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
+    ],
+    preferred_linkage = "static",
+    tests = [
+        profilo_path("cpp/test:codegen"),
+    ],
+    visibility = [
+        profilo_path("cpp/test/..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "delta_visitor",
+    srcs = [
+        "DeltaEncodingVisitor.cpp",
+    ],
+    header_namespace = "profilo/writer",
+    exported_headers = [
+        "DeltaEncodingVisitor.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+        # no __builtin_sub/add_overflow on gcc 4.9, so let's do this instead
+        "-fwrapv",
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
+    ],
+    preferred_linkage = "static",
+    tests = [
+        profilo_path("cpp/test:delta_visitor"),
+    ],
+    visibility = [
+        profilo_path("cpp/test/..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "timestamp_truncating_visitor",
+    srcs = [
+        "TimestampTruncatingVisitor.cpp",
+    ],
+    header_namespace = "profilo/writer",
+    exported_headers = [
+        "TimestampTruncatingVisitor.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        profilo_path("cpp/test/..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "stack_visitor",
+    srcs = [
+        "StackTraceInvertingVisitor.cpp",
+    ],
+    header_namespace = "profilo/writer",
+    exported_headers = [
+        "StackTraceInvertingVisitor.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        profilo_path("cpp/test/..."),
+    ],
+    deps = [
+        profilo_path("cpp/profiler:constants"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "packet_reassembler",
+    srcs = [
+        "PacketReassembler.cpp",
+    ],
+    header_namespace = "profilo/writer",
+    exported_headers = [
+        "PacketReassembler.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+    ],
+    exported_deps = [
+        profilo_path("cpp/logger:logger"),
+    ],
+    preferred_linkage = "static",
+    visibility = [
+        profilo_path("cpp/test/..."),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "writer",
+    srcs = [
+        "MultiTraceLifecycleVisitor.cpp",
+        "TraceLifecycleVisitor.cpp",
+        "TraceWriter.cpp",
+    ],
+    headers = [
+        "MultiTraceLifecycleVisitor.h",
+        "TraceLifecycleVisitor.h",
+    ],
+    header_namespace = "profilo/writer",
+    exported_headers = [
+        "AbortReason.h",
+        "TraceCallbacks.h",
+        "TraceWriter.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
+    ],
+    preferred_linkage = "static",
+    tests = [
+        profilo_path("cpp/test:trace_writer"),
+    ],
+    visibility = [
+        profilo_path("cpp/jni/..."),
+        profilo_path("cpp/test/..."),
+    ],
+    deps = [
+        ":delta_visitor",
+        ":packet_reassembler",
+        ":print_visitor",
+        ":stack_visitor",
+        ":timestamp_truncating_visitor",
+        profilo_path("cpp/logger:logger"),
+        profilo_path("deps/zstr:zstr"),
+    ],
+)

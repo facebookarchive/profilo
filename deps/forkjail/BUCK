@@ -1,0 +1,29 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+FORKJAIL_EXPORTED_HEADERS = [
+    "ForkJail.h",
+    "ShmErrorMsg.h",
+]
+
+profilo_oss_cxx_library(
+    name = "forkjail",
+    srcs = glob([
+        "ForkJail.cpp",
+        "ShmErrorMsg.cpp",
+    ]),
+    headers = glob(
+        ["*.h"],
+        excludes = FORKJAIL_EXPORTED_HEADERS,
+    ),
+    header_namespace = "forkjail",
+    exported_headers = FORKJAIL_EXPORTED_HEADERS,
+    compiler_flags = [
+        "-fexceptions",
+        "-fPIC",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    visibility = [
+        "PUBLIC",
+    ],
+)

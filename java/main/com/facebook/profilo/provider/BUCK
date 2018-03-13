@@ -1,0 +1,15 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+android_library(
+    name = "provider",
+    visibility = [
+        "//java/com/facebook/cloudseeder:cloudseeder",
+        "//javatests/com/facebook/cloudseeder:cloudseeder",
+        profilo_path("..."),
+        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+    ],
+    deps = [
+        profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),
+        profilo_path("java/main/com/facebook/profilo/provider/systemcounters:systemcounters"),
+    ],
+)

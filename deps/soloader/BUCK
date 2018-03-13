@@ -1,0 +1,14 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_maven_library")
+
+profilo_oss_maven_library(
+    name = "soloader",
+    artifact = "soloader",
+    group = "com.facebook.soloader",
+    packaging = "aar",
+    scope = "compile",
+    sha1 = "2f27b33862c38f8197536a189f7a8f0be0839561",
+    version = "0.2.0",
+    visibility = [
+        "PUBLIC",
+    ],
+)

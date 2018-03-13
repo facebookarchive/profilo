@@ -1,0 +1,12 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "linux-syscall-support",
+    header_namespace = "",
+    exported_headers = [
+        "linux_syscall_support.h",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

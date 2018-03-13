@@ -1,0 +1,24 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+android_library(
+    name = "aidl",
+    srcs = glob(["java/**/*.java"]) + [
+        ":IProfiloMultiProcessTraceService",
+        ":IProfiloMultiProcessTraceListener",
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+)
+
+gen_aidl(
+    name = "IProfiloMultiProcessTraceService",
+    aidl = "java/com/facebook/profilo/ipc/IProfiloMultiProcessTraceService.aidl",
+    import_path = profilo_path("aidl/java/").replace("//", ""),
+)
+
+gen_aidl(
+    name = "IProfiloMultiProcessTraceListener",
+    aidl = "java/com/facebook/profilo/ipc/IProfiloMultiProcessTraceListener.aidl",
+    import_path = profilo_path("aidl/java/").replace("//", ""),
+)

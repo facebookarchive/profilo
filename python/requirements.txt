@@ -1,0 +1,4 @@
+notebook==5.2.0
+pandas==0.18.1
+numpy==1.13.3
+matplotlib==2.1.2

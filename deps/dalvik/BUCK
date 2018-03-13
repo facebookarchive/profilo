@@ -1,0 +1,12 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "dalvik-subset",
+    header_namespace = "dalvik-subset",
+    exported_headers = [
+        "internals.h",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

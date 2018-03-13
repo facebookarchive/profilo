@@ -1,0 +1,19 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "zstr",
+    header_namespace = "zstr",
+    exported_headers = subdir_glob([
+        ("src", "strict_fstream.hpp"),
+        ("src", "zstr.hpp"),
+    ]),
+    exported_linker_flags = [
+        "-lz",
+    ],
+    licenses = [
+        "LICENSE",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

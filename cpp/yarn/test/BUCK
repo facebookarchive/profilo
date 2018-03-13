@@ -1,0 +1,22 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+cxx_binary(
+    name = "stress_test",
+    srcs = [
+        "stress_test.cpp",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-fPIE",
+        "-DLOG_TAG=\"yarn\"",
+        "-g",
+    ],
+    linker_flags = [
+        "-pie",
+        "-g",
+    ],
+    deps = [
+        profilo_path("cpp/yarn:yarn"),
+    ],
+)

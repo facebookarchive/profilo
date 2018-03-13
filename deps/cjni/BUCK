@@ -1,0 +1,12 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "cjni",
+    srcs = glob(["*.c"]),
+    header_namespace = "cjni",
+    exported_headers = glob(["*.h"]),
+    preferred_linkage = "static",
+    visibility = [
+        "PUBLIC",
+    ],
+)
