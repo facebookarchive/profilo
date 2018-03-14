@@ -1,4 +1,8 @@
-# Getting started
+---
+id: getting-started
+title: Getting Started
+sidebar_label: Getting Started
+---
 
 ## Use a prebuilt `.aar` with Gradle
 
