@@ -5,9 +5,9 @@ Profilo is an Android library for collecting performance *traces* from productio
 
 ## Index
 
-1. [Getting started](docs/getting-started.md)
-2. [Internal architecture](docs/architecture.md)
-3. [Trace processing and analysis](docs/trace-processing.md)
+1. [Getting started](https://facebookincubator.github.io/profilo/docs/getting-started.html)
+2. [Internal architecture](https://facebookincubator.github.io/profilo/docs/architecture.html)
+3. [Trace processing and analysis](https://facebookincubator.github.io/profilo/docs/trace-processing.html)
 
 ## APIs
 
@@ -22,8 +22,7 @@ You can also find the prebuilt apk in the Releases section.
 ## Demos
 
 A demo script can be found in `python/profilo/workflow_demo.py`. It contains examples of simple
-analysis that can be run on Profilo traces. For more information see the README
-`python/demos/README.md`
+analysis that can be run on Profilo traces. For more information see the [trace processing](https://facebookincubator.github.io/profilo/docs/trace-processing.html) section of the docs.
 
 ## License
 Profilo is Apache 2 licensed, as found in the LICENSE file.
