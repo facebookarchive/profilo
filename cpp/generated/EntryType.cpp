@@ -1,4 +1,5 @@
-// @generated SignedSource<<04a11582fb51403863026668f02d41df>>
+// Copyright 2004-present Facebook. All Rights Reserved.
+// @generated SignedSource<<97f4ec911f41ef2128b984e76f95622c>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -68,7 +69,6 @@ const char* to_string(EntryType type) {
     case QPL_END: return "QPL_END";
     case QPL_CANCEL: return "QPL_CANCEL";
     case QPL_NOTE: return "QPL_NOTE";
-    case QPL_POINT: return "QPL_POINT";
     case TRACE_ANNOTATION: return "TRACE_ANNOTATION";
     case WAIT_START: return "WAIT_START";
     case WAIT_END: return "WAIT_END";

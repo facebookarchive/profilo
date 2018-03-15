@@ -103,7 +103,6 @@ NAMES = [
     'QPL_END',
     'QPL_CANCEL',
     'QPL_NOTE',
-    'QPL_POINT',
 
     'TRACE_ANNOTATION',
 
