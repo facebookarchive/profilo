@@ -15,6 +15,7 @@ const siteConfig = {
   url: 'https://facebookincubator.github.io' /* your website url */,
   baseUrl: '/profilo/' /* base url for your project */,
   projectName: 'profilo',
+  organizationName: "facebookincubator",
   headerLinks: [
     {doc: 'getting-started', label: 'Docs'},
     {
