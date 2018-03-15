@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  deploy-website:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/profilo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys: 
+          - dependencies-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - dependencies-{{ .Branch }}-
+
+      - run:
+          name: Install Docusaurus
+          command: |
+            cd website
+            yarn --non-interactive --cache-folder ~/.cache/yarn
+
+      - save_cache:
+          paths:
+            - website/node_modules
+            - ~/.cache/yarn
+          key: dependencies-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
+
+      - run:
+          name: Configure GitHub Bot
+          command: |
+            git config --global user.email "docusaurus-bot@users.noreply.github.com"
+            git config --global user.name "Website Deployment Script"
+            echo "machine github.com login docusaurus-bot password $GITHUB_TOKEN" > ~/.netrc
+
+      - deploy:
+          name: Deploy Website
+          command: |
+            echo "Deploying website..."
+            cd website && GIT_USER=docusaurus-bot USE_SSH=false yarn run publish-gh-pages
+
