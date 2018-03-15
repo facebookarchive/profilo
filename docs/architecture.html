@@ -1,0 +1,87 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Architecture · Profilo</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Architecture · Profilo"/><meta property="og:type" content="website"/><meta property="og:url" content="https://facebookincubator.github.io/profilo/index.html"/><meta property="og:description" content="## Glossary"/><link rel="shortcut icon" href="/profilo/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/profilo/css/main.css"/></head><body class="sideNavVisible doc"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/profilo/"><img class="logo" src="/profilo/img/profilo_logo_small.png"/><h2 class="headerTitle">Profilo</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/profilo/docs/getting-started.html" target="_self">Docs</a></li><li class=""><a href="https://github.com/facebookincubator/profilo" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Introduction</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Introduction</h3><ul><li class="navListItem"><a class="navItem" href="/profilo/docs/getting-started.html">Getting Started</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/profilo/docs/architecture.html">Architecture</a></li><li class="navListItem"><a class="navItem" href="/profilo/docs/trace-processing.html">Trace Processing</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1>Architecture</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="glossary"></a><a href="#glossary" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Glossary</h2>
+<ul>
+<li><strong>Trace</strong>: a file containing a time window of performance data from an application.</li>
+<li><strong>Trigger</strong>: an attempt to start a trace.</li>
+<li><strong>TraceController</strong>: an object controlling whether Profilo should actually start a trace. Each Trigger is associated with one TraceController.</li>
+<li><strong>TraceProvider</strong>: an object providing a subset of data in the trace. Examples are stack traces, systrace (atrace), system counters, etc. Different providers can be enabled in different traces, all at the discretion of the TraceController.</li>
+<li><strong>ConfigProvider</strong>: an object providing a Config implementation, which <strong>TraceController</strong> can check to determine whether to satisfy the request.</li>
+</ul>
+<h2><a class="anchor" aria-hidden="true" id="fundamental-design-concerns"></a><a href="#fundamental-design-concerns" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Fundamental design concerns</h2>
+<p>There are a few concerns that drive most of Profilo's design.</p>
+<ol>
+<li>The ability to configure separate layers of data (providers) inside the collected traces.</li>
+<li>The ability to decouple &quot;trace requests&quot; from &quot;trace configuration&quot;.</li>
+<li>The ability to efficiently write data into the trace file.</li>
+</ol>
+<p>Let's go through each in turn to investigate how it was handled.</p>
+<h3><a class="anchor" aria-hidden="true" id="trace-providers"></a><a href="#trace-providers" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Trace Providers</h3>
+<p>Trace providers are fundamentally just bits in a bitset. The bitset is managed by <code>TraceEvents</code> while the bits are assigned by <code>ProvidersRegistry</code>. Registering a provider requires that you associate it with a name.</p>
+<p>This name may appear in a config (see below) and the numeric constant (single bit in the bitset) may be used directly to check if the provider is enabled in the trace.</p>
+<p>The <code>TraceProvider</code> interface (and <code>BaseTraceProvider</code> abstract class) will receive notification at the beginning and end of a trace to perform setup and teardown work.</p>
+<p>It's easy to get the interactions between registering and using providers wrong, so we recommend this pattern for your custom data needs:</p>
+<pre><code class="hljs css java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyProvider</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseTraceProvider</span> </span>{
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> PROVIDER_MY_PROVIDER =
+      ProvidersRegistry.newProvider(<span class="hljs-string">"my_provider"</span>);
+
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">enable</span><span class="hljs-params">()</span> </span>{}
+
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">disable</span><span class="hljs-params">()</span> </span>{}
+
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getSupportedProviders</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> PROVIDER_MY_PROVIDER;
+  }
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="trace-configuration"></a><a href="#trace-configuration" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Trace configuration</h2>
+<p><strong>TraceControllers</strong> can use external configuration to determine whether to allow a trace request.</p>
+<p>An example may be a hypothetical trigger <code>STRING_TRIGGER</code> with the following associated controller:</p>
+<pre><code class="hljs css java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StringController</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">TraceController</span> </span>{
+
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">evaluateConfig</span><span class="hljs-params">(@Nullable Object context, ControllerConfig config)</span> </span>{
+    <span class="hljs-comment">// Downcast to the types we expect.</span>
+    String str = (String) context;
+    StringControllerConfig strconfig = (StringControllerConfig) config;
+
+    <span class="hljs-keyword">return</span> strconfig.hasKey(str);
+  }
+
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getCpuSamplingRateMs</span><span class="hljs-params">(Object context, ControllerConfig config)</span> </span>{
+    StringControllerConfig strconfig = (StringControllerConfig) config;
+
+    <span class="hljs-keyword">return</span> strconfig.get(str).cpuSamplingRateMs;
+  }
+
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">contextsEqual</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fstInt, @Nullable Object fst, <span class="hljs-keyword">int</span> sndInt, @Nullable Object snd)</span> </span>{
+    <span class="hljs-keyword">if</span> ((fst == <span class="hljs-keyword">null</span> &amp;&amp; snd != <span class="hljs-keyword">null</span>) ||
+      (fst != <span class="hljs-keyword">null</span> &amp;&amp; snd == <span class="hljs-keyword">null</span>)) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+    <span class="hljs-keyword">return</span> fst == snd || fst.equals(snd);
+  }
+</code></pre>
+<p>This controller can then be used as follows:</p>
+<pre><code class="hljs css java">TraceControl.get().startTrace(
+  STRING_TRIGGER,
+  <span class="hljs-number">0</span>, <span class="hljs-comment">// flags</span>
+  <span class="hljs-number">0</span>, <span class="hljs-comment">// intContext</span>
+  <span class="hljs-string">"my_unique_string_identifying_this_trace_request"</span>);
+</code></pre>
+<p>It is the responsibility of your custom <code>ConfigProvider</code> to return an instance of <code>StringControllerConfig</code> when asked for the controller config for <code>STRING_TRIGGER</code>.</p>
+<p>You can set your <code>ConfigProvider</code> at any point, Profilo takes care to ensure that the config presented to <code>TraceControllers</code> is consistent while a trace is active.</p>
+<h2><a class="anchor" aria-hidden="true" id="adding-events-to-the-trace"></a><a href="#adding-events-to-the-trace" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding events to the trace</h2>
+<p><strong>NOTE:</strong> Subject to imminent change.</p>
+<p>The current APIs to log data into the trace are <code>com.facebook.profilo.logger.Logger</code> (Java) and <code>facebook::profilo::logger::Logger</code> (C++).</p>
+<p>They're not very extensible but we're working on fixing the APIs and data formats. Until then, you can look at how the builtin providers use them.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="getting-started.html">← Getting Started</a><a class="docs-next button" href="trace-processing.html">Trace Processing →</a></div></div></div></div><footer class="nav-footer" id="footer"><a href="https://code.facebook.com/projects/" target="_blank" class="fbOpenSource"><img src="/profilo/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2018 Facebook Inc.</section></footer></div></body></html>

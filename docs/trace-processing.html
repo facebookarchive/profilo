@@ -1,0 +1,77 @@
+<html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Trace Processing · Profilo</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Trace Processing · Profilo"/><meta property="og:type" content="website"/><meta property="og:url" content="https://facebookincubator.github.io/profilo/index.html"/><meta property="og:description" content="## Design"/><link rel="shortcut icon" href="/profilo/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><link rel="stylesheet" href="/profilo/css/main.css"/></head><body class="sideNavVisible doc"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/profilo/"><img class="logo" src="/profilo/img/profilo_logo_small.png"/><h2 class="headerTitle">Profilo</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/profilo/docs/getting-started.html" target="_self">Docs</a></li><li class=""><a href="https://github.com/facebookincubator/profilo" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Introduction</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3>Introduction</h3><ul><li class="navListItem"><a class="navItem" href="/profilo/docs/getting-started.html">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/profilo/docs/architecture.html">Architecture</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/profilo/docs/trace-processing.html">Trace Processing</a></li></ul></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1>Trace Processing</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="design"></a><a href="#design" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Design</h2>
+<p>Profilo comes with a Python library which can parse traces into a semantic trace object. This trace object can then be traversed and examined to extract meaningful metrics.</p>
+<h2><a class="anchor" aria-hidden="true" id="trace-model"></a><a href="#trace-model" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Trace model</h2>
+<p>The semantic trace objects follow a hierarchy (or trace model):</p>
+<p>Traces consist of execution units.</p>
+<p>Execution units consist of blocks. Execution units are usually individual threads in Profilo traces.</p>
+<p>Blocks consist of points. A block always has a start and end point. Points within a block can share timestamps but are uniquely identifiable.</p>
+<p>Edges can indicate change of control flow between any two points. There's an implicit edge between the start and end points of a block, as well as between the boundary points of consecutive blocks in an execution unit. All other edges must be explicitly created.</p>
+<p>All of the above objects can have &quot;annotations&quot; (props in API) attached to them. Annotations are key-value pairs with very loose typing.</p>
+<pre><code class="hljs"><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">Execution</span> <span class="hljs-comment">Unit</span> <span class="hljs-comment">1</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>
+
+  <span class="hljs-comment">Block</span> <span class="hljs-comment">A</span>      <span class="hljs-comment">Block</span> <span class="hljs-comment">B</span>
+<span class="hljs-title">[</span><span class="hljs-comment">s</span><span class="hljs-string">.</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>&gt;  <span class="hljs-string">.</span><span class="hljs-comment">e</span><span class="hljs-title">]</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>&gt;<span class="hljs-title">[</span><span class="hljs-comment">s</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span>&gt; <span class="hljs-string">.</span><span class="hljs-comment">e</span><span class="hljs-title">]</span>
+  <span class="hljs-comment">|</span>     <span class="hljs-comment">^</span>            <span class="hljs-comment">|</span>
+  <span class="hljs-comment">v</span>     <span class="hljs-comment">|</span>            <span class="hljs-comment">|</span>
+  <span class="hljs-title">[</span><span class="hljs-comment">s</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>&gt;<span class="hljs-comment">e</span><span class="hljs-title">]</span>            <span class="hljs-comment">|</span>
+  <span class="hljs-comment">Block</span> <span class="hljs-comment">C</span>            <span class="hljs-comment">|</span>
+                     <span class="hljs-comment">|</span>
+<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>
+                     <span class="hljs-comment">|</span>
+<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">Execution</span> <span class="hljs-comment">Unit</span> <span class="hljs-comment">2</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>
+                     <span class="hljs-comment">|</span>
+                     <span class="hljs-comment">v</span> <span class="hljs-comment">Block</span> <span class="hljs-comment">D</span>
+                     <span class="hljs-title">[</span><span class="hljs-comment">s</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span>&gt; <span class="hljs-comment">e</span><span class="hljs-title">]</span>
+
+<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>
+</code></pre>
+<p>In the diagram above, the edges are as follows:</p>
+<table>
+<thead>
+<tr><th>Edge Source</th><th>Edge Target</th><th>Type</th></tr>
+</thead>
+<tbody>
+<tr><td>Block A, start point</td><td>Block A, end point</td><td>Implicit</td></tr>
+<tr><td>Block B, start point</td><td>Block B, end point</td><td>Implicit</td></tr>
+<tr><td>Block C, start point</td><td>Block C, end point</td><td>Implicit</td></tr>
+<tr><td>Block D, start point</td><td>Block D, end point</td><td>Implicit</td></tr>
+<tr><td>Block A, 2nd point</td><td>Block C, start point</td><td>Explicit, child call</td></tr>
+<tr><td>Block C, end point</td><td>Block A, 3rd point</td><td>Explicit, child return</td></tr>
+<tr><td>Block B, 2nd point</td><td>Block D, start point</td><td>Explicit, async call</td></tr>
+</tbody>
+</table>
+<h2><a class="anchor" aria-hidden="true" id="workflow"></a><a href="#workflow" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Workflow</h2>
+<p>The complete flow for tracing-downloading-analyzing is as follows:</p>
+<ol>
+<li><p>Start and stop a trace in the app. (You can use the sample app to play with traces)</p></li>
+<li><p>Download the trace on a host. This can be done in a few ways:</p>
+<p>a. Navigate to python/ and run
+<code>python -m profilo.profilo pull_last_trace &lt;your_application_package&gt;</code></p>
+<p>In this case:</p>
+<p><code>python -m profilo.profilo pull_last_trace com.facebook.profilo.sample</code></p>
+<p>b. Navigate to python/profilo/device, start an interactive Python shell, and
+use the &quot;device&quot; module directly:</p>
+<pre><code class="hljs">  <span class="hljs-keyword">import</span> device
+  device.pull_last_trace(<span class="hljs-symbol">'com</span>.example.<span class="hljs-keyword">package</span>.name')
+</code></pre>
+<p>Both approaches will result in a file with the same name as the trace to be created in the current directory.</p></li>
+<li><p>Analyze the data. A sample demo script is provided in
+<code>python/profilo/workflow_demo.py</code>. It contains logic to perform analysis on stacks, blocks, and system counters.</p></li>
+</ol>
+<p>a. Stacks:
+Parses the sampled stacks from a trace file into a format similar to that of DTrace. This allows for visualizations such as <a href="https://github.com/brendangregg/FlameGraph">FlameGraph</a>.</p>
+<pre><code class="hljs"> Note that functions for which we couldn't find symbols will just show up as numbers.
+</code></pre>
+<p>b. Blocks:
+Parses the instrumented start-end blocks from a trace file and outputs some per-thread statistics (mean, median, std) about execution times in
+csv format.</p>
+<p>c. System counters:
+Parses system counters from a trace file and sorts them by timestamp so as to obtain a time series. A command line argument must be used to
+define the output path for the generated graphs.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="architecture.html">← Architecture</a></div></div></div></div><footer class="nav-footer" id="footer"><a href="https://code.facebook.com/projects/" target="_blank" class="fbOpenSource"><img src="/profilo/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2018 Facebook Inc.</section></footer></div></body></html>
