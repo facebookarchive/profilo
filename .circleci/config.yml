@@ -1,3 +1,9 @@
+aliases:
+  - &filter-only-master
+    branches:
+      only:
+        - master
+        
 version: 2
 jobs:
   deploy-website:
@@ -41,3 +47,9 @@ jobs:
             echo "Deploying website..."
             cd website && GIT_USER=docusaurus-bot USE_SSH=false yarn run publish-gh-pages
 
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy-website
+    filters: *filter-only-master
