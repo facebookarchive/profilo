@@ -6,6 +6,7 @@ profilo_oss_xplat_cxx_library(
     srcs = glob([
         "cxx/fbjni/**/*.cpp",
     ]),
+    soname = "libfbjni.$(ext)",
     header_namespace = "",
     exported_headers = subdir_glob([
         ("cxx", "fbjni/**/*.h"),
