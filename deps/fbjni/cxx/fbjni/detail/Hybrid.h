@@ -146,6 +146,7 @@ public:
     T* cthis();
 
     friend class HybridClass;
+    friend T;
   };
 
   using jhybridobject = typename JavaPart::javaobject;
