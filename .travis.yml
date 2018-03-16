@@ -35,7 +35,7 @@ deploy:
   file_glob: true
   file: out/*
   on:
-    all_branches: true
+    branch: master
     repo: facebookincubator/profilo
 
 branches:
