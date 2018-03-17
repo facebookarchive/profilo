@@ -147,7 +147,7 @@ template<size_t N>
 template<class... T>
   using index_sequence_for = make_index_sequence<sizeof...(T)>;
 
-template<class T, class U=T> 
+template<class T, class U=T>
     T exchange(T& obj, U&& new_value);
 }  // std
 
@@ -673,7 +673,7 @@ struct _LIBCPP_TYPE_VIS_ONLY integer_sequence
 {
     typedef _Tp value_type;
     static_assert( is_integral<_Tp>::value,
-                  "std::integer_sequence can only be instantiated with an integral type" );
+                  "facebook::museum::MUSEUM_VERSION::std::integer_sequence can only be instantiated with an integral type" );
     static
     _LIBCPP_INLINE_VISIBILITY
     constexpr
@@ -736,8 +736,8 @@ template <class _Tp, _Tp _Ep>
 struct __make_integer_sequence
 {
     static_assert(is_integral<_Tp>::value,
-                  "std::make_integer_sequence can only be instantiated with an integral type" );
-    static_assert(0 <= _Ep, "std::make_integer_sequence input shall not be negative");
+                  "facebook::museum::MUSEUM_VERSION::std::make_integer_sequence can only be instantiated with an integral type" );
+    static_assert(0 <= _Ep, "facebook::museum::MUSEUM_VERSION::std::make_integer_sequence input shall not be negative");
     typedef __make_integer_sequence_unchecked<_Tp, _Ep> type;
 };
 
@@ -749,7 +749,7 @@ template<size_t _Np>
 
 template<class... _Tp>
     using index_sequence_for = make_index_sequence<sizeof...(_Tp)>;
-  
+
 #endif  // _LIBCPP_STD_VER > 11
 
 #if _LIBCPP_STD_VER > 11
@@ -760,7 +760,7 @@ _T1 exchange(_T1& __obj, _T2 && __new_value)
     _T1 __old_value = _VSTD::move(__obj);
     __obj = _VSTD::forward<_T2>(__new_value);
     return __old_value;
-}    
+}
 #endif  // _LIBCPP_STD_VER > 11
 
 _LIBCPP_END_NAMESPACE_STD

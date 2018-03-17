@@ -49,7 +49,7 @@ Types:
 
 extern "C++" {
 #include <museum/8.0.0/external/libcxx/__nullptr>
-using std::nullptr_t;
+using facebook::museum::MUSEUM_VERSION::std::nullptr_t;
 }
 
 // Re-use the compiler's <stddef.h> max_align_t where possible.

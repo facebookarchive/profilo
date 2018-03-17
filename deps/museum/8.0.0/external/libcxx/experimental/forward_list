@@ -20,7 +20,7 @@ inline namespace fundamentals_v1 {
 namespace pmr {
 
   template <class T>
-  using forward_list = std::forward_list<T,polymorphic_allocator<T>>;
+  using forward_list = facebook::museum::MUSEUM_VERSION::std::forward_list<T,polymorphic_allocator<T>>;
 
 } // namespace pmr
 } // namespace fundamentals_v1

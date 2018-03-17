@@ -180,9 +180,9 @@ namespace std
       using add_pointer_t    = typename add_pointer<T>::type;  // C++14
 
     // other transformations:
-    template <size_t Len, std::size_t Align=default-alignment>
+    template <size_t Len, facebook::museum::MUSEUM_VERSION::std::size_t Align=default-alignment>
       using aligned_storage_t = typename aligned_storage<Len,Align>::type;  // C++14
-    template <std::size_t Len, class... Types>
+    template <facebook::museum::MUSEUM_VERSION::std::size_t Len, class... Types>
       using aligned_union_t   = typename aligned_union<Len,Types...>::type;  // C++14
     template <class T>
       using decay_t           = typename decay<T>::type;  // C++14
@@ -456,10 +456,10 @@ struct __member_pointer_traits_imp
 
 namespace __libcpp_is_member_function_pointer_imp {
 	template <typename _Tp>
-	char __test(typename std::__member_pointer_traits_imp<_Tp, true, false>::_FnType *);
+	char __test(typename facebook::museum::MUSEUM_VERSION::std::__member_pointer_traits_imp<_Tp, true, false>::_FnType *);
 
 	template <typename>
-	std::__two __test(...);
+	facebook::museum::MUSEUM_VERSION::std::__two __test(...);
 };
 	
 template <class _Tp> struct __libcpp_is_member_function_pointer
@@ -1594,7 +1594,7 @@ move(_Tp&& __t) _NOEXCEPT
 template <class _Tp>
 inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&&
-forward(typename std::remove_reference<_Tp>::type& __t) _NOEXCEPT
+forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 {
     return static_cast<_Tp&&>(__t);
 }
@@ -1602,9 +1602,9 @@ forward(typename std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 template <class _Tp>
 inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&&
-forward(typename std::remove_reference<_Tp>::type&& __t) _NOEXCEPT
+forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type&& __t) _NOEXCEPT
 {
-    static_assert(!std::is_lvalue_reference<_Tp>::value,
+    static_assert(!facebook::museum::MUSEUM_VERSION::std::is_lvalue_reference<_Tp>::value,
                   "Can not forward an rvalue as an lvalue.");
     return static_cast<_Tp&&>(__t);
 }
@@ -1630,7 +1630,7 @@ move(const _Tp& __t)
 template <class _Tp>
 inline _LIBCPP_INLINE_VISIBILITY
 _Tp&
-forward(typename std::remove_reference<_Tp>::type& __t) _NOEXCEPT
+forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 {
     return __t;
 }

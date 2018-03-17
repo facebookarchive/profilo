@@ -21,7 +21,7 @@ namespace pmr {
 
   template <class BidirectionalIterator>
   using match_results =
-    std::match_results<BidirectionalIterator,
+    facebook::museum::MUSEUM_VERSION::std::match_results<BidirectionalIterator,
                        polymorphic_allocator<sub_match<BidirectionalIterator>>>;
 
   typedef match_results<const char*> cmatch;

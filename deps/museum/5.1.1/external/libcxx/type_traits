@@ -152,7 +152,7 @@ namespace std
       using add_volatile_t    = typename add_volatile<T>::type;  // C++14
     template <class T>
       using add_cv_t          = typename add_cv<T>::type;  // C++14
-  
+
     // reference modifications:
     template <class T>
       using remove_reference_t     = typename remove_reference<T>::type;  // C++14
@@ -160,13 +160,13 @@ namespace std
       using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;  // C++14
     template <class T>
       using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;  // C++14
-  
+
     // sign modifications:
     template <class T>
       using make_signed_t   = typename make_signed<T>::type;  // C++14
     template <class T>
       using make_unsigned_t = typename make_unsigned<T>::type;  // C++14
-  
+
     // array modifications:
     template <class T>
       using remove_extent_t      = typename remove_extent<T>::type;  // C++14
@@ -180,9 +180,9 @@ namespace std
       using add_pointer_t    = typename add_pointer<T>::type;  // C++14
 
     // other transformations:
-    template <size_t Len, std::size_t Align=default-alignment>
+    template <size_t Len, facebook::museum::MUSEUM_VERSION::std::size_t Align=default-alignment>
       using aligned_storage_t = typename aligned_storage<Len,Align>::type;  // C++14
-    template <std::size_t Len, class... Types>
+    template <facebook::museum::MUSEUM_VERSION::std::size_t Len, class... Types>
       using aligned_union_t   = typename aligned_union<Len,Types...>::type;  // C++14
     template <class T>
       using decay_t           = typename decay<T>::type;  // C++14
@@ -446,7 +446,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_function
 
 // template <class _Tp> struct            __libcpp_is_member_function_pointer             : public false_type {};
 // template <class _Tp, class _Up> struct __libcpp_is_member_function_pointer<_Tp _Up::*> : public is_function<_Tp> {};
-// 
+//
 
 template <class _MP, bool _IsMemberFuctionPtr, bool _IsMemberObjectPtr>
 struct __member_pointer_traits_imp
@@ -456,12 +456,12 @@ struct __member_pointer_traits_imp
 
 namespace __libcpp_is_member_function_pointer_imp {
 	template <typename _Tp>
-	char __test(typename std::__member_pointer_traits_imp<_Tp, true, false>::_FnType *);
+	char __test(typename facebook::museum::MUSEUM_VERSION::std::__member_pointer_traits_imp<_Tp, true, false>::_FnType *);
 
 	template <typename>
-	std::__two __test(...);
+	facebook::museum::MUSEUM_VERSION::std::__two __test(...);
 };
-	
+
 template <class _Tp> struct __libcpp_is_member_function_pointer
     : public integral_constant<bool, sizeof(__libcpp_is_member_function_pointer_imp::__test<_Tp>(nullptr)) == 1> {};
 
@@ -785,7 +785,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_abstract : public __libcpp_
 // is_final
 
 #if _LIBCPP_STD_VER > 11 && __has_feature(is_final)
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY 
+template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY
 is_final : public integral_constant<bool, __is_final(_Tp)> {};
 #endif
 
@@ -1594,7 +1594,7 @@ move(_Tp&& __t) _NOEXCEPT
 template <class _Tp>
 inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&&
-forward(typename std::remove_reference<_Tp>::type& __t) _NOEXCEPT
+forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 {
     return static_cast<_Tp&&>(__t);
 }
@@ -1602,9 +1602,9 @@ forward(typename std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 template <class _Tp>
 inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&&
-forward(typename std::remove_reference<_Tp>::type&& __t) _NOEXCEPT
+forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type&& __t) _NOEXCEPT
 {
-    static_assert(!std::is_lvalue_reference<_Tp>::value,
+    static_assert(!facebook::museum::MUSEUM_VERSION::std::is_lvalue_reference<_Tp>::value,
                   "Can not forward an rvalue as an lvalue.");
     return static_cast<_Tp&&>(__t);
 }
@@ -1630,7 +1630,7 @@ move(const _Tp& __t)
 template <class _Tp>
 inline _LIBCPP_INLINE_VISIBILITY
 _Tp&
-forward(typename std::remove_reference<_Tp>::type& __t) _NOEXCEPT
+forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 {
     return __t;
 }
@@ -2970,7 +2970,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_literal_type
                               is_reference<typename remove_all_extents<_Tp>::type>::value>
 #endif
     {};
-    
+
 // is_standard_layout;
 
 template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_standard_layout
@@ -2980,7 +2980,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_standard_layout
     : integral_constant<bool, is_scalar<typename remove_all_extents<_Tp>::type>::value>
 #endif
     {};
-    
+
 // is_trivially_copyable;
 
 template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_copyable
@@ -2990,7 +2990,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_copyable
     : integral_constant<bool, is_scalar<typename remove_all_extents<_Tp>::type>::value>
 #endif
     {};
-    
+
 // is_trivial;
 
 template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivial

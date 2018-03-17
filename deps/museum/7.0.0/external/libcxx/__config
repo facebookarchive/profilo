@@ -126,7 +126,7 @@
 #elif defined(__native_client__)
   // NaCl's sandbox (which PNaCl also runs in) doesn't allow filesystem access,
   // including accesses to the special files under /dev. C++11's
-  // std::random_device is instead exposed through a NaCl syscall.
+  // facebook::museum::MUSEUM_VERSION::std::random_device is instead exposed through a NaCl syscall.
 # define _LIBCPP_USING_NACL_RANDOM
 #elif defined(_WIN32)
 # define _LIBCPP_USING_WIN32_RANDOM
@@ -383,14 +383,14 @@ typedef __char32_t char32_t;
 #endif
 
 // Inline namespaces are available in Clang regardless of C++ dialect.
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {inline namespace _LIBCPP_NAMESPACE {
-#define _LIBCPP_END_NAMESPACE_STD  } }
-#define _VSTD std::_LIBCPP_NAMESPACE
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {inline namespace _LIBCPP_NAMESPACE {
+#define _LIBCPP_END_NAMESPACE_STD  } } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std::_LIBCPP_NAMESPACE
 
-namespace std {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
   inline namespace _LIBCPP_NAMESPACE {
   }
-}
+} } } }
 
 #if !defined(_LIBCPP_HAS_NO_ASAN) && !__has_feature(address_sanitizer)
 #define _LIBCPP_HAS_NO_ASAN
@@ -484,15 +484,15 @@ namespace std {
 
 #endif  // __GXX_EXPERIMENTAL_CXX0X__
 
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std { namespace _LIBCPP_NAMESPACE {
-#define _LIBCPP_END_NAMESPACE_STD  } }
-#define _VSTD std::_LIBCPP_NAMESPACE
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std { namespace _LIBCPP_NAMESPACE {
+#define _LIBCPP_END_NAMESPACE_STD  } } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std::_LIBCPP_NAMESPACE
 
-namespace std {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
 namespace _LIBCPP_NAMESPACE {
 }
 using namespace _LIBCPP_NAMESPACE __attribute__((__strong__));
-}
+} } } }
 
 #if !defined(_LIBCPP_HAS_NO_ASAN) && !defined(__SANITIZE_ADDRESS__)
 #define _LIBCPP_HAS_NO_ASAN
@@ -518,13 +518,13 @@ using namespace _LIBCPP_NAMESPACE __attribute__((__strong__));
 #define _NOEXCEPT_(x)
 #define _NOEXCEPT_OR_FALSE(x) false
 
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {
-#define _LIBCPP_END_NAMESPACE_STD  }
-#define _VSTD std
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
+#define _LIBCPP_END_NAMESPACE_STD  } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std
 
 #  define _LIBCPP_WEAK
-namespace std {
-}
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
+} } } }
 
 #define _LIBCPP_HAS_NO_ASAN
 
@@ -554,14 +554,14 @@ namespace std {
 #define __MULTILOCALE_API
 #endif
 
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {inline namespace _LIBCPP_NAMESPACE {
-#define _LIBCPP_END_NAMESPACE_STD  } }
-#define _VSTD std::_LIBCPP_NAMESPACE
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {inline namespace _LIBCPP_NAMESPACE {
+#define _LIBCPP_END_NAMESPACE_STD  } } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std::_LIBCPP_NAMESPACE
 
-namespace std {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
   inline namespace _LIBCPP_NAMESPACE {
   }
-}
+} } } }
 
 #define _LIBCPP_HAS_NO_ASAN
 

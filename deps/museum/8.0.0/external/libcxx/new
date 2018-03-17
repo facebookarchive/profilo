@@ -48,38 +48,38 @@ new_handler get_new_handler() noexcept;
 
 }  // std
 
-void* operator new(std::size_t size);                                   // replaceable
-void* operator new(std::size_t size, std::align_val_t alignment);       // replaceable, C++17
-void* operator new(std::size_t size, const std::nothrow_t&) noexcept;   // replaceable
-void* operator new(std::size_t size, std::align_val_t alignment,
-                   const std::nothrow_t&) noexcept;                     // replaceable, C++17
+void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t size);                                   // replaceable
+void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t size, facebook::museum::MUSEUM_VERSION::std::align_val_t alignment);       // replaceable, C++17
+void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t size, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept;   // replaceable
+void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t size, facebook::museum::MUSEUM_VERSION::std::align_val_t alignment,
+                   const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept;                     // replaceable, C++17
 void  operator delete(void* ptr) noexcept;                              // replaceable
-void  operator delete(void* ptr, std::size_t size) noexcept;            // replaceable, C++14
-void  operator delete(void* ptr, std::align_val_t alignment) noexcept;  // replaceable, C++17
-void  operator delete(void* ptr, std::size_t size,
-                      std::align_val_t alignment) noexcept;             // replaceable, C++17
-void  operator delete(void* ptr, const std::nothrow_t&) noexcept;       // replaceable
+void  operator delete(void* ptr, facebook::museum::MUSEUM_VERSION::std::size_t size) noexcept;            // replaceable, C++14
+void  operator delete(void* ptr, facebook::museum::MUSEUM_VERSION::std::align_val_t alignment) noexcept;  // replaceable, C++17
+void  operator delete(void* ptr, facebook::museum::MUSEUM_VERSION::std::size_t size,
+                      facebook::museum::MUSEUM_VERSION::std::align_val_t alignment) noexcept;             // replaceable, C++17
+void  operator delete(void* ptr, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept;       // replaceable
 void  operator delete(void* ptr, std:align_val_t alignment,
-                      const std::nothrow_t&) noexcept;                  // replaceable, C++17
+                      const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept;                  // replaceable, C++17
 
-void* operator new[](std::size_t size);                                 // replaceable
-void* operator new[](std::size_t size,
-                     std::align_val_t alignment) noexcept;              // replaceable, C++17
-void* operator new[](std::size_t size, const std::nothrow_t&) noexcept; // replaceable
-void* operator new[](std::size_t size, std::align_val_t alignment,
-                     const std::nothrow_t&) noexcept;                   // replaceable, C++17
+void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t size);                                 // replaceable
+void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t size,
+                     facebook::museum::MUSEUM_VERSION::std::align_val_t alignment) noexcept;              // replaceable, C++17
+void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t size, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept; // replaceable
+void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t size, facebook::museum::MUSEUM_VERSION::std::align_val_t alignment,
+                     const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept;                   // replaceable, C++17
 void  operator delete[](void* ptr) noexcept;                            // replaceable
-void  operator delete[](void* ptr, std::size_t size) noexcept;          // replaceable, C++14
+void  operator delete[](void* ptr, facebook::museum::MUSEUM_VERSION::std::size_t size) noexcept;          // replaceable, C++14
 void  operator delete[](void* ptr,
-                        std::align_val_t alignment) noexcept;           // replaceable, C++17
-void  operator delete[](void* ptr, std::size_t size,
-                        std::align_val_t alignment) noexcept;           // replaceable, C++17
-void  operator delete[](void* ptr, const std::nothrow_t&) noexcept;     // replaceable
-void  operator delete[](void* ptr, std::align_val_t alignment,
-                        const std::nothrow_t&) noexcept;                // replaceable, C++17
+                        facebook::museum::MUSEUM_VERSION::std::align_val_t alignment) noexcept;           // replaceable, C++17
+void  operator delete[](void* ptr, facebook::museum::MUSEUM_VERSION::std::size_t size,
+                        facebook::museum::MUSEUM_VERSION::std::align_val_t alignment) noexcept;           // replaceable, C++17
+void  operator delete[](void* ptr, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept;     // replaceable
+void  operator delete[](void* ptr, facebook::museum::MUSEUM_VERSION::std::align_val_t alignment,
+                        const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) noexcept;                // replaceable, C++17
 
-void* operator new  (std::size_t size, void* ptr) noexcept;
-void* operator new[](std::size_t size, void* ptr) noexcept;
+void* operator new  (facebook::museum::MUSEUM_VERSION::std::size_t size, void* ptr) noexcept;
+void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t size, void* ptr) noexcept;
 void  operator delete  (void* ptr, void*) noexcept;
 void  operator delete[](void* ptr, void*) noexcept;
 
@@ -111,7 +111,7 @@ void  operator delete[](void* ptr, void*) noexcept;
 # define _LIBCPP_HAS_NO_ALIGNED_ALLOCATION
 #endif
 
-namespace std  // purposefully not using versioning namespace
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {
 
 #if !defined(_LIBCPP_ABI_MICROSOFT)
@@ -167,52 +167,52 @@ enum align_val_t { __zero = 0, __max = (size_t)-1 };
 #endif
 #endif
 
-}  // std
+} } } }  // facebook::museum::MUSEUM_VERSION::std
 
 #if defined(_LIBCPP_CXX03_LANG)
-#define _THROW_BAD_ALLOC throw(std::bad_alloc)
+#define _THROW_BAD_ALLOC throw(facebook::museum::MUSEUM_VERSION::std::bad_alloc)
 #else
 #define _THROW_BAD_ALLOC
 #endif
 
 #if !defined(_LIBCPP_ABI_MICROSOFT)
 
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(std::size_t __sz) _THROW_BAD_ALLOC;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(std::size_t __sz, const std::nothrow_t&) _NOEXCEPT _NOALIAS;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz) _THROW_BAD_ALLOC;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
 _LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p) _NOEXCEPT;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, const std::nothrow_t&) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
 #ifndef _LIBCPP_HAS_NO_SIZED_DEALLOCATION
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, std::size_t __sz) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz) _NOEXCEPT;
 #endif
 
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](std::size_t __sz) _THROW_BAD_ALLOC;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](std::size_t __sz, const std::nothrow_t&) _NOEXCEPT _NOALIAS;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz) _THROW_BAD_ALLOC;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
 _LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p) _NOEXCEPT;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, const std::nothrow_t&) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
 #ifndef _LIBCPP_HAS_NO_SIZED_DEALLOCATION
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, std::size_t __sz) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz) _NOEXCEPT;
 #endif
 
 #ifndef _LIBCPP_HAS_NO_ALIGNED_ALLOCATION
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(std::size_t __sz, std::align_val_t) _THROW_BAD_ALLOC;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(std::size_t __sz, std::align_val_t, const std::nothrow_t&) _NOEXCEPT _NOALIAS;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, std::align_val_t) _NOEXCEPT;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, std::align_val_t, const std::nothrow_t&) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz, facebook::museum::MUSEUM_VERSION::std::align_val_t) _THROW_BAD_ALLOC;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz, facebook::museum::MUSEUM_VERSION::std::align_val_t, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, facebook::museum::MUSEUM_VERSION::std::align_val_t) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, facebook::museum::MUSEUM_VERSION::std::align_val_t, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
 #ifndef _LIBCPP_HAS_NO_SIZED_DEALLOCATION
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, std::size_t __sz, std::align_val_t) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete(void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz, facebook::museum::MUSEUM_VERSION::std::align_val_t) _NOEXCEPT;
 #endif
 
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](std::size_t __sz, std::align_val_t) _THROW_BAD_ALLOC;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](std::size_t __sz, std::align_val_t, const std::nothrow_t&) _NOEXCEPT _NOALIAS;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, std::align_val_t) _NOEXCEPT;
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, std::align_val_t, const std::nothrow_t&) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz, facebook::museum::MUSEUM_VERSION::std::align_val_t) _THROW_BAD_ALLOC;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz, facebook::museum::MUSEUM_VERSION::std::align_val_t, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, facebook::museum::MUSEUM_VERSION::std::align_val_t) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, facebook::museum::MUSEUM_VERSION::std::align_val_t, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
 #ifndef _LIBCPP_HAS_NO_SIZED_DEALLOCATION
-_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, std::size_t __sz, std::align_val_t) _NOEXCEPT;
+_LIBCPP_OVERRIDABLE_FUNC_VIS void  operator delete[](void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz, facebook::museum::MUSEUM_VERSION::std::align_val_t) _NOEXCEPT;
 #endif
 #endif
 
-inline _LIBCPP_INLINE_VISIBILITY void* operator new  (std::size_t, void* __p) _NOEXCEPT {return __p;}
-inline _LIBCPP_INLINE_VISIBILITY void* operator new[](std::size_t, void* __p) _NOEXCEPT {return __p;}
+inline _LIBCPP_INLINE_VISIBILITY void* operator new  (facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT {return __p;}
+inline _LIBCPP_INLINE_VISIBILITY void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT {return __p;}
 inline _LIBCPP_INLINE_VISIBILITY void  operator delete  (void*, void*) _NOEXCEPT {}
 inline _LIBCPP_INLINE_VISIBILITY void  operator delete[](void*, void*) _NOEXCEPT {}
 

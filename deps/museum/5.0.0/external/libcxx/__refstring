@@ -29,8 +29,8 @@ private:
 
     struct _Rep_base
     {
-        std::size_t len;
-        std::size_t cap;
+        facebook::museum::MUSEUM_VERSION::std::size_t len;
+        facebook::museum::MUSEUM_VERSION::std::size_t cap;
         count_t     count;
     };
 
@@ -86,13 +86,13 @@ private:
 
 public:
     explicit __libcpp_refstring(const char* msg) {
-        std::size_t len = strlen(msg);
+        facebook::museum::MUSEUM_VERSION::std::size_t len = strlen(msg);
         _Rep_base* rep = static_cast<_Rep_base *>(::operator new(sizeof(*rep) + len + 1));
         rep->len = len;
         rep->cap = len;
         rep->count = 0;
         char *data = data_from_rep(rep);
-        std::memcpy(data, msg, len + 1);
+        facebook::museum::MUSEUM_VERSION::std::memcpy(data, msg, len + 1);
         str_ = data;
     }
 

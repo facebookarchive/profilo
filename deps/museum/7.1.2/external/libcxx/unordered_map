@@ -602,7 +602,7 @@ union __hash_value_type
     template <class ..._Args>
     _LIBCPP_INLINE_VISIBILITY
     __hash_value_type(_Args&& ...__args)
-        : __cc(std::forward<_Args>(__args)...) {}
+        : __cc(facebook::museum::MUSEUM_VERSION::std::forward<_Args>(__args)...) {}
 
     _LIBCPP_INLINE_VISIBILITY
     __hash_value_type(const __hash_value_type& __v)

@@ -347,7 +347,7 @@ template <class T, class D>
     bool operator>=(nullptr_t, const unique_ptr<T, D>& y);
 
 class bad_weak_ptr
-    : public std::exception
+    : public facebook::museum::MUSEUM_VERSION::std::exception
 {
     bad_weak_ptr() noexcept;
 };
@@ -3155,7 +3155,7 @@ _Size
 __loadword(const void* __p)
 {
     _Size __r;
-    std::memcpy(&__r, __p, sizeof(__r));
+    facebook::museum::MUSEUM_VERSION::std::memcpy(&__r, __p, sizeof(__r));
     return __r;
 }
 
@@ -3359,7 +3359,7 @@ __murmur2_or_cityhash<_Size, 64>::operator()(const void* __key, _Size __len)
     __v = __weak_hash_len_32_with_seeds(__s, __v.second * __k1, __x + __w.first);
     __w = __weak_hash_len_32_with_seeds(__s + 32, __z + __w.second,
                                         __y + __loadword<_Size>(__s + 16));
-    std::swap(__z, __x);
+    facebook::museum::MUSEUM_VERSION::std::swap(__z, __x);
     __s += 64;
     __len -= 64;
   } while (__len != 0);
@@ -3656,7 +3656,7 @@ uninitialized_fill_n(_ForwardIterator __f, _Size __n, const _Tp& __x)
 }
 
 class _LIBCPP_EXCEPTION_ABI bad_weak_ptr
-    : public std::exception
+    : public facebook::museum::MUSEUM_VERSION::std::exception
 {
 public:
     virtual ~bad_weak_ptr() _NOEXCEPT;

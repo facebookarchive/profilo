@@ -17,9 +17,9 @@
 #pragma GCC system_header
 #endif
 
-#define _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL namespace std { namespace experimental {
-#define _LIBCPP_END_NAMESPACE_EXPERIMENTAL  } }
-#define _VSTD_EXPERIMENTAL std::experimental
+#define _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std { namespace experimental {
+#define _LIBCPP_END_NAMESPACE_EXPERIMENTAL  } } } } }
+#define _VSTD_EXPERIMENTAL facebook::museum::MUSEUM_VERSION::std::experimental
 
 #define _LIBCPP_BEGIN_NAMESPACE_LFTS _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL inline namespace fundamentals_v1 {
 #define _LIBCPP_END_NAMESPACE_LFTS  } } }
@@ -45,6 +45,6 @@
     } } _LIBCPP_END_NAMESPACE_EXPERIMENTAL
 
 
-#define _VSTD_FS ::std::experimental::filesystem::v1
+#define _VSTD_FS ::facebook::museum::MUSEUM_VERSION::std::experimental::filesystem::v1
 
 #endif

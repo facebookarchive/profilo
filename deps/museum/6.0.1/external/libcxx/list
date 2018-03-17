@@ -764,9 +764,9 @@ __list_imp<_Tp, _Alloc>::swap(__list_imp& __c)
     __libcpp_db* __db = __get_db();
     __c_node* __cn1 = __db->__find_c_and_lock(this);
     __c_node* __cn2 = __db->__find_c(&__c);
-    std::swap(__cn1->beg_, __cn2->beg_);
-    std::swap(__cn1->end_, __cn2->end_);
-    std::swap(__cn1->cap_, __cn2->cap_);
+    facebook::museum::MUSEUM_VERSION::std::swap(__cn1->beg_, __cn2->beg_);
+    facebook::museum::MUSEUM_VERSION::std::swap(__cn1->end_, __cn2->end_);
+    facebook::museum::MUSEUM_VERSION::std::swap(__cn1->cap_, __cn2->cap_);
     for (__i_node** __p = __cn1->end_; __p != __cn1->beg_;)
     {
         --__p;

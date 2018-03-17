@@ -20,11 +20,11 @@ inline namespace fundamentals_v1 {
 namespace pmr {
 
   template <class Key, class T, class Compare = less<Key>>
-  using set = std::set<Key, T, Compare,
+  using set = facebook::museum::MUSEUM_VERSION::std::set<Key, T, Compare,
                        polymorphic_allocator<pair<const Key,T>>>;
 
   template <class Key, class T, class Compare = less<Key>>
-  using multiset = std::multiset<Key, T, Compare,
+  using multiset = facebook::museum::MUSEUM_VERSION::std::multiset<Key, T, Compare,
                                  polymorphic_allocator<pair<const Key,T>>>;
 
 } // namespace pmr

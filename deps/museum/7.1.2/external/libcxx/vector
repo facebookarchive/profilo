@@ -31,8 +31,8 @@ public:
     typedef typename allocator_type::difference_type difference_type;
     typedef typename allocator_type::pointer         pointer;
     typedef typename allocator_type::const_pointer   const_pointer;
-    typedef std::reverse_iterator<iterator>          reverse_iterator;
-    typedef std::reverse_iterator<const_iterator>    const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator>          reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator>    const_reverse_iterator;
 
     vector()
         noexcept(is_nothrow_default_constructible<allocator_type>::value);
@@ -137,8 +137,8 @@ public:
     typedef typename allocator_type::difference_type difference_type;
     typedef iterator                                 pointer;
     typedef const_iterator                           const_pointer;
-    typedef std::reverse_iterator<iterator>          reverse_iterator;
-    typedef std::reverse_iterator<const_iterator>    const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator>          reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator>    const_reverse_iterator;
 
     class reference
     {
@@ -244,7 +244,7 @@ public:
     bool __invariants() const;
 };
 
-template <class Allocator> struct hash<std::vector<bool, Allocator>>;
+template <class Allocator> struct hash<facebook::museum::MUSEUM_VERSION::std::vector<bool, Allocator>>;
 
 template <class T, class Allocator> bool operator==(const vector<T,Allocator>& x, const vector<T,Allocator>& y);
 template <class T, class Allocator> bool operator< (const vector<T,Allocator>& x, const vector<T,Allocator>& y);

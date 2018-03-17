@@ -87,8 +87,8 @@ public:
     typedef typename allocator_type::const_pointer const_pointer;
     typedef implementation-defined iterator;
     typedef implementation-defined const_iterator;
-    typedef std::reverse_iterator<iterator> reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator> reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator> const_reverse_iterator;
 
     static const size_type npos = -1;
 

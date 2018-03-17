@@ -218,8 +218,8 @@ bool operator!=(const error_code& lhs, const error_condition& rhs) noexcept;
 bool operator!=(const error_condition& lhs, const error_code& rhs) noexcept;
 bool operator!=(const error_condition& lhs, const error_condition& rhs) noexcept;
 
-template <> struct hash<std::error_code>;
-template <> struct hash<std::error_condition>;
+template <> struct hash<facebook::museum::MUSEUM_VERSION::std::error_code>;
+template <> struct hash<facebook::museum::MUSEUM_VERSION::std::error_condition>;
 
 }  // std
 

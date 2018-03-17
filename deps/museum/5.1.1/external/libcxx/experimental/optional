@@ -109,7 +109,7 @@ template <class T> constexpr optional<typename decay<T>::type> make_optional(T&&
 template <class T> struct hash;
 template <class T> struct hash<optional<T>>;
 
-}}  // std::experimental
+}}  // facebook::museum::MUSEUM_VERSION::std::experimental
 
 */
 
@@ -117,7 +117,7 @@ template <class T> struct hash<optional<T>>;
 #include <museum/5.1.1/external/libcxx/functional>
 #include <museum/5.1.1/external/libcxx/stdexcept>
 
-namespace std { namespace experimental {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std { namespace experimental {
 
 class _LIBCPP_EXCEPTION_ABI bad_optional_access
     : public logic_error
@@ -140,7 +140,7 @@ public:
     virtual ~bad_optional_access() _NOEXCEPT;
 };
 
-}}  // std::experimental
+}}}}}  // facebook::museum::MUSEUM_VERSION::std::experimental
 
 #if _LIBCPP_STD_VER > 11
 
@@ -161,7 +161,7 @@ public:
 #pragma GCC system_header
 #endif
 
-namespace std { namespace experimental { inline namespace __library_fundamentals_v1 {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std { namespace experimental { inline namespace __library_fundamentals_v1 {
 
 struct in_place_t {};
 constexpr in_place_t in_place{};
@@ -675,14 +675,14 @@ make_optional(_Tp&& __v)
     return optional<typename decay<_Tp>::type>(_VSTD::forward<_Tp>(__v));
 }
 
-}}}  // namespace std::experimental::__library_fundamentals_v1
+}}}}}}  // namespace facebook::museum::MUSEUM_VERSION::std::experimental::__library_fundamentals_v1
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY hash<std::experimental::optional<_Tp> >
+struct _LIBCPP_TYPE_VIS_ONLY hash<facebook::museum::MUSEUM_VERSION::std::experimental::optional<_Tp> >
 {
-    typedef std::experimental::optional<_Tp> argument_type;
+    typedef facebook::museum::MUSEUM_VERSION::std::experimental::optional<_Tp> argument_type;
     typedef size_t        result_type;
 
     _LIBCPP_INLINE_VISIBILITY

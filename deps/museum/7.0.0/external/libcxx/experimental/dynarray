@@ -93,7 +93,7 @@ public:
     void fill(const T& v);
 };
 
-}}  // std::experimental
+}}  // facebook::museum::MUSEUM_VERSION::std::experimental
 
 */
 
@@ -131,8 +131,8 @@ public:
     typedef const value_type*                     const_pointer;
     typedef size_t                                size_type;
     typedef ptrdiff_t                             difference_type;
-    typedef std::reverse_iterator<iterator>       reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator>       reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 private:
     size_t                  __size_;
@@ -309,7 +309,7 @@ dynarray<_Tp>::at(size_type __n) const
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 template <class _Tp, class _Alloc>
-struct _LIBCPP_TYPE_VIS_ONLY uses_allocator<std::experimental::dynarray<_Tp>, _Alloc> : true_type {};
+struct _LIBCPP_TYPE_VIS_ONLY uses_allocator<facebook::museum::MUSEUM_VERSION::std::experimental::dynarray<_Tp>, _Alloc> : true_type {};
 _LIBCPP_END_NAMESPACE_STD
 
 #endif  // if _LIBCPP_STD_VER > 11 

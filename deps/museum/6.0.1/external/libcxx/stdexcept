@@ -58,7 +58,7 @@ class _LIBCPP_HIDDEN __libcpp_refstring {
 _LIBCPP_END_NAMESPACE_STD
 #endif
 
-namespace std  // purposefully not using versioning namespace
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {
 
 class _LIBCPP_EXCEPTION_ABI logic_error
@@ -165,6 +165,6 @@ public:
     virtual ~underflow_error() _NOEXCEPT;
 };
 
-}  // std
+} } } } // facebook::museum::MUSEUM_VERSION::std
 
 #endif  // _LIBCPP_STDEXCEPT

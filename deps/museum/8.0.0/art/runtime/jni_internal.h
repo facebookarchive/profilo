@@ -66,6 +66,6 @@ static inline ArtMethod* DecodeArtMethod(jmethodID method_id) {
 }  // namespace jni
 }  // namespace art
 
-std::ostream& operator<<(std::ostream& os, const jobjectRefType& rhs);
+facebook::museum::MUSEUM_VERSION::std::ostream& operator<<(facebook::museum::MUSEUM_VERSION::std::ostream& os, const jobjectRefType& rhs);
 
 #endif  // ART_RUNTIME_JNI_INTERNAL_H_

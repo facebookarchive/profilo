@@ -84,7 +84,7 @@ template <class E> void rethrow_if_nested(const E& e);
 #pragma GCC system_header
 #endif
 
-namespace std  // purposefully not using versioning namespace
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {
 
 class _LIBCPP_EXCEPTION_ABI exception
@@ -245,6 +245,6 @@ rethrow_if_nested(const _Ep&, typename enable_if<
 {
 }
 
-}  // std
+} } } }  // facebook::museum::MUSEUM_VERSION::std
 
 #endif  // _LIBCPP_EXCEPTION

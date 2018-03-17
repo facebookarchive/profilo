@@ -20,11 +20,11 @@ inline namespace fundamentals_v1 {
 namespace pmr {
 
   template <class T, class Hash = hash<T>, class Pred = equal_to<T>>
-  using unordered_set = std::unordered_set<T, Hash, Pred,
+  using unordered_set = facebook::museum::MUSEUM_VERSION::std::unordered_set<T, Hash, Pred,
                        polymorphic_allocator<T>>;
 
   template <class T, class Hash = hash<T>, class Pred = equal_to<T>>
-  using unordered_multiset = std::unordered_multiset<T, Hash, Pred,
+  using unordered_multiset = facebook::museum::MUSEUM_VERSION::std::unordered_multiset<T, Hash, Pred,
                        polymorphic_allocator<T>>;
 
 } // namespace pmr

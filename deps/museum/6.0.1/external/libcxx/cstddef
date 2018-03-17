@@ -92,10 +92,10 @@ _LIBCPP_END_NAMESPACE_STD
 
 #ifndef _LIBCPP_HAS_NO_NULLPTR
 
-namespace std
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std
 {
     typedef decltype(nullptr) nullptr_t;
-}
+} } } }
 
 #endif  // _LIBCPP_HAS_NO_NULLPTR
 

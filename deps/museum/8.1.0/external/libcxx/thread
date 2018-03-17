@@ -342,8 +342,8 @@ __thread_execute(tuple<_TSp, _Fp, _Args...>& __t, __tuple_indices<_Indices...>)
 template <class _Fp>
 void* __thread_proxy(void* __vp)
 {
-    // _Fp = std::tuple< unique_ptr<__thread_struct>, Functor, Args...>
-    std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
+    // _Fp = facebook::museum::MUSEUM_VERSION::std::tuple< unique_ptr<__thread_struct>, Functor, Args...>
+    facebook::museum::MUSEUM_VERSION::std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
     __thread_local_data().set_pointer(_VSTD::get<0>(*__p).release());
     typedef typename __make_tuple_indices<tuple_size<_Fp>::value, 2>::type _Index;
     __thread_execute(*__p, _Index());
@@ -359,7 +359,7 @@ thread::thread(_Fp&& __f, _Args&&... __args)
     _TSPtr __tsp(new __thread_struct);
     typedef tuple<_TSPtr, typename decay<_Fp>::type, typename decay<_Args>::type...> _Gp;
     _VSTD::unique_ptr<_Gp> __p(
-            new _Gp(std::move(__tsp),
+            new _Gp(facebook::museum::MUSEUM_VERSION::std::move(__tsp),
                     __decay_copy(_VSTD::forward<_Fp>(__f)),
                     __decay_copy(_VSTD::forward<_Args>(__args))...));
     int __ec = __libcpp_thread_create(&__t_, &__thread_proxy<_Gp>, __p.get());
@@ -374,8 +374,8 @@ thread::thread(_Fp&& __f, _Args&&... __args)
 template <class _Fp>
 struct __thread_invoke_pair {
     // This type is used to pass memory for thread local storage and a functor
-    // to a newly created thread because std::pair doesn't work with
-    // std::unique_ptr in C++03.
+    // to a newly created thread because facebook::museum::MUSEUM_VERSION::std::pair doesn't work with
+    // facebook::museum::MUSEUM_VERSION::std::unique_ptr in C++03.
     __thread_invoke_pair(_Fp& __f) : __tsp_(new __thread_struct), __fn_(__f) {}
     unique_ptr<__thread_struct> __tsp_;
     _Fp __fn_;
@@ -384,7 +384,7 @@ struct __thread_invoke_pair {
 template <class _Fp>
 void* __thread_proxy_cxx03(void* __vp)
 {
-    std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
+    facebook::museum::MUSEUM_VERSION::std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
     __thread_local_data().set_pointer(__p->__tsp_.release());
     (__p->__fn_)();
     return nullptr;
@@ -395,7 +395,7 @@ thread::thread(_Fp __f)
 {
 
     typedef __thread_invoke_pair<_Fp> _InvokePair;
-    typedef std::unique_ptr<_InvokePair> _PairPtr;
+    typedef facebook::museum::MUSEUM_VERSION::std::unique_ptr<_InvokePair> _PairPtr;
     _PairPtr __pp(new _InvokePair(__f));
     int __ec = __libcpp_thread_create(&__t_, &__thread_proxy_cxx03<_InvokePair>, __pp.get());
     if (__ec == 0)

@@ -327,20 +327,20 @@ __libcpp_signbit(_A1 __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, bool>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, bool>::type
 signbit(_A1 __lcpp_x) _NOEXCEPT
 {
-    return __libcpp_signbit((typename std::__promote<_A1>::type)__lcpp_x);
+    return __libcpp_signbit((typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type)__lcpp_x);
 }
 
 #elif defined(_LIBCPP_MSVCRT) && ((_VC_CRT_MAJOR_VERSION-0) >= 14)
 
 template <typename _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, bool>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, bool>::type
 signbit(_A1 __lcpp_x) _NOEXCEPT
 {
-  return ::signbit(static_cast<typename std::__promote<_A1>::type>(__lcpp_x));
+  return ::signbit(static_cast<typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type>(__lcpp_x));
 }
 
 #endif  // signbit
@@ -361,20 +361,20 @@ __libcpp_fpclassify(_A1 __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, int>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, int>::type
 fpclassify(_A1 __lcpp_x) _NOEXCEPT
 {
-    return __libcpp_fpclassify((typename std::__promote<_A1>::type)__lcpp_x);
+    return __libcpp_fpclassify((typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type)__lcpp_x);
 }
 
 #elif defined(_LIBCPP_MSVCRT) && ((_VC_CRT_MAJOR_VERSION-0) >= 14)
 
 template <typename _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, int>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, int>::type
 fpclassify(_A1 __lcpp_x) _NOEXCEPT
 {
-  return ::fpclassify(static_cast<typename std::__promote<_A1>::type>(__lcpp_x));
+  return ::fpclassify(static_cast<typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type>(__lcpp_x));
 }
 
 #endif  // fpclassify
@@ -395,10 +395,10 @@ __libcpp_isfinite(_A1 __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, bool>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, bool>::type
 isfinite(_A1 __lcpp_x) _NOEXCEPT
 {
-    return __libcpp_isfinite((typename std::__promote<_A1>::type)__lcpp_x);
+    return __libcpp_isfinite((typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type)__lcpp_x);
 }
 
 #endif  // isfinite
@@ -419,10 +419,10 @@ __libcpp_isinf(_A1 __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, bool>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, bool>::type
 isinf(_A1 __lcpp_x) _NOEXCEPT
 {
-    return __libcpp_isinf((typename std::__promote<_A1>::type)__lcpp_x);
+    return __libcpp_isinf((typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type)__lcpp_x);
 }
 
 #endif  // isinf
@@ -443,10 +443,10 @@ __libcpp_isnan(_A1 __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, bool>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, bool>::type
 isnan(_A1 __lcpp_x) _NOEXCEPT
 {
-    return __libcpp_isnan((typename std::__promote<_A1>::type)__lcpp_x);
+    return __libcpp_isnan((typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type)__lcpp_x);
 }
 
 #endif  // isnan
@@ -467,10 +467,10 @@ __libcpp_isnormal(_A1 __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_arithmetic<_A1>::value, bool>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value, bool>::type
 isnormal(_A1 __lcpp_x) _NOEXCEPT
 {
-    return __libcpp_isnormal((typename std::__promote<_A1>::type)__lcpp_x);
+    return __libcpp_isnormal((typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1>::type)__lcpp_x);
 }
 
 #endif  // isnormal
@@ -491,15 +491,15 @@ __libcpp_isgreater(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if
+typename facebook::museum::MUSEUM_VERSION::std::enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
     bool
 >::type
 isgreater(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type type;
     return __libcpp_isgreater((type)__lcpp_x, (type)__lcpp_y);
 }
 
@@ -521,15 +521,15 @@ __libcpp_isgreaterequal(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if
+typename facebook::museum::MUSEUM_VERSION::std::enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
     bool
 >::type
 isgreaterequal(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type type;
     return __libcpp_isgreaterequal((type)__lcpp_x, (type)__lcpp_y);
 }
 
@@ -551,15 +551,15 @@ __libcpp_isless(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if
+typename facebook::museum::MUSEUM_VERSION::std::enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
     bool
 >::type
 isless(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type type;
     return __libcpp_isless((type)__lcpp_x, (type)__lcpp_y);
 }
 
@@ -581,15 +581,15 @@ __libcpp_islessequal(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if
+typename facebook::museum::MUSEUM_VERSION::std::enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
     bool
 >::type
 islessequal(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type type;
     return __libcpp_islessequal((type)__lcpp_x, (type)__lcpp_y);
 }
 
@@ -611,15 +611,15 @@ __libcpp_islessgreater(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if
+typename facebook::museum::MUSEUM_VERSION::std::enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
     bool
 >::type
 islessgreater(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type type;
     return __libcpp_islessgreater((type)__lcpp_x, (type)__lcpp_y);
 }
 
@@ -641,15 +641,15 @@ __libcpp_isunordered(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if
+typename facebook::museum::MUSEUM_VERSION::std::enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
     bool
 >::type
 isunordered(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type type;
     return __libcpp_isunordered((type)__lcpp_x, (type)__lcpp_y);
 }
 
@@ -680,7 +680,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double acos(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 acos(_A1 __lcpp_x) _NOEXCEPT {return ::acos((double)__lcpp_x);}
 
 // asin
@@ -692,7 +692,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double asin(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 asin(_A1 __lcpp_x) _NOEXCEPT {return ::asin((double)__lcpp_x);}
 
 // atan
@@ -704,7 +704,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double atan(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 atan(_A1 __lcpp_x) _NOEXCEPT {return ::atan((double)__lcpp_x);}
 
 // atan2
@@ -716,17 +716,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double atan2(long double __lcpp_y, long do
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 atan2(_A1 __lcpp_y, _A2 __lcpp_x) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::atan2((__result_type)__lcpp_y, (__result_type)__lcpp_x);
 }
 
@@ -739,7 +739,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double ceil(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 ceil(_A1 __lcpp_x) _NOEXCEPT {return ::ceil((double)__lcpp_x);}
 
 // cos
@@ -751,7 +751,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double cos(long double __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 cos(_A1 __lcpp_x) _NOEXCEPT {return ::cos((double)__lcpp_x);}
 
 // cosh
@@ -763,7 +763,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double cosh(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 cosh(_A1 __lcpp_x) _NOEXCEPT {return ::cosh((double)__lcpp_x);}
 
 // exp
@@ -775,7 +775,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double exp(long double __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 exp(_A1 __lcpp_x) _NOEXCEPT {return ::exp((double)__lcpp_x);}
 
 // fabs
@@ -787,7 +787,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double fabs(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 fabs(_A1 __lcpp_x) _NOEXCEPT {return ::fabs((double)__lcpp_x);}
 
 // floor
@@ -799,7 +799,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double floor(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 floor(_A1 __lcpp_x) _NOEXCEPT {return ::floor((double)__lcpp_x);}
 
 // fmod
@@ -811,17 +811,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double fmod(long double __lcpp_x, long dou
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 fmod(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::fmod((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -834,7 +834,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double frexp(long double __lcpp_x, int* __
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 frexp(_A1 __lcpp_x, int* __lcpp_e) _NOEXCEPT {return ::frexp((double)__lcpp_x, __lcpp_e);}
 
 // ldexp
@@ -846,7 +846,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double ldexp(long double __lcpp_x, int __l
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 ldexp(_A1 __lcpp_x, int __lcpp_e) _NOEXCEPT {return ::ldexp((double)__lcpp_x, __lcpp_e);}
 
 // log
@@ -858,7 +858,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double log(long double __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 log(_A1 __lcpp_x) _NOEXCEPT {return ::log((double)__lcpp_x);}
 
 // log10
@@ -870,7 +870,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double log10(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 log10(_A1 __lcpp_x) _NOEXCEPT {return ::log10((double)__lcpp_x);}
 
 // modf
@@ -889,17 +889,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double pow(long double __lcpp_x, long doub
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 pow(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::pow((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -912,7 +912,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double sin(long double __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 sin(_A1 __lcpp_x) _NOEXCEPT {return ::sin((double)__lcpp_x);}
 
 // sinh
@@ -924,7 +924,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double sinh(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 sinh(_A1 __lcpp_x) _NOEXCEPT {return ::sinh((double)__lcpp_x);}
 
 // sqrt
@@ -936,7 +936,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double sqrt(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 sqrt(_A1 __lcpp_x) _NOEXCEPT {return ::sqrt((double)__lcpp_x);}
 
 // tan
@@ -948,7 +948,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double tan(long double __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 tan(_A1 __lcpp_x) _NOEXCEPT {return ::tan((double)__lcpp_x);}
 
 // tanh
@@ -960,7 +960,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double tanh(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 tanh(_A1 __lcpp_x) _NOEXCEPT {return ::tanh((double)__lcpp_x);}
 
 // acosh
@@ -971,7 +971,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double acosh(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 acosh(_A1 __lcpp_x) _NOEXCEPT {return ::acosh((double)__lcpp_x);}
 #endif
 
@@ -983,7 +983,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double asinh(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 asinh(_A1 __lcpp_x) _NOEXCEPT {return ::asinh((double)__lcpp_x);}
 #endif
 
@@ -995,7 +995,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double atanh(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 atanh(_A1 __lcpp_x) _NOEXCEPT {return ::atanh((double)__lcpp_x);}
 #endif
 
@@ -1007,7 +1007,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double cbrt(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 cbrt(_A1 __lcpp_x) _NOEXCEPT {return ::cbrt((double)__lcpp_x);}
 #endif
 
@@ -1026,17 +1026,17 @@ copysign(long double __lcpp_x, long double __lcpp_y) _NOEXCEPT {
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 copysign(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::copysign((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -1049,7 +1049,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double erf(long double __lcpp_x) _NOEXCEPT
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 erf(_A1 __lcpp_x) _NOEXCEPT {return ::erf((double)__lcpp_x);}
 
 // erfc
@@ -1059,7 +1059,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double erfc(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 erfc(_A1 __lcpp_x) _NOEXCEPT {return ::erfc((double)__lcpp_x);}
 
 // exp2
@@ -1069,7 +1069,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double exp2(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 exp2(_A1 __lcpp_x) _NOEXCEPT {return ::exp2((double)__lcpp_x);}
 
 // expm1
@@ -1079,7 +1079,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double expm1(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 expm1(_A1 __lcpp_x) _NOEXCEPT {return ::expm1((double)__lcpp_x);}
 
 // fdim
@@ -1089,17 +1089,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double fdim(long double __lcpp_x, long dou
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 fdim(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::fdim((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -1110,19 +1110,19 @@ inline _LIBCPP_INLINE_VISIBILITY long double fma(long double __lcpp_x, long doub
 
 template <class _A1, class _A2, class _A3>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value &&
-    std::is_arithmetic<_A3>::value,
-    std::__promote<_A1, _A2, _A3>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A3>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2, _A3>
 >::type
 fma(_A1 __lcpp_x, _A2 __lcpp_y, _A3 __lcpp_z) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2, _A3>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value &&
-                     std::is_same<_A3, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2, _A3>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A3, __result_type>::value)), "");
     return ::fma((__result_type)__lcpp_x, (__result_type)__lcpp_y, (__result_type)__lcpp_z);
 }
 
@@ -1133,17 +1133,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double fmax(long double __lcpp_x, long dou
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 fmax(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::fmax((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -1154,17 +1154,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double fmin(long double __lcpp_x, long dou
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 fmin(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::fmin((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -1175,17 +1175,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double hypot(long double __lcpp_x, long do
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 hypot(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::hypot((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -1196,7 +1196,7 @@ inline _LIBCPP_INLINE_VISIBILITY int ilogb(long double __lcpp_x) _NOEXCEPT {retu
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, int>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, int>::type
 ilogb(_A1 __lcpp_x) _NOEXCEPT {return ::ilogb((double)__lcpp_x);}
 
 // lgamma
@@ -1206,7 +1206,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double lgamma(long double __lcpp_x) _NOEXC
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 lgamma(_A1 __lcpp_x) _NOEXCEPT {return ::lgamma((double)__lcpp_x);}
 
 // llrint
@@ -1216,7 +1216,7 @@ inline _LIBCPP_INLINE_VISIBILITY long long llrint(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, long long>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, long long>::type
 llrint(_A1 __lcpp_x) _NOEXCEPT {return ::llrint((double)__lcpp_x);}
 
 // llround
@@ -1226,7 +1226,7 @@ inline _LIBCPP_INLINE_VISIBILITY long long llround(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, long long>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, long long>::type
 llround(_A1 __lcpp_x) _NOEXCEPT {return ::llround((double)__lcpp_x);}
 
 // log1p
@@ -1236,7 +1236,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double log1p(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 log1p(_A1 __lcpp_x) _NOEXCEPT {return ::log1p((double)__lcpp_x);}
 
 // log2
@@ -1246,7 +1246,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double log2(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 log2(_A1 __lcpp_x) _NOEXCEPT {return ::log2((double)__lcpp_x);}
 
 // logb
@@ -1256,7 +1256,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double logb(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 logb(_A1 __lcpp_x) _NOEXCEPT {return ::logb((double)__lcpp_x);}
 
 // lrint
@@ -1266,7 +1266,7 @@ inline _LIBCPP_INLINE_VISIBILITY long lrint(long double __lcpp_x) _NOEXCEPT {ret
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, long>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, long>::type
 lrint(_A1 __lcpp_x) _NOEXCEPT {return ::lrint((double)__lcpp_x);}
 
 // lround
@@ -1276,7 +1276,7 @@ inline _LIBCPP_INLINE_VISIBILITY long lround(long double __lcpp_x) _NOEXCEPT {re
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, long>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, long>::type
 lround(_A1 __lcpp_x) _NOEXCEPT {return ::lround((double)__lcpp_x);}
 
 // nan
@@ -1288,7 +1288,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double nearbyint(long double __lcpp_x) _NO
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 nearbyint(_A1 __lcpp_x) _NOEXCEPT {return ::nearbyint((double)__lcpp_x);}
 
 // nextafter
@@ -1298,17 +1298,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double nextafter(long double __lcpp_x, lon
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 nextafter(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::nextafter((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -1319,7 +1319,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double nexttoward(long double __lcpp_x, lo
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 nexttoward(_A1 __lcpp_x, long double __lcpp_y) _NOEXCEPT {return ::nexttoward((double)__lcpp_x, __lcpp_y);}
 
 // remainder
@@ -1329,17 +1329,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double remainder(long double __lcpp_x, lon
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 remainder(_A1 __lcpp_x, _A2 __lcpp_y) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::remainder((__result_type)__lcpp_x, (__result_type)__lcpp_y);
 }
 
@@ -1350,17 +1350,17 @@ inline _LIBCPP_INLINE_VISIBILITY long double remquo(long double __lcpp_x, long d
 
 template <class _A1, class _A2>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::__lazy_enable_if
+typename facebook::museum::MUSEUM_VERSION::std::__lazy_enable_if
 <
-    std::is_arithmetic<_A1>::value &&
-    std::is_arithmetic<_A2>::value,
-    std::__promote<_A1, _A2>
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A1>::value &&
+    facebook::museum::MUSEUM_VERSION::std::is_arithmetic<_A2>::value,
+    facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>
 >::type
 remquo(_A1 __lcpp_x, _A2 __lcpp_y, int* __lcpp_z) _NOEXCEPT
 {
-    typedef typename std::__promote<_A1, _A2>::type __result_type;
-    static_assert((!(std::is_same<_A1, __result_type>::value &&
-                     std::is_same<_A2, __result_type>::value)), "");
+    typedef typename facebook::museum::MUSEUM_VERSION::std::__promote<_A1, _A2>::type __result_type;
+    static_assert((!(facebook::museum::MUSEUM_VERSION::std::is_same<_A1, __result_type>::value &&
+                     facebook::museum::MUSEUM_VERSION::std::is_same<_A2, __result_type>::value)), "");
     return ::remquo((__result_type)__lcpp_x, (__result_type)__lcpp_y, __lcpp_z);
 }
 
@@ -1371,7 +1371,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double rint(long double __lcpp_x) _NOEXCEP
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 rint(_A1 __lcpp_x) _NOEXCEPT {return ::rint((double)__lcpp_x);}
 
 // round
@@ -1381,7 +1381,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double round(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 round(_A1 __lcpp_x) _NOEXCEPT {return ::round((double)__lcpp_x);}
 
 // scalbln
@@ -1391,7 +1391,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double scalbln(long double __lcpp_x, long 
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 scalbln(_A1 __lcpp_x, long __lcpp_y) _NOEXCEPT {return ::scalbln((double)__lcpp_x, __lcpp_y);}
 
 // scalbn
@@ -1401,7 +1401,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double scalbn(long double __lcpp_x, int __
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 scalbn(_A1 __lcpp_x, int __lcpp_y) _NOEXCEPT {return ::scalbn((double)__lcpp_x, __lcpp_y);}
 
 // tgamma
@@ -1411,7 +1411,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double tgamma(long double __lcpp_x) _NOEXC
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 tgamma(_A1 __lcpp_x) _NOEXCEPT {return ::tgamma((double)__lcpp_x);}
 
 // trunc
@@ -1421,7 +1421,7 @@ inline _LIBCPP_INLINE_VISIBILITY long double trunc(long double __lcpp_x) _NOEXCE
 
 template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
-typename std::enable_if<std::is_integral<_A1>::value, double>::type
+typename facebook::museum::MUSEUM_VERSION::std::enable_if<facebook::museum::MUSEUM_VERSION::std::is_integral<_A1>::value, double>::type
 trunc(_A1 __lcpp_x) _NOEXCEPT {return ::trunc((double)__lcpp_x);}
 
 #endif // !(defined(_LIBCPP_MSVCRT) && ((_VC_CRT_MAJOR_VERSION-0) < 14))

@@ -38,8 +38,8 @@ public:
 
     typedef implementation-defined                   iterator;
     typedef implementation-defined                   const_iterator;
-    typedef std::reverse_iterator<iterator>          reverse_iterator;
-    typedef std::reverse_iterator<const_iterator>    const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator>          reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator>    const_reverse_iterator;
 
     class value_compare
         : public binary_function<value_type, value_type, bool>
@@ -256,8 +256,8 @@ public:
 
     typedef implementation-defined                   iterator;
     typedef implementation-defined                   const_iterator;
-    typedef std::reverse_iterator<iterator>          reverse_iterator;
-    typedef std::reverse_iterator<const_iterator>    const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator>          reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator>    const_reverse_iterator;
 
     class value_compare
         : public binary_function<value_type,value_type,bool>
@@ -627,7 +627,7 @@ union __value_type
     template <class ..._Args>
     _LIBCPP_INLINE_VISIBILITY
     __value_type(_Args&& ...__args)
-        : __cc(std::forward<_Args>(__args)...) {}
+        : __cc(facebook::museum::MUSEUM_VERSION::std::forward<_Args>(__args)...) {}
 
     _LIBCPP_INLINE_VISIBILITY
     __value_type(const __value_type& __v)
@@ -639,7 +639,7 @@ union __value_type
 
     _LIBCPP_INLINE_VISIBILITY
     __value_type(__value_type&& __v)
-        : __nc(std::move(__v.__nc)) {}
+        : __nc(facebook::museum::MUSEUM_VERSION::std::move(__v.__nc)) {}
 
     _LIBCPP_INLINE_VISIBILITY
     __value_type& operator=(const __value_type& __v)
@@ -647,7 +647,7 @@ union __value_type
 
     _LIBCPP_INLINE_VISIBILITY
     __value_type& operator=(__value_type&& __v)
-        {__nc = std::move(__v.__nc); return *this;}
+        {__nc = facebook::museum::MUSEUM_VERSION::std::move(__v.__nc); return *this;}
 
     _LIBCPP_INLINE_VISIBILITY
     ~__value_type() {__cc.~value_type();}

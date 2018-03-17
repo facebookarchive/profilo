@@ -77,7 +77,7 @@ public:
 #define _LIBCPP_HAS_UNIQUE_TYPEINFO
 #endif
 
-namespace std  // purposefully not using versioning namespace
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {
 
 #if !defined(_LIBCPP_ABI_MICROSOFT)
@@ -192,7 +192,7 @@ public:
 
 #endif // !_LIBCPP_ABI_MICROSOFT
 
-}  // std
+} } } }  // facebook::museum::MUSEUM_VERSION::std
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 _LIBCPP_NORETURN inline _LIBCPP_ALWAYS_INLINE

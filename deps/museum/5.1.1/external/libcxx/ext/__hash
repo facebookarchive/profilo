@@ -16,7 +16,7 @@
 #include <museum/5.1.1/external/libcxx/string>
 #include <museum/5.1.1/external/libcxx/cstring>
 
-namespace __gnu_cxx {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace __gnu_cxx {
 using namespace std;
 
 template <typename _Tp> struct _LIBCPP_TYPE_VIS_ONLY hash { };
@@ -130,6 +130,6 @@ template <> struct _LIBCPP_TYPE_VIS_ONLY hash<unsigned long>
         return __c;
     }
 };
-}
+}}}}
 
 #endif  // _LIBCPP_EXT_HASH

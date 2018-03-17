@@ -183,7 +183,7 @@ public:
     _ValueType* allocate(size_t __n) {
         if (__n > __max_size()) {
             __throw_length_error(
-                "std::experimental::pmr::polymorphic_allocator<T>::allocate(size_t n)"
+                "facebook::museum::MUSEUM_VERSION::std::experimental::pmr::polymorphic_allocator<T>::allocate(size_t n)"
                 " 'n' exceeds maximum supported size");
         }
         return static_cast<_ValueType*>(
@@ -384,7 +384,7 @@ protected:
     {
         if (__bytes > __max_size()) {
             __throw_length_error(
-                "std::experimental::pmr::resource_adaptor<T>::do_allocate(size_t bytes, size_t align)"
+                "facebook::museum::MUSEUM_VERSION::std::experimental::pmr::resource_adaptor<T>::do_allocate(size_t bytes, size_t align)"
                 " 'bytes' exceeds maximum supported size");
         }
         size_t __s = __aligned_allocation_size(__bytes, _MaxAlign) / _MaxAlign;

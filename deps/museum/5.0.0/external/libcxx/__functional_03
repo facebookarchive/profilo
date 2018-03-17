@@ -247,7 +247,7 @@ public:
     virtual _Rp operator()() = 0;
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
-    virtual const std::type_info& target_type() const = 0;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -266,7 +266,7 @@ public:
     virtual _Rp operator()(_A0) = 0;
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
-    virtual const std::type_info& target_type() const = 0;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -285,7 +285,7 @@ public:
     virtual _Rp operator()(_A0, _A1) = 0;
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
-    virtual const std::type_info& target_type() const = 0;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -304,7 +304,7 @@ public:
     virtual _Rp operator()(_A0, _A1, _A2) = 0;
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
-    virtual const std::type_info& target_type() const = 0;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -325,7 +325,7 @@ public:
     virtual _Rp operator()();
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
-    virtual const std::type_info& target_type() const;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -384,7 +384,7 @@ __func<_Fp, _Alloc, _Rp()>::target(const type_info& __ti) const
 }
 
 template<class _Fp, class _Alloc, class _Rp>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 __func<_Fp, _Alloc, _Rp()>::target_type() const
 {
     return typeid(_Fp);
@@ -408,7 +408,7 @@ public:
     virtual _Rp operator()(_A0);
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
-    virtual const std::type_info& target_type() const;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -467,7 +467,7 @@ __func<_Fp, _Alloc, _Rp(_A0)>::target(const type_info& __ti) const
 }
 
 template<class _Fp, class _Alloc, class _Rp, class _A0>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 __func<_Fp, _Alloc, _Rp(_A0)>::target_type() const
 {
     return typeid(_Fp);
@@ -491,7 +491,7 @@ public:
     virtual _Rp operator()(_A0, _A1);
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
-    virtual const std::type_info& target_type() const;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -550,7 +550,7 @@ __func<_Fp, _Alloc, _Rp(_A0, _A1)>::target(const type_info& __ti) const
 }
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 __func<_Fp, _Alloc, _Rp(_A0, _A1)>::target_type() const
 {
     return typeid(_Fp);
@@ -574,7 +574,7 @@ public:
     virtual _Rp operator()(_A0, _A1, _A2);
 #ifndef _LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
-    virtual const std::type_info& target_type() const;
+    virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
 #endif  // _LIBCPP_NO_RTTI
 };
 
@@ -633,7 +633,7 @@ __func<_Fp, _Alloc, _Rp(_A0, _A1, _A2)>::target(const type_info& __ti) const
 }
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1, class _A2>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 __func<_Fp, _Alloc, _Rp(_A0, _A1, _A2)>::target_type() const
 {
     return typeid(_Fp);
@@ -711,7 +711,7 @@ public:
 
 #ifndef _LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
-    const std::type_info& target_type() const;
+    const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
 #endif  // _LIBCPP_NO_RTTI
@@ -897,7 +897,7 @@ function<_Rp()>::operator()() const
 #ifndef _LIBCPP_NO_RTTI
 
 template<class _Rp>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 function<_Rp()>::target_type() const
 {
     if (__f_ == 0)
@@ -1013,7 +1013,7 @@ public:
 
 #ifndef _LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
-    const std::type_info& target_type() const;
+    const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
 #endif  // _LIBCPP_NO_RTTI
@@ -1199,7 +1199,7 @@ function<_Rp(_A0)>::operator()(_A0 __a0) const
 #ifndef _LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 function<_Rp(_A0)>::target_type() const
 {
     if (__f_ == 0)
@@ -1315,7 +1315,7 @@ public:
 
 #ifndef _LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
-    const std::type_info& target_type() const;
+    const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
 #endif  // _LIBCPP_NO_RTTI
@@ -1501,7 +1501,7 @@ function<_Rp(_A0, _A1)>::operator()(_A0 __a0, _A1 __a1) const
 #ifndef _LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0, class _A1>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 function<_Rp(_A0, _A1)>::target_type() const
 {
     if (__f_ == 0)
@@ -1616,7 +1616,7 @@ public:
 
 #ifndef _LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
-    const std::type_info& target_type() const;
+    const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
 #endif  // _LIBCPP_NO_RTTI
@@ -1803,7 +1803,7 @@ function<_Rp(_A0, _A1, _A2)>::operator()(_A0 __a0, _A1 __a1, _A2 __a2) const
 #ifndef _LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0, class _A1, class _A2>
-const std::type_info&
+const facebook::museum::MUSEUM_VERSION::std::type_info&
 function<_Rp(_A0, _A1, _A2)>::target_type() const
 {
     if (__f_ == 0)

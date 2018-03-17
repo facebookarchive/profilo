@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/external/libcxx/cstdlib> // For NULL.
 
-// This is a fake declaration of std::swap to avoid including <algorithm>
+// This is a fake declaration of facebook::museum::MUSEUM_VERSION::std::swap to avoid including <algorithm>
 namespace std {
 template <class T> void swap(T&, T&);
 }
@@ -44,7 +44,7 @@ struct DefaultDelete<T[]> {
 };
 
 // A smart pointer that deletes the given pointer on destruction.
-// Equivalent to C++0x's std::unique_ptr (a combination of boost::scoped_ptr
+// Equivalent to C++0x's facebook::museum::MUSEUM_VERSION::std::unique_ptr (a combination of boost::scoped_ptr
 // and boost::scoped_array).
 // Named to be in keeping with Android style but also to avoid
 // collision with any other implementation, until we can switch over
@@ -87,7 +87,7 @@ public:
 
     // Swap with another unique pointer.
     void swap(UniquePtr<T>& other) {
-      std::swap(mPtr, other.mPtr);
+      facebook::museum::MUSEUM_VERSION::std::swap(mPtr, other.mPtr);
     }
 
 private:
@@ -103,7 +103,7 @@ private:
     void operator=(const UniquePtr&);
 };
 
-// Partial specialization for array types. Like std::unique_ptr, this removes
+// Partial specialization for array types. Like facebook::museum::MUSEUM_VERSION::std::unique_ptr, this removes
 // operator* and operator-> but adds operator[].
 template <typename T, typename D>
 class UniquePtr<T[], D> {

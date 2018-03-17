@@ -20,11 +20,11 @@ inline namespace fundamentals_v1 {
 namespace pmr {
 
   template <class Key, class T, class Compare = less<Key>>
-  using map = std::map<Key, T, Compare,
+  using map = facebook::museum::MUSEUM_VERSION::std::map<Key, T, Compare,
                        polymorphic_allocator<pair<const Key,T>>>;
 
   template <class Key, class T, class Compare = less<Key>>
-  using multimap = std::multimap<Key, T, Compare,
+  using multimap = facebook::museum::MUSEUM_VERSION::std::multimap<Key, T, Compare,
                                  polymorphic_allocator<pair<const Key,T>>>;
 
 } // namespace pmr

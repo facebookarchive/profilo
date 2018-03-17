@@ -198,14 +198,14 @@ public:
   template <class _Up, enable_if_t<!is_convertible<_Up, _Tp>::value &&
                                  is_constructible<_Tp, _Up&&>::value,bool> = true>
   explicit _LIBCPP_CONSTEXPR propagate_const(propagate_const<_Up>&& __pu)
-      : __t_(std::move(_VSTD_LFTS_V2::get_underlying(__pu)))
+      : __t_(facebook::museum::MUSEUM_VERSION::std::move(_VSTD_LFTS_V2::get_underlying(__pu)))
   {
   }
 
   template <class _Up, enable_if_t<is_convertible<_Up&&, _Tp>::value &&
                                  is_constructible<_Tp, _Up&&>::value,bool> = false>
   _LIBCPP_CONSTEXPR propagate_const(propagate_const<_Up>&& __pu)
-      : __t_(std::move(_VSTD_LFTS_V2::get_underlying(__pu)))
+      : __t_(facebook::museum::MUSEUM_VERSION::std::move(_VSTD_LFTS_V2::get_underlying(__pu)))
   {
   }
 
@@ -213,7 +213,7 @@ public:
                                  is_constructible<_Tp, _Up&&>::value &&
                                  !__is_propagate_const<decay_t<_Up>>::value,bool> = true>
   explicit _LIBCPP_CONSTEXPR propagate_const(_Up&& __u)
-      : __t_(std::forward<_Up>(__u))
+      : __t_(facebook::museum::MUSEUM_VERSION::std::forward<_Up>(__u))
   {
   }
 
@@ -221,7 +221,7 @@ public:
                                  is_constructible<_Tp, _Up&&>::value &&
                                  !__is_propagate_const<decay_t<_Up>>::value,bool> = false>
   _LIBCPP_CONSTEXPR propagate_const(_Up&& __u)
-      : __t_(std::forward<_Up>(__u))
+      : __t_(facebook::museum::MUSEUM_VERSION::std::forward<_Up>(__u))
   {
   }
 
@@ -232,14 +232,14 @@ public:
   template <class _Up>
   _LIBCPP_CONSTEXPR propagate_const& operator=(propagate_const<_Up>&& __pu)
   {
-    __t_ = std::move(_VSTD_LFTS_V2::get_underlying(__pu));
+    __t_ = facebook::museum::MUSEUM_VERSION::std::move(_VSTD_LFTS_V2::get_underlying(__pu));
     return *this;
   }
 
   template <class _Up, class _Vp = enable_if_t<!__is_propagate_const<decay_t<_Up>>::value>>
   _LIBCPP_CONSTEXPR propagate_const& operator=(_Up&& __u)
   {
-    __t_ = std::forward<_Up>(__u);
+    __t_ = facebook::museum::MUSEUM_VERSION::std::forward<_Up>(__u);
     return *this;
   }
 
@@ -491,7 +491,7 @@ struct hash<experimental::fundamentals_v2::propagate_const<_Tp>>
 
   size_t operator()(const experimental::fundamentals_v2::propagate_const<_Tp>& __pc1) const
   {
-    return std::hash<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1));
+    return facebook::museum::MUSEUM_VERSION::std::hash<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1));
   }
 };
 
@@ -504,7 +504,7 @@ struct equal_to<experimental::fundamentals_v2::propagate_const<_Tp>>
   bool operator()(const experimental::fundamentals_v2::propagate_const<_Tp>& __pc1,
       const experimental::fundamentals_v2::propagate_const<_Tp>& __pc2) const
   {
-    return std::equal_to<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
+    return facebook::museum::MUSEUM_VERSION::std::equal_to<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
   }
 };
 
@@ -517,7 +517,7 @@ struct not_equal_to<experimental::fundamentals_v2::propagate_const<_Tp>>
   bool operator()(const experimental::fundamentals_v2::propagate_const<_Tp>& __pc1,
       const experimental::fundamentals_v2::propagate_const<_Tp>& __pc2) const
   {
-    return std::not_equal_to<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
+    return facebook::museum::MUSEUM_VERSION::std::not_equal_to<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
   }
 };
 
@@ -530,7 +530,7 @@ struct less<experimental::fundamentals_v2::propagate_const<_Tp>>
   bool operator()(const experimental::fundamentals_v2::propagate_const<_Tp>& __pc1,
       const experimental::fundamentals_v2::propagate_const<_Tp>& __pc2) const
   {
-    return std::less<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
+    return facebook::museum::MUSEUM_VERSION::std::less<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
   }
 };
 
@@ -543,7 +543,7 @@ struct greater<experimental::fundamentals_v2::propagate_const<_Tp>>
   bool operator()(const experimental::fundamentals_v2::propagate_const<_Tp>& __pc1,
       const experimental::fundamentals_v2::propagate_const<_Tp>& __pc2) const
   {
-    return std::greater<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
+    return facebook::museum::MUSEUM_VERSION::std::greater<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
   }
 };
 
@@ -556,7 +556,7 @@ struct less_equal<experimental::fundamentals_v2::propagate_const<_Tp>>
   bool operator()(const experimental::fundamentals_v2::propagate_const<_Tp>& __pc1,
       const experimental::fundamentals_v2::propagate_const<_Tp>& __pc2) const
   {
-    return std::less_equal<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
+    return facebook::museum::MUSEUM_VERSION::std::less_equal<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
   }
 };
 
@@ -569,7 +569,7 @@ struct greater_equal<experimental::fundamentals_v2::propagate_const<_Tp>>
   bool operator()(const experimental::fundamentals_v2::propagate_const<_Tp>& __pc1,
       const experimental::fundamentals_v2::propagate_const<_Tp>& __pc2) const
   {
-    return std::greater_equal<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
+    return facebook::museum::MUSEUM_VERSION::std::greater_equal<_Tp>()(_VSTD_LFTS_V2::get_underlying(__pc1), _VSTD_LFTS_V2::get_underlying(__pc2));
   }
 };
 

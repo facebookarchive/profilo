@@ -836,7 +836,7 @@ struct _LIBCPP_TEMPLATE_VIS integer_sequence
 {
     typedef _Tp value_type;
     static_assert( is_integral<_Tp>::value,
-                  "std::integer_sequence can only be instantiated with an integral type" );
+                  "facebook::museum::MUSEUM_VERSION::std::integer_sequence can only be instantiated with an integral type" );
     static
     _LIBCPP_INLINE_VISIBILITY
     constexpr
@@ -861,8 +861,8 @@ template <class _Tp, _Tp _Ep>
 struct __make_integer_sequence_checked
 {
     static_assert(is_integral<_Tp>::value,
-                  "std::make_integer_sequence can only be instantiated with an integral type" );
-    static_assert(0 <= _Ep, "std::make_integer_sequence must have a non-negative sequence length");
+                  "facebook::museum::MUSEUM_VERSION::std::make_integer_sequence can only be instantiated with an integral type" );
+    static_assert(0 <= _Ep, "facebook::museum::MUSEUM_VERSION::std::make_integer_sequence must have a non-negative sequence length");
     // Workaround GCC bug by preventing bad installations when 0 <= _Ep
     // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68929
     typedef __make_integer_sequence_unchecked<_Tp, 0 <= _Ep ? _Ep : 0> type;
@@ -946,7 +946,7 @@ _Size
 __loadword(const void* __p)
 {
     _Size __r;
-    std::memcpy(&__r, __p, sizeof(__r));
+    facebook::museum::MUSEUM_VERSION::std::memcpy(&__r, __p, sizeof(__r));
     return __r;
 }
 
@@ -1163,7 +1163,7 @@ __murmur2_or_cityhash<_Size, 64>::operator()(const void* __key, _Size __len)
     __v = __weak_hash_len_32_with_seeds(__s, __v.second * __k1, __x + __w.first);
     __w = __weak_hash_len_32_with_seeds(__s + 32, __z + __w.second,
                                         __y + __loadword<_Size>(__s + 16));
-    std::swap(__z, __x);
+    facebook::museum::MUSEUM_VERSION::std::swap(__z, __x);
     __s += 64;
     __len -= 64;
   } while (__len != 0);
@@ -1567,7 +1567,7 @@ using __check_hash_requirements = integral_constant<bool,
     __invokable_r<size_t, _Hash, _Key const&>::value
 >;
 
-template <class _Key, class _Hash = std::hash<_Key> >
+template <class _Key, class _Hash = facebook::museum::MUSEUM_VERSION::std::hash<_Key> >
 using __has_enabled_hash = integral_constant<bool,
     __check_hash_requirements<_Key, _Hash>::value &&
     is_default_constructible<_Hash>::value

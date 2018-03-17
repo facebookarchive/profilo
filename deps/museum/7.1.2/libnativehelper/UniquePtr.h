@@ -40,7 +40,7 @@ struct DefaultDelete<T[]> {
 };
 
 // A smart pointer that deletes the given pointer on destruction.
-// Equivalent to C++0x's std::unique_ptr (a combination of boost::scoped_ptr
+// Equivalent to C++0x's facebook::museum::MUSEUM_VERSION::std::unique_ptr (a combination of boost::scoped_ptr
 // and boost::scoped_array).
 // Named to be in keeping with Android style but also to avoid
 // collision with any other implementation, until we can switch over
@@ -92,7 +92,7 @@ private:
     DISALLOW_COPY_AND_ASSIGN(UniquePtr);
 };
 
-// Partial specialization for array types. Like std::unique_ptr, this removes
+// Partial specialization for array types. Like facebook::museum::MUSEUM_VERSION::std::unique_ptr, this removes
 // operator* and operator-> but adds operator[].
 template <typename T, typename D>
 class UniquePtr<T[], D> {

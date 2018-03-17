@@ -1102,7 +1102,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     future& operator=(future&& __rhs) _NOEXCEPT
         {
-            future(std::move(__rhs)).swap(*this);
+            future(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
 #else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
@@ -1206,7 +1206,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     future& operator=(future&& __rhs) _NOEXCEPT
         {
-            future(std::move(__rhs)).swap(*this);
+            future(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
 #else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
@@ -1305,7 +1305,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     future& operator=(future&& __rhs) _NOEXCEPT
         {
-            future(std::move(__rhs)).swap(*this);
+            future(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
 #else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
@@ -1383,7 +1383,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     promise& operator=(promise&& __rhs) _NOEXCEPT
         {
-            promise(std::move(__rhs)).swap(*this);
+            promise(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
     promise& operator=(const promise& __rhs) = delete;
@@ -1563,7 +1563,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     promise& operator=(promise&& __rhs) _NOEXCEPT
         {
-            promise(std::move(__rhs)).swap(*this);
+            promise(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
     promise& operator=(const promise& __rhs) = delete;
@@ -1707,7 +1707,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     promise& operator=(promise&& __rhs) _NOEXCEPT
         {
-            promise(std::move(__rhs)).swap(*this);
+            promise(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
     promise& operator=(const promise& __rhs) = delete;
@@ -2409,7 +2409,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     shared_future& operator=(shared_future&& __rhs) _NOEXCEPT
         {
-            shared_future(std::move(__rhs)).swap(*this);
+            shared_future(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
@@ -2483,7 +2483,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     shared_future& operator=(shared_future&& __rhs) _NOEXCEPT
         {
-            shared_future(std::move(__rhs)).swap(*this);
+            shared_future(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
@@ -2557,7 +2557,7 @@ public:
     _LIBCPP_INLINE_VISIBILITY
     shared_future& operator=(shared_future&& __rhs) _NOEXCEPT
         {
-            shared_future(std::move(__rhs)).swap(*this);
+            shared_future(facebook::museum::MUSEUM_VERSION::std::move(__rhs)).swap(*this);
             return *this;
         }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES

@@ -22,10 +22,10 @@ namespace pmr {
   // basic_string using polymorphic allocator in namespace pmr
   template <class charT, class traits = char_traits<charT>>
    using basic_string =
-     std::basic_string<charT, traits, polymorphic_allocator<charT>>;
+     facebook::museum::MUSEUM_VERSION::std::basic_string<charT, traits, polymorphic_allocator<charT>>;
 
   // basic_string typedef names using polymorphic allocator in namespace
-  // std::experimental::pmr
+  // facebook::museum::MUSEUM_VERSION::std::experimental::pmr
   typedef basic_string<char> string;
   typedef basic_string<char16_t> u16string;
   typedef basic_string<char32_t> u32string;

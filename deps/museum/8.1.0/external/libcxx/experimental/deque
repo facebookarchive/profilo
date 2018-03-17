@@ -20,7 +20,7 @@ inline namespace fundamentals_v1 {
 namespace pmr {
 
   template <class T>
-  using deque = std::deque<T,polymorphic_allocator<T>>;
+  using deque = facebook::museum::MUSEUM_VERSION::std::deque<T,polymorphic_allocator<T>>;
 
 } // namespace pmr
 } // namespace fundamentals_v1

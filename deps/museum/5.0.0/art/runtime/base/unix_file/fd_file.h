@@ -33,7 +33,7 @@ class FdFile : public RandomAccessFile {
   // Creates an FdFile using the given file descriptor. Takes ownership of the
   // file descriptor. (Use DisableAutoClose to retain ownership.)
   explicit FdFile(int fd);
-  explicit FdFile(int fd, const std::string& path);
+  explicit FdFile(int fd, const facebook::museum::MUSEUM_VERISION::std::string& path);
 
   // Destroys an FdFile, closing the file descriptor if Close hasn't already
   // been called. (If you care about the return value of Close, call it
@@ -43,8 +43,8 @@ class FdFile : public RandomAccessFile {
   virtual ~FdFile();
 
   // Opens file 'file_path' using 'flags' and 'mode'.
-  bool Open(const std::string& file_path, int flags);
-  bool Open(const std::string& file_path, int flags, mode_t mode);
+  bool Open(const facebook::museum::MUSEUM_VERISION::std::string& file_path, int flags);
+  bool Open(const facebook::museum::MUSEUM_VERISION::std::string& file_path, int flags, mode_t mode);
 
   // RandomAccessFile API.
   virtual int Close();
@@ -57,7 +57,7 @@ class FdFile : public RandomAccessFile {
   // Bonus API.
   int Fd() const;
   bool IsOpened() const;
-  const std::string& GetPath() const {
+  const facebook::museum::MUSEUM_VERISION::std::string& GetPath() const {
     return file_path_;
   }
   void DisableAutoClose();
@@ -66,7 +66,7 @@ class FdFile : public RandomAccessFile {
 
  private:
   int fd_;
-  std::string file_path_;
+  facebook::museum::MUSEUM_VERISION::std::string file_path_;
   bool auto_close_;
 
   DISALLOW_COPY_AND_ASSIGN(FdFile);

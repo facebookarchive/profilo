@@ -1430,8 +1430,8 @@ _Tp&
 unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::operator[](const key_type& __k)
 {
     return __table_.__emplace_unique_key_args(__k,
-        std::piecewise_construct, std::forward_as_tuple(__k),
-                                  std::forward_as_tuple()).first->__cc.second;
+        facebook::museum::MUSEUM_VERSION::std::piecewise_construct, facebook::museum::MUSEUM_VERSION::std::forward_as_tuple(__k),
+                                  facebook::museum::MUSEUM_VERSION::std::forward_as_tuple()).first->__cc.second;
 }
 
 template <class _Key, class _Tp, class _Hash, class _Pred, class _Alloc>
@@ -1439,8 +1439,8 @@ _Tp&
 unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::operator[](key_type&& __k)
 {
     return __table_.__emplace_unique_key_args(__k,
-        std::piecewise_construct, std::forward_as_tuple(std::move(__k)),
-                                  std::forward_as_tuple()).first->__cc.second;
+        facebook::museum::MUSEUM_VERSION::std::piecewise_construct, facebook::museum::MUSEUM_VERSION::std::forward_as_tuple(facebook::museum::MUSEUM_VERSION::std::move(__k)),
+                                  facebook::museum::MUSEUM_VERSION::std::forward_as_tuple()).first->__cc.second;
 }
 
 #endif  // !_LIBCPP_CXX03_MODE

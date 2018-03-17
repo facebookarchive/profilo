@@ -212,7 +212,7 @@
     path temp_directory_path();
     path temp_directory_path(error_code& ec);
 
-} } } }  // namespaces std::experimental::filesystem::v1
+} } } }  // namespaces facebook::museum::MUSEUM_VERSION::std::experimental::filesystem::v1
 
 */
 
@@ -240,7 +240,7 @@
 
 _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL_FILESYSTEM
 
-typedef chrono::time_point<std::chrono::system_clock>  file_time_type;
+typedef chrono::time_point<facebook::museum::MUSEUM_VERSION::std::chrono::system_clock>  file_time_type;
 
 struct _LIBCPP_TYPE_VIS space_info
 {
@@ -922,11 +922,11 @@ public:
         return __s;
     }
 
-    _LIBCPP_INLINE_VISIBILITY std::string    string()    const { return __pn_; }
-    _LIBCPP_INLINE_VISIBILITY std::wstring   wstring()   const { return string<wchar_t>(); }
-    _LIBCPP_INLINE_VISIBILITY std::string    u8string()  const { return __pn_; }
-    _LIBCPP_INLINE_VISIBILITY std::u16string u16string() const { return string<char16_t>(); }
-    _LIBCPP_INLINE_VISIBILITY std::u32string u32string() const { return string<char32_t>(); }
+    _LIBCPP_INLINE_VISIBILITY facebook::museum::MUSEUM_VERSION::std::string    string()    const { return __pn_; }
+    _LIBCPP_INLINE_VISIBILITY facebook::museum::MUSEUM_VERSION::std::wstring   wstring()   const { return string<wchar_t>(); }
+    _LIBCPP_INLINE_VISIBILITY facebook::museum::MUSEUM_VERSION::std::string    u8string()  const { return __pn_; }
+    _LIBCPP_INLINE_VISIBILITY facebook::museum::MUSEUM_VERSION::std::u16string u16string() const { return string<char16_t>(); }
+    _LIBCPP_INLINE_VISIBILITY facebook::museum::MUSEUM_VERSION::std::u32string u32string() const { return string<char32_t>(); }
 
     // generic format observers
     template <class _ECharT, class _Traits = char_traits<_ECharT>,
@@ -937,11 +937,11 @@ public:
         return string<_ECharT, _Traits, _Allocator>(__a);
     }
 
-    std::string    generic_string()    const { return __pn_; }
-    std::wstring   generic_wstring()   const { return string<wchar_t>(); }
-    std::string    generic_u8string()  const { return __pn_; }
-    std::u16string generic_u16string() const { return string<char16_t>(); }
-    std::u32string generic_u32string() const { return string<char32_t>(); }
+    facebook::museum::MUSEUM_VERSION::std::string    generic_string()    const { return __pn_; }
+    facebook::museum::MUSEUM_VERSION::std::wstring   generic_wstring()   const { return string<wchar_t>(); }
+    facebook::museum::MUSEUM_VERSION::std::string    generic_u8string()  const { return __pn_; }
+    facebook::museum::MUSEUM_VERSION::std::u16string generic_u16string() const { return string<char16_t>(); }
+    facebook::museum::MUSEUM_VERSION::std::u32string generic_u32string() const { return string<char32_t>(); }
 
 private:
     int __compare(__string_view) const;
@@ -1043,7 +1043,7 @@ typename enable_if<is_same<_CharT, char>::value &&
                    basic_ostream<_CharT, _Traits>&
 >::type
 operator<<(basic_ostream<_CharT, _Traits>& __os, const path& __p) {
-    __os << std::__quoted(__p.native());
+    __os << facebook::museum::MUSEUM_VERSION::std::__quoted(__p.native());
     return __os;
 }
 
@@ -1054,7 +1054,7 @@ typename enable_if<!is_same<_CharT, char>::value ||
                    basic_ostream<_CharT, _Traits>&
 >::type
 operator<<(basic_ostream<_CharT, _Traits>& __os, const path& __p) {
-    __os << std::__quoted(__p.string<_CharT, _Traits>());
+    __os << facebook::museum::MUSEUM_VERSION::std::__quoted(__p.string<_CharT, _Traits>());
     return __os;
 }
 
@@ -1092,7 +1092,7 @@ class _LIBCPP_TYPE_VIS path::iterator
 public:
     typedef bidirectional_iterator_tag iterator_category;
     typedef path                       value_type;
-    typedef std::ptrdiff_t             difference_type;
+    typedef facebook::museum::MUSEUM_VERSION::std::ptrdiff_t             difference_type;
     typedef const path*                pointer;
     typedef const path&                reference;
 public:
@@ -1223,7 +1223,7 @@ _LIBCPP_NORETURN inline _LIBCPP_ALWAYS_INLINE
 #ifndef _LIBCPP_NO_EXCEPTIONS
 void __throw_filesystem_error(_Args && ...__args)
 {
-    throw filesystem_error(std::forward<_Args>(__args)...);
+    throw filesystem_error(facebook::museum::MUSEUM_VERSION::std::forward<_Args>(__args)...);
 }
 #else
 void __throw_filesystem_error(_Args&&...)
@@ -1990,10 +1990,10 @@ directory_iterator end(const directory_iterator&) _NOEXCEPT {
 class recursive_directory_iterator {
 public:
     using value_type = directory_entry;
-    using difference_type = std::ptrdiff_t;
+    using difference_type = facebook::museum::MUSEUM_VERSION::std::ptrdiff_t;
     using pointer = directory_entry const *;
     using reference = directory_entry const &;
-    using iterator_category = std::input_iterator_tag;
+    using iterator_category = facebook::museum::MUSEUM_VERSION::std::input_iterator_tag;
 
 public:
     // constructors and destructor

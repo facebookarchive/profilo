@@ -36,8 +36,8 @@ class FdFile : public RandomAccessFile {
   // Creates an FdFile using the given file descriptor. Takes ownership of the
   // file descriptor. (Use DisableAutoClose to retain ownership.)
   FdFile(int fd, bool checkUsage);
-  FdFile(int fd, const std::string& path, bool checkUsage);
-  FdFile(int fd, const std::string& path, bool checkUsage, bool read_only_mode);
+  FdFile(int fd, const facebook::museum::MUSEUM_VERSION::std::string& path, bool checkUsage);
+  FdFile(int fd, const facebook::museum::MUSEUM_VERSION::std::string& path, bool checkUsage, bool read_only_mode);
 
   // Destroys an FdFile, closing the file descriptor if Close hasn't already
   // been called. (If you care about the return value of Close, call it
@@ -47,8 +47,8 @@ class FdFile : public RandomAccessFile {
   virtual ~FdFile();
 
   // Opens file 'file_path' using 'flags' and 'mode'.
-  bool Open(const std::string& file_path, int flags);
-  bool Open(const std::string& file_path, int flags, mode_t mode);
+  bool Open(const facebook::museum::MUSEUM_VERSION::std::string& file_path, int flags);
+  bool Open(const facebook::museum::MUSEUM_VERSION::std::string& file_path, int flags, mode_t mode);
 
   // RandomAccessFile API.
   int Close() OVERRIDE WARN_UNUSED;
@@ -72,7 +72,7 @@ class FdFile : public RandomAccessFile {
   bool ReadOnlyMode() const;
   bool CheckUsage() const;
   bool IsOpened() const;
-  const std::string& GetPath() const {
+  const facebook::museum::MUSEUM_VERSION::std::string& GetPath() const {
     return file_path_;
   }
   void DisableAutoClose();
@@ -124,14 +124,14 @@ class FdFile : public RandomAccessFile {
   bool WriteFullyGeneric(const void* buffer, size_t byte_count, size_t offset);
 
   int fd_;
-  std::string file_path_;
+  facebook::museum::MUSEUM_VERSION::std::string file_path_;
   bool auto_close_;
   bool read_only_mode_;
 
   DISALLOW_COPY_AND_ASSIGN(FdFile);
 };
 
-std::ostream& operator<<(std::ostream& os, const FdFile::GuardState& kind);
+facebook::museum::MUSEUM_VERSION::std::ostream& operator<<(facebook::museum::MUSEUM_VERSION::std::ostream& os, const FdFile::GuardState& kind);
 
 }  // namespace unix_file
 

@@ -78,7 +78,7 @@ inline _LIBCPP_INLINE_VISIBILITY
 size_t
 __next_hash_pow2(size_t __n)
 {
-    return size_t(1) << (std::numeric_limits<size_t>::digits - __clz(__n-1));
+    return size_t(1) << (facebook::museum::MUSEUM_VERSION::std::numeric_limits<size_t>::digits - __clz(__n-1));
 }
 
 template <class _Tp, class _Hash, class _Equal, class _Alloc> class __hash_table;
@@ -256,7 +256,7 @@ public:
         __get_db()->__insert_i(this);
 #endif
     }
-    _LIBCPP_INLINE_VISIBILITY 
+    _LIBCPP_INLINE_VISIBILITY
     __hash_const_iterator(const __non_const_iterator& __x) _NOEXCEPT
         : __node_(__x.__node_)
     {

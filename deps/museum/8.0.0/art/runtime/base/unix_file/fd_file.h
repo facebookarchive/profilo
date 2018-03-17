@@ -38,18 +38,18 @@ class FdFile : public RandomAccessFile {
   // Creates an FdFile using the given file descriptor. Takes ownership of the
   // file descriptor. (Use DisableAutoClose to retain ownership.)
   FdFile(int fd, bool checkUsage);
-  FdFile(int fd, const std::string& path, bool checkUsage);
-  FdFile(int fd, const std::string& path, bool checkUsage, bool read_only_mode);
+  FdFile(int fd, const facebook::museum::MUSEUM_VERSION::std::string& path, bool checkUsage);
+  FdFile(int fd, const facebook::museum::MUSEUM_VERSION::std::string& path, bool checkUsage, bool read_only_mode);
 
-  FdFile(const std::string& path, int flags, bool checkUsage)
+  FdFile(const facebook::museum::MUSEUM_VERSION::std::string& path, int flags, bool checkUsage)
       : FdFile(path, flags, 0640, checkUsage) {}
-  FdFile(const std::string& path, int flags, mode_t mode, bool checkUsage);
+  FdFile(const facebook::museum::MUSEUM_VERSION::std::string& path, int flags, mode_t mode, bool checkUsage);
 
   // Move constructor.
   FdFile(FdFile&& other)
       : guard_state_(other.guard_state_),
         fd_(other.fd_),
-        file_path_(std::move(other.file_path_)),
+        file_path_(facebook::museum::MUSEUM_VERSION::std::move(other.file_path_)),
         auto_close_(other.auto_close_),
         read_only_mode_(other.read_only_mode_) {
     other.Release();  // Release the src.
@@ -117,7 +117,7 @@ class FdFile : public RandomAccessFile {
   bool ReadOnlyMode() const;
   bool CheckUsage() const;
   bool IsOpened() const;
-  const std::string& GetPath() const {
+  const facebook::museum::MUSEUM_VERSION::std::string& GetPath() const {
     return file_path_;
   }
   void DisableAutoClose();
@@ -165,8 +165,8 @@ class FdFile : public RandomAccessFile {
   GuardState guard_state_;
 
   // Opens file 'file_path' using 'flags' and 'mode'.
-  bool Open(const std::string& file_path, int flags);
-  bool Open(const std::string& file_path, int flags, mode_t mode);
+  bool Open(const facebook::museum::MUSEUM_VERSION::std::string& file_path, int flags);
+  bool Open(const facebook::museum::MUSEUM_VERSION::std::string& file_path, int flags, mode_t mode);
 
  private:
   template <bool kUseOffset>
@@ -175,14 +175,14 @@ class FdFile : public RandomAccessFile {
   void Destroy();  // For ~FdFile and operator=(&&).
 
   int fd_;
-  std::string file_path_;
+  facebook::museum::MUSEUM_VERSION::std::string file_path_;
   bool auto_close_;
   bool read_only_mode_;
 
   DISALLOW_COPY_AND_ASSIGN(FdFile);
 };
 
-std::ostream& operator<<(std::ostream& os, const FdFile::GuardState& kind);
+facebook::museum::MUSEUM_VERSION::std::ostream& operator<<(facebook::museum::MUSEUM_VERSION::std::ostream& os, const FdFile::GuardState& kind);
 
 }  // namespace unix_file
 

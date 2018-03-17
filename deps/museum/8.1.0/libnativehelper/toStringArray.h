@@ -46,21 +46,21 @@ jobjectArray toStringArray(JNIEnv* env, Counter* counter, Getter* getter) {
 }
 
 struct VectorCounter {
-    const std::vector<std::string>& strings;
-    explicit VectorCounter(const std::vector<std::string>& strings) : strings(strings) {}
+    const facebook::museum::MUSEUM_VERSION::std::vector<facebook::museum::MUSEUM_VERSION::std::string>& strings;
+    explicit VectorCounter(const facebook::museum::MUSEUM_VERSION::std::vector<facebook::museum::MUSEUM_VERSION::std::string>& strings) : strings(strings) {}
     size_t operator()() {
         return strings.size();
     }
 };
 struct VectorGetter {
-    const std::vector<std::string>& strings;
-    explicit VectorGetter(const std::vector<std::string>& strings) : strings(strings) {}
+    const facebook::museum::MUSEUM_VERSION::std::vector<facebook::museum::MUSEUM_VERSION::std::string>& strings;
+    explicit VectorGetter(const facebook::museum::MUSEUM_VERSION::std::vector<facebook::museum::MUSEUM_VERSION::std::string>& strings) : strings(strings) {}
     const char* operator()(size_t i) {
         return strings[i].c_str();
     }
 };
 
-inline jobjectArray toStringArray(JNIEnv* env, const std::vector<std::string>& strings) {
+inline jobjectArray toStringArray(JNIEnv* env, const facebook::museum::MUSEUM_VERSION::std::vector<facebook::museum::MUSEUM_VERSION::std::string>& strings) {
     VectorCounter counter(strings);
     VectorGetter getter(strings);
     return toStringArray<VectorCounter, VectorGetter>(env, &counter, &getter);

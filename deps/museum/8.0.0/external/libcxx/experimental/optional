@@ -146,10 +146,10 @@ namespace std { namespace experimental { inline namespace fundamentals_v1 {
 
 _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL
 class _LIBCPP_EXCEPTION_ABI bad_optional_access
-    : public std::logic_error
+    : public facebook::museum::MUSEUM_VERSION::std::logic_error
 {
 public:
-	bad_optional_access() : std::logic_error("Bad optional Access") {}
+	bad_optional_access() : facebook::museum::MUSEUM_VERSION::std::logic_error("Bad optional Access") {}
 
 //	Get the key function ~bad_optional_access() into the dylib
     virtual ~bad_optional_access() _NOEXCEPT;
@@ -894,9 +894,9 @@ _LIBCPP_END_NAMESPACE_LFTS
 _LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _Tp>
-struct _LIBCPP_TEMPLATE_VIS hash<std::experimental::optional<_Tp> >
+struct _LIBCPP_TEMPLATE_VIS hash<facebook::museum::MUSEUM_VERSION::std::experimental::optional<_Tp> >
 {
-    typedef std::experimental::optional<_Tp> argument_type;
+    typedef facebook::museum::MUSEUM_VERSION::std::experimental::optional<_Tp> argument_type;
     typedef size_t        result_type;
 
     _LIBCPP_INLINE_VISIBILITY

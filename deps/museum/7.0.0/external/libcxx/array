@@ -29,8 +29,8 @@ struct array
     typedef T value_type;
     typedef T* pointer;
     typedef const T* const_pointer;
-    typedef std::reverse_iterator<iterator> reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator> reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator> const_reverse_iterator;
 
     // No explicit construct/copy/destroy for aggregate type
     void fill(const T& u);
@@ -131,8 +131,8 @@ struct _LIBCPP_TYPE_VIS_ONLY array
     typedef const value_type*                     const_pointer;
     typedef size_t                                size_type;
     typedef ptrdiff_t                             difference_type;
-    typedef std::reverse_iterator<iterator>       reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator>       reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator> const_reverse_iterator;
 
     value_type __elems_[_Size > 0 ? _Size : 1];
 
@@ -300,7 +300,7 @@ inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&
 get(array<_Tp, _Size>& __a) _NOEXCEPT
 {
-    static_assert(_Ip < _Size, "Index out of bounds in std::get<> (std::array)");
+    static_assert(_Ip < _Size, "Index out of bounds in facebook::museum::MUSEUM_VERSION::std::get<> (facebook::museum::MUSEUM_VERSION::std::array)");
     return __a.__elems_[_Ip];
 }
 
@@ -309,7 +309,7 @@ inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
 const _Tp&
 get(const array<_Tp, _Size>& __a) _NOEXCEPT
 {
-    static_assert(_Ip < _Size, "Index out of bounds in std::get<> (const std::array)");
+    static_assert(_Ip < _Size, "Index out of bounds in facebook::museum::MUSEUM_VERSION::std::get<> (const facebook::museum::MUSEUM_VERSION::std::array)");
     return __a.__elems_[_Ip];
 }
 
@@ -320,7 +320,7 @@ inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&&
 get(array<_Tp, _Size>&& __a) _NOEXCEPT
 {
-    static_assert(_Ip < _Size, "Index out of bounds in std::get<> (std::array &&)");
+    static_assert(_Ip < _Size, "Index out of bounds in facebook::museum::MUSEUM_VERSION::std::get<> (facebook::museum::MUSEUM_VERSION::std::array &&)");
     return _VSTD::move(__a.__elems_[_Ip]);
 }
 

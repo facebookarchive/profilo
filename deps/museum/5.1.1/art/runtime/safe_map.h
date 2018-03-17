@@ -34,14 +34,14 @@ class SafeMap {
   typedef SafeMap<K, V, Comparator, Allocator> Self;
 
  public:
-  typedef typename ::std::map<K, V, Comparator, Allocator>::key_compare key_compare;
-  typedef typename ::std::map<K, V, Comparator, Allocator>::value_compare value_compare;
-  typedef typename ::std::map<K, V, Comparator, Allocator>::allocator_type allocator_type;
-  typedef typename ::std::map<K, V, Comparator, Allocator>::iterator iterator;
-  typedef typename ::std::map<K, V, Comparator, Allocator>::const_iterator const_iterator;
-  typedef typename ::std::map<K, V, Comparator, Allocator>::size_type size_type;
-  typedef typename ::std::map<K, V, Comparator, Allocator>::key_type key_type;
-  typedef typename ::std::map<K, V, Comparator, Allocator>::value_type value_type;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::key_compare key_compare;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::value_compare value_compare;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::allocator_type allocator_type;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::iterator iterator;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::const_iterator const_iterator;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::size_type size_type;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::key_type key_type;
+  typedef typename facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator>::value_type value_type;
 
   SafeMap() = default;
   explicit SafeMap(const key_compare& cmp, const allocator_type& allocator = allocator_type())
@@ -116,7 +116,7 @@ class SafeMap {
   }
 
  private:
-  ::std::map<K, V, Comparator, Allocator> map_;
+  facebook::museum::MUSEUM_VERSION::std::map<K, V, Comparator, Allocator> map_;
 };
 
 template <typename K, typename V, typename Comparator, typename Allocator>

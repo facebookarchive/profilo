@@ -345,14 +345,14 @@ typedef __char32_t char32_t;
 #endif
 
 // Inline namespaces are available in Clang regardless of C++ dialect.
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {inline namespace _LIBCPP_NAMESPACE {
-#define _LIBCPP_END_NAMESPACE_STD  } }
-#define _VSTD std::_LIBCPP_NAMESPACE
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {inline namespace _LIBCPP_NAMESPACE {
+#define _LIBCPP_END_NAMESPACE_STD  } } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std::_LIBCPP_NAMESPACE
 
-namespace std {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
   inline namespace _LIBCPP_NAMESPACE {
   }
-}
+} } } }
 
 #elif defined(__GNUC__)
 
@@ -418,15 +418,15 @@ namespace std {
 
 #endif  // __GXX_EXPERIMENTAL_CXX0X__
 
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std { namespace _LIBCPP_NAMESPACE {
-#define _LIBCPP_END_NAMESPACE_STD  } }
-#define _VSTD std::_LIBCPP_NAMESPACE
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std { namespace _LIBCPP_NAMESPACE {
+#define _LIBCPP_END_NAMESPACE_STD  } } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std::_LIBCPP_NAMESPACE
 
-namespace std {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
 namespace _LIBCPP_NAMESPACE {
 }
 using namespace _LIBCPP_NAMESPACE __attribute__((__strong__));
-}
+} } } }
 
 #elif defined(_LIBCPP_MSVC)
 
@@ -445,13 +445,13 @@ using namespace _LIBCPP_NAMESPACE __attribute__((__strong__));
 #define _NOEXCEPT_(x)
 #define _NOEXCEPT_OR_FALSE(x) false
 
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {
-#define _LIBCPP_END_NAMESPACE_STD  }
-#define _VSTD std
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
+#define _LIBCPP_END_NAMESPACE_STD  } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std
 
 #  define _LIBCPP_WEAK
-namespace std {
-}
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
+} } } }
 
 #elif defined(__IBMCPP__)
 
@@ -476,14 +476,14 @@ namespace std {
 #define __MULTILOCALE_API
 #endif
 
-#define _LIBCPP_BEGIN_NAMESPACE_STD namespace std {inline namespace _LIBCPP_NAMESPACE {
-#define _LIBCPP_END_NAMESPACE_STD  } }
-#define _VSTD std::_LIBCPP_NAMESPACE
+#define _LIBCPP_BEGIN_NAMESPACE_STD namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {inline namespace _LIBCPP_NAMESPACE {
+#define _LIBCPP_END_NAMESPACE_STD  } } } } }
+#define _VSTD facebook::museum::MUSEUM_VERSION::std::_LIBCPP_NAMESPACE
 
-namespace std {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
   inline namespace _LIBCPP_NAMESPACE {
   }
-}
+} } } }
 
 #endif // __clang__ || __GNUC__ || _MSC_VER || __IBMCPP__
 

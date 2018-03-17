@@ -151,11 +151,11 @@ public: // TODO private:
     typedef _Key   key_type;
 
     const _Value __default_value_;
-    std::unordered_map<_Key, _Value, _Hash, _BinaryPredicate> __table;
+    facebook::museum::MUSEUM_VERSION::std::unordered_map<_Key, _Value, _Hash, _BinaryPredicate> __table;
     
 public:
     _LIBCPP_INLINE_VISIBILITY
-    _BMSkipTable(std::size_t __sz, _Value __default, _Hash __hf, _BinaryPredicate __pred)
+    _BMSkipTable(facebook::museum::MUSEUM_VERSION::std::size_t __sz, _Value __default, _Hash __hf, _BinaryPredicate __pred)
         : __default_value_(__default), __table(__sz, __hf, __pred) {}
     
     _LIBCPP_INLINE_VISIBILITY
@@ -180,15 +180,15 @@ private:
     typedef _Value value_type;
     typedef _Key   key_type;
 
-    typedef typename std::make_unsigned<key_type>::type unsigned_key_type;
-    typedef std::array<value_type, _VSTD::numeric_limits<unsigned_key_type>::max()> skip_map;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::make_unsigned<key_type>::type unsigned_key_type;
+    typedef facebook::museum::MUSEUM_VERSION::std::array<value_type, _VSTD::numeric_limits<unsigned_key_type>::max()> skip_map;
     skip_map __table;
 
 public:
     _LIBCPP_INLINE_VISIBILITY
-    _BMSkipTable(std::size_t /*__sz*/, _Value __default, _Hash /*__hf*/, _BinaryPredicate /*__pred*/)
+    _BMSkipTable(facebook::museum::MUSEUM_VERSION::std::size_t /*__sz*/, _Value __default, _Hash /*__hf*/, _BinaryPredicate /*__pred*/)
     {
-        std::fill_n(__table.begin(), __table.size(), __default);
+        facebook::museum::MUSEUM_VERSION::std::fill_n(__table.begin(), __table.size(), __default);
     }
     
     _LIBCPP_INLINE_VISIBILITY
@@ -211,8 +211,8 @@ template <class _RandomAccessIterator1,
 _LIBCPP_TYPE_VIS
 class boyer_moore_searcher {
 private:
-    typedef typename std::iterator_traits<_RandomAccessIterator1>::difference_type difference_type;
-    typedef typename std::iterator_traits<_RandomAccessIterator1>::value_type      value_type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator1>::difference_type difference_type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator1>::value_type      value_type;
     typedef _BMSkipTable<value_type, difference_type, _Hash, _BinaryPredicate,
                     _VSTD::is_integral<value_type>::value && // what about enums?
                     sizeof(value_type) == 1 &&
@@ -239,9 +239,9 @@ public:
     pair<_RandomAccessIterator2, _RandomAccessIterator2>
     operator ()(_RandomAccessIterator2 __f, _RandomAccessIterator2 __l) const
     {
-        static_assert ( std::is_same<
-                typename std::decay<typename std::iterator_traits<_RandomAccessIterator1>::value_type>::type, 
-                typename std::decay<typename std::iterator_traits<_RandomAccessIterator2>::value_type>::type
+        static_assert ( facebook::museum::MUSEUM_VERSION::std::is_same<
+                typename facebook::museum::MUSEUM_VERSION::std::decay<typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator1>::value_type>::type, 
+                typename facebook::museum::MUSEUM_VERSION::std::decay<typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator2>::value_type>::type
                     >::value,
                 "Corpus and Pattern iterators must point to the same type" );
 
@@ -301,11 +301,11 @@ public: // TODO private:
     template<typename _Iterator, typename _Container>
     void __compute_bm_prefix ( _Iterator __f, _Iterator __l, _BinaryPredicate __pred, _Container &__prefix )
     {
-        const std::size_t __count = _VSTD::distance(__f, __l);
+        const facebook::museum::MUSEUM_VERSION::std::size_t __count = _VSTD::distance(__f, __l);
                         
         __prefix[0] = 0;
-        std::size_t __k = 0;
-        for ( std::size_t __i = 1; __i < __count; ++__i )
+        facebook::museum::MUSEUM_VERSION::std::size_t __k = 0;
+        for ( facebook::museum::MUSEUM_VERSION::std::size_t __i = 1; __i < __count; ++__i )
         {
             while ( __k > 0 && !__pred ( __f[__k], __f[__i] ))
                 __k = __prefix [ __k - 1 ];
@@ -319,22 +319,22 @@ public: // TODO private:
     void __build_suffix_table(_RandomAccessIterator1 __f, _RandomAccessIterator1 __l, 
                                                     _BinaryPredicate __pred)
     {
-        const std::size_t __count = _VSTD::distance(__f, __l);
+        const facebook::museum::MUSEUM_VERSION::std::size_t __count = _VSTD::distance(__f, __l);
         vector<difference_type> & __suffix = *__suffix_.get();
         if (__count > 0)
         {
             _VSTD::vector<value_type> __scratch(__count);
             
             __compute_bm_prefix(__f, __l, __pred, __scratch);
-            for ( std::size_t __i = 0; __i <= __count; __i++ )
+            for ( facebook::museum::MUSEUM_VERSION::std::size_t __i = 0; __i <= __count; __i++ )
                 __suffix[__i] = __count - __scratch[__count-1];
     
             typedef _VSTD::reverse_iterator<_RandomAccessIterator1> _RevIter;
             __compute_bm_prefix(_RevIter(__l), _RevIter(__f), __pred, __scratch);
      
-            for ( std::size_t __i = 0; __i < __count; __i++ )
+            for ( facebook::museum::MUSEUM_VERSION::std::size_t __i = 0; __i < __count; __i++ )
             {
-                const std::size_t     __j = __count - __scratch[__i];
+                const facebook::museum::MUSEUM_VERSION::std::size_t     __j = __count - __scratch[__i];
                 const difference_type __k = __i     - __scratch[__i] + 1;
      
                 if (__suffix[__j] > __k)
@@ -363,8 +363,8 @@ template <class _RandomAccessIterator1,
 _LIBCPP_TYPE_VIS
 class boyer_moore_horspool_searcher {
 private:
-    typedef typename std::iterator_traits<_RandomAccessIterator1>::difference_type difference_type;
-    typedef typename std::iterator_traits<_RandomAccessIterator1>::value_type      value_type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator1>::difference_type difference_type;
+    typedef typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator1>::value_type      value_type;
     typedef _BMSkipTable<value_type, difference_type, _Hash, _BinaryPredicate,
                     _VSTD::is_integral<value_type>::value && // what about enums?
                     sizeof(value_type) == 1 &&
@@ -392,9 +392,9 @@ public:
     pair<_RandomAccessIterator2, _RandomAccessIterator2>
     operator ()(_RandomAccessIterator2 __f, _RandomAccessIterator2 __l) const
     {
-        static_assert ( std::is_same<
-                typename std::decay<typename std::iterator_traits<_RandomAccessIterator1>::value_type>::type, 
-                typename std::decay<typename std::iterator_traits<_RandomAccessIterator2>::value_type>::type
+        static_assert ( facebook::museum::MUSEUM_VERSION::std::is_same<
+                typename facebook::museum::MUSEUM_VERSION::std::decay<typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator1>::value_type>::type, 
+                typename facebook::museum::MUSEUM_VERSION::std::decay<typename facebook::museum::MUSEUM_VERSION::std::iterator_traits<_RandomAccessIterator2>::value_type>::type
                     >::value,
                 "Corpus and Pattern iterators must point to the same type" );
 

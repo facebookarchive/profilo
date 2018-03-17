@@ -93,7 +93,7 @@ public:
     void fill(const T& v);
 };
 
-}}  // std::experimental
+}}  // facebook::museum::MUSEUM_VERSION::std::experimental
 
 */
 
@@ -112,7 +112,7 @@ public:
 #pragma GCC system_header
 #endif
 
-namespace std { namespace experimental { inline namespace __array_extensions_v1 {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std { namespace experimental { inline namespace __array_extensions_v1 {
 
 template <class _Tp>
 struct _LIBCPP_TYPE_VIS_ONLY dynarray
@@ -129,14 +129,14 @@ public:
     typedef const value_type*                     const_pointer;
     typedef size_t                                size_type;
     typedef ptrdiff_t                             difference_type;
-    typedef std::reverse_iterator<iterator>       reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<iterator>       reverse_iterator;
+    typedef facebook::museum::MUSEUM_VERSION::std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 private:
     size_t                  __size_;
     value_type *            __base_;
     _LIBCPP_ALWAYS_INLINE dynarray () noexcept : __base_(nullptr), __size_(0) {}
-    
+
     static inline _LIBCPP_INLINE_VISIBILITY value_type* __allocate ( size_t count )
     {
         if ( numeric_limits<size_t>::max() / sizeof (value_type) <= count )
@@ -263,7 +263,7 @@ dynarray<_Tp>::dynarray(const dynarray& __d) : dynarray ()
 template <class _Tp>
 inline _LIBCPP_INLINE_VISIBILITY
 dynarray<_Tp>::~dynarray()
-{ 
+{
     value_type *__data = data () + __size_;
     for ( size_t i = 0; i < __size_; ++i )
         (--__data)->value_type::~value_type();
@@ -302,13 +302,13 @@ dynarray<_Tp>::at(size_type __n) const
     return data()[__n];
 }
 
-}}}
+}}}}}}
 
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 template <class _Tp, class _Alloc>
-struct _LIBCPP_TYPE_VIS_ONLY uses_allocator<std::experimental::dynarray<_Tp>, _Alloc> : true_type {};
+struct _LIBCPP_TYPE_VIS_ONLY uses_allocator<facebook::museum::MUSEUM_VERSION::std::experimental::dynarray<_Tp>, _Alloc> : true_type {};
 _LIBCPP_END_NAMESPACE_STD
 
-#endif  // if _LIBCPP_STD_VER > 11 
+#endif  // if _LIBCPP_STD_VER > 11
 #endif  // _LIBCPP_DYNARRAY

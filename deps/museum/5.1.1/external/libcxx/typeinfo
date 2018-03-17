@@ -66,7 +66,7 @@ public:
 #pragma GCC system_header
 #endif
 
-namespace std  // purposefully not using versioning namespace
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {
 
 class _LIBCPP_EXCEPTION_ABI type_info
@@ -171,6 +171,6 @@ public:
     virtual const char* what() const _NOEXCEPT;
 };
 
-}  // std
+} } } }  // facebook::museum::MUSEUM_VERSION::std
 
 #endif  // __LIBCPP_TYPEINFO

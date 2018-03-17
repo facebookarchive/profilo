@@ -455,7 +455,7 @@ private:
   static constexpr void __std_visit_visitor_return_type_check() {
     static_assert(
         __all<is_same_v<_Fp, _Fs>...>::value,
-        "`std::visit` requires the visitor to have a single return type.");
+        "`facebook::museum::MUSEUM_VERSION::std::visit` requires the visitor to have a single return type.");
   }
 
   template <class... _Fs>
@@ -466,7 +466,7 @@ private:
     return __result{{_VSTD::forward<_Fs>(__fs)...}};
   }
 
-  template <std::size_t... _Is>
+  template <facebook::museum::MUSEUM_VERSION::std::size_t... _Is>
   struct __dispatcher {
     template <class _Fp, class... _Vs>
     inline _LIBCPP_INLINE_VISIBILITY
@@ -568,7 +568,7 @@ private:
   template <class _Visitor, class... _Values>
   static constexpr void __std_visit_exhaustive_visitor_check() {
     static_assert(is_callable_v<_Visitor(_Values...)>,
-                  "`std::visit` requires the visitor to be exhaustive.");
+                  "`facebook::museum::MUSEUM_VERSION::std::visit` requires the visitor to be exhaustive.");
   }
 
   template <class _Visitor>

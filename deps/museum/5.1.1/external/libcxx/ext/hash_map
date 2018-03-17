@@ -215,7 +215,7 @@ template <class Key, class T, class Hash, class Pred, class Alloc>
 
 #pragma GCC system_header
 
-namespace __gnu_cxx {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace __gnu_cxx {
 
 using namespace std;
 
@@ -401,10 +401,10 @@ public:
         return __t;
     }
 
-    friend _LIBCPP_INLINE_VISIBILITY 
+    friend _LIBCPP_INLINE_VISIBILITY
     bool operator==(const __hash_map_iterator& __x, const __hash_map_iterator& __y)
         {return __x.__i_ == __y.__i_;}
-    friend _LIBCPP_INLINE_VISIBILITY 
+    friend _LIBCPP_INLINE_VISIBILITY
     bool operator!=(const __hash_map_iterator& __x, const __hash_map_iterator& __y)
         {return __x.__i_ != __y.__i_;}
 
@@ -1002,6 +1002,6 @@ operator!=(const hash_multimap<_Key, _Tp, _Hash, _Pred, _Alloc>& __x,
     return !(__x == __y);
 }
 
-} // __gnu_cxx
+}}}} // facebook::museum::MUSEUM_VERSION::__gnu_cxx
 
 #endif  // _LIBCPP_HASH_MAP

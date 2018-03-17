@@ -337,7 +337,7 @@ void*
 __thread_proxy(void* __vp)
 {
     __thread_local_data().reset(new __thread_struct);
-    std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
+    facebook::museum::MUSEUM_VERSION::std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
     typedef typename __make_tuple_indices<tuple_size<_Fp>::value, 1>::type _Index;
     __thread_execute(*__p, _Index());
     return nullptr;
@@ -365,7 +365,7 @@ void*
 __thread_proxy(void* __vp)
 {
     __thread_local_data().reset(new __thread_struct);
-    std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
+    facebook::museum::MUSEUM_VERSION::std::unique_ptr<_Fp> __p(static_cast<_Fp*>(__vp));
     (*__p)();
     return nullptr;
 }
@@ -373,7 +373,7 @@ __thread_proxy(void* __vp)
 template <class _Fp>
 thread::thread(_Fp __f)
 {
-    std::unique_ptr<_Fp> __p(new _Fp(__f));
+    facebook::museum::MUSEUM_VERSION::std::unique_ptr<_Fp> __p(new _Fp(__f));
     int __ec = pthread_create(&__t_, 0, &__thread_proxy<_Fp>, __p.get());
     if (__ec == 0)
         __p.release();
