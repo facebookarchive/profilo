@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ACCT_H
 #define _UAPI_LINUX_ACCT_H
-#include <linux/types.h>
-#include <asm/param.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/asm/param.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <asm/byteorder.h>
+#include <museum/5.1.1/bionic/libc/asm/byteorder.h>
 typedef __u16 comp_t;
 typedef __u32 comp2_t;
 #define ACCT_COMM 16

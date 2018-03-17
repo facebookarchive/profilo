@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPINFSD_EXPORT_H
 #define _UAPINFSD_EXPORT_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define NFSCLNT_IDMAX 1024
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NFSCLNT_ADDRMAX 16

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __BPQETHER_H
 #define __BPQETHER_H
-#include <linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 #define SIOCSBPQETHOPT (SIOCDEVPRIVATE + 0)
 #define SIOCSBPQETHADDR (SIOCDEVPRIVATE + 1)
 struct bpq_ethaddr {

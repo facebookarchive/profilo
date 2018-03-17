@@ -29,9 +29,9 @@
 #ifndef _TIME_H_
 #define _TIME_H_
 
-#include <sys/cdefs.h>
-#include <sys/time.h>
-#include <xlocale.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/time.h>
+#include <museum/8.1.0/bionic/libc/xlocale.h>
 
 __BEGIN_DECLS
 

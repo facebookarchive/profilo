@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_UNIX_FILE_MAPPED_FILE_H_
 #define ART_RUNTIME_BASE_UNIX_FILE_MAPPED_FILE_H_
 
-#include <fcntl.h>
-#include <string>
-#include "base/unix_file/fd_file.h"
+#include <museum/5.0.0/bionic/libc/fcntl.h>
+#include <museum/5.0.0/external/libcxx/string>
+#include <museum/5.0.0/art/runtime/base/unix_file/fd_file.h>
 
 namespace unix_file {
 

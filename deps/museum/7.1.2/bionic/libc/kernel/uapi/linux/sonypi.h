@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_SONYPI_H_
 #define _UAPI_SONYPI_H_
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define SONYPI_EVENT_IGNORE 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SONYPI_EVENT_JOGDIAL_DOWN 1

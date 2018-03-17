@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__ISDN_H__
 #define _UAPI__ISDN_H__
-#include <linux/ioctl.h>
-#include <linux/tty.h>
+#include <museum/6.0.1/bionic/libc/linux/ioctl.h>
+#include <museum/6.0.1/bionic/libc/linux/tty.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ISDN_MAX_DRIVERS 32
 #define ISDN_MAX_CHANNELS 64

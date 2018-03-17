@@ -29,12 +29,12 @@
 #ifndef _SYS_TIME_H_
 #define _SYS_TIME_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/time.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
+#include <museum/7.1.2/bionic/libc/linux/time.h>
 
 /* POSIX says <sys/time.h> gets you most of <sys/select.h> and may get you all of it. */
-#include <sys/select.h>
+#include <museum/7.1.2/bionic/libc/sys/select.h>
 
 __BEGIN_DECLS
 

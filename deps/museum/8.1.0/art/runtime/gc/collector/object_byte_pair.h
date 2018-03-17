@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_OBJECT_BYTE_PAIR_H_
 #define ART_RUNTIME_GC_COLLECTOR_OBJECT_BYTE_PAIR_H_
 
-#include <inttypes.h>
+#include <museum/8.1.0/external/libcxx/inttypes.h>
 
 namespace art {
 namespace gc {

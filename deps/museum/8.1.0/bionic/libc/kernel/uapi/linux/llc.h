@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_LLC_H
 #define _UAPI__LINUX_LLC_H
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define __LLC_SOCK_SIZE__ 16
 struct sockaddr_llc {
   __kernel_sa_family_t sllc_family;

@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_EVENTS_INL_H_
 #define ART_RUNTIME_OPENJDKJVMTI_EVENTS_INL_H_
 
-#include <array>
+#include <museum/8.1.0/external/libcxx/array>
 
-#include "events.h"
-#include "jni_internal.h"
+#include <museum/8.1.0/art/runtime/openjdkjvmti/events.h>
+#include <museum/8.1.0/art/runtime/jni_internal.h>
 #include "nativehelper/ScopedLocalRef.h"
-#include "ti_breakpoint.h"
+#include <museum/8.1.0/art/runtime/openjdkjvmti/ti_breakpoint.h>
 
-#include "art_jvmti.h"
+#include <museum/8.1.0/art/runtime/openjdkjvmti/art_jvmti.h>
 
 namespace openjdkjvmti {
 

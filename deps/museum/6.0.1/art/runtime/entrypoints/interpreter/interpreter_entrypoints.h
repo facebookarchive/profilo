@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_INTERPRETER_INTERPRETER_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_INTERPRETER_INTERPRETER_ENTRYPOINTS_H_
 
-#include "base/macros.h"
-#include "dex_file.h"
-#include "offsets.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/dex_file.h>
+#include <museum/6.0.1/art/runtime/offsets.h>
 
 #define INTERPRETER_ENTRYPOINT_OFFSET(ptr_size, x) \
     Thread::InterpreterEntryPointOffset<ptr_size>(OFFSETOF_MEMBER(InterpreterEntryPoints, x))

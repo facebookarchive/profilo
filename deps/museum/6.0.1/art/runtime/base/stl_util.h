@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BASE_STL_UTIL_H_
 #define ART_RUNTIME_BASE_STL_UTIL_H_
 
-#include <algorithm>
-#include <sstream>
+#include <museum/6.0.1/external/libcxx/algorithm>
+#include <museum/6.0.1/external/libcxx/sstream>
 
 namespace art {
 

@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_PRIMITIVE_H_
 #define ART_RUNTIME_PRIMITIVE_H_
 
-#include <sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
 
-#include "base/logging.h"
-#include "base/macros.h"
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/macros.h>
 
 namespace art {
 

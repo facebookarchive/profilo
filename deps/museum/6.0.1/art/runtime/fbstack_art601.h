@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include <jni.h>
-#include <unistd.h>
+#include <museum/6.0.1/libnativehelper/jni.h>
+#include <museum/6.0.1/bionic/libc/unistd.h>
 
 namespace facebook {
 namespace art {

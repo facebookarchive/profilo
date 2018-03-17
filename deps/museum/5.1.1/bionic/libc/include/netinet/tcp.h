@@ -29,7 +29,7 @@
 #ifndef _NETINET_TCP_H
 #define _NETINET_TCP_H
 
-#include <linux/tcp.h>
+#include <museum/5.1.1/bionic/libc/linux/tcp.h>
 
 __BEGIN_DECLS
 

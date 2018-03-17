@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_NATIVE_DALVIK_SYSTEM_DEXFILE_H_
 #define ART_RUNTIME_NATIVE_DALVIK_SYSTEM_DEXFILE_H_
 
-#include <jni.h>
-#include <unistd.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
+#include <museum/7.1.2/bionic/libc/unistd.h>
 
 namespace art {
 

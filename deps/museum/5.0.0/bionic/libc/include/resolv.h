@@ -28,13 +28,13 @@
 #ifndef _RESOLV_H_
 #define _RESOLV_H_
 
-#include <sys/param.h>
-#include <sys/types.h>
-#include <sys/cdefs.h>
-#include <sys/socket.h>
-#include <stdio.h>
-#include <arpa/nameser.h>
-#include <netinet/in.h>
+#include <museum/5.0.0/bionic/libc/sys/param.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/socket.h>
+#include <museum/5.0.0/bionic/libc/stdio.h>
+#include <museum/5.0.0/bionic/libc/arpa/nameser.h>
+#include <museum/5.0.0/bionic/libc/netinet/in.h>
 
 __BEGIN_DECLS
 #pragma GCC visibility push(default)

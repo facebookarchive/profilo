@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_CLASS_TABLE_INL_H_
 #define ART_RUNTIME_CLASS_TABLE_INL_H_
 
-#include "class_table.h"
-#include "oat_file.h"
+#include <museum/8.0.0/art/runtime/class_table.h>
+#include <museum/8.0.0/art/runtime/oat_file.h>
 
 namespace art {
 

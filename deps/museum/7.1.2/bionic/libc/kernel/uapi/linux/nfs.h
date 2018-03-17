@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NFS_H
 #define _UAPI_LINUX_NFS_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define NFS_PROGRAM 100003
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NFS_PORT 2049

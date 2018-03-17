@@ -14,10 +14,10 @@
 /*
     iostream synopsis
 
-#include <ios>
-#include <streambuf>
-#include <istream>
-#include <ostream>
+#include <museum/7.1.2/external/libcxx/ios>
+#include <museum/7.1.2/external/libcxx/streambuf>
+#include <museum/7.1.2/external/libcxx/istream>
+#include <museum/7.1.2/external/libcxx/ostream>
 
 namespace std {
 
@@ -34,11 +34,11 @@ extern wostream wclog;
 
 */
 
-#include <__config>
-#include <ios>
-#include <streambuf>
-#include <istream>
-#include <ostream>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/ios>
+#include <museum/7.1.2/external/libcxx/streambuf>
+#include <museum/7.1.2/external/libcxx/istream>
+#include <museum/7.1.2/external/libcxx/ostream>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

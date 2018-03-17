@@ -17,28 +17,28 @@
 // This file is special-purpose for cases where you want a stack context. Most users should use
 // Context::Create().
 
-#include "context.h"
+#include <museum/8.1.0/art/runtime/arch/context.h>
 
 #ifndef ART_RUNTIME_ARCH_CONTEXT_INL_H_
 #define ART_RUNTIME_ARCH_CONTEXT_INL_H_
 
 #if defined(__arm__)
-#include "arm/context_arm.h"
+#include <museum/8.1.0/art/runtime/arch/arm/context_arm.h>
 #define RUNTIME_CONTEXT_TYPE arm::ArmContext
 #elif defined(__aarch64__)
-#include "arm64/context_arm64.h"
+#include <museum/8.1.0/art/runtime/arch/arm64/context_arm64.h>
 #define RUNTIME_CONTEXT_TYPE arm64::Arm64Context
 #elif defined(__mips__) && !defined(__LP64__)
-#include "mips/context_mips.h"
+#include <museum/8.1.0/art/runtime/arch/mips/context_mips.h>
 #define RUNTIME_CONTEXT_TYPE mips::MipsContext
 #elif defined(__mips__) && defined(__LP64__)
-#include "mips64/context_mips64.h"
+#include <museum/8.1.0/art/runtime/arch/mips64/context_mips64.h>
 #define RUNTIME_CONTEXT_TYPE mips64::Mips64Context
 #elif defined(__i386__)
-#include "x86/context_x86.h"
+#include <museum/8.1.0/art/runtime/arch/x86/context_x86.h>
 #define RUNTIME_CONTEXT_TYPE x86::X86Context
 #elif defined(__x86_64__)
-#include "x86_64/context_x86_64.h"
+#include <museum/8.1.0/art/runtime/arch/x86_64/context_x86_64.h>
 #define RUNTIME_CONTEXT_TYPE x86_64::X86_64Context
 #else
 #error unimplemented

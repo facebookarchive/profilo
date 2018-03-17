@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_NATIVE_JAVA_LANG_REFLECT_ARRAY_H_
 #define ART_RUNTIME_NATIVE_JAVA_LANG_REFLECT_ARRAY_H_
 
-#include <jni.h>
+#include <museum/7.0.0/libnativehelper/jni.h>
 
 namespace art {
 

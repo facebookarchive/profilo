@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_TO_STR_H_
 #define ART_RUNTIME_BASE_TO_STR_H_
 
-#include <sstream>
+#include <museum/6.0.1/external/libcxx/sstream>
 
 namespace art {
 

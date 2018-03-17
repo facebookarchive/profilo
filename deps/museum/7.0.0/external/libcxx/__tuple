@@ -11,9 +11,9 @@
 #ifndef _LIBCPP___TUPLE
 #define _LIBCPP___TUPLE
 
-#include <__config>
-#include <cstddef>
-#include <type_traits>
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/external/libcxx/cstddef>
+#include <museum/7.0.0/external/libcxx/type_traits>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_NFLOG_TARGET
 #define _XT_NFLOG_TARGET
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_NFLOG_DEFAULT_GROUP 0x1
 #define XT_NFLOG_DEFAULT_THRESHOLD 0
 #define XT_NFLOG_MASK 0x1

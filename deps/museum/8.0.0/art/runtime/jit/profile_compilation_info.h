@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_JIT_PROFILE_COMPILATION_INFO_H_
 #define ART_RUNTIME_JIT_PROFILE_COMPILATION_INFO_H_
 
-#include <set>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/set>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "atomic.h"
-#include "base/arena_object.h"
-#include "base/arena_containers.h"
-#include "dex_cache_resolved_classes.h"
-#include "dex_file.h"
-#include "dex_file_types.h"
-#include "method_reference.h"
-#include "safe_map.h"
+#include <museum/8.0.0/art/runtime/atomic.h>
+#include <museum/8.0.0/art/runtime/base/arena_object.h>
+#include <museum/8.0.0/art/runtime/base/arena_containers.h>
+#include <museum/8.0.0/art/runtime/dex_cache_resolved_classes.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/dex_file_types.h>
+#include <museum/8.0.0/art/runtime/method_reference.h>
+#include <museum/8.0.0/art/runtime/safe_map.h>
 
 namespace art {
 

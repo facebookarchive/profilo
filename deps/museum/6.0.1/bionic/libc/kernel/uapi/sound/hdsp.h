@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __SOUND_HDSP_H
 #define __SOUND_HDSP_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define HDSP_MATRIX_MIXER_SIZE 2048
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum HDSP_IO_Type {

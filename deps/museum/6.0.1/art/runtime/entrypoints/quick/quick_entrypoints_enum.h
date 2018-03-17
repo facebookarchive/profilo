@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_ENUM_H_
 #define ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_ENUM_H_
 
-#include "quick_entrypoints.h"
-#include "quick_entrypoints_enum.h"
-#include "thread.h"
+#include <museum/6.0.1/art/runtime/entrypoints/quick/quick_entrypoints.h>
+#include <museum/6.0.1/art/runtime/entrypoints/quick/quick_entrypoints_enum.h>
+#include <museum/6.0.1/art/runtime/thread.h>
 
 namespace art {
 
@@ -27,7 +27,7 @@ namespace art {
 enum QuickEntrypointEnum
 {  // NOLINT(whitespace/braces)
 #define ENTRYPOINT_ENUM(name, rettype, ...) kQuick ## name,
-#include "quick_entrypoints_list.h"
+#include <museum/6.0.1/art/runtime/entrypoints/quick/quick_entrypoints_list.h>
   QUICK_ENTRYPOINT_LIST(ENTRYPOINT_ENUM)
 #undef QUICK_ENTRYPOINT_LIST
 #undef ENTRYPOINT_ENUM
@@ -42,7 +42,7 @@ static ThreadOffset<pointer_size> GetThreadOffset(QuickEntrypointEnum trampoline
   {  // NOLINT(whitespace/braces)
   #define ENTRYPOINT_ENUM(name, rettype, ...) case kQuick ## name : \
       return QUICK_ENTRYPOINT_OFFSET(pointer_size, p ## name);
-  #include "quick_entrypoints_list.h"
+  #include <museum/6.0.1/art/runtime/entrypoints/quick/quick_entrypoints_list.h>
     QUICK_ENTRYPOINT_LIST(ENTRYPOINT_ENUM)
   #undef QUICK_ENTRYPOINT_LIST
   #undef ENTRYPOINT_ENUM
@@ -57,7 +57,7 @@ void CheckEntrypointTypes();
 
 #define ENTRYPOINT_ENUM(name, ...) \
 template <> inline void CheckEntrypointTypes<kQuick ## name, __VA_ARGS__>() {};  // NOLINT [readability/braces] [4]
-#include "quick_entrypoints_list.h"
+#include <museum/6.0.1/art/runtime/entrypoints/quick/quick_entrypoints_list.h>
   QUICK_ENTRYPOINT_LIST(ENTRYPOINT_ENUM)
 #undef QUICK_ENTRYPOINT_LIST
 #undef ENTRYPOINT_ENUM

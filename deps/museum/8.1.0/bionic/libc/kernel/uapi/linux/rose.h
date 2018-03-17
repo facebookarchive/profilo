@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef ROSE_KERNEL_H
 #define ROSE_KERNEL_H
-#include <linux/socket.h>
-#include <linux/ax25.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/ax25.h>
 #define ROSE_MTU 251
 #define ROSE_MAX_DIGIS 6
 #define ROSE_DEFER 1

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_SYNPROXY_H
 #define _XT_SYNPROXY_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_SYNPROXY_OPT_MSS 0x01
 #define XT_SYNPROXY_OPT_WSCALE 0x02
 #define XT_SYNPROXY_OPT_SACK_PERM 0x04

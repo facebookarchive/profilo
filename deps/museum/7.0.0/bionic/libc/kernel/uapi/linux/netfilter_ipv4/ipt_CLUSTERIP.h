@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _IPT_CLUSTERIP_H_target
 #define _IPT_CLUSTERIP_H_target
-#include <linux/types.h>
-#include <linux/if_ether.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum clusterip_hashmode {
   CLUSTERIP_HASHMODE_SIP = 0,

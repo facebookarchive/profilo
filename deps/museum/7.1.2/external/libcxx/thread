@@ -85,21 +85,21 @@ void sleep_for(const chrono::duration<Rep, Period>& rel_time);
 
 */
 
-#include <__config>
-#include <iosfwd>
-#include <__functional_base>
-#include <type_traits>
-#include <cstddef>
-#include <functional>
-#include <memory>
-#include <system_error>
-#include <chrono>
-#include <__mutex_base>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/iosfwd>
+#include <museum/7.1.2/external/libcxx/__functional_base>
+#include <museum/7.1.2/external/libcxx/type_traits>
+#include <museum/7.1.2/external/libcxx/cstddef>
+#include <museum/7.1.2/external/libcxx/functional>
+#include <museum/7.1.2/external/libcxx/memory>
+#include <museum/7.1.2/external/libcxx/system_error>
+#include <museum/7.1.2/external/libcxx/chrono>
+#include <museum/7.1.2/external/libcxx/__mutex_base>
 #ifndef _LIBCPP_HAS_NO_VARIADICS
-#include <tuple>
+#include <museum/7.1.2/external/libcxx/tuple>
 #endif
-#include <pthread.h>
-#include <sched.h>
+#include <museum/7.1.2/bionic/libc/pthread.h>
+#include <museum/7.1.2/bionic/libc/sched.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

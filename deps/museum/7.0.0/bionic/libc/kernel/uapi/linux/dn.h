@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _LINUX_DN_H
 #define _LINUX_DN_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/if_ether.h>
+#include <museum/7.0.0/bionic/libc/linux/if_ether.h>
 #define DNPROTO_NSP 2
 #define DNPROTO_ROU 3
 #define DNPROTO_NML 4

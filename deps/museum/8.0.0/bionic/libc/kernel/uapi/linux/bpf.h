@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_BPF_H__
 #define _UAPI__LINUX_BPF_H__
-#include <linux/types.h>
-#include <linux/bpf_common.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/bpf_common.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define BPF_ALU64 0x07
 #define BPF_DW 0x18

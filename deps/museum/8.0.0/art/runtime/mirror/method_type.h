@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_MIRROR_METHOD_TYPE_H_
 #define ART_RUNTIME_MIRROR_METHOD_TYPE_H_
 
-#include "object.h"
-#include "string.h"
-#include "mirror/object_array.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/mirror/string.h>
+#include <museum/8.0.0/art/runtime/mirror/object_array.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

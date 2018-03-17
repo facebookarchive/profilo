@@ -35,8 +35,8 @@ int toupper(int c);
 }  // std
 */
 
-#include <__config>
-#include <ctype.h>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/ctype.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

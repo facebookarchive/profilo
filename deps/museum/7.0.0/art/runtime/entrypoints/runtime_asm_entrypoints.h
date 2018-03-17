@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_RUNTIME_ASM_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_RUNTIME_ASM_ENTRYPOINTS_H_
 
-#include "fbentrypoints.h"
-#include "entrypoints/quick/quick_entrypoints.h"
+#include <museum/7.0.0/art/runtime/fbentrypoints.h>
+#include <museum/7.0.0/art/runtime/entrypoints/quick/quick_entrypoints.h>
 
 namespace art {
 

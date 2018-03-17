@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_IMAGE_INL_H_
 #define ART_RUNTIME_IMAGE_INL_H_
 
-#include "image.h"
+#include <museum/8.1.0/art/runtime/image.h>
 
-#include "art_method.h"
-#include "imt_conflict_table.h"
-#include "imtable.h"
-#include "read_barrier-inl.h"
+#include <museum/8.1.0/art/runtime/art_method.h>
+#include <museum/8.1.0/art/runtime/imt_conflict_table.h>
+#include <museum/8.1.0/art/runtime/imtable.h>
+#include <museum/8.1.0/art/runtime/read_barrier-inl.h>
 
 namespace art {
 

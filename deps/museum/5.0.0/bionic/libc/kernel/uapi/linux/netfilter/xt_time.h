@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_TIME_H
 #define _XT_TIME_H 1
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 struct xt_time_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u32 date_start;

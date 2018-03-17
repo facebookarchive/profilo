@@ -28,9 +28,9 @@
 #ifndef _SYS_UIO_H_
 #define _SYS_UIO_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/uio.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
+#include <museum/7.1.2/bionic/libc/linux/uio.h>
 
 __BEGIN_DECLS
 

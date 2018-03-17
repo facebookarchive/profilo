@@ -14,13 +14,13 @@
 /*
     ctgmath synopsis
 
-#include <ccomplex>
-#include <cmath>
+#include <museum/8.0.0/external/libcxx/ccomplex>
+#include <museum/8.0.0/external/libcxx/cmath>
 
 */
 
-#include <ccomplex>
-#include <cmath>
+#include <museum/8.0.0/external/libcxx/ccomplex>
+#include <museum/8.0.0/external/libcxx/cmath>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

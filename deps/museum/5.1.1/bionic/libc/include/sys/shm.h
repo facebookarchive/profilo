@@ -29,6 +29,6 @@
 #ifndef _SYS_SHM_H_
 #define _SYS_SHM_H_
 
-#include <linux/shm.h>
+#include <museum/5.1.1/bionic/libc/linux/shm.h>
 
 #endif /* _SYS_SHM_H_ */

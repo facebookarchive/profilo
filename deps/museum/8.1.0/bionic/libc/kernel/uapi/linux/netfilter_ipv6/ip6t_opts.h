@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6T_OPTS_H
 #define _IP6T_OPTS_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IP6T_OPTS_OPTSNR 16
 struct ip6t_opts {
   __u32 hdrlen;

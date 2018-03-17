@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_
 #define ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_
 
-#include "indirect_reference_table.h"
+#include <museum/7.1.2/art/runtime/indirect_reference_table.h>
 
-#include "gc_root-inl.h"
-#include "runtime-inl.h"
-#include "verify_object-inl.h"
+#include <museum/7.1.2/art/runtime/gc_root-inl.h>
+#include <museum/7.1.2/art/runtime/runtime-inl.h>
+#include <museum/7.1.2/art/runtime/verify_object-inl.h>
 
 namespace art {
 namespace mirror {

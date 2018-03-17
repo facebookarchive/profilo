@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_REFERENCE_INL_H_
 #define ART_RUNTIME_MIRROR_OBJECT_REFERENCE_INL_H_
 
-#include "object_reference.h"
+#include <museum/8.1.0/art/runtime/mirror/object_reference.h>
 
-#include "obj_ptr-inl.h"
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
 
 namespace art {
 namespace mirror {

@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_MEM_MAP_H_
 #define ART_RUNTIME_MEM_MAP_H_
 
-#include <stddef.h>
-#include <sys/types.h>
+#include <museum/8.1.0/external/libcxx/stddef.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
-#include <map>
-#include <mutex>
-#include <string>
+#include <museum/8.1.0/external/libcxx/map>
+#include <museum/8.1.0/external/libcxx/mutex>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "android-base/thread_annotations.h"
+#include <museum/8.1.0/android-base/thread_annotations.h>
 
 namespace art {
 

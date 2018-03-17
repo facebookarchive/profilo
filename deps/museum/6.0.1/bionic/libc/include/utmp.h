@@ -28,9 +28,9 @@
 #ifndef _UTMP_H_
 #define _UTMP_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <time.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
+#include <museum/6.0.1/bionic/libc/time.h>
 
 #define _PATH_UTMP      "/var/run/utmp"
 #define _PATH_WTMP      "/var/log/wtmp"

@@ -30,12 +30,12 @@
 #define _UNISTD_H_
 
 #include <stddef.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/select.h>
-#include <sys/sysconf.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/select.h>
+#include <museum/6.0.1/bionic/libc/sys/sysconf.h>
 
-#include <machine/posix_limits.h>
+#include <museum/6.0.1/bionic/libc/machine/posix_limits.h>
 
 __BEGIN_DECLS
 

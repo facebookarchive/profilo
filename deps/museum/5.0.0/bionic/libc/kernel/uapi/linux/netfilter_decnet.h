@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_DECNET_NETFILTER_H
 #define __LINUX_DECNET_NETFILTER_H
-#include <linux/netfilter.h>
-#include <limits.h>
+#include <museum/5.0.0/bionic/libc/linux/netfilter.h>
+#include <museum/5.0.0/bionic/libc/limits.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NFC_DN_SRC 0x0001
 #define NFC_DN_DST 0x0002

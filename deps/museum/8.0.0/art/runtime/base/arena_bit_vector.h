@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BASE_ARENA_BIT_VECTOR_H_
 #define ART_RUNTIME_BASE_ARENA_BIT_VECTOR_H_
 
-#include "base/arena_object.h"
-#include "base/bit_vector.h"
+#include <museum/8.0.0/art/runtime/base/arena_object.h>
+#include <museum/8.0.0/art/runtime/base/bit_vector.h>
 
 namespace art {
 

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_INL_H_
 #define ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_INL_H_
 
-#include "class_linker.h"
-#include "mirror/class-inl.h"
-#include "mirror/string.h"
-#include "mirror/throwable.h"
-#include "reg_type.h"
-#include "reg_type_cache.h"
+#include <museum/7.0.0/art/runtime/class_linker.h>
+#include <museum/7.0.0/art/runtime/mirror/class-inl.h>
+#include <museum/7.0.0/art/runtime/mirror/string.h>
+#include <museum/7.0.0/art/runtime/mirror/throwable.h>
+#include <museum/7.0.0/art/runtime/verifier/reg_type.h>
+#include <museum/7.0.0/art/runtime/verifier/reg_type_cache.h>
 
 namespace art {
 namespace verifier {

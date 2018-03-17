@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_BRIDGE_EBT_802_3_H
 #define _UAPI__LINUX_BRIDGE_EBT_802_3_H
-#include <linux/types.h>
-#include <linux/if_ether.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EBT_802_3_SAP 0x01
 #define EBT_802_3_TYPE 0x02

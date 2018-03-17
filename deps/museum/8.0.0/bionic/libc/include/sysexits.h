@@ -35,7 +35,7 @@
 #ifndef	_SYSEXITS_H_
 #define	_SYSEXITS_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 /*
  *  SYSEXITS.H -- Exit status codes for system programs.

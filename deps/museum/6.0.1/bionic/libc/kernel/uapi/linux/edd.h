@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_EDD_H
 #define _UAPI_LINUX_EDD_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define EDDNR 0x1e9
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EDDBUF 0xd00

@@ -29,11 +29,11 @@
 #ifndef _NETINET_TCP_H
 #define _NETINET_TCP_H
 
-#include <sys/cdefs.h>
-#include <stdint.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/stdint.h>
 
 #define tcphdr __kernel_tcphdr
-#include <linux/tcp.h>
+#include <museum/8.0.0/bionic/libc/linux/tcp.h>
 #undef tcphdr
 
 __BEGIN_DECLS

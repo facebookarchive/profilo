@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_COMMON_DEX_OPERATIONS_H_
 #define ART_RUNTIME_COMMON_DEX_OPERATIONS_H_
 
-#include "art_field.h"
-#include "art_method.h"
-#include "class_linker.h"
-#include "interpreter/unstarted_runtime.h"
-#include "runtime.h"
-#include "stack.h"
-#include "thread.h"
+#include <museum/8.0.0/art/runtime/art_field.h>
+#include <museum/8.0.0/art/runtime/art_method.h>
+#include <museum/8.0.0/art/runtime/class_linker.h>
+#include <museum/8.0.0/art/runtime/interpreter/unstarted_runtime.h>
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/art/runtime/stack.h>
+#include <museum/8.0.0/art/runtime/thread.h>
 
 namespace art {
 

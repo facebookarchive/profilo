@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_OSF_H
 #define _XT_OSF_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 #define MAXGENRELEN 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XT_OSF_GENRE (1<<0)

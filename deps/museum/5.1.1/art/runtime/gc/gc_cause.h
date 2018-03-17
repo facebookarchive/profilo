@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_GC_CAUSE_H_
 #define ART_RUNTIME_GC_GC_CAUSE_H_
 
-#include <ostream>
+#include <museum/5.1.1/external/libcxx/ostream>
 
 namespace art {
 namespace gc {

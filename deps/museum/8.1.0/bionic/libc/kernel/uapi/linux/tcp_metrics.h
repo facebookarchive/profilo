@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_TCP_METRICS_H
 #define _LINUX_TCP_METRICS_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define TCP_METRICS_GENL_NAME "tcp_metrics"
 #define TCP_METRICS_GENL_VERSION 0x1
 enum tcp_metric_index {

@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_NETLINK_H
 #define _UAPI__LINUX_NETLINK_H
-#include <linux/kernel.h>
-#include <linux/socket.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/kernel.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define NETLINK_ROUTE 0
 #define NETLINK_UNUSED 1
 #define NETLINK_USERSOCK 2

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_REISER_FS_H
 #define _LINUX_REISER_FS_H
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define REISERFS_IOC_UNPACK _IOW(0xCD,1,long)
 #define REISERFS_IOC_GETFLAGS FS_IOC_GETFLAGS

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_OFFSETS_H_
 #define ART_RUNTIME_OFFSETS_H_
 
-#include <ostream>
+#include <museum/7.1.2/external/libcxx/ostream>
 
-#include "globals.h"
+#include <museum/7.1.2/art/runtime/globals.h>
 
 namespace art {
 

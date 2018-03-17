@@ -14,17 +14,17 @@
 /*
     complex.h synopsis
 
-#include <ccomplex>
+#include <museum/7.1.2/external/libcxx/ccomplex>
 
 */
 
 #ifdef __cplusplus
 
-#include <ccomplex>
+#include <museum/7.1.2/external/libcxx/ccomplex>
 
 #else  // __cplusplus
 
-#include_next <complex.h>
+#include <museum/7.1.2/bionic/libm/complex.h>
 
 #endif  // __cplusplus
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_IOCTLS_H
 #define __ASM_GENERIC_IOCTLS_H
-#include <linux/ioctl.h>
+#include <museum/7.1.2/bionic/libc/linux/ioctl.h>
 #define TCGETS 0x5401
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TCSETS 0x5402

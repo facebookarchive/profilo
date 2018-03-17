@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SISFB_H_
 #define _UAPI_LINUX_SISFB_H_
-#include <linux/types.h>
-#include <asm/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/ioctl.h>
 #define CRT2_DEFAULT 0x00000001
 #define CRT2_LCD 0x00000002
 #define CRT2_TV 0x00000004

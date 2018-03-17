@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_INTERPRETER_INTERPRETER_MTERP_IMPL_H_
 #define ART_RUNTIME_INTERPRETER_INTERPRETER_MTERP_IMPL_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "dex_file.h"
-#include "jvalue.h"
-#include "obj_ptr.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/jvalue.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
 
 namespace art {
 

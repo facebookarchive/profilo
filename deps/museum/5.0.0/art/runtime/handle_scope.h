@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_HANDLE_SCOPE_H_
 #define ART_RUNTIME_HANDLE_SCOPE_H_
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "handle.h"
-#include "stack.h"
-#include "utils.h"
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/handle.h>
+#include <museum/5.0.0/art/runtime/stack.h>
+#include <museum/5.0.0/art/runtime/utils.h>
 
 namespace art {
 namespace mirror {

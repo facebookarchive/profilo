@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_ARCH_X86_64_QUICK_METHOD_FRAME_INFO_X86_64_H_
 #define ART_RUNTIME_ARCH_X86_64_QUICK_METHOD_FRAME_INFO_X86_64_H_
 
-#include "quick/quick_method_frame_info.h"
-#include "registers_x86_64.h"
-#include "runtime.h"  // for Runtime::CalleeSaveType.
+#include <museum/5.0.0/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/5.0.0/art/runtime/arch/x86_64/registers_x86_64.h>
+#include <museum/5.0.0/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
 namespace art {
 namespace x86_64 {

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_
 #define ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_
 
-#include "indirect_reference_table.h"
+#include <museum/5.0.0/art/runtime/indirect_reference_table.h>
 
-#include "verify_object-inl.h"
+#include <museum/5.0.0/art/runtime/verify_object-inl.h>
 
 namespace art {
 namespace mirror {

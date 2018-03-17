@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BARRIER_H_
 #define ART_RUNTIME_BARRIER_H_
 
-#include <memory>
-#include "base/mutex.h"
+#include <museum/5.0.0/external/libcxx/memory>
+#include <museum/5.0.0/art/runtime/base/mutex.h>
 
 namespace art {
 

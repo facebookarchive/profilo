@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_XT_HASHLIMIT_H
 #define _UAPI_XT_HASHLIMIT_H
-#include <linux/types.h>
-#include <linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
 #define XT_HASHLIMIT_SCALE 10000
 #define XT_HASHLIMIT_SCALE_v2 1000000llu
 #define XT_HASHLIMIT_BYTE_SHIFT 4

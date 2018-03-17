@@ -35,8 +35,8 @@
 #ifndef	_FTS_H_
 #define	_FTS_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
 
 typedef struct {
 	struct _ftsent *fts_cur;	/* current node */

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_STP_H
 #define __LINUX_BRIDGE_EBT_STP_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 #define EBT_STP_TYPE 0x0001
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EBT_STP_FLAGS 0x0002

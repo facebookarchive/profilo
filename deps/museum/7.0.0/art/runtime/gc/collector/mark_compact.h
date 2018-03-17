@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_MARK_COMPACT_H_
 #define ART_RUNTIME_GC_COLLECTOR_MARK_COMPACT_H_
 
-#include <deque>
-#include <memory>  // For unique_ptr.
+#include <museum/7.0.0/external/libcxx/deque>
+#include <museum/7.0.0/external/libcxx/memory>  // For unique_ptr.
 
-#include "atomic.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "garbage_collector.h"
-#include "gc_root.h"
-#include "gc/accounting/heap_bitmap.h"
-#include "immune_spaces.h"
-#include "lock_word.h"
-#include "object_callbacks.h"
-#include "offsets.h"
+#include <museum/7.0.0/art/runtime/atomic.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/gc/collector/garbage_collector.h>
+#include <museum/7.0.0/art/runtime/gc_root.h>
+#include <museum/7.0.0/art/runtime/gc/accounting/heap_bitmap.h>
+#include <museum/7.0.0/art/runtime/gc/collector/immune_spaces.h>
+#include <museum/7.0.0/art/runtime/lock_word.h>
+#include <museum/7.0.0/art/runtime/object_callbacks.h>
+#include <museum/7.0.0/art/runtime/offsets.h>
 
 namespace art {
 

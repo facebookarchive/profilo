@@ -50,9 +50,9 @@ wctrans_t wctrans(const char* property);
 
 */
 
-#include <__config>
-#include <cctype>
-#include <wctype.h>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/cctype>
+#include <museum/7.1.2/bionic/libc/wctype.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

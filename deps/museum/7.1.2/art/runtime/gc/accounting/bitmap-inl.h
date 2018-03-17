@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_BITMAP_INL_H_
 #define ART_RUNTIME_GC_ACCOUNTING_BITMAP_INL_H_
 
-#include "bitmap.h"
+#include <museum/7.1.2/art/runtime/gc/accounting/bitmap.h>
 
-#include <memory>
+#include <museum/7.1.2/external/libcxx/memory>
 
-#include "atomic.h"
-#include "base/bit_utils.h"
-#include "base/logging.h"
+#include <museum/7.1.2/art/runtime/atomic.h>
+#include <museum/7.1.2/art/runtime/base/bit_utils.h>
+#include <museum/7.1.2/art/runtime/base/logging.h>
 
 namespace art {
 namespace gc {

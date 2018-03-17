@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_BASE_HISTOGRAM_INL_H_
 #define ART_RUNTIME_BASE_HISTOGRAM_INL_H_
 
-#include "histogram.h"
+#include <museum/5.1.1/art/runtime/base/histogram.h>
 
-#include "utils.h"
+#include <museum/5.1.1/art/runtime/utils.h>
 
-#include <algorithm>
-#include <cmath>
-#include <limits>
-#include <ostream>
+#include <museum/5.1.1/external/libcxx/algorithm>
+#include <museum/5.1.1/external/libcxx/cmath>
+#include <museum/5.1.1/external/libcxx/limits>
+#include <museum/5.1.1/external/libcxx/ostream>
 
 namespace art {
 

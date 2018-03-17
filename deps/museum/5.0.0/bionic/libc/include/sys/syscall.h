@@ -28,12 +28,12 @@
 #ifndef _SYS_SYSCALL_H_
 #define _SYS_SYSCALL_H_
 
-#include <errno.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <asm/unistd.h>
+#include <museum/5.0.0/bionic/libc/errno.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/asm/unistd.h>
 
-#include <sys/glibc-syscalls.h> /* glibc-compatible SYS_* aliases for our __NR_* names. */
+#include <museum/5.0.0/bionic/libc/sys/glibc-syscalls.h> /* glibc-compatible SYS_* aliases for our __NR_* names. */
 
 __BEGIN_DECLS
 

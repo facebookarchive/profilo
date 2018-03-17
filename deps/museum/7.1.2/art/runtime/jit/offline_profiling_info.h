@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_JIT_OFFLINE_PROFILING_INFO_H_
 #define ART_RUNTIME_JIT_OFFLINE_PROFILING_INFO_H_
 
-#include <set>
-#include <vector>
+#include <museum/7.1.2/external/libcxx/set>
+#include <museum/7.1.2/external/libcxx/vector>
 
-#include "atomic.h"
-#include "dex_cache_resolved_classes.h"
-#include "dex_file.h"
-#include "method_reference.h"
-#include "safe_map.h"
+#include <museum/7.1.2/art/runtime/atomic.h>
+#include <museum/7.1.2/art/runtime/dex_cache_resolved_classes.h>
+#include <museum/7.1.2/art/runtime/dex_file.h>
+#include <museum/7.1.2/art/runtime/method_reference.h>
+#include <museum/7.1.2/art/runtime/safe_map.h>
 
 namespace art {
 

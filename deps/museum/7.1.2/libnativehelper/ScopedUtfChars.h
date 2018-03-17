@@ -17,8 +17,8 @@
 #ifndef SCOPED_UTF_CHARS_H_included
 #define SCOPED_UTF_CHARS_H_included
 
-#include "JNIHelp.h"
-#include <string.h>
+#include <museum/7.1.2/libnativehelper/JNIHelp.h>
+#include <museum/7.1.2/bionic/libc/string.h>
 
 // A smart pointer that provides read-only access to a Java string's UTF chars.
 // Unlike GetStringUTFChars, we throw NullPointerException rather than abort if

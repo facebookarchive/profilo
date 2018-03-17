@@ -30,7 +30,7 @@
 #ifndef _FENV_H_
 #define _FENV_H_
 
-#include <sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 #include <machine/fenv.h>
 
 __BEGIN_DECLS

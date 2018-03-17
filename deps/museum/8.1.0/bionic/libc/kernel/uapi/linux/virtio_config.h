@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VIRTIO_CONFIG_H
 #define _UAPI_LINUX_VIRTIO_CONFIG_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define VIRTIO_CONFIG_S_ACKNOWLEDGE 1
 #define VIRTIO_CONFIG_S_DRIVER 2
 #define VIRTIO_CONFIG_S_DRIVER_OK 4

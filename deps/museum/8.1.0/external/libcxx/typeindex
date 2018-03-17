@@ -45,9 +45,9 @@ struct hash<type_index>
 
 */
 
-#include <__config>
-#include <typeinfo>
-#include <__functional_base>
+#include <museum/8.1.0/external/libcxx/__config>
+#include <museum/8.1.0/external/libcxx/typeinfo>
+#include <museum/8.1.0/external/libcxx/__functional_base>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

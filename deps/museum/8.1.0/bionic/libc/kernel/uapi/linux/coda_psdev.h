@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__CODA_PSDEV_H
 #define _UAPI__CODA_PSDEV_H
-#include <linux/magic.h>
+#include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define CODA_PSDEV_MAJOR 67
 #define MAX_CODADEVS 5
 struct upc_req {

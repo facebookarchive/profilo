@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_SCSI_H
 #define _LINUX_VIRTIO_SCSI_H
-#include <linux/virtio_types.h>
+#include <museum/7.1.2/bionic/libc/linux/virtio_types.h>
 #define VIRTIO_SCSI_CDB_DEFAULT_SIZE 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define VIRTIO_SCSI_SENSE_DEFAULT_SIZE 96

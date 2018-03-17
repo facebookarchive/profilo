@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_I915_DRM_H_
 #define _UAPI_I915_DRM_H_
-#include <drm/drm.h>
+#include <museum/7.1.2/bionic/libc/drm/drm.h>
 #define I915_L3_PARITY_UEVENT "L3_PARITY_ERROR"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define I915_ERROR_UEVENT "ERROR"

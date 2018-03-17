@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_STACK_H_
 #define ART_RUNTIME_STACK_H_
 
-#include <stdint.h>
-#include <string>
+#include <museum/5.0.0/bionic/libc/stdint.h>
+#include <museum/5.0.0/external/libcxx/string>
 
-#include "dex_file.h"
-#include "instruction_set.h"
-#include "mirror/object_reference.h"
-#include "throw_location.h"
-#include "utils.h"
-#include "verify_object.h"
+#include <museum/5.0.0/art/runtime/dex_file.h>
+#include <museum/5.0.0/art/runtime/instruction_set.h>
+#include <museum/5.0.0/art/runtime/mirror/object_reference.h>
+#include <museum/5.0.0/art/runtime/throw_location.h>
+#include <museum/5.0.0/art/runtime/utils.h>
+#include <museum/5.0.0/art/runtime/verify_object.h>
 
 namespace art {
 

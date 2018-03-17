@@ -17,7 +17,7 @@
 #ifndef ASYNCHRONOUS_CLOSE_MONITOR_H_included
 #define ASYNCHRONOUS_CLOSE_MONITOR_H_included
 
-#include <pthread.h>
+#include <museum/8.0.0/bionic/libc/pthread.h>
 
 /**
  * AsynchronousCloseMonitor helps implement Java's asynchronous close semantics.

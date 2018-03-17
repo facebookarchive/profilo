@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BTRFS_H
 #define _UAPI_LINUX_BTRFS_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define BTRFS_IOCTL_MAGIC 0x94
 #define BTRFS_VOL_NAME_MAX 255
 #define BTRFS_LABEL_SIZE 256

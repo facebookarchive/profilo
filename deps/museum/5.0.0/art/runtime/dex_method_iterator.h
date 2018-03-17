@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_DEX_METHOD_ITERATOR_H_
 #define ART_RUNTIME_DEX_METHOD_ITERATOR_H_
 
-#include <vector>
+#include <museum/5.0.0/external/libcxx/vector>
 
-#include "dex_file.h"
+#include <museum/5.0.0/art/runtime/dex_file.h>
 
 namespace art {
 

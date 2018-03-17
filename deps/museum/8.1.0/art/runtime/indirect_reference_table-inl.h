@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_
 #define ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_
 
-#include "indirect_reference_table.h"
+#include <museum/8.1.0/art/runtime/indirect_reference_table.h>
 
-#include "android-base/stringprintf.h"
+#include <museum/8.1.0/android-base/stringprintf.h>
 
-#include "base/dumpable.h"
-#include "gc_root-inl.h"
-#include "obj_ptr-inl.h"
-#include "verify_object.h"
+#include <museum/8.1.0/art/runtime/base/dumpable.h>
+#include <museum/8.1.0/art/runtime/gc_root-inl.h>
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.1.0/art/runtime/verify_object.h>
 
 namespace art {
 namespace mirror {

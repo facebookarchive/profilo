@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_NETFILTER_H
 #define _UAPI__LINUX_NETFILTER_H
-#include <linux/types.h>
-#include <linux/compiler.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/sysctl.h>
-#include <linux/in.h>
-#include <linux/in6.h>
+#include <museum/7.0.0/bionic/libc/linux/sysctl.h>
+#include <museum/7.0.0/bionic/libc/linux/in.h>
+#include <museum/7.0.0/bionic/libc/linux/in6.h>
 #define NF_DROP 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NF_ACCEPT 1

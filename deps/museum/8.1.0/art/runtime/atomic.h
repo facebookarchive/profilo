@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_ATOMIC_H_
 #define ART_RUNTIME_ATOMIC_H_
 
-#include <stdint.h>
-#include <atomic>
-#include <limits>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/atomic>
+#include <museum/8.1.0/external/libcxx/limits>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "arch/instruction_set.h"
-#include "base/logging.h"
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
 namespace art {
 

@@ -29,6 +29,6 @@ typedef long long __kernel_si_clock_t __attribute__((aligned(4)));
 #define __ARCH_SI_PREAMBLE_SIZE (4 * sizeof(int))
 #endif
 #endif
-#include <asm-generic/siginfo.h>
+#include <museum/6.0.1/bionic/libc/asm-generic/siginfo.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

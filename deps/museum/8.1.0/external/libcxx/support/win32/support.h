@@ -14,8 +14,8 @@
 // Functions and constants used in libc++ that
 // are missing from the Windows C library.
 
-#include <wchar.h> // mbstate_t
-#include <cstdarg> // va_ macros
+#include <museum/8.1.0/external/libcxx/wchar.h> // mbstate_t
+#include <museum/8.1.0/external/libcxx/cstdarg> // va_ macros
 // "builtins" not implemented here for Clang or GCC as they provide
 // implementations. Assuming required for elsewhere else, certainly MSVC.
 #if defined(_LIBCPP_COMPILER_MSVC)

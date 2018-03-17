@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BASE_STRLCPY_H_
 #define ART_RUNTIME_BASE_STRLCPY_H_
 
-#include <cstdio>
-#include <cstring>
+#include <museum/8.1.0/external/libcxx/cstdio>
+#include <museum/8.1.0/external/libcxx/cstring>
 
 // Expose a simple implementation of strlcpy when we're not compiling against bionic. This is to
 // make static analyzers happy not using strcpy.

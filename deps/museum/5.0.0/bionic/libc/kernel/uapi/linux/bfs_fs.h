@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_BFS_FS_H
 #define _LINUX_BFS_FS_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 #define BFS_BSIZE_BITS 9
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define BFS_BSIZE (1<<BFS_BSIZE_BITS)

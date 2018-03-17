@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_REFERENCE_PROCESSOR_INL_H_
 #define ART_RUNTIME_GC_REFERENCE_PROCESSOR_INL_H_
 
-#include "reference_processor.h"
+#include <museum/8.1.0/art/runtime/gc/reference_processor.h>
 
-#include "mirror/reference-inl.h"
+#include <museum/8.1.0/art/runtime/mirror/reference-inl.h>
 
 namespace art {
 namespace gc {

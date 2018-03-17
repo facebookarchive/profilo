@@ -29,9 +29,9 @@
 #ifndef _SYS_VFS_H_
 #define _SYS_VFS_H_
 
-#include <stdint.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/stdint.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 
@@ -116,7 +116,7 @@ struct statfs64 { __STATFS64_BODY };
 #define _STATFS_F_FLAGS
 
 /* Pull in the kernel magic numbers. */
-#include <linux/magic.h>
+#include <museum/8.1.0/bionic/libc/linux/magic.h>
 /* Add in ones that we had historically that aren't in the uapi header. */
 #define BEFS_SUPER_MAGIC      0x42465331
 #define BFS_MAGIC             0x1BADFACE

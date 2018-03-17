@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_RUNTIME_CALLBACKS_H_
 #define ART_RUNTIME_RUNTIME_CALLBACKS_H_
 
-#include <vector>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "dex_file.h"
-#include "handle.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/dex_file.h>
+#include <museum/8.1.0/art/runtime/handle.h>
 
 namespace art {
 

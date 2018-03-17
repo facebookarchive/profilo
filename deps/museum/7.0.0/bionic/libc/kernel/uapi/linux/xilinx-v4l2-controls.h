@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __UAPI_XILINX_V4L2_CONTROLS_H__
 #define __UAPI_XILINX_V4L2_CONTROLS_H__
-#include <linux/v4l2-controls.h>
+#include <museum/7.0.0/bionic/libc/linux/v4l2-controls.h>
 #define V4L2_CID_XILINX_OFFSET 0xc000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define V4L2_CID_XILINX_BASE (V4L2_CID_USER_BASE + V4L2_CID_XILINX_OFFSET)

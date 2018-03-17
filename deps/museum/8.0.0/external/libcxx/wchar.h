@@ -14,7 +14,7 @@
 #pragma GCC system_header
 #endif
 
-#include_next <wchar.h>
+#include <museum/8.0.0/bionic/libc/wchar.h>
 
 #elif !defined(_LIBCPP_WCHAR_H)
 #define _LIBCPP_WCHAR_H
@@ -106,7 +106,7 @@ size_t wcsrtombs(char* restrict dst, const wchar_t** restrict src, size_t len,
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -116,7 +116,7 @@ size_t wcsrtombs(char* restrict dst, const wchar_t** restrict src, size_t len,
 #define __CORRECT_ISO_CPP_WCHAR_H_PROTO
 #endif
 
-#include_next <wchar.h>
+#include <museum/8.0.0/bionic/libc/wchar.h>
 
 // Determine whether we have const-correct overloads for wcschr and friends.
 #if defined(_WCHAR_H_CPLUSPLUS_98_CONFORMANCE_)
@@ -168,7 +168,7 @@ inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_PREFERRED_OVERLOAD
 
 #if defined(__cplusplus) && (defined(_LIBCPP_MSVCRT) || defined(__MINGW32__))
 extern "C++" {
-#include <support/win32/support.h> // pull in *swprintf defines
+#include <museum/8.0.0/external/libcxx/support/win32/support.h> // pull in *swprintf defines
 }  // extern "C++"
 #endif  // __cplusplus && _LIBCPP_MSVCRT
 

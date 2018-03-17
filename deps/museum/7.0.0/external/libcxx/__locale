@@ -11,32 +11,32 @@
 #ifndef _LIBCPP___LOCALE
 #define _LIBCPP___LOCALE
 
-#include <__config>
-#include <string>
-#include <memory>
-#include <utility>
-#include <mutex>
-#include <cstdint>
-#include <cctype>
-#include <locale.h>
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/utility>
+#include <museum/7.0.0/external/libcxx/mutex>
+#include <museum/7.0.0/external/libcxx/cstdint>
+#include <museum/7.0.0/external/libcxx/cctype>
+#include <museum/7.0.0/bionic/libc/locale.h>
 #if defined(_LIBCPP_MSVCRT) || defined(__MINGW32__)
-# include <support/win32/locale_win32.h>
+# include <museum/7.0.0/external/libcxx/support/win32/locale_win32.h>
 #elif defined(_AIX)
-# include <support/ibm/xlocale.h>
+# include <museum/7.0.0/external/libcxx/support/ibm/xlocale.h>
 #elif defined(__ANDROID__)
 // Android gained the locale aware functions in L (API level 21)
-# include <android/api-level.h>
+# include <museum/7.0.0/bionic/libc/android/api-level.h>
 # if __ANDROID_API__ <= 20
-#  include <support/android/locale_bionic.h>
+#  include <museum/7.0.0/external/libcxx/support/android/locale_bionic.h>
 # endif
 #elif defined(__sun__)
-# include <xlocale.h>
-# include <support/solaris/xlocale.h>
+# include <museum/7.0.0/bionic/libc/xlocale.h>
+# include <museum/7.0.0/external/libcxx/support/solaris/xlocale.h>
 #elif defined(_NEWLIB_VERSION)
-# include <support/newlib/xlocale.h>
+# include <museum/7.0.0/external/libcxx/support/newlib/xlocale.h>
 #elif (defined(__GLIBC__) || defined(__APPLE__)      || defined(__FreeBSD__) \
     || defined(__EMSCRIPTEN__) || defined(__IBMCPP__))
-# include <xlocale.h>
+# include <museum/7.0.0/bionic/libc/xlocale.h>
 #endif // __GLIBC__ || __APPLE__ || __FreeBSD__ || __sun__ || __EMSCRIPTEN__ || __IBMCPP__
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)

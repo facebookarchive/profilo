@@ -29,8 +29,8 @@
 #ifndef _STDIO_EXT_H
 #define _STDIO_EXT_H
 
-#include <sys/cdefs.h>
-#include <stdio.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/stdio.h>
 
 #define FSETLOCKING_QUERY 0
 #define FSETLOCKING_INTERNAL 1

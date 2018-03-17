@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_COMMON_THROWS_H_
 #define ART_RUNTIME_COMMON_THROWS_H_
 
-#include "base/mutex.h"
-#include "invoke_type.h"
+#include <museum/5.1.1/art/runtime/base/mutex.h>
+#include <museum/5.1.1/art/runtime/invoke_type.h>
 
 namespace art {
 namespace mirror {

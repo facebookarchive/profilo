@@ -17,33 +17,33 @@
 #ifndef ART_RUNTIME_ART_METHOD_INL_H_
 #define ART_RUNTIME_ART_METHOD_INL_H_
 
-#include "art_method.h"
+#include <museum/8.1.0/art/runtime/art_method.h>
 
-#include "art_field.h"
-#include "base/callee_save_type.h"
-#include "base/logging.h"
-#include "class_linker-inl.h"
-#include "common_throws.h"
-#include "dex_file.h"
-#include "dex_file_annotations.h"
-#include "dex_file-inl.h"
-#include "gc_root-inl.h"
-#include "invoke_type.h"
-#include "jit/profiling_info.h"
-#include "mirror/class-inl.h"
-#include "mirror/dex_cache-inl.h"
-#include "mirror/object-inl.h"
-#include "mirror/object_array.h"
-#include "mirror/string.h"
-#include "oat.h"
-#include "obj_ptr-inl.h"
-#include "primitive.h"
-#include "quick/quick_method_frame_info.h"
-#include "read_barrier-inl.h"
-#include "runtime-inl.h"
-#include "scoped_thread_state_change-inl.h"
-#include "thread-current-inl.h"
-#include "utils.h"
+#include <museum/8.1.0/art/runtime/art_field.h>
+#include <museum/8.1.0/art/runtime/base/callee_save_type.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/class_linker-inl.h>
+#include <museum/8.1.0/art/runtime/common_throws.h>
+#include <museum/8.1.0/art/runtime/dex_file.h>
+#include <museum/8.1.0/art/runtime/dex_file_annotations.h>
+#include <museum/8.1.0/art/runtime/dex_file-inl.h>
+#include <museum/8.1.0/art/runtime/gc_root-inl.h>
+#include <museum/8.1.0/art/runtime/invoke_type.h>
+#include <museum/8.1.0/art/runtime/jit/profiling_info.h>
+#include <museum/8.1.0/art/runtime/mirror/class-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/dex_cache-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/object-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/object_array.h>
+#include <museum/8.1.0/art/runtime/mirror/string.h>
+#include <museum/8.1.0/art/runtime/oat.h>
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.1.0/art/runtime/primitive.h>
+#include <museum/8.1.0/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/8.1.0/art/runtime/read_barrier-inl.h>
+#include <museum/8.1.0/art/runtime/runtime-inl.h>
+#include <museum/8.1.0/art/runtime/scoped_thread_state_change-inl.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
+#include <museum/8.1.0/art/runtime/utils.h>
 
 namespace art {
 

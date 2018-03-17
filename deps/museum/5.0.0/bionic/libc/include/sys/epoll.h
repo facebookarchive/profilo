@@ -29,10 +29,10 @@
 #ifndef _SYS_EPOLL_H_
 #define _SYS_EPOLL_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <fcntl.h> /* For O_CLOEXEC. */
-#include <signal.h> /* For sigset_t. */
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/fcntl.h> /* For O_CLOEXEC. */
+#include <museum/5.0.0/bionic/libc/signal.h> /* For sigset_t. */
 
 __BEGIN_DECLS
 

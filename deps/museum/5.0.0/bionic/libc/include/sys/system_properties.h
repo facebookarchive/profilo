@@ -29,7 +29,7 @@
 #ifndef _INCLUDE_SYS_SYSTEM_PROPERTIES_H
 #define _INCLUDE_SYS_SYSTEM_PROPERTIES_H
 
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

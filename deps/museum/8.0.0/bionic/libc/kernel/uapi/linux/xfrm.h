@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_XFRM_H
 #define _LINUX_XFRM_H
-#include <linux/in6.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef union {
   __be32 a4;

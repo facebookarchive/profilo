@@ -16,10 +16,10 @@
 #ifndef ART_RUNTIME_BASE_HISTOGRAM_H_
 #define ART_RUNTIME_BASE_HISTOGRAM_H_
 
-#include <vector>
-#include <string>
+#include <museum/6.0.1/external/libcxx/vector>
+#include <museum/6.0.1/external/libcxx/string>
 
-#include "base/logging.h"
+#include <museum/6.0.1/art/runtime/base/logging.h>
 
 namespace art {
 

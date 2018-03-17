@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__UINPUT_H_
 #define _UAPI__UINPUT_H_
-#include <linux/types.h>
-#include <linux/input.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/input.h>
 #define UINPUT_VERSION 5
 #define UINPUT_MAX_NAME_SIZE 80
 struct uinput_ff_upload {

@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_GC_REFERENCE_QUEUE_H_
 #define ART_RUNTIME_GC_REFERENCE_QUEUE_H_
 
-#include <iosfwd>
-#include <string>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/iosfwd>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "atomic.h"
-#include "base/mutex.h"
-#include "base/timing_logger.h"
-#include "globals.h"
-#include "jni.h"
-#include "obj_ptr.h"
-#include "object_callbacks.h"
-#include "offsets.h"
-#include "thread_pool.h"
+#include <museum/8.0.0/art/runtime/atomic.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/base/timing_logger.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
+#include <museum/8.0.0/art/runtime/offsets.h>
+#include <museum/8.0.0/art/runtime/thread_pool.h>
 
 namespace art {
 namespace mirror {

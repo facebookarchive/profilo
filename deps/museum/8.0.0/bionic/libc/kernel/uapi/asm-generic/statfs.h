@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_GENERIC_STATFS_H
 #define _UAPI_GENERIC_STATFS_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #ifndef __statfs_word
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #if __BITS_PER_LONG == 64

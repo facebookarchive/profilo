@@ -17,8 +17,8 @@
 #ifndef ANDROID_BASE_MACROS_H
 #define ANDROID_BASE_MACROS_H
 
-#include <stddef.h>  // for size_t
-#include <unistd.h>  // for TEMP_FAILURE_RETRY
+#include <museum/8.1.0/external/libcxx/stddef.h>  // for size_t
+#include <museum/8.1.0/bionic/libc/unistd.h>  // for TEMP_FAILURE_RETRY
 
 // bionic and glibc both have TEMP_FAILURE_RETRY, but eg Mac OS' libc doesn't.
 #ifndef TEMP_FAILURE_RETRY

@@ -39,9 +39,9 @@
 #ifndef _STRINGS_H_
 #define _STRINGS_H_
 
-#include <sys/types.h>
-#include <sys/cdefs.h>
-#include <xlocale.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/xlocale.h>
 
 __BEGIN_DECLS
 #if defined(__BIONIC_FORTIFY)

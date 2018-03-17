@@ -24,6 +24,6 @@
 #else
 #define __BITS_PER_LONG 32
 #endif
-#include <asm-generic/bitsperlong.h>
+#include <museum/5.0.0/bionic/libc/asm-generic/bitsperlong.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

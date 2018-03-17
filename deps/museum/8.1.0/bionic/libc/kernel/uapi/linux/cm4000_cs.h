@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_CM4000_H_
 #define _UAPI_CM4000_H_
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define MAX_ATR 33
 #define CM4000_MAX_DEV 4
 typedef struct atreq {

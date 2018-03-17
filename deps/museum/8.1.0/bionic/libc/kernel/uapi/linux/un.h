@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_UN_H
 #define _LINUX_UN_H
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define UNIX_PATH_MAX 108
 struct sockaddr_un {
   __kernel_sa_family_t sun_family;

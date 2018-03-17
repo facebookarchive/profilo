@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_MIRROR_METHOD_HANDLE_IMPL_INL_H_
 #define ART_RUNTIME_MIRROR_METHOD_HANDLE_IMPL_INL_H_
 
-#include "method_handle_impl.h"
+#include <museum/8.0.0/art/runtime/mirror/method_handle_impl.h>
 
-#include "art_method-inl.h"
-#include "object-inl.h"
+#include <museum/8.0.0/art/runtime/art_method-inl.h>
+#include <museum/8.0.0/art/runtime/mirror/object-inl.h>
 
 namespace art {
 namespace mirror {

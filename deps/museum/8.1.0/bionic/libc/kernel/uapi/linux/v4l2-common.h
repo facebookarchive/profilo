@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __V4L2_COMMON__
 #define __V4L2_COMMON__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define V4L2_SEL_TGT_CROP 0x0000
 #define V4L2_SEL_TGT_CROP_DEFAULT 0x0001
 #define V4L2_SEL_TGT_CROP_BOUNDS 0x0002

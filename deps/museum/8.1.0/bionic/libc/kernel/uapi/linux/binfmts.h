@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BINFMTS_H
 #define _UAPI_LINUX_BINFMTS_H
-#include <linux/capability.h>
+#include <museum/8.1.0/bionic/libc/linux/capability.h>
 struct pt_regs;
 #define MAX_ARG_STRLEN (PAGE_SIZE * 32)
 #define MAX_ARG_STRINGS 0x7FFFFFFF

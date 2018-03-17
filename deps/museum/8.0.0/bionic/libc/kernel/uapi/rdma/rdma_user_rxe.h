@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef RDMA_USER_RXE_H
 #define RDMA_USER_RXE_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 union rxe_gid {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u8 raw[16];

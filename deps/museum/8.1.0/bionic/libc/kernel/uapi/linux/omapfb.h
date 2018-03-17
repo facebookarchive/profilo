@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_OMAPFB_H__
 #define _UAPI__LINUX_OMAPFB_H__
-#include <linux/fb.h>
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/fb.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define OMAP_IOW(num,dtype) _IOW('O', num, dtype)
 #define OMAP_IOR(num,dtype) _IOR('O', num, dtype)
 #define OMAP_IOWR(num,dtype) _IOWR('O', num, dtype)

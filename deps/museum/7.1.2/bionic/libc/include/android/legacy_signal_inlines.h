@@ -29,8 +29,8 @@
 #ifndef _ANDROID_LEGACY_SIGNAL_INLINES_H_
 #define _ANDROID_LEGACY_SIGNAL_INLINES_H_
 
-#include <string.h>
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/string.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

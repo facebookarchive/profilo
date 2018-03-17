@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_AUXVEC_H
 #define _UAPI_LINUX_AUXVEC_H
-#include <asm/auxvec.h>
+#include <museum/8.1.0/bionic/libc/asm/auxvec.h>
 #define AT_NULL 0
 #define AT_IGNORE 1
 #define AT_EXECFD 2

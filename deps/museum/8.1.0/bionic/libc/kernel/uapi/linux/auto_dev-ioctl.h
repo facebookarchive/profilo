@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_AUTO_DEV_IOCTL_H
 #define _UAPI_LINUX_AUTO_DEV_IOCTL_H
-#include <linux/auto_fs.h>
-#include <linux/string.h>
+#include <museum/8.1.0/bionic/libc/linux/auto_fs.h>
+#include <museum/8.1.0/bionic/libc/linux/string.h>
 #define AUTOFS_DEVICE_NAME "autofs"
 #define AUTOFS_DEV_IOCTL_VERSION_MAJOR 1
 #define AUTOFS_DEV_IOCTL_VERSION_MINOR 0

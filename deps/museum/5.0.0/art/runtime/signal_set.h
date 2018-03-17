@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_SIGNAL_SET_H_
 #define ART_RUNTIME_SIGNAL_SET_H_
 
-#include <signal.h>
+#include <museum/5.0.0/bionic/libc/signal.h>
 
-#include "base/logging.h"
+#include <museum/5.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

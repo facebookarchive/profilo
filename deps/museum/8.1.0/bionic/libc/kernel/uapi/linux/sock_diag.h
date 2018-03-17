@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__SOCK_DIAG_H__
 #define _UAPI__SOCK_DIAG_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SOCK_DIAG_BY_FAMILY 20
 #define SOCK_DESTROY 21
 struct sock_diag_req {

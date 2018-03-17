@@ -29,10 +29,10 @@
 #ifndef _SYS_TIMERFD_H_
 #define _SYS_TIMERFD_H_
 
-#include <fcntl.h> /* For O_CLOEXEC and O_NONBLOCK. */
-#include <time.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/fcntl.h> /* For O_CLOEXEC and O_NONBLOCK. */
+#include <museum/8.1.0/bionic/libc/time.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

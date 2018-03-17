@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef SCIF_IOCTL_H
 #define SCIF_IOCTL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct scif_port_id {
   __u16 node;
   __u16 port;

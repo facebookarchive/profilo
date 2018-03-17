@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_H_
 #define ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_H_
 
-#include "jni.h"
+#include <museum/8.0.0/libnativehelper/jni.h>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "base/value_object.h"
-#include "thread_state.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/base/value_object.h>
+#include <museum/8.0.0/art/runtime/thread_state.h>
 
 namespace art {
 

@@ -64,11 +64,11 @@
 #ifndef _NETINET_IP6_H_
 #define _NETINET_IP6_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <endian.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
+#include <museum/8.0.0/bionic/libc/endian.h>
 
-#include <linux/in6.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
 
 /*
  * Definition for internet protocol version 6.

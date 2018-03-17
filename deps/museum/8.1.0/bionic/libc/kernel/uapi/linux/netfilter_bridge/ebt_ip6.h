@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_IP6_H
 #define __LINUX_BRIDGE_EBT_IP6_H
-#include <linux/types.h>
-#include <linux/in6.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/in6.h>
 #define EBT_IP6_SOURCE 0x01
 #define EBT_IP6_DEST 0x02
 #define EBT_IP6_TCLASS 0x04

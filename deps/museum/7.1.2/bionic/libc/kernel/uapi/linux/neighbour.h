@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_NEIGHBOUR_H
 #define __LINUX_NEIGHBOUR_H
-#include <linux/types.h>
-#include <linux/netlink.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct ndmsg {
   __u8 ndm_family;

@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_VALUE_OBJECT_H_
 #define ART_RUNTIME_BASE_VALUE_OBJECT_H_
 
-#include "base/macros.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
 
 namespace art {
 

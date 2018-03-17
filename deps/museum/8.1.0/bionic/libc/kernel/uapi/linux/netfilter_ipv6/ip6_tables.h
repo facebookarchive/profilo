@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_IP6_TABLES_H
 #define _UAPI_IP6_TABLES_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
-#include <linux/if.h>
-#include <linux/netfilter_ipv6.h>
-#include <linux/netfilter/x_tables.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter_ipv6.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter/x_tables.h>
 #define IP6T_FUNCTION_MAXNAMELEN XT_FUNCTION_MAXNAMELEN
 #define IP6T_TABLE_MAXNAMELEN XT_TABLE_MAXNAMELEN
 #define ip6t_match xt_match
@@ -36,7 +36,7 @@
 #define ip6t_counters xt_counters
 #define IP6T_CONTINUE XT_CONTINUE
 #define IP6T_RETURN XT_RETURN
-#include <linux/netfilter/xt_tcpudp.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter/xt_tcpudp.h>
 #define ip6t_tcp xt_tcp
 #define ip6t_udp xt_udp
 #define IP6T_TCP_INV_SRCPT XT_TCP_INV_SRCPT

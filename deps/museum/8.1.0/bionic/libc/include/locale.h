@@ -29,8 +29,8 @@
 #ifndef _LOCALE_H_
 #define _LOCALE_H_
 
-#include <sys/cdefs.h>
-#include <xlocale.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/xlocale.h>
 
 #define __need_NULL
 #include <stddef.h>

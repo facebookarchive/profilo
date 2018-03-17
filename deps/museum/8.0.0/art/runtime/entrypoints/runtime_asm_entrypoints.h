@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_RUNTIME_ASM_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_RUNTIME_ASM_ENTRYPOINTS_H_
 
-#include "deoptimization_kind.h"
+#include <museum/8.0.0/art/runtime/deoptimization_kind.h>
 
 namespace art {
 

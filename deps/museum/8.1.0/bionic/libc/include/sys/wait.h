@@ -28,11 +28,11 @@
 #ifndef _SYS_WAIT_H_
 #define _SYS_WAIT_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/resource.h>
-#include <linux/wait.h>
-#include <signal.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/resource.h>
+#include <museum/8.1.0/bionic/libc/linux/wait.h>
+#include <museum/8.1.0/bionic/libc/signal.h>
 
 __BEGIN_DECLS
 
@@ -67,6 +67,6 @@ int waitid(idtype_t which, id_t id, siginfo_t* info, int options);
 
 __END_DECLS
 
-#include <android/legacy_sys_wait_inlines.h>
+#include <museum/8.1.0/bionic/libc/android/legacy_sys_wait_inlines.h>
 
 #endif /* _SYS_WAIT_H_ */

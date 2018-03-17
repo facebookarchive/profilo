@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __VSP1_USER_H__
 #define __VSP1_USER_H__
-#include <linux/types.h>
-#include <linux/videodev2.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/videodev2.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define VIDIOC_VSP1_LUT_CONFIG _IOWR('V', BASE_VIDIOC_PRIVATE + 1, struct vsp1_lut_config)
 struct vsp1_lut_config {

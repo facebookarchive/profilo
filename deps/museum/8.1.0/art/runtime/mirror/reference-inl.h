@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_MIRROR_REFERENCE_INL_H_
 #define ART_RUNTIME_MIRROR_REFERENCE_INL_H_
 
-#include "reference.h"
+#include <museum/8.1.0/art/runtime/mirror/reference.h>
 
-#include "gc_root-inl.h"
-#include "obj_ptr-inl.h"
-#include "runtime.h"
+#include <museum/8.1.0/art/runtime/gc_root-inl.h>
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.1.0/art/runtime/runtime.h>
 
 namespace art {
 namespace mirror {

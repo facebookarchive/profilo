@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_IDLETIMER_H
 #define _XT_IDLETIMER_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 #define MAX_IDLETIMER_LABEL_SIZE 28
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct idletimer_tg_info {

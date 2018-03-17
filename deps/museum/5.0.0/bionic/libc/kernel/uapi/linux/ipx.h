@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _IPX_H_
 #define _IPX_H_
-#include <linux/types.h>
-#include <linux/sockios.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/sockios.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/socket.h>
+#include <museum/5.0.0/bionic/libc/linux/socket.h>
 #define IPX_NODE_LEN 6
 #define IPX_MTU 576
 struct sockaddr_ipx {

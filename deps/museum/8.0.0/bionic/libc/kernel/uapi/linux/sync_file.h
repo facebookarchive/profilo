@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SYNC_H
 #define _UAPI_LINUX_SYNC_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct sync_merge_data {
   char name[32];

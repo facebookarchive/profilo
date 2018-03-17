@@ -38,8 +38,8 @@
 #ifndef	_STDIO_H_
 #define	_STDIO_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -47,10 +47,10 @@
 #define __need_NULL
 #include <stddef.h>
 
-#include <bits/seek_constants.h>
+#include <museum/8.1.0/bionic/libc/bits/seek_constants.h>
 
 #if __ANDROID_API__ < __ANDROID_API_N__
-#include <bits/struct_file.h>
+#include <museum/8.1.0/bionic/libc/bits/struct_file.h>
 #endif
 
 __BEGIN_DECLS

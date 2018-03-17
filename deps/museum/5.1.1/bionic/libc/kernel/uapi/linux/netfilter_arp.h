@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_ARP_NETFILTER_H
 #define __LINUX_ARP_NETFILTER_H
-#include <linux/netfilter.h>
+#include <museum/5.1.1/bionic/libc/linux/netfilter.h>
 #define NF_ARP 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NF_ARP_IN 0

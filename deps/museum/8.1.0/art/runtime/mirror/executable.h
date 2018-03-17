@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_MIRROR_EXECUTABLE_H_
 #define ART_RUNTIME_MIRROR_EXECUTABLE_H_
 
-#include "accessible_object.h"
-#include "gc_root.h"
-#include "object.h"
-#include "read_barrier_option.h"
+#include <museum/8.1.0/art/runtime/mirror/accessible_object.h>
+#include <museum/8.1.0/art/runtime/gc_root.h>
+#include <museum/8.1.0/art/runtime/mirror/object.h>
+#include <museum/8.1.0/art/runtime/read_barrier_option.h>
 
 namespace art {
 

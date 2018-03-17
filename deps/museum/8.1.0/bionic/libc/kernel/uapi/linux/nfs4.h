@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NFS4_H
 #define _UAPI_LINUX_NFS4_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define NFS4_BITMAP_SIZE 3
 #define NFS4_VERIFIER_SIZE 8
 #define NFS4_STATEID_SEQID_SIZE 4

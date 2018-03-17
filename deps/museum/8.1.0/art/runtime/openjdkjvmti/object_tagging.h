@@ -32,13 +32,13 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_OBJECT_TAGGING_H_
 #define ART_RUNTIME_OPENJDKJVMTI_OBJECT_TAGGING_H_
 
-#include <unordered_map>
+#include <museum/8.1.0/external/libcxx/unordered_map>
 
-#include "base/mutex.h"
-#include "globals.h"
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/globals.h>
 #include "jvmti.h"
-#include "jvmti_weak_table.h"
-#include "mirror/object.h"
+#include <museum/8.1.0/art/runtime/openjdkjvmti/jvmti_weak_table.h>
+#include <museum/8.1.0/art/runtime/mirror/object.h>
 
 namespace openjdkjvmti {
 

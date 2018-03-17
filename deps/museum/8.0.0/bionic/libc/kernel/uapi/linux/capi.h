@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef __LINUX_CAPI_H__
 #define __LINUX_CAPI_H__
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/kernelcapi.h>
+#include <museum/8.0.0/bionic/libc/linux/kernelcapi.h>
 typedef struct capi_register_params {
   __u32 level3cnt;
   __u32 datablkcnt;

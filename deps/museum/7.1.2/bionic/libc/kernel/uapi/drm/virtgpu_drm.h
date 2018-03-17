@@ -19,7 +19,7 @@
 #ifndef VIRTGPU_DRM_H
 #define VIRTGPU_DRM_H
 #include <stddef.h>
-#include "drm/drm.h"
+#include <museum/7.1.2/bionic/libc/drm/drm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DRM_VIRTGPU_MAP 0x01
 #define DRM_VIRTGPU_EXECBUFFER 0x02

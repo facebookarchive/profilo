@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_PTRACE_H
 #define _UAPI_ASM_X86_PTRACE_H
-#include <linux/compiler.h>
-#include <asm/ptrace-abi.h>
+#include <museum/5.0.0/bionic/libc/linux/compiler.h>
+#include <museum/5.0.0/bionic/libc/asm/ptrace-abi.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <asm/processor-flags.h>
+#include <museum/5.0.0/bionic/libc/asm/processor-flags.h>
 #ifndef __ASSEMBLY__
 #ifdef __i386__
 struct pt_regs {

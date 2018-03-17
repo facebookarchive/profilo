@@ -55,8 +55,8 @@
 
 #define BIND_4_COMPAT
 
-#include <sys/types.h>
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 /*
  * Revision information.  This is the release date in YYYYMMDD format.
@@ -624,7 +624,7 @@ int ns_samename(const char*, const char*) __INTRODUCED_IN_64(23);
 __END_DECLS
 
 #ifdef BIND_4_COMPAT
-#include <arpa/nameser_compat.h>
+#include <museum/8.1.0/bionic/libc/arpa/nameser_compat.h>
 #endif
 
 #endif /* !_ARPA_NAMESER_H_ */

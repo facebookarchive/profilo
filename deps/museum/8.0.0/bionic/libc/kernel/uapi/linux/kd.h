@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KD_H
 #define _UAPI_LINUX_KD_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define GIO_FONT 0x4B60

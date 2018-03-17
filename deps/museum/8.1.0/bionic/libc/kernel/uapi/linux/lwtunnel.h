@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LWTUNNEL_H_
 #define _UAPI_LWTUNNEL_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum lwtunnel_encap_types {
   LWTUNNEL_ENCAP_NONE,
   LWTUNNEL_ENCAP_MPLS,

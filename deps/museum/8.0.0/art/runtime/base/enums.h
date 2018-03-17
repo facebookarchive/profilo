@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BASE_ENUMS_H_
 #define ART_RUNTIME_BASE_ENUMS_H_
 
-#include <cstddef>
-#include <ostream>
+#include <museum/8.0.0/external/libcxx/cstddef>
+#include <museum/8.0.0/external/libcxx/ostream>
 
 namespace art {
 

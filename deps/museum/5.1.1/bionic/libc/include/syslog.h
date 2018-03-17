@@ -29,8 +29,8 @@
 #ifndef _SYSLOG_H
 #define _SYSLOG_H
 
-#include <stdio.h>
-#include <sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/stdio.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <stdarg.h>
 
 __BEGIN_DECLS

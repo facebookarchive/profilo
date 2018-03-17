@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_MIRROR_ART_METHOD_H_
 #define ART_RUNTIME_MIRROR_ART_METHOD_H_
 
-#include "dex_file.h"
-#include "gc_root.h"
-#include "invoke_type.h"
-#include "modifiers.h"
-#include "object.h"
-#include "object_callbacks.h"
-#include "quick/quick_method_frame_info.h"
-#include "read_barrier_option.h"
-#include "stack.h"
+#include <museum/5.1.1/art/runtime/dex_file.h>
+#include <museum/5.1.1/art/runtime/gc_root.h>
+#include <museum/5.1.1/art/runtime/invoke_type.h>
+#include <museum/5.1.1/art/runtime/modifiers.h>
+#include <museum/5.1.1/art/runtime/mirror/object.h>
+#include <museum/5.1.1/art/runtime/object_callbacks.h>
+#include <museum/5.1.1/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/5.1.1/art/runtime/read_barrier_option.h>
+#include <museum/5.1.1/art/runtime/stack.h>
 
 namespace art {
 

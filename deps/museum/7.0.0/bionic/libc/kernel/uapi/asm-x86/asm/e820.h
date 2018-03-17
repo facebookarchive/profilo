@@ -34,7 +34,7 @@
 #define E820_PRAM 12
 #define E820_RESERVED_KERN 128
 #ifndef __ASSEMBLY__
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct e820entry {
   __u64 addr;

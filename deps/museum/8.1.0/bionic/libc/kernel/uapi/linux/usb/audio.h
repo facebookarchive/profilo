@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_USB_AUDIO_H
 #define _UAPI__LINUX_USB_AUDIO_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define UAC_VERSION_1 0x00
 #define UAC_VERSION_2 0x20
 #define USB_SUBCLASS_AUDIOCONTROL 0x01

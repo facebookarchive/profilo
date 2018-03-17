@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_MEI_H
 #define _LINUX_MEI_H
-#include <linux/uuid.h>
+#include <museum/6.0.1/bionic/libc/linux/uuid.h>
 #define IOCTL_MEI_CONNECT_CLIENT _IOWR('H', 0x01, struct mei_connect_client_data)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct mei_client {

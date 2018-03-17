@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_ART_METHOD_H_
 #define ART_RUNTIME_ART_METHOD_H_
 
-#include <cstddef>
+#include <museum/8.1.0/external/libcxx/cstddef>
 
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "base/enums.h"
-#include "base/logging.h"
-#include "dex_file.h"
-#include "gc_root.h"
-#include "modifiers.h"
-#include "obj_ptr.h"
-#include "offsets.h"
-#include "primitive.h"
-#include "read_barrier_option.h"
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/base/casts.h>
+#include <museum/8.1.0/art/runtime/base/enums.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/dex_file.h>
+#include <museum/8.1.0/art/runtime/gc_root.h>
+#include <museum/8.1.0/art/runtime/modifiers.h>
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
+#include <museum/8.1.0/art/runtime/offsets.h>
+#include <museum/8.1.0/art/runtime/primitive.h>
+#include <museum/8.1.0/art/runtime/read_barrier_option.h>
 
 namespace art {
 

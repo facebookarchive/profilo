@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_SELINUX_NETLINK_H
 #define _LINUX_SELINUX_NETLINK_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SELNL_MSG_BASE 0x10
 enum {
   SELNL_MSG_SETENFORCE = SELNL_MSG_BASE,

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_INET_DIAG_H_
 #define _UAPI_INET_DIAG_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define TCPDIAG_GETSOCK 18
 #define DCCPDIAG_GETSOCK 19
 #define INET_DIAG_GETSOCK_MAX 24

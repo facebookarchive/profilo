@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __UBI_USER_H__
 #define __UBI_USER_H__
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define UBI_VOL_NUM_AUTO (- 1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define UBI_DEV_NUM_AUTO (- 1)

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_SCTP_H_
 #define _XT_SCTP_H_
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define XT_SCTP_SRC_PORTS 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XT_SCTP_DEST_PORTS 0x02

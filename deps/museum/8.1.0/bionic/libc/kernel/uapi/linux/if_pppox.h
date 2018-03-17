@@ -18,14 +18,14 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_IF_PPPOX_H
 #define _UAPI__LINUX_IF_PPPOX_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
-#include <linux/socket.h>
-#include <linux/if.h>
-#include <linux/if_ether.h>
-#include <linux/if_pppol2tp.h>
-#include <linux/in.h>
-#include <linux/in6.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/if_pppol2tp.h>
+#include <museum/8.1.0/bionic/libc/linux/in.h>
+#include <museum/8.1.0/bionic/libc/linux/in6.h>
 #ifndef AF_PPPOX
 #define AF_PPPOX 24
 #define PF_PPPOX AF_PPPOX

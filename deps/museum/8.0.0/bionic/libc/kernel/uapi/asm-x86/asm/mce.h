@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_MCE_H
 #define _UAPI_ASM_X86_MCE_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct mce {
   __u64 status;

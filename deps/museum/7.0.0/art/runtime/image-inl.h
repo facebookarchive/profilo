@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_IMAGE_INL_H_
 #define ART_RUNTIME_IMAGE_INL_H_
 
-#include "image.h"
+#include <museum/7.0.0/art/runtime/image.h>
 
-#include "art_method.h"
+#include <museum/7.0.0/art/runtime/art_method.h>
 
 namespace art {
 

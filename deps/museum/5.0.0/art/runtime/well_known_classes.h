@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_WELL_KNOWN_CLASSES_H_
 #define ART_RUNTIME_WELL_KNOWN_CLASSES_H_
 
-#include "base/mutex.h"
-#include "jni.h"
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/libnativehelper/jni.h>
 
 namespace art {
 namespace mirror {

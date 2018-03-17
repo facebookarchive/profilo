@@ -28,8 +28,8 @@
 #ifndef _ERRNO_H
 #define _ERRNO_H
 
-#include <sys/cdefs.h>
-#include <linux/errno.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/linux/errno.h>
 
 __BEGIN_DECLS
 

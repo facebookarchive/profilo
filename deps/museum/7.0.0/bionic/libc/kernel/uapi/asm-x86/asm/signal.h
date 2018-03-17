@@ -19,10 +19,10 @@
 #ifndef _UAPI_ASM_X86_SIGNAL_H
 #define _UAPI_ASM_X86_SIGNAL_H
 #ifndef __ASSEMBLY__
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/time.h>
-#include <linux/compiler.h>
+#include <museum/7.0.0/bionic/libc/linux/time.h>
+#include <museum/7.0.0/bionic/libc/linux/compiler.h>
 struct siginfo;
 #define _KERNEL_NSIG 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -88,7 +88,7 @@ typedef unsigned long sigset_t;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MINSIGSTKSZ 2048
 #define SIGSTKSZ 8192
-#include <asm-generic/signal-defs.h>
+#include <museum/7.0.0/bionic/libc/asm-generic/signal-defs.h>
 #ifndef __ASSEMBLY__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #ifdef __i386__

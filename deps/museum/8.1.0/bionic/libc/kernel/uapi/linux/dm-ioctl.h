@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_DM_IOCTL_V4_H
 #define _LINUX_DM_IOCTL_V4_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define DM_DIR "mapper"
 #define DM_CONTROL_NODE "control"
 #define DM_MAX_TYPE_NAME 16

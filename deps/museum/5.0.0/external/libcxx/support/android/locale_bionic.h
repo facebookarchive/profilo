@@ -17,8 +17,8 @@
 extern "C" {
 #endif
 
-#include <stdlib.h>
-#include <xlocale.h>
+#include <museum/5.0.0/bionic/libc/stdlib.h>
+#include <museum/5.0.0/bionic/libc/xlocale.h>
 
 static inline int isalnum_l(int c, locale_t) {
   return isalnum(c);

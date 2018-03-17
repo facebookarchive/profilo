@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_NL80211_H
 #define __LINUX_NL80211_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define NL80211_GENL_NAME "nl80211"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum nl80211_commands {

@@ -28,9 +28,9 @@
 #ifndef _SCHED_H_
 #define _SCHED_H_
 
-#include <bits/timespec.h>
-#include <linux/sched.h>
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/bits/timespec.h>
+#include <museum/8.1.0/bionic/libc/linux/sched.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

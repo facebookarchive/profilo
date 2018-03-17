@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_AOT_CLASS_LINKER_H_
 #define ART_RUNTIME_AOT_CLASS_LINKER_H_
 
-#include "class_linker.h"
+#include <museum/8.1.0/art/runtime/class_linker.h>
 
 namespace art {
 

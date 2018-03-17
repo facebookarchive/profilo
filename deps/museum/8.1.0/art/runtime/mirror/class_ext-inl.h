@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_EXT_INL_H_
 #define ART_RUNTIME_MIRROR_CLASS_EXT_INL_H_
 
-#include "class_ext.h"
+#include <museum/8.1.0/art/runtime/mirror/class_ext.h>
 
-#include "art_method-inl.h"
+#include <museum/8.1.0/art/runtime/art_method-inl.h>
 
 namespace art {
 namespace mirror {

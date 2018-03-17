@@ -31,8 +31,8 @@ void longjmp(jmp_buf env, int val);
 
 */
 
-#include <__config>
-#include <setjmp.h>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/bionic/libc/setjmp.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

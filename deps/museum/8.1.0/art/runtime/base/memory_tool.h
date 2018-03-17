@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_MEMORY_TOOL_H_
 #define ART_RUNTIME_BASE_MEMORY_TOOL_H_
 
-#include <stddef.h>
+#include <museum/8.1.0/external/libcxx/stddef.h>
 
 #if !defined(__has_feature)
 #define __has_feature(x) 0

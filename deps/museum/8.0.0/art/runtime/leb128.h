@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_LEB128_H_
 #define ART_RUNTIME_LEB128_H_
 
-#include <vector>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "base/bit_utils.h"
-#include "base/logging.h"
-#include "globals.h"
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/globals.h>
 
 namespace art {
 

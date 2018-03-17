@@ -19,7 +19,7 @@
 #ifndef _UAPI__LINUX_UIO_H
 #define _UAPI__LINUX_UIO_H
 #include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct iovec {
   void __user * iov_base;

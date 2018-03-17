@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_JVALUE_H_
 #define ART_RUNTIME_JVALUE_H_
 
-#include "base/macros.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
 
-#include <stdint.h>
+#include <museum/7.1.2/bionic/libc/stdint.h>
 
 namespace art {
 namespace mirror {

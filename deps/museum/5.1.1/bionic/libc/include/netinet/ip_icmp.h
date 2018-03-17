@@ -35,8 +35,8 @@
 #ifndef _NETINET_IP_ICMP_H_
 #define _NETINET_IP_ICMP_H_
 
-#include <netinet/ip.h>
-#include <sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/netinet/ip.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

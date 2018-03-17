@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_ARCNET_H
 #define _LINUX_IF_ARCNET_H
-#include <linux/types.h>
-#include <linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 #define ARC_P_IP 212
 #define ARC_P_IPV6 196
 #define ARC_P_ARP 213

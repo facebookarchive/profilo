@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VTPM_PROXY_H
 #define _UAPI_LINUX_VTPM_PROXY_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 enum vtpm_proxy_flags {
   VTPM_PROXY_FLAG_TPM2 = 1,
 };

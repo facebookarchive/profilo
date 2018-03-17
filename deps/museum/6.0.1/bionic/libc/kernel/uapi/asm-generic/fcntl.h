@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ASM_GENERIC_FCNTL_H
 #define _ASM_GENERIC_FCNTL_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define O_ACCMODE 00000003
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define O_RDONLY 00000000

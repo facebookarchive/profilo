@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_INSTRUMENTATION_H_
 #define ART_RUNTIME_INSTRUMENTATION_H_
 
-#include <stdint.h>
-#include <list>
-#include <map>
+#include <museum/5.1.1/bionic/libc/stdint.h>
+#include <museum/5.1.1/external/libcxx/list>
+#include <museum/5.1.1/external/libcxx/map>
 
-#include "atomic.h"
-#include "instruction_set.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc_root.h"
-#include "object_callbacks.h"
+#include <museum/5.1.1/art/runtime/atomic.h>
+#include <museum/5.1.1/art/runtime/instruction_set.h>
+#include <museum/5.1.1/art/runtime/base/macros.h>
+#include <museum/5.1.1/art/runtime/base/mutex.h>
+#include <museum/5.1.1/art/runtime/gc_root.h>
+#include <museum/5.1.1/art/runtime/object_callbacks.h>
 
 namespace art {
 namespace mirror {

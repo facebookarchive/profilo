@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_RTNETLINK_H
 #define _UAPI__LINUX_RTNETLINK_H
-#include <linux/types.h>
-#include <linux/netlink.h>
-#include <linux/if_link.h>
-#include <linux/if_addr.h>
-#include <linux/neighbour.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netlink.h>
+#include <museum/8.1.0/bionic/libc/linux/if_link.h>
+#include <museum/8.1.0/bionic/libc/linux/if_addr.h>
+#include <museum/8.1.0/bionic/libc/linux/neighbour.h>
 #define RTNL_FAMILY_IPMR 128
 #define RTNL_FAMILY_IP6MR 129
 #define RTNL_FAMILY_MAX 129

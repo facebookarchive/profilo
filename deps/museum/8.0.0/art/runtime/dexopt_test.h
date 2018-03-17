@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_DEXOPT_TEST_H_
 #define ART_RUNTIME_DEXOPT_TEST_H_
 
-#include <string>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "dex2oat_environment_test.h"
+#include <museum/8.0.0/art/runtime/dex2oat_environment_test.h>
 
 namespace art {
 

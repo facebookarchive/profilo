@@ -240,11 +240,11 @@ template<class T, class charT, class traits>
 
 */
 
-#include <__config>
-#include <type_traits>
-#include <stdexcept>
-#include <cmath>
-#include <sstream>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/type_traits>
+#include <museum/8.0.0/external/libcxx/stdexcept>
+#include <museum/8.0.0/external/libcxx/cmath>
+#include <museum/8.0.0/external/libcxx/sstream>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -45,13 +45,13 @@ wctrans_t wctrans(const char* property);
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#include_next <wctype.h>
+#include <museum/8.0.0/bionic/libc/wctype.h>
 
 #ifdef __cplusplus
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef MLX4_ABI_USER_H
 #define MLX4_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define MLX4_IB_UVERBS_NO_DEV_CAPS_ABI_VERSION 3
 #define MLX4_IB_UVERBS_ABI_VERSION 4
 struct mlx4_ib_alloc_ucontext_resp_v3 {

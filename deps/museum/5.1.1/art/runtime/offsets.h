@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_OFFSETS_H_
 #define ART_RUNTIME_OFFSETS_H_
 
-#include <iostream>  // NOLINT
-#include "globals.h"
+#include <museum/5.1.1/external/libcxx/iostream>  // NOLINT
+#include <museum/5.1.1/art/runtime/globals.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __IPV6HEADER_H
 #define __IPV6HEADER_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct ip6t_ipv6header_info {
   __u8 matchflags;
   __u8 invflags;

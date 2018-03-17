@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_EXPERIMENTAL_FLAGS_H_
 #define ART_RUNTIME_EXPERIMENTAL_FLAGS_H_
 
-#include <ostream>
+#include <museum/7.1.2/external/libcxx/ostream>
 
 namespace art {
 

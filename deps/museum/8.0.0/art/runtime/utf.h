@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_UTF_H_
 #define ART_RUNTIME_UTF_H_
 
-#include "base/macros.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
 
-#include <stddef.h>
-#include <stdint.h>
+#include <museum/8.0.0/external/libcxx/stddef.h>
+#include <museum/8.0.0/external/libcxx/stdint.h>
 
 /*
  * All UTF-8 in art is actually modified UTF-8. Mostly, this distinction

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __MIC_COMMON_H_
 #define __MIC_COMMON_H_
-#include <linux/virtio_ring.h>
+#include <museum/8.1.0/bionic/libc/linux/virtio_ring.h>
 #define __mic_align(a,x) (((a) + (x) - 1) & ~((x) - 1))
 struct mic_device_desc {
   __s8 type;

@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_SEMI_SPACE_H_
 #define ART_RUNTIME_GC_COLLECTOR_SEMI_SPACE_H_
 
-#include <memory>
+#include <museum/5.0.0/external/libcxx/memory>
 
-#include "atomic.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "garbage_collector.h"
-#include "gc/accounting/heap_bitmap.h"
-#include "immune_region.h"
-#include "mirror/object_reference.h"
-#include "object_callbacks.h"
-#include "offsets.h"
+#include <museum/5.0.0/art/runtime/atomic.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/gc/collector/garbage_collector.h>
+#include <museum/5.0.0/art/runtime/gc/accounting/heap_bitmap.h>
+#include <museum/5.0.0/art/runtime/gc/collector/immune_region.h>
+#include <museum/5.0.0/art/runtime/mirror/object_reference.h>
+#include <museum/5.0.0/art/runtime/object_callbacks.h>
+#include <museum/5.0.0/art/runtime/offsets.h>
 
 namespace art {
 

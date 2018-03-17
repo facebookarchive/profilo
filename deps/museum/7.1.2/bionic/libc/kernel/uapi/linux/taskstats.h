@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_TASKSTATS_H
 #define _LINUX_TASKSTATS_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define TASKSTATS_VERSION 8
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TS_COMM_LEN 32

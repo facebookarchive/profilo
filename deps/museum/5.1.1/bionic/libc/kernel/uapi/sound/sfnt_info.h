@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __SOUND_SFNT_INFO_H
 #define __SOUND_SFNT_INFO_H
-#include <sound/asound.h>
+#include <museum/5.1.1/bionic/libc/sound/asound.h>
 #ifdef SNDRV_BIG_ENDIAN
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SNDRV_OSS_PATCHKEY(id) (0xfd00|id)

@@ -19,7 +19,7 @@
 #ifndef QXL_DRM_H
 #define QXL_DRM_H
 #include <stddef.h>
-#include "drm/drm.h"
+#include <museum/5.0.0/bionic/libc/drm/drm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define QXL_GEM_DOMAIN_CPU 0
 #define QXL_GEM_DOMAIN_VRAM 1

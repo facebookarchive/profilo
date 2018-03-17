@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IPT_TTL_H
 #define _IPT_TTL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   IPT_TTL_SET = 0,
   IPT_TTL_INC,

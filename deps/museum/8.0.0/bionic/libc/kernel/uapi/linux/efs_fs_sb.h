@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __EFS_FS_SB_H__
 #define __EFS_FS_SB_H__
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EFS_MAGIC 0x072959
 #define EFS_NEWMAGIC 0x07295a

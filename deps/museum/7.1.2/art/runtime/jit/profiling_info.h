@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_JIT_PROFILING_INFO_H_
 #define ART_RUNTIME_JIT_PROFILING_INFO_H_
 
-#include <vector>
+#include <museum/7.1.2/external/libcxx/vector>
 
-#include "base/macros.h"
-#include "gc_root.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
 
 namespace art {
 

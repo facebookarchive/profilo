@@ -166,11 +166,11 @@ template <class T, class Container, class Compare>
 
 */
 
-#include <__config>
-#include <deque>
-#include <vector>
-#include <functional>
-#include <algorithm>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/deque>
+#include <museum/8.0.0/external/libcxx/vector>
+#include <museum/8.0.0/external/libcxx/functional>
+#include <museum/8.0.0/external/libcxx/algorithm>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

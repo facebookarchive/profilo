@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__SOCK_DIAG_H__
 #define _UAPI__SOCK_DIAG_H__
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 #define SOCK_DIAG_BY_FAMILY 20
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct sock_diag_req {

@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_PERF_EVENT_H
 #define _UAPI_LINUX_PERF_EVENT_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 enum perf_type_id {
   PERF_TYPE_HARDWARE = 0,
   PERF_TYPE_SOFTWARE = 1,

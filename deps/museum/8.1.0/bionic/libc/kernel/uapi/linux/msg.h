@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MSG_H
 #define _UAPI_LINUX_MSG_H
-#include <linux/ipc.h>
+#include <museum/8.1.0/bionic/libc/linux/ipc.h>
 #define MSG_STAT 11
 #define MSG_INFO 12
 #define MSG_NOERROR 010000
@@ -39,7 +39,7 @@ struct __kernel_legacy_msqid_ds {
   __kernel_ipc_pid_t msg_lspid;
   __kernel_ipc_pid_t msg_lrpid;
 };
-#include <asm/msgbuf.h>
+#include <museum/8.1.0/bionic/libc/asm/msgbuf.h>
 struct msgbuf {
   __kernel_long_t mtype;
   char mtext[1];

@@ -29,7 +29,7 @@
 #ifndef _NL_TYPES_H_
 #define _NL_TYPES_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

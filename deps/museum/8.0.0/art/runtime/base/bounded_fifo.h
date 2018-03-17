@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BASE_BOUNDED_FIFO_H_
 #define ART_RUNTIME_BASE_BOUNDED_FIFO_H_
 
-#include "base/bit_utils.h"
-#include "base/logging.h"
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

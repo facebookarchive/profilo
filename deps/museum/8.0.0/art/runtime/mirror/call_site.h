@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_MIRROR_CALL_SITE_H_
 #define ART_RUNTIME_MIRROR_CALL_SITE_H_
 
-#include "mirror/method_handle_impl.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/mirror/method_handle_impl.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

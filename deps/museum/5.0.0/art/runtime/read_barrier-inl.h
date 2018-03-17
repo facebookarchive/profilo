@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_READ_BARRIER_INL_H_
 #define ART_RUNTIME_READ_BARRIER_INL_H_
 
-#include "read_barrier.h"
+#include <museum/5.0.0/art/runtime/read_barrier.h>
 
-#include "mirror/object_reference.h"
+#include <museum/5.0.0/art/runtime/mirror/object_reference.h>
 
 namespace art {
 

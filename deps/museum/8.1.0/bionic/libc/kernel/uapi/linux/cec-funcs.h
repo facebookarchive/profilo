@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _CEC_UAPI_FUNCS_H
 #define _CEC_UAPI_FUNCS_H
-#include <linux/cec.h>
+#include <museum/8.1.0/bionic/libc/linux/cec.h>
 struct cec_op_arib_data {
   __u16 transport_id;
   __u16 service_id;

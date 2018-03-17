@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPIFSL_HYPERVISOR_H
 #define _UAPIFSL_HYPERVISOR_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct fsl_hv_ioctl_restart {
   __u32 ret;
   __u32 partition;

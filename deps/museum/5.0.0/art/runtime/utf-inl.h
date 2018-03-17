@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_UTF_INL_H_
 #define ART_RUNTIME_UTF_INL_H_
 
-#include "utf.h"
+#include <museum/5.0.0/art/runtime/utf.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_REISERFS_XATTR_H
 #define _LINUX_REISERFS_XATTR_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define REISERFS_XATTR_MAGIC 0x52465841
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct reiserfs_xattr_header {

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_EM_META_H
 #define __LINUX_TC_EM_META_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/pkt_cls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum {
   TCA_EM_META_UNSPEC,

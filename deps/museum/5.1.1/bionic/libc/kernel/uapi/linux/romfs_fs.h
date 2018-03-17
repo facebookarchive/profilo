@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_ROMFS_FS_H
 #define __LINUX_ROMFS_FS_H
-#include <linux/types.h>
-#include <linux/fs.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/fs.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ROMBSIZE BLOCK_SIZE
 #define ROMBSBITS BLOCK_SIZE_BITS

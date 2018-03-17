@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_PROFILER_H_
 #define ART_RUNTIME_PROFILER_H_
 
-#include <memory>
-#include <ostream>
-#include <set>
-#include <string>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/ostream>
+#include <museum/7.0.0/external/libcxx/set>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "barrier.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "globals.h"
-#include "instrumentation.h"
-#include "profiler_options.h"
-#include "os.h"
-#include "safe_map.h"
-#include "method_reference.h"
+#include <museum/7.0.0/art/runtime/barrier.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/globals.h>
+#include <museum/7.0.0/art/runtime/instrumentation.h>
+#include <museum/7.0.0/art/runtime/profiler_options.h>
+#include <museum/7.0.0/art/runtime/os.h>
+#include <museum/7.0.0/art/runtime/safe_map.h>
+#include <museum/7.0.0/art/runtime/method_reference.h>
 
 namespace art {
 

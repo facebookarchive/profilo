@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_EM_TEXT_H
 #define __LINUX_TC_EM_TEXT_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/pkt_cls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TC_EM_TEXT_ALGOSIZ 16
 struct tcf_em_text {

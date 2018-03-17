@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_MACROS_H_
 #define ART_RUNTIME_BASE_MACROS_H_
 
-#include <stddef.h>  // for size_t
-#include <unistd.h>  // for TEMP_FAILURE_RETRY
+#include <museum/8.0.0/external/libcxx/stddef.h>  // for size_t
+#include <museum/8.0.0/bionic/libc/unistd.h>  // for TEMP_FAILURE_RETRY
 
-#include "android-base/macros.h"
-#include "android-base/thread_annotations.h"
+#include <museum/8.0.0/android-base/macros.h>
+#include <museum/8.0.0/android-base/thread_annotations.h>
 
 #define OVERRIDE override
 #define FINAL final

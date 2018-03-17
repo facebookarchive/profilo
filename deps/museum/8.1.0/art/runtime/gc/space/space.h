@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_GC_SPACE_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_SPACE_H_
 
-#include <memory>
-#include <string>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "atomic.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc/accounting/space_bitmap.h"
-#include "gc/collector/object_byte_pair.h"
-#include "globals.h"
-#include "mem_map.h"
+#include <museum/8.1.0/art/runtime/atomic.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/space_bitmap.h>
+#include <museum/8.1.0/art/runtime/gc/collector/object_byte_pair.h>
+#include <museum/8.1.0/art/runtime/globals.h>
+#include <museum/8.1.0/art/runtime/mem_map.h>
 
 namespace art {
 namespace mirror {

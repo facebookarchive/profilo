@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__DLM_DOT_H__
 #define _UAPI__DLM_DOT_H__
-#include <linux/dlmconstants.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/dlmconstants.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 typedef void dlm_lockspace_t;
 #define DLM_SBF_DEMOTED 0x01
 #define DLM_SBF_VALNOTVALID 0x02

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _NETFILTER_NF_NAT_H
 #define _NETFILTER_NF_NAT_H
-#include <linux/netfilter.h>
-#include <linux/netfilter/nf_conntrack_tuple_common.h>
+#include <museum/5.0.0/bionic/libc/linux/netfilter.h>
+#include <museum/5.0.0/bionic/libc/linux/netfilter/nf_conntrack_tuple_common.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NF_NAT_RANGE_MAP_IPS (1 << 0)
 #define NF_NAT_RANGE_PROTO_SPECIFIED (1 << 1)

@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_ARCH_MEMCMP16_H_
 #define ART_RUNTIME_ARCH_MEMCMP16_H_
 
-#include <cstddef>
-#include <cstdint>
+#include <museum/5.1.1/external/libcxx/cstddef>
+#include <museum/5.1.1/external/libcxx/cstdint>
 
 // memcmp16 support.
 //

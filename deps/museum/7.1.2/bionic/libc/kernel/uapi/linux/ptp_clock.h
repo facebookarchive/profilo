@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _PTP_CLOCK_H_
 #define _PTP_CLOCK_H_
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/ioctl.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PTP_ENABLE_FEATURE (1 << 0)
 #define PTP_RISING_EDGE (1 << 1)

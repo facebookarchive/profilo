@@ -29,10 +29,10 @@
 #ifndef _NETINET_UDP_H
 #define _NETINET_UDP_H
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
-#include <linux/udp.h>
+#include <museum/8.1.0/bionic/libc/linux/udp.h>
 
 struct udphdr {
     __extension__ union {

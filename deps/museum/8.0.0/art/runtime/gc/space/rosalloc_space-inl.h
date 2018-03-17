@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_GC_SPACE_ROSALLOC_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_ROSALLOC_SPACE_INL_H_
 
-#include "base/memory_tool.h"
-#include "gc/allocator/rosalloc-inl.h"
-#include "gc/space/memory_tool_settings.h"
-#include "rosalloc_space.h"
-#include "thread.h"
+#include <museum/8.0.0/art/runtime/base/memory_tool.h>
+#include <museum/8.0.0/art/runtime/gc/allocator/rosalloc-inl.h>
+#include <museum/8.0.0/art/runtime/gc/space/memory_tool_settings.h>
+#include <museum/8.0.0/art/runtime/gc/space/rosalloc_space.h>
+#include <museum/8.0.0/art/runtime/thread.h>
 
 namespace art {
 namespace gc {

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_SPACE_DLMALLOC_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_DLMALLOC_SPACE_INL_H_
 
-#include "dlmalloc_space.h"
-#include "gc/allocator/dlmalloc.h"
-#include "thread.h"
+#include <museum/7.1.2/art/runtime/gc/space/dlmalloc_space.h>
+#include <museum/7.1.2/art/runtime/gc/allocator/dlmalloc.h>
+#include <museum/7.1.2/art/runtime/thread.h>
 
 namespace art {
 namespace gc {

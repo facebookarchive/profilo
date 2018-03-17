@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_AUTO_FS4_H
 #define _LINUX_AUTO_FS4_H
-#include <linux/types.h>
-#include <linux/auto_fs.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/auto_fs.h>
 #undef AUTOFS_PROTO_VERSION
 #undef AUTOFS_MIN_PROTO_VERSION
 #undef AUTOFS_MAX_PROTO_VERSION

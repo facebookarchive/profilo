@@ -275,13 +275,13 @@ constexpr chrono::duration<unspecified , nano>          operator "" ns(long doub
 }  // std
 */
 
-#include <__config>
-#include <ctime>
-#include <type_traits>
-#include <ratio>
-#include <limits>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/ctime>
+#include <museum/7.1.2/external/libcxx/type_traits>
+#include <museum/7.1.2/external/libcxx/ratio>
+#include <museum/7.1.2/external/libcxx/limits>
 
-#include <__undef_min_max>
+#include <museum/7.1.2/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

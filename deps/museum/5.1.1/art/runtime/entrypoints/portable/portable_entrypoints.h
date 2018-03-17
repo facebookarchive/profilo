@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_PORTABLE_PORTABLE_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_PORTABLE_PORTABLE_ENTRYPOINTS_H_
 
-#include "dex_file-inl.h"
-#include "runtime.h"
+#include <museum/5.1.1/art/runtime/dex_file-inl.h>
+#include <museum/5.1.1/art/runtime/runtime.h>
 
 namespace art {
 namespace mirror {

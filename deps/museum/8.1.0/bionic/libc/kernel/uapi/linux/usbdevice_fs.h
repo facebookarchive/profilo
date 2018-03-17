@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_USBDEVICE_FS_H
 #define _UAPI_LINUX_USBDEVICE_FS_H
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/magic.h>
 struct usbdevfs_ctrltransfer {
   __u8 bRequestType;
   __u8 bRequest;

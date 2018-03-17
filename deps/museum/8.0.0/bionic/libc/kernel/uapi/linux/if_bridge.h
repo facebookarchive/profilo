@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_BRIDGE_H
 #define _UAPI_LINUX_IF_BRIDGE_H
-#include <linux/types.h>
-#include <linux/if_ether.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/in6.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
 #define SYSFS_BRIDGE_ATTR "bridge"
 #define SYSFS_BRIDGE_FDB "brforward"
 #define SYSFS_BRIDGE_PORT_SUBDIR "brif"

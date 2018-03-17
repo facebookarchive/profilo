@@ -29,14 +29,14 @@
 #ifndef _STRING_H
 #define _STRING_H
 
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <stddef.h>
-#include <xlocale.h>
+#include <museum/7.1.2/bionic/libc/xlocale.h>
 
 __BEGIN_DECLS
 
 #if defined(__USE_BSD)
-#include <strings.h>
+#include <museum/7.1.2/bionic/libc/strings.h>
 #endif
 
 extern void*  memccpy(void* __restrict, const void* __restrict, int, size_t);

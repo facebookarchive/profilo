@@ -17,11 +17,11 @@
 #ifndef ANDROID_BASE_PARSEINT_H
 #define ANDROID_BASE_PARSEINT_H
 
-#include <errno.h>
-#include <stdlib.h>
+#include <museum/8.0.0/external/libcxx/errno.h>
+#include <museum/8.0.0/external/libcxx/stdlib.h>
 
-#include <limits>
-#include <string>
+#include <museum/8.0.0/external/libcxx/limits>
+#include <museum/8.0.0/external/libcxx/string>
 
 namespace android {
 namespace base {

@@ -17,8 +17,8 @@
 #ifndef SCOPED_FD_H_included
 #define SCOPED_FD_H_included
 
-#include <unistd.h>
-#include "JNIHelp.h"  // for DISALLOW_COPY_AND_ASSIGN.
+#include <museum/6.0.1/bionic/libc/unistd.h>
+#include <museum/6.0.1/libnativehelper/JNIHelp.h>  // for DISALLOW_COPY_AND_ASSIGN.
 
 // A smart pointer that closes the given fd on going out of scope.
 // Use this when the fd is incidental to the purpose of your function,

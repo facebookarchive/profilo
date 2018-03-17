@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_KVM_PARA_H
 #define _UAPI_ASM_X86_KVM_PARA_H
-#include <linux/types.h>
-#include <asm/hyperv.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/asm/hyperv.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define KVM_CPUID_SIGNATURE 0x40000000
 #define KVM_CPUID_FEATURES 0x40000001

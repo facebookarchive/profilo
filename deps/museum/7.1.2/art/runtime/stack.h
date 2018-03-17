@@ -17,18 +17,18 @@
 #ifndef ART_RUNTIME_STACK_H_
 #define ART_RUNTIME_STACK_H_
 
-#include <stdint.h>
-#include <string>
+#include <museum/7.1.2/bionic/libc/stdint.h>
+#include <museum/7.1.2/external/libcxx/string>
 
-#include "arch/instruction_set.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "dex_file.h"
-#include "gc_root.h"
-#include "mirror/object_reference.h"
-#include "quick/quick_method_frame_info.h"
-#include "read_barrier.h"
-#include "verify_object.h"
+#include <museum/7.1.2/art/runtime/arch/instruction_set.h>
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/dex_file.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
+#include <museum/7.1.2/art/runtime/mirror/object_reference.h>
+#include <museum/7.1.2/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/7.1.2/art/runtime/read_barrier.h>
+#include <museum/7.1.2/art/runtime/verify_object.h>
 
 namespace art {
 

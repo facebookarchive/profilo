@@ -28,9 +28,9 @@
 #ifndef _SYS_IPC_H
 #define _SYS_IPC_H
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/ipc.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ipc.h>
 
 __BEGIN_DECLS
 

@@ -29,10 +29,10 @@
 #ifndef _SYS_SIGNALFD_H_
 #define _SYS_SIGNALFD_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
-#include <linux/signalfd.h>
-#include <signal.h>
+#include <museum/8.1.0/bionic/libc/linux/signalfd.h>
+#include <museum/8.1.0/bionic/libc/signal.h>
 
 __BEGIN_DECLS
 

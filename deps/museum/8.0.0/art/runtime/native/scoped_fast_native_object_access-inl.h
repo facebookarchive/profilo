@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_NATIVE_SCOPED_FAST_NATIVE_OBJECT_ACCESS_INL_H_
 #define ART_RUNTIME_NATIVE_SCOPED_FAST_NATIVE_OBJECT_ACCESS_INL_H_
 
-#include "scoped_fast_native_object_access.h"
+#include <museum/8.0.0/art/runtime/native/scoped_fast_native_object_access.h>
 
-#include "art_method.h"
-#include "scoped_thread_state_change-inl.h"
+#include <museum/8.0.0/art/runtime/art_method.h>
+#include <museum/8.0.0/art/runtime/scoped_thread_state_change-inl.h>
 
 namespace art {
 

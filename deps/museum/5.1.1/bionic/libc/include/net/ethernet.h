@@ -27,6 +27,6 @@
  */
 #ifndef _NET_ETHERNET_H_
 #define _NET_IF_ETHERNET_H_
-#include <linux/if_ether.h>
-#include <net/if_ether.h>
+#include <museum/5.1.1/bionic/libc/linux/if_ether.h>
+#include <museum/5.1.1/bionic/libc/net/if_ether.h>
 #endif /* !_NET_ETHERNET_H_ */

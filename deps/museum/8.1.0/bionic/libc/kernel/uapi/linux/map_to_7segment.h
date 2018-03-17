@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef MAP_TO_7SEGMENT_H
 #define MAP_TO_7SEGMENT_H
-#include <linux/errno.h>
+#include <museum/8.1.0/bionic/libc/linux/errno.h>
 #define BIT_SEG7_A 0
 #define BIT_SEG7_B 1
 #define BIT_SEG7_C 2

@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_OBJECT_CALLBACKS_H_
 #define ART_RUNTIME_OBJECT_CALLBACKS_H_
 
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
 namespace art {
 namespace mirror {

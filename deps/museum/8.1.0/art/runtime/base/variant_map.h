@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_BASE_VARIANT_MAP_H_
 #define ART_RUNTIME_BASE_VARIANT_MAP_H_
 
-#include <memory.h>
-#include <map>
-#include <type_traits>
-#include <utility>
+#include <museum/8.1.0/bionic/libc/memory.h>
+#include <museum/8.1.0/external/libcxx/map>
+#include <museum/8.1.0/external/libcxx/type_traits>
+#include <museum/8.1.0/external/libcxx/utility>
 
-#include "android-base/logging.h"
-#include "base/stl_util_identity.h"
+#include <museum/8.1.0/android-base/logging.h>
+#include <museum/8.1.0/art/runtime/base/stl_util_identity.h>
 
 namespace art {
 

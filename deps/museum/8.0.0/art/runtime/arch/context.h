@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_ARCH_CONTEXT_H_
 #define ART_RUNTIME_ARCH_CONTEXT_H_
 
-#include <stddef.h>
-#include <stdint.h>
+#include <museum/8.0.0/external/libcxx/stddef.h>
+#include <museum/8.0.0/external/libcxx/stdint.h>
 
-#include "base/macros.h"
-#include "base/mutex.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
 
 namespace art {
 

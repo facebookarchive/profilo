@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __UHID_H_
 #define __UHID_H_
-#include <linux/input.h>
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/input.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum uhid_event_type {
  UHID_CREATE,

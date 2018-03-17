@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _IP6T_RT_H
 #define _IP6T_RT_H
-#include <linux/types.h>
-#include <linux/in6.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define IP6T_RT_HOPS 16
 struct ip6t_rt {

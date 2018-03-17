@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6T_FRAG_H
 #define _IP6T_FRAG_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct ip6t_frag {
   __u32 ids[2];
   __u32 hdrlen;

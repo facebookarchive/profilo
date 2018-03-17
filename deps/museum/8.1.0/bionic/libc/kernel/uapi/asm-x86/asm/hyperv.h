@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ASM_X86_HYPERV_H
 #define _ASM_X86_HYPERV_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define HYPERV_CPUID_VENDOR_AND_MAX_FUNCTIONS 0x40000000
 #define HYPERV_CPUID_INTERFACE 0x40000001
 #define HYPERV_CPUID_VERSION 0x40000002

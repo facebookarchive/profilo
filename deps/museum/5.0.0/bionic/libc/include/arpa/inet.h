@@ -28,9 +28,9 @@
 #ifndef _ARPA_INET_H_
 #define _ARPA_INET_H_
 
-#include <stdint.h>
-#include <sys/types.h>
-#include <netinet/in.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/netinet/in.h>
 
 __BEGIN_DECLS
 

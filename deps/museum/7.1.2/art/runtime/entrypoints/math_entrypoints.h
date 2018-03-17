@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_MATH_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_MATH_ENTRYPOINTS_H_
 
-#include <stdint.h>
+#include <museum/7.1.2/bionic/libc/stdint.h>
 
 extern "C" double art_l2d(int64_t l);
 extern "C" float art_l2f(int64_t l);

@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_MIPS64_INSTRUCTION_SET_FEATURES_MIPS64_H_
 #define ART_RUNTIME_ARCH_MIPS64_INSTRUCTION_SET_FEATURES_MIPS64_H_
 
-#include "arch/instruction_set_features.h"
+#include <museum/7.1.2/art/runtime/arch/instruction_set_features.h>
 
 namespace art {
 

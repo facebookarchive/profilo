@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_INTERPRETER_SHADOW_FRAME_H_
 #define ART_RUNTIME_INTERPRETER_SHADOW_FRAME_H_
 
-#include <cstring>
-#include <stdint.h>
-#include <string>
+#include <museum/8.1.0/external/libcxx/cstring>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "dex_file.h"
-#include "lock_count_data.h"
-#include "read_barrier.h"
-#include "stack_reference.h"
-#include "verify_object.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/dex_file.h>
+#include <museum/8.1.0/art/runtime/interpreter/lock_count_data.h>
+#include <museum/8.1.0/art/runtime/read_barrier.h>
+#include <museum/8.1.0/art/runtime/stack_reference.h>
+#include <museum/8.1.0/art/runtime/verify_object.h>
 
 namespace art {
 

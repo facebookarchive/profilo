@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_VERIFIER_REGISTER_LINE_H_
 #define ART_RUNTIME_VERIFIER_REGISTER_LINE_H_
 
-#include <memory>
-#include <vector>
+#include <museum/5.1.1/external/libcxx/memory>
+#include <museum/5.1.1/external/libcxx/vector>
 
-#include "dex_instruction.h"
-#include "reg_type.h"
-#include "safe_map.h"
+#include <museum/5.1.1/art/runtime/dex_instruction.h>
+#include <museum/5.1.1/art/runtime/verifier/reg_type.h>
+#include <museum/5.1.1/art/runtime/safe_map.h>
 
 namespace art {
 namespace verifier {

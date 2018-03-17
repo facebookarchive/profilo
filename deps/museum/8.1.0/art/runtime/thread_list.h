@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_THREAD_LIST_H_
 #define ART_RUNTIME_THREAD_LIST_H_
 
-#include "barrier.h"
-#include "base/histogram.h"
-#include "base/mutex.h"
-#include "base/time_utils.h"
-#include "base/value_object.h"
-#include "jni.h"
-#include "suspend_reason.h"
+#include <museum/8.1.0/art/runtime/barrier.h>
+#include <museum/8.1.0/art/runtime/base/histogram.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/base/time_utils.h>
+#include <museum/8.1.0/art/runtime/base/value_object.h>
+#include <museum/8.1.0/libnativehelper/jni.h>
+#include <museum/8.1.0/art/runtime/suspend_reason.h>
 
-#include <bitset>
-#include <list>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/bitset>
+#include <museum/8.1.0/external/libcxx/list>
+#include <museum/8.1.0/external/libcxx/vector>
 
 namespace art {
 namespace gc {

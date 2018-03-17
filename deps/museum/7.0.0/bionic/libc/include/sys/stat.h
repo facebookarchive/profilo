@@ -29,10 +29,10 @@
 #ifndef _SYS_STAT_H_
 #define _SYS_STAT_H_
 
-#include <bits/timespec.h>
-#include <linux/stat.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/7.0.0/bionic/libc/bits/timespec.h>
+#include <museum/7.0.0/bionic/libc/linux/stat.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 
@@ -184,7 +184,7 @@ extern int utimensat(int fd, const char *path, const struct timespec times[2], i
 extern int futimens(int fd, const struct timespec times[2]);
 
 #if __ANDROID_API__ < 21
-#include <android/legacy_sys_stat_inlines.h>
+#include <museum/7.0.0/bionic/libc/android/legacy_sys_stat_inlines.h>
 #endif
 
 __END_DECLS

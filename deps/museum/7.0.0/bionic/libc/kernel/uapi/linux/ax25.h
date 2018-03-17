@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef AX25_KERNEL_H
 #define AX25_KERNEL_H
-#include <linux/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/socket.h>
 #define AX25_MTU 256
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define AX25_MAX_DIGIS 8

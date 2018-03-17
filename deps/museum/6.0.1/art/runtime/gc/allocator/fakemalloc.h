@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include <stdlib.h>
-#include <inttypes.h>
+#include <museum/6.0.1/bionic/libc/stdlib.h>
+#include <museum/6.0.1/bionic/libc/inttypes.h>
 
 typedef void* mspace;
 

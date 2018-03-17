@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_
 #define ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_
 
-#include "entrypoint_utils.h"
+#include <museum/5.0.0/art/runtime/entrypoints/entrypoint_utils.h>
 
-#include "class_linker-inl.h"
-#include "common_throws.h"
-#include "dex_file.h"
-#include "indirect_reference_table.h"
-#include "invoke_type.h"
-#include "jni_internal.h"
-#include "mirror/art_method.h"
-#include "mirror/array.h"
-#include "mirror/class-inl.h"
-#include "mirror/object-inl.h"
-#include "mirror/throwable.h"
-#include "handle_scope-inl.h"
-#include "thread.h"
+#include <museum/5.0.0/art/runtime/class_linker-inl.h>
+#include <museum/5.0.0/art/runtime/common_throws.h>
+#include <museum/5.0.0/art/runtime/dex_file.h>
+#include <museum/5.0.0/art/runtime/indirect_reference_table.h>
+#include <museum/5.0.0/art/runtime/invoke_type.h>
+#include <museum/5.0.0/art/runtime/jni_internal.h>
+#include <museum/5.0.0/art/runtime/mirror/art_method.h>
+#include <museum/5.0.0/art/runtime/mirror/array.h>
+#include <museum/5.0.0/art/runtime/mirror/class-inl.h>
+#include <museum/5.0.0/art/runtime/mirror/object-inl.h>
+#include <museum/5.0.0/art/runtime/mirror/throwable.h>
+#include <museum/5.0.0/art/runtime/handle_scope-inl.h>
+#include <museum/5.0.0/art/runtime/thread.h>
 
 namespace art {
 

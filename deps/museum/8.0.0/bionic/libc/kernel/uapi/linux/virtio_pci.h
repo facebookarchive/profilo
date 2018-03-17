@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_PCI_H
 #define _LINUX_VIRTIO_PCI_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #ifndef VIRTIO_PCI_NO_LEGACY
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define VIRTIO_PCI_HOST_FEATURES 0

@@ -19,7 +19,7 @@
 #ifndef __WIL6210_UAPI_H__
 #define __WIL6210_UAPI_H__
 #define __user
-#include <linux/sockios.h>
+#include <museum/8.1.0/bionic/libc/linux/sockios.h>
 #define WIL_IOCTL_MEMIO (SIOCDEVPRIVATE + 2)
 #define WIL_IOCTL_MEMIO_BLOCK (SIOCDEVPRIVATE + 3)
 enum wil_memio_op {

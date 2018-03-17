@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GC_SPACE_REGION_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_REGION_SPACE_H_
 
-#include "gc/accounting/read_barrier_table.h"
-#include "object_callbacks.h"
-#include "space.h"
-#include "thread.h"
+#include <museum/8.0.0/art/runtime/gc/accounting/read_barrier_table.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
+#include <museum/8.0.0/art/runtime/gc/space/space.h>
+#include <museum/8.0.0/art/runtime/thread.h>
 
 namespace art {
 namespace gc {

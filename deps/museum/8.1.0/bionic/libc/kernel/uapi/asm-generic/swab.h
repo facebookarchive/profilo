@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ASM_GENERIC_SWAB_H
 #define _ASM_GENERIC_SWAB_H
-#include <asm/bitsperlong.h>
+#include <museum/8.1.0/bionic/libc/asm/bitsperlong.h>
 #if __BITS_PER_LONG == 32
 #if defined(__GNUC__) && !defined(__STRICT_ANSI__)
 #define __SWAB_64_THRU_32__

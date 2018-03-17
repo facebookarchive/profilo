@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef CXGB4_ABI_USER_H
 #define CXGB4_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define C4IW_UVERBS_ABI_VERSION 3
 struct c4iw_create_cq_resp {
   __u64 key;

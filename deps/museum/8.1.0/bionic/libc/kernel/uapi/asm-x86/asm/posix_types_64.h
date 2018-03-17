@@ -23,5 +23,5 @@ typedef unsigned short __kernel_old_gid_t;
 #define __kernel_old_uid_t __kernel_old_uid_t
 typedef unsigned long __kernel_old_dev_t;
 #define __kernel_old_dev_t __kernel_old_dev_t
-#include <asm-generic/posix_types.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/posix_types.h>
 #endif

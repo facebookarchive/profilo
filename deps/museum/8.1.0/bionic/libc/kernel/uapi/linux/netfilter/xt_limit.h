@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_RATE_H
 #define _XT_RATE_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_LIMIT_SCALE 10000
 struct xt_limit_priv;
 struct xt_rateinfo {

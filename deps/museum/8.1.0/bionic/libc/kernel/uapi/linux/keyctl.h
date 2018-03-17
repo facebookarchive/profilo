@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_KEYCTL_H
 #define _LINUX_KEYCTL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define KEY_SPEC_THREAD_KEYRING - 1
 #define KEY_SPEC_PROCESS_KEYRING - 2
 #define KEY_SPEC_SESSION_KEYRING - 3

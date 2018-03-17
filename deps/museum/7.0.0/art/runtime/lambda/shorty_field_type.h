@@ -16,13 +16,13 @@
 #ifndef ART_RUNTIME_LAMBDA_SHORTY_FIELD_TYPE_H_
 #define ART_RUNTIME_LAMBDA_SHORTY_FIELD_TYPE_H_
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/value_object.h"
-#include "globals.h"
+#include <museum/7.0.0/art/runtime/base/logging.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/value_object.h>
+#include <museum/7.0.0/art/runtime/globals.h>
 #include "runtime/primitive.h"
 
-#include <ostream>
+#include <museum/7.0.0/external/libcxx/ostream>
 
 namespace art {
 

@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_BIT_UTILS_H_
 #define ART_RUNTIME_BASE_BIT_UTILS_H_
 
-#include <limits>
-#include <type_traits>
+#include <museum/8.1.0/external/libcxx/limits>
+#include <museum/8.1.0/external/libcxx/type_traits>
 
-#include "base/logging.h"
-#include "base/stl_util_identity.h"
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/stl_util_identity.h>
 
 namespace art {
 

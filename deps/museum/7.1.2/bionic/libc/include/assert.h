@@ -42,7 +42,7 @@
  * multiple times, with and without NDEBUG defined.
  */
 
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 #undef assert
 #undef _assert

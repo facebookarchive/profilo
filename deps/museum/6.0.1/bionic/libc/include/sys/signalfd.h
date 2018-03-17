@@ -29,9 +29,9 @@
 #ifndef _SYS_SIGNALFD_H_
 #define _SYS_SIGNALFD_H_
 
-#include <linux/signalfd.h>
-#include <signal.h>
-#include <sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/linux/signalfd.h>
+#include <museum/6.0.1/bionic/libc/signal.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

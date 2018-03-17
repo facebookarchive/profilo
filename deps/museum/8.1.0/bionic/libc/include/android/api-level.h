@@ -29,7 +29,7 @@
 #ifndef ANDROID_API_LEVEL_H
 #define ANDROID_API_LEVEL_H
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 /*
  * Magic version number for a current development build, which has

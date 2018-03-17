@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_THREAD_POOL_H_
 #define ART_RUNTIME_THREAD_POOL_H_
 
-#include <deque>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/deque>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "barrier.h"
-#include "base/mutex.h"
-#include "mem_map.h"
+#include <museum/7.0.0/art/runtime/barrier.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/mem_map.h>
 
 namespace art {
 

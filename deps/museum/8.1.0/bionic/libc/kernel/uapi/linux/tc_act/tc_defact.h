@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_DEF_H
 #define __LINUX_TC_DEF_H
-#include <linux/pkt_cls.h>
+#include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 struct tc_defact {
   tc_gen;
 };

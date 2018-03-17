@@ -30,13 +30,13 @@
 #define _SYS_TYPES_H_
 
 #include <stddef.h>
-#include <stdint.h>
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/stdint.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
-#include <linux/types.h>
-#include <linux/posix_types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/posix_types.h>
 
-#include <bits/pthread_types.h>
+#include <museum/8.0.0/bionic/libc/bits/pthread_types.h>
 
 /* gids, uids, and pids are all 32-bit. */
 typedef __kernel_gid32_t __gid_t;
@@ -131,7 +131,7 @@ typedef unsigned int        uint_t;
 typedef unsigned int        uint;
 
 #if defined(__USE_BSD) || defined(__BIONIC__) /* Historically bionic exposed these. */
-#include <sys/sysmacros.h>
+#include <museum/8.0.0/bionic/libc/sys/sysmacros.h>
 
 typedef unsigned char  u_char;
 typedef unsigned short u_short;

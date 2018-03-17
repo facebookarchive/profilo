@@ -96,8 +96,8 @@ void perror(const char* s);
 }  // std
 */
 
-#include <__config>
-#include <stdio.h>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/bionic/libc/stdio.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -105,7 +105,7 @@ void perror(const char* s);
 
 // snprintf
 #if defined(_LIBCPP_MSVCRT)
-#include "support/win32/support.h"
+#include <museum/7.1.2/external/libcxx/support/win32/support.h>
 #endif
 
 #ifdef getc

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_JVALUE_H_
 #define ART_RUNTIME_JVALUE_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
 
-#include <stdint.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
 
-#include "obj_ptr.h"
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
 
 namespace art {
 namespace mirror {

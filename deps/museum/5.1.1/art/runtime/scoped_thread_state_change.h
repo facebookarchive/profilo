@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_H_
 #define ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_H_
 
-#include "base/casts.h"
-#include "jni_internal-inl.h"
-#include "read_barrier.h"
-#include "thread-inl.h"
-#include "verify_object.h"
+#include <museum/5.1.1/art/runtime/base/casts.h>
+#include <museum/5.1.1/art/runtime/jni_internal-inl.h>
+#include <museum/5.1.1/art/runtime/read_barrier.h>
+#include <museum/5.1.1/art/runtime/thread-inl.h>
+#include <museum/5.1.1/art/runtime/verify_object.h>
 
 namespace art {
 

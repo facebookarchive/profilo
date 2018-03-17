@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6_TUNNEL_H
 #define _IP6_TUNNEL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IPV6_TLV_TNL_ENCAP_LIMIT 4
 #define IPV6_DEFAULT_TNL_ENCAP_LIMIT 4
 #define IP6_TNL_F_IGN_ENCAP_LIMIT 0x1

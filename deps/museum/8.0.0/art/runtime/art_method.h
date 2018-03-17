@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_ART_METHOD_H_
 #define ART_RUNTIME_ART_METHOD_H_
 
-#include <cstddef>
+#include <museum/8.0.0/external/libcxx/cstddef>
 
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "base/enums.h"
-#include "dex_file.h"
-#include "gc_root.h"
-#include "invoke_type.h"
-#include "method_reference.h"
-#include "modifiers.h"
-#include "mirror/dex_cache.h"
-#include "mirror/object.h"
-#include "obj_ptr.h"
-#include "read_barrier_option.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/invoke_type.h>
+#include <museum/8.0.0/art/runtime/method_reference.h>
+#include <museum/8.0.0/art/runtime/modifiers.h>
+#include <museum/8.0.0/art/runtime/mirror/dex_cache.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/read_barrier_option.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

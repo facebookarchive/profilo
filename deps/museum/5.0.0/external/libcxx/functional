@@ -470,14 +470,14 @@ POLICY:  For non-variadic implementations, the number of arguments is limited
 
 */
 
-#include <__config>
-#include <type_traits>
-#include <typeinfo>
-#include <exception>
-#include <memory>
-#include <tuple>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/type_traits>
+#include <museum/5.0.0/external/libcxx/typeinfo>
+#include <museum/5.0.0/external/libcxx/exception>
+#include <museum/5.0.0/external/libcxx/memory>
+#include <museum/5.0.0/external/libcxx/tuple>
 
-#include <__functional_base>
+#include <museum/5.0.0/external/libcxx/__functional_base>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -1200,7 +1200,7 @@ mem_fun_ref(_Sp (_Tp::*__f)(_Ap) const)
 
 #ifdef _LIBCPP_HAS_NO_VARIADICS
 
-#include <__functional_03>
+#include <museum/5.0.0/external/libcxx/__functional_03>
 
 #else  // _LIBCPP_HAS_NO_VARIADICS
 

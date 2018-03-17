@@ -16,5 +16,5 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#include <asm-generic/mman.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/mman.h>
 #define arch_mmap_check(addr,len,flags) (((flags) & MAP_FIXED && (addr) < FIRST_USER_ADDRESS) ? - EINVAL : 0)

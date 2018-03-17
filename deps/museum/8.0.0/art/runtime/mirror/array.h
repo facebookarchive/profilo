@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_MIRROR_ARRAY_H_
 #define ART_RUNTIME_MIRROR_ARRAY_H_
 
-#include "base/enums.h"
-#include "gc_root.h"
-#include "gc/allocator_type.h"
-#include "obj_ptr.h"
-#include "object.h"
-#include "object_callbacks.h"
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/gc/allocator_type.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
 
 namespace art {
 

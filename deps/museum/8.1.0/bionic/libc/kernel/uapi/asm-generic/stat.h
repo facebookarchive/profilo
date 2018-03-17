@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_STAT_H
 #define __ASM_GENERIC_STAT_H
-#include <asm/bitsperlong.h>
+#include <museum/8.1.0/bionic/libc/asm/bitsperlong.h>
 #define STAT_HAVE_NSEC 1
 struct stat {
   unsigned long st_dev;

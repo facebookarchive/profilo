@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_JIT_JIT_H_
 #define ART_RUNTIME_JIT_JIT_H_
 
-#include "base/histogram-inl.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "base/timing_logger.h"
-#include "jit/profile_saver_options.h"
-#include "obj_ptr.h"
-#include "profile_compilation_info.h"
-#include "thread_pool.h"
+#include <museum/8.1.0/art/runtime/base/histogram-inl.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/base/timing_logger.h>
+#include <museum/8.1.0/art/runtime/jit/profile_saver_options.h>
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
+#include <museum/8.1.0/art/runtime/jit/profile_compilation_info.h>
+#include <museum/8.1.0/art/runtime/thread_pool.h>
 
 namespace art {
 

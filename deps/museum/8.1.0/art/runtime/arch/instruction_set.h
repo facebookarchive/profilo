@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_ARCH_INSTRUCTION_SET_H_
 #define ART_RUNTIME_ARCH_INSTRUCTION_SET_H_
 
-#include <iosfwd>
-#include <string>
+#include <museum/8.1.0/external/libcxx/iosfwd>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "base/enums.h"
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/base/enums.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
 namespace art {
 

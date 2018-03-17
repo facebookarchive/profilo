@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_RUNTIME_INL_H_
 #define ART_RUNTIME_RUNTIME_INL_H_
 
-#include "runtime.h"
+#include <museum/7.1.2/art/runtime/runtime.h>
 
-#include "art_method.h"
-#include "class_linker.h"
-#include "read_barrier-inl.h"
+#include <museum/7.1.2/art/runtime/art_method.h>
+#include <museum/7.1.2/art/runtime/class_linker.h>
+#include <museum/7.1.2/art/runtime/read_barrier-inl.h>
 
 namespace art {
 

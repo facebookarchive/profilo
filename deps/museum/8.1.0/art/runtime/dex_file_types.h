@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_DEX_FILE_TYPES_H_
 #define ART_RUNTIME_DEX_FILE_TYPES_H_
 
-#include <limits>
-#include <ostream>
+#include <museum/8.1.0/external/libcxx/limits>
+#include <museum/8.1.0/external/libcxx/ostream>
 
 namespace art {
 namespace dex {

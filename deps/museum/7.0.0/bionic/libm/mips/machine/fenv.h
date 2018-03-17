@@ -71,7 +71,7 @@
 #ifndef _MIPS_FENV_H_
 #define _MIPS_FENV_H_
 
-#include <sys/types.h>
+#include <museum/7.0.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

@@ -86,8 +86,8 @@ typedef fpos<char_traits<wchar_t>::state_type> wstreampos;
 
 */
 
-#include <__config>
-#include <wchar.h>  // for mbstate_t
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/bionic/libc/wchar.h>  // for mbstate_t
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _LINUX_GSMMUX_H
 #define _LINUX_GSMMUX_H
-#include <linux/if.h>
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct gsm_config {
   unsigned int adaption;
   unsigned int encapsulation;

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_USB_F_MTP_H
 #define _UAPI_LINUX_USB_F_MTP_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct mtp_file_range {
   int fd;

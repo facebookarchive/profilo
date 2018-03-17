@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TIMERFD_H
 #define _UAPI_LINUX_TIMERFD_H
-#include <linux/types.h>
-#include <linux/fcntl.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/fcntl.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define TFD_TIMER_ABSTIME (1 << 0)
 #define TFD_TIMER_CANCEL_ON_SET (1 << 1)
 #define TFD_CLOEXEC O_CLOEXEC

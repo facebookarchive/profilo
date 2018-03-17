@@ -29,8 +29,8 @@
 #ifndef _SYS_UCONTEXT_H_
 #define _SYS_UCONTEXT_H_
 
-#include <signal.h>
-#include <sys/user.h>
+#include <museum/5.1.1/bionic/libc/signal.h>
+#include <museum/5.1.1/bionic/libc/sys/user.h>
 
 __BEGIN_DECLS
 
@@ -60,7 +60,7 @@ enum {
 typedef int greg_t;
 typedef greg_t gregset_t[NGREG];
 
-#include <asm/sigcontext.h>
+#include <museum/5.1.1/bionic/libc/asm/sigcontext.h>
 typedef struct sigcontext mcontext_t;
 
 typedef struct ucontext {
@@ -82,7 +82,7 @@ typedef struct ucontext {
 typedef unsigned long greg_t;
 typedef greg_t gregset_t[NGREG];
 
-#include <asm/sigcontext.h>
+#include <museum/5.1.1/bionic/libc/asm/sigcontext.h>
 typedef struct sigcontext mcontext_t;
 
 typedef struct ucontext {

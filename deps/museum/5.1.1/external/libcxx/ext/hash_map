@@ -199,11 +199,11 @@ template <class Key, class T, class Hash, class Pred, class Alloc>
 
 */
 
-#include <__config>
-#include <__hash_table>
-#include <functional>
-#include <stdexcept>
-#include <ext/__hash>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/__hash_table>
+#include <museum/5.1.1/external/libcxx/functional>
+#include <museum/5.1.1/external/libcxx/stdexcept>
+#include <museum/5.1.1/external/libcxx/ext/__hash>
 
 #if __DEPRECATED
 #if defined(_MSC_VER) && ! defined(__clang__)

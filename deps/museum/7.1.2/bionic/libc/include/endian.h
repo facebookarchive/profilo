@@ -28,6 +28,6 @@
 #ifndef _ENDIAN_H_
 #define _ENDIAN_H_
 
-#include <sys/endian.h>
+#include <museum/7.1.2/bionic/libc/sys/endian.h>
 
 #endif /* _ENDIAN_H_ */

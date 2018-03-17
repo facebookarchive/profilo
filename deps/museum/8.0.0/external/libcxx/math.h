@@ -292,7 +292,7 @@ long double    truncl(long double x);
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 #if defined(_LIBCPP_MSVCRT)
 #include <crtversion.h>
 #endif
@@ -301,7 +301,7 @@ long double    truncl(long double x);
 #pragma GCC system_header
 #endif
 
-#include_next <math.h>
+#include <museum/8.0.0/bionic/libc/math.h>
 
 #ifdef __cplusplus
 
@@ -309,7 +309,7 @@ long double    truncl(long double x);
 // back to C++ linkage before including these C++ headers.
 extern "C++" {
 
-#include <type_traits>
+#include <museum/8.0.0/external/libcxx/type_traits>
 
 // signbit
 

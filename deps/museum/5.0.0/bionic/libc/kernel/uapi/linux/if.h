@@ -18,13 +18,13 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_H
 #define _LINUX_IF_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/compiler.h>
+#include <museum/5.0.0/bionic/libc/linux/compiler.h>
 #define IFNAMSIZ 16
 #define IFALIASZ 256
-#include <linux/hdlc/ioctl.h>
+#include <museum/5.0.0/bionic/libc/linux/hdlc/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define IFF_UP 0x1
 #define IFF_BROADCAST 0x2

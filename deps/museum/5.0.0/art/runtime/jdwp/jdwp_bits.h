@@ -18,11 +18,11 @@
 #define ART_RUNTIME_JDWP_JDWP_BITS_H_
 
 #include <stddef.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <string>
-#include <vector>
+#include <museum/5.0.0/bionic/libc/stdint.h>
+#include <museum/5.0.0/bionic/libc/stdlib.h>
+#include <museum/5.0.0/bionic/libc/string.h>
+#include <museum/5.0.0/external/libcxx/string>
+#include <museum/5.0.0/external/libcxx/vector>
 
 namespace art {
 

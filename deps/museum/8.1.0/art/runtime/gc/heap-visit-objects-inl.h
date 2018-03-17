@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_GC_HEAP_VISIT_OBJECTS_INL_H_
 #define ART_RUNTIME_GC_HEAP_VISIT_OBJECTS_INL_H_
 
-#include "heap.h"
+#include <museum/8.1.0/art/runtime/gc/heap.h>
 
-#include "base/mutex-inl.h"
-#include "gc/accounting/heap_bitmap-inl.h"
-#include "gc/space/bump_pointer_space-walk-inl.h"
-#include "gc/space/region_space-inl.h"
-#include "mirror/object-inl.h"
-#include "obj_ptr-inl.h"
-#include "scoped_thread_state_change-inl.h"
-#include "thread-current-inl.h"
-#include "thread_list.h"
+#include <museum/8.1.0/art/runtime/base/mutex-inl.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/heap_bitmap-inl.h>
+#include <museum/8.1.0/art/runtime/gc/space/bump_pointer_space-walk-inl.h>
+#include <museum/8.1.0/art/runtime/gc/space/region_space-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/object-inl.h>
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.1.0/art/runtime/scoped_thread_state_change-inl.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
+#include <museum/8.1.0/art/runtime/thread_list.h>
 
 namespace art {
 namespace gc {

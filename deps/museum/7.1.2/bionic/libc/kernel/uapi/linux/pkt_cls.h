@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_PKT_CLS_H
 #define __LINUX_PKT_CLS_H
-#include <linux/types.h>
-#include <linux/pkt_sched.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/pkt_sched.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum {
   TCA_ACT_UNSPEC,

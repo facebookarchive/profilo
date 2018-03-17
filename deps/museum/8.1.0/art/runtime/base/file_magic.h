@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BASE_FILE_MAGIC_H_
 #define ART_RUNTIME_BASE_FILE_MAGIC_H_
 
-#include <stdint.h>
-#include <string>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "os.h"
+#include <museum/8.1.0/art/runtime/os.h>
 
 namespace art {
 

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_DVBDMX_H_
 #define _UAPI_DVBDMX_H_
-#include <linux/types.h>
-#include <time.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/time.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DMX_FILTER_SIZE 16
 typedef enum

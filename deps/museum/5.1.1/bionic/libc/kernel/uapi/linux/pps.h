@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _PPS_H_
 #define _PPS_H_
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define PPS_VERSION "5.3.6"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PPS_MAX_SOURCES 16
@@ -78,7 +78,7 @@ struct pps_bind_args {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  int consumer;
 };
-#include <linux/ioctl.h>
+#include <museum/5.1.1/bionic/libc/linux/ioctl.h>
 #define PPS_GETPARAMS _IOR('p', 0xa1, struct pps_kparams *)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PPS_SETPARAMS _IOW('p', 0xa2, struct pps_kparams *)

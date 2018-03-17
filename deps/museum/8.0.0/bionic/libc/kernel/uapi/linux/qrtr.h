@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_QRTR_H
 #define _LINUX_QRTR_H
-#include <linux/socket.h>
+#include <museum/8.0.0/bionic/libc/linux/socket.h>
 struct sockaddr_qrtr {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __kernel_sa_family_t sq_family;

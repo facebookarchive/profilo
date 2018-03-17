@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_STM_H
 #define _UAPI_LINUX_STM_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct stp_policy_id {
   __u32 size;
   __u16 master;

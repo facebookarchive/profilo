@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_I2C_H
 #define _UAPI_LINUX_I2C_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 struct i2c_msg {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u16 addr;

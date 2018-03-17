@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_LOADER_H_
 #define ART_RUNTIME_MIRROR_CLASS_LOADER_H_
 
-#include "mirror/object.h"
+#include <museum/5.1.1/art/runtime/mirror/object.h>
 
 namespace art {
 

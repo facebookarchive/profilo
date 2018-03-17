@@ -76,9 +76,9 @@ template <class E> void rethrow_if_nested(const E& e);
 
 */
 
-#include <__config>
-#include <cstddef>
-#include <type_traits>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/cstddef>
+#include <museum/5.1.1/external/libcxx/type_traits>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

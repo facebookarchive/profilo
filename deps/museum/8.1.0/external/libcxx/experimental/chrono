@@ -16,7 +16,7 @@
 
 // C++1y
 
-#include <chrono>
+#include <museum/8.1.0/external/libcxx/experimental/chrono>
 
 namespace std {
 namespace chrono {
@@ -34,8 +34,8 @@ inline namespace fundamentals_v1 {
 
  */
 
-#include <experimental/__config>
-#include <chrono>
+#include <museum/8.1.0/external/libcxx/experimental/__config>
+#include <museum/8.1.0/external/libcxx/experimental/chrono>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

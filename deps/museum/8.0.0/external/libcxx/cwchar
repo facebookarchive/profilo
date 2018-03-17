@@ -103,9 +103,9 @@ size_t wcsrtombs(char* restrict dst, const wchar_t** restrict src, size_t len,
 
 */
 
-#include <__config>
-#include <cwctype>
-#include <wchar.h>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/cwctype>
+#include <museum/8.0.0/external/libcxx/wchar.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

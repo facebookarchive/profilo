@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_CAIF_SOCKET_H
 #define _LINUX_CAIF_SOCKET_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum caif_link_selector {
   CAIF_LINK_HIGH_BANDW,

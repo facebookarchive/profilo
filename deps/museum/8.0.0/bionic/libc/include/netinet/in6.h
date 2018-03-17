@@ -29,9 +29,9 @@
 #ifndef _NETINET_IN6_H
 #define _NETINET_IN6_H
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
-#include <linux/in6.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
 
 #define IN6_IS_ADDR_UNSPECIFIED(a) \
   ((((a)->s6_addr32[0]) == 0) && \

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _FC_NS_H_
 #define _FC_NS_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define FC_NS_SUBTYPE 2
 enum fc_ns_req {
   FC_NS_GA_NXT = 0x0100,

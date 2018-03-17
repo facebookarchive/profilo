@@ -17,7 +17,7 @@
 #ifndef SCOPED_LOCAL_FRAME_H_included
 #define SCOPED_LOCAL_FRAME_H_included
 
-#include "JNIHelp.h"
+#include <museum/8.0.0/libnativehelper/JNIHelp.h>
 
 class ScopedLocalFrame {
 public:

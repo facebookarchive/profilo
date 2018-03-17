@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_UDP_H
 #define _UAPI_LINUX_UDP_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 struct __kernel_udphdr {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __be16 source;

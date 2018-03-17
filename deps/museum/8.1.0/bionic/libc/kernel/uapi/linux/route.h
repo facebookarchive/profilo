@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_ROUTE_H
 #define _LINUX_ROUTE_H
-#include <linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
 #include <linux/compiler.h>
 struct rtentry {
   unsigned long rt_pad1;

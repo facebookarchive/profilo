@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_MIPS_ASM_SUPPORT_MIPS_H_
 #define ART_RUNTIME_ARCH_MIPS_ASM_SUPPORT_MIPS_H_
 
-#include "asm_support.h"
+#include <museum/7.1.2/art/runtime/asm_support.h>
 
 #define FRAME_SIZE_SAVE_ALL_CALLEE_SAVE 96
 #define FRAME_SIZE_REFS_ONLY_CALLEE_SAVE 48

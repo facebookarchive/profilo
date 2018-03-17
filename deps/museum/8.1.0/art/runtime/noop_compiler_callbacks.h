@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_NOOP_COMPILER_CALLBACKS_H_
 #define ART_RUNTIME_NOOP_COMPILER_CALLBACKS_H_
 
-#include "compiler_callbacks.h"
+#include <museum/8.1.0/art/runtime/compiler_callbacks.h>
 
 namespace art {
 

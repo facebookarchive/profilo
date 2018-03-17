@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_TERMIOS_H
 #define _LINUX_TERMIOS_H
-#include <linux/types.h>
-#include <asm/termios.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/termios.h>
 #define NFF 5
 struct termiox {
   __u16 x_hflag;

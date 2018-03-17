@@ -19,7 +19,7 @@
 #ifndef __WIL6210_UAPI_H__
 #define __WIL6210_UAPI_H__
 #define __user
-#include <linux/sockios.h>
+#include <museum/7.1.2/bionic/libc/linux/sockios.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define WIL_IOCTL_MEMIO (SIOCDEVPRIVATE + 2)
 #define WIL_IOCTL_MEMIO_BLOCK (SIOCDEVPRIVATE + 3)

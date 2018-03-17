@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _ISOFS_FS_H
 #define _ISOFS_FS_H
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ISODCL(from, to) (to - from + 1)
 struct iso_volume_descriptor {

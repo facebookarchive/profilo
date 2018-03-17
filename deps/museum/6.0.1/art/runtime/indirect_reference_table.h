@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_INDIRECT_REFERENCE_TABLE_H_
 #define ART_RUNTIME_INDIRECT_REFERENCE_TABLE_H_
 
-#include <stdint.h>
+#include <museum/6.0.1/bionic/libc/stdint.h>
 
-#include <iosfwd>
-#include <string>
+#include <museum/6.0.1/external/libcxx/iosfwd>
+#include <museum/6.0.1/external/libcxx/string>
 
-#include "base/logging.h"
-#include "base/mutex.h"
-#include "gc_root.h"
-#include "object_callbacks.h"
-#include "offsets.h"
-#include "read_barrier_option.h"
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/mutex.h>
+#include <museum/6.0.1/art/runtime/gc_root.h>
+#include <museum/6.0.1/art/runtime/object_callbacks.h>
+#include <museum/6.0.1/art/runtime/offsets.h>
+#include <museum/6.0.1/art/runtime/read_barrier_option.h>
 
 namespace art {
 

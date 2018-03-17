@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_STACK_MAP_H_
 #define ART_RUNTIME_STACK_MAP_H_
 
-#include "base/bit_vector.h"
-#include "base/bit_utils.h"
-#include "memory_region.h"
+#include <museum/6.0.1/art/runtime/base/bit_vector.h>
+#include <museum/6.0.1/art/runtime/base/bit_utils.h>
+#include <museum/6.0.1/art/runtime/memory_region.h>
 
 namespace art {
 

@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_GC_ALLOCATOR_ROSALLOC_H_
 #define ART_RUNTIME_GC_ALLOCATOR_ROSALLOC_H_
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <memory>
-#include <set>
-#include <string>
-#include <unordered_set>
-#include <vector>
+#include <museum/7.0.0/bionic/libc/stdint.h>
+#include <museum/7.0.0/bionic/libc/stdlib.h>
+#include <museum/7.0.0/bionic/libc/sys/mman.h>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/set>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/unordered_set>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "base/allocator.h"
-#include "base/bit_utils.h"
-#include "base/mutex.h"
-#include "base/logging.h"
-#include "globals.h"
-#include "thread.h"
+#include <museum/7.0.0/art/runtime/base/allocator.h>
+#include <museum/7.0.0/art/runtime/base/bit_utils.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/base/logging.h>
+#include <museum/7.0.0/art/runtime/globals.h>
+#include <museum/7.0.0/art/runtime/thread.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NFSD_DEBUG_H
 #define _UAPILINUX_NFSD_DEBUG_H
-#include <linux/sunrpc/debug.h>
+#include <museum/5.0.0/bionic/libc/linux/sunrpc/debug.h>
 #ifdef RPC_DEBUG
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NFSD_DEBUG 1

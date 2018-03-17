@@ -19,7 +19,7 @@
 #ifndef _UAPI_CODA_HEADER_
 #define _UAPI_CODA_HEADER_
 #if defined(__NetBSD__) || (defined(DJGPP) || defined(__CYGWIN32__)) && !defined(KERNEL)
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 #endif
 #ifndef CODA_MAXSYMLINKS
 #define CODA_MAXSYMLINKS 10
@@ -43,12 +43,12 @@ struct timespec {
   long ts_nsec;
 };
 #else
-#include <sys/time.h>
+#include <museum/8.1.0/bionic/libc/sys/time.h>
 typedef unsigned long long u_quad_t;
 #endif
 #endif
 #ifdef __linux__
-#include <linux/time.h>
+#include <museum/8.1.0/bionic/libc/linux/time.h>
 #define cdev_t u_quad_t
 #if !defined(_UQUAD_T_) && (!defined(__GLIBC__) || __GLIBC__ < 2)
 #define _UQUAD_T_ 1

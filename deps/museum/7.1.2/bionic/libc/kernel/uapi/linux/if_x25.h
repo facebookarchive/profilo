@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IF_X25_H
 #define _IF_X25_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define X25_IFACE_DATA 0x00
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define X25_IFACE_CONNECT 0x01

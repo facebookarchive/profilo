@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef LINUX_ATMCLIP_H
 #define LINUX_ATMCLIP_H
-#include <linux/sockios.h>
-#include <linux/atmioc.h>
+#include <museum/6.0.1/bionic/libc/linux/sockios.h>
+#include <museum/6.0.1/bionic/libc/linux/atmioc.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define RFC1483LLC_LEN 8
 #define RFC1626_MTU 9180

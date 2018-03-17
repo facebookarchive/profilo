@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IN_H
 #define _UAPI_LINUX_IN_H
-#include <linux/types.h>
-#include <linux/libc-compat.h>
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/libc-compat.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 #if __UAPI_DEF_IN_IPPROTO
 enum {
   IPPROTO_IP = 0,
@@ -226,5 +226,5 @@ struct sockaddr_in {
 #define INADDR_ALLRTRS_GROUP 0xe0000002U
 #define INADDR_MAX_LOCAL_GROUP 0xe00000ffU
 #endif
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #endif

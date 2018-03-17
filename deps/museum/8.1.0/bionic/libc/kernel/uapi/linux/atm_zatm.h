@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_ZATM_H
 #define LINUX_ATM_ZATM_H
-#include <linux/atmapi.h>
-#include <linux/atmioc.h>
+#include <museum/8.1.0/bionic/libc/linux/atmapi.h>
+#include <museum/8.1.0/bionic/libc/linux/atmioc.h>
 #define ZATM_GETPOOL _IOW('a', ATMIOC_SARPRV + 1, struct atmif_sioc)
 #define ZATM_GETPOOLZ _IOW('a', ATMIOC_SARPRV + 2, struct atmif_sioc)
 #define ZATM_SETPOOL _IOW('a', ATMIOC_SARPRV + 3, struct atmif_sioc)

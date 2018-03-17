@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_ARCH_CODE_OFFSET_H_
 #define ART_RUNTIME_ARCH_CODE_OFFSET_H_
 
-#include <iosfwd>
+#include <museum/8.1.0/external/libcxx/iosfwd>
 
-#include "base/bit_utils.h"
-#include "base/logging.h"
-#include "instruction_set.h"
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/arch/instruction_set.h>
 
 namespace art {
 

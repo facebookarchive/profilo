@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __MTD_INFTL_USER_H__
 #define __MTD_INFTL_USER_H__
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define OSAK_VERSION 0x5120
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PERCENTUSED 98

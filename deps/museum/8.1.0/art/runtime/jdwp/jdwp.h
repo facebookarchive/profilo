@@ -17,18 +17,18 @@
 #ifndef ART_RUNTIME_JDWP_JDWP_H_
 #define ART_RUNTIME_JDWP_JDWP_H_
 
-#include "atomic.h"
-#include "base/mutex.h"
-#include "jdwp/jdwp_bits.h"
-#include "jdwp/jdwp_constants.h"
-#include "jdwp/jdwp_expand_buf.h"
-#include "obj_ptr.h"
+#include <museum/8.1.0/art/runtime/atomic.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/jdwp/jdwp_bits.h>
+#include <museum/8.1.0/art/runtime/jdwp/jdwp_constants.h>
+#include <museum/8.1.0/art/runtime/jdwp/jdwp_expand_buf.h>
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
 
-#include <pthread.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-#include <vector>
+#include <museum/8.1.0/bionic/libc/pthread.h>
+#include <museum/8.1.0/external/libcxx/stddef.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/string.h>
+#include <museum/8.1.0/external/libcxx/vector>
 
 struct iovec;
 

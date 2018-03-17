@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_STICKY_MARK_SWEEP_H_
 #define ART_RUNTIME_GC_COLLECTOR_STICKY_MARK_SWEEP_H_
 
-#include "base/macros.h"
-#include "partial_mark_sweep.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/gc/collector/partial_mark_sweep.h>
 
 namespace art {
 namespace gc {

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_METHOD_INFO_H_
 #define ART_RUNTIME_METHOD_INFO_H_
 
-#include "base/logging.h"
-#include "leb128.h"
-#include "memory_region.h"
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/leb128.h>
+#include <museum/8.0.0/art/runtime/memory_region.h>
 
 namespace art {
 

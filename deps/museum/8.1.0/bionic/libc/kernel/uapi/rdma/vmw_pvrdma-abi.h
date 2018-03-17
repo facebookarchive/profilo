@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __VMW_PVRDMA_ABI_H__
 #define __VMW_PVRDMA_ABI_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define PVRDMA_UVERBS_ABI_VERSION 3
 #define PVRDMA_UAR_HANDLE_MASK 0x00FFFFFF
 #define PVRDMA_UAR_QP_OFFSET 0

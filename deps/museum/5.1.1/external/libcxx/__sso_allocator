@@ -11,9 +11,9 @@
 #ifndef _LIBCPP___SSO_ALLOCATOR
 #define _LIBCPP___SSO_ALLOCATOR
 
-#include <__config>
-#include <type_traits>
-#include <new>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/type_traits>
+#include <museum/5.1.1/external/libcxx/new>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

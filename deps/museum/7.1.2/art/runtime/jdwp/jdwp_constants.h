@@ -19,7 +19,7 @@
 #ifndef ART_RUNTIME_JDWP_JDWP_CONSTANTS_H_
 #define ART_RUNTIME_JDWP_JDWP_CONSTANTS_H_
 
-#include <iosfwd>
+#include <museum/7.1.2/external/libcxx/iosfwd>
 
 namespace art {
 

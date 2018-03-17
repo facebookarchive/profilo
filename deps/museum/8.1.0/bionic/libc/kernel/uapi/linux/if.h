@@ -18,15 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_H
 #define _LINUX_IF_H
-#include <linux/libc-compat.h>
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/libc-compat.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 #include <linux/compiler.h>
 #if __UAPI_DEF_IF_IFNAMSIZ
 #define IFNAMSIZ 16
 #endif
 #define IFALIASZ 256
-#include <linux/hdlc/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/hdlc/ioctl.h>
 #if __UAPI_DEF_IF_NET_DEVICE_FLAGS_LOWER_UP_DORMANT_ECHO != 0 || __UAPI_DEF_IF_NET_DEVICE_FLAGS != 0
 enum net_device_flags {
 #if __UAPI_DEF_IF_NET_DEVICE_FLAGS

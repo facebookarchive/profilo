@@ -17,26 +17,26 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_INL_H_
 #define ART_RUNTIME_MIRROR_CLASS_INL_H_
 
-#include "class.h"
+#include <museum/8.1.0/art/runtime/mirror/class.h>
 
-#include "art_field.h"
-#include "art_method.h"
-#include "base/array_slice.h"
-#include "base/length_prefixed_array.h"
-#include "class_linker.h"
-#include "class_loader.h"
-#include "common_throws.h"
-#include "dex_cache.h"
-#include "dex_file-inl.h"
-#include "gc/heap-inl.h"
-#include "iftable.h"
-#include "object_array.h"
-#include "object-inl.h"
-#include "read_barrier-inl.h"
-#include "reference-inl.h"
-#include "runtime.h"
-#include "string.h"
-#include "utils.h"
+#include <museum/8.1.0/art/runtime/art_field.h>
+#include <museum/8.1.0/art/runtime/art_method.h>
+#include <museum/8.1.0/art/runtime/base/array_slice.h>
+#include <museum/8.1.0/art/runtime/base/length_prefixed_array.h>
+#include <museum/8.1.0/art/runtime/class_linker.h>
+#include <museum/8.1.0/art/runtime/mirror/class_loader.h>
+#include <museum/8.1.0/art/runtime/common_throws.h>
+#include <museum/8.1.0/art/runtime/mirror/dex_cache.h>
+#include <museum/8.1.0/art/runtime/dex_file-inl.h>
+#include <museum/8.1.0/art/runtime/gc/heap-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/iftable.h>
+#include <museum/8.1.0/art/runtime/mirror/object_array.h>
+#include <museum/8.1.0/art/runtime/mirror/object-inl.h>
+#include <museum/8.1.0/art/runtime/read_barrier-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/reference-inl.h>
+#include <museum/8.1.0/art/runtime/runtime.h>
+#include <museum/8.1.0/art/runtime/mirror/string.h>
+#include <museum/8.1.0/art/runtime/utils.h>
 
 namespace art {
 namespace mirror {

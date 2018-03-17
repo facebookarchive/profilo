@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_MIRROR_ART_FIELD_H_
 #define ART_RUNTIME_MIRROR_ART_FIELD_H_
 
-#include <jni.h>
+#include <museum/5.1.1/libnativehelper/jni.h>
 
-#include "gc_root.h"
-#include "modifiers.h"
-#include "object.h"
-#include "object_callbacks.h"
-#include "primitive.h"
-#include "read_barrier_option.h"
+#include <museum/5.1.1/art/runtime/gc_root.h>
+#include <museum/5.1.1/art/runtime/modifiers.h>
+#include <museum/5.1.1/art/runtime/mirror/object.h>
+#include <museum/5.1.1/art/runtime/object_callbacks.h>
+#include <museum/5.1.1/art/runtime/primitive.h>
+#include <museum/5.1.1/art/runtime/read_barrier_option.h>
 
 namespace art {
 

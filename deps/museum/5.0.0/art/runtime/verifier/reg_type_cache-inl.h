@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_INL_H_
 #define ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_INL_H_
 
-#include "reg_type.h"
-#include "reg_type_cache.h"
-#include "class_linker.h"
+#include <museum/5.0.0/art/runtime/verifier/reg_type.h>
+#include <museum/5.0.0/art/runtime/verifier/reg_type_cache.h>
+#include <museum/5.0.0/art/runtime/class_linker.h>
 
 namespace art {
 namespace verifier {

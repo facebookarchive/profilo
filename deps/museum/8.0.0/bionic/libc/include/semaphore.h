@@ -29,7 +29,7 @@
 #ifndef _SEMAPHORE_H
 #define _SEMAPHORE_H
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

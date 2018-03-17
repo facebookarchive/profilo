@@ -17,20 +17,20 @@
 #ifndef ART_RUNTIME_JIT_JIT_CODE_CACHE_H_
 #define ART_RUNTIME_JIT_JIT_CODE_CACHE_H_
 
-#include "instrumentation.h"
+#include <museum/7.1.2/art/runtime/instrumentation.h>
 
-#include "atomic.h"
-#include "base/histogram-inl.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc/accounting/bitmap.h"
-#include "gc_root.h"
-#include "jni.h"
-#include "method_reference.h"
-#include "oat_file.h"
-#include "object_callbacks.h"
-#include "safe_map.h"
-#include "thread_pool.h"
+#include <museum/7.1.2/art/runtime/atomic.h>
+#include <museum/7.1.2/art/runtime/base/histogram-inl.h>
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/gc/accounting/bitmap.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
+#include <museum/7.1.2/art/runtime/method_reference.h>
+#include <museum/7.1.2/art/runtime/oat_file.h>
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
+#include <museum/7.1.2/art/runtime/safe_map.h>
+#include <museum/7.1.2/art/runtime/thread_pool.h>
 
 namespace art {
 

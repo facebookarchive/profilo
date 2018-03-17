@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NVRAM_H
 #define _UAPI_LINUX_NVRAM_H
-#include <linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 #define NVRAM_INIT _IO('p', 0x40)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NVRAM_SETCKS _IO('p', 0x41)

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_NETLINK_H
 #define _UAPI_CAN_NETLINK_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct can_bittiming {
   __u32 bitrate;
   __u32 sample_point;

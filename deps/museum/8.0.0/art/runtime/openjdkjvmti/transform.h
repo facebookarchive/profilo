@@ -32,12 +32,12 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_TRANSFORM_H_
 #define ART_RUNTIME_OPENJDKJVMTI_TRANSFORM_H_
 
-#include <string>
+#include <museum/8.0.0/external/libcxx/string>
 
-#include <jni.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
-#include "art_jvmti.h"
-#include "ti_class_definition.h"
+#include <museum/8.0.0/art/runtime/openjdkjvmti/art_jvmti.h>
+#include <museum/8.0.0/art/runtime/openjdkjvmti/ti_class_definition.h>
 #include "jvmti.h"
 
 namespace openjdkjvmti {

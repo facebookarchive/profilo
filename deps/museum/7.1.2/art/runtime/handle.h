@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_HANDLE_H_
 #define ART_RUNTIME_HANDLE_H_
 
-#include "base/casts.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/value_object.h"
-#include "stack.h"
+#include <museum/7.1.2/art/runtime/base/casts.h>
+#include <museum/7.1.2/art/runtime/base/logging.h>
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/value_object.h>
+#include <museum/7.1.2/art/runtime/stack.h>
 
 namespace art {
 

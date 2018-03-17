@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_NATIVE_BRIDGE_ART_INTERFACE_H_
 #define ART_RUNTIME_NATIVE_BRIDGE_ART_INTERFACE_H_
 
-#include <jni.h>
-#include <stdint.h>
-#include <string>
+#include <museum/7.0.0/libnativehelper/jni.h>
+#include <museum/7.0.0/bionic/libc/stdint.h>
+#include <museum/7.0.0/external/libcxx/string>
 
 namespace art {
 

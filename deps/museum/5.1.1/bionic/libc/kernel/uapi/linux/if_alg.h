@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_ALG_H
 #define _LINUX_IF_ALG_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct sockaddr_alg {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u16 salg_family;

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_TASKSTATS_H
 #define _LINUX_TASKSTATS_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define TASKSTATS_VERSION 8
 #define TS_COMM_LEN 32
 struct taskstats {

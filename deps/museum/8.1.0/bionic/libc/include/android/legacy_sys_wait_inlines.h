@@ -29,10 +29,10 @@
 #ifndef _ANDROID_LEGACY_SYS_WAIT_INLINES_H_
 #define _ANDROID_LEGACY_SYS_WAIT_INLINES_H_
 
-#include <sys/cdefs.h>
-#include <sys/syscall.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/syscall.h>
+#include <museum/8.1.0/bionic/libc/sys/wait.h>
+#include <museum/8.1.0/bionic/libc/unistd.h>
 
 #if __ANDROID_API__ < __ANDROID_API_J_MR2__
 

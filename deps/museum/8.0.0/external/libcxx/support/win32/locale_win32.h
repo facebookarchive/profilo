@@ -18,9 +18,9 @@
 extern "C" unsigned short __declspec(dllimport) _ctype[];
 #endif
 
-#include "support/win32/support.h"
-#include "support/win32/locale_mgmt_win32.h"
-#include <stdio.h>
+#include <museum/8.0.0/external/libcxx/support/win32/support.h>
+#include <museum/8.0.0/external/libcxx/support/win32/locale_mgmt_win32.h>
+#include <museum/8.0.0/external/libcxx/stdio.h>
 
 lconv *localeconv_l( locale_t loc );
 size_t mbrlen_l( const char *__restrict s, size_t n,

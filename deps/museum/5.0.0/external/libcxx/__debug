@@ -17,9 +17,9 @@
 
 #if _LIBCPP_DEBUG_LEVEL >= 1
 
-#   include <cstdlib>
-#   include <cstdio>
-#   include <cstddef>
+#   include <museum/5.0.0/external/libcxx/cstdlib>
+#   include <museum/5.0.0/external/libcxx/cstdio>
+#   include <museum/5.0.0/external/libcxx/cstddef>
 #   ifndef _LIBCPP_ASSERT
 #      define _LIBCPP_ASSERT(x, m) ((x) ? (void)0 : (_VSTD::printf("%s\n", m), _VSTD::abort()))
 #   endif

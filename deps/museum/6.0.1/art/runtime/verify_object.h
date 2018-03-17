@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_VERIFY_OBJECT_H_
 #define ART_RUNTIME_VERIFY_OBJECT_H_
 
-#include <stdint.h>
+#include <museum/6.0.1/bionic/libc/stdint.h>
 
-#include "base/macros.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
 
 namespace art {
 

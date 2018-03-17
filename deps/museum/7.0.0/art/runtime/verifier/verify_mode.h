@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_VERIFIER_VERIFY_MODE_H_
 #define ART_RUNTIME_VERIFIER_VERIFY_MODE_H_
 
-#include <stdint.h>
+#include <museum/7.0.0/bionic/libc/stdint.h>
 
 namespace art {
 namespace verifier {

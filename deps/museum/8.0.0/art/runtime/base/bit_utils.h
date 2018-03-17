@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_BASE_BIT_UTILS_H_
 #define ART_RUNTIME_BASE_BIT_UTILS_H_
 
-#include <iterator>
-#include <limits>
-#include <type_traits>
+#include <museum/8.0.0/external/libcxx/iterator>
+#include <museum/8.0.0/external/libcxx/limits>
+#include <museum/8.0.0/external/libcxx/type_traits>
 
-#include "base/iteration_range.h"
-#include "base/logging.h"
-#include "base/stl_util.h"
+#include <museum/8.0.0/art/runtime/base/iteration_range.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/base/stl_util.h>
 
 namespace art {
 

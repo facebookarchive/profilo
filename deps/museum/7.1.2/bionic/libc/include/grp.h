@@ -40,8 +40,8 @@
 #ifndef _GRP_H_
 #define	_GRP_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
 
 struct group {
 	char	*gr_name;		/* group name */

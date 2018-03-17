@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _ASM_X86_KVM_H
 #define _ASM_X86_KVM_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DE_VECTOR 0
 #define DB_VECTOR 1

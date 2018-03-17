@@ -29,11 +29,11 @@
 #ifndef _SYS_INOTIFY_H_
 #define _SYS_INOTIFY_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <stdint.h>
-#include <linux/inotify.h>
-#include <asm/fcntl.h> /* For O_CLOEXEC and O_NONBLOCK. */
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
+#include <museum/8.0.0/bionic/libc/stdint.h>
+#include <museum/8.0.0/bionic/libc/linux/inotify.h>
+#include <museum/8.0.0/bionic/libc/asm/fcntl.h> /* For O_CLOEXEC and O_NONBLOCK. */
 
 __BEGIN_DECLS
 

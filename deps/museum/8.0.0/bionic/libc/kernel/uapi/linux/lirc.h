@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_LIRC_H
 #define _LINUX_LIRC_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PULSE_BIT 0x01000000
 #define PULSE_MASK 0x00FFFFFF

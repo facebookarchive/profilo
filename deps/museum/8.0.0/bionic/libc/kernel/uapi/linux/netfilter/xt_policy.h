@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _XT_POLICY_H
 #define _XT_POLICY_H
-#include <linux/types.h>
-#include <linux/in.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/in.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/in6.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
 #define XT_POLICY_MAX_ELEM 4
 enum xt_policy_flags {
   XT_POLICY_MATCH_IN = 0x1,

@@ -85,11 +85,11 @@ void  operator delete[](void* ptr, void*) noexcept;
 
 */
 
-#include <__config>
-#include <exception>
-#include <cstddef>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/exception>
+#include <museum/8.0.0/external/libcxx/cstddef>
 #ifdef _LIBCPP_NO_EXCEPTIONS
-#include <cstdlib>
+#include <museum/8.0.0/external/libcxx/cstdlib>
 #endif
 
 #if defined(_LIBCPP_ABI_MICROSOFT)

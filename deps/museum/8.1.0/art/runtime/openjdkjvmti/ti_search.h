@@ -32,7 +32,7 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_TI_SEARCH_H_
 #define ART_RUNTIME_OPENJDKJVMTI_TI_SEARCH_H_
 
-#include <vector>
+#include <museum/8.1.0/external/libcxx/vector>
 
 #include "jvmti.h"
 

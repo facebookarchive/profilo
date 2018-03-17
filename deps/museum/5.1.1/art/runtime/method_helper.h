@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_METHOD_HELPER_H_
 #define ART_RUNTIME_METHOD_HELPER_H_
 
-#include "base/macros.h"
-#include "handle.h"
-#include "mirror/art_method.h"
-#include "primitive.h"
+#include <museum/5.1.1/art/runtime/base/macros.h>
+#include <museum/5.1.1/art/runtime/handle.h>
+#include <museum/5.1.1/art/runtime/mirror/art_method.h>
+#include <museum/5.1.1/art/runtime/primitive.h>
 
 namespace art {
 

@@ -13,8 +13,8 @@
 #ifndef ART_RUNTIME_JIT_PROFILE_SAVER_OPTIONS_H_
 #define ART_RUNTIME_JIT_PROFILE_SAVER_OPTIONS_H_
 
-#include <string>
-#include <ostream>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/ostream>
 
 namespace art {
 

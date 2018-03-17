@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_IDT77105_H
 #define LINUX_ATM_IDT77105_H
-#include <linux/types.h>
-#include <linux/atmioc.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/atmioc.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/atmdev.h>
+#include <museum/5.1.1/bionic/libc/linux/atmdev.h>
 struct idt77105_stats {
  __u32 symbol_errors;
  __u32 tx_cells;

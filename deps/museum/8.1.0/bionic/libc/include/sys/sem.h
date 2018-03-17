@@ -29,15 +29,15 @@
 #ifndef _SYS_SEM_H_
 #define _SYS_SEM_H_
 
-#include <sys/cdefs.h>
-#include <sys/ipc.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/ipc.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
 #if defined(__USE_GNU)
-#include <bits/timespec.h>
+#include <museum/8.1.0/bionic/libc/bits/timespec.h>
 #endif
 
-#include <linux/sem.h>
+#include <museum/8.1.0/bionic/libc/linux/sem.h>
 
 __BEGIN_DECLS
 

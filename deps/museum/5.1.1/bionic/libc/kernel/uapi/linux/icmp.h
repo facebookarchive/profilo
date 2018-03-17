@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ICMP_H
 #define _UAPI_LINUX_ICMP_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define ICMP_ECHOREPLY 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ICMP_DEST_UNREACH 3

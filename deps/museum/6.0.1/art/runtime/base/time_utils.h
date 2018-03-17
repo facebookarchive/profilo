@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_TIME_UTILS_H_
 #define ART_RUNTIME_BASE_TIME_UTILS_H_
 
-#include <stdint.h>
-#include <string>
-#include <time.h>
+#include <museum/6.0.1/bionic/libc/stdint.h>
+#include <museum/6.0.1/external/libcxx/string>
+#include <museum/6.0.1/bionic/libc/time.h>
 
-#include "base/macros.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
 
 namespace art {
 

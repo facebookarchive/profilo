@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_OBJ_PTR_INL_H_
 #define ART_RUNTIME_OBJ_PTR_INL_H_
 
-#include "base/bit_utils.h"
-#include "obj_ptr.h"
-#include "thread-current-inl.h"
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
 
 namespace art {
 

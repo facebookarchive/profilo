@@ -29,7 +29,7 @@
 #ifndef _MACHINE_TIMESPEC_H_
 #define _MACHINE_TIMESPEC_H_
 
-#include <sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
 
 /*
  * This file is used to include timespec definition without introducing the whole

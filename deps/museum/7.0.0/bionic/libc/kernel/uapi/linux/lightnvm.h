@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_LIGHTNVM_H
 #define _UAPI_LINUX_LIGHTNVM_H
-#include <stdio.h>
-#include <sys/ioctl.h>
+#include <museum/7.0.0/bionic/libc/stdio.h>
+#include <museum/7.0.0/bionic/libc/sys/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DISK_NAME_LEN 32
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 #define NVM_TTYPE_NAME_MAX 48
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NVM_TTYPE_MAX 63

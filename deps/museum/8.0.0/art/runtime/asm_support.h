@@ -18,21 +18,21 @@
 #define ART_RUNTIME_ASM_SUPPORT_H_
 
 #if defined(__cplusplus)
-#include "art_method.h"
-#include "base/bit_utils.h"
-#include "gc/allocator/rosalloc.h"
-#include "gc/heap.h"
-#include "jit/jit.h"
-#include "lock_word.h"
-#include "mirror/class.h"
-#include "mirror/dex_cache.h"
-#include "mirror/string.h"
-#include "utils/dex_cache_arrays_layout.h"
-#include "runtime.h"
-#include "thread.h"
+#include <museum/8.0.0/art/runtime/art_method.h>
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/gc/allocator/rosalloc.h>
+#include <museum/8.0.0/art/runtime/gc/heap.h>
+#include <museum/8.0.0/art/runtime/jit/jit.h>
+#include <museum/8.0.0/art/runtime/lock_word.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/mirror/dex_cache.h>
+#include <museum/8.0.0/art/runtime/mirror/string.h>
+#include <museum/8.0.0/art/runtime/utils/dex_cache_arrays_layout.h>
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/art/runtime/thread.h>
 #endif
 
-#include "read_barrier_c.h"
+#include <museum/8.0.0/art/runtime/read_barrier_c.h>
 
 #if defined(__arm__) || defined(__mips__)
 // In quick code for ARM and MIPS we make poor use of registers and perform frequent suspend

@@ -17,7 +17,7 @@
 #ifndef SCOPED_PRIMITIVE_ARRAY_H_included
 #define SCOPED_PRIMITIVE_ARRAY_H_included
 
-#include "JNIHelp.h"
+#include <museum/7.1.2/libnativehelper/JNIHelp.h>
 
 // ScopedBooleanArrayRO, ScopedByteArrayRO, ScopedCharArrayRO, ScopedDoubleArrayRO,
 // ScopedFloatArrayRO, ScopedIntArrayRO, ScopedLongArrayRO, and ScopedShortArrayRO provide

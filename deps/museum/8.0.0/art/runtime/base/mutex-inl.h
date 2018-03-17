@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_BASE_MUTEX_INL_H_
 #define ART_RUNTIME_BASE_MUTEX_INL_H_
 
-#include <inttypes.h>
+#include <museum/8.0.0/external/libcxx/inttypes.h>
 
-#include "mutex.h"
+#include <museum/8.0.0/art/runtime/base/mutex.h>
 
-#include "base/value_object.h"
-#include "thread.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/base/value_object.h>
+#include <museum/8.0.0/art/runtime/thread.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 #if ART_USE_FUTEXES
-#include "linux/futex.h"
-#include "sys/syscall.h"
+#include <museum/8.0.0/bionic/libc/linux/futex.h>
+#include <museum/8.0.0/bionic/libc/sys/syscall.h>
 #ifndef SYS_futex
 #define SYS_futex __NR_futex
 #endif

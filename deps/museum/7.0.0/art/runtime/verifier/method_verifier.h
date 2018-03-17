@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_
 #define ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_
 
-#include <memory>
-#include <sstream>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/sstream>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "base/arena_allocator.h"
-#include "base/macros.h"
-#include "base/scoped_arena_containers.h"
-#include "base/stl_util.h"
-#include "base/value_object.h"
-#include "dex_file.h"
-#include "handle.h"
-#include "instruction_flags.h"
-#include "method_reference.h"
-#include "register_line.h"
-#include "reg_type_cache.h"
+#include <museum/7.0.0/art/runtime/base/arena_allocator.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/scoped_arena_containers.h>
+#include <museum/7.0.0/art/runtime/base/stl_util.h>
+#include <museum/7.0.0/art/runtime/base/value_object.h>
+#include <museum/7.0.0/art/runtime/dex_file.h>
+#include <museum/7.0.0/art/runtime/handle.h>
+#include <museum/7.0.0/art/runtime/verifier/instruction_flags.h>
+#include <museum/7.0.0/art/runtime/method_reference.h>
+#include <museum/7.0.0/art/runtime/verifier/register_line.h>
+#include <museum/7.0.0/art/runtime/verifier/reg_type_cache.h>
 
 namespace art {
 

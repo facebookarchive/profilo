@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __GENWQE_CARD_H__
 #define __GENWQE_CARD_H__
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define GENWQE_DEVNAME "genwqe"
 #define GENWQE_TYPE_ALTERA_230 0x00

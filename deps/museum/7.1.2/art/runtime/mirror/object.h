@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_H_
 #define ART_RUNTIME_MIRROR_OBJECT_H_
 
-#include "base/casts.h"
-#include "globals.h"
-#include "object_reference.h"
-#include "offsets.h"
-#include "verify_object.h"
+#include <museum/7.1.2/art/runtime/base/casts.h>
+#include <museum/7.1.2/art/runtime/globals.h>
+#include <museum/7.1.2/art/runtime/mirror/object_reference.h>
+#include <museum/7.1.2/art/runtime/offsets.h>
+#include <museum/7.1.2/art/runtime/verify_object.h>
 
 namespace art {
 

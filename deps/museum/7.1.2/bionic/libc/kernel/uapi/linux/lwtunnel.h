@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LWTUNNEL_H_
 #define _UAPI_LWTUNNEL_H_
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 enum lwtunnel_encap_types {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   LWTUNNEL_ENCAP_NONE,

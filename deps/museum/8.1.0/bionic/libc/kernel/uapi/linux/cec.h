@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _CEC_UAPI_H
 #define _CEC_UAPI_H
-#include <linux/types.h>
-#include <linux/string.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/string.h>
 #define CEC_MAX_MSG_SIZE 16
 struct cec_msg {
   __u64 tx_ts;

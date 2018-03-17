@@ -17,25 +17,25 @@
 #ifndef ART_RUNTIME_GC_HEAP_INL_H_
 #define ART_RUNTIME_GC_HEAP_INL_H_
 
-#include "heap.h"
+#include <museum/8.1.0/art/runtime/gc/heap.h>
 
-#include "allocation_listener.h"
-#include "base/time_utils.h"
-#include "gc/accounting/atomic_stack.h"
-#include "gc/accounting/card_table-inl.h"
-#include "gc/allocation_record.h"
-#include "gc/collector/semi_space.h"
-#include "gc/space/bump_pointer_space-inl.h"
-#include "gc/space/dlmalloc_space-inl.h"
-#include "gc/space/large_object_space.h"
-#include "gc/space/region_space-inl.h"
-#include "gc/space/rosalloc_space-inl.h"
-#include "obj_ptr-inl.h"
-#include "runtime.h"
-#include "handle_scope-inl.h"
-#include "thread-inl.h"
-#include "utils.h"
-#include "verify_object.h"
+#include <museum/8.1.0/art/runtime/gc/allocation_listener.h>
+#include <museum/8.1.0/art/runtime/base/time_utils.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/atomic_stack.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/card_table-inl.h>
+#include <museum/8.1.0/art/runtime/gc/allocation_record.h>
+#include <museum/8.1.0/art/runtime/gc/collector/semi_space.h>
+#include <museum/8.1.0/art/runtime/gc/space/bump_pointer_space-inl.h>
+#include <museum/8.1.0/art/runtime/gc/space/dlmalloc_space-inl.h>
+#include <museum/8.1.0/art/runtime/gc/space/large_object_space.h>
+#include <museum/8.1.0/art/runtime/gc/space/region_space-inl.h>
+#include <museum/8.1.0/art/runtime/gc/space/rosalloc_space-inl.h>
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.1.0/art/runtime/runtime.h>
+#include <museum/8.1.0/art/runtime/handle_scope-inl.h>
+#include <museum/8.1.0/art/runtime/thread-inl.h>
+#include <museum/8.1.0/art/runtime/utils.h>
+#include <museum/8.1.0/art/runtime/verify_object.h>
 
 namespace art {
 namespace gc {

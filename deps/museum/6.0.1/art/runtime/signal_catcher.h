@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_SIGNAL_CATCHER_H_
 #define ART_RUNTIME_SIGNAL_CATCHER_H_
 
-#include "base/mutex.h"
+#include <museum/6.0.1/art/runtime/base/mutex.h>
 
 namespace art {
 

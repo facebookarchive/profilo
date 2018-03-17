@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_REFLECTION_H_
 #define ART_RUNTIME_REFLECTION_H_
 
-#include "base/mutex.h"
-#include "jni.h"
-#include "primitive.h"
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
+#include <museum/7.1.2/art/runtime/primitive.h>
 
 namespace art {
 namespace mirror {

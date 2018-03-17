@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _NF_CONNTRACK_TUPLE_COMMON_H
 #define _NF_CONNTRACK_TUPLE_COMMON_H
-#include <linux/types.h>
-#include <linux/netfilter.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/netfilter/nf_conntrack_common.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter/nf_conntrack_common.h>
 enum ip_conntrack_dir {
   IP_CT_DIR_ORIGINAL,
   IP_CT_DIR_REPLY,

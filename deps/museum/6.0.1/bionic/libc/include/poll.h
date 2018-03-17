@@ -29,10 +29,10 @@
 #ifndef _POLL_H_
 #define _POLL_H_
 
-#include <sys/cdefs.h>
-#include <linux/poll.h>
-#include <signal.h> /* For sigset_t. */
-#include <time.h> /* For timespec. */
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/linux/poll.h>
+#include <museum/6.0.1/bionic/libc/signal.h> /* For sigset_t. */
+#include <museum/6.0.1/bionic/libc/time.h> /* For timespec. */
 
 __BEGIN_DECLS
 

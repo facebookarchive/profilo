@@ -29,15 +29,15 @@
 #ifndef _FCNTL_H
 #define _FCNTL_H
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/fadvise.h>
-#include <linux/fcntl.h>
-#include <linux/stat.h>
-#include <linux/uio.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
+#include <museum/7.1.2/bionic/libc/linux/fadvise.h>
+#include <museum/7.1.2/bionic/libc/linux/fcntl.h>
+#include <museum/7.1.2/bionic/libc/linux/stat.h>
+#include <museum/7.1.2/bionic/libc/linux/uio.h>
 
 #if defined(__USE_GNU) || defined(__USE_BSD)
-#include <bits/lockf.h>
+#include <museum/7.1.2/bionic/libc/bits/lockf.h>
 #endif
 
 __BEGIN_DECLS

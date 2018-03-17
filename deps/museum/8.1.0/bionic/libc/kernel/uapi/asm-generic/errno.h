@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ASM_GENERIC_ERRNO_H
 #define _ASM_GENERIC_ERRNO_H
-#include <asm-generic/errno-base.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/errno-base.h>
 #define EDEADLK 35
 #define ENAMETOOLONG 36
 #define ENOLCK 37

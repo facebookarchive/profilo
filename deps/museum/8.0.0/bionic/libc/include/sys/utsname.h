@@ -29,7 +29,7 @@
 #ifndef _SYS_UTSNAME_H_
 #define _SYS_UTSNAME_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

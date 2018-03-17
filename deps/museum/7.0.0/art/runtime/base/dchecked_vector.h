@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_DCHECKED_VECTOR_H_
 #define ART_RUNTIME_BASE_DCHECKED_VECTOR_H_
 
-#include <algorithm>
-#include <type_traits>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/algorithm>
+#include <museum/7.0.0/external/libcxx/type_traits>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "base/logging.h"
+#include <museum/7.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

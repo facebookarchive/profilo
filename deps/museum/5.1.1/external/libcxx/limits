@@ -106,17 +106,17 @@ template<> class numeric_limits<cv long double>;
 #pragma GCC system_header
 #endif
 
-#include <__config>
-#include <type_traits>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/type_traits>
 
-#include <__undef_min_max>
+#include <museum/5.1.1/external/libcxx/__undef_min_max>
 
 #if defined(_LIBCPP_MSVCRT)
-#include "support/win32/limits_win32.h"
+#include <museum/5.1.1/external/libcxx/support/win32/limits_win32.h>
 #endif // _LIBCPP_MSVCRT
 
 #if defined(__IBMCPP__)
-#include "support/ibm/limits.h"
+#include <museum/5.1.1/external/libcxx/support/ibm/limits.h>
 #endif // __IBMCPP__
 
 _LIBCPP_BEGIN_NAMESPACE_STD

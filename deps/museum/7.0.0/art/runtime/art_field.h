@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_ART_FIELD_H_
 #define ART_RUNTIME_ART_FIELD_H_
 
-#include <jni.h>
+#include <museum/7.0.0/libnativehelper/jni.h>
 
-#include "gc_root.h"
-#include "modifiers.h"
-#include "offsets.h"
-#include "primitive.h"
-#include "read_barrier_option.h"
+#include <museum/7.0.0/art/runtime/gc_root.h>
+#include <museum/7.0.0/art/runtime/modifiers.h>
+#include <museum/7.0.0/art/runtime/offsets.h>
+#include <museum/7.0.0/art/runtime/primitive.h>
+#include <museum/7.0.0/art/runtime/read_barrier_option.h>
 
 namespace art {
 

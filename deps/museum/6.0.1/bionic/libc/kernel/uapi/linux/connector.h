@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__CONNECTOR_H
 #define _UAPI__CONNECTOR_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define CN_IDX_PROC 0x1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CN_VAL_PROC 0x1

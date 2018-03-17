@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_NFQ_TARGET_H
 #define _XT_NFQ_TARGET_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 struct xt_NFQ_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u16 queuenum;

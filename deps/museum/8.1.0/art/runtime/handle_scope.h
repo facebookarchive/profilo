@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_HANDLE_SCOPE_H_
 #define ART_RUNTIME_HANDLE_SCOPE_H_
 
-#include <stack>
+#include <museum/8.1.0/external/libcxx/stack>
 
-#include "base/enums.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "handle.h"
-#include "stack_reference.h"
-#include "verify_object.h"
+#include <museum/8.1.0/art/runtime/base/enums.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/handle.h>
+#include <museum/8.1.0/art/runtime/stack_reference.h>
+#include <museum/8.1.0/art/runtime/verify_object.h>
 
 namespace art {
 

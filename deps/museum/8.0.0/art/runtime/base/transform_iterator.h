@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BASE_TRANSFORM_ITERATOR_H_
 #define ART_RUNTIME_BASE_TRANSFORM_ITERATOR_H_
 
-#include <iterator>
-#include <type_traits>
+#include <museum/8.0.0/external/libcxx/iterator>
+#include <museum/8.0.0/external/libcxx/type_traits>
 
-#include "base/iteration_range.h"
+#include <museum/8.0.0/art/runtime/base/iteration_range.h>
 
 namespace art {
 

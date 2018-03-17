@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NVME_IOCTL_H
 #define _UAPI_LINUX_NVME_IOCTL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct nvme_user_io {
   __u8 opcode;
   __u8 flags;

@@ -3,4 +3,4 @@
  * No standard mentions a <sys/sysconf.h>, but there are enough users in vendor (and potential ones
  * in the NDK) to warrant not breaking source compatibility.
  */
-#include <bits/sysconf.h>
+#include <museum/8.0.0/bionic/libc/bits/sysconf.h>

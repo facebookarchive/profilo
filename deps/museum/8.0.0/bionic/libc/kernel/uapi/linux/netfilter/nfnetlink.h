@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_NFNETLINK_H
 #define _UAPI_NFNETLINK_H
-#include <linux/types.h>
-#include <linux/netfilter/nfnetlink_compat.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter/nfnetlink_compat.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum nfnetlink_groups {
   NFNLGRP_NONE,

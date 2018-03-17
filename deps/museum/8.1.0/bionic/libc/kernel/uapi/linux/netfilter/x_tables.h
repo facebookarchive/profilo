@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_X_TABLES_H
 #define _UAPI_X_TABLES_H
-#include <linux/kernel.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/kernel.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_FUNCTION_MAXNAMELEN 30
 #define XT_EXTENSION_MAXNAMELEN 29
 #define XT_TABLE_MAXNAMELEN 32

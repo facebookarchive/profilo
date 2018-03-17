@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__CRAMFS_H
 #define _UAPI__CRAMFS_H
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CRAMFS_SIGNATURE "Compressed ROMFS"
 #define CRAMFS_MODE_WIDTH 16

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_H
 #define _UAPI_CAN_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CAN_EFF_FLAG 0x80000000U
 #define CAN_RTR_FLAG 0x40000000U

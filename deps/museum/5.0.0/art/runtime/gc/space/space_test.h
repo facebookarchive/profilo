@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_GC_SPACE_SPACE_TEST_H_
 #define ART_RUNTIME_GC_SPACE_SPACE_TEST_H_
 
-#include <stdint.h>
-#include <memory>
+#include <museum/5.0.0/bionic/libc/stdint.h>
+#include <museum/5.0.0/external/libcxx/memory>
 
-#include "common_runtime_test.h"
-#include "globals.h"
-#include "mirror/array-inl.h"
-#include "mirror/object-inl.h"
-#include "scoped_thread_state_change.h"
-#include "zygote_space.h"
+#include <museum/5.0.0/art/runtime/common_runtime_test.h>
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/mirror/array-inl.h>
+#include <museum/5.0.0/art/runtime/mirror/object-inl.h>
+#include <museum/5.0.0/art/runtime/scoped_thread_state_change.h>
+#include <museum/5.0.0/art/runtime/gc/space/zygote_space.h>
 
 namespace art {
 namespace gc {

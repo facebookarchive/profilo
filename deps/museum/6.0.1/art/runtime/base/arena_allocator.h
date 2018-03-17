@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_BASE_ARENA_ALLOCATOR_H_
 #define ART_RUNTIME_BASE_ARENA_ALLOCATOR_H_
 
-#include <stdint.h>
+#include <museum/6.0.1/bionic/libc/stdint.h>
 #include <stddef.h>
 
-#include "base/bit_utils.h"
-#include "debug_stack.h"
-#include "macros.h"
-#include "mutex.h"
+#include <museum/6.0.1/art/runtime/base/bit_utils.h>
+#include <museum/6.0.1/art/runtime/base/debug_stack.h>
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/base/mutex.h>
 
 namespace art {
 

@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_IF_PPPOL2TP_H
 #define _UAPI__LINUX_IF_PPPOL2TP_H
-#include <linux/types.h>
-#include <linux/in.h>
-#include <linux/in6.h>
-#include <linux/l2tp.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/in.h>
+#include <museum/8.1.0/bionic/libc/linux/in6.h>
+#include <museum/8.1.0/bionic/libc/linux/l2tp.h>
 struct pppol2tp_addr {
   __kernel_pid_t pid;
   int fd;

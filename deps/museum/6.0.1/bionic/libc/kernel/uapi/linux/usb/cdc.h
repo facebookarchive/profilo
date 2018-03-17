@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_CDC_H
 #define __LINUX_USB_CDC_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define USB_CDC_SUBCLASS_ACM 0x02
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define USB_CDC_SUBCLASS_ETHERNET 0x06

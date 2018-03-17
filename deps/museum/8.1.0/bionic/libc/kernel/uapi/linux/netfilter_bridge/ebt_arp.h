@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_ARP_H
 #define __LINUX_BRIDGE_EBT_ARP_H
-#include <linux/types.h>
-#include <linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 #define EBT_ARP_OPCODE 0x01
 #define EBT_ARP_HTYPE 0x02
 #define EBT_ARP_PTYPE 0x04

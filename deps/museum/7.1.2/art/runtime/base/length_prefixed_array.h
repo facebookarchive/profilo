@@ -18,12 +18,12 @@
 #define ART_RUNTIME_BASE_LENGTH_PREFIXED_ARRAY_H_
 
 #include <stddef.h>  // for offsetof()
-#include <string.h>  // for memset()
+#include <museum/7.1.2/bionic/libc/string.h>  // for memset()
 
-#include "stride_iterator.h"
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "base/iteration_range.h"
+#include <museum/7.1.2/art/runtime/stride_iterator.h>
+#include <museum/7.1.2/art/runtime/base/bit_utils.h>
+#include <museum/7.1.2/art/runtime/base/casts.h>
+#include <museum/7.1.2/art/runtime/base/iteration_range.h>
 
 namespace art {
 

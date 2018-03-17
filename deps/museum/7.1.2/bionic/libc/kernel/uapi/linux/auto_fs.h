@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_AUTO_FS_H
 #define _UAPI_LINUX_AUTO_FS_H
-#include <linux/types.h>
-#include <sys/ioctl.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/sys/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define AUTOFS_PROTO_VERSION 3
 #define AUTOFS_MAX_PROTO_VERSION AUTOFS_PROTO_VERSION

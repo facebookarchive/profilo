@@ -17,20 +17,20 @@
 #ifndef ART_RUNTIME_GC_HEAP_INL_H_
 #define ART_RUNTIME_GC_HEAP_INL_H_
 
-#include "heap.h"
+#include <museum/5.0.0/art/runtime/gc/heap.h>
 
-#include "debugger.h"
-#include "gc/accounting/card_table-inl.h"
-#include "gc/collector/semi_space.h"
-#include "gc/space/bump_pointer_space-inl.h"
-#include "gc/space/dlmalloc_space-inl.h"
-#include "gc/space/large_object_space.h"
-#include "gc/space/rosalloc_space-inl.h"
-#include "runtime.h"
-#include "handle_scope-inl.h"
-#include "thread.h"
-#include "thread-inl.h"
-#include "verify_object-inl.h"
+#include <museum/5.0.0/art/runtime/debugger.h>
+#include <museum/5.0.0/art/runtime/gc/accounting/card_table-inl.h>
+#include <museum/5.0.0/art/runtime/gc/collector/semi_space.h>
+#include <museum/5.0.0/art/runtime/gc/space/bump_pointer_space-inl.h>
+#include <museum/5.0.0/art/runtime/gc/space/dlmalloc_space-inl.h>
+#include <museum/5.0.0/art/runtime/gc/space/large_object_space.h>
+#include <museum/5.0.0/art/runtime/gc/space/rosalloc_space-inl.h>
+#include <museum/5.0.0/art/runtime/runtime.h>
+#include <museum/5.0.0/art/runtime/handle_scope-inl.h>
+#include <museum/5.0.0/art/runtime/thread.h>
+#include <museum/5.0.0/art/runtime/thread-inl.h>
+#include <museum/5.0.0/art/runtime/verify_object-inl.h>
 
 namespace art {
 namespace gc {

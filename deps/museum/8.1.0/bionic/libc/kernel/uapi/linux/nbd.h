@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NBD_H
 #define _UAPILINUX_NBD_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define NBD_SET_SOCK _IO(0xab, 0)
 #define NBD_SET_BLKSIZE _IO(0xab, 1)
 #define NBD_SET_SIZE _IO(0xab, 2)

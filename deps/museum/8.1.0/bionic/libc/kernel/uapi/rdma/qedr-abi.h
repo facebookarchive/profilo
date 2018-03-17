@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __QEDR_USER_H__
 #define __QEDR_USER_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define QEDR_ABI_VERSION (8)
 struct qedr_alloc_ucontext_resp {
   __u64 db_pa;

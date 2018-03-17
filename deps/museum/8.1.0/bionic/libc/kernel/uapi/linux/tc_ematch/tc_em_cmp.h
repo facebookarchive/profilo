@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_EM_CMP_H
 #define __LINUX_TC_EM_CMP_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 struct tcf_em_cmp {
   __u32 val;
   __u32 mask;

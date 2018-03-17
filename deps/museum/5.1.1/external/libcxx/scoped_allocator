@@ -103,8 +103,8 @@ template <class OuterA1, class OuterA2, class... InnerAllocs>
 
 */
 
-#include <__config>
-#include <memory>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/memory>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

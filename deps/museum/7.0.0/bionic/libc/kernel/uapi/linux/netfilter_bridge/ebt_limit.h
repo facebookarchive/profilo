@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_LIMIT_H
 #define __LINUX_BRIDGE_EBT_LIMIT_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 #define EBT_LIMIT_MATCH "limit"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EBT_LIMIT_SCALE 10000

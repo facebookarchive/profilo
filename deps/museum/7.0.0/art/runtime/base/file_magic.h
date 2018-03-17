@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BASE_FILE_MAGIC_H_
 #define ART_RUNTIME_BASE_FILE_MAGIC_H_
 
-#include <stdint.h>
-#include <string>
+#include <museum/7.0.0/bionic/libc/stdint.h>
+#include <museum/7.0.0/external/libcxx/string>
 
-#include "ScopedFd.h"
+#include <museum/7.0.0/libnativehelper/ScopedFd.h>
 
 namespace art {
 

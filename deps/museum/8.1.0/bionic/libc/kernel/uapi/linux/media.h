@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef __LINUX_MEDIA_H
 #define __LINUX_MEDIA_H
-#include <stdint.h>
-#include <linux/ioctl.h>
-#include <linux/types.h>
-#include <linux/version.h>
+#include <museum/8.1.0/bionic/libc/stdint.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/version.h>
 #define MEDIA_API_VERSION KERNEL_VERSION(0, 1, 0)
 struct media_device_info {
   char driver[16];

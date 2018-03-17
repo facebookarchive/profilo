@@ -18,17 +18,17 @@
 #define ART_RUNTIME_ASM_SUPPORT_H_
 
 #if defined(__cplusplus)
-#include "art_method.h"
-#include "gc/allocator/rosalloc.h"
-#include "jit/jit.h"
-#include "lock_word.h"
-#include "mirror/class.h"
-#include "mirror/string.h"
-#include "runtime.h"
-#include "thread.h"
+#include <museum/7.0.0/art/runtime/art_method.h>
+#include <museum/7.0.0/art/runtime/gc/allocator/rosalloc.h>
+#include <museum/7.0.0/art/runtime/jit/jit.h>
+#include <museum/7.0.0/art/runtime/lock_word.h>
+#include <museum/7.0.0/art/runtime/mirror/class.h>
+#include <museum/7.0.0/art/runtime/mirror/string.h>
+#include <museum/7.0.0/art/runtime/runtime.h>
+#include <museum/7.0.0/art/runtime/thread.h>
 #endif
 
-#include "read_barrier_c.h"
+#include <museum/7.0.0/art/runtime/read_barrier_c.h>
 
 #if defined(__arm__) || defined(__mips__)
 // In quick code for ARM and MIPS we make poor use of registers and perform frequent suspend

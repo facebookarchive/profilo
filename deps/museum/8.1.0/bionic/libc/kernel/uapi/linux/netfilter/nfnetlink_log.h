@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _NFNETLINK_LOG_H
 #define _NFNETLINK_LOG_H
-#include <linux/types.h>
-#include <linux/netfilter/nfnetlink.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter/nfnetlink.h>
 enum nfulnl_msg_types {
   NFULNL_MSG_PACKET,
   NFULNL_MSG_CONFIG,

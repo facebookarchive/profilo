@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_PARTIAL_MARK_SWEEP_H_
 #define ART_RUNTIME_GC_COLLECTOR_PARTIAL_MARK_SWEEP_H_
 
-#include "mark_sweep.h"
+#include <museum/8.0.0/art/runtime/gc/collector/mark_sweep.h>
 
 namespace art {
 namespace gc {

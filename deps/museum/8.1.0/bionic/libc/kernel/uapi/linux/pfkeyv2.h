@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_PFKEY2_H
 #define _LINUX_PFKEY2_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define PF_KEY_V2 2
 #define PFKEYV2_REVISION 199806L
 struct sadb_msg {

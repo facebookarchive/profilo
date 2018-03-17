@@ -19,7 +19,7 @@
 #ifndef __BPQETHER_H
 #define __BPQETHER_H
 #ifndef __LINUX_IF_ETHER_H
-#include <linux/if_ether.h>
+#include <museum/5.1.1/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif
 #define SIOCSBPQETHOPT (SIOCDEVPRIVATE+0)

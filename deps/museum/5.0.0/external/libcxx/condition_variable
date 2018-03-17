@@ -107,9 +107,9 @@ public:
 
 */
 
-#include <__config>
-#include <__mutex_base>
-#include <memory>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/__mutex_base>
+#include <museum/5.0.0/external/libcxx/memory>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_HE_H
 #define LINUX_ATM_HE_H
-#include <linux/atmioc.h>
+#include <museum/6.0.1/bionic/libc/linux/atmioc.h>
 #define HE_GET_REG _IOW('a', ATMIOC_SARPRV, struct atmif_sioc)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define HE_REGTYPE_PCI 1

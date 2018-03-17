@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_REFLECTION_INL_H_
 #define ART_RUNTIME_REFLECTION_INL_H_
 
-#include "reflection.h"
+#include <museum/8.0.0/art/runtime/reflection.h>
 
-#include "android-base/stringprintf.h"
+#include <museum/8.0.0/android-base/stringprintf.h>
 
-#include "common_throws.h"
-#include "jvalue-inl.h"
-#include "mirror/object-inl.h"
-#include "obj_ptr-inl.h"
-#include "primitive.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/common_throws.h>
+#include <museum/8.0.0/art/runtime/jvalue-inl.h>
+#include <museum/8.0.0/art/runtime/mirror/object-inl.h>
+#include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.0.0/art/runtime/primitive.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

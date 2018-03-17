@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_MACSEC_H
 #define _UAPI_MACSEC_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define MACSEC_GENL_NAME "macsec"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MACSEC_GENL_VERSION 1

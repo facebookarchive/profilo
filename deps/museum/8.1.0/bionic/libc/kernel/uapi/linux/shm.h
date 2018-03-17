@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SHM_H_
 #define _UAPI_LINUX_SHM_H_
-#include <linux/ipc.h>
-#include <linux/errno.h>
-#include <unistd.h>
+#include <museum/8.1.0/bionic/libc/linux/ipc.h>
+#include <museum/8.1.0/bionic/libc/linux/errno.h>
+#include <museum/8.1.0/bionic/libc/unistd.h>
 #define SHMMIN 1
 #define SHMMNI 4096
 #define SHMMAX (ULONG_MAX - (1UL << 24))
@@ -39,7 +39,7 @@ struct __kernel_legacy_shmid_ds {
   void * shm_unused2;
   void * shm_unused3;
 };
-#include <asm/shmbuf.h>
+#include <museum/8.1.0/bionic/libc/asm/shmbuf.h>
 #define SHM_R 0400
 #define SHM_W 0200
 #define SHM_RDONLY 010000

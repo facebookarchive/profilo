@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _DLM_NETLINK_H
 #define _DLM_NETLINK_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   DLM_STATUS_WAITING = 1,
   DLM_STATUS_GRANTED = 2,

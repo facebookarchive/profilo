@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IGMP_H
 #define _UAPI_LINUX_IGMP_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 struct igmphdr {
   __u8 type;
   __u8 code;

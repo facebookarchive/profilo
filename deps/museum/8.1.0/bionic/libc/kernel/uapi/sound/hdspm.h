@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __SOUND_HDSPM_H
 #define __SOUND_HDSPM_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define HDSPM_MAX_CHANNELS 64
 enum hdspm_io_type {
   MADI,

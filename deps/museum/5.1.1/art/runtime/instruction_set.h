@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_INSTRUCTION_SET_H_
 #define ART_RUNTIME_INSTRUCTION_SET_H_
 
-#include <iosfwd>
-#include <string>
+#include <museum/5.1.1/external/libcxx/iosfwd>
+#include <museum/5.1.1/external/libcxx/string>
 
-#include "base/logging.h"  // Logging is required for FATAL in the helper functions.
-#include "base/macros.h"
-#include "globals.h"       // For KB.
+#include <museum/5.1.1/art/runtime/base/logging.h>  // Logging is required for FATAL in the helper functions.
+#include <museum/5.1.1/art/runtime/base/macros.h>
+#include <museum/5.1.1/art/runtime/globals.h>       // For KB.
 
 namespace art {
 

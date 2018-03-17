@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef __UHID_H_
 #define __UHID_H_
-#include <linux/input.h>
-#include <linux/types.h>
-#include <linux/hid.h>
+#include <museum/8.1.0/bionic/libc/linux/input.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/hid.h>
 enum uhid_event_type {
   __UHID_LEGACY_CREATE,
   UHID_DESTROY,

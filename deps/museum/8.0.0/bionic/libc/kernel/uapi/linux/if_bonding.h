@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_BONDING_H
 #define _LINUX_IF_BONDING_H
-#include <linux/if.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/if.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/if_ether.h>
+#include <museum/8.0.0/bionic/libc/linux/if_ether.h>
 #define BOND_ABI_VERSION 2
 #define BOND_ENSLAVE_OLD (SIOCDEVPRIVATE)
 #define BOND_RELEASE_OLD (SIOCDEVPRIVATE + 1)

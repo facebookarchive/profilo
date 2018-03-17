@@ -40,8 +40,8 @@
 #ifndef _SETJMP_H_
 #define _SETJMP_H_
 
-#include <sys/cdefs.h>
-#include <machine/setjmp.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/machine/setjmp.h>
 
 typedef long sigjmp_buf[_JBLEN + 1];
 typedef long jmp_buf[_JBLEN];

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_JIT_DEBUGGER_INTERFACE_H_
 #define ART_RUNTIME_JIT_DEBUGGER_INTERFACE_H_
 
-#include <inttypes.h>
-#include <memory>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/inttypes.h>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/vector>
 
 namespace art {
 

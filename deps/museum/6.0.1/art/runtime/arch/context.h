@@ -18,10 +18,10 @@
 #define ART_RUNTIME_ARCH_CONTEXT_H_
 
 #include <stddef.h>
-#include <stdint.h>
+#include <museum/6.0.1/bionic/libc/stdint.h>
 
-#include "base/macros.h"
-#include "base/mutex.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/base/mutex.h>
 
 namespace art {
 

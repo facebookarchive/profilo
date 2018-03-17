@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _VIRTIO_CRYPTO_H
 #define _VIRTIO_CRYPTO_H
-#include <linux/types.h>
-#include <linux/virtio_types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/virtio_ids.h>
-#include <linux/virtio_config.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_ids.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_config.h>
 #define VIRTIO_CRYPTO_SERVICE_CIPHER 0
 #define VIRTIO_CRYPTO_SERVICE_HASH 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

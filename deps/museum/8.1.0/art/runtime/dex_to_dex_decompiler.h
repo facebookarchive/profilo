@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_DEX_TO_DEX_DECOMPILER_H_
 #define ART_RUNTIME_DEX_TO_DEX_DECOMPILER_H_
 
-#include "base/array_ref.h"
-#include "dex_file.h"
+#include <museum/8.1.0/art/runtime/base/array_ref.h>
+#include <museum/8.1.0/art/runtime/dex_file.h>
 
 namespace art {
 namespace optimizer {

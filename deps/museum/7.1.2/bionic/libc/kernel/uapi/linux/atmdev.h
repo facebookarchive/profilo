@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_ATMDEV_H
 #define _UAPILINUX_ATMDEV_H
-#include <linux/atmapi.h>
-#include <linux/atm.h>
+#include <museum/7.1.2/bionic/libc/linux/atmapi.h>
+#include <museum/7.1.2/bionic/libc/linux/atm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/atmioc.h>
+#include <museum/7.1.2/bionic/libc/linux/atmioc.h>
 #define ESI_LEN 6
 #define ATM_OC3_PCR (155520000 / 270 * 260 / 8 / 53)
 #define ATM_25_PCR ((25600000 / 8 - 8000) / 54)

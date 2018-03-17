@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6T_FRAG_H
 #define _IP6T_FRAG_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 struct ip6t_frag {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u32 ids[2];

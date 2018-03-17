@@ -1,7 +1,7 @@
-#include <string>
+#include <museum/7.0.0/external/libcxx/string>
 
-#include <elf_file.h>
-#include <elf_file_impl.h>
+#include <museum/7.0.0/art/runtime/elf_file.h>
+#include <museum/7.0.0/art/runtime/elf_file_impl.h>
 #include <museum/libart.h>
 
 namespace art {

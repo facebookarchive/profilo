@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _DVBOSD_H_
 #define _DVBOSD_H_
-#include <linux/compiler.h>
+#include <museum/5.1.1/bionic/libc/linux/compiler.h>
 typedef enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  OSD_Close=1,

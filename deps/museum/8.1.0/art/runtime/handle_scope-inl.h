@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_HANDLE_SCOPE_INL_H_
 #define ART_RUNTIME_HANDLE_SCOPE_INL_H_
 
-#include "handle_scope.h"
+#include <museum/8.1.0/art/runtime/handle_scope.h>
 
-#include "base/mutex.h"
-#include "handle.h"
-#include "obj_ptr-inl.h"
-#include "thread-current-inl.h"
-#include "verify_object.h"
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/handle.h>
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
+#include <museum/8.1.0/art/runtime/verify_object.h>
 
 namespace art {
 

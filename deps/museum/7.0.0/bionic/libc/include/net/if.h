@@ -29,9 +29,9 @@
 #ifndef _NET_IF_H_
 #define _NET_IF_H_
 
-#include <sys/socket.h>
-#include <linux/if.h>
-#include <sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/if.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 
 #ifndef IF_NAMESIZE
 #define IF_NAMESIZE IFNAMSIZ

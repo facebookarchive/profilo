@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_IMTABLE_INL_H_
 #define ART_RUNTIME_IMTABLE_INL_H_
 
-#include "imtable.h"
+#include <museum/8.0.0/art/runtime/imtable.h>
 
-#include "art_method-inl.h"
-#include "dex_file.h"
-#include "utf.h"
+#include <museum/8.0.0/art/runtime/art_method-inl.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/utf.h>
 
 namespace art {
 

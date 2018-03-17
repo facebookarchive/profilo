@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ELF_FDPIC_H
 #define _UAPI_LINUX_ELF_FDPIC_H
-#include <linux/elf.h>
+#include <museum/8.1.0/bionic/libc/linux/elf.h>
 #define PT_GNU_STACK (PT_LOOS + 0x474e551)
 struct elf32_fdpic_loadseg {
   Elf32_Addr addr;

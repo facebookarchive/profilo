@@ -34,7 +34,7 @@
 #ifndef _NET_IF_ETHER_H_
 #define _NET_IF_ETHER_H_
 
-#include <sys/types.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
 
 #ifdef _KERNEL
 #ifdef _KERNEL_OPT
@@ -76,7 +76,7 @@ struct	ether_header {
 	u_int16_t ether_type;
 } __attribute__((__packed__));
 
-#include <net/ethertypes.h>
+#include <museum/5.0.0/bionic/libc/net/ethertypes.h>
 
 #define	ETHER_IS_MULTICAST(addr) (*(addr) & 0x01) /* is address mcast/bcast? */
 
@@ -203,7 +203,7 @@ int	ether_nonstatic_aton(u_char *, char *);
 /*
  * Prototype ethers(3) functions.
  */
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 __BEGIN_DECLS
 char *	ether_ntoa __P((const struct ether_addr *));
 struct ether_addr *

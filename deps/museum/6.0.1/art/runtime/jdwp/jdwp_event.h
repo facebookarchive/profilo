@@ -19,9 +19,9 @@
 #ifndef ART_RUNTIME_JDWP_JDWP_EVENT_H_
 #define ART_RUNTIME_JDWP_JDWP_EVENT_H_
 
-#include "jdwp/jdwp.h"
-#include "jdwp/jdwp_constants.h"
-#include "jdwp/jdwp_expand_buf.h"
+#include <museum/6.0.1/art/runtime/jdwp/jdwp.h>
+#include <museum/6.0.1/art/runtime/jdwp/jdwp_constants.h>
+#include <museum/6.0.1/art/runtime/jdwp/jdwp_expand_buf.h>
 
 namespace art {
 

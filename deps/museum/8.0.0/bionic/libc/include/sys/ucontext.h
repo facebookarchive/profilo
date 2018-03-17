@@ -29,10 +29,10 @@
 #ifndef _SYS_UCONTEXT_H_
 #define _SYS_UCONTEXT_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
-#include <signal.h>
-#include <sys/user.h>
+#include <museum/8.0.0/bionic/libc/signal.h>
+#include <museum/8.0.0/bionic/libc/sys/user.h>
 
 __BEGIN_DECLS
 
@@ -63,7 +63,7 @@ typedef int greg_t;
 typedef greg_t gregset_t[NGREG];
 typedef struct user_fpregs fpregset_t;
 
-#include <asm/sigcontext.h>
+#include <museum/8.0.0/bionic/libc/asm/sigcontext.h>
 typedef struct sigcontext mcontext_t;
 
 typedef struct ucontext {
@@ -86,7 +86,7 @@ typedef unsigned long greg_t;
 typedef greg_t gregset_t[NGREG];
 typedef struct user_fpsimd_struct fpregset_t;
 
-#include <asm/sigcontext.h>
+#include <museum/8.0.0/bionic/libc/asm/sigcontext.h>
 typedef struct sigcontext mcontext_t;
 
 typedef struct ucontext {

@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_VERIFIER_VERIFIER_DEPS_H_
 #define ART_RUNTIME_VERIFIER_VERIFIER_DEPS_H_
 
-#include <map>
-#include <set>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/map>
+#include <museum/8.0.0/external/libcxx/set>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "base/array_ref.h"
-#include "base/mutex.h"
-#include "handle.h"
-#include "method_resolution_kind.h"
-#include "obj_ptr.h"
-#include "thread.h"
-#include "verifier_enums.h"  // For MethodVerifier::FailureKind.
+#include <museum/8.0.0/art/runtime/base/array_ref.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/handle.h>
+#include <museum/8.0.0/art/runtime/verifier/method_resolution_kind.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/thread.h>
+#include <museum/8.0.0/art/runtime/verifier/verifier_enums.h>  // For MethodVerifier::FailureKind.
 
 namespace art {
 

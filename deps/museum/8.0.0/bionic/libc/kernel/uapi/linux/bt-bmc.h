@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BT_BMC_H
 #define _UAPI_LINUX_BT_BMC_H
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 #define __BT_BMC_IOCTL_MAGIC 0xb1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define BT_BMC_IOCTL_SMS_ATN _IO(__BT_BMC_IOCTL_MAGIC, 0x00)

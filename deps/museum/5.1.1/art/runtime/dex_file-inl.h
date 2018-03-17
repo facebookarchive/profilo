@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_DEX_FILE_INL_H_
 #define ART_RUNTIME_DEX_FILE_INL_H_
 
-#include "base/logging.h"
-#include "base/stringpiece.h"
-#include "dex_file.h"
-#include "leb128.h"
-#include "utils.h"
+#include <museum/5.1.1/art/runtime/base/logging.h>
+#include <museum/5.1.1/art/runtime/base/stringpiece.h>
+#include <museum/5.1.1/art/runtime/dex_file.h>
+#include <museum/5.1.1/art/runtime/leb128.h>
+#include <museum/5.1.1/art/runtime/utils.h>
 
 namespace art {
 

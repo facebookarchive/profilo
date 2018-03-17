@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_GC_SPACE_MALLOC_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_MALLOC_SPACE_H_
 
-#include "space.h"
+#include <museum/6.0.1/art/runtime/gc/space/space.h>
 
-#include <ostream>
-#include <valgrind.h>
-#include <memcheck/memcheck.h>
+#include <museum/6.0.1/external/libcxx/ostream>
+#include <museum/6.0.1/art/runtime/valgrind.h>
+#include <museum/6.0.1/art/runtime/memcheck/memcheck.h>
 
 namespace art {
 namespace gc {

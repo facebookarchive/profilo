@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_CLASS_LINKER_H_
 #define ART_RUNTIME_CLASS_LINKER_H_
 
-#include <string>
-#include <utility>
-#include <vector>
+#include <museum/5.0.0/external/libcxx/string>
+#include <museum/5.0.0/external/libcxx/utility>
+#include <museum/5.0.0/external/libcxx/vector>
 
-#include "base/allocator.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "dex_file.h"
-#include "gc_root.h"
-#include "gtest/gtest.h"
-#include "jni.h"
-#include "oat_file.h"
-#include "object_callbacks.h"
+#include <museum/5.0.0/art/runtime/base/allocator.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/dex_file.h>
+#include <museum/5.0.0/art/runtime/gc_root.h>
+#include <museum/5.0.0/art/runtime/gtest/gtest.h>
+#include <museum/5.0.0/libnativehelper/jni.h>
+#include <museum/5.0.0/art/runtime/oat_file.h>
+#include <museum/5.0.0/art/runtime/object_callbacks.h>
 
 namespace art {
 

@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_X86_64_ASM_SUPPORT_X86_64_H_
 #define ART_RUNTIME_ARCH_X86_64_ASM_SUPPORT_X86_64_H_
 
-#include "asm_support.h"
+#include <museum/5.0.0/art/runtime/asm_support.h>
 
 // Note: these callee save methods loads require read barriers.
 // Offset of field Runtime::callee_save_methods_[kSaveAll]

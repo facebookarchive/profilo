@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_DCCP_H
 #define _UAPI_LINUX_DCCP_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct dccp_hdr {
  __be16 dccph_sport,

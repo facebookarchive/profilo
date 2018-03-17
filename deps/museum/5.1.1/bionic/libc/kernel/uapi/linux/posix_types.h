@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_POSIX_TYPES_H
 #define _LINUX_POSIX_TYPES_H
-#include <linux/stddef.h>
+#include <museum/5.1.1/bionic/libc/linux/stddef.h>
 #undef __FD_SETSIZE
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define __FD_SETSIZE 1024
@@ -29,6 +29,6 @@ typedef struct {
 typedef void (*__kernel_sighandler_t)(int);
 typedef int __kernel_key_t;
 typedef int __kernel_mqd_t;
-#include <asm/posix_types.h>
+#include <museum/5.1.1/bionic/libc/asm/posix_types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

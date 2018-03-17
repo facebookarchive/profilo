@@ -21,8 +21,8 @@
 #define SOUND_VERSION 0x030802
 #define OPEN_SOUND_SYSTEM
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/ioctl.h>
-#include <endian.h>
+#include <museum/5.1.1/bionic/libc/linux/ioctl.h>
+#include <museum/5.1.1/bionic/libc/endian.h>
 #define SNDCARD_ADLIB 1
 #define SNDCARD_SB 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -161,7 +161,7 @@ typedef struct seq_event_rec {
 #define SNDCTL_TMR_SELECT _SIOW ('T', 8, int)
 #define _LINUX_PATCHKEY_H_INDIRECT
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/patchkey.h>
+#include <museum/5.1.1/bionic/libc/linux/patchkey.h>
 #undef _LINUX_PATCHKEY_H_INDIRECT
 #ifdef __BYTE_ORDER
 #if __BYTE_ORDER == __BIG_ENDIAN

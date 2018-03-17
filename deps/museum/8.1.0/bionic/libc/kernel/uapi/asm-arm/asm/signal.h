@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_ASMARM_SIGNAL_H
 #define _UAPI_ASMARM_SIGNAL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct siginfo;
 #define _KERNEL_NSIG 32
 typedef unsigned long sigset_t;
@@ -72,7 +72,7 @@ typedef unsigned long sigset_t;
 #define SA_ONESHOT SA_RESETHAND
 #define MINSIGSTKSZ 2048
 #define SIGSTKSZ 8192
-#include <asm-generic/signal-defs.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/signal-defs.h>
 struct sigaction {
   union {
     __sighandler_t _sa_handler;

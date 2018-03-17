@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _IPX_H_
 #define _IPX_H_
-#include <linux/libc-compat.h>
-#include <linux/types.h>
-#include <linux/sockios.h>
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/libc-compat.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/sockios.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define IPX_NODE_LEN 6
 #define IPX_MTU 576
 #if __UAPI_DEF_SOCKADDR_IPX

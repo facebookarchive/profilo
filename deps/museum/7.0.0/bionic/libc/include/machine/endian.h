@@ -30,6 +30,6 @@
 #define _MACHINE_ENDIAN_H_
 
 /* This file is for BSD source compatibility only. Use <endian.h> or <sys/endian.h> instead. */
-#include <sys/endian.h>
+#include <museum/7.0.0/bionic/libc/sys/endian.h>
 
 #endif /* _MACHINE_ENDIAN_H_ */

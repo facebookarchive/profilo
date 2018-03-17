@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_MOD_UNION_TABLE_H_
 #define ART_RUNTIME_GC_ACCOUNTING_MOD_UNION_TABLE_H_
 
-#include "bitmap.h"
-#include "base/allocator.h"
-#include "card_table.h"
-#include "globals.h"
-#include "mirror/object_reference.h"
-#include "safe_map.h"
+#include <museum/8.1.0/art/runtime/gc/accounting/bitmap.h>
+#include <museum/8.1.0/art/runtime/base/allocator.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/card_table.h>
+#include <museum/8.1.0/art/runtime/globals.h>
+#include <museum/8.1.0/art/runtime/mirror/object_reference.h>
+#include <museum/8.1.0/art/runtime/safe_map.h>
 
-#include <set>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/set>
+#include <museum/8.1.0/external/libcxx/vector>
 
 namespace art {
 

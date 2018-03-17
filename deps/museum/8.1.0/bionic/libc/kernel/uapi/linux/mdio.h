@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_MDIO_H__
 #define _UAPI__LINUX_MDIO_H__
-#include <linux/types.h>
-#include <linux/mii.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/mii.h>
 #define MDIO_MMD_PMAPMD 1
 #define MDIO_MMD_WIS 2
 #define MDIO_MMD_PCS 3

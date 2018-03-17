@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_METHOD_HELPER_INL_H_
 #define ART_RUNTIME_METHOD_HELPER_INL_H_
 
-#include "method_helper.h"
+#include <museum/5.1.1/art/runtime/method_helper.h>
 
-#include "class_linker.h"
-#include "mirror/object_array.h"
-#include "runtime.h"
-#include "thread-inl.h"
+#include <museum/5.1.1/art/runtime/class_linker.h>
+#include <museum/5.1.1/art/runtime/mirror/object_array.h>
+#include <museum/5.1.1/art/runtime/runtime.h>
+#include <museum/5.1.1/art/runtime/thread-inl.h>
 
 namespace art {
 

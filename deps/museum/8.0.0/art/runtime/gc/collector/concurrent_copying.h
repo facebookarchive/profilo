@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_H_
 #define ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_H_
 
-#include "barrier.h"
-#include "garbage_collector.h"
-#include "immune_spaces.h"
-#include "jni.h"
-#include "object_callbacks.h"
-#include "offsets.h"
-#include "gc/accounting/space_bitmap.h"
-#include "mirror/object.h"
-#include "mirror/object_reference.h"
-#include "safe_map.h"
+#include <museum/8.0.0/art/runtime/barrier.h>
+#include <museum/8.0.0/art/runtime/gc/collector/garbage_collector.h>
+#include <museum/8.0.0/art/runtime/gc/collector/immune_spaces.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
+#include <museum/8.0.0/art/runtime/offsets.h>
+#include <museum/8.0.0/art/runtime/gc/accounting/space_bitmap.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/mirror/object_reference.h>
+#include <museum/8.0.0/art/runtime/safe_map.h>
 
-#include <unordered_map>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/unordered_map>
+#include <museum/8.0.0/external/libcxx/vector>
 
 namespace art {
 class Closure;

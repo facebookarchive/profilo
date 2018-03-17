@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_ARCH_INSTRUCTION_SET_FEATURES_H_
 #define ART_RUNTIME_ARCH_INSTRUCTION_SET_FEATURES_H_
 
-#include <ostream>
-#include <vector>
+#include <museum/6.0.1/external/libcxx/ostream>
+#include <museum/6.0.1/external/libcxx/vector>
 
-#include "base/macros.h"
-#include "instruction_set.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/arch/instruction_set.h>
 
 namespace art {
 

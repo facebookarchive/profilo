@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_HYPERV_H
 #define _UAPI_HYPERV_H
-#include <linux/uuid.h>
+#include <museum/8.1.0/bionic/libc/linux/uuid.h>
 #define UTIL_FW_MINOR 0
 #define UTIL_WS2K8_FW_MAJOR 1
 #define UTIL_WS2K8_FW_VERSION (UTIL_WS2K8_FW_MAJOR << 16 | UTIL_FW_MINOR)

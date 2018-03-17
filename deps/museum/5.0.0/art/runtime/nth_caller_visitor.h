@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_NTH_CALLER_VISITOR_H_
 #define ART_RUNTIME_NTH_CALLER_VISITOR_H_
 
-#include "base/mutex.h"
-#include "mirror/art_method.h"
-#include "stack.h"
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/mirror/art_method.h>
+#include <museum/5.0.0/art/runtime/stack.h>
 
 namespace art {
 class Thread;

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_ARCH_MIPS_CONTEXT_MIPS_H_
 #define ART_RUNTIME_ARCH_MIPS_CONTEXT_MIPS_H_
 
-#include "arch/context.h"
-#include "base/logging.h"
-#include "registers_mips.h"
+#include <museum/5.0.0/art/runtime/arch/context.h>
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/arch/mips/registers_mips.h>
 
 namespace art {
 namespace mips {

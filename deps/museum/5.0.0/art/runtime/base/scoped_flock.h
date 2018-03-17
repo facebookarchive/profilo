@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_SCOPED_FLOCK_H_
 #define ART_RUNTIME_BASE_SCOPED_FLOCK_H_
 
-#include <memory>
-#include <string>
+#include <museum/5.0.0/external/libcxx/memory>
+#include <museum/5.0.0/external/libcxx/string>
 
-#include "base/macros.h"
-#include "os.h"
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/os.h>
 
 namespace art {
 

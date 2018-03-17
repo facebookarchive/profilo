@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_DEX_INSTRUCTION_H_
 #define ART_RUNTIME_DEX_INSTRUCTION_H_
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "globals.h"
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/globals.h>
 
 typedef uint8_t uint4_t;
 typedef int8_t int4_t;
@@ -81,7 +81,7 @@ class Instruction {
 
   enum Code {  // private marker to avoid generate-operator-out.py from processing.
 #define INSTRUCTION_ENUM(opcode, cname, p, f, r, i, a, v) cname = opcode,
-#include "dex_instruction_list.h"
+#include <museum/6.0.1/art/runtime/dex_instruction_list.h>
     DEX_INSTRUCTION_LIST(INSTRUCTION_ENUM)
 #undef DEX_INSTRUCTION_LIST
 #undef INSTRUCTION_ENUM

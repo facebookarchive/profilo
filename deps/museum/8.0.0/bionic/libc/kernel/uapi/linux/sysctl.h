@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SYSCTL_H
 #define _UAPI_LINUX_SYSCTL_H
-#include <linux/kernel.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/kernel.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #include <linux/compiler.h>
 #define CTL_MAXNAME 10

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX__HFI1_USER_H
 #define _LINUX__HFI1_USER_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define HFI1_USER_SWMAJOR 6
 #define HFI1_USER_SWMINOR 3
 #define HFI1_SWMAJOR_SHIFT 16

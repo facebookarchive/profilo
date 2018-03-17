@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_STL_UTIL_H_
 #define ART_RUNTIME_BASE_STL_UTIL_H_
 
-#include <algorithm>
-#include <set>
-#include <sstream>
+#include <museum/8.0.0/external/libcxx/algorithm>
+#include <museum/8.0.0/external/libcxx/set>
+#include <museum/8.0.0/external/libcxx/sstream>
 
-#include "base/logging.h"
+#include <museum/8.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

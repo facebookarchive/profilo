@@ -43,7 +43,7 @@
 #ifndef _AR_H_
 #define	_AR_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 /* Pre-4BSD archives had these magic numbers in them. */
 #define	OARMAG1	0177555

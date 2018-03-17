@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_IST_H
 #define _UAPI_ASM_X86_IST_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct ist_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u32 signature;

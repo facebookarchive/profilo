@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_HIDRAW_H
 #define _UAPI_HIDRAW_H
-#include <linux/hid.h>
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/hid.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct hidraw_report_descriptor {
  __u32 size;

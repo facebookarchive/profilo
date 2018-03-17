@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_STRING_H
 #define _XT_STRING_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define XT_STRING_MAX_PATTERN_SIZE 128
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XT_STRING_MAX_ALGO_NAME_SIZE 16

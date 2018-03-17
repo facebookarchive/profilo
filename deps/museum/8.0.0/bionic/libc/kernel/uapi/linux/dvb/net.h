@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _DVBNET_H_
 #define _DVBNET_H_
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 struct dvb_net_if {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u16 pid;

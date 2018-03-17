@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_IXJUSER_H
 #define __LINUX_IXJUSER_H
-#include <linux/telephony.h>
+#include <museum/8.1.0/bionic/libc/linux/telephony.h>
 #define IXJCTL_DSP_RESET _IO('q', 0xC0)
 #define IXJCTL_RING PHONE_RING
 #define IXJCTL_HOOKSTATE PHONE_HOOKSTATE

@@ -17,20 +17,20 @@
 #ifndef ART_RUNTIME_VERIFIER_REG_TYPE_H_
 #define ART_RUNTIME_VERIFIER_REG_TYPE_H_
 
-#include <stdint.h>
-#include <limits>
-#include <set>
-#include <string>
+#include <museum/7.1.2/bionic/libc/stdint.h>
+#include <museum/7.1.2/external/libcxx/limits>
+#include <museum/7.1.2/external/libcxx/set>
+#include <museum/7.1.2/external/libcxx/string>
 
-#include "base/arena_object.h"
-#include "base/bit_vector.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "base/stringpiece.h"
-#include "gc_root.h"
-#include "handle_scope.h"
-#include "object_callbacks.h"
-#include "primitive.h"
+#include <museum/7.1.2/art/runtime/base/arena_object.h>
+#include <museum/7.1.2/art/runtime/base/bit_vector.h>
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/base/stringpiece.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
+#include <museum/7.1.2/art/runtime/handle_scope.h>
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
+#include <museum/7.1.2/art/runtime/primitive.h>
 
 namespace art {
 namespace mirror {

@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_GC_SPACE_VALGRIND_MALLOC_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_VALGRIND_MALLOC_SPACE_INL_H_
 
-#include "valgrind_malloc_space.h"
+#include <museum/6.0.1/art/runtime/gc/space/valgrind_malloc_space.h>
 
-#include <memcheck/memcheck.h>
+#include <museum/6.0.1/art/runtime/memcheck/memcheck.h>
 
-#include "valgrind_settings.h"
+#include <museum/6.0.1/art/runtime/gc/space/valgrind_settings.h>
 
 namespace art {
 namespace gc {

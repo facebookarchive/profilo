@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_SKBEDIT_H
 #define __LINUX_TC_SKBEDIT_H
-#include <linux/pkt_cls.h>
+#include <museum/5.1.1/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_SKBEDIT 11
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SKBEDIT_F_PRIORITY 0x1

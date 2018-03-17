@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GLOBALS_H_
 #define ART_RUNTIME_GLOBALS_H_
 
-#include <stddef.h>
-#include <stdint.h>
-#include "read_barrier_c.h"
-#include "read_barrier_option.h"
+#include <museum/8.1.0/external/libcxx/stddef.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/art/runtime/read_barrier_c.h>
+#include <museum/8.1.0/art/runtime/read_barrier_option.h>
 
 namespace art {
 

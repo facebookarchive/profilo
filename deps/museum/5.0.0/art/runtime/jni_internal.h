@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_JNI_INTERNAL_H_
 #define ART_RUNTIME_JNI_INTERNAL_H_
 
-#include "jni.h"
+#include <museum/5.0.0/libnativehelper/jni.h>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "indirect_reference_table.h"
-#include "object_callbacks.h"
-#include "reference_table.h"
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/indirect_reference_table.h>
+#include <museum/5.0.0/art/runtime/object_callbacks.h>
+#include <museum/5.0.0/art/runtime/reference_table.h>
 
-#include <iosfwd>
-#include <string>
+#include <museum/5.0.0/external/libcxx/iosfwd>
+#include <museum/5.0.0/external/libcxx/string>
 
 #ifndef NATIVE_METHOD
 #define NATIVE_METHOD(className, functionName, signature) \

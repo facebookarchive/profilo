@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMARP_H
 #define _LINUX_ATMARP_H
-#include <linux/types.h>
-#include <linux/atmapi.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/atmapi.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/atmioc.h>
+#include <museum/7.0.0/bionic/libc/linux/atmioc.h>
 #define ATMARP_RETRY_DELAY 30
 #define ATMARP_MAX_UNRES_PACKETS 5
 #define ATMARPD_CTRL _IO('a', ATMIOC_CLIP + 1)

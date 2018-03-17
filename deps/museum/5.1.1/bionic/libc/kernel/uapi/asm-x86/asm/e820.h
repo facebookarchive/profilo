@@ -32,7 +32,7 @@
 #define E820_RESERVED_KERN 128
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #ifndef __ASSEMBLY__
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct e820entry {
  __u64 addr;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

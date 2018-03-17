@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GC_SPACE_REGION_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_REGION_SPACE_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "space.h"
-#include "thread.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/gc/space/space.h>
+#include <museum/8.1.0/art/runtime/thread.h>
 
 namespace art {
 namespace gc {

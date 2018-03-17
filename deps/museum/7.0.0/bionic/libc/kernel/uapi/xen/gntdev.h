@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_PUBLIC_GNTDEV_H__
 #define __LINUX_PUBLIC_GNTDEV_H__
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 struct ioctl_gntdev_grant_ref {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u32 domid;

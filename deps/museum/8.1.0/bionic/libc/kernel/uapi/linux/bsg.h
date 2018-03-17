@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPIBSG_H
 #define _UAPIBSG_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define BSG_PROTOCOL_SCSI 0
 #define BSG_SUB_PROTOCOL_SCSI_CMD 0
 #define BSG_SUB_PROTOCOL_SCSI_TMF 1

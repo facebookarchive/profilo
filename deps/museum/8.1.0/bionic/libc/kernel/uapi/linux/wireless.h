@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_WIRELESS_H
 #define _UAPI_LINUX_WIRELESS_H
-#include <linux/types.h>
-#include <linux/socket.h>
-#include <linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
 #define WIRELESS_EXT 22
 #define SIOCSIWCOMMIT 0x8B00
 #define SIOCGIWNAME 0x8B01

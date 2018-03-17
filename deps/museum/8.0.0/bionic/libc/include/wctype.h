@@ -29,9 +29,9 @@
 #ifndef _WCTYPE_H_
 #define _WCTYPE_H_
 
-#include <bits/wctype.h>
-#include <sys/cdefs.h>
-#include <xlocale.h>
+#include <museum/8.0.0/bionic/libc/bits/wctype.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/xlocale.h>
 
 __BEGIN_DECLS
 

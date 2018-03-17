@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_PPPOLAC_H
 #define _UAPI_LINUX_IF_PPPOLAC_H
-#include <linux/socket.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct sockaddr_pppolac {
   sa_family_t sa_family;

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef CAN_RAW_H
 #define CAN_RAW_H
-#include <linux/can.h>
+#include <museum/5.1.1/bionic/libc/linux/can.h>
 #define SOL_CAN_RAW (SOL_CAN_BASE + CAN_RAW)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum {

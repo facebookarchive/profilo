@@ -29,7 +29,7 @@
 #ifndef _BITS_SA_FAMILY_T_H_
 #define _BITS_SA_FAMILY_T_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 typedef unsigned short sa_family_t;
 

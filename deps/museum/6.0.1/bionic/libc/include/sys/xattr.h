@@ -28,7 +28,7 @@
 #ifndef _SYS_XATTR_H_
 #define _SYS_XATTR_H_
 
-#include <sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

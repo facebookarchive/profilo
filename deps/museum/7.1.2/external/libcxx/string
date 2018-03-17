@@ -431,29 +431,29 @@ basic_string<char32_t> operator "" s( const char32_t *str, size_t len ); // C++1
 
 */
 
-#include <__config>
-#include <iosfwd>
-#include <cstring>
-#include <cstdio>  // For EOF.
-#include <cwchar>
-#include <algorithm>
-#include <iterator>
-#include <utility>
-#include <memory>
-#include <stdexcept>
-#include <type_traits>
-#include <initializer_list>
-#include <__functional_base>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/iosfwd>
+#include <museum/7.1.2/external/libcxx/cstring>
+#include <museum/7.1.2/external/libcxx/cstdio>  // For EOF.
+#include <museum/7.1.2/external/libcxx/cwchar>
+#include <museum/7.1.2/external/libcxx/algorithm>
+#include <museum/7.1.2/external/libcxx/iterator>
+#include <museum/7.1.2/external/libcxx/utility>
+#include <museum/7.1.2/external/libcxx/memory>
+#include <museum/7.1.2/external/libcxx/stdexcept>
+#include <museum/7.1.2/external/libcxx/type_traits>
+#include <museum/7.1.2/external/libcxx/initializer_list>
+#include <museum/7.1.2/external/libcxx/__functional_base>
 #ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
-#include <cstdint>
+#include <museum/7.1.2/external/libcxx/cstdint>
 #endif
 #if defined(_LIBCPP_NO_EXCEPTIONS)
-#include <cassert>
+#include <museum/7.1.2/external/libcxx/cassert>
 #endif
 
-#include <__undef_min_max>
+#include <museum/7.1.2/external/libcxx/__undef_min_max>
 
-#include <__debug>
+#include <museum/7.1.2/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_CT_H
 #define _XT_CT_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   XT_CT_NOTRACK = 1 << 0,
   XT_CT_NOTRACK_ALIAS = 1 << 1,

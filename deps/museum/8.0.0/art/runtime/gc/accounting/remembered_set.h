@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_REMEMBERED_SET_H_
 #define ART_RUNTIME_GC_ACCOUNTING_REMEMBERED_SET_H_
 
-#include "base/allocator.h"
-#include "globals.h"
-#include "object_callbacks.h"
-#include "safe_map.h"
+#include <museum/8.0.0/art/runtime/base/allocator.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
+#include <museum/8.0.0/art/runtime/safe_map.h>
 
-#include <set>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/set>
+#include <museum/8.0.0/external/libcxx/vector>
 
 namespace art {
 namespace gc {

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MEMPOLICY_H
 #define _UAPI_LINUX_MEMPOLICY_H
-#include <linux/errno.h>
+#include <museum/8.1.0/bionic/libc/linux/errno.h>
 enum {
   MPOL_DEFAULT,
   MPOL_PREFERRED,

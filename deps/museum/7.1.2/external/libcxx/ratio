@@ -65,12 +65,12 @@ typedef ratio<1000000000000000000000000, 1> yotta;  // not supported
 }
 */
 
-#include <__config>
-#include <cstdint>
-#include <climits>
-#include <type_traits>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/cstdint>
+#include <museum/7.1.2/external/libcxx/climits>
+#include <museum/7.1.2/external/libcxx/type_traits>
 
-#include <__undef_min_max>
+#include <museum/7.1.2/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

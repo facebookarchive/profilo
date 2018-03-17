@@ -17,7 +17,7 @@
 #ifndef SCOPED_BYTES_H_included
 #define SCOPED_BYTES_H_included
 
-#include "JNIHelp.h"
+#include <museum/5.1.1/libnativehelper/JNIHelp.h>
 
 /**
  * ScopedBytesRO and ScopedBytesRW attempt to paper over the differences between byte[]s and

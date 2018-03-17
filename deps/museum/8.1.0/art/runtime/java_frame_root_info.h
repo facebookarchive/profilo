@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_JAVA_FRAME_ROOT_INFO_H_
 #define ART_RUNTIME_JAVA_FRAME_ROOT_INFO_H_
 
-#include <iosfwd>
+#include <museum/8.1.0/external/libcxx/iosfwd>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc_root.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/gc_root.h>
 
 namespace art {
 

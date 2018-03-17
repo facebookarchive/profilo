@@ -25,14 +25,14 @@
 #define _XOPEN_SOURCE
 #endif
 
-#include <sys/utsname.h>
-#include <ucontext.h>
+#include <museum/8.0.0/bionic/libc/sys/utsname.h>
+#include <museum/8.0.0/bionic/libc/ucontext.h>
 
-#include <iomanip>
+#include <museum/8.0.0/external/libcxx/iomanip>
 
-#include "base/dumpable.h"
-#include "native_stack_dump.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/base/dumpable.h>
+#include <museum/8.0.0/art/runtime/native_stack_dump.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

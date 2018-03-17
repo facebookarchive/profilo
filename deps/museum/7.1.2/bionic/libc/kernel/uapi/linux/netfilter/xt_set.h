@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _XT_SET_H
 #define _XT_SET_H
-#include <linux/types.h>
-#include <linux/netfilter/ipset/ip_set.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/netfilter/ipset/ip_set.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define IPSET_SRC 0x01
 #define IPSET_DST 0x02

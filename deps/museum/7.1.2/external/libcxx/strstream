@@ -127,9 +127,9 @@ private:
 
 */
 
-#include <__config>
-#include <ostream>
-#include <istream>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/ostream>
+#include <museum/7.1.2/external/libcxx/istream>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

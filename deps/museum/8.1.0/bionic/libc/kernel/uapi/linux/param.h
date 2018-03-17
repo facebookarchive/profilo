@@ -18,5 +18,5 @@
  ****************************************************************************/
 #ifndef _LINUX_PARAM_H
 #define _LINUX_PARAM_H
-#include <asm/param.h>
+#include <museum/8.1.0/bionic/libc/asm/param.h>
 #endif

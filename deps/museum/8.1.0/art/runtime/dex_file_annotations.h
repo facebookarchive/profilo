@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_DEX_FILE_ANNOTATIONS_H_
 #define ART_RUNTIME_DEX_FILE_ANNOTATIONS_H_
 
-#include "dex_file.h"
+#include <museum/8.1.0/art/runtime/dex_file.h>
 
-#include "mirror/object_array.h"
+#include <museum/8.1.0/art/runtime/mirror/object_array.h>
 
 namespace art {
 

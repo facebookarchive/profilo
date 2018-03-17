@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_UVCVIDEO_H_
 #define __LINUX_UVCVIDEO_H_
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define UVC_CTRL_DATA_TYPE_RAW 0
 #define UVC_CTRL_DATA_TYPE_SIGNED 1
 #define UVC_CTRL_DATA_TYPE_UNSIGNED 2

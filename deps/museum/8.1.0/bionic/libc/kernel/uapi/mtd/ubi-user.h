@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __UBI_USER_H__
 #define __UBI_USER_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define UBI_VOL_NUM_AUTO (- 1)
 #define UBI_DEV_NUM_AUTO (- 1)
 #define UBI_MAX_VOLUME_NAME 127

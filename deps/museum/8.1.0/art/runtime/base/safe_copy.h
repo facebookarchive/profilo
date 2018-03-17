@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_SAFE_COPY_H_
 #define ART_RUNTIME_BASE_SAFE_COPY_H_
 
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
 namespace art {
 

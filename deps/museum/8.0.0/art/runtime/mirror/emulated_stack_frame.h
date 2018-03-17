@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_MIRROR_EMULATED_STACK_FRAME_H_
 #define ART_RUNTIME_MIRROR_EMULATED_STACK_FRAME_H_
 
-#include "dex_instruction.h"
-#include "method_type.h"
-#include "object.h"
-#include "stack.h"
-#include "string.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/dex_instruction.h>
+#include <museum/8.0.0/art/runtime/mirror/method_type.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/stack.h>
+#include <museum/8.0.0/art/runtime/mirror/string.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_DEFAULT_INIT_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_DEFAULT_INIT_ENTRYPOINTS_H_
 
-#include "base/logging.h"
-#include "entrypoints/jni/jni_entrypoints.h"
-#include "entrypoints/runtime_asm_entrypoints.h"
-#include "quick_alloc_entrypoints.h"
-#include "quick_default_externs.h"
-#include "quick_entrypoints.h"
+#include <museum/7.1.2/art/runtime/base/logging.h>
+#include <museum/7.1.2/art/runtime/entrypoints/jni/jni_entrypoints.h>
+#include <museum/7.1.2/art/runtime/entrypoints/runtime_asm_entrypoints.h>
+#include <museum/7.1.2/art/runtime/entrypoints/quick/quick_alloc_entrypoints.h>
+#include <museum/7.1.2/art/runtime/entrypoints/quick/quick_default_externs.h>
+#include <museum/7.1.2/art/runtime/entrypoints/quick/quick_entrypoints.h>
 
 namespace art {
 

@@ -11,9 +11,9 @@
 #ifndef _LIBCPP_THREADING_SUPPORT
 #define _LIBCPP_THREADING_SUPPORT
 
-#include <__config>
-#include <chrono>
-#include <errno.h>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/chrono>
+#include <museum/8.0.0/external/libcxx/errno.h>
 
 #ifndef _LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER
 #pragma GCC system_header
@@ -24,8 +24,8 @@
 #elif !defined(_LIBCPP_HAS_NO_THREADS)
 
 #if defined(_LIBCPP_HAS_THREAD_API_PTHREAD)
-# include <pthread.h>
-# include <sched.h>
+# include <museum/8.0.0/bionic/libc/pthread.h>
+# include <museum/8.0.0/bionic/libc/sched.h>
 #elif defined(_LIBCPP_HAS_THREAD_API_WIN32)
 #include <Windows.h>
 #include <process.h>

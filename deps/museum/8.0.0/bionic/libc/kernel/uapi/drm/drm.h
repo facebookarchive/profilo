@@ -19,14 +19,14 @@
 #ifndef _DRM_H_
 #define _DRM_H_
 #ifdef __linux__
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <asm/ioctl.h>
+#include <museum/8.0.0/bionic/libc/asm/ioctl.h>
 typedef unsigned int drm_handle_t;
 #else
 #include <sys/ioccom.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <sys/types.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
 typedef int8_t __s8;
 typedef uint8_t __u8;
 typedef int16_t __s16;

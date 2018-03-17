@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_LEB128_H_
 #define ART_RUNTIME_LEB128_H_
 
-#include "globals.h"
-#include "utils.h"
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/utils.h>
 
 namespace art {
 

@@ -19,7 +19,7 @@
 
 #define ATRACE_TAG ATRACE_TAG_DALVIK
 #include <cutils/trace.h>
-#include <string>
+#include <museum/8.1.0/external/libcxx/string>
 #include <utils/Trace.h>
 
 namespace art {

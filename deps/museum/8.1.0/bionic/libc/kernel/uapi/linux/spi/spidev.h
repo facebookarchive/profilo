@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef SPIDEV_H
 #define SPIDEV_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SPI_CPHA 0x01
 #define SPI_CPOL 0x02
 #define SPI_MODE_0 (0 | 0)

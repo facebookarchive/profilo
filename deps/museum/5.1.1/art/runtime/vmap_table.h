@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_VMAP_TABLE_H_
 #define ART_RUNTIME_VMAP_TABLE_H_
 
-#include "base/logging.h"
-#include "leb128.h"
-#include "stack.h"
+#include <museum/5.1.1/art/runtime/base/logging.h>
+#include <museum/5.1.1/art/runtime/leb128.h>
+#include <museum/5.1.1/art/runtime/stack.h>
 
 namespace art {
 

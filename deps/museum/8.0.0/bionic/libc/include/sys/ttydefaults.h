@@ -42,7 +42,7 @@
 #ifndef _SYS_TTYDEFAULTS_H_
 #define	_SYS_TTYDEFAULTS_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 /*
  * Defaults on "first" open.

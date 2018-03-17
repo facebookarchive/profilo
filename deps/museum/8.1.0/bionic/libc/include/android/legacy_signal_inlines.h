@@ -29,10 +29,10 @@
 #ifndef _ANDROID_LEGACY_SIGNAL_INLINES_H_
 #define _ANDROID_LEGACY_SIGNAL_INLINES_H_
 
-#include <errno.h>
-#include <signal.h>
-#include <string.h>
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/errno.h>
+#include <museum/8.1.0/bionic/libc/signal.h>
+#include <museum/8.1.0/bionic/libc/string.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 
 __BEGIN_DECLS

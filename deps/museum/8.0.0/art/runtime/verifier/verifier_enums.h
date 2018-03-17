@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_VERIFIER_VERIFIER_ENUMS_H_
 #define ART_RUNTIME_VERIFIER_VERIFIER_ENUMS_H_
 
-#include <stdint.h>
+#include <museum/8.0.0/external/libcxx/stdint.h>
 
 namespace art {
 namespace verifier {

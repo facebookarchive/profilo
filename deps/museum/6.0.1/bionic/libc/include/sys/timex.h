@@ -29,6 +29,6 @@
 #ifndef _SYS_TIMEX_H_
 #define _SYS_TIMEX_H_
 
-#include <linux/timex.h>
+#include <museum/6.0.1/bionic/libc/linux/timex.h>
 
 #endif /* _SYS_TIMEX_H_ */

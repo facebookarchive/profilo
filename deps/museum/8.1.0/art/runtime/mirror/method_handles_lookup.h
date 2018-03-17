@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_MIRROR_METHOD_HANDLES_LOOKUP_H_
 #define ART_RUNTIME_MIRROR_METHOD_HANDLES_LOOKUP_H_
 
-#include "obj_ptr.h"
-#include "gc_root.h"
-#include "object.h"
-#include "handle.h"
-#include "utils.h"
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
+#include <museum/8.1.0/art/runtime/gc_root.h>
+#include <museum/8.1.0/art/runtime/mirror/object.h>
+#include <museum/8.1.0/art/runtime/handle.h>
+#include <museum/8.1.0/art/runtime/utils.h>
 
 namespace art {
 

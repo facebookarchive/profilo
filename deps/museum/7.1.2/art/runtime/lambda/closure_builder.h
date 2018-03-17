@@ -16,13 +16,13 @@
 #ifndef ART_RUNTIME_LAMBDA_CLOSURE_BUILDER_H_
 #define ART_RUNTIME_LAMBDA_CLOSURE_BUILDER_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"  // For Locks::mutator_lock_.
-#include "base/value_object.h"
-#include "lambda/shorty_field_type.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>  // For Locks::mutator_lock_.
+#include <museum/7.1.2/art/runtime/base/value_object.h>
+#include <museum/7.1.2/art/runtime/lambda/shorty_field_type.h>
 
-#include <stdint.h>
-#include <vector>
+#include <museum/7.1.2/bionic/libc/stdint.h>
+#include <museum/7.1.2/external/libcxx/vector>
 
 namespace art {
 class ArtMethod;  // forward declaration

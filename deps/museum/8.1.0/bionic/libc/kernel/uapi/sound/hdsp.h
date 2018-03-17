@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __SOUND_HDSP_H
 #define __SOUND_HDSP_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define HDSP_MATRIX_MIXER_SIZE 2048
 enum HDSP_IO_Type {
   Digiface,

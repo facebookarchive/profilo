@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX__WIMAX_H__
 #define __LINUX__WIMAX_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   WIMAX_GNL_VERSION = 01,
   WIMAX_GNL_ATTR_INVALID = 0x00,

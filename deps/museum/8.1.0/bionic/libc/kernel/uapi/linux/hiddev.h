@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_HIDDEV_H
 #define _UAPI_HIDDEV_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct hiddev_event {
   unsigned hid;
   signed int value;

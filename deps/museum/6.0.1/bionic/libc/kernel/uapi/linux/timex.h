@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TIMEX_H
 #define _UAPI_LINUX_TIMEX_H
-#include <linux/time.h>
+#include <museum/6.0.1/bionic/libc/linux/time.h>
 #define NTP_API 4
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct timex {

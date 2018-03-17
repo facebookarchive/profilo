@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_STACK_MAP_H_
 #define ART_RUNTIME_STACK_MAP_H_
 
-#include "arch/code_offset.h"
-#include "base/bit_vector.h"
-#include "base/bit_utils.h"
-#include "bit_memory_region.h"
-#include "dex_file.h"
-#include "memory_region.h"
-#include "method_info.h"
-#include "leb128.h"
+#include <museum/8.0.0/art/runtime/arch/code_offset.h>
+#include <museum/8.0.0/art/runtime/base/bit_vector.h>
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/bit_memory_region.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/memory_region.h>
+#include <museum/8.0.0/art/runtime/method_info.h>
+#include <museum/8.0.0/art/runtime/leb128.h>
 
 namespace art {
 

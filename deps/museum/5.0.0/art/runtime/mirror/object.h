@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_H_
 #define ART_RUNTIME_MIRROR_OBJECT_H_
 
-#include "object_reference.h"
-#include "offsets.h"
-#include "verify_object.h"
+#include <museum/5.0.0/art/runtime/mirror/object_reference.h>
+#include <museum/5.0.0/art/runtime/offsets.h>
+#include <museum/5.0.0/art/runtime/verify_object.h>
 
 namespace art {
 

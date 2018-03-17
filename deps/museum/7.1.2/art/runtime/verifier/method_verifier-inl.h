@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_VERIFIER_METHOD_VERIFIER_INL_H_
 #define ART_RUNTIME_VERIFIER_METHOD_VERIFIER_INL_H_
 
-#include "base/logging.h"
-#include "method_verifier.h"
-#include "mirror/class_loader.h"
-#include "mirror/dex_cache.h"
-#include "handle_scope-inl.h"
+#include <museum/7.1.2/art/runtime/base/logging.h>
+#include <museum/7.1.2/art/runtime/verifier/method_verifier.h>
+#include <museum/7.1.2/art/runtime/mirror/class_loader.h>
+#include <museum/7.1.2/art/runtime/mirror/dex_cache.h>
+#include <museum/7.1.2/art/runtime/handle_scope-inl.h>
 
 namespace art {
 namespace verifier {

@@ -29,7 +29,7 @@
 #ifndef _SYS_SYSMACROS_H_
 #define _SYS_SYSMACROS_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 #define makedev(__major, __minor) \
   ( \

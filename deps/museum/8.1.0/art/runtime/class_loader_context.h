@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_CLASS_LOADER_CONTEXT_H_
 #define ART_RUNTIME_CLASS_LOADER_CONTEXT_H_
 
-#include <string>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/string>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "arch/instruction_set.h"
-#include "base/dchecked_vector.h"
-#include "handle_scope.h"
-#include "mirror/class_loader.h"
-#include "scoped_thread_state_change.h"
+#include <museum/8.1.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.1.0/art/runtime/base/dchecked_vector.h>
+#include <museum/8.1.0/art/runtime/handle_scope.h>
+#include <museum/8.1.0/art/runtime/mirror/class_loader.h>
+#include <museum/8.1.0/art/runtime/scoped_thread_state_change.h>
 
 namespace art {
 

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _XT_DSCP_TARGET_H
 #define _XT_DSCP_TARGET_H
-#include <linux/netfilter/xt_dscp.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/netfilter/xt_dscp.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct xt_DSCP_info {
   __u8 dscp;

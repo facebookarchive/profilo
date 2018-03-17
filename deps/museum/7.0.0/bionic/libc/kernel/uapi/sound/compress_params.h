@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __SND_COMPRESS_PARAMS_H
 #define __SND_COMPRESS_PARAMS_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 #define MAX_NUM_CODECS 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MAX_NUM_CODEC_DESCRIPTORS 32

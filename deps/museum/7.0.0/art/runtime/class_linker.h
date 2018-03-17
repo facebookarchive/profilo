@@ -17,24 +17,24 @@
 #ifndef ART_RUNTIME_CLASS_LINKER_H_
 #define ART_RUNTIME_CLASS_LINKER_H_
 
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <utility>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/set>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/unordered_map>
+#include <museum/7.0.0/external/libcxx/unordered_set>
+#include <museum/7.0.0/external/libcxx/utility>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "base/allocator.h"
-#include "base/hash_set.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "class_table.h"
-#include "dex_cache_resolved_classes.h"
-#include "dex_file.h"
-#include "gc_root.h"
-#include "jni.h"
-#include "oat_file.h"
-#include "object_callbacks.h"
+#include <museum/7.0.0/art/runtime/base/allocator.h>
+#include <museum/7.0.0/art/runtime/base/hash_set.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/class_table.h>
+#include <museum/7.0.0/art/runtime/dex_cache_resolved_classes.h>
+#include <museum/7.0.0/art/runtime/dex_file.h>
+#include <museum/7.0.0/art/runtime/gc_root.h>
+#include <museum/7.0.0/libnativehelper/jni.h>
+#include <museum/7.0.0/art/runtime/oat_file.h>
+#include <museum/7.0.0/art/runtime/object_callbacks.h>
 
 namespace art {
 

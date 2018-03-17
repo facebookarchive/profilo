@@ -16,8 +16,8 @@
 #ifndef ART_RUNTIME_LAMBDA_LEAKING_ALLOCATOR_H_
 #define ART_RUNTIME_LAMBDA_LEAKING_ALLOCATOR_H_
 
-#include <utility>  // std::forward
-#include <type_traits>  // std::aligned_storage
+#include <museum/7.0.0/external/libcxx/utility>  // std::forward
+#include <museum/7.0.0/external/libcxx/type_traits>  // std::aligned_storage
 
 namespace art {
 class Thread;  // forward declaration

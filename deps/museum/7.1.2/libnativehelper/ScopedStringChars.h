@@ -17,7 +17,7 @@
 #ifndef SCOPED_STRING_CHARS_H_included
 #define SCOPED_STRING_CHARS_H_included
 
-#include "JNIHelp.h"
+#include <museum/7.1.2/libnativehelper/JNIHelp.h>
 
 // A smart pointer that provides access to a jchar* given a JNI jstring.
 // Unlike GetStringChars, we throw NullPointerException rather than abort if

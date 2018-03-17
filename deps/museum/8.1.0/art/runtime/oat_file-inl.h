@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_OAT_FILE_INL_H_
 #define ART_RUNTIME_OAT_FILE_INL_H_
 
-#include "oat_file.h"
-#include "oat_quick_method_header.h"
+#include <museum/8.1.0/art/runtime/oat_file.h>
+#include <museum/8.1.0/art/runtime/oat_quick_method_header.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6T_OPTS_H
 #define _IP6T_OPTS_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define IP6T_OPTS_OPTSNR 16
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct ip6t_opts {

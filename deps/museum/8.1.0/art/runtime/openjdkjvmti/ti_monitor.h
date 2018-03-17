@@ -32,7 +32,7 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_TI_MONITOR_H_
 #define ART_RUNTIME_OPENJDKJVMTI_TI_MONITOR_H_
 
-#include "jni.h"
+#include <museum/8.1.0/libnativehelper/jni.h>
 #include "jvmti.h"
 
 namespace openjdkjvmti {

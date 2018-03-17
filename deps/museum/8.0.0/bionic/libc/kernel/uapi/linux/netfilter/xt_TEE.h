@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_TEE_TARGET_H
 #define _XT_TEE_TARGET_H
-#include <linux/netfilter.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter.h>
 struct xt_tee_tginfo {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   union nf_inet_addr gw;

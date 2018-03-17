@@ -29,10 +29,10 @@
 #ifndef _NET_ETHERNET_H_
 #define _NET_ETHERNET_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
-#include <linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 
 #define ETHERTYPE_IP 0x0800
 #define ETHERTYPE_ARP 0x0806

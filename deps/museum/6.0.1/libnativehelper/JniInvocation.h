@@ -17,7 +17,7 @@
 #ifndef JNI_INVOCATION_H_included
 #define JNI_INVOCATION_H_included
 
-#include <jni.h>
+#include <museum/6.0.1/libnativehelper/jni.h>
 
 // JniInvocation adds a layer of indirection for applications using
 // the JNI invocation API to allow the JNI implementation to be

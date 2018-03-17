@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_
 #define ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_
 
-#include <memory>
-#include <vector>
+#include <museum/6.0.1/external/libcxx/memory>
+#include <museum/6.0.1/external/libcxx/vector>
 
-#include "base/macros.h"
-#include "dex_file.h"
-#include "handle.h"
-#include "instruction_flags.h"
-#include "method_reference.h"
-#include "reg_type_cache.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/dex_file.h>
+#include <museum/6.0.1/art/runtime/handle.h>
+#include <museum/6.0.1/art/runtime/verifier/instruction_flags.h>
+#include <museum/6.0.1/art/runtime/method_reference.h>
+#include <museum/6.0.1/art/runtime/verifier/reg_type_cache.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _DMA_BUF_UAPI_H_
 #define _DMA_BUF_UAPI_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct dma_buf_sync {
   __u64 flags;
 };

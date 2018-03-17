@@ -33,7 +33,7 @@ Types:
 
 */
 
-#include <__config>
+#include <museum/5.1.1/external/libcxx/__config>
 
 #include <stddef.h>
 

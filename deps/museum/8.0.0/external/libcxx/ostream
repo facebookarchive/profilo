@@ -134,12 +134,12 @@ template <class charT, class traits, class T>
 
 */
 
-#include <__config>
-#include <ios>
-#include <streambuf>
-#include <locale>
-#include <iterator>
-#include <bitset>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/ios>
+#include <museum/8.0.0/external/libcxx/streambuf>
+#include <museum/8.0.0/external/libcxx/locale>
+#include <museum/8.0.0/external/libcxx/iterator>
+#include <museum/8.0.0/external/libcxx/bitset>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

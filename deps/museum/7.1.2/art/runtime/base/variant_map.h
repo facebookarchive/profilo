@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_BASE_VARIANT_MAP_H_
 #define ART_RUNTIME_BASE_VARIANT_MAP_H_
 
-#include <memory.h>
-#include <map>
-#include <type_traits>
-#include <utility>
+#include <museum/7.1.2/bionic/libc/memory.h>
+#include <museum/7.1.2/external/libcxx/map>
+#include <museum/7.1.2/external/libcxx/type_traits>
+#include <museum/7.1.2/external/libcxx/utility>
 
-#include "base/stl_util.h"
+#include <museum/7.1.2/art/runtime/base/stl_util.h>
 
 namespace art {
 

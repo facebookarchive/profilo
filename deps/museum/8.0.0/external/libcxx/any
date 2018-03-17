@@ -79,12 +79,12 @@ namespace std {
 
 */
 
-#include <experimental/__config>
-#include <memory>
-#include <new>
-#include <typeinfo>
-#include <type_traits>
-#include <cstdlib>
+#include <museum/8.0.0/external/libcxx/experimental/__config>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/new>
+#include <museum/8.0.0/external/libcxx/typeinfo>
+#include <museum/8.0.0/external/libcxx/type_traits>
+#include <museum/8.0.0/external/libcxx/cstdlib>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

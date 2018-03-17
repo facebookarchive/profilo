@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_NON_DEBUGGABLE_CLASSES_H_
 #define ART_RUNTIME_NON_DEBUGGABLE_CLASSES_H_
 
-#include <vector>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "base/mutex.h"
-#include "jni.h"
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
 namespace art {
 

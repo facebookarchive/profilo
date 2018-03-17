@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_THREAD_INL_H_
 #define ART_RUNTIME_THREAD_INL_H_
 
-#include "thread.h"
+#include <museum/8.0.0/art/runtime/thread.h>
 
 #ifdef ART_TARGET_ANDROID
-#include <bionic_tls.h>  // Access to our own TLS slot.
+#include <museum/8.0.0/bionic/libc/bionic_tls.h>  // Access to our own TLS slot.
 #endif
 
-#include <pthread.h>
+#include <museum/8.0.0/bionic/libc/pthread.h>
 
-#include "base/casts.h"
-#include "base/mutex-inl.h"
-#include "gc/heap.h"
-#include "jni_env_ext.h"
-#include "obj_ptr.h"
-#include "runtime.h"
-#include "thread_pool.h"
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/mutex-inl.h>
+#include <museum/8.0.0/art/runtime/gc/heap.h>
+#include <museum/8.0.0/art/runtime/jni_env_ext.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/art/runtime/thread_pool.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef OCRDMA_ABI_USER_H
 #define OCRDMA_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define OCRDMA_ABI_VERSION 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define OCRDMA_BE_ROCE_ABI_VERSION 1

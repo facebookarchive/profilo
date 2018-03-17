@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_DVBVIDEO_H_
 #define _UAPI_DVBVIDEO_H_
-#include <linux/types.h>
-#include <stdint.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/stdint.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <time.h>
+#include <museum/5.1.1/bionic/libc/time.h>
 typedef enum {
  VIDEO_FORMAT_4_3,
  VIDEO_FORMAT_16_9,

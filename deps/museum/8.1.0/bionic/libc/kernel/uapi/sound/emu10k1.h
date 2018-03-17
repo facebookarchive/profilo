@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__SOUND_EMU10K1_H
 #define _UAPI__SOUND_EMU10K1_H
-#include <linux/types.h>
-#include <sound/asound.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/sound/asound.h>
 #define EMU10K1_CARD_CREATIVE 0x00000000
 #define EMU10K1_CARD_EMUAPS 0x00000001
 #define EMU10K1_FX8010_PCM_COUNT 8

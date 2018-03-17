@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_ARCH_ARM64_QUICK_METHOD_FRAME_INFO_ARM64_H_
 #define ART_RUNTIME_ARCH_ARM64_QUICK_METHOD_FRAME_INFO_ARM64_H_
 
-#include "arch/instruction_set.h"
-#include "base/bit_utils.h"
-#include "base/callee_save_type.h"
-#include "base/enums.h"
-#include "globals.h"
-#include "quick/quick_method_frame_info.h"
-#include "registers_arm64.h"
+#include <museum/8.1.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/base/callee_save_type.h>
+#include <museum/8.1.0/art/runtime/base/enums.h>
+#include <museum/8.1.0/art/runtime/globals.h>
+#include <museum/8.1.0/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/8.1.0/art/runtime/arch/arm64/registers_arm64.h>
 
 namespace art {
 namespace arm64 {

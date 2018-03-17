@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef RDMA_USER_CM_H
 #define RDMA_USER_CM_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/in6.h>
-#include <rdma/ib_user_verbs.h>
-#include <rdma/ib_user_sa.h>
+#include <museum/7.1.2/bionic/libc/linux/in6.h>
+#include <museum/7.1.2/bionic/libc/rdma/ib_user_verbs.h>
+#include <museum/7.1.2/bionic/libc/rdma/ib_user_sa.h>
 #define RDMA_USER_CM_ABI_VERSION 4
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define RDMA_MAX_PRIVATE_DATA 256

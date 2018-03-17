@@ -28,8 +28,8 @@
 #ifndef _ERRNO_H
 #define _ERRNO_H
 
-#include <sys/cdefs.h>
-#include <linux/errno.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/linux/errno.h>
 
 __BEGIN_DECLS
 
@@ -47,7 +47,7 @@ extern volatile int* __errno(void) __pure2;
 #define  errno   (*__errno())
 
 #if __ANDROID_API__ < 21
-#include <android/legacy_errno_inlines.h>
+#include <museum/7.1.2/bionic/libc/android/legacy_errno_inlines.h>
 #endif
 
 __END_DECLS

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_MACSEC_H
 #define _UAPI_MACSEC_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define MACSEC_GENL_NAME "macsec"
 #define MACSEC_GENL_VERSION 1
 #define MACSEC_MAX_KEY_LEN 128

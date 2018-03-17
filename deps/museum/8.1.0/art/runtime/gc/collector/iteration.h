@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_ITERATION_H_
 #define ART_RUNTIME_GC_COLLECTOR_ITERATION_H_
 
-#include <inttypes.h>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/inttypes.h>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "android-base/macros.h"
-#include "base/timing_logger.h"
-#include "object_byte_pair.h"
+#include <museum/8.1.0/android-base/macros.h>
+#include <museum/8.1.0/art/runtime/base/timing_logger.h>
+#include <museum/8.1.0/art/runtime/gc/collector/object_byte_pair.h>
 
 namespace art {
 namespace gc {

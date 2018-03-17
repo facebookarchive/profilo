@@ -29,9 +29,9 @@
 #ifndef _SYS_MOUNT_H
 #define _SYS_MOUNT_H
 
-#include <sys/cdefs.h>
-#include <sys/ioctl.h>
-#include <linux/fs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/fs.h>
 
 __BEGIN_DECLS
 

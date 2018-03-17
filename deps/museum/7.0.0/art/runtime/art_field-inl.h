@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_ART_FIELD_INL_H_
 #define ART_RUNTIME_ART_FIELD_INL_H_
 
-#include "art_field.h"
+#include <museum/7.0.0/art/runtime/art_field.h>
 
-#include "base/logging.h"
-#include "class_linker.h"
-#include "gc_root-inl.h"
-#include "gc/accounting/card_table-inl.h"
-#include "jvalue.h"
-#include "mirror/dex_cache-inl.h"
-#include "mirror/object-inl.h"
-#include "primitive.h"
-#include "thread-inl.h"
-#include "scoped_thread_state_change.h"
-#include "well_known_classes.h"
+#include <museum/7.0.0/art/runtime/base/logging.h>
+#include <museum/7.0.0/art/runtime/class_linker.h>
+#include <museum/7.0.0/art/runtime/gc_root-inl.h>
+#include <museum/7.0.0/art/runtime/gc/accounting/card_table-inl.h>
+#include <museum/7.0.0/art/runtime/jvalue.h>
+#include <museum/7.0.0/art/runtime/mirror/dex_cache-inl.h>
+#include <museum/7.0.0/art/runtime/mirror/object-inl.h>
+#include <museum/7.0.0/art/runtime/primitive.h>
+#include <museum/7.0.0/art/runtime/thread-inl.h>
+#include <museum/7.0.0/art/runtime/scoped_thread_state_change.h>
+#include <museum/7.0.0/art/runtime/well_known_classes.h>
 
 namespace art {
 

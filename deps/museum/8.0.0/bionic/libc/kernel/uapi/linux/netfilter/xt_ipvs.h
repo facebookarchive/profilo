@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _XT_IPVS_H
 #define _XT_IPVS_H
-#include <linux/types.h>
-#include <linux/netfilter.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum {
   XT_IPVS_IPVS_PROPERTY = 1 << 0,

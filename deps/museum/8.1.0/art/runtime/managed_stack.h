@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_MANAGED_STACK_H_
 #define ART_RUNTIME_MANAGED_STACK_H_
 
-#include <cstring>
-#include <stdint.h>
-#include <string>
+#include <museum/8.1.0/external/libcxx/cstring>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/mutex.h"
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
 
 namespace art {
 

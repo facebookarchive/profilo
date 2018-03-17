@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ASM_SUPPORT_H_
 #define ART_RUNTIME_ASM_SUPPORT_H_
 
-#include "read_barrier_c.h"
+#include <museum/8.1.0/art/runtime/read_barrier_c.h>
 
 #if defined(__arm__) || defined(__mips__)
 // In quick code for ARM and MIPS we make poor use of registers and perform frequent suspend

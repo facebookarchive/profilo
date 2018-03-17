@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_MIRROR_DEX_CACHE_INL_H_
 #define ART_RUNTIME_MIRROR_DEX_CACHE_INL_H_
 
-#include "dex_cache.h"
+#include <museum/7.1.2/art/runtime/mirror/dex_cache.h>
 
-#include "art_field-inl.h"
-#include "art_method-inl.h"
-#include "base/casts.h"
-#include "base/logging.h"
-#include "mirror/class.h"
-#include "runtime.h"
+#include <museum/7.1.2/art/runtime/art_field-inl.h>
+#include <museum/7.1.2/art/runtime/art_method-inl.h>
+#include <museum/7.1.2/art/runtime/base/casts.h>
+#include <museum/7.1.2/art/runtime/base/logging.h>
+#include <museum/7.1.2/art/runtime/mirror/class.h>
+#include <museum/7.1.2/art/runtime/runtime.h>
 
 namespace art {
 namespace mirror {

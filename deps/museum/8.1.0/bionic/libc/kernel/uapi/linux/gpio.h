@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_GPIO_H_
 #define _UAPI_GPIO_H_
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct gpiochip_info {
   char name[32];
   char label[32];

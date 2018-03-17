@@ -18,16 +18,16 @@
 #define ART_RUNTIME_COMMON_RUNTIME_TEST_H_
 
 #include <gtest/gtest.h>
-#include <jni.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
-#include <string>
+#include <museum/8.0.0/external/libcxx/string>
 
-#include "arch/instruction_set.h"
-#include "base/mutex.h"
-#include "globals.h"
+#include <museum/8.0.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/globals.h>
 // TODO: Add inl file and avoid including inl.
-#include "obj_ptr-inl.h"
-#include "os.h"
+#include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.0.0/art/runtime/os.h>
 
 namespace art {
 

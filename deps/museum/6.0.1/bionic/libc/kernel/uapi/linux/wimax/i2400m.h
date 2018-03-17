@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX__WIMAX__I2400M_H__
 #define __LINUX__WIMAX__I2400M_H__
-#include <linux/types.h>
-#include <linux/if_ether.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct i2400m_bcf_hdr {
   __le32 module_type;

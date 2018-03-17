@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_JNI_JNI_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_JNI_JNI_ENTRYPOINTS_H_
 
-#include "jni.h"
+#include <museum/8.0.0/libnativehelper/jni.h>
 
-#include "base/macros.h"
-#include "offsets.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/offsets.h>
 
 #define JNI_ENTRYPOINT_OFFSET(ptr_size, x) \
     Thread::JniEntryPointOffset<ptr_size>(OFFSETOF_MEMBER(JniEntryPoints, x))

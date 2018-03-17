@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_PRCTL_H
 #define _LINUX_PRCTL_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 #define PR_SET_PDEATHSIG 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PR_GET_PDEATHSIG 2

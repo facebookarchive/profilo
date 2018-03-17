@@ -20,7 +20,7 @@
 #endif
 
 #if !_WIN32
-#include <unistd.h>
+#include <museum/6.0.1/bionic/libc/unistd.h>
 #endif
 
 #define _LIBCPP_VERSION 1101
@@ -47,7 +47,7 @@
 #endif  // __BIG_ENDIAN__
 
 #ifdef __FreeBSD__
-# include <sys/endian.h>
+# include <museum/6.0.1/bionic/libc/sys/endian.h>
 #  if _BYTE_ORDER == _LITTLE_ENDIAN
 #   define _LIBCPP_LITTLE_ENDIAN 1
 #   define _LIBCPP_BIG_ENDIAN    0
@@ -61,7 +61,7 @@
 #endif  // __FreeBSD__
 
 #ifdef __NetBSD__
-# include <sys/endian.h>
+# include <museum/6.0.1/bionic/libc/sys/endian.h>
 #  if _BYTE_ORDER == _LITTLE_ENDIAN
 #   define _LIBCPP_LITTLE_ENDIAN 1
 #   define _LIBCPP_BIG_ENDIAN    0
@@ -118,7 +118,7 @@
 #endif // defined(__native_client__)
 
 #if !defined(_LIBCPP_LITTLE_ENDIAN) || !defined(_LIBCPP_BIG_ENDIAN)
-# include <endian.h>
+# include <museum/6.0.1/bionic/libc/endian.h>
 # if __BYTE_ORDER == __LITTLE_ENDIAN
 #  define _LIBCPP_LITTLE_ENDIAN 1
 #  define _LIBCPP_BIG_ENDIAN    0
@@ -333,7 +333,7 @@ typedef __char32_t char32_t;
 #elif defined(__ANDROID__)
 #define _LIBCPP_HAS_QUICK_EXIT
 #elif defined(__linux__)
-#include <features.h>
+#include <museum/6.0.1/bionic/libc/features.h>
 #if __GLIBC_PREREQ(2, 15)
 #define _LIBCPP_HAS_QUICK_EXIT
 #endif

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_HEX_DUMP_H_
 #define ART_RUNTIME_BASE_HEX_DUMP_H_
 
-#include "macros.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
-#include <ostream>
+#include <museum/8.1.0/external/libcxx/ostream>
 
 namespace art {
 

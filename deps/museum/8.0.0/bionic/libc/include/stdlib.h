@@ -29,11 +29,11 @@
 #ifndef _STDLIB_H
 #define _STDLIB_H
 
-#include <sys/cdefs.h>
-#include <xlocale.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/xlocale.h>
 
-#include <alloca.h>
-#include <malloc.h>
+#include <museum/8.0.0/bionic/libc/alloca.h>
+#include <museum/8.0.0/bionic/libc/malloc.h>
 #include <stddef.h>
 
 __BEGIN_DECLS
@@ -235,6 +235,6 @@ long strtol_l(const char*, char**, int, locale_t) __INTRODUCED_IN(26);
 
 __END_DECLS
 
-#include <android/legacy_stdlib_inlines.h>
+#include <museum/8.0.0/bionic/libc/android/legacy_stdlib_inlines.h>
 
 #endif /* _STDLIB_H */

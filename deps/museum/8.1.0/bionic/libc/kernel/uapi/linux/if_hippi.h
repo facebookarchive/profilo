@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_HIPPI_H
 #define _LINUX_IF_HIPPI_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #define HIPPI_ALEN 6
 #define HIPPI_HLEN sizeof(struct hippi_hdr)
 #define HIPPI_ZLEN 0

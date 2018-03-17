@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_STATISTIC_H
 #define _XT_STATISTIC_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum xt_statistic_mode {
   XT_STATISTIC_MODE_RANDOM,
   XT_STATISTIC_MODE_NTH,

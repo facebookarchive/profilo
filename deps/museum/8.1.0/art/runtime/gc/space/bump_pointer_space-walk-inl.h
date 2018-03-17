@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_WALK_INL_H_
 #define ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_WALK_INL_H_
 
-#include "bump_pointer_space.h"
+#include <museum/8.1.0/art/runtime/gc/space/bump_pointer_space.h>
 
-#include "base/bit_utils.h"
-#include "mirror/object-inl.h"
-#include "thread-current-inl.h"
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/mirror/object-inl.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
 
 namespace art {
 namespace gc {

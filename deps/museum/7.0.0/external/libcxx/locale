@@ -178,26 +178,26 @@ template <class charT> class messages_byname;
 
 */
 
-#include <__config>
-#include <__locale>
-#include <algorithm>
-#include <memory>
-#include <ios>
-#include <streambuf>
-#include <iterator>
-#include <limits>
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/external/libcxx/__locale>
+#include <museum/7.0.0/external/libcxx/algorithm>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/ios>
+#include <museum/7.0.0/external/libcxx/streambuf>
+#include <museum/7.0.0/external/libcxx/iterator>
+#include <museum/7.0.0/external/libcxx/limits>
 #ifndef __APPLE__
-#include <cstdarg>
+#include <museum/7.0.0/external/libcxx/cstdarg>
 #endif
-#include <cstdlib>
-#include <ctime>
+#include <museum/7.0.0/external/libcxx/cstdlib>
+#include <museum/7.0.0/external/libcxx/ctime>
 #if defined(_LIBCPP_MSVCRT) || defined(__MINGW32__)
-#include <support/win32/locale_win32.h>
+#include <museum/7.0.0/external/libcxx/support/win32/locale_win32.h>
 #elif defined(_NEWLIB_VERSION)
 // FIXME: replace all the uses of _NEWLIB_VERSION with __NEWLIB__ preceded by an
 // include of <sys/cdefs.h> once https://sourceware.org/ml/newlib-cvs/2014-q3/msg00038.html
 // has had a chance to bake for a bit
-#include <support/newlib/xlocale.h>
+#include <museum/7.0.0/external/libcxx/support/newlib/xlocale.h>
 #endif
 #ifdef _LIBCPP_HAS_CATOPEN
 #include <nl_types.h>
@@ -207,7 +207,7 @@ template <class charT> class messages_byname;
 #include <Availability.h>
 #endif
 
-#include <__undef_min_max>
+#include <museum/7.0.0/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

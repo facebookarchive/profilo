@@ -19,7 +19,7 @@
 #ifndef __MSM_DRM_H__
 #define __MSM_DRM_H__
 #include <stddef.h>
-#include <drm/drm.h>
+#include <museum/7.0.0/bionic/libc/drm/drm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MSM_PIPE_NONE 0x00
 #define MSM_PIPE_2D0 0x01

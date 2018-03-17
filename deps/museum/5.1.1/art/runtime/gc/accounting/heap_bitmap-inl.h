@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_INL_H_
 #define ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_INL_H_
 
-#include "heap_bitmap.h"
+#include <museum/5.1.1/art/runtime/gc/accounting/heap_bitmap.h>
 
-#include "space_bitmap-inl.h"
+#include <museum/5.1.1/art/runtime/gc/accounting/space_bitmap-inl.h>
 
 namespace art {
 namespace gc {

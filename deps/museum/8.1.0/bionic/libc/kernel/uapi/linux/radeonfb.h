@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_RADEONFB_H__
 #define __LINUX_RADEONFB_H__
-#include <asm/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define ATY_RADEON_LCD_ON 0x00000001
 #define ATY_RADEON_CRT_ON 0x00000002
 #define FBIO_RADEON_GET_MIRROR _IOR('@', 3, size_t)

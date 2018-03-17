@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __NDCTL_H__
 #define __NDCTL_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct nd_cmd_smart {
   __u32 status;
   __u8 data[128];

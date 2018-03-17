@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VIRTIO_TYPES_H
 #define _UAPI_LINUX_VIRTIO_TYPES_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 typedef __u16 __bitwise__ __virtio16;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef __u32 __bitwise__ __virtio32;

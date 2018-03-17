@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_BASE_ARENA_ALLOCATOR_H_
 #define ART_RUNTIME_BASE_ARENA_ALLOCATOR_H_
 
-#include <stdint.h>
-#include <stddef.h>
+#include <museum/8.0.0/external/libcxx/stdint.h>
+#include <museum/8.0.0/external/libcxx/stddef.h>
 
-#include "base/bit_utils.h"
-#include "base/dchecked_vector.h"
-#include "base/memory_tool.h"
-#include "debug_stack.h"
-#include "macros.h"
-#include "mutex.h"
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/base/dchecked_vector.h>
+#include <museum/8.0.0/art/runtime/base/memory_tool.h>
+#include <museum/8.0.0/art/runtime/base/debug_stack.h>
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
 
 namespace art {
 

@@ -16,14 +16,14 @@
 #ifndef ART_RUNTIME_LAMBDA_BOX_TABLE_H_
 #define ART_RUNTIME_LAMBDA_BOX_TABLE_H_
 
-#include "base/allocator.h"
-#include "base/hash_map.h"
-#include "gc_root.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "object_callbacks.h"
+#include <museum/7.0.0/art/runtime/base/allocator.h>
+#include <museum/7.0.0/art/runtime/base/hash_map.h>
+#include <museum/7.0.0/art/runtime/gc_root.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/object_callbacks.h>
 
-#include <stdint.h>
+#include <museum/7.0.0/bionic/libc/stdint.h>
 
 namespace art {
 

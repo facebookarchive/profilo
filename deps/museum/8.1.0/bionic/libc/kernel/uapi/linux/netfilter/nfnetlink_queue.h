@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _NFNETLINK_QUEUE_H
 #define _NFNETLINK_QUEUE_H
-#include <linux/types.h>
-#include <linux/netfilter/nfnetlink.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter/nfnetlink.h>
 enum nfqnl_msg_types {
   NFQNL_MSG_PACKET,
   NFQNL_MSG_VERDICT,

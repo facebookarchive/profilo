@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_JNI_INTERNAL_H_
 #define ART_RUNTIME_JNI_INTERNAL_H_
 
-#include <jni.h>
-#include <iosfwd>
+#include <museum/8.1.0/libnativehelper/jni.h>
+#include <museum/8.1.0/external/libcxx/iosfwd>
 
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
 namespace art {
 

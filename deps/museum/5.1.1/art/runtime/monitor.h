@@ -17,20 +17,20 @@
 #ifndef ART_RUNTIME_MONITOR_H_
 #define ART_RUNTIME_MONITOR_H_
 
-#include <pthread.h>
-#include <stdint.h>
+#include <museum/5.1.1/bionic/libc/pthread.h>
+#include <museum/5.1.1/bionic/libc/stdint.h>
 
-#include <iosfwd>
-#include <list>
-#include <vector>
+#include <museum/5.1.1/external/libcxx/iosfwd>
+#include <museum/5.1.1/external/libcxx/list>
+#include <museum/5.1.1/external/libcxx/vector>
 
-#include "atomic.h"
-#include "base/allocator.h"
-#include "base/mutex.h"
-#include "gc_root.h"
-#include "object_callbacks.h"
-#include "read_barrier_option.h"
-#include "thread_state.h"
+#include <museum/5.1.1/art/runtime/atomic.h>
+#include <museum/5.1.1/art/runtime/base/allocator.h>
+#include <museum/5.1.1/art/runtime/base/mutex.h>
+#include <museum/5.1.1/art/runtime/gc_root.h>
+#include <museum/5.1.1/art/runtime/object_callbacks.h>
+#include <museum/5.1.1/art/runtime/read_barrier_option.h>
+#include <museum/5.1.1/art/runtime/thread_state.h>
 
 namespace art {
 

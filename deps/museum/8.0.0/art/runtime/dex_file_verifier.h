@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_DEX_FILE_VERIFIER_H_
 #define ART_RUNTIME_DEX_FILE_VERIFIER_H_
 
-#include <unordered_set>
+#include <museum/8.0.0/external/libcxx/unordered_set>
 
-#include "dex_file.h"
-#include "dex_file_types.h"
-#include "safe_map.h"
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/dex_file_types.h>
+#include <museum/8.0.0/art/runtime/safe_map.h>
 
 namespace art {
 

@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_MIRROR_REFERENCE_INL_H_
 #define ART_RUNTIME_MIRROR_REFERENCE_INL_H_
 
-#include "reference.h"
+#include <museum/6.0.1/art/runtime/mirror/reference.h>
 
 namespace art {
 namespace mirror {

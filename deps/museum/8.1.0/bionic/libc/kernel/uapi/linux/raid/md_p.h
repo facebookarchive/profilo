@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _MD_P_H
 #define _MD_P_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #define MD_RESERVED_BYTES (64 * 1024)
 #define MD_RESERVED_SECTORS (MD_RESERVED_BYTES / 512)
 #define MD_NEW_SIZE_SECTORS(x) ((x & ~(MD_RESERVED_SECTORS - 1)) - MD_RESERVED_SECTORS)

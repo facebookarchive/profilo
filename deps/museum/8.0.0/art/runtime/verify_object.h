@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_VERIFY_OBJECT_H_
 #define ART_RUNTIME_VERIFY_OBJECT_H_
 
-#include <stdint.h>
+#include <museum/8.0.0/external/libcxx/stdint.h>
 
-#include "base/macros.h"
-#include "obj_ptr.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
 
 namespace art {
 

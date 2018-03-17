@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_ATM_TCP_H
 #define _UAPILINUX_ATM_TCP_H
-#include <linux/atmapi.h>
-#include <linux/atm.h>
+#include <museum/5.0.0/bionic/libc/linux/atmapi.h>
+#include <museum/5.0.0/bionic/libc/linux/atm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/atmioc.h>
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/atmioc.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 struct atmtcp_hdr {
  __u16 vpi;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

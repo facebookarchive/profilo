@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _DVBAUDIO_H_
 #define _DVBAUDIO_H_
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 typedef enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   AUDIO_SOURCE_DEMUX,

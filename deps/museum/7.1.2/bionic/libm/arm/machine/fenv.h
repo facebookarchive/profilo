@@ -36,7 +36,7 @@
 #ifndef _ARM_FENV_H_
 #define _ARM_FENV_H_
 
-#include <sys/types.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

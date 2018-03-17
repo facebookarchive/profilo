@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_THROW_LOCATION_H_
 #define ART_RUNTIME_THROW_LOCATION_H_
 
-#include "object_callbacks.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc_root.h"
+#include <museum/5.1.1/art/runtime/object_callbacks.h>
+#include <museum/5.1.1/art/runtime/base/macros.h>
+#include <museum/5.1.1/art/runtime/base/mutex.h>
+#include <museum/5.1.1/art/runtime/gc_root.h>
 
-#include <stdint.h>
-#include <string>
+#include <museum/5.1.1/bionic/libc/stdint.h>
+#include <museum/5.1.1/external/libcxx/string>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IPV6_ROUTE_H
 #define _UAPI_LINUX_IPV6_ROUTE_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define RTF_DEFAULT 0x00010000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define RTF_ALLONLINK 0x00020000

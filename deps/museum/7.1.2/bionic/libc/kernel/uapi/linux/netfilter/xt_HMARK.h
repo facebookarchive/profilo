@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef XT_HMARK_H_
 #define XT_HMARK_H_
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   XT_HMARK_SADDR_MASK,

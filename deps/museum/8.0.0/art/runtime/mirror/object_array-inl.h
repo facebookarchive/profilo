@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_ARRAY_INL_H_
 #define ART_RUNTIME_MIRROR_OBJECT_ARRAY_INL_H_
 
-#include "object_array.h"
+#include <museum/8.0.0/art/runtime/mirror/object_array.h>
 
-#include <string>
+#include <museum/8.0.0/external/libcxx/string>
 
-#include "android-base/stringprintf.h"
+#include <museum/8.0.0/android-base/stringprintf.h>
 
-#include "array-inl.h"
-#include "class.h"
-#include "gc/heap.h"
-#include "object-inl.h"
-#include "obj_ptr-inl.h"
-#include "runtime.h"
-#include "handle_scope-inl.h"
-#include "thread.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/mirror/array-inl.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/gc/heap.h>
+#include <museum/8.0.0/art/runtime/mirror/object-inl.h>
+#include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/art/runtime/handle_scope-inl.h>
+#include <museum/8.0.0/art/runtime/thread.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 namespace mirror {

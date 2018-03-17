@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _ATMLEC_H_
 #define _ATMLEC_H_
-#include <linux/atmapi.h>
-#include <linux/atmioc.h>
+#include <museum/8.0.0/bionic/libc/linux/atmapi.h>
+#include <museum/8.0.0/bionic/libc/linux/atmioc.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/atm.h>
-#include <linux/if_ether.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/atm.h>
+#include <museum/8.0.0/bionic/libc/linux/if_ether.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define ATMLEC_CTRL _IO('a', ATMIOC_LANE)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ATMLEC_DATA _IO('a', ATMIOC_LANE + 1)

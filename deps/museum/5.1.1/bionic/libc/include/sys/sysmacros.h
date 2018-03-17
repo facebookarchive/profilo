@@ -30,7 +30,7 @@
 
 /* some rogue code includes this file directly :-( */
 #ifndef _SYS_TYPES_H_
-# include <sys/types.h>
+# include <museum/5.1.1/bionic/libc/sys/types.h>
 #endif
 
 static __inline__ int major(dev_t _dev)

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SEG6_HMAC_H
 #define _UAPI_LINUX_SEG6_HMAC_H
-#include <linux/seg6.h>
+#include <museum/8.0.0/bionic/libc/linux/seg6.h>
 #define SEG6_HMAC_SECRET_LEN 64
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SEG6_HMAC_FIELD_LEN 32

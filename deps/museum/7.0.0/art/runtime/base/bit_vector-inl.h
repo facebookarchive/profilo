@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_BIT_VECTOR_INL_H_
 #define ART_RUNTIME_BASE_BIT_VECTOR_INL_H_
 
-#include "base/bit_utils.h"
-#include "bit_vector.h"
-#include "logging.h"
+#include <museum/7.0.0/art/runtime/base/bit_utils.h>
+#include <museum/7.0.0/art/runtime/base/bit_vector.h>
+#include <museum/7.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

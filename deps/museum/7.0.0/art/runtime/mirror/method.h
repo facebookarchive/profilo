@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_MIRROR_METHOD_H_
 #define ART_RUNTIME_MIRROR_METHOD_H_
 
-#include "abstract_method.h"
-#include "gc_root.h"
+#include <museum/7.0.0/art/runtime/mirror/abstract_method.h>
+#include <museum/7.0.0/art/runtime/gc_root.h>
 
 namespace art {
 namespace mirror {

@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_BASE_ARENA_CONTAINERS_H_
 #define ART_RUNTIME_BASE_ARENA_CONTAINERS_H_
 
-#include <deque>
-#include <queue>
-#include <set>
-#include <utility>
+#include <museum/7.1.2/external/libcxx/deque>
+#include <museum/7.1.2/external/libcxx/queue>
+#include <museum/7.1.2/external/libcxx/set>
+#include <museum/7.1.2/external/libcxx/utility>
 
-#include "arena_allocator.h"
-#include "base/dchecked_vector.h"
-#include "hash_map.h"
-#include "hash_set.h"
-#include "safe_map.h"
+#include <museum/7.1.2/art/runtime/base/arena_allocator.h>
+#include <museum/7.1.2/art/runtime/base/dchecked_vector.h>
+#include <museum/7.1.2/art/runtime/base/hash_map.h>
+#include <museum/7.1.2/art/runtime/base/hash_set.h>
+#include <museum/7.1.2/art/runtime/safe_map.h>
 
 namespace art {
 

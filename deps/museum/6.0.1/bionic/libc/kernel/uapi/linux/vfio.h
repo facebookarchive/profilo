@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPIVFIO_H
 #define _UAPIVFIO_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define VFIO_API_VERSION 0
 #define VFIO_TYPE1_IOMMU 1

@@ -34,20 +34,20 @@
 #ifndef _NETINET_IF_ETHER_H_
 #define _NETINET_IF_ETHER_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
 
 #if defined(__USE_BSD)
 
 /* pull in Ethernet-specific definitions and packet structures */
 
-#include <linux/if_ether.h>
+#include <museum/8.0.0/bionic/libc/linux/if_ether.h>
 
 /* pull in ARP-specific definitions and packet structures */
 
-#include <net/if_arp.h>
+#include <museum/8.0.0/bionic/libc/net/if_arp.h>
 
-#include <net/ethernet.h>
+#include <museum/8.0.0/bionic/libc/net/ethernet.h>
 
 /* ... and define some more which we don't need anymore: */
 

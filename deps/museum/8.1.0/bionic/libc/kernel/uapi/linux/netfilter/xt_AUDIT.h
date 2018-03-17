@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_AUDIT_TARGET_H
 #define _XT_AUDIT_TARGET_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   XT_AUDIT_TYPE_ACCEPT = 0,
   XT_AUDIT_TYPE_DROP,

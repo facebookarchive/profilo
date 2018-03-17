@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_PROCESSOR_FLAGS_H
 #define _UAPI_ASM_X86_PROCESSOR_FLAGS_H
-#include <linux/const.h>
+#include <museum/8.0.0/bionic/libc/linux/const.h>
 #define X86_EFLAGS_CF_BIT 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define X86_EFLAGS_CF _BITUL(X86_EFLAGS_CF_BIT)

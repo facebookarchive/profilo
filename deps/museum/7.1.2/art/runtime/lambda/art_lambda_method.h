@@ -16,10 +16,10 @@
 #ifndef ART_RUNTIME_LAMBDA_ART_LAMBDA_METHOD_H_
 #define ART_RUNTIME_LAMBDA_ART_LAMBDA_METHOD_H_
 
-#include "base/macros.h"
-#include "art_method.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/art_method.h>
 
-#include <stdint.h>
+#include <museum/7.1.2/bionic/libc/stdint.h>
 
 namespace art {
 namespace lambda {

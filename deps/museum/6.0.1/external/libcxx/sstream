@@ -170,12 +170,12 @@ typedef basic_stringstream<wchar_t> wstringstream;
 
 */
 
-#include <__config>
-#include <ostream>
-#include <istream>
-#include <string>
+#include <museum/6.0.1/external/libcxx/__config>
+#include <museum/6.0.1/external/libcxx/ostream>
+#include <museum/6.0.1/external/libcxx/istream>
+#include <museum/6.0.1/external/libcxx/string>
 
-#include <__undef_min_max>
+#include <museum/6.0.1/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

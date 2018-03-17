@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ATM_H
 #define _UAPI_LINUX_ATM_H
-#include <linux/compiler.h>
-#include <linux/atmapi.h>
+#include <museum/5.1.1/bionic/libc/linux/compiler.h>
+#include <museum/5.1.1/bionic/libc/linux/atmapi.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/atmsap.h>
-#include <linux/atmioc.h>
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/atmsap.h>
+#include <museum/5.1.1/bionic/libc/linux/atmioc.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define ATM_CELL_SIZE 53
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ATM_CELL_PAYLOAD 48

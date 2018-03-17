@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_H_
 #define ART_RUNTIME_MIRROR_OBJECT_H_
 
-#include "atomic.h"
-#include "base/casts.h"
-#include "base/enums.h"
-#include "globals.h"
-#include "obj_ptr.h"
-#include "object_reference.h"
-#include "offsets.h"
-#include "verify_object.h"
+#include <museum/8.0.0/art/runtime/atomic.h>
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/mirror/object_reference.h>
+#include <museum/8.0.0/art/runtime/offsets.h>
+#include <museum/8.0.0/art/runtime/verify_object.h>
 
 namespace art {
 

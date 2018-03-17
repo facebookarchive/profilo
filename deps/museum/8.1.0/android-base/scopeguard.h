@@ -17,7 +17,7 @@
 #ifndef ANDROID_BASE_SCOPEGUARD_H
 #define ANDROID_BASE_SCOPEGUARD_H
 
-#include <utility>  // for std::move
+#include <museum/8.1.0/external/libcxx/utility>  // for std::move
 
 namespace android {
 namespace base {

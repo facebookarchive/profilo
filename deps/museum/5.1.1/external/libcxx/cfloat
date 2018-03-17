@@ -60,7 +60,7 @@ Macros:
 
 */
 
-#include <__config>
+#include <museum/5.1.1/external/libcxx/__config>
 #include <float.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)

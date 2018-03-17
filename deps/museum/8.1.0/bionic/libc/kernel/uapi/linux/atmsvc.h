@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMSVC_H
 #define _LINUX_ATMSVC_H
-#include <linux/atmapi.h>
-#include <linux/atm.h>
-#include <linux/atmioc.h>
+#include <museum/8.1.0/bionic/libc/linux/atmapi.h>
+#include <museum/8.1.0/bionic/libc/linux/atm.h>
+#include <museum/8.1.0/bionic/libc/linux/atmioc.h>
 #define ATMSIGD_CTRL _IO('a', ATMIOC_SPECIAL)
 enum atmsvc_msg_type {
   as_catch_null,

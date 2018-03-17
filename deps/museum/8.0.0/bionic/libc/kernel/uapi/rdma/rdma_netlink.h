@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_RDMA_NETLINK_H
 #define _UAPI_RDMA_NETLINK_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   RDMA_NL_RDMA_CM = 1,

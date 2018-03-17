@@ -17,20 +17,20 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_INL_H_
 #define ART_RUNTIME_MIRROR_OBJECT_INL_H_
 
-#include "object.h"
+#include <museum/5.0.0/art/runtime/mirror/object.h>
 
-#include "art_field.h"
-#include "art_method.h"
-#include "atomic.h"
-#include "array-inl.h"
-#include "class.h"
-#include "lock_word-inl.h"
-#include "monitor.h"
-#include "object_array-inl.h"
-#include "read_barrier-inl.h"
-#include "runtime.h"
-#include "reference.h"
-#include "throwable.h"
+#include <museum/5.0.0/art/runtime/mirror/art_field.h>
+#include <museum/5.0.0/art/runtime/mirror/art_method.h>
+#include <museum/5.0.0/art/runtime/atomic.h>
+#include <museum/5.0.0/art/runtime/mirror/array-inl.h>
+#include <museum/5.0.0/art/runtime/mirror/class.h>
+#include <museum/5.0.0/art/runtime/lock_word-inl.h>
+#include <museum/5.0.0/art/runtime/monitor.h>
+#include <museum/5.0.0/art/runtime/mirror/object_array-inl.h>
+#include <museum/5.0.0/art/runtime/read_barrier-inl.h>
+#include <museum/5.0.0/art/runtime/runtime.h>
+#include <museum/5.0.0/art/runtime/mirror/reference.h>
+#include <museum/5.0.0/art/runtime/mirror/throwable.h>
 
 namespace art {
 namespace mirror {

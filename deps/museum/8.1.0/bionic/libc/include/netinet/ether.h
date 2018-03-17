@@ -29,8 +29,8 @@
 #ifndef _NETINET_ETHER_H_
 #define _NETINET_ETHER_H_ 1
 
-#include <sys/cdefs.h>
-#include <netinet/if_ether.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/netinet/if_ether.h>
 
 __BEGIN_DECLS
 

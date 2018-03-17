@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_SIGNAL_CATCHER_H_
 #define ART_RUNTIME_SIGNAL_CATCHER_H_
 
-#include "android-base/unique_fd.h"
-#include "base/mutex.h"
+#include <museum/8.1.0/android-base/unique_fd.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
 
 namespace art {
 

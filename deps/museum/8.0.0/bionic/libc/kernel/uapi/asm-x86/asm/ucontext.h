@@ -24,6 +24,6 @@
 #define UC_SIGCONTEXT_SS 0x2
 #define UC_STRICT_RESTORE_SS 0x4
 #endif
-#include <asm-generic/ucontext.h>
+#include <museum/8.0.0/bionic/libc/asm-generic/ucontext.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

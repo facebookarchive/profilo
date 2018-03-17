@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPICCISS_IOCTLH
 #define _UAPICCISS_IOCTLH
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/cciss_defs.h>
+#include <museum/8.0.0/bionic/libc/linux/cciss_defs.h>
 #define CCISS_IOC_MAGIC 'B'
 typedef struct _cciss_pci_info_struct {
   unsigned char bus;

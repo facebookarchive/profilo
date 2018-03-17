@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_ROOT_INL_H_
 #define ART_RUNTIME_GC_ROOT_INL_H_
 
-#include "gc_root.h"
+#include <museum/5.0.0/art/runtime/gc_root.h>
 
-#include "read_barrier-inl.h"
+#include <museum/5.0.0/art/runtime/read_barrier-inl.h>
 
 namespace art {
 

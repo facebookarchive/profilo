@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_ARP_H
 #define _UAPI_LINUX_IF_ARP_H
-#include <linux/netdevice.h>
+#include <museum/8.1.0/bionic/libc/linux/netdevice.h>
 #define ARPHRD_NETROM 0
 #define ARPHRD_ETHER 1
 #define ARPHRD_EETHER 2

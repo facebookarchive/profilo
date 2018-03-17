@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_UNIX_FILE_RANDOM_ACCESS_FILE_H_
 #define ART_RUNTIME_BASE_UNIX_FILE_RANDOM_ACCESS_FILE_H_
 
-#include <stdint.h>
+#include <museum/7.1.2/bionic/libc/stdint.h>
 
 namespace unix_file {
 

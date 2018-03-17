@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GC_SPACE_ROSALLOC_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_ROSALLOC_SPACE_INL_H_
 
-#include "gc/allocator/rosalloc-inl.h"
-#include "gc/space/valgrind_settings.h"
-#include "rosalloc_space.h"
-#include "thread.h"
+#include <museum/6.0.1/art/runtime/gc/allocator/rosalloc-inl.h>
+#include <museum/6.0.1/art/runtime/gc/space/valgrind_settings.h>
+#include <museum/6.0.1/art/runtime/gc/space/rosalloc_space.h>
+#include <museum/6.0.1/art/runtime/thread.h>
 
 namespace art {
 namespace gc {

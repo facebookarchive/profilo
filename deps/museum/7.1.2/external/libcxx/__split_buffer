@@ -2,11 +2,11 @@
 #ifndef _LIBCPP_SPLIT_BUFFER
 #define _LIBCPP_SPLIT_BUFFER
 
-#include <__config>
-#include <type_traits>
-#include <algorithm>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/type_traits>
+#include <museum/7.1.2/external/libcxx/algorithm>
 
-#include <__undef_min_max>
+#include <museum/7.1.2/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

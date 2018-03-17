@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SIGNALFD_H
 #define _UAPI_LINUX_SIGNALFD_H
-#include <linux/types.h>
-#include <linux/fcntl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/fcntl.h>
 #define SFD_CLOEXEC O_CLOEXEC
 #define SFD_NONBLOCK O_NONBLOCK
 struct signalfd_siginfo {

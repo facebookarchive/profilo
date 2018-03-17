@@ -29,4 +29,4 @@
 /* All definitions related to termio are in Linux kernel headers
  * that are already included by <termios.h>
  */
-#include <termios.h>
+#include <museum/6.0.1/bionic/libc/termios.h>

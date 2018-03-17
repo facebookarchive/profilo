@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_KEYBOARD_H
 #define _UAPI__LINUX_KEYBOARD_H
-#include <linux/wait.h>
+#include <museum/7.1.2/bionic/libc/linux/wait.h>
 #define KG_SHIFT 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define KG_CTRL 2

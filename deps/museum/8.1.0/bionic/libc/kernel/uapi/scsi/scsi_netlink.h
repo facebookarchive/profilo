@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef SCSI_NETLINK_H
 #define SCSI_NETLINK_H
-#include <linux/netlink.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netlink.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SCSI_TRANSPORT_MSG NLMSG_MIN_TYPE + 1
 #define SCSI_NL_GRP_FC_EVENTS (1 << 2)
 #define SCSI_NL_GRP_CNT 3

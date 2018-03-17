@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_CLASS_LOADER_UTILS_H_
 #define ART_RUNTIME_CLASS_LOADER_UTILS_H_
 
-#include "handle_scope.h"
-#include "mirror/class_loader.h"
-#include "scoped_thread_state_change-inl.h"
-#include "well_known_classes.h"
+#include <museum/8.1.0/art/runtime/handle_scope.h>
+#include <museum/8.1.0/art/runtime/mirror/class_loader.h>
+#include <museum/8.1.0/art/runtime/scoped_thread_state_change-inl.h>
+#include <museum/8.1.0/art/runtime/well_known_classes.h>
 
 namespace art {
 

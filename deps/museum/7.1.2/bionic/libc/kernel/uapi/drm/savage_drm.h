@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __SAVAGE_DRM_H__
 #define __SAVAGE_DRM_H__
-#include <drm/drm.h>
+#include <museum/7.1.2/bionic/libc/drm/drm.h>
 #ifndef __SAVAGE_SAREA_DEFINES__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define __SAVAGE_SAREA_DEFINES__

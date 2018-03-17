@@ -11,11 +11,11 @@
 #ifndef _LIBCPP___TREE
 #define _LIBCPP___TREE
 
-#include <__config>
-#include <iterator>
-#include <memory>
-#include <stdexcept>
-#include <algorithm>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/iterator>
+#include <museum/7.1.2/external/libcxx/memory>
+#include <museum/7.1.2/external/libcxx/stdexcept>
+#include <museum/7.1.2/external/libcxx/algorithm>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SYSCTL_H
 #define _UAPI_LINUX_SYSCTL_H
-#include <linux/kernel.h>
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/kernel.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/compiler.h>
+#include <museum/6.0.1/bionic/libc/linux/compiler.h>
 struct completion;
 #define CTL_MAXNAME 10
 struct __sysctl_args {

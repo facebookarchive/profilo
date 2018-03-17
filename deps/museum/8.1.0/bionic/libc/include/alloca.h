@@ -29,7 +29,7 @@
 #ifndef _ALLOCA_H
 #define _ALLOCA_H
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 #define alloca(size)   __builtin_alloca(size)
 

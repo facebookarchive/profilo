@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __TARGET_CORE_USER_H
 #define __TARGET_CORE_USER_H
-#include <linux/types.h>
-#include <linux/uio.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/uio.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TCMU_VERSION "2.0"
 #define TCMU_MAILBOX_VERSION 2

@@ -240,13 +240,13 @@ template<class T, class charT, class traits>
 
 */
 
-#include <__config>
-#include <type_traits>
-#include <stdexcept>
-#include <cmath>
-#include <sstream>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/type_traits>
+#include <museum/5.1.1/external/libcxx/stdexcept>
+#include <museum/5.1.1/external/libcxx/cmath>
+#include <museum/5.1.1/external/libcxx/sstream>
 #if defined(_LIBCPP_NO_EXCEPTIONS)
-    #include <cassert>
+    #include <museum/5.1.1/external/libcxx/cassert>
 #endif
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)

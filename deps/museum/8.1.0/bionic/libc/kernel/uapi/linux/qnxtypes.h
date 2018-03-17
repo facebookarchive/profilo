@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _QNX4TYPES_H
 #define _QNX4TYPES_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 typedef __le16 qnx4_nxtnt_t;
 typedef __u8 qnx4_ftype_t;
 typedef struct {

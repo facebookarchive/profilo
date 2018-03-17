@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_PLUGIN_H_
 #define ART_RUNTIME_PLUGIN_H_
 
-#include <string>
-#include "base/logging.h"
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

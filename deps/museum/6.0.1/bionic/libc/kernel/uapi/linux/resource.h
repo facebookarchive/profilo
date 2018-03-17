@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_RESOURCE_H
 #define _UAPI_LINUX_RESOURCE_H
-#include <linux/time.h>
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/time.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define RUSAGE_SELF 0
 #define RUSAGE_CHILDREN (- 1)
@@ -68,6 +68,6 @@ struct rlimit64 {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define _STK_LIM (8 * 1024 * 1024)
 #define MLOCK_LIMIT ((PAGE_SIZE > 64 * 1024) ? PAGE_SIZE : 64 * 1024)
-#include <asm/resource.h>
+#include <museum/6.0.1/bionic/libc/asm/resource.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

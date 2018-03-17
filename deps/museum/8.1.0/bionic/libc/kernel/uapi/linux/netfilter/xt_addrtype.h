@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_ADDRTYPE_H
 #define _XT_ADDRTYPE_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   XT_ADDRTYPE_INVERT_SOURCE = 0x0001,
   XT_ADDRTYPE_INVERT_DEST = 0x0002,

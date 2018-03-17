@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_REFVISITOR_INL_H_
 #define ART_RUNTIME_MIRROR_CLASS_REFVISITOR_INL_H_
 
-#include "class-inl.h"
+#include <museum/8.1.0/art/runtime/mirror/class-inl.h>
 
-#include "art_field-inl.h"
-#include "class_ext-inl.h"
+#include <museum/8.1.0/art/runtime/art_field-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/class_ext-inl.h>
 
 namespace art {
 namespace mirror {

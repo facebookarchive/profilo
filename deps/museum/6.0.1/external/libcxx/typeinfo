@@ -57,10 +57,10 @@ public:
 
 */
 
-#include <__config>
-#include <exception>
-#include <cstddef>
-#include <cstdint>
+#include <museum/6.0.1/external/libcxx/__config>
+#include <museum/6.0.1/external/libcxx/exception>
+#include <museum/6.0.1/external/libcxx/cstddef>
+#include <museum/6.0.1/external/libcxx/cstdint>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

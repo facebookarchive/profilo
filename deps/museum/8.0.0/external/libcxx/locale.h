@@ -34,12 +34,12 @@ Functions:
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#include_next <locale.h>
+#include <museum/8.0.0/bionic/libc/locale.h>
 
 #endif  // _LIBCPP_LOCALE_H

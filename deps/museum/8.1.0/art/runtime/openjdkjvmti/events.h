@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_EVENTS_H_
 #define ART_RUNTIME_OPENJDKJVMTI_EVENTS_H_
 
-#include <bitset>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/bitset>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "base/logging.h"
+#include <museum/8.1.0/art/runtime/base/logging.h>
 #include "jvmti.h"
-#include "thread.h"
+#include <museum/8.1.0/art/runtime/thread.h>
 
 namespace openjdkjvmti {
 

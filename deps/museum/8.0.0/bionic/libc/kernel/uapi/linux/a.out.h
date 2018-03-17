@@ -21,7 +21,7 @@
 #define __GNU_EXEC_MACROS__
 #ifndef __STRUCT_EXEC_OVERRIDE__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <asm/a.out.h>
+#include <museum/8.0.0/bionic/libc/asm/a.out.h>
 #endif
 #ifndef __ASSEMBLY__
 enum machine_type {
@@ -122,7 +122,7 @@ enum machine_type {
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #ifdef linux
-#include <unistd.h>
+#include <museum/8.0.0/bionic/libc/unistd.h>
 #if defined(__i386__) || defined(__mc68000__)
 #define SEGMENT_SIZE 1024
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

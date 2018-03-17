@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_NILFS2_API_H
 #define _LINUX_NILFS2_API_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct nilfs_cpinfo {
   __u32 ci_flags;

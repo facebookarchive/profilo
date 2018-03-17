@@ -37,8 +37,8 @@
 #ifndef FALSE
 #define FALSE 0
 #endif
-#include <linux/types.h>
-#include <stdlib.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/stdlib.h>
 struct agp_version {
   __u16 major;
   __u16 minor;

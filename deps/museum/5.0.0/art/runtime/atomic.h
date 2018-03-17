@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_ATOMIC_H_
 #define ART_RUNTIME_ATOMIC_H_
 
-#include <stdint.h>
-#include <atomic>
-#include <limits>
-#include <vector>
+#include <museum/5.0.0/bionic/libc/stdint.h>
+#include <museum/5.0.0/external/libcxx/atomic>
+#include <museum/5.0.0/external/libcxx/limits>
+#include <museum/5.0.0/external/libcxx/vector>
 
-#include "base/logging.h"
-#include "base/macros.h"
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
 
 namespace art {
 

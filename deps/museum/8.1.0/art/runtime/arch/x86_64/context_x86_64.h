@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_ARCH_X86_64_CONTEXT_X86_64_H_
 #define ART_RUNTIME_ARCH_X86_64_CONTEXT_X86_64_H_
 
-#include "arch/context.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "registers_x86_64.h"
+#include <museum/8.1.0/art/runtime/arch/context.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/arch/x86_64/registers_x86_64.h>
 
 namespace art {
 namespace x86_64 {

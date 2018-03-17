@@ -4,7 +4,7 @@
 #ifndef	_MACHINE_FPU_H_
 #define	_MACHINE_FPU_H_
 
-#include <sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
 
 /*
  * amd64 only uses the extended save/restore format used

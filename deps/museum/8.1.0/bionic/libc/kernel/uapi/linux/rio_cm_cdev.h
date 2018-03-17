@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _RIO_CM_CDEV_H_
 #define _RIO_CM_CDEV_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct rio_cm_channel {
   __u16 id;
   __u16 remote_channel;

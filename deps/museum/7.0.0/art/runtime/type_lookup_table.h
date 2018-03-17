@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_TYPE_LOOKUP_TABLE_H_
 #define ART_RUNTIME_TYPE_LOOKUP_TABLE_H_
 
-#include "dex_file.h"
-#include "leb128.h"
-#include "utf.h"
+#include <museum/7.0.0/art/runtime/dex_file.h>
+#include <museum/7.0.0/art/runtime/leb128.h>
+#include <museum/7.0.0/art/runtime/utf.h>
 
 namespace art {
 

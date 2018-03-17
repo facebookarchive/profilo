@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_CONNSECMARK_H_target
 #define _XT_CONNSECMARK_H_target
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  CONNSECMARK_SAVE = 1,

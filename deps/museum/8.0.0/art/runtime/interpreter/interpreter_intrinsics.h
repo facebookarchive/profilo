@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_INTERPRETER_INTERPRETER_INTRINSICS_H_
 #define ART_RUNTIME_INTERPRETER_INTERPRETER_INTRINSICS_H_
 
-#include "jvalue.h"
+#include <museum/8.0.0/art/runtime/jvalue.h>
 
 namespace art {
 

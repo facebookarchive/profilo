@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_SIGCONTEXT_H
 #define _UAPI_ASM_X86_SIGCONTEXT_H
-#include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/compiler.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define FP_XSTATE_MAGIC1 0x46505853U
 #define FP_XSTATE_MAGIC2 0x46505845U

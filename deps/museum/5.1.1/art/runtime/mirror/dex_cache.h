@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_MIRROR_DEX_CACHE_H_
 #define ART_RUNTIME_MIRROR_DEX_CACHE_H_
 
-#include "art_field.h"
-#include "art_method.h"
-#include "class.h"
-#include "object.h"
-#include "object_array.h"
+#include <museum/5.1.1/art/runtime/mirror/art_field.h>
+#include <museum/5.1.1/art/runtime/mirror/art_method.h>
+#include <museum/5.1.1/art/runtime/mirror/class.h>
+#include <museum/5.1.1/art/runtime/mirror/object.h>
+#include <museum/5.1.1/art/runtime/mirror/object_array.h>
 
 namespace art {
 

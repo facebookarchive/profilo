@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_DUMPABLE_INL_H_
 #define ART_RUNTIME_BASE_DUMPABLE_INL_H_
 
-#include "base/dumpable.h"
-#include "base/mutex.h"
-#include "thread-inl.h"
+#include <museum/8.0.0/art/runtime/base/dumpable.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/thread-inl.h>
 
 namespace art {
 

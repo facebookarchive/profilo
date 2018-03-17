@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_GENERIC_SIGNAL_H
 #define _UAPI__ASM_GENERIC_SIGNAL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define _KERNEL__NSIG 64
 #define _NSIG_BPW __BITS_PER_LONG
 #define _NSIG_WORDS (_KERNEL__NSIG / _NSIG_BPW)
@@ -78,7 +78,7 @@ typedef struct {
   unsigned long sig[_NSIG_WORDS];
 } sigset_t;
 typedef unsigned long old_sigset_t;
-#include <asm-generic/signal-defs.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/signal-defs.h>
 #ifdef SA_RESTORER
 #define __ARCH_HAS_SA_RESTORER
 #endif

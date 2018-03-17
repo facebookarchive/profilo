@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_DEX2OAT_ENVIRONMENT_TEST_H_
 #define ART_RUNTIME_DEX2OAT_ENVIRONMENT_TEST_H_
 
-#include <fstream>
-#include <string>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/fstream>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/vector>
 
 #include <gtest/gtest.h>
 
-#include "common_runtime_test.h"
-#include "compiler_callbacks.h"
-#include "exec_utils.h"
-#include "gc/heap.h"
-#include "gc/space/image_space.h"
-#include "oat_file_assistant.h"
-#include "os.h"
-#include "runtime.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/common_runtime_test.h>
+#include <museum/8.0.0/art/runtime/compiler_callbacks.h>
+#include <museum/8.0.0/art/runtime/exec_utils.h>
+#include <museum/8.0.0/art/runtime/gc/heap.h>
+#include <museum/8.0.0/art/runtime/gc/space/image_space.h>
+#include <museum/8.0.0/art/runtime/oat_file_assistant.h>
+#include <museum/8.0.0/art/runtime/os.h>
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

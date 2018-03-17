@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IPC_H
 #define _UAPI_LINUX_IPC_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IPC_PRIVATE ((__kernel_key_t) 0)
 struct __kernel_legacy_ipc_perm {
   __kernel_key_t key;
@@ -29,7 +29,7 @@ struct __kernel_legacy_ipc_perm {
   __kernel_mode_t mode;
   unsigned short seq;
 };
-#include <asm/ipcbuf.h>
+#include <museum/8.1.0/bionic/libc/asm/ipcbuf.h>
 #define IPC_CREAT 00001000
 #define IPC_EXCL 00002000
 #define IPC_NOWAIT 00004000

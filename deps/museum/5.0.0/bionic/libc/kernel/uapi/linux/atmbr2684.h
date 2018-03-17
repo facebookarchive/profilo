@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMBR2684_H
 #define _LINUX_ATMBR2684_H
-#include <linux/types.h>
-#include <linux/atm.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/atm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/if.h>
+#include <museum/5.0.0/bionic/libc/linux/if.h>
 #define BR2684_MEDIA_ETHERNET (0)
 #define BR2684_MEDIA_802_4 (1)
 #define BR2684_MEDIA_TR (2)

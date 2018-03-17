@@ -35,12 +35,12 @@
 #ifndef _LIMITS_H_
 #define _LIMITS_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 /* Historically bionic exposed the content of <float.h> from <limits.h> and <sys/limits.h> too. */
 #include <float.h>
 
-#include <linux/limits.h>
+#include <museum/8.1.0/bionic/libc/linux/limits.h>
 
 #define PASS_MAX		128	/* _PASSWORD_LEN from <pwd.h> */
 
@@ -134,7 +134,7 @@
 #define SEM_VALUE_MAX 0x3fffffff
 
 /* POSIX says these belong in <unistd.h> but BSD has some in <limits.h>. */
-#include <bits/posix_limits.h>
+#include <museum/8.1.0/bionic/libc/bits/posix_limits.h>
 
 #define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
 

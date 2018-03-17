@@ -19,7 +19,7 @@
 #ifndef _UAPI_ASM_X86_SIGCONTEXT_H
 #define _UAPI_ASM_X86_SIGCONTEXT_H
 #include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define FP_XSTATE_MAGIC1 0x46505853U
 #define FP_XSTATE_MAGIC2 0x46505845U
 #define FP_XSTATE_MAGIC2_SIZE sizeof(FP_XSTATE_MAGIC2)

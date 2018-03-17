@@ -17,7 +17,7 @@
 #ifndef JNI_CONSTANTS_H_included
 #define JNI_CONSTANTS_H_included
 
-#include "JNIHelp.h"
+#include <museum/8.0.0/libnativehelper/JNIHelp.h>
 
 /**
  * A cache to avoid calling FindClass at runtime.

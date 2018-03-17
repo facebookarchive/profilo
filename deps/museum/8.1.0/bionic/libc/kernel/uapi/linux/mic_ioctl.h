@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _MIC_IOCTL_H_
 #define _MIC_IOCTL_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct mic_copy_desc {
   struct iovec * iov;
   __u32 iovcnt;

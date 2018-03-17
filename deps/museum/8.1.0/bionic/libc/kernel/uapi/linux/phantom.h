@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __PHANTOM_H
 #define __PHANTOM_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct phm_reg {
   __u32 reg;
   __u32 value;

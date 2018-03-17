@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FD_H
 #define _UAPI_LINUX_FD_H
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #include <linux/compiler.h>
 struct floppy_struct {
   unsigned int size, sect, head, track, stretch;

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _VIA_DRM_H_
 #define _VIA_DRM_H_
-#include <drm/drm.h>
+#include <museum/7.0.0/bionic/libc/drm/drm.h>
 #ifndef _VIA_DEFINES_
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define _VIA_DEFINES_

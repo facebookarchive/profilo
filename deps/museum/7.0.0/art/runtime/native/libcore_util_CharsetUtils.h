@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_NATIVE_LIBCORE_UTIL_CHARSETUTILS_H_
 #define ART_RUNTIME_NATIVE_LIBCORE_UTIL_CHARSETUTILS_H_
 
-#include <jni.h>
+#include <museum/7.0.0/libnativehelper/jni.h>
 
 namespace art {
 

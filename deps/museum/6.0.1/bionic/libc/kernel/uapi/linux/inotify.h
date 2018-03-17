@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_INOTIFY_H
 #define _UAPI_LINUX_INOTIFY_H
-#include <linux/fcntl.h>
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/fcntl.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct inotify_event {
   __s32 wd;

@@ -18,7 +18,7 @@
 #define ANDROID_BASE_STRINGPRINTF_H
 
 #include <stdarg.h>
-#include <string>
+#include <museum/8.1.0/external/libcxx/string>
 
 namespace android {
 namespace base {

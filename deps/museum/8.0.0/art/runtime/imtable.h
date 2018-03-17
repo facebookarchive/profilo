@@ -21,9 +21,9 @@
 #error IMT_SIZE not defined
 #endif
 
-#include "base/enums.h"
-#include "base/macros.h"
-#include "base/mutex.h"
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
 
 namespace art {
 

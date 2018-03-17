@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_ELF_FILE_IMPL_H_
 #define ART_RUNTIME_ELF_FILE_IMPL_H_
 
-#include <map>
-#include <memory>
-#include <type_traits>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/map>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/type_traits>
+#include <museum/8.0.0/external/libcxx/vector>
 
 // Explicitly include our own elf.h to avoid Linux and other dependencies.
-#include "./elf.h"
-#include "mem_map.h"
+#include <museum/8.0.0/art/runtime/elf.h>
+#include <museum/8.0.0/art/runtime/mem_map.h>
 
 namespace art {
 

@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VIRTIO_VSOCK_H
 #define _UAPI_LINUX_VIRTIO_VSOCK_H
-#include <linux/types.h>
-#include <linux/virtio_ids.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_ids.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/virtio_config.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_config.h>
 struct virtio_vsock_config {
   __le64 guest_cid;
 } __attribute__((packed));

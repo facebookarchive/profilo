@@ -28,7 +28,7 @@
 #ifndef _SYS_SYSCONF_H_
 #define _SYS_SYSCONF_H_
 
-#include <sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

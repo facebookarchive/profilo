@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_XT_PHYSDEV_H
 #define _UAPI_XT_PHYSDEV_H
-#include <linux/types.h>
-#include <linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
 #define XT_PHYSDEV_OP_IN 0x01
 #define XT_PHYSDEV_OP_OUT 0x02
 #define XT_PHYSDEV_OP_BRIDGED 0x04

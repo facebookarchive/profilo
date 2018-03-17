@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_MARK_M_H
 #define __LINUX_BRIDGE_EBT_MARK_M_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define EBT_MARK_AND 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EBT_MARK_OR 0x02

@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_INTERPRETER_UNSTARTED_RUNTIME_H_
 #define ART_RUNTIME_INTERPRETER_UNSTARTED_RUNTIME_H_
 
-#include "interpreter.h"
+#include <museum/6.0.1/art/runtime/interpreter/interpreter.h>
 
-#include "dex_file.h"
-#include "jvalue.h"
+#include <museum/6.0.1/art/runtime/dex_file.h>
+#include <museum/6.0.1/art/runtime/jvalue.h>
 
 namespace art {
 
@@ -69,7 +69,7 @@ class UnstartedRuntime {
                                      JValue* result,            \
                                      size_t arg_offset)         \
       SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
-#include "unstarted_runtime_list.h"
+#include <museum/6.0.1/art/runtime/interpreter/unstarted_runtime_list.h>
   UNSTARTED_RUNTIME_DIRECT_LIST(UNSTARTED_DIRECT)
 #undef UNSTARTED_RUNTIME_DIRECT_LIST
 #undef UNSTARTED_RUNTIME_JNI_LIST
@@ -83,7 +83,7 @@ class UnstartedRuntime {
                                         uint32_t* args,            \
                                         JValue* result)            \
       SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
-#include "unstarted_runtime_list.h"
+#include <museum/6.0.1/art/runtime/interpreter/unstarted_runtime_list.h>
   UNSTARTED_RUNTIME_JNI_LIST(UNSTARTED_JNI)
 #undef UNSTARTED_RUNTIME_DIRECT_LIST
 #undef UNSTARTED_RUNTIME_JNI_LIST

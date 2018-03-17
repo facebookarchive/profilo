@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_ARM_INSTRUCTION_SET_FEATURES_ARM_H_
 #define ART_RUNTIME_ARCH_ARM_INSTRUCTION_SET_FEATURES_ARM_H_
 
-#include "arch/instruction_set_features.h"
+#include <museum/7.0.0/art/runtime/arch/instruction_set_features.h>
 
 namespace art {
 

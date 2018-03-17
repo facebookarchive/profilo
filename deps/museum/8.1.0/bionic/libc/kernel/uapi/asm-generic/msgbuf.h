@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_MSGBUF_H
 #define __ASM_GENERIC_MSGBUF_H
-#include <asm/bitsperlong.h>
+#include <museum/8.1.0/bionic/libc/asm/bitsperlong.h>
 struct msqid64_ds {
   struct ipc64_perm msg_perm;
   __kernel_time_t msg_stime;

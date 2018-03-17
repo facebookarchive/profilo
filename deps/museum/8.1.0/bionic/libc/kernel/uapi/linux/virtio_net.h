@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VIRTIO_NET_H
 #define _UAPI_LINUX_VIRTIO_NET_H
-#include <linux/types.h>
-#include <linux/virtio_ids.h>
-#include <linux/virtio_config.h>
-#include <linux/virtio_types.h>
-#include <linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/virtio_ids.h>
+#include <museum/8.1.0/bionic/libc/linux/virtio_config.h>
+#include <museum/8.1.0/bionic/libc/linux/virtio_types.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 #define VIRTIO_NET_F_CSUM 0
 #define VIRTIO_NET_F_GUEST_CSUM 1
 #define VIRTIO_NET_F_CTRL_GUEST_OFFLOADS 2

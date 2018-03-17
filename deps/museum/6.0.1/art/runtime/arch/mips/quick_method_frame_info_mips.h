@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_ARCH_MIPS_QUICK_METHOD_FRAME_INFO_MIPS_H_
 #define ART_RUNTIME_ARCH_MIPS_QUICK_METHOD_FRAME_INFO_MIPS_H_
 
-#include "base/bit_utils.h"
-#include "quick/quick_method_frame_info.h"
-#include "registers_mips.h"
-#include "runtime.h"  // for Runtime::CalleeSaveType.
+#include <museum/6.0.1/art/runtime/base/bit_utils.h>
+#include <museum/6.0.1/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/6.0.1/art/runtime/arch/mips/registers_mips.h>
+#include <museum/6.0.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
 namespace art {
 namespace mips {

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __NET_DROPMON_H
 #define __NET_DROPMON_H
-#include <linux/types.h>
-#include <linux/netlink.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netlink.h>
 struct net_dm_drop_point {
   __u8 pc[8];
   __u32 count;

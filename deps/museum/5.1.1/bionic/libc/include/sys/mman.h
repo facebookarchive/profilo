@@ -28,9 +28,9 @@
 #ifndef _SYS_MMAN_H_
 #define _SYS_MMAN_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <asm/mman.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
+#include <museum/5.1.1/bionic/libc/asm/mman.h>
 
 __BEGIN_DECLS
 

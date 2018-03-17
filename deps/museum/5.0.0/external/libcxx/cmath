@@ -297,12 +297,12 @@ long double    truncl(long double x);
 
 */
 
-#include <__config>
-#include <math.h>
-#include <type_traits>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/bionic/libm/math.h>
+#include <museum/5.0.0/external/libcxx/type_traits>
 
 #ifdef _LIBCPP_MSVCRT
-#include "support/win32/math_win32.h"
+#include <museum/5.0.0/external/libcxx/support/win32/math_win32.h>
 #endif
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)

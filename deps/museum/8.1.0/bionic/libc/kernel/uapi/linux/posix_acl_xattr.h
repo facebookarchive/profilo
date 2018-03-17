@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __UAPI_POSIX_ACL_XATTR_H
 #define __UAPI_POSIX_ACL_XATTR_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define POSIX_ACL_XATTR_VERSION 0x0002
 #define ACL_UNDEFINED_ID (- 1)
 struct posix_acl_xattr_entry {

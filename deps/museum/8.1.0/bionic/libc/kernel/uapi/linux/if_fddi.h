@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_FDDI_H
 #define _UAPI_LINUX_IF_FDDI_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define FDDI_K_ALEN 6
 #define FDDI_K_8022_HLEN 16
 #define FDDI_K_SNAP_HLEN 21

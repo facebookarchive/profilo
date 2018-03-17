@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_JDWP_OBJECT_REGISTRY_H_
 #define ART_RUNTIME_JDWP_OBJECT_REGISTRY_H_
 
-#include <jni.h>
-#include <stdint.h>
+#include <museum/6.0.1/libnativehelper/jni.h>
+#include <museum/6.0.1/bionic/libc/stdint.h>
 
-#include <map>
+#include <museum/6.0.1/external/libcxx/map>
 
-#include "base/casts.h"
-#include "handle.h"
-#include "jdwp/jdwp.h"
-#include "safe_map.h"
+#include <museum/6.0.1/art/runtime/base/casts.h>
+#include <museum/6.0.1/art/runtime/handle.h>
+#include <museum/6.0.1/art/runtime/jdwp/jdwp.h>
+#include <museum/6.0.1/art/runtime/safe_map.h>
 
 namespace art {
 

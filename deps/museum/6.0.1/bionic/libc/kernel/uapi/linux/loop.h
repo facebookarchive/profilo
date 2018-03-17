@@ -27,8 +27,8 @@ enum {
   LO_FLAGS_PARTSCAN = 8,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 };
-#include <asm/posix_types.h>
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/asm/posix_types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 struct loop_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   int lo_number;

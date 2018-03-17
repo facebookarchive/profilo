@@ -16,20 +16,20 @@
 #ifndef ART_RUNTIME_MIRROR_STRING_INL_H_
 #define ART_RUNTIME_MIRROR_STRING_INL_H_
 
-#include "string.h"
+#include <museum/8.1.0/art/runtime/mirror/string.h>
 
-#include "android-base/stringprintf.h"
+#include <museum/8.1.0/android-base/stringprintf.h>
 
-#include "array.h"
-#include "base/bit_utils.h"
-#include "class.h"
-#include "common_throws.h"
-#include "gc/heap-inl.h"
-#include "globals.h"
-#include "runtime.h"
-#include "thread.h"
-#include "utf.h"
-#include "utils.h"
+#include <museum/8.1.0/art/runtime/mirror/array.h>
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/mirror/class.h>
+#include <museum/8.1.0/art/runtime/common_throws.h>
+#include <museum/8.1.0/art/runtime/gc/heap-inl.h>
+#include <museum/8.1.0/art/runtime/globals.h>
+#include <museum/8.1.0/art/runtime/runtime.h>
+#include <museum/8.1.0/art/runtime/thread.h>
+#include <museum/8.1.0/art/runtime/utf.h>
+#include <museum/8.1.0/art/runtime/utils.h>
 
 namespace art {
 namespace mirror {

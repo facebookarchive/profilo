@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef KERNEL_IRDA_H
 #define KERNEL_IRDA_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define HINT_PNP 0x01
 #define HINT_PDA 0x02

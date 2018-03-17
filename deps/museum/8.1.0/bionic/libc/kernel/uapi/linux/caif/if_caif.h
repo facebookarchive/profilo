@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef IF_CAIF_H_
 #define IF_CAIF_H_
-#include <linux/sockios.h>
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/sockios.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 enum ifla_caif {
   __IFLA_CAIF_UNSPEC,
   IFLA_CAIF_IPV4_CONNID,

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_RUNTIME_INL_H_
 #define ART_RUNTIME_RUNTIME_INL_H_
 
-#include "runtime.h"
+#include <museum/8.1.0/art/runtime/runtime.h>
 
-#include "art_method.h"
-#include "base/callee_save_type.h"
-#include "gc_root-inl.h"
-#include "obj_ptr-inl.h"
+#include <museum/8.1.0/art/runtime/art_method.h>
+#include <museum/8.1.0/art/runtime/base/callee_save_type.h>
+#include <museum/8.1.0/art/runtime/gc_root-inl.h>
+#include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
 
 namespace art {
 

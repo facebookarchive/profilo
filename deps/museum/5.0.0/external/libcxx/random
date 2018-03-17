@@ -14,7 +14,7 @@
 /*
     random synopsis
 
-#include <initializer_list>
+#include <museum/5.0.0/external/libcxx/initializer_list>
 
 namespace std
 {
@@ -1632,21 +1632,21 @@ class piecewise_linear_distribution
 } // std
 */
 
-#include <__config>
-#include <cstddef>
-#include <type_traits>
-#include <initializer_list>
-#include <cstdint>
-#include <limits>
-#include <algorithm>
-#include <numeric>
-#include <vector>
-#include <string>
-#include <istream>
-#include <ostream>
-#include <cmath>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/cstddef>
+#include <museum/5.0.0/external/libcxx/type_traits>
+#include <museum/5.0.0/external/libcxx/initializer_list>
+#include <museum/5.0.0/external/libcxx/cstdint>
+#include <museum/5.0.0/external/libcxx/limits>
+#include <museum/5.0.0/external/libcxx/algorithm>
+#include <museum/5.0.0/external/libcxx/numeric>
+#include <museum/5.0.0/external/libcxx/vector>
+#include <museum/5.0.0/external/libcxx/string>
+#include <museum/5.0.0/external/libcxx/istream>
+#include <museum/5.0.0/external/libcxx/ostream>
+#include <museum/5.0.0/external/libcxx/cmath>
 
-#include <__undef_min_max>
+#include <museum/5.0.0/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

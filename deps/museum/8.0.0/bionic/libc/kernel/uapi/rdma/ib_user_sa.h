@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef IB_USER_SA_H
 #define IB_USER_SA_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   IB_PATH_GMP = 1,

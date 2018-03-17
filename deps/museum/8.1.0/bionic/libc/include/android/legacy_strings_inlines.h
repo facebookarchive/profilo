@@ -29,8 +29,8 @@
 #ifndef _ANDROID_LEGACY_STRINGS_INLINES_H_
 #define _ANDROID_LEGACY_STRINGS_INLINES_H_
 
-#include <strings.h>
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/strings.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

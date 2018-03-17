@@ -29,7 +29,7 @@
 #ifndef _ANDROID_LEGACY_SYS_STAT_INLINES_H_
 #define _ANDROID_LEGACY_SYS_STAT_INLINES_H_
 
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _NFNETLINK_COMPAT_H
 #define _NFNETLINK_COMPAT_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define NF_NETLINK_CONNTRACK_NEW 0x00000001
 #define NF_NETLINK_CONNTRACK_UPDATE 0x00000002
 #define NF_NETLINK_CONNTRACK_DESTROY 0x00000004

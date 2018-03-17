@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_TIPC_H_
 #define _LINUX_TIPC_H_
-#include <linux/types.h>
-#include <linux/sockios.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/sockios.h>
 struct tipc_portid {
   __u32 ref;
   __u32 node;

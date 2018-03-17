@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_SAFE_MAP_H_
 #define ART_RUNTIME_SAFE_MAP_H_
 
-#include <map>
-#include <memory>
-#include <type_traits>
+#include <museum/8.0.0/external/libcxx/map>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/type_traits>
 
-#include "base/allocator.h"
-#include "base/logging.h"
+#include <museum/8.0.0/art/runtime/base/allocator.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

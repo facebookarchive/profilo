@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_THREAD_STATE_H_
 #define ART_RUNTIME_THREAD_STATE_H_
 
-#include <ostream>
+#include <museum/8.1.0/external/libcxx/ostream>
 
 namespace art {
 

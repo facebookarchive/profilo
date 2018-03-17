@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FCNTL_H
 #define _UAPI_LINUX_FCNTL_H
-#include <asm/fcntl.h>
+#include <museum/8.1.0/bionic/libc/asm/fcntl.h>
 #define F_SETLEASE (F_LINUX_SPECIFIC_BASE + 0)
 #define F_GETLEASE (F_LINUX_SPECIFIC_BASE + 1)
 #define F_CANCELLK (F_LINUX_SPECIFIC_BASE + 5)

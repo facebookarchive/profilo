@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SOUND_H
 #define _UAPI_LINUX_SOUND_H
-#include <linux/fs.h>
+#include <museum/8.1.0/bionic/libc/linux/fs.h>
 #define SND_DEV_CTL 0
 #define SND_DEV_SEQ 1
 #define SND_DEV_MIDIN 2

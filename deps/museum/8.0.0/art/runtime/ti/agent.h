@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_TI_AGENT_H_
 #define ART_RUNTIME_TI_AGENT_H_
 
-#include <dlfcn.h>
-#include <jni.h>  // for jint, JavaVM* etc declarations
+#include <museum/8.0.0/bionic/libc/dlfcn.h>
+#include <museum/8.0.0/libnativehelper/jni.h>  // for jint, JavaVM* etc declarations
 
-#include "runtime.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 namespace ti {

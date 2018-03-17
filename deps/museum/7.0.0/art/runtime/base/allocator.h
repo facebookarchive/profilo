@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_BASE_ALLOCATOR_H_
 #define ART_RUNTIME_BASE_ALLOCATOR_H_
 
-#include <map>
-#include <set>
-#include <unordered_map>
+#include <museum/7.0.0/external/libcxx/map>
+#include <museum/7.0.0/external/libcxx/set>
+#include <museum/7.0.0/external/libcxx/unordered_map>
 
-#include "atomic.h"
-#include "base/hash_map.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "base/type_static_if.h"
+#include <museum/7.0.0/art/runtime/atomic.h>
+#include <museum/7.0.0/art/runtime/base/hash_map.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/base/type_static_if.h>
 
 namespace art {
 

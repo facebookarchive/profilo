@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_VERIFIER_REG_TYPE_INL_H_
 #define ART_RUNTIME_VERIFIER_REG_TYPE_INL_H_
 
-#include "reg_type.h"
+#include <museum/7.1.2/art/runtime/verifier/reg_type.h>
 
-#include "base/casts.h"
-#include "base/scoped_arena_allocator.h"
-#include "mirror/class.h"
+#include <museum/7.1.2/art/runtime/base/casts.h>
+#include <museum/7.1.2/art/runtime/base/scoped_arena_allocator.h>
+#include <museum/7.1.2/art/runtime/mirror/class.h>
 
 namespace art {
 namespace verifier {

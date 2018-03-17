@@ -57,8 +57,8 @@ size_t strlen(const char* s);
 
 */
 
-#include <__config>
-#include <string.h>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/bionic/libc/string.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef __ARM_KVM_H__
 #define __ARM_KVM_H__
-#include <linux/types.h>
-#include <linux/psci.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/psci.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <asm/ptrace.h>
+#include <museum/7.0.0/bionic/libc/asm/ptrace.h>
 #define __KVM_HAVE_GUEST_DEBUG
 #define __KVM_HAVE_IRQ_LINE
 #define __KVM_HAVE_READONLY_MEM

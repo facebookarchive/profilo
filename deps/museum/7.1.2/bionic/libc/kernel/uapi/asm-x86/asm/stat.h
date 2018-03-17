@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ASM_X86_STAT_H
 #define _ASM_X86_STAT_H
-#include <asm/posix_types.h>
+#include <museum/7.1.2/bionic/libc/asm/posix_types.h>
 #define STAT_HAVE_NSEC 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #ifdef __i386__

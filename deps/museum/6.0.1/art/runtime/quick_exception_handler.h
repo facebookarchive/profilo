@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_QUICK_EXCEPTION_HANDLER_H_
 #define ART_RUNTIME_QUICK_EXCEPTION_HANDLER_H_
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "stack.h"  // StackReference
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/base/mutex.h>
+#include <museum/6.0.1/art/runtime/stack.h>  // StackReference
 
 namespace art {
 

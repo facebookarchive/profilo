@@ -19,8 +19,8 @@
 #ifndef _UAPI_ASM_X86_SIGNAL_H
 #define _UAPI_ASM_X86_SIGNAL_H
 #ifndef __ASSEMBLY__
-#include <linux/types.h>
-#include <linux/time.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/time.h>
 #include <linux/compiler.h>
 struct siginfo;
 #define _KERNEL_NSIG 32
@@ -74,7 +74,7 @@ typedef unsigned long sigset_t;
 #define SA_RESTORER 0x04000000
 #define MINSIGSTKSZ 2048
 #define SIGSTKSZ 8192
-#include <asm-generic/signal-defs.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/signal-defs.h>
 #ifndef __ASSEMBLY__
 #ifdef __i386__
 struct sigaction {

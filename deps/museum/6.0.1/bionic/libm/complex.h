@@ -29,7 +29,7 @@
 #ifndef _COMPLEX_H
 #define	_COMPLEX_H
 
-#include <sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 
 #ifdef __GNUC__
 #if __STDC_VERSION__ < 199901

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_QUICK_QUICK_METHOD_FRAME_INFO_H_
 #define ART_RUNTIME_QUICK_QUICK_METHOD_FRAME_INFO_H_
 
-#include <stdint.h>
+#include <museum/5.1.1/bionic/libc/stdint.h>
 
-#include "base/macros.h"
+#include <museum/5.1.1/art/runtime/base/macros.h>
 
 namespace art {
 

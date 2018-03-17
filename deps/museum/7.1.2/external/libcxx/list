@@ -168,17 +168,17 @@ template <class T, class Alloc>
 
 */
 
-#include <__config>
+#include <museum/7.1.2/external/libcxx/__config>
 
-#include <memory>
-#include <limits>
-#include <initializer_list>
-#include <iterator>
-#include <algorithm>
+#include <museum/7.1.2/external/libcxx/memory>
+#include <museum/7.1.2/external/libcxx/limits>
+#include <museum/7.1.2/external/libcxx/initializer_list>
+#include <museum/7.1.2/external/libcxx/iterator>
+#include <museum/7.1.2/external/libcxx/algorithm>
 
-#include <__undef_min_max>
+#include <museum/7.1.2/external/libcxx/__undef_min_max>
 
-#include <__debug>
+#include <museum/7.1.2/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

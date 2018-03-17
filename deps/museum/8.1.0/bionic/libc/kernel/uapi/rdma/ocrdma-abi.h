@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef OCRDMA_ABI_USER_H
 #define OCRDMA_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define OCRDMA_ABI_VERSION 2
 #define OCRDMA_BE_ROCE_ABI_VERSION 1
 struct ocrdma_alloc_ucontext_resp {

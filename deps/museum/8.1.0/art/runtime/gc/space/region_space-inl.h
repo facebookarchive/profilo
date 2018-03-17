@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_GC_SPACE_REGION_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_REGION_SPACE_INL_H_
 
-#include "region_space.h"
-#include "thread-current-inl.h"
+#include <museum/8.1.0/art/runtime/gc/space/region_space.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
 
 namespace art {
 namespace gc {

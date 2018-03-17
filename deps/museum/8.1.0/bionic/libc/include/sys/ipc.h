@@ -29,9 +29,9 @@
 #ifndef _SYS_IPC_H
 #define _SYS_IPC_H
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/ipc.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ipc.h>
 
 #if defined(__USE_GNU)
 #define __key key

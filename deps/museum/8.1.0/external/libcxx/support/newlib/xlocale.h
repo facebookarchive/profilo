@@ -12,13 +12,13 @@
 
 #if defined(_NEWLIB_VERSION)
 
-#include <cstdlib>
-#include <clocale>
-#include <cwctype>
-#include <ctype.h>
-#include <support/xlocale/__nop_locale_mgmt.h>
-#include <support/xlocale/__posix_l_fallback.h>
-#include <support/xlocale/__strtonum_fallback.h>
+#include <museum/8.1.0/external/libcxx/cstdlib>
+#include <museum/8.1.0/external/libcxx/clocale>
+#include <museum/8.1.0/external/libcxx/cwctype>
+#include <museum/8.1.0/external/libcxx/ctype.h>
+#include <museum/8.1.0/external/libcxx/support/xlocale/__nop_locale_mgmt.h>
+#include <museum/8.1.0/external/libcxx/support/xlocale/__posix_l_fallback.h>
+#include <museum/8.1.0/external/libcxx/support/xlocale/__strtonum_fallback.h>
 
 #endif // _NEWLIB_VERSION
 

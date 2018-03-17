@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_RADEONFB_H__
 #define __LINUX_RADEONFB_H__
-#include <asm/ioctl.h>
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/asm/ioctl.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ATY_RADEON_LCD_ON 0x00000001
 #define ATY_RADEON_CRT_ON 0x00000002

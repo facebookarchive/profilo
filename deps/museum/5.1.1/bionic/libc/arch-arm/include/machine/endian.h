@@ -73,7 +73,7 @@
 #define _BYTE_ORDER _LITTLE_ENDIAN
 #endif
 #define __STRICT_ALIGNMENT
-#include <sys/types.h>
-#include <sys/endian.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
+#include <museum/5.1.1/bionic/libc/sys/endian.h>
 
 #endif  /* !_ARM_ENDIAN_H_ */

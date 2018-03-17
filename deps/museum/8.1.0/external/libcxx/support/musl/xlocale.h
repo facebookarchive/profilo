@@ -18,8 +18,8 @@
 #ifndef _LIBCPP_SUPPORT_MUSL_XLOCALE_H
 #define _LIBCPP_SUPPORT_MUSL_XLOCALE_H
 
-#include <cstdlib>
-#include <cwchar>
+#include <museum/8.1.0/external/libcxx/cstdlib>
+#include <museum/8.1.0/external/libcxx/cwchar>
 
 #ifdef __cplusplus
 extern "C" {

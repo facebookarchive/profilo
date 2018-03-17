@@ -26,9 +26,9 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/socket.h>
-#include <linux/if.h>
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/socket.h>
+#include <museum/5.0.0/bionic/libc/linux/if.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #ifndef IF_NAMESIZE
 #define IF_NAMESIZE IFNAMSIZ
 #endif

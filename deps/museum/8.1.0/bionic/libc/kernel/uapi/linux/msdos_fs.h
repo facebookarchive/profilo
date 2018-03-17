@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MSDOS_FS_H
 #define _UAPI_LINUX_MSDOS_FS_H
-#include <linux/types.h>
-#include <linux/magic.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/magic.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #define SECTOR_SIZE 512
 #define SECTOR_BITS 9
 #define MSDOS_DPB (MSDOS_DPS)

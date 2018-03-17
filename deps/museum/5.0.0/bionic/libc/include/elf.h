@@ -28,11 +28,11 @@
 #ifndef _ELF_H
 #define _ELF_H
 
-#include <linux/auxvec.h>
-#include <linux/elf.h>
-#include <linux/elf-em.h>
+#include <museum/5.0.0/bionic/libc/linux/auxvec.h>
+#include <museum/5.0.0/bionic/libc/linux/elf.h>
+#include <museum/5.0.0/bionic/libc/linux/elf-em.h>
 
-#include <machine/elf_machdep.h>
+#include <museum/5.0.0/bionic/libc/machine/elf_machdep.h>
 
 typedef struct {
   __u32 a_type;

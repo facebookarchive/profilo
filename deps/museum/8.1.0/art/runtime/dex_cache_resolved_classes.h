@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_DEX_CACHE_RESOLVED_CLASSES_H_
 #define ART_RUNTIME_DEX_CACHE_RESOLVED_CLASSES_H_
 
-#include <string>
-#include <unordered_set>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/string>
+#include <museum/8.1.0/external/libcxx/unordered_set>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "dex_file_types.h"
+#include <museum/8.1.0/art/runtime/dex_file_types.h>
 
 namespace art {
 

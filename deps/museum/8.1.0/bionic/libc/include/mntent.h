@@ -29,9 +29,9 @@
 #ifndef _MNTENT_H_
 #define _MNTENT_H_
 
-#include <stdio.h>
-#include <sys/cdefs.h>
-#include <paths.h>  /* for _PATH_MOUNTED */
+#include <museum/8.1.0/bionic/libc/stdio.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/paths.h>  /* for _PATH_MOUNTED */
 
 #define MOUNTED _PATH_MOUNTED
 

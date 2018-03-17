@@ -19,10 +19,10 @@
 #ifndef ART_RUNTIME_JDWP_JDWP_EXPAND_BUF_H_
 #define ART_RUNTIME_JDWP_JDWP_EXPAND_BUF_H_
 
-#include <string>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include <stddef.h>
-#include <stdint.h>
+#include <museum/8.1.0/external/libcxx/stddef.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
 
 namespace art {
 

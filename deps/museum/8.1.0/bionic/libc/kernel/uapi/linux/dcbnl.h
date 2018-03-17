@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_DCBNL_H__
 #define __LINUX_DCBNL_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IEEE_8021QAZ_MAX_TCS 8
 #define IEEE_8021QAZ_TSA_STRICT 0
 #define IEEE_8021QAZ_TSA_CB_SHAPER 1

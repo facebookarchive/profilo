@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_IPTABLES_H
 #define _UAPI_IPTABLES_H
-#include <linux/types.h>
-#include <linux/compiler.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/netfilter_ipv4.h>
-#include <linux/netfilter/x_tables.h>
+#include <museum/5.1.1/bionic/libc/linux/netfilter_ipv4.h>
+#include <museum/5.1.1/bionic/libc/linux/netfilter/x_tables.h>
 #define IPT_FUNCTION_MAXNAMELEN XT_FUNCTION_MAXNAMELEN
 #define IPT_TABLE_MAXNAMELEN XT_TABLE_MAXNAMELEN
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
@@ -39,7 +39,7 @@
 #define ipt_counters xt_counters
 #define IPT_CONTINUE XT_CONTINUE
 #define IPT_RETURN XT_RETURN
-#include <linux/netfilter/xt_tcpudp.h>
+#include <museum/5.1.1/bionic/libc/linux/netfilter/xt_tcpudp.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ipt_udp xt_udp
 #define ipt_tcp xt_tcp

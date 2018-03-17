@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _ATMMPC_H_
 #define _ATMMPC_H_
-#include <linux/atmapi.h>
-#include <linux/atmioc.h>
-#include <linux/atm.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/atmapi.h>
+#include <museum/8.1.0/bionic/libc/linux/atmioc.h>
+#include <museum/8.1.0/bionic/libc/linux/atm.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define ATMMPC_CTRL _IO('a', ATMIOC_MPOA)
 #define ATMMPC_DATA _IO('a', ATMIOC_MPOA + 1)
 #define MPC_SOCKET_INGRESS 1

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_MPLS_H
 #define _UAPI_MPLS_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct mpls_label {
   __be32 entry;

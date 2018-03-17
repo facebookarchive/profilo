@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef __LINUX_KVM_H
 #define __LINUX_KVM_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
-#include <linux/ioctl.h>
-#include <asm/kvm.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/asm/kvm.h>
 #define KVM_API_VERSION 12
 #define KVM_TRC_SHIFT 16
 #define KVM_TRC_ENTRYEXIT (1 << KVM_TRC_SHIFT)

@@ -40,8 +40,8 @@ int raise(int sig);
 
 */
 
-#include <__config>
-#include <signal.h>
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/bionic/libc/signal.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

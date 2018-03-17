@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GC_SPACE_IMAGE_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_IMAGE_SPACE_H_
 
-#include "arch/instruction_set.h"
-#include "gc/accounting/space_bitmap.h"
-#include "image.h"
-#include "space.h"
+#include <museum/8.1.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/space_bitmap.h>
+#include <museum/8.1.0/art/runtime/image.h>
+#include <museum/8.1.0/art/runtime/gc/space/space.h>
 
 namespace art {
 

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_TASK_PROCESSOR_H_
 #define ART_RUNTIME_GC_TASK_PROCESSOR_H_
 
-#include <memory>
-#include <set>
+#include <museum/7.1.2/external/libcxx/memory>
+#include <museum/7.1.2/external/libcxx/set>
 
-#include "base/mutex.h"
-#include "globals.h"
-#include "thread_pool.h"
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/globals.h>
+#include <museum/7.1.2/art/runtime/thread_pool.h>
 
 namespace art {
 namespace gc {

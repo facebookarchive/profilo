@@ -23,13 +23,13 @@ Macros:
 
 */
 
-#include <__config>
+#include <museum/8.1.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#include_next <errno.h>
+#include <museum/8.1.0/bionic/libc/errno.h>
 
 #ifdef __cplusplus
 

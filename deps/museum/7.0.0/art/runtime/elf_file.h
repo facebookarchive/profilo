@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_ELF_FILE_H_
 #define ART_RUNTIME_ELF_FILE_H_
 
-#include <memory>
-#include <string>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/string>
 
-#include "base/macros.h"
+#include <museum/7.0.0/art/runtime/base/macros.h>
 // Explicitly include our own elf.h to avoid Linux and other dependencies.
-#include "./elf.h"
-#include "os.h"
+#include <museum/7.0.0/art/runtime/elf.h>
+#include <museum/7.0.0/art/runtime/os.h>
 
 namespace art {
 template <typename ElfTypes>

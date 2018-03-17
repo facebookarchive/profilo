@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_IP6_NETFILTER_H
 #define _UAPI__LINUX_IP6_NETFILTER_H
-#include <linux/netfilter.h>
-#include <limits.h>
+#include <museum/6.0.1/bionic/libc/linux/netfilter.h>
+#include <museum/6.0.1/bionic/libc/limits.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NFC_IP6_SRC 0x0001
 #define NFC_IP6_DST 0x0002

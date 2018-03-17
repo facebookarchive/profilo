@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_CSUM_H
 #define __LINUX_TC_CSUM_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/pkt_cls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TCA_ACT_CSUM 16
 enum {

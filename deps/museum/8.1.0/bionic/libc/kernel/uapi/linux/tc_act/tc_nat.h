@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_NAT_H
 #define __LINUX_TC_NAT_H
-#include <linux/pkt_cls.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define TCA_ACT_NAT 9
 enum {
   TCA_NAT_UNSPEC,

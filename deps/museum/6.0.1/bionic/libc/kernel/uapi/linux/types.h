@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TYPES_H
 #define _UAPI_LINUX_TYPES_H
-#include <asm/types.h>
+#include <museum/6.0.1/bionic/libc/asm/types.h>
 #ifndef __ASSEMBLY__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/posix_types.h>
+#include <museum/6.0.1/bionic/libc/linux/posix_types.h>
 #define __bitwise__
 #define __bitwise
 typedef __u16 __bitwise __le16;

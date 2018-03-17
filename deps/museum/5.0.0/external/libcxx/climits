@@ -38,8 +38,8 @@ Macros:
 
 */
 
-#include <__config>
-#include <limits.h>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/bionic/libc/limits.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

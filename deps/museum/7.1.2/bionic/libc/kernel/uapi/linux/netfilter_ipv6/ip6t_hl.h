@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6T_HL_H
 #define _IP6T_HL_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   IP6T_HL_EQ = 0,

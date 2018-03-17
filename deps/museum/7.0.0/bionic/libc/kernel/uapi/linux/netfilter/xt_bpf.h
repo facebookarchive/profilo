@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _XT_BPF_H
 #define _XT_BPF_H
-#include <linux/filter.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/filter.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XT_BPF_MAX_NUM_INSTR 64
 struct bpf_prog;

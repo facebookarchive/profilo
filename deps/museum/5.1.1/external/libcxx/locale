@@ -178,21 +178,21 @@ template <class charT> class messages_byname;
 
 */
 
-#include <__config>
-#include <__locale>
-#include <algorithm>
-#include <memory>
-#include <ios>
-#include <streambuf>
-#include <iterator>
-#include <limits>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/__locale>
+#include <museum/5.1.1/external/libcxx/algorithm>
+#include <museum/5.1.1/external/libcxx/memory>
+#include <museum/5.1.1/external/libcxx/ios>
+#include <museum/5.1.1/external/libcxx/streambuf>
+#include <museum/5.1.1/external/libcxx/iterator>
+#include <museum/5.1.1/external/libcxx/limits>
 #ifndef __APPLE__
-#include <cstdarg>
+#include <museum/5.1.1/external/libcxx/cstdarg>
 #endif
-#include <cstdlib>
-#include <ctime>
+#include <museum/5.1.1/external/libcxx/cstdlib>
+#include <museum/5.1.1/external/libcxx/ctime>
 #if defined(_LIBCPP_MSVCRT) || defined(__MINGW32__)
-#include <support/win32/locale_win32.h>
+#include <museum/5.1.1/external/libcxx/support/win32/locale_win32.h>
 #elif !defined(__ANDROID__)
 #include <nl_types.h>
 #endif
@@ -201,7 +201,7 @@ template <class charT> class messages_byname;
 #include <Availability.h>
 #endif
 
-#include <__undef_min_max>
+#include <museum/5.1.1/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

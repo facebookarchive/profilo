@@ -29,8 +29,8 @@
 #ifndef _SYS_PROCFS_H_
 #define _SYS_PROCFS_H_
 
-#include <sys/cdefs.h>
-#include <sys/ucontext.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/ucontext.h>
 
 __BEGIN_DECLS
 

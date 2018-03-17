@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __R128_DRM_H__
 #define __R128_DRM_H__
-#include <drm/drm.h>
+#include <museum/7.0.0/bionic/libc/drm/drm.h>
 #ifndef __R128_SAREA_DEFINES__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define __R128_SAREA_DEFINES__

@@ -174,16 +174,16 @@ namespace std {
 
 */
 
-#include <experimental/__config>
+#include <museum/8.0.0/external/libcxx/experimental/__config>
 
-#include <string>
-#include <algorithm>
-#include <iterator>
-#include <ostream>
-#include <stdexcept>
-#include <iomanip>
+#include <museum/8.0.0/external/libcxx/experimental/string>
+#include <museum/8.0.0/external/libcxx/experimental/algorithm>
+#include <museum/8.0.0/external/libcxx/experimental/iterator>
+#include <museum/8.0.0/external/libcxx/ostream>
+#include <museum/8.0.0/external/libcxx/stdexcept>
+#include <museum/8.0.0/external/libcxx/iomanip>
 
-#include <__debug>
+#include <museum/8.0.0/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

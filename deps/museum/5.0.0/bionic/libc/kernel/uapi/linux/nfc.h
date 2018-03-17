@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_NFC_H
 #define __LINUX_NFC_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NFC_GENL_NAME "nfc"
 #define NFC_GENL_VERSION 1

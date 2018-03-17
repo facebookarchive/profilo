@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_SCREEN_INFO_H
 #define _UAPI_SCREEN_INFO_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 struct screen_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u8 orig_x;

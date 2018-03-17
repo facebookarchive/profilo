@@ -43,15 +43,15 @@
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XLF_EFI_KEXEC (1 << 4)
 #ifndef __ASSEMBLY__
-#include <linux/types.h>
-#include <linux/screen_info.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/screen_info.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/apm_bios.h>
-#include <linux/edd.h>
-#include <asm/e820.h>
-#include <asm/ist.h>
+#include <museum/8.0.0/bionic/libc/linux/apm_bios.h>
+#include <museum/8.0.0/bionic/libc/linux/edd.h>
+#include <museum/8.0.0/bionic/libc/asm/e820.h>
+#include <museum/8.0.0/bionic/libc/asm/ist.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <video/edid.h>
+#include <museum/8.0.0/bionic/libc/video/edid.h>
 struct setup_data {
   __u64 next;
   __u32 type;

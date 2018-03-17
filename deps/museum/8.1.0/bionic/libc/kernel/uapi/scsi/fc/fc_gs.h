@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _FC_GS_H_
 #define _FC_GS_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct fc_ct_hdr {
   __u8 ct_rev;
   __u8 ct_in_id[3];

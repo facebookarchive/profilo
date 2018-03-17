@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_L2TP_H_
 #define _UAPI_LINUX_L2TP_H_
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/in.h>
-#include <linux/in6.h>
+#include <museum/8.0.0/bionic/libc/linux/in.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
 #define IPPROTO_L2TP 115
 #define __SOCK_SIZE__ 16
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

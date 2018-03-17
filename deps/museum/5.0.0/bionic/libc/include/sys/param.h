@@ -28,8 +28,8 @@
 #ifndef _SYS_PARAM_H_
 #define _SYS_PARAM_H_
 
-#include <limits.h>
-#include <linux/param.h>
+#include <museum/5.0.0/bionic/libc/limits.h>
+#include <museum/5.0.0/bionic/libc/linux/param.h>
 
 #define MAXPATHLEN  PATH_MAX
 #define MAXSYMLINKS 8

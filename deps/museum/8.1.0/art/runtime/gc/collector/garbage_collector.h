@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_GARBAGE_COLLECTOR_H_
 #define ART_RUNTIME_GC_COLLECTOR_GARBAGE_COLLECTOR_H_
 
-#include <stdint.h>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "base/histogram.h"
-#include "base/mutex.h"
-#include "base/timing_logger.h"
-#include "gc/collector_type.h"
-#include "gc/gc_cause.h"
-#include "gc_root.h"
-#include "gc_type.h"
-#include "iteration.h"
-#include "object_byte_pair.h"
-#include "object_callbacks.h"
+#include <museum/8.1.0/art/runtime/base/histogram.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/base/timing_logger.h>
+#include <museum/8.1.0/art/runtime/gc/collector_type.h>
+#include <museum/8.1.0/art/runtime/gc/gc_cause.h>
+#include <museum/8.1.0/art/runtime/gc_root.h>
+#include <museum/8.1.0/art/runtime/gc/collector/gc_type.h>
+#include <museum/8.1.0/art/runtime/gc/collector/iteration.h>
+#include <museum/8.1.0/art/runtime/gc/collector/object_byte_pair.h>
+#include <museum/8.1.0/art/runtime/object_callbacks.h>
 
 namespace art {
 

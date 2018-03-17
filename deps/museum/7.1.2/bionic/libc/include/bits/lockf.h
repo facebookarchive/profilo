@@ -29,7 +29,7 @@
 #ifndef _BITS_LOCKF_H_
 #define _BITS_LOCKF_H_
 
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 #define F_ULOCK 0
 #define F_LOCK 1

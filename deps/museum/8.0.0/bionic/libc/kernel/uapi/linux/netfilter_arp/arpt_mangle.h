@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ARPT_MANGLE_H
 #define _ARPT_MANGLE_H
-#include <linux/netfilter_arp/arp_tables.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter_arp/arp_tables.h>
 #define ARPT_MANGLE_ADDR_LEN_MAX sizeof(struct in_addr)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct arpt_mangle {

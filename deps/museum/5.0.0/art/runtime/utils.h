@@ -17,18 +17,18 @@
 #ifndef ART_RUNTIME_UTILS_H_
 #define ART_RUNTIME_UTILS_H_
 
-#include <pthread.h>
+#include <museum/5.0.0/bionic/libc/pthread.h>
 
-#include <limits>
-#include <memory>
-#include <string>
-#include <vector>
+#include <museum/5.0.0/external/libcxx/limits>
+#include <museum/5.0.0/external/libcxx/memory>
+#include <museum/5.0.0/external/libcxx/string>
+#include <museum/5.0.0/external/libcxx/vector>
 
-#include "base/logging.h"
-#include "base/mutex.h"
-#include "globals.h"
-#include "instruction_set.h"
-#include "primitive.h"
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/instruction_set.h>
+#include <museum/5.0.0/art/runtime/primitive.h>
 
 #ifdef HAVE_ANDROID_OS
 #include "cutils/properties.h"

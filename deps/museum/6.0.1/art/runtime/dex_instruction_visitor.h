@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_DEX_INSTRUCTION_VISITOR_H_
 #define ART_RUNTIME_DEX_INSTRUCTION_VISITOR_H_
 
-#include "base/macros.h"
-#include "dex_instruction.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/dex_instruction.h>
 
 namespace art {
 
@@ -37,7 +37,7 @@ class DexInstructionVisitor {
           derived->Do_ ## cname(inst);                \
           break;                                      \
         }
-#include "dex_instruction_list.h"
+#include <museum/6.0.1/art/runtime/dex_instruction_list.h>
         DEX_INSTRUCTION_LIST(INSTRUCTION_CASE)
 #undef DEX_INSTRUCTION_LIST
 #undef INSTRUCTION_CASE
@@ -55,7 +55,7 @@ class DexInstructionVisitor {
     T* derived = static_cast<T*>(this);                    \
     derived->Do_Default(inst);                             \
   }
-#include "dex_instruction_list.h"
+#include <museum/6.0.1/art/runtime/dex_instruction_list.h>
   DEX_INSTRUCTION_LIST(INSTRUCTION_VISITOR)
 #undef DEX_INSTRUCTION_LIST
 #undef INSTRUCTION_VISITOR

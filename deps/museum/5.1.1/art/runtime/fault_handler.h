@@ -18,12 +18,12 @@
 #ifndef ART_RUNTIME_FAULT_HANDLER_H_
 #define ART_RUNTIME_FAULT_HANDLER_H_
 
-#include <signal.h>
-#include <vector>
-#include <setjmp.h>
-#include <stdint.h>
+#include <museum/5.1.1/bionic/libc/signal.h>
+#include <museum/5.1.1/external/libcxx/vector>
+#include <museum/5.1.1/bionic/libc/setjmp.h>
+#include <museum/5.1.1/bionic/libc/stdint.h>
 
-#include "base/mutex.h"   // For annotalysis.
+#include <museum/5.1.1/art/runtime/base/mutex.h>   // For annotalysis.
 
 namespace art {
 

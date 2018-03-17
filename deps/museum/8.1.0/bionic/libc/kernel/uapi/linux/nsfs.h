@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_NSFS_H
 #define __LINUX_NSFS_H
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define NSIO 0xb7
 #define NS_GET_USERNS _IO(NSIO, 0x1)
 #define NS_GET_PARENT _IO(NSIO, 0x2)

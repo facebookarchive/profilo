@@ -57,11 +57,11 @@
 #endif
 #endif
 
-#include <functional>
-#include <memory>
-#include <ostream>
+#include <museum/8.0.0/external/libcxx/functional>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/ostream>
 
-#include "android-base/macros.h"
+#include <museum/8.0.0/android-base/macros.h>
 
 namespace android {
 namespace base {

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_XFRM_H
 #define _LINUX_XFRM_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 typedef union {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __be32 a4;

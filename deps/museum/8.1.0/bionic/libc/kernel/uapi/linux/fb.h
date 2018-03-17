@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FB_H
 #define _UAPI_LINUX_FB_H
-#include <linux/types.h>
-#include <linux/i2c.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/i2c.h>
 #define FB_MAX 32
 #define FBIOGET_VSCREENINFO 0x4600
 #define FBIOPUT_VSCREENINFO 0x4601

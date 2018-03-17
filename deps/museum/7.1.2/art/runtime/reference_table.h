@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_REFERENCE_TABLE_H_
 #define ART_RUNTIME_REFERENCE_TABLE_H_
 
-#include <cstddef>
-#include <iosfwd>
-#include <string>
-#include <vector>
+#include <museum/7.1.2/external/libcxx/cstddef>
+#include <museum/7.1.2/external/libcxx/iosfwd>
+#include <museum/7.1.2/external/libcxx/string>
+#include <museum/7.1.2/external/libcxx/vector>
 
-#include "base/allocator.h"
-#include "base/mutex.h"
-#include "gc_root.h"
-#include "object_callbacks.h"
+#include <museum/7.1.2/art/runtime/base/allocator.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
 
 namespace art {
 namespace mirror {

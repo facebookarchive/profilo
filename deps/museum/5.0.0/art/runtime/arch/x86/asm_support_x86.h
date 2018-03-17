@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_X86_ASM_SUPPORT_X86_H_
 #define ART_RUNTIME_ARCH_X86_ASM_SUPPORT_X86_H_
 
-#include "asm_support.h"
+#include <museum/5.0.0/art/runtime/asm_support.h>
 
 // Offset of field Thread::self_ verified in InitCpu
 #define THREAD_SELF_OFFSET 156

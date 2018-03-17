@@ -14,7 +14,7 @@
 #ifndef __XLOCALE_H_INCLUDED
 #define __XLOCALE_H_INCLUDED
 
-#include <stdlib.h>
+#include <museum/8.0.0/external/libcxx/stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {

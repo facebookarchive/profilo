@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef GIGASET_INTERFACE_H
 #define GIGASET_INTERFACE_H
-#include <linux/ioctl.h>
+#include <museum/5.0.0/bionic/libc/linux/ioctl.h>
 #define GIGASET_IOCTL 0x47
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define GIGASET_REDIR _IOWR(GIGASET_IOCTL, 0, int)

@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_H_
 
-#include "object_callbacks.h"
-#include "space.h"
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
+#include <museum/7.1.2/art/runtime/gc/space/space.h>
 
 namespace art {
 namespace gc {

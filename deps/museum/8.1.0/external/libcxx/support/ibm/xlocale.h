@@ -10,10 +10,10 @@
 
 #ifndef _LIBCPP_SUPPORT_IBM_XLOCALE_H
 #define _LIBCPP_SUPPORT_IBM_XLOCALE_H
-#include <support/ibm/locale_mgmt_aix.h>
+#include <museum/8.1.0/external/libcxx/support/ibm/locale_mgmt_aix.h>
 
 #if defined(_AIX)
-#include "cstdlib"
+#include <museum/8.1.0/external/libcxx/cstdlib>
 
 #ifdef __cplusplus
 extern "C" {

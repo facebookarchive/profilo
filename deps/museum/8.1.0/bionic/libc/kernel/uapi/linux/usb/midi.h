@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_MIDI_H
 #define __LINUX_USB_MIDI_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define USB_MS_HEADER 0x01
 #define USB_MS_MIDI_IN_JACK 0x02
 #define USB_MS_MIDI_OUT_JACK 0x03

@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_ARRAY_INL_H_
 #define ART_RUNTIME_MIRROR_OBJECT_ARRAY_INL_H_
 
-#include "object_array.h"
+#include <museum/5.0.0/art/runtime/mirror/object_array.h>
 
-#include "base/stringprintf.h"
-#include "gc/heap.h"
-#include "mirror/art_field.h"
-#include "mirror/class.h"
-#include "runtime.h"
-#include "handle_scope-inl.h"
-#include "thread.h"
-#include <string>
+#include <museum/5.0.0/art/runtime/base/stringprintf.h>
+#include <museum/5.0.0/art/runtime/gc/heap.h>
+#include <museum/5.0.0/art/runtime/mirror/art_field.h>
+#include <museum/5.0.0/art/runtime/mirror/class.h>
+#include <museum/5.0.0/art/runtime/runtime.h>
+#include <museum/5.0.0/art/runtime/handle_scope-inl.h>
+#include <museum/5.0.0/art/runtime/thread.h>
+#include <museum/5.0.0/external/libcxx/string>
 
 namespace art {
 namespace mirror {

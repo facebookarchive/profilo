@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_INL_H_
 #define ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_INL_H_
 
-#include "scoped_thread_state_change.h"
+#include <museum/8.0.0/art/runtime/scoped_thread_state_change.h>
 
-#include "base/casts.h"
-#include "jni_env_ext-inl.h"
-#include "obj_ptr-inl.h"
-#include "thread-inl.h"
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/jni_env_ext-inl.h>
+#include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.0.0/art/runtime/thread-inl.h>
 
 namespace art {
 

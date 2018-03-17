@@ -40,8 +40,8 @@
 #ifndef _ARPA_NAMESER_COMPAT_
 #define	_ARPA_NAMESER_COMPAT_
 
-#include <endian.h>
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/endian.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 #define	__BIND		19950621	/* (DEAD) interface version stamp. */
 

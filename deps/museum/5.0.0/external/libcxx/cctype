@@ -35,10 +35,10 @@ int toupper(int c);
 }  // std
 */
 
-#include <__config>
-#include <ctype.h>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/bionic/libc/ctype.h>
 #if defined(_LIBCPP_MSVCRT)
-#include "support/win32/support.h"
+#include <museum/5.0.0/external/libcxx/support/win32/support.h>
 #endif // _LIBCPP_MSVCRT
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)

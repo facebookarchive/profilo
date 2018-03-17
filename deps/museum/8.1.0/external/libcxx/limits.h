@@ -38,14 +38,14 @@ Macros:
 
 */
 
-#include <__config>
+#include <museum/8.1.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #ifndef __GNUC__
-#include_next <limits.h>
+#include <museum/8.1.0/bionic/libc/limits.h>
 #else
 // GCC header limits.h recursively includes itself through another header called
 // syslimits.h for some reason. This setup breaks down if we directly
@@ -55,11 +55,11 @@ Macros:
 // Get the system limits.h defines (force recurse into the next level)
 #define _GCC_LIMITS_H_
 #define _GCC_NEXT_LIMITS_H
-#include_next <limits.h>
+#include <museum/8.1.0/bionic/libc/limits.h>
 
 // Get the ISO C defines
 #undef _GCC_LIMITS_H_
-#include_next <limits.h>
+#include <museum/8.1.0/bionic/libc/limits.h>
 #endif // __GNUC__
 
 #endif  // _LIBCPP_LIMITS_H

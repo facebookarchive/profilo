@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef CCISS_DEFS_H
 #define CCISS_DEFS_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 #define SENSEINFOBYTES 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CMD_SUCCESS 0x0000

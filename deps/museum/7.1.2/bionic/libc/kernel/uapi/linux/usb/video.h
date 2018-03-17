@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_VIDEO_H
 #define __LINUX_USB_VIDEO_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define UVC_SC_UNDEFINED 0x00
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define UVC_SC_VIDEOCONTROL 0x01

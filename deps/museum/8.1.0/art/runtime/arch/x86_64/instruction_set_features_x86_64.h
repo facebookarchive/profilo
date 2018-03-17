@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_X86_64_INSTRUCTION_SET_FEATURES_X86_64_H_
 #define ART_RUNTIME_ARCH_X86_64_INSTRUCTION_SET_FEATURES_X86_64_H_
 
-#include "arch/x86/instruction_set_features_x86.h"
+#include <museum/8.1.0/art/runtime/arch/x86/instruction_set_features_x86.h>
 
 namespace art {
 

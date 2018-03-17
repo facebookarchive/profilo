@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPICN_PROC_H
 #define _UAPICN_PROC_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum proc_cn_mcast_op {
   PROC_CN_MCAST_LISTEN = 1,
   PROC_CN_MCAST_IGNORE = 2

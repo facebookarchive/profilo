@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_IF_TUNNEL_H_
 #define _UAPI_IF_TUNNEL_H_
-#include <linux/types.h>
-#include <linux/if.h>
-#include <linux/ip.h>
-#include <linux/in6.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/ip.h>
+#include <museum/8.1.0/bionic/libc/linux/in6.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #define SIOCGETTUNNEL (SIOCDEVPRIVATE + 0)
 #define SIOCADDTUNNEL (SIOCDEVPRIVATE + 1)
 #define SIOCDELTUNNEL (SIOCDEVPRIVATE + 2)

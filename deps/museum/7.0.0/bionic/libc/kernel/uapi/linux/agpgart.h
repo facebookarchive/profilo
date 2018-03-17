@@ -42,7 +42,7 @@
 #define FALSE 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 struct agp_version {
   __u16 major;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

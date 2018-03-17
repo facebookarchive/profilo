@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_RANDOM_H
 #define _UAPI_LINUX_RANDOM_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
-#include <linux/irqnr.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/irqnr.h>
 #define RNDGETENTCNT _IOR('R', 0x00, int)
 #define RNDADDTOENTCNT _IOW('R', 0x01, int)
 #define RNDGETPOOL _IOR('R', 0x02, int[2])

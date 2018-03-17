@@ -28,13 +28,13 @@
 #ifndef _STDLIB_H_
 #define _STDLIB_H_
 
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 
 #include <stddef.h>
-#include <string.h>
-#include <alloca.h>
-#include <strings.h>
-#include <memory.h>
+#include <museum/5.0.0/bionic/libc/string.h>
+#include <museum/5.0.0/bionic/libc/alloca.h>
+#include <museum/5.0.0/bionic/libc/strings.h>
+#include <museum/5.0.0/bionic/libc/memory.h>
 
 __BEGIN_DECLS
 

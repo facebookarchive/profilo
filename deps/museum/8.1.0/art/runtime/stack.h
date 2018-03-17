@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_STACK_H_
 #define ART_RUNTIME_STACK_H_
 
-#include <stdint.h>
-#include <string>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "quick/quick_method_frame_info.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/quick/quick_method_frame_info.h>
 
 namespace art {
 

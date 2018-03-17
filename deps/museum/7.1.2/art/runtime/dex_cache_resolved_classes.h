@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_DEX_CACHE_RESOLVED_CLASSES_H_
 #define ART_RUNTIME_DEX_CACHE_RESOLVED_CLASSES_H_
 
-#include <string>
-#include <unordered_set>
-#include <vector>
+#include <museum/7.1.2/external/libcxx/string>
+#include <museum/7.1.2/external/libcxx/unordered_set>
+#include <museum/7.1.2/external/libcxx/vector>
 
 namespace art {
 

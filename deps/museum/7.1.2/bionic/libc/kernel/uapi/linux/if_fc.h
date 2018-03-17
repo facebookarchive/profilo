@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_FC_H
 #define _LINUX_IF_FC_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define FC_ALEN 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define FC_HLEN (sizeof(struct fch_hdr) + sizeof(struct fcllc))

@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_GC_SPACE_DLMALLOC_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_DLMALLOC_SPACE_H_
 
-#include "malloc_space.h"
-#include "space.h"
+#include <museum/8.1.0/art/runtime/gc/space/malloc_space.h>
+#include <museum/8.1.0/art/runtime/gc/space/space.h>
 
 namespace art {
 namespace gc {

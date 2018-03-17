@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_USB_CDC_WDM_H
 #define _UAPI__LINUX_USB_CDC_WDM_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 #define IOCTL_WDM_MAX_COMMAND _IOR('H', 0xA0, __u16)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

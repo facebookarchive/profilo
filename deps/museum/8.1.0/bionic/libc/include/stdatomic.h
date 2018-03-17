@@ -30,7 +30,7 @@
 #ifndef _STDATOMIC_H_
 #define	_STDATOMIC_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 #if defined(__cplusplus) && __cplusplus >= 201103L && defined(_USING_LIBCXX)
 # ifdef __clang__
@@ -131,7 +131,7 @@ using std::atomic_uintmax_t;
 
 #else /* <atomic> unavailable, possibly because this is C, not C++ */
 
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 #include <stdbool.h>
 
 /*
@@ -142,12 +142,12 @@ using std::atomic_uintmax_t;
  */
 
 #include <stddef.h>  /* For ptrdiff_t. */
-#include <stdint.h>  /* TODO: don't drag in all the macros, just the types. */
+#include <museum/8.1.0/bionic/libc/stdint.h>  /* TODO: don't drag in all the macros, just the types. */
 // Include uchar.h only when needed.  Bionic's stdatomic.h is also used for the
 // host (via a copy in prebuilts/clang) and uchar.h is not available in the
 // glibc used for the host.
 #if __STDC_VERSION__ >= 201112L
-# include <uchar.h>  /* For char16_t and char32_t.              */
+# include <museum/8.1.0/bionic/libc/uchar.h>  /* For char16_t and char32_t.              */
 #endif
 
 

@@ -23,8 +23,8 @@
 // END android-changed
 
 // BEGIN android-changed
-#include <stdint.h>
-#include <string.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/string.h>
 // END android-changed
 
 typedef uint32_t Elf32_Addr; // Program address

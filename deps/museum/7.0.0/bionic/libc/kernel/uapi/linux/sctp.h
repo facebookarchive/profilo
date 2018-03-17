@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_SCTP_H
 #define _UAPI_SCTP_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef __s32 sctp_assoc_t;
 #define SCTP_RTOINFO 0

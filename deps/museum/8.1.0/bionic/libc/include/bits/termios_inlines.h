@@ -29,12 +29,12 @@
 #ifndef _BITS_TERMIOS_INLINES_H_
 #define _BITS_TERMIOS_INLINES_H_
 
-#include <errno.h>
-#include <sys/cdefs.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/errno.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/ioctl.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
-#include <linux/termios.h>
+#include <museum/8.1.0/bionic/libc/linux/termios.h>
 
 #if !defined(__BIONIC_TERMIOS_INLINE)
 #define __BIONIC_TERMIOS_INLINE static __inline

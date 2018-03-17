@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMPPP_H
 #define _LINUX_ATMPPP_H
-#include <linux/atm.h>
+#include <museum/6.0.1/bionic/libc/linux/atm.h>
 #define PPPOATM_ENCAPS_AUTODETECT (0)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PPPOATM_ENCAPS_VC (1)

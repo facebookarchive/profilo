@@ -15,8 +15,8 @@
 #error "This header complements the Microsoft C Runtime library, and should not be included otherwise."
 #else
 
-#include <limits.h> // CHAR_BIT
-#include <float.h> // limit constants
+#include <museum/8.0.0/external/libcxx/limits.h> // CHAR_BIT
+#include <museum/8.0.0/external/libcxx/float.h> // limit constants
 
 #if ! defined(__clang__)
 #define __CHAR_BIT__       CHAR_BIT
@@ -61,7 +61,7 @@
 #define __LDBL_DENORM_MIN__ 3.64519953188247460253e-4951L
 
 // __builtin replacements/workarounds
-#include <math.h> // HUGE_VAL
+#include <museum/8.0.0/external/libcxx/math.h> // HUGE_VAL
 #include <ymath.h> // internal MSVC header providing the needed functionality
 #define __builtin_huge_val()     HUGE_VAL
 #define __builtin_huge_valf()    _FInf._Float

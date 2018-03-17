@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_CGROUPSTATS_H
 #define _LINUX_CGROUPSTATS_H
-#include <linux/types.h>
-#include <linux/taskstats.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/taskstats.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct cgroupstats {
  __u64 nr_sleeping;

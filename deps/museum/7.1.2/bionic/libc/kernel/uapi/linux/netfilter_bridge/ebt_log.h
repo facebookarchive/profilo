@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_LOG_H
 #define __LINUX_BRIDGE_EBT_LOG_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define EBT_LOG_IP 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EBT_LOG_ARP 0x02

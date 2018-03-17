@@ -107,16 +107,16 @@
 
 */
 
-#include <experimental/__config>
+#include <museum/8.0.0/external/libcxx/experimental/__config>
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #if _LIBCPP_STD_VER > 11
 
-#include <type_traits>
-#include <utility>
-#include <functional>
+#include <museum/8.0.0/external/libcxx/experimental/type_traits>
+#include <museum/8.0.0/external/libcxx/experimental/utility>
+#include <museum/8.0.0/external/libcxx/experimental/functional>
 
 _LIBCPP_BEGIN_NAMESPACE_LFTS_V2
 

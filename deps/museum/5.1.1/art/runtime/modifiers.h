@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_MODIFIERS_H_
 #define ART_RUNTIME_MODIFIERS_H_
 
-#include <stdint.h>
+#include <museum/5.1.1/bionic/libc/stdint.h>
 
 static constexpr uint32_t kAccPublic =       0x0001;  // class, field, method, ic
 static constexpr uint32_t kAccPrivate =      0x0002;  // field, method, ic

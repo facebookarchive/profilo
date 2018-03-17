@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _CXLFLASH_IOCTL_H
 #define _CXLFLASH_IOCTL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define DK_CXLFLASH_VERSION_0 0
 struct dk_cxlflash_hdr {
   __u16 version;

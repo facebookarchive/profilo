@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_ASM_SUPPORT_CHECK_H_
 #define ART_RUNTIME_ASM_SUPPORT_CHECK_H_
 
-#include "art_method.h"
-#include "base/bit_utils.h"
-#include "base/callee_save_type.h"
-#include "gc/accounting/card_table.h"
-#include "gc/allocator/rosalloc.h"
-#include "gc/heap.h"
-#include "jit/jit.h"
-#include "lock_word.h"
-#include "mirror/class.h"
-#include "mirror/dex_cache.h"
-#include "mirror/string.h"
-#include "utils/dex_cache_arrays_layout.h"
-#include "runtime.h"
-#include "stack.h"
-#include "thread.h"
+#include <museum/8.1.0/art/runtime/art_method.h>
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/base/callee_save_type.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/card_table.h>
+#include <museum/8.1.0/art/runtime/gc/allocator/rosalloc.h>
+#include <museum/8.1.0/art/runtime/gc/heap.h>
+#include <museum/8.1.0/art/runtime/jit/jit.h>
+#include <museum/8.1.0/art/runtime/lock_word.h>
+#include <museum/8.1.0/art/runtime/mirror/class.h>
+#include <museum/8.1.0/art/runtime/mirror/dex_cache.h>
+#include <museum/8.1.0/art/runtime/mirror/string.h>
+#include <museum/8.1.0/art/runtime/utils/dex_cache_arrays_layout.h>
+#include <museum/8.1.0/art/runtime/runtime.h>
+#include <museum/8.1.0/art/runtime/stack.h>
+#include <museum/8.1.0/art/runtime/thread.h>
 
 #ifndef ADD_TEST_EQ
 #define ADD_TEST_EQ(x, y) CHECK_EQ(x, y);
@@ -53,7 +53,7 @@ static inline ASM_SUPPORT_CHECK_RETURN_TYPE CheckAsmSupportOffsetsAndSizes() {
   ASM_SUPPORT_CHECK_HEADER
 #endif
 
-#include "asm_support.h"
+#include <museum/8.1.0/art/runtime/asm_support.h>
 
 #ifdef ASM_SUPPORT_CHECK_FOOTER
   ASM_SUPPORT_CHECK_FOOTER

@@ -28,7 +28,7 @@
 #ifndef __DLFCN_H__
 #define __DLFCN_H__
 
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

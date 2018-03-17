@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_THREAD_CURRENT_INL_H_
 #define ART_RUNTIME_THREAD_CURRENT_INL_H_
 
-#include "thread.h"
+#include <museum/8.1.0/art/runtime/thread.h>
 
 #ifdef ART_TARGET_ANDROID
 #include <bionic_tls.h>  // Access to our own TLS slot.
 #endif
 
-#include <pthread.h>
+#include <museum/8.1.0/bionic/libc/pthread.h>
 
 namespace art {
 

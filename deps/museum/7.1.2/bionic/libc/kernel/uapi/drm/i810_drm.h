@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _I810_DRM_H_
 #define _I810_DRM_H_
-#include <drm/drm.h>
+#include <museum/7.1.2/bionic/libc/drm/drm.h>
 #ifndef _I810_DEFINES_
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define _I810_DEFINES_

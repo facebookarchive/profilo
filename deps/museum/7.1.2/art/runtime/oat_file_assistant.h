@@ -17,18 +17,18 @@
 #ifndef ART_RUNTIME_OAT_FILE_ASSISTANT_H_
 #define ART_RUNTIME_OAT_FILE_ASSISTANT_H_
 
-#include <cstdint>
-#include <memory>
-#include <sstream>
-#include <string>
+#include <museum/7.1.2/external/libcxx/cstdint>
+#include <museum/7.1.2/external/libcxx/memory>
+#include <museum/7.1.2/external/libcxx/sstream>
+#include <museum/7.1.2/external/libcxx/string>
 
-#include "arch/instruction_set.h"
-#include "base/scoped_flock.h"
-#include "base/unix_file/fd_file.h"
-#include "compiler_filter.h"
-#include "oat_file.h"
-#include "os.h"
-#include "profiler.h"
+#include <museum/7.1.2/art/runtime/arch/instruction_set.h>
+#include <museum/7.1.2/art/runtime/base/scoped_flock.h>
+#include <museum/7.1.2/art/runtime/base/unix_file/fd_file.h>
+#include <museum/7.1.2/art/runtime/compiler_filter.h>
+#include <museum/7.1.2/art/runtime/oat_file.h>
+#include <museum/7.1.2/art/runtime/os.h>
+#include <museum/7.1.2/art/runtime/profiler.h>
 
 namespace art {
 

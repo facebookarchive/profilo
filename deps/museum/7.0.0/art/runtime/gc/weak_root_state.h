@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_WEAK_ROOT_STATE_H_
 #define ART_RUNTIME_GC_WEAK_ROOT_STATE_H_
 
-#include <iosfwd>
+#include <museum/7.0.0/external/libcxx/iosfwd>
 
 namespace art {
 namespace gc {

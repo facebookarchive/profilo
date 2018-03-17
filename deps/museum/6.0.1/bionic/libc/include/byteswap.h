@@ -29,7 +29,7 @@
 #define _BYTESWAP_H_
 
 /* endian.h rather than sys/endian.h so we get the machine-specific file. */
-#include <endian.h>
+#include <museum/6.0.1/bionic/libc/endian.h>
 
 #define  bswap_16(x)   swap16(x)
 #define  bswap_32(x)   swap32(x)

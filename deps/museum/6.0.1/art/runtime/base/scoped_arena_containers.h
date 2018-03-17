@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_BASE_SCOPED_ARENA_CONTAINERS_H_
 #define ART_RUNTIME_BASE_SCOPED_ARENA_CONTAINERS_H_
 
-#include <deque>
-#include <queue>
-#include <set>
-#include <unordered_map>
-#include <vector>
+#include <museum/6.0.1/external/libcxx/deque>
+#include <museum/6.0.1/external/libcxx/queue>
+#include <museum/6.0.1/external/libcxx/set>
+#include <museum/6.0.1/external/libcxx/unordered_map>
+#include <museum/6.0.1/external/libcxx/vector>
 
-#include "arena_containers.h"  // For ArenaAllocatorAdapterKind.
-#include "scoped_arena_allocator.h"
-#include "safe_map.h"
+#include <museum/6.0.1/art/runtime/base/arena_containers.h>  // For ArenaAllocatorAdapterKind.
+#include <museum/6.0.1/art/runtime/base/scoped_arena_allocator.h>
+#include <museum/6.0.1/art/runtime/safe_map.h>
 
 namespace art {
 

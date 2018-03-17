@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_GENERIC_TERMIOS_H
 #define _UAPI_ASM_GENERIC_TERMIOS_H
-#include <asm/termbits.h>
-#include <asm/ioctls.h>
+#include <museum/7.1.2/bionic/libc/asm/termbits.h>
+#include <museum/7.1.2/bionic/libc/asm/ioctls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct winsize {
   unsigned short ws_row;

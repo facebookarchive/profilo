@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _LINUX_QNX4_FS_H
 #define _LINUX_QNX4_FS_H
-#include <linux/types.h>
-#include <linux/qnxtypes.h>
-#include <linux/magic.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/qnxtypes.h>
+#include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define QNX4_ROOT_INO 1
 #define QNX4_MAX_XTNTS_PER_XBLK 60
 #define QNX4_FILE_USED 0x01

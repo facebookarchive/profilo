@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VIRTIO_CONSOLE_H
 #define _UAPI_LINUX_VIRTIO_CONSOLE_H
-#include <linux/types.h>
-#include <linux/virtio_ids.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/virtio_ids.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/virtio_config.h>
+#include <museum/6.0.1/bionic/libc/linux/virtio_config.h>
 #define VIRTIO_CONSOLE_F_SIZE 0
 #define VIRTIO_CONSOLE_F_MULTIPORT 1
 #define VIRTIO_CONSOLE_F_EMERG_WRITE 2

@@ -17,18 +17,18 @@
 #ifndef ART_RUNTIME_DEX_FILE_H_
 #define ART_RUNTIME_DEX_FILE_H_
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "base/logging.h"
-#include "base/value_object.h"
-#include "dex_file_types.h"
-#include "globals.h"
-#include "invoke_type.h"
-#include "jni.h"
-#include "modifiers.h"
-#include "utf.h"
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/base/value_object.h>
+#include <museum/8.0.0/art/runtime/dex_file_types.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/art/runtime/invoke_type.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
+#include <museum/8.0.0/art/runtime/modifiers.h>
+#include <museum/8.0.0/art/runtime/utf.h>
 
 namespace art {
 

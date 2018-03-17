@@ -26,8 +26,8 @@ enum {
   LO_FLAGS_PARTSCAN = 8,
   LO_FLAGS_DIRECT_IO = 16,
 };
-#include <asm/posix_types.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/posix_types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct loop_info {
   int lo_number;
   __kernel_old_dev_t lo_device;

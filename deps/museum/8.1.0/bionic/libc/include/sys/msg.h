@@ -29,10 +29,10 @@
 #ifndef _SYS_MSG_H_
 #define _SYS_MSG_H_
 
-#include <sys/cdefs.h>
-#include <sys/ipc.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/ipc.h>
 
-#include <linux/msg.h>
+#include <museum/8.1.0/bionic/libc/linux/msg.h>
 
 #define msqid_ds msqid64_ds
 

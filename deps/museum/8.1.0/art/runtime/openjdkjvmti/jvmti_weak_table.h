@@ -32,17 +32,17 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_JVMTI_WEAK_TABLE_H_
 #define ART_RUNTIME_OPENJDKJVMTI_JVMTI_WEAK_TABLE_H_
 
-#include <unordered_map>
+#include <museum/8.1.0/external/libcxx/unordered_map>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc/system_weak.h"
-#include "gc_root-inl.h"
-#include "globals.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/gc/system_weak.h>
+#include <museum/8.1.0/art/runtime/gc_root-inl.h>
+#include <museum/8.1.0/art/runtime/globals.h>
 #include "jvmti.h"
-#include "jvmti_allocator.h"
-#include "mirror/object.h"
-#include "thread-current-inl.h"
+#include <museum/8.1.0/art/runtime/openjdkjvmti/jvmti_allocator.h>
+#include <museum/8.1.0/art/runtime/mirror/object.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
 
 namespace openjdkjvmti {
 

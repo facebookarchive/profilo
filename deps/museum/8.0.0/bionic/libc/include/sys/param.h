@@ -29,9 +29,9 @@
 #ifndef _SYS_PARAM_H_
 #define _SYS_PARAM_H_
 
-#include <limits.h>
-#include <linux/param.h>
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/limits.h>
+#include <museum/8.0.0/bionic/libc/linux/param.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 #define DEV_BSIZE 512
 

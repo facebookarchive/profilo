@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_BASE_BIT_VECTOR_H_
 #define ART_RUNTIME_BASE_BIT_VECTOR_H_
 
-#include <stdint.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
 #include <stddef.h>
 
-#include "allocator.h"
-#include "base/logging.h"
-#include "utils.h"
+#include <museum/5.0.0/art/runtime/base/allocator.h>
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/utils.h>
 
 namespace art {
 

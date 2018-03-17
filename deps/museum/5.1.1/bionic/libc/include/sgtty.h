@@ -37,8 +37,8 @@
 #ifndef USE_OLD_TTY
 #define	USE_OLD_TTY
 #endif
-#include <sys/ioctl.h>
-#include <sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/sys/ioctl.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 int gtty(int, struct sgttyb *);

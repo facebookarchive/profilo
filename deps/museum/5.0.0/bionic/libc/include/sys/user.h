@@ -29,8 +29,8 @@
 #ifndef _SYS_USER_H_
 #define _SYS_USER_H_
 
-#include <sys/cdefs.h>
-#include <limits.h> /* For PAGE_SIZE. */
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/limits.h> /* For PAGE_SIZE. */
 
 __BEGIN_DECLS
 

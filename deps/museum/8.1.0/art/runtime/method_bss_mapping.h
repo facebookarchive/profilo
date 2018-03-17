@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_METHOD_BSS_MAPPING_H_
 #define ART_RUNTIME_METHOD_BSS_MAPPING_H_
 
-#include "base/bit_utils.h"
-#include "base/length_prefixed_array.h"
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/base/length_prefixed_array.h>
 
 namespace art {
 

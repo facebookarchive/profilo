@@ -17,8 +17,8 @@
 #ifndef _MATH_H_
 #define	_MATH_H_
 
-#include <sys/cdefs.h>
-#include <limits.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/limits.h>
 
 __BEGIN_DECLS
 #pragma GCC visibility push(default)

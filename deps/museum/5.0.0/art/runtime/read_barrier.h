@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_READ_BARRIER_H_
 #define ART_RUNTIME_READ_BARRIER_H_
 
-#include "base/mutex.h"
-#include "base/macros.h"
-#include "offsets.h"
-#include "read_barrier_c.h"
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/offsets.h>
+#include <museum/5.0.0/art/runtime/read_barrier_c.h>
 
 // This is a C++ (not C) header file, separate from read_barrier_c.h
 // which needs to be a C header file for asm_support.h.

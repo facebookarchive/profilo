@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_IF_PPPOL2TP_H
 #define _UAPI__LINUX_IF_PPPOL2TP_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 struct pppol2tp_addr {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __kernel_pid_t pid;

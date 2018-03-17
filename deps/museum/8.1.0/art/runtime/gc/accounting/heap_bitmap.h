@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_H_
 #define ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_H_
 
-#include "base/allocator.h"
-#include "base/logging.h"
-#include "space_bitmap.h"
+#include <museum/8.1.0/art/runtime/base/allocator.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/gc/accounting/space_bitmap.h>
 
 namespace art {
 namespace gc {

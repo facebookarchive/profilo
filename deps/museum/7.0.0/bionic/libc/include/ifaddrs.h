@@ -29,9 +29,9 @@
 #ifndef _IFADDRS_H_
 #define _IFADDRS_H_
 
-#include <sys/cdefs.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/netinet/in.h>
+#include <museum/7.0.0/bionic/libc/sys/socket.h>
 
 __BEGIN_DECLS
 

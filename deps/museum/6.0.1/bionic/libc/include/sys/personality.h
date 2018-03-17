@@ -29,8 +29,8 @@
 #ifndef _SYS_PERSONALITY_H_
 #define _SYS_PERSONALITY_H_
 
-#include <sys/cdefs.h>
-#include <linux/personality.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/linux/personality.h>
 
 __BEGIN_DECLS
 

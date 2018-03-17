@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef CAN_NETLINK_H
 #define CAN_NETLINK_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct can_bittiming {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u32 bitrate;

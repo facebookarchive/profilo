@@ -29,11 +29,11 @@
 #ifndef _STRING_H
 #define _STRING_H
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <stddef.h>
-#include <xlocale.h>
+#include <museum/8.0.0/bionic/libc/xlocale.h>
 
-#include <bits/strcasecmp.h>
+#include <museum/8.0.0/bionic/libc/bits/strcasecmp.h>
 
 __BEGIN_DECLS
 
@@ -43,7 +43,7 @@ __BEGIN_DECLS
 #endif
 
 #if defined(__USE_BSD)
-#include <strings.h>
+#include <museum/8.0.0/bionic/libc/strings.h>
 #endif
 
 void* memccpy(void* _Nonnull __restrict, const void* _Nonnull __restrict, int, size_t);

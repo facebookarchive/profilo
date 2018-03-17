@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef CXGB3_ABI_USER_H
 #define CXGB3_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define IWCH_UVERBS_ABI_VERSION 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct iwch_create_cq_req {

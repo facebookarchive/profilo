@@ -29,8 +29,8 @@
 #ifndef _BYTESWAP_H_
 #define _BYTESWAP_H_
 
-#include <sys/cdefs.h>
-#include <sys/endian.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/endian.h>
 
 #define bswap_16(x) __swap16(x)
 #define bswap_32(x) __swap32(x)

@@ -165,13 +165,13 @@ typedef basic_fstream<wchar_t> wfstream;
 
 */
 
-#include <__config>
-#include <ostream>
-#include <istream>
-#include <__locale>
-#include <cstdio>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/ostream>
+#include <museum/8.0.0/external/libcxx/istream>
+#include <museum/8.0.0/external/libcxx/__locale>
+#include <museum/8.0.0/external/libcxx/cstdio>
 
-#include <__undef_min_max>
+#include <museum/8.0.0/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

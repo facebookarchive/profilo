@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _PPP_IOCTL_H
 #define _PPP_IOCTL_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
-#include <linux/ppp_defs.h>
+#include <museum/8.1.0/bionic/libc/linux/ppp_defs.h>
 #define SC_COMP_PROT 0x00000001
 #define SC_COMP_AC 0x00000002
 #define SC_COMP_TCP 0x00000004

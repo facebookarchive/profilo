@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_NETFILTER_XT_RECENT_H
 #define _LINUX_NETFILTER_XT_RECENT_H 1
-#include <linux/types.h>
-#include <linux/netfilter.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter.h>
 enum {
   XT_RECENT_CHECK = 1 << 0,
   XT_RECENT_SET = 1 << 1,

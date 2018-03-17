@@ -103,11 +103,11 @@ size_t wcsrtombs(char* restrict dst, const wchar_t** restrict src, size_t len,
 
 */
 
-#include <__config>
-#include <cwctype>
-#include <wchar.h>
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/external/libcxx/cwctype>
+#include <museum/7.0.0/bionic/libc/wchar.h>
 #if defined(_LIBCPP_MSVCRT) || defined(__MINGW32__)
-#include <support/win32/support.h> // pull in *swprintf defines
+#include <museum/7.0.0/external/libcxx/support/win32/support.h> // pull in *swprintf defines
 #endif // _LIBCPP_MSVCRT
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)

@@ -17,18 +17,18 @@
 #ifndef ART_RUNTIME_OAT_FILE_H_
 #define ART_RUNTIME_OAT_FILE_H_
 
-#include <list>
-#include <string>
-#include <vector>
+#include <museum/5.1.1/external/libcxx/list>
+#include <museum/5.1.1/external/libcxx/string>
+#include <museum/5.1.1/external/libcxx/vector>
 
-#include "base/mutex.h"
-#include "base/stringpiece.h"
-#include "dex_file.h"
-#include "invoke_type.h"
-#include "mem_map.h"
-#include "mirror/class.h"
-#include "oat.h"
-#include "os.h"
+#include <museum/5.1.1/art/runtime/base/mutex.h>
+#include <museum/5.1.1/art/runtime/base/stringpiece.h>
+#include <museum/5.1.1/art/runtime/dex_file.h>
+#include <museum/5.1.1/art/runtime/invoke_type.h>
+#include <museum/5.1.1/art/runtime/mem_map.h>
+#include <museum/5.1.1/art/runtime/mirror/class.h>
+#include <museum/5.1.1/art/runtime/oat.h>
+#include <museum/5.1.1/art/runtime/os.h>
 
 namespace art {
 

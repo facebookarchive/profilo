@@ -29,9 +29,9 @@
 #ifndef _UTIME_H_
 #define _UTIME_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/utime.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
+#include <museum/7.1.2/bionic/libc/linux/utime.h>
 
 __BEGIN_DECLS
 

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_ALLOCATION_RECORD_H_
 #define ART_RUNTIME_GC_ALLOCATION_RECORD_H_
 
-#include <list>
-#include <memory>
+#include <museum/7.1.2/external/libcxx/list>
+#include <museum/7.1.2/external/libcxx/memory>
 
-#include "base/mutex.h"
-#include "object_callbacks.h"
-#include "gc_root.h"
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
 
 namespace art {
 

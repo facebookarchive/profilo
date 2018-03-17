@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_QUICK_EXCEPTION_HANDLER_H_
 #define ART_RUNTIME_QUICK_EXCEPTION_HANDLER_H_
 
-#include "base/logging.h"
-#include "base/mutex.h"
-#include "stack.h"  // StackReference
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/stack.h>  // StackReference
 
 namespace art {
 

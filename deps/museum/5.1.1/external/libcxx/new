@@ -64,9 +64,9 @@ void  operator delete[](void* ptr, void*) noexcept;
 
 */
 
-#include <__config>
-#include <exception>
-#include <cstddef>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/exception>
+#include <museum/5.1.1/external/libcxx/cstddef>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

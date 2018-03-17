@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_MISC_CXL_H
 #define _UAPI_MISC_CXL_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct cxl_ioctl_start_work {
   __u64 flags;

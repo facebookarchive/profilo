@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_NAT_H
 #define __LINUX_BRIDGE_EBT_NAT_H
-#include <linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 #define NAT_ARP_BIT (0x00000010)
 struct ebt_nat_info {
   unsigned char mac[ETH_ALEN];

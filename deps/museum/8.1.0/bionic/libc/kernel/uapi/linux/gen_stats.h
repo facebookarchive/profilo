@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_GEN_STATS_H
 #define __LINUX_GEN_STATS_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   TCA_STATS_UNSPEC,
   TCA_STATS_BASIC,

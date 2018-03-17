@@ -29,7 +29,7 @@
 #ifndef _WCTYPE_H_
 #define _WCTYPE_H_
 
-#include <wchar.h>
+#include <museum/7.1.2/bionic/libc/wchar.h>
 
 __BEGIN_DECLS
 

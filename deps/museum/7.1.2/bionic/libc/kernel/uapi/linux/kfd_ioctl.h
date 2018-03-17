@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef KFD_IOCTL_H_INCLUDED
 #define KFD_IOCTL_H_INCLUDED
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define KFD_IOCTL_MAJOR_VERSION 1
 #define KFD_IOCTL_MINOR_VERSION 1

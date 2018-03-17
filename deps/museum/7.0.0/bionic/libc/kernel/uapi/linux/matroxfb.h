@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef __LINUX_MATROXFB_H__
 #define __LINUX_MATROXFB_H__
-#include <asm/ioctl.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/asm/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/videodev2.h>
-#include <linux/fb.h>
+#include <museum/7.0.0/bionic/libc/linux/videodev2.h>
+#include <museum/7.0.0/bionic/libc/linux/fb.h>
 struct matroxioc_output_mode {
   __u32 output;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KEYCHORD_H_
 #define _UAPI_LINUX_KEYCHORD_H_
-#include <linux/input.h>
+#include <museum/5.1.1/bionic/libc/linux/input.h>
 #define KEYCHORD_VERSION 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct input_keychord {

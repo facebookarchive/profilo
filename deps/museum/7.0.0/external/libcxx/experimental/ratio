@@ -14,7 +14,7 @@
 /**
     experimental/ratio synopsis
     C++1y
-#include <ratio>
+#include <museum/7.0.0/external/libcxx/experimental/ratio>
 
 namespace std {
 namespace experimental {
@@ -40,11 +40,11 @@ inline namespace fundamentals_v1 {
 
 */
 
-#include <experimental/__config>
+#include <museum/7.0.0/external/libcxx/experimental/__config>
 
 #if _LIBCPP_STD_VER > 11
 
-#include <ratio>
+#include <museum/7.0.0/external/libcxx/experimental/ratio>
 
 _LIBCPP_BEGIN_NAMESPACE_LFTS
 

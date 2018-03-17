@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_MINIX_FS_H
 #define _LINUX_MINIX_FS_H
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MINIX_ROOT_INO 1
 #define MINIX_LINK_MAX 250

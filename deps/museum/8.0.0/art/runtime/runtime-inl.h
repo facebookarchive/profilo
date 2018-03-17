@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_RUNTIME_INL_H_
 #define ART_RUNTIME_RUNTIME_INL_H_
 
-#include "runtime.h"
+#include <museum/8.0.0/art/runtime/runtime.h>
 
-#include "art_method.h"
-#include "class_linker.h"
-#include "gc_root-inl.h"
-#include "obj_ptr-inl.h"
-#include "read_barrier-inl.h"
+#include <museum/8.0.0/art/runtime/art_method.h>
+#include <museum/8.0.0/art/runtime/class_linker.h>
+#include <museum/8.0.0/art/runtime/gc_root-inl.h>
+#include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.0.0/art/runtime/read_barrier-inl.h>
 
 namespace art {
 

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_UAPI_SND_ASOC_H
 #define __LINUX_UAPI_SND_ASOC_H
-#include <linux/types.h>
-#include <sound/asound.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/sound/asound.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #error This API is an early revision and not enabled in the current
 #error kernel release , it will be enabled in a future kernel version

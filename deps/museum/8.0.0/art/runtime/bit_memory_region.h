@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BIT_MEMORY_REGION_H_
 #define ART_RUNTIME_BIT_MEMORY_REGION_H_
 
-#include "memory_region.h"
+#include <museum/8.0.0/art/runtime/memory_region.h>
 
 namespace art {
 

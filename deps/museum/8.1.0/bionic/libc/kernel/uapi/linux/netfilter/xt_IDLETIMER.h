@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_IDLETIMER_H
 #define _XT_IDLETIMER_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define MAX_IDLETIMER_LABEL_SIZE 28
 struct idletimer_tg_info {
   __u32 timeout;

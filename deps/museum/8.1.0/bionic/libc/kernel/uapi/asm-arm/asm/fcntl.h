@@ -22,5 +22,5 @@
 #define O_NOFOLLOW 0100000
 #define O_DIRECT 0200000
 #define O_LARGEFILE 0400000
-#include <asm-generic/fcntl.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/fcntl.h>
 #endif

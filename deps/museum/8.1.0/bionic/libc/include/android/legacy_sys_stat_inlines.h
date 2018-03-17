@@ -29,8 +29,8 @@
 #ifndef _ANDROID_LEGACY_SYS_STAT_INLINES_H_
 #define _ANDROID_LEGACY_SYS_STAT_INLINES_H_
 
-#include <sys/cdefs.h>
-#include <sys/stat.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/stat.h>
 
 #if __ANDROID_API__ < __ANDROID_API_L__
 

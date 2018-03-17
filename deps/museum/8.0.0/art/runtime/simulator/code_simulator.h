@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_SIMULATOR_CODE_SIMULATOR_H_
 #define ART_RUNTIME_SIMULATOR_CODE_SIMULATOR_H_
 
-#include "arch/instruction_set.h"
+#include <museum/8.0.0/art/runtime/arch/instruction_set.h>
 
 namespace art {
 

@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_VERIFIER_VERIFIER_COMPILER_BINDING_H_
 #define ART_RUNTIME_VERIFIER_VERIFIER_COMPILER_BINDING_H_
 
-#include <inttypes.h>
+#include <museum/8.1.0/external/libcxx/inttypes.h>
 
-#include "base/macros.h"
-#include "verifier_enums.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/verifier/verifier_enums.h>
 
 namespace art {
 namespace verifier {

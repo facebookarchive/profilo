@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_REFVISITOR_INL_H_
 #define ART_RUNTIME_MIRROR_OBJECT_REFVISITOR_INL_H_
 
-#include "object-inl.h"
+#include <museum/8.0.0/art/runtime/mirror/object-inl.h>
 
-#include "class-refvisitor-inl.h"
+#include <museum/8.0.0/art/runtime/mirror/class-refvisitor-inl.h>
 
 namespace art {
 namespace mirror {

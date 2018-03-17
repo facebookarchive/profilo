@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_MEM_MAP_H_
 #define ART_RUNTIME_MEM_MAP_H_
 
-#include "base/mutex.h"
+#include <museum/7.0.0/art/runtime/base/mutex.h>
 
-#include <string>
-#include <map>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/map>
 
 #include <stddef.h>
-#include <sys/mman.h>  // For the PROT_* and MAP_* constants.
-#include <sys/types.h>
+#include <museum/7.0.0/bionic/libc/sys/mman.h>  // For the PROT_* and MAP_* constants.
+#include <museum/7.0.0/bionic/libc/sys/types.h>
 
-#include "base/allocator.h"
-#include "globals.h"
+#include <museum/7.0.0/art/runtime/base/allocator.h>
+#include <museum/7.0.0/art/runtime/globals.h>
 
 namespace art {
 

@@ -21,7 +21,7 @@
 #endif
 #ifndef _UAPI_LINUX_PATCHKEY_H
 #define _UAPI_LINUX_PATCHKEY_H
-#include <endian.h>
+#include <museum/8.1.0/bionic/libc/endian.h>
 #ifdef __BYTE_ORDER
 #if __BYTE_ORDER == __BIG_ENDIAN
 #define _PATCHKEY(id) (0xfd00 | id)

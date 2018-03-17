@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BASE_LOGGING_H_
 #define ART_RUNTIME_BASE_LOGGING_H_
 
-#include <memory>
-#include <ostream>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/ostream>
 
-#include "base/macros.h"
+#include <museum/7.0.0/art/runtime/base/macros.h>
 
 namespace art {
 

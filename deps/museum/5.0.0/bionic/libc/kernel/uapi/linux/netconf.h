@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NETCONF_H_
 #define _UAPI_LINUX_NETCONF_H_
-#include <linux/types.h>
-#include <linux/netlink.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct netconfmsg {
  __u8 ncm_family;

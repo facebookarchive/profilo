@@ -14,13 +14,13 @@
 /*
     tgmath.h synopsis
 
-#include <complex.h>
-#include <math.h>
+#include <museum/8.1.0/external/libcxx/complex.h>
+#include <museum/8.1.0/external/libcxx/math.h>
 
 */
 
-#include <complex.h>
-#include <math.h>
+#include <museum/8.1.0/external/libcxx/complex.h>
+#include <museum/8.1.0/external/libcxx/math.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

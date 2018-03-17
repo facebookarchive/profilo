@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BASE_ALLOCATOR_H_
 #define ART_RUNTIME_BASE_ALLOCATOR_H_
 
-#include "atomic.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "base/type_static_if.h"
+#include <museum/8.1.0/art/runtime/atomic.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/base/type_static_if.h>
 
 namespace art {
 

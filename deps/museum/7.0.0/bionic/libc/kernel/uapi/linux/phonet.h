@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_PHONET_H
 #define _UAPILINUX_PHONET_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PN_PROTO_TRANSPORT 0
 #define PN_PROTO_PHONET 1

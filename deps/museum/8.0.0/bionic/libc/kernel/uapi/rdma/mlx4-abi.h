@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef MLX4_ABI_USER_H
 #define MLX4_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define MLX4_IB_UVERBS_NO_DEV_CAPS_ABI_VERSION 3
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MLX4_IB_UVERBS_ABI_VERSION 4

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_IMMUNE_SPACES_H_
 #define ART_RUNTIME_GC_COLLECTOR_IMMUNE_SPACES_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc/space/space.h"
-#include "immune_region.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/gc/space/space.h>
+#include <museum/7.1.2/art/runtime/gc/collector/immune_region.h>
 
-#include <set>
+#include <museum/7.1.2/external/libcxx/set>
 
 namespace art {
 namespace gc {

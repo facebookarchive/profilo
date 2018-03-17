@@ -29,10 +29,10 @@
 #ifndef _LANGINFO_H_
 #define _LANGINFO_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
-#include <nl_types.h>
-#include <xlocale.h>
+#include <museum/8.1.0/bionic/libc/nl_types.h>
+#include <museum/8.1.0/bionic/libc/xlocale.h>
 
 __BEGIN_DECLS
 

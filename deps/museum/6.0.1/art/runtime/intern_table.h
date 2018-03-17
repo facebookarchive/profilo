@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_INTERN_TABLE_H_
 #define ART_RUNTIME_INTERN_TABLE_H_
 
-#include <unordered_set>
+#include <museum/6.0.1/external/libcxx/unordered_set>
 
-#include "base/allocator.h"
-#include "base/hash_set.h"
-#include "base/mutex.h"
-#include "gc_root.h"
-#include "object_callbacks.h"
+#include <museum/6.0.1/art/runtime/base/allocator.h>
+#include <museum/6.0.1/art/runtime/base/hash_set.h>
+#include <museum/6.0.1/art/runtime/base/mutex.h>
+#include <museum/6.0.1/art/runtime/gc_root.h>
+#include <museum/6.0.1/art/runtime/object_callbacks.h>
 
 namespace art {
 

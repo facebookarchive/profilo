@@ -19,7 +19,7 @@
 #ifndef _UAPI__ASM_ARM_SWAB_H
 #define _UAPI__ASM_ARM_SWAB_H
 #include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #ifndef __STRICT_ANSI__
 #define __SWAB_64_THRU_32__
 #endif

@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_ELF_FILE_H_
 #define ART_RUNTIME_ELF_FILE_H_
 
-#include <map>
-#include <memory>
-#include <vector>
+#include <museum/5.0.0/external/libcxx/map>
+#include <museum/5.0.0/external/libcxx/memory>
+#include <museum/5.0.0/external/libcxx/vector>
 
-#include "base/unix_file/fd_file.h"
-#include "globals.h"
-#include "elf_utils.h"
-#include "mem_map.h"
-#include "os.h"
+#include <museum/5.0.0/art/runtime/base/unix_file/fd_file.h>
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/elf_utils.h>
+#include <museum/5.0.0/art/runtime/mem_map.h>
+#include <museum/5.0.0/art/runtime/os.h>
 
 namespace art {
 

@@ -29,23 +29,23 @@
 #ifndef _SIGNAL_H_
 #define _SIGNAL_H_
 
-#include <errno.h>
-#include <sys/cdefs.h>
-#include <limits.h>		/* For LONG_BIT */
-#include <string.h>		/* For memset() */
-#include <sys/types.h>
-#include <asm/sigcontext.h>
+#include <museum/5.0.0/bionic/libc/errno.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/limits.h>		/* For LONG_BIT */
+#include <museum/5.0.0/bionic/libc/string.h>		/* For memset() */
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/asm/sigcontext.h>
 
 #if defined(__LP64__) || defined(__mips__)
 /* For 64-bit (and mips), the kernel's struct sigaction doesn't match the POSIX one,
  * so we need to expose our own and translate behind the scenes. */
 #  define sigaction __kernel_sigaction
-#  include <linux/signal.h>
+#  include <museum/5.0.0/bionic/libc/linux/signal.h>
 #  undef sigaction
 #else
 /* For 32-bit, we're stuck with the definitions we already shipped,
  * even though they contain a sigset_t that's too small. */
-#  include <linux/signal.h>
+#  include <museum/5.0.0/bionic/libc/linux/signal.h>
 #endif
 
 __BEGIN_DECLS

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_BLKZONED_H
 #define _UAPI_BLKZONED_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 enum blk_zone_type {
   BLK_ZONE_TYPE_CONVENTIONAL = 0x1,
   BLK_ZONE_TYPE_SEQWRITE_REQ = 0x2,

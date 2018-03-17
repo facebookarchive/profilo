@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_BIT_VECTOR_H_
 #define ART_RUNTIME_BASE_BIT_VECTOR_H_
 
-#include <stdint.h>
-#include <iterator>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/iterator>
 
-#include "base/bit_utils.h"
-#include "globals.h"
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/globals.h>
 
 namespace art {
 

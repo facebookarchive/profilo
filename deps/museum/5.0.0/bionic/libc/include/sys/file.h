@@ -28,11 +28,11 @@
 #ifndef _SYS_FILE_H_
 #define _SYS_FILE_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
 
 /* ANDROID: needed for flock() */
-#include <unistd.h>
-#include <fcntl.h>
+#include <museum/5.0.0/bionic/libc/unistd.h>
+#include <museum/5.0.0/bionic/libc/fcntl.h>
 
 #endif /* _SYS_FILE_H_ */

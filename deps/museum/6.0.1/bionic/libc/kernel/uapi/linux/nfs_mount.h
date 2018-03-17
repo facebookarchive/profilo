@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_NFS_MOUNT_H
 #define _LINUX_NFS_MOUNT_H
-#include <linux/in.h>
-#include <linux/nfs.h>
+#include <museum/6.0.1/bionic/libc/linux/in.h>
+#include <museum/6.0.1/bionic/libc/linux/nfs.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/nfs2.h>
-#include <linux/nfs3.h>
+#include <museum/6.0.1/bionic/libc/linux/nfs2.h>
+#include <museum/6.0.1/bionic/libc/linux/nfs3.h>
 #define NFS_MOUNT_VERSION 6
 #define NFS_MAX_CONTEXT_LEN 256
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

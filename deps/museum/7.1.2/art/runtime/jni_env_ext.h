@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_JNI_ENV_EXT_H_
 #define ART_RUNTIME_JNI_ENV_EXT_H_
 
-#include <jni.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "indirect_reference_table.h"
-#include "object_callbacks.h"
-#include "reference_table.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/indirect_reference_table.h>
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
+#include <museum/7.1.2/art/runtime/reference_table.h>
 
 namespace art {
 

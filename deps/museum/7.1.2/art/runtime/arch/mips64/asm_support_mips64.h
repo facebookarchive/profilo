@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_MIPS64_ASM_SUPPORT_MIPS64_H_
 #define ART_RUNTIME_ARCH_MIPS64_ASM_SUPPORT_MIPS64_H_
 
-#include "asm_support.h"
+#include <museum/7.1.2/art/runtime/asm_support.h>
 
 // 64 ($f24-$f31) + 64 ($s0-$s7) + 8 ($gp) + 8 ($s8) + 8 ($ra) + 1x8 bytes padding
 #define FRAME_SIZE_SAVE_ALL_CALLEE_SAVE 160

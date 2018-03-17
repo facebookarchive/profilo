@@ -14,11 +14,11 @@
 /*
     complex.h synopsis
 
-#include <ccomplex>
+#include <museum/8.0.0/external/libcxx/ccomplex>
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -26,11 +26,11 @@
 
 #ifdef __cplusplus
 
-#include <ccomplex>
+#include <museum/8.0.0/external/libcxx/ccomplex>
 
 #else  // __cplusplus
 
-#include_next <complex.h>
+#include <museum/8.0.0/bionic/libc/complex.h>
 
 #endif  // __cplusplus
 

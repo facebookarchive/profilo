@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__DLM_PLOCK_DOT_H__
 #define _UAPI__DLM_PLOCK_DOT_H__
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 #define DLM_PLOCK_MISC_NAME "dlm_plock"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DLM_PLOCK_VERSION_MAJOR 1

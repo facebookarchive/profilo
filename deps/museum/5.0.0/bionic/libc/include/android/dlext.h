@@ -18,7 +18,7 @@
 #define __ANDROID_DLEXT_H__
 
 #include <stddef.h>
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_RPATH_H
 #define _XT_RPATH_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   XT_RPFILTER_LOOSE = 1 << 0,
   XT_RPFILTER_VALID_MARK = 1 << 1,

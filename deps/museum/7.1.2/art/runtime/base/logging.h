@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_LOGGING_H_
 #define ART_RUNTIME_BASE_LOGGING_H_
 
-#include <ostream>
+#include <museum/7.1.2/external/libcxx/ostream>
 
-#include "base/macros.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
 
 namespace art {
 

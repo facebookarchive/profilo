@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_VARIANT_MAP_H_
 #define ART_RUNTIME_BASE_VARIANT_MAP_H_
 
-#include <memory.h>
-#include <map>
-#include <utility>
+#include <museum/6.0.1/bionic/libc/memory.h>
+#include <museum/6.0.1/external/libcxx/map>
+#include <museum/6.0.1/external/libcxx/utility>
 
 namespace art {
 

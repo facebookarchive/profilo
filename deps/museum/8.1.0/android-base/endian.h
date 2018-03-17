@@ -21,15 +21,15 @@
 
 #if defined(__BIONIC__)
 
-#include <sys/endian.h>
+#include <museum/8.1.0/bionic/libc/sys/endian.h>
 
 #elif defined(__GLIBC__)
 
 /* glibc's <endian.h> is like bionic's <sys/endian.h>. */
-#include <endian.h>
+#include <museum/8.1.0/android-base/endian.h>
 
 /* glibc keeps htons and htonl in <netinet/in.h>. */
-#include <netinet/in.h>
+#include <museum/8.1.0/bionic/libc/netinet/in.h>
 
 /* glibc doesn't have the 64-bit variants. */
 #define htonq(x) htobe64(x)

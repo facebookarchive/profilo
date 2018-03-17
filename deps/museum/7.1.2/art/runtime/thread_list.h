@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_THREAD_LIST_H_
 #define ART_RUNTIME_THREAD_LIST_H_
 
-#include "base/histogram.h"
-#include "base/mutex.h"
-#include "base/value_object.h"
-#include "gc_root.h"
-#include "jni.h"
-#include "object_callbacks.h"
+#include <museum/7.1.2/art/runtime/base/histogram.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/base/value_object.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
 
-#include <bitset>
-#include <list>
+#include <museum/7.1.2/external/libcxx/bitset>
+#include <museum/7.1.2/external/libcxx/list>
 
 namespace art {
 namespace gc {

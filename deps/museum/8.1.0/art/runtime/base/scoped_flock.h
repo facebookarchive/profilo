@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_BASE_SCOPED_FLOCK_H_
 #define ART_RUNTIME_BASE_SCOPED_FLOCK_H_
 
-#include <memory>
-#include <string>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "android-base/unique_fd.h"
+#include <museum/8.1.0/android-base/unique_fd.h>
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/unix_file/fd_file.h"
-#include "os.h"
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/unix_file/fd_file.h>
+#include <museum/8.1.0/art/runtime/os.h>
 
 namespace art {
 

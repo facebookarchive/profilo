@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_REFVISITOR_INL_H_
 #define ART_RUNTIME_MIRROR_OBJECT_REFVISITOR_INL_H_
 
-#include "object-inl.h"
+#include <museum/8.1.0/art/runtime/mirror/object-inl.h>
 
-#include "class_loader-inl.h"
-#include "class-refvisitor-inl.h"
-#include "dex_cache-inl.h"
+#include <museum/8.1.0/art/runtime/mirror/class_loader-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/class-refvisitor-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/dex_cache-inl.h>
 
 namespace art {
 namespace mirror {

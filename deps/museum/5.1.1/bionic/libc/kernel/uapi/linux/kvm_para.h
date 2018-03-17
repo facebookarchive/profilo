@@ -29,6 +29,6 @@
 #define KVM_HC_FEATURES 3
 #define KVM_HC_PPC_MAP_MAGIC_PAGE 4
 #define KVM_HC_KICK_CPU 5
-#include <asm/kvm_para.h>
+#include <museum/5.1.1/bionic/libc/asm/kvm_para.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

@@ -29,10 +29,10 @@
 #ifndef _INCLUDE_SYS_SYSTEM_PROPERTIES_H
 #define _INCLUDE_SYS_SYSTEM_PROPERTIES_H
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
+#include <museum/8.1.0/bionic/libc/stdint.h>
 
 __BEGIN_DECLS
 

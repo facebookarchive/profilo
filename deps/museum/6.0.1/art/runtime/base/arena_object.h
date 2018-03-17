@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_ARENA_OBJECT_H_
 #define ART_RUNTIME_BASE_ARENA_OBJECT_H_
 
-#include "base/arena_allocator.h"
-#include "base/logging.h"
-#include "scoped_arena_allocator.h"
+#include <museum/6.0.1/art/runtime/base/arena_allocator.h>
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/scoped_arena_allocator.h>
 
 namespace art {
 

@@ -35,7 +35,7 @@
 #ifndef _LIMITS_H_
 #define	_LIMITS_H_
 
-#include <sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 
 #if __XPG_VISIBLE
 #define PASS_MAX		128	/* _PASSWORD_LEN from <pwd.h> */
@@ -50,10 +50,10 @@
 #define TMP_MAX                 308915776
 #endif /* __XPG_VISIBLE */
 
-#include <sys/limits.h>
+#include <museum/7.0.0/bionic/libc/sys/limits.h>
 
 #if __POSIX_VISIBLE
-#include <sys/syslimits.h>
+#include <museum/7.0.0/bionic/libc/sys/syslimits.h>
 #endif
 
 /* GLibc compatibility definitions.
@@ -84,7 +84,7 @@
 #define SEM_VALUE_MAX 0x3fffffff
 
 /* POSIX says these belong in <unistd.h> but BSD has some in <limits.h>. */
-#include <bits/posix_limits.h>
+#include <museum/7.0.0/bionic/libc/bits/posix_limits.h>
 
 #define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
 #endif /* !_LIMITS_H_ */

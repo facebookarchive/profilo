@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_MAC_H
 #define _XT_MAC_H
-#include <linux/if_ether.h>
+#include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 struct xt_mac_info {
   unsigned char srcaddr[ETH_ALEN];
   int invert;

@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _XT_OSF_H
 #define _XT_OSF_H
-#include <linux/types.h>
-#include <linux/ip.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ip.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/tcp.h>
+#include <museum/8.0.0/bionic/libc/linux/tcp.h>
 #define MAXGENRELEN 32
 #define XT_OSF_GENRE (1 << 0)
 #define XT_OSF_TTL (1 << 1)

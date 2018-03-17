@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __NETFILTER_IP6T_NPT
 #define __NETFILTER_IP6T_NPT
-#include <linux/types.h>
-#include <linux/netfilter.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct ip6t_npt_tginfo {
   union nf_inet_addr src_pfx;

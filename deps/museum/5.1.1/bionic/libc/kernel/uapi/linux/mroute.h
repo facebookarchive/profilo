@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_MROUTE_H
 #define _UAPI__LINUX_MROUTE_H
-#include <linux/sockios.h>
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/sockios.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MRT_BASE 200
 #define MRT_INIT (MRT_BASE)

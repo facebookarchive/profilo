@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NET_H
 #define _UAPI_LINUX_NET_H
-#include <linux/socket.h>
-#include <asm/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
+#include <museum/8.1.0/bionic/libc/asm/socket.h>
 #define NPROTO AF_MAX
 #define SYS_SOCKET 1
 #define SYS_BIND 2

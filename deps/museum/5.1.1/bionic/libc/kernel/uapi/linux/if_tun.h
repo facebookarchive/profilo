@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI__IF_TUN_H
 #define _UAPI__IF_TUN_H
-#include <linux/types.h>
-#include <linux/if_ether.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/filter.h>
+#include <museum/5.1.1/bionic/libc/linux/filter.h>
 #define TUN_READQ_SIZE 500
 #define TUN_TUN_DEV 0x0001
 #define TUN_TAP_DEV 0x0002

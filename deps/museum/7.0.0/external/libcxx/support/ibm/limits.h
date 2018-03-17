@@ -12,7 +12,7 @@
 #define _LIBCPP_SUPPORT_IBM_LIMITS_H
 
 #if !defined(_AIX) // Linux
-#include <math.h> // for HUGE_VAL, HUGE_VALF, HUGE_VALL, and NAN
+#include <museum/7.0.0/bionic/libm/math.h> // for HUGE_VAL, HUGE_VALF, HUGE_VALL, and NAN
 
 static const unsigned int _QNAN_F = 0x7fc00000;
 #define NANF (*((float *)(&_QNAN_F)))
@@ -37,7 +37,7 @@ static const unsigned int _SNAN_LDBL128[4] = {0x7ff55555, 0x55555555, 0x0, 0x0};
 
 #else
 
-#include <math.h>
+#include <museum/7.0.0/bionic/libm/math.h>
 #include <float.h> // limit constants
 
 #define __builtin_huge_val()     HUGE_VAL  //0x7ff0000000000000

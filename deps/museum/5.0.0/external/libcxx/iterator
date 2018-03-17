@@ -328,18 +328,18 @@ template <class C> auto crend(const C& c) -> decltype(std::rend(c));          //
 
 */
 
-#include <__config>
-#include <__functional_base>
-#include <type_traits>
-#include <cstddef>
-#include <iosfwd>
-#include <initializer_list>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/__functional_base>
+#include <museum/5.0.0/external/libcxx/type_traits>
+#include <museum/5.0.0/external/libcxx/cstddef>
+#include <museum/5.0.0/external/libcxx/iosfwd>
+#include <museum/5.0.0/external/libcxx/initializer_list>
 #ifdef __APPLE__
 #include <Availability.h>
 #endif
 
 #ifdef _LIBCPP_DEBUG
-#   include <__debug>
+#   include <museum/5.0.0/external/libcxx/__debug>
 #else
 #   define _LIBCPP_ASSERT(x, m) ((void)0)
 #endif

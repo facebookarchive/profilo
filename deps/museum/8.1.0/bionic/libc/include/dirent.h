@@ -29,9 +29,9 @@
 #ifndef _DIRENT_H_
 #define _DIRENT_H_
 
-#include <stdint.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/stdint.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

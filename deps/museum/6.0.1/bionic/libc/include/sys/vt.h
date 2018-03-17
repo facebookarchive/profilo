@@ -25,4 +25,4 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-#include <linux/vt.h>
+#include <museum/6.0.1/bionic/libc/linux/vt.h>

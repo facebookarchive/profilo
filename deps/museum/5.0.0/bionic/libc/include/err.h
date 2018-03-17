@@ -35,8 +35,8 @@
 #ifndef _ERR_H_
 #define _ERR_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_BLKPG_H
 #define _LINUX_BLKPG_H
-#include <linux/compiler.h>
-#include <linux/ioctl.h>
+#include <museum/6.0.1/bionic/libc/linux/compiler.h>
+#include <museum/6.0.1/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define BLKPG _IO(0x12, 105)
 struct blkpg_ioctl_arg {

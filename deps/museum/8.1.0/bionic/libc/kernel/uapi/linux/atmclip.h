@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef LINUX_ATMCLIP_H
 #define LINUX_ATMCLIP_H
-#include <linux/sockios.h>
-#include <linux/atmioc.h>
+#include <museum/8.1.0/bionic/libc/linux/sockios.h>
+#include <museum/8.1.0/bionic/libc/linux/atmioc.h>
 #define RFC1483LLC_LEN 8
 #define RFC1626_MTU 9180
 #define CLIP_DEFAULT_IDLETIMER 1200

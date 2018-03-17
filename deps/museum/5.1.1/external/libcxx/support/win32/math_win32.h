@@ -15,7 +15,7 @@
 #error "This header complements Microsoft's C Runtime library, and should not be included otherwise."
 #else
 
-#include <math.h>
+#include <museum/5.1.1/bionic/libm/math.h>
 #include <float.h> // _FPCLASS_PN etc.
 
 // Necessary?

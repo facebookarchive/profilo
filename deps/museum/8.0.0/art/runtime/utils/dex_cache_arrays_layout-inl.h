@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_UTILS_DEX_CACHE_ARRAYS_LAYOUT_INL_H_
 #define ART_RUNTIME_UTILS_DEX_CACHE_ARRAYS_LAYOUT_INL_H_
 
-#include "dex_cache_arrays_layout.h"
+#include <museum/8.0.0/art/runtime/utils/dex_cache_arrays_layout.h>
 
-#include "base/bit_utils.h"
-#include "base/logging.h"
-#include "gc_root.h"
-#include "globals.h"
-#include "mirror/dex_cache.h"
-#include "primitive.h"
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/art/runtime/mirror/dex_cache.h>
+#include <museum/8.0.0/art/runtime/primitive.h>
 
 namespace art {
 

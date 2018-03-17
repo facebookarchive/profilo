@@ -16,7 +16,7 @@
 
 // C++1y
 
-#include <tuple>
+#include <museum/8.0.0/external/libcxx/experimental/tuple>
 
 namespace std {
 namespace experimental {
@@ -36,13 +36,13 @@ inline namespace fundamentals_v1 {
 
  */
 
-# include <experimental/__config>
+# include <museum/8.0.0/external/libcxx/experimental/__config>
 
 #if _LIBCPP_STD_VER > 11
 
-# include <tuple>
-# include <utility>
-# include <__functional_base>
+# include <museum/8.0.0/external/libcxx/experimental/tuple>
+# include <museum/8.0.0/external/libcxx/experimental/utility>
+# include <museum/8.0.0/external/libcxx/__functional_base>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

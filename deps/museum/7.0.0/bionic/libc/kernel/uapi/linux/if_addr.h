@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_IF_ADDR_H
 #define __LINUX_IF_ADDR_H
-#include <linux/types.h>
-#include <linux/netlink.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct ifaddrmsg {
   __u8 ifa_family;

@@ -33,7 +33,7 @@
 #ifndef _GETOPT_H_
 #define _GETOPT_H_
 
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 
 /*
  * GNU-like getopt_long()/getopt_long_only() with 4.4BSD optreset extension.

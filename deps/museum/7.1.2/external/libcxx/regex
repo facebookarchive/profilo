@@ -14,7 +14,7 @@
 /*
     regex synopsis
 
-#include <initializer_list>
+#include <museum/7.1.2/external/libcxx/initializer_list>
 
 namespace std
 {
@@ -752,18 +752,18 @@ typedef regex_token_iterator<wstring::const_iterator> wsregex_token_iterator;
 } // std
 */
 
-#include <__config>
-#include <stdexcept>
-#include <__locale>
-#include <initializer_list>
-#include <utility>
-#include <iterator>
-#include <string>
-#include <memory>
-#include <vector>
-#include <deque>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/stdexcept>
+#include <museum/7.1.2/external/libcxx/__locale>
+#include <museum/7.1.2/external/libcxx/initializer_list>
+#include <museum/7.1.2/external/libcxx/utility>
+#include <museum/7.1.2/external/libcxx/iterator>
+#include <museum/7.1.2/external/libcxx/string>
+#include <museum/7.1.2/external/libcxx/memory>
+#include <museum/7.1.2/external/libcxx/vector>
+#include <museum/7.1.2/external/libcxx/deque>
 
-#include <__undef_min_max>
+#include <museum/7.1.2/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_BCACHE_H
 #define _LINUX_BCACHE_H
-#include <asm/types.h>
+#include <museum/5.1.1/bionic/libc/asm/types.h>
 #define BITMASK(name, type, field, offset, size)  static inline __u64 name(const type *k)  { return (k->field >> offset) & ~(~0ULL << size); }    static inline void SET_##name(type *k, __u64 v)  {   k->field &= ~(~(~0ULL << size) << offset);   k->field |= (v & ~(~0ULL << size)) << offset;  }
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct bkey {

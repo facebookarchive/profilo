@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_ARM_ASM_SUPPORT_ARM_H_
 #define ART_RUNTIME_ARCH_ARM_ASM_SUPPORT_ARM_H_
 
-#include "asm_support.h"
+#include <museum/5.0.0/art/runtime/asm_support.h>
 
 // Offset of field Thread::tls32_.state_and_flags verified in InitCpu
 #define THREAD_FLAGS_OFFSET 0

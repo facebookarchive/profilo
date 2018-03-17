@@ -21,8 +21,8 @@
 #define __NR_OABI_SYSCALL_BASE 0x900000
 #define __NR_SYSCALL_BASE 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <asm/unistd-eabi.h>
-#include <asm/unistd-common.h>
+#include <museum/8.0.0/bionic/libc/asm/unistd-eabi.h>
+#include <museum/8.0.0/bionic/libc/asm/unistd-common.h>
 #define __NR_sync_file_range2 __NR_arm_sync_file_range
 #define __ARM_NR_BASE (__NR_SYSCALL_BASE + 0x0f0000)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

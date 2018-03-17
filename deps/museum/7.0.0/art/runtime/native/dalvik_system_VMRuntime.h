@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_NATIVE_DALVIK_SYSTEM_VMRUNTIME_H_
 #define ART_RUNTIME_NATIVE_DALVIK_SYSTEM_VMRUNTIME_H_
 
-#include <jni.h>
+#include <museum/7.0.0/libnativehelper/jni.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_SOCKET_H
 #define _XT_SOCKET_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   XT_SOCKET_TRANSPARENT = 1 << 0,

@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_NATIVE_NATIVE_UTIL_H_
 #define ART_RUNTIME_NATIVE_NATIVE_UTIL_H_
 
-#include <jni.h>
+#include <museum/8.1.0/libnativehelper/jni.h>
 
-#include "android-base/logging.h"
-#include "base/macros.h"
-#include "nativehelper/ScopedLocalRef.h"
+#include <museum/8.1.0/android-base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/libnativehelper/ScopedLocalRef.h>
 
 namespace art {
 

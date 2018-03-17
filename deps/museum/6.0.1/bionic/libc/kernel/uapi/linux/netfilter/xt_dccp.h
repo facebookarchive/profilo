@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_DCCP_H_
 #define _XT_DCCP_H_
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define XT_DCCP_SRC_PORTS 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XT_DCCP_DEST_PORTS 0x02

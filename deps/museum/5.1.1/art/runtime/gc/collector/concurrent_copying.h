@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_H_
 #define ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_H_
 
-#include "garbage_collector.h"
+#include <museum/5.1.1/art/runtime/gc/collector/garbage_collector.h>
 
 namespace art {
 namespace gc {

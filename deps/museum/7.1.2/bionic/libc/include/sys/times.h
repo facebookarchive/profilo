@@ -29,9 +29,9 @@
 #ifndef _SYS_TIMES_H_
 #define _SYS_TIMES_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/times.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
+#include <museum/7.1.2/bionic/libc/linux/times.h>
 
 __BEGIN_DECLS
 

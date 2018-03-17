@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_TIMES_H
 #define _LINUX_TIMES_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct tms {
   __kernel_clock_t tms_utime;
   __kernel_clock_t tms_stime;

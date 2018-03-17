@@ -197,16 +197,16 @@ namespace std {
 
 */
 
-#include <__config>
-#include <__tuple>
-#include <array>
-#include <exception>
-#include <functional>
-#include <initializer_list>
-#include <new>
-#include <tuple>
-#include <type_traits>
-#include <utility>
+#include <museum/8.0.0/external/libcxx/__config>
+#include <museum/8.0.0/external/libcxx/__tuple>
+#include <museum/8.0.0/external/libcxx/array>
+#include <museum/8.0.0/external/libcxx/exception>
+#include <museum/8.0.0/external/libcxx/functional>
+#include <museum/8.0.0/external/libcxx/initializer_list>
+#include <museum/8.0.0/external/libcxx/new>
+#include <museum/8.0.0/external/libcxx/tuple>
+#include <museum/8.0.0/external/libcxx/type_traits>
+#include <museum/8.0.0/external/libcxx/utility>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

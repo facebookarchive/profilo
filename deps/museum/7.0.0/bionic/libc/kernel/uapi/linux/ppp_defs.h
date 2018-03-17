@@ -16,7 +16,7 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 #ifndef _UAPI_PPP_DEFS_H_
 #define _UAPI_PPP_DEFS_H_
 #define PPP_HDRLEN 4

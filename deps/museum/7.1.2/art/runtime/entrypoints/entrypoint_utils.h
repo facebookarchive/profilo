@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_H_
 #define ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_H_
 
-#include <jni.h>
-#include <stdint.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
+#include <museum/7.1.2/bionic/libc/stdint.h>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "dex_instruction.h"
-#include "gc/allocator_type.h"
-#include "invoke_type.h"
-#include "jvalue.h"
-#include "runtime.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/dex_instruction.h>
+#include <museum/7.1.2/art/runtime/gc/allocator_type.h>
+#include <museum/7.1.2/art/runtime/invoke_type.h>
+#include <museum/7.1.2/art/runtime/jvalue.h>
+#include <museum/7.1.2/art/runtime/runtime.h>
 
 namespace art {
 

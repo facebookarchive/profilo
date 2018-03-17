@@ -23,6 +23,6 @@
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define O_DIRECT 0200000
 #define O_LARGEFILE 0400000
-#include <asm-generic/fcntl.h>
+#include <museum/5.0.0/bionic/libc/asm-generic/fcntl.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

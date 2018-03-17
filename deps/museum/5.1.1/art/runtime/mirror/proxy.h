@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_MIRROR_PROXY_H_
 #define ART_RUNTIME_MIRROR_PROXY_H_
 
-#include "object.h"
+#include <museum/5.1.1/art/runtime/mirror/object.h>
 
 namespace art {
 

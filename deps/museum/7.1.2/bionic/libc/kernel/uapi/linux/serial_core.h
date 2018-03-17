@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_SERIAL_CORE_H
 #define _UAPILINUX_SERIAL_CORE_H
-#include <linux/serial.h>
+#include <museum/7.1.2/bionic/libc/linux/serial.h>
 #define PORT_UNKNOWN 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PORT_8250 1

@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_H_
 #define ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_H_
 
-#include <stdint.h>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "base/casts.h"
-#include "base/macros.h"
-#include "base/scoped_arena_containers.h"
-#include "gc_root.h"
-#include "primitive.h"
+#include <museum/8.1.0/art/runtime/base/casts.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/scoped_arena_containers.h>
+#include <museum/8.1.0/art/runtime/gc_root.h>
+#include <museum/8.1.0/art/runtime/primitive.h>
 
 namespace art {
 namespace mirror {

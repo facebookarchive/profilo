@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_ARCH_MIPS_INSTRUCTION_SET_FEATURES_MIPS_H_
 #define ART_RUNTIME_ARCH_MIPS_INSTRUCTION_SET_FEATURES_MIPS_H_
 
-#include "arch/instruction_set_features.h"
-#include "base/logging.h"
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/arch/instruction_set_features.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
 namespace art {
 

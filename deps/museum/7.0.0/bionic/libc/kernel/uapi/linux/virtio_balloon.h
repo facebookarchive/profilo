@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_BALLOON_H
 #define _LINUX_VIRTIO_BALLOON_H
-#include <linux/types.h>
-#include <linux/virtio_types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/virtio_types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/virtio_ids.h>
-#include <linux/virtio_config.h>
+#include <museum/7.0.0/bionic/libc/linux/virtio_ids.h>
+#include <museum/7.0.0/bionic/libc/linux/virtio_config.h>
 #define VIRTIO_BALLOON_F_MUST_TELL_HOST 0
 #define VIRTIO_BALLOON_F_STATS_VQ 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __MTD_ABI_H__
 #define __MTD_ABI_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct erase_info_user {
   __u32 start;
   __u32 length;

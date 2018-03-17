@@ -9,8 +9,8 @@
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
 
 typedef enum {
   preorder,

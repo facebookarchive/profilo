@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_KEXEC_H
 #define _UAPILINUX_KEXEC_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define KEXEC_ON_CRASH 0x00000001
 #define KEXEC_PRESERVE_CONTEXT 0x00000002
 #define KEXEC_ARCH_MASK 0xffff0000

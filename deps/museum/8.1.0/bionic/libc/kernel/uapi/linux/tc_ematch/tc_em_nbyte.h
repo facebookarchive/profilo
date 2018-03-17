@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_EM_NBYTE_H
 #define __LINUX_TC_EM_NBYTE_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 struct tcf_em_nbyte {
   __u16 off;
   __u16 len : 12;

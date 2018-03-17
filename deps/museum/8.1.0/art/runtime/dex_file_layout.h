@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_DEX_FILE_LAYOUT_H_
 #define ART_RUNTIME_DEX_FILE_LAYOUT_H_
 
-#include <cstdint>
-#include <iosfwd>
+#include <museum/8.1.0/external/libcxx/cstdint>
+#include <museum/8.1.0/external/libcxx/iosfwd>
 
 namespace art {
 

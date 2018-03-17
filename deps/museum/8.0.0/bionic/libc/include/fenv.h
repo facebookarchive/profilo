@@ -30,8 +30,8 @@
 #ifndef _FENV_H_
 #define _FENV_H_
 
-#include <sys/cdefs.h>
-#include <machine/fenv.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/machine/fenv.h>
 
 __BEGIN_DECLS
 
@@ -74,7 +74,7 @@ extern const fenv_t __fe_dfl_env;
 
 __END_DECLS
 
-#include <android/legacy_fenv_inlines_arm.h>
-#include <android/legacy_fenv_inlines_mips.h>
+#include <museum/8.0.0/bionic/libc/android/legacy_fenv_inlines_arm.h>
+#include <museum/8.0.0/bionic/libc/android/legacy_fenv_inlines_mips.h>
 
 #endif  /* ! _FENV_H_ */

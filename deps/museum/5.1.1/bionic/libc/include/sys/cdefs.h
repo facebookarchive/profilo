@@ -77,7 +77,7 @@
 #define	__GNUC_PREREQ(x, y)	0
 #endif
 
-#include <sys/cdefs_elf.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs_elf.h>
 
 #if defined(__cplusplus)
 #define	__BEGIN_DECLS		extern "C" {
@@ -488,7 +488,7 @@
 #endif
 
 #define  __BIONIC__   1
-#include <android/api-level.h>
+#include <museum/5.1.1/bionic/libc/android/api-level.h>
 
 /* glibc compatibility. */
 #if __LP64__

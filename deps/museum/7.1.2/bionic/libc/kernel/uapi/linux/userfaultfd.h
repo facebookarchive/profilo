@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_USERFAULTFD_H
 #define _LINUX_USERFAULTFD_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define UFFD_API ((__u64) 0xAA)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define UFFD_API_FEATURES (0)

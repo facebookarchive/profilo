@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_SOCKIOS_H
 #define _LINUX_SOCKIOS_H
-#include <asm/sockios.h>
+#include <museum/6.0.1/bionic/libc/asm/sockios.h>
 #define SIOCINQ FIONREAD
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SIOCOUTQ TIOCOUTQ

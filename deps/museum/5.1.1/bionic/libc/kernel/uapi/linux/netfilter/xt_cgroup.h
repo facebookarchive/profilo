@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_XT_CGROUP_H
 #define _UAPI_XT_CGROUP_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct xt_cgroup_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u32 id;

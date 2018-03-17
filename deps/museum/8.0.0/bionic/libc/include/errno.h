@@ -28,8 +28,8 @@
 #ifndef _ERRNO_H
 #define _ERRNO_H
 
-#include <sys/cdefs.h>
-#include <linux/errno.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/linux/errno.h>
 
 __BEGIN_DECLS
 
@@ -48,6 +48,6 @@ volatile int* __errno(void) __attribute_const__;
 
 __END_DECLS
 
-#include <android/legacy_errno_inlines.h>
+#include <museum/8.0.0/bionic/libc/android/legacy_errno_inlines.h>
 
 #endif /* _ERRNO_H */

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_NATIVE_SCOPED_FAST_NATIVE_OBJECT_ACCESS_H_
 #define ART_RUNTIME_NATIVE_SCOPED_FAST_NATIVE_OBJECT_ACCESS_H_
 
-#include <jni.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
-#include "scoped_thread_state_change.h"
+#include <museum/8.0.0/art/runtime/scoped_thread_state_change.h>
 
 namespace art {
 

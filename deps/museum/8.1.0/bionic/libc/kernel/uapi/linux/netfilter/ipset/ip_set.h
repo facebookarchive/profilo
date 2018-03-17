@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_IP_SET_H
 #define _UAPI_IP_SET_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IPSET_PROTOCOL 6
 #define IPSET_MAXNAMELEN 32
 #define IPSET_MAX_COMMENT_SIZE 255

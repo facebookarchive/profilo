@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FANOTIFY_H
 #define _UAPI_LINUX_FANOTIFY_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define FAN_ACCESS 0x00000001
 #define FAN_MODIFY 0x00000002
 #define FAN_CLOSE_WRITE 0x00000008

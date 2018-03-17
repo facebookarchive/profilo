@@ -14,7 +14,7 @@
 #ifndef __XLOCALE_H_INCLUDED
 #define __XLOCALE_H_INCLUDED
 
-#include <stdlib.h>
+#include <museum/6.0.1/bionic/libc/stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_MROUTE6_H
 #define _UAPI__LINUX_MROUTE6_H
-#include <linux/kernel.h>
-#include <linux/types.h>
-#include <linux/sockios.h>
+#include <museum/8.1.0/bionic/libc/linux/kernel.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/sockios.h>
 #define MRT6_BASE 200
 #define MRT6_INIT (MRT6_BASE)
 #define MRT6_DONE (MRT6_BASE + 1)

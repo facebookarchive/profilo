@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IP_H
 #define _UAPI_LINUX_IP_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #define IPTOS_TOS_MASK 0x1E
 #define IPTOS_TOS(tos) ((tos) & IPTOS_TOS_MASK)
 #define IPTOS_LOWDELAY 0x10

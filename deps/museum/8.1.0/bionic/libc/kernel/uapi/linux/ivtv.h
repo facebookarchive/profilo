@@ -19,8 +19,8 @@
 #ifndef __LINUX_IVTV_H__
 #define __LINUX_IVTV_H__
 #include <linux/compiler.h>
-#include <linux/types.h>
-#include <linux/videodev2.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/videodev2.h>
 struct ivtv_dma_frame {
   enum v4l2_buf_type type;
   __u32 pixelformat;

@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_BLK_H
 #define _LINUX_VIRTIO_BLK_H
-#include <linux/types.h>
-#include <linux/virtio_ids.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_ids.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/virtio_config.h>
-#include <linux/virtio_types.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_config.h>
+#include <museum/8.0.0/bionic/libc/linux/virtio_types.h>
 #define VIRTIO_BLK_F_SIZE_MAX 1
 #define VIRTIO_BLK_F_SEG_MAX 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_VERIFIER_INSTRUCTION_FLAGS_H_
 #define ART_RUNTIME_VERIFIER_INSTRUCTION_FLAGS_H_
 
-#include <stdint.h>
-#include <string>
+#include <museum/5.1.1/bionic/libc/stdint.h>
+#include <museum/5.1.1/external/libcxx/string>
 
-#include "base/logging.h"
+#include <museum/5.1.1/art/runtime/base/logging.h>
 
 namespace art {
 namespace verifier {

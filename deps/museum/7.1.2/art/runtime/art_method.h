@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_ART_METHOD_H_
 #define ART_RUNTIME_ART_METHOD_H_
 
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "dex_file.h"
-#include "gc_root.h"
-#include "invoke_type.h"
-#include "method_reference.h"
-#include "modifiers.h"
-#include "mirror/object.h"
-#include "read_barrier_option.h"
-#include "stack.h"
-#include "utils.h"
+#include <museum/7.1.2/art/runtime/base/bit_utils.h>
+#include <museum/7.1.2/art/runtime/base/casts.h>
+#include <museum/7.1.2/art/runtime/dex_file.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
+#include <museum/7.1.2/art/runtime/invoke_type.h>
+#include <museum/7.1.2/art/runtime/method_reference.h>
+#include <museum/7.1.2/art/runtime/modifiers.h>
+#include <museum/7.1.2/art/runtime/mirror/object.h>
+#include <museum/7.1.2/art/runtime/read_barrier_option.h>
+#include <museum/7.1.2/art/runtime/stack.h>
+#include <museum/7.1.2/art/runtime/utils.h>
 
 namespace art {
 

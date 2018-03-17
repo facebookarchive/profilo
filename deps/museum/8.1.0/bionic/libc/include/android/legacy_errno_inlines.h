@@ -29,8 +29,8 @@
 #ifndef _ANDROID_LEGACY_ERRNO_INLINES_H
 #define _ANDROID_LEGACY_ERRNO_INLINES_H
 
-#include <errno.h>
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/errno.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 #if __ANDROID_API__ < __ANDROID_API_L__
 

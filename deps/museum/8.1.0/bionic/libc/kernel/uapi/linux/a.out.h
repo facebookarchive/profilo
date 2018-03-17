@@ -20,7 +20,7 @@
 #define _UAPI__A_OUT_GNU_H__
 #define __GNU_EXEC_MACROS__
 #ifndef __STRUCT_EXEC_OVERRIDE__
-#include <asm/a.out.h>
+#include <museum/8.1.0/bionic/libc/asm/a.out.h>
 #endif
 #ifndef __ASSEMBLY__
 enum machine_type {
@@ -101,7 +101,7 @@ enum machine_type {
 #define SEGMENT_SIZE PAGE_SIZE
 #endif
 #ifdef linux
-#include <unistd.h>
+#include <museum/8.1.0/bionic/libc/unistd.h>
 #if defined(__i386__) || defined(__mc68000__)
 #define SEGMENT_SIZE 1024
 #else

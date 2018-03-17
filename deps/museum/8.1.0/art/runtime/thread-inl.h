@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_THREAD_INL_H_
 #define ART_RUNTIME_THREAD_INL_H_
 
-#include "thread.h"
+#include <museum/8.1.0/art/runtime/thread.h>
 
-#include "base/casts.h"
-#include "base/mutex-inl.h"
-#include "base/time_utils.h"
-#include "jni_env_ext.h"
-#include "managed_stack-inl.h"
-#include "obj_ptr.h"
-#include "thread-current-inl.h"
-#include "thread_pool.h"
+#include <museum/8.1.0/art/runtime/base/casts.h>
+#include <museum/8.1.0/art/runtime/base/mutex-inl.h>
+#include <museum/8.1.0/art/runtime/base/time_utils.h>
+#include <museum/8.1.0/art/runtime/jni_env_ext.h>
+#include <museum/8.1.0/art/runtime/managed_stack-inl.h>
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
+#include <museum/8.1.0/art/runtime/thread-current-inl.h>
+#include <museum/8.1.0/art/runtime/thread_pool.h>
 
 namespace art {
 

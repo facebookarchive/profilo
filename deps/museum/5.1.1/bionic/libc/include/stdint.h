@@ -30,7 +30,7 @@
 #define _STDINT_H
 
 #include <stddef.h>
-#include <machine/wchar_limits.h>
+#include <museum/5.1.1/bionic/libc/machine/wchar_limits.h>
 
 typedef __signed char __int8_t;
 typedef unsigned char __uint8_t;

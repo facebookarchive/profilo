@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_FRAD_H_
 #define _UAPI_FRAD_H_
-#include <linux/if.h>
+#include <museum/8.1.0/bionic/libc/linux/if.h>
 struct dlci_add {
   char devname[IFNAMSIZ];
   short dlci;

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef KFD_IOCTL_H_INCLUDED
 #define KFD_IOCTL_H_INCLUDED
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define KFD_IOCTL_MAJOR_VERSION 1
 #define KFD_IOCTL_MINOR_VERSION 1
 struct kfd_ioctl_get_version_args {

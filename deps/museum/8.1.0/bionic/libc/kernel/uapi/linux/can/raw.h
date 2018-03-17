@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_RAW_H
 #define _UAPI_CAN_RAW_H
-#include <linux/can.h>
+#include <museum/8.1.0/bionic/libc/linux/can.h>
 #define SOL_CAN_RAW (SOL_CAN_BASE + CAN_RAW)
 enum {
   CAN_RAW_FILTER = 1,

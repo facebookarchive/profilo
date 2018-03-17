@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_TCPMSS_MATCH_H
 #define _XT_TCPMSS_MATCH_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 struct xt_tcpmss_match_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u16 mss_min, mss_max;

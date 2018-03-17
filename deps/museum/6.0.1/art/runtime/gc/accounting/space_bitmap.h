@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_SPACE_BITMAP_H_
 #define ART_RUNTIME_GC_ACCOUNTING_SPACE_BITMAP_H_
 
-#include <limits.h>
-#include <stdint.h>
-#include <memory>
-#include <set>
-#include <vector>
+#include <museum/6.0.1/bionic/libc/limits.h>
+#include <museum/6.0.1/bionic/libc/stdint.h>
+#include <museum/6.0.1/external/libcxx/memory>
+#include <museum/6.0.1/external/libcxx/set>
+#include <museum/6.0.1/external/libcxx/vector>
 
-#include "base/mutex.h"
-#include "globals.h"
-#include "object_callbacks.h"
+#include <museum/6.0.1/art/runtime/base/mutex.h>
+#include <museum/6.0.1/art/runtime/globals.h>
+#include <museum/6.0.1/art/runtime/object_callbacks.h>
 
 namespace art {
 

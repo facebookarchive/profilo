@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_LED_H
 #define _XT_LED_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct xt_led_info {
   char id[27];
   __u8 always_blink;

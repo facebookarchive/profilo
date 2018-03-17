@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_EVENTPOLL_H
 #define _UAPI_LINUX_EVENTPOLL_H
-#include <linux/fcntl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/fcntl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define EPOLL_CLOEXEC O_CLOEXEC
 #define EPOLL_CTL_ADD 1
 #define EPOLL_CTL_DEL 2

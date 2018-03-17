@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_H_
 
-#include "space.h"
+#include <museum/8.1.0/art/runtime/gc/space/space.h>
 
 namespace art {
 

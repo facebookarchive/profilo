@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_JNI_INTERNAL_H_
 #define ART_RUNTIME_JNI_INTERNAL_H_
 
-#include <jni.h>
-#include <iosfwd>
+#include <museum/7.0.0/libnativehelper/jni.h>
+#include <museum/7.0.0/external/libcxx/iosfwd>
 
 #ifndef NATIVE_METHOD
 #define NATIVE_METHOD(className, functionName, signature) \

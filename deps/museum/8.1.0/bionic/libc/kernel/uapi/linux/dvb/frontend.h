@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _DVBFRONTEND_H_
 #define _DVBFRONTEND_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum fe_type {
   FE_QPSK,
   FE_QAM,

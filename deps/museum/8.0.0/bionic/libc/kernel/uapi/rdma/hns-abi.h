@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef HNS_ABI_USER_H
 #define HNS_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 struct hns_roce_ib_create_cq {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u64 buf_addr;

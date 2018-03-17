@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_FIELD_HELPER_H_
 #define ART_RUNTIME_FIELD_HELPER_H_
 
-#include "base/macros.h"
-#include "handle.h"
-#include "mirror/art_field.h"
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/handle.h>
+#include <museum/5.0.0/art/runtime/mirror/art_field.h>
 
 namespace art {
 

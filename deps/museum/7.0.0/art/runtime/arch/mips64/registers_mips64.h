@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_ARCH_MIPS64_REGISTERS_MIPS64_H_
 #define ART_RUNTIME_ARCH_MIPS64_REGISTERS_MIPS64_H_
 
-#include <iosfwd>
+#include <museum/7.0.0/external/libcxx/iosfwd>
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "globals.h"
+#include <museum/7.0.0/art/runtime/base/logging.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/globals.h>
 
 namespace art {
 namespace mips64 {

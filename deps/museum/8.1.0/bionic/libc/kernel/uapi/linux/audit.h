@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_AUDIT_H_
 #define _UAPI_LINUX_AUDIT_H_
-#include <linux/types.h>
-#include <linux/elf-em.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/elf-em.h>
 #define AUDIT_GET 1000
 #define AUDIT_SET 1001
 #define AUDIT_LIST 1002

@@ -16,7 +16,7 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#include <asm/bitsperlong.h>
+#include <museum/7.1.2/bionic/libc/asm/bitsperlong.h>
 #ifndef __SYSCALL
 #define __SYSCALL(x,y)
 #endif

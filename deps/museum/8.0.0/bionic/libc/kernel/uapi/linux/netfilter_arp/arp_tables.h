@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _UAPI_ARPTABLES_H
 #define _UAPI_ARPTABLES_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/if.h>
-#include <linux/netfilter_arp.h>
-#include <linux/netfilter/x_tables.h>
+#include <museum/8.0.0/bionic/libc/linux/if.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter_arp.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter/x_tables.h>
 #define ARPT_FUNCTION_MAXNAMELEN XT_FUNCTION_MAXNAMELEN
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ARPT_TABLE_MAXNAMELEN XT_TABLE_MAXNAMELEN

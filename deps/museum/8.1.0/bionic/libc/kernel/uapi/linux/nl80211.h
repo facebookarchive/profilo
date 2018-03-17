@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_NL80211_H
 #define __LINUX_NL80211_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define NL80211_GENL_NAME "nl80211"
 #define NL80211_MULTICAST_GROUP_CONFIG "config"
 #define NL80211_MULTICAST_GROUP_SCAN "scan"

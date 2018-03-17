@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _EBT_ULOG_H
 #define _EBT_ULOG_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define EBT_ULOG_DEFAULT_NLGROUP 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EBT_ULOG_DEFAULT_QTHRESHOLD 1

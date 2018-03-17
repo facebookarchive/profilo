@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_ALLOCATOR_ROSALLOC_INL_H_
 #define ART_RUNTIME_GC_ALLOCATOR_ROSALLOC_INL_H_
 
-#include "rosalloc.h"
+#include <museum/6.0.1/art/runtime/gc/allocator/rosalloc.h>
 
 namespace art {
 namespace gc {

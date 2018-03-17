@@ -48,7 +48,7 @@
 #ifndef _MACHINE_IEEE_H_
 #define _MACHINE_IEEE_H_
 
-#include <sys/types.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

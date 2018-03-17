@@ -28,8 +28,8 @@
 #ifndef _SYS_REBOOT_H_
 #define _SYS_REBOOT_H_
 
-#include <sys/cdefs.h>
-#include <linux/reboot.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/linux/reboot.h>
 
 __BEGIN_DECLS
 

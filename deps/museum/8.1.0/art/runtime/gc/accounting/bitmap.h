@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_BITMAP_H_
 #define ART_RUNTIME_GC_ACCOUNTING_BITMAP_H_
 
-#include <limits.h>
-#include <stdint.h>
-#include <memory>
-#include <set>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/limits.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/set>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "base/mutex.h"
-#include "globals.h"
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/globals.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_SOM_H
 #define _LINUX_SOM_H
-#include <linux/time.h>
+#include <museum/6.0.1/bionic/libc/linux/time.h>
 #define SOM_PAGESIZE 4096
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct som_hdr {

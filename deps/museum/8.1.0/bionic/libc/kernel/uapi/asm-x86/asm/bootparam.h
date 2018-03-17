@@ -38,13 +38,13 @@
 #define XLF_EFI_HANDOVER_64 (1 << 3)
 #define XLF_EFI_KEXEC (1 << 4)
 #ifndef __ASSEMBLY__
-#include <linux/types.h>
-#include <linux/screen_info.h>
-#include <linux/apm_bios.h>
-#include <linux/edd.h>
-#include <asm/e820.h>
-#include <asm/ist.h>
-#include <video/edid.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/screen_info.h>
+#include <museum/8.1.0/bionic/libc/linux/apm_bios.h>
+#include <museum/8.1.0/bionic/libc/linux/edd.h>
+#include <museum/8.1.0/bionic/libc/asm/e820.h>
+#include <museum/8.1.0/bionic/libc/asm/ist.h>
+#include <museum/8.1.0/bionic/libc/video/edid.h>
 struct setup_data {
   __u64 next;
   __u32 type;

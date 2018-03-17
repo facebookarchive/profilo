@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ASHMEM_H
 #define _UAPI_LINUX_ASHMEM_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ASHMEM_NAME_LEN 256
 #define ASHMEM_NAME_DEF "dev/ashmem"

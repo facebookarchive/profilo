@@ -97,7 +97,7 @@ enum {
   PMU_PWR_WAKEUP_LID_OPEN = 0x08,
   PMU_PWR_WAKEUP_RING = 0x10,
 };
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define PMU_IOC_SLEEP _IO('B', 0)
 #define PMU_IOC_GET_BACKLIGHT _IOR('B', 1, size_t)
 #define PMU_IOC_SET_BACKLIGHT _IOW('B', 2, size_t)

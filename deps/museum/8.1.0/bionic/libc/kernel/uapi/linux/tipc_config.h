@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_TIPC_CONFIG_H_
 #define _LINUX_TIPC_CONFIG_H_
-#include <linux/types.h>
-#include <linux/string.h>
-#include <linux/tipc.h>
-#include <asm/byteorder.h>
-#include <arpa/inet.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/string.h>
+#include <museum/8.1.0/bionic/libc/linux/tipc.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/arpa/inet.h>
 #define TIPC_CMD_NOOP 0x0000
 #define TIPC_CMD_GET_NODES 0x0001
 #define TIPC_CMD_GET_MEDIA_NAMES 0x0002

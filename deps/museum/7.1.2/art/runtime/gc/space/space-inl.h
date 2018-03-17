@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_SPACE_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_SPACE_INL_H_
 
-#include "space.h"
+#include <museum/7.1.2/art/runtime/gc/space/space.h>
 
-#include "base/casts.h"
-#include "dlmalloc_space.h"
-#include "image_space.h"
-#include "large_object_space.h"
+#include <museum/7.1.2/art/runtime/base/casts.h>
+#include <museum/7.1.2/art/runtime/gc/space/dlmalloc_space.h>
+#include <museum/7.1.2/art/runtime/gc/space/image_space.h>
+#include <museum/7.1.2/art/runtime/gc/space/large_object_space.h>
 
 namespace art {
 namespace gc {

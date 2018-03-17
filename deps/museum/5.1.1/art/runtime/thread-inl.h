@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_THREAD_INL_H_
 #define ART_RUNTIME_THREAD_INL_H_
 
-#include "thread.h"
+#include <museum/5.1.1/art/runtime/thread.h>
 
-#include <pthread.h>
+#include <museum/5.1.1/bionic/libc/pthread.h>
 
-#include "base/casts.h"
-#include "base/mutex-inl.h"
-#include "gc/heap.h"
-#include "jni_internal.h"
+#include <museum/5.1.1/art/runtime/base/casts.h>
+#include <museum/5.1.1/art/runtime/base/mutex-inl.h>
+#include <museum/5.1.1/art/runtime/gc/heap.h>
+#include <museum/5.1.1/art/runtime/jni_internal.h>
 
 namespace art {
 

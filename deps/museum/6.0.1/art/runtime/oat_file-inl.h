@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_OAT_FILE_INL_H_
 #define ART_RUNTIME_OAT_FILE_INL_H_
 
-#include "oat_file.h"
+#include <museum/6.0.1/art/runtime/oat_file.h>
 
 namespace art {
 

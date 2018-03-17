@@ -11,17 +11,17 @@
 #ifndef _LIBCPP__HASH_TABLE
 #define _LIBCPP__HASH_TABLE
 
-#include <__config>
-#include <initializer_list>
-#include <memory>
-#include <iterator>
-#include <algorithm>
-#include <cmath>
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/external/libcxx/initializer_list>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/iterator>
+#include <museum/7.0.0/external/libcxx/algorithm>
+#include <museum/7.0.0/external/libcxx/cmath>
 
-#include <__undef_min_max>
-#include <__undef___deallocate>
+#include <museum/7.0.0/external/libcxx/__undef_min_max>
+#include <museum/7.0.0/external/libcxx/__undef___deallocate>
 
-#include <__debug>
+#include <museum/7.0.0/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

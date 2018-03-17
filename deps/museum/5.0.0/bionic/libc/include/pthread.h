@@ -29,11 +29,11 @@
 #ifndef _PTHREAD_H_
 #define _PTHREAD_H_
 
-#include <time.h>
-#include <signal.h>
-#include <sched.h>
-#include <limits.h>
-#include <sys/types.h>
+#include <museum/5.0.0/bionic/libc/time.h>
+#include <museum/5.0.0/bionic/libc/signal.h>
+#include <museum/5.0.0/bionic/libc/sched.h>
+#include <museum/5.0.0/bionic/libc/limits.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
 
 #if defined(__LP64__)
   #define __RESERVED_INITIALIZER , {0}

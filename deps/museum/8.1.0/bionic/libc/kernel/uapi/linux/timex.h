@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TIMEX_H
 #define _UAPI_LINUX_TIMEX_H
-#include <linux/time.h>
+#include <museum/8.1.0/bionic/libc/linux/time.h>
 #define NTP_API 4
 struct timex {
   unsigned int modes;

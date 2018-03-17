@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_MIPS_ENTRYPOINTS_DIRECT_MIPS_H_
 #define ART_RUNTIME_ARCH_MIPS_ENTRYPOINTS_DIRECT_MIPS_H_
 
-#include "entrypoints/quick/quick_entrypoints_enum.h"
+#include <museum/8.1.0/art/runtime/entrypoints/quick/quick_entrypoints_enum.h>
 
 namespace art {
 

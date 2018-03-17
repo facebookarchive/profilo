@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IPCONNTRACK_NETLINK_H
 #define _IPCONNTRACK_NETLINK_H
-#include <linux/netfilter/nfnetlink.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter/nfnetlink.h>
 enum cntl_msg_types {
   IPCTNL_MSG_CT_NEW,
   IPCTNL_MSG_CT_GET,

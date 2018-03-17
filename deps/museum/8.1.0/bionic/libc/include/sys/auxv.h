@@ -29,9 +29,9 @@
 #ifndef _SYS_AUXV_H_
 #define _SYS_AUXV_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
-#include <bits/auxvec.h>
+#include <museum/8.1.0/bionic/libc/bits/auxvec.h>
 
 __BEGIN_DECLS
 

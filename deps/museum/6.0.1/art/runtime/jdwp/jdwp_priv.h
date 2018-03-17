@@ -19,12 +19,12 @@
 #ifndef ART_RUNTIME_JDWP_JDWP_PRIV_H_
 #define ART_RUNTIME_JDWP_JDWP_PRIV_H_
 
-#include "debugger.h"
-#include "jdwp/jdwp.h"
-#include "jdwp/jdwp_event.h"
+#include <museum/6.0.1/art/runtime/debugger.h>
+#include <museum/6.0.1/art/runtime/jdwp/jdwp.h>
+#include <museum/6.0.1/art/runtime/jdwp/jdwp_event.h>
 
-#include <pthread.h>
-#include <sys/uio.h>
+#include <museum/6.0.1/bionic/libc/pthread.h>
+#include <museum/6.0.1/bionic/libc/sys/uio.h>
 
 /*
  * JDWP constants.

@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_GC_REFERENCE_PROCESSOR_H_
 #define ART_RUNTIME_GC_REFERENCE_PROCESSOR_H_
 
-#include "base/mutex.h"
-#include "globals.h"
-#include "jni.h"
-#include "object_callbacks.h"
-#include "reference_queue.h"
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/libnativehelper/jni.h>
+#include <museum/5.0.0/art/runtime/object_callbacks.h>
+#include <museum/5.0.0/art/runtime/gc/reference_queue.h>
 
 namespace art {
 

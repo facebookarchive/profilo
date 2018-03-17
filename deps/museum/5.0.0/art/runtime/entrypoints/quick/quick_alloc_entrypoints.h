@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ALLOC_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ALLOC_ENTRYPOINTS_H_
 
-#include "gc/heap.h"
-#include "quick_entrypoints.h"
+#include <museum/5.0.0/art/runtime/gc/heap.h>
+#include <museum/5.0.0/art/runtime/entrypoints/quick/quick_entrypoints.h>
 
 namespace art {
 

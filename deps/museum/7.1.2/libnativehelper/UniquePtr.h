@@ -17,8 +17,8 @@
 #ifndef UNIQUE_PTR_H_included
 #define UNIQUE_PTR_H_included
 
-#include <cstdlib> // For NULL.
-#include "JNIHelp.h"  // For DISALLOW_COPY_AND_ASSIGN.
+#include <museum/7.1.2/external/libcxx/cstdlib> // For NULL.
+#include <museum/7.1.2/libnativehelper/JNIHelp.h>  // For DISALLOW_COPY_AND_ASSIGN.
 
 // Default deleter for pointer types.
 template <typename T>
@@ -133,7 +133,7 @@ private:
 // Run these tests with:
 // g++ -g -DUNIQUE_PTR_TESTS -x c++ UniquePtr.h && ./a.out
 
-#include <stdio.h>
+#include <museum/7.1.2/bionic/libc/stdio.h>
 
 static void assert(bool b) {
     if (!b) {

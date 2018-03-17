@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__SOUND_ASEQUENCER_H
 #define _UAPI__SOUND_ASEQUENCER_H
-#include <sound/asound.h>
+#include <museum/7.1.2/bionic/libc/sound/asound.h>
 #define SNDRV_SEQ_VERSION SNDRV_PROTOCOL_VERSION(1, 0, 1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SNDRV_SEQ_EVENT_SYSTEM 0

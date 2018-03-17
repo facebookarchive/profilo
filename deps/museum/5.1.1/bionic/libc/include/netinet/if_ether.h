@@ -26,10 +26,10 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/socket.h>
-#include <linux/if_ether.h>
-#include <linux/if_arp.h>
+#include <museum/5.1.1/bionic/libc/sys/socket.h>
+#include <museum/5.1.1/bionic/libc/linux/if_ether.h>
+#include <museum/5.1.1/bionic/libc/linux/if_arp.h>
 #ifndef ETHER_ADDR_LEN
 #define ETHER_ADDR_LEN ETH_ALEN
-#include <net/ethertypes.h>
+#include <museum/5.1.1/bionic/libc/net/ethertypes.h>
 #endif

@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_GADGETFS_H
 #define __LINUX_USB_GADGETFS_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/usb/ch9.h>
+#include <museum/7.0.0/bionic/libc/linux/usb/ch9.h>
 enum usb_gadgetfs_event_type {
   GADGETFS_NOP = 0,
   GADGETFS_CONNECT,

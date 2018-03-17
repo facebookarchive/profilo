@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NUBUS_H
 #define _UAPILINUX_NUBUS_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum nubus_category {
   NUBUS_CAT_BOARD = 0x0001,
   NUBUS_CAT_DISPLAY = 0x0003,

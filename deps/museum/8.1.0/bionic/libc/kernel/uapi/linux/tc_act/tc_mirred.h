@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_MIR_H
 #define __LINUX_TC_MIR_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_MIRRED 8
 #define TCA_EGRESS_REDIR 1
 #define TCA_EGRESS_MIRROR 2

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _XT_TPROXY_H
 #define _XT_TPROXY_H
-#include <linux/types.h>
-#include <linux/netfilter.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct xt_tproxy_target_info {
   __u32 mark_mask;

@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TCP_H
 #define _UAPI_LINUX_TCP_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 struct tcphdr {
   __be16 source;
   __be16 dest;

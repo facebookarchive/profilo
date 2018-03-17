@@ -18,7 +18,7 @@
 #define ART_RUNTIME_BASE_STRINGPRINTF_H_
 
 #include <stdarg.h>
-#include <string>
+#include <museum/5.0.0/external/libcxx/string>
 
 namespace art {
 

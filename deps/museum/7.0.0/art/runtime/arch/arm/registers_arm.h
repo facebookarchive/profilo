@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ARCH_ARM_REGISTERS_ARM_H_
 #define ART_RUNTIME_ARCH_ARM_REGISTERS_ARM_H_
 
-#include <iosfwd>
+#include <museum/7.0.0/external/libcxx/iosfwd>
 
 namespace art {
 namespace arm {

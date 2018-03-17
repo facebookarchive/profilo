@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_MIRROR_ACCESSIBLE_OBJECT_H_
 #define ART_RUNTIME_MIRROR_ACCESSIBLE_OBJECT_H_
 
-#include "class.h"
-#include "gc_root.h"
-#include "object.h"
-#include "object_callbacks.h"
-#include "read_barrier_option.h"
-#include "thread.h"
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
+#include <museum/8.0.0/art/runtime/read_barrier_option.h>
+#include <museum/8.0.0/art/runtime/thread.h>
 
 namespace art {
 

@@ -32,10 +32,10 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_TI_STACK_H_
 #define ART_RUNTIME_OPENJDKJVMTI_TI_STACK_H_
 
-#include "jni.h"
+#include <museum/8.0.0/libnativehelper/jni.h>
 #include "jvmti.h"
 
-#include "base/mutex.h"
+#include <museum/8.0.0/art/runtime/base/mutex.h>
 
 namespace openjdkjvmti {
 

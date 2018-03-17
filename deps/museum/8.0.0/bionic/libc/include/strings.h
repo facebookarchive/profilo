@@ -39,11 +39,11 @@
 #ifndef _STRINGS_H_
 #define _STRINGS_H_
 
-#include <sys/types.h>
-#include <sys/cdefs.h>
-#include <xlocale.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/xlocale.h>
 
-#include <bits/strcasecmp.h>
+#include <museum/8.0.0/bionic/libc/bits/strcasecmp.h>
 
 __BEGIN_DECLS
 #if defined(__BIONIC_FORTIFY)

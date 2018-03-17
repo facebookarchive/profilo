@@ -28,10 +28,10 @@
 #ifndef _SCHED_H_
 #define _SCHED_H_
 
-#include <sys/cdefs.h>
-#include <sys/time.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/time.h>
 
-#include <linux/sched.h>
+#include <museum/5.0.0/bionic/libc/linux/sched.h>
 
 __BEGIN_DECLS
 

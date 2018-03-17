@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_H
 #define _LINUX_NCP_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define NCP_PTYPE (0x11)
 #define NCP_PORT (0x0451)
 #define NCP_ALLOC_SLOT_REQUEST (0x1111)

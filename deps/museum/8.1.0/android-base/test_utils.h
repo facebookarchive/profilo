@@ -17,7 +17,7 @@
 #ifndef ANDROID_BASE_TEST_UTILS_H
 #define ANDROID_BASE_TEST_UTILS_H
 
-#include <string>
+#include <museum/8.1.0/external/libcxx/string>
 
 #include <android-base/macros.h>
 

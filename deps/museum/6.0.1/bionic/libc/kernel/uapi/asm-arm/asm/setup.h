@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__ASMARM_SETUP_H
 #define _UAPI__ASMARM_SETUP_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define COMMAND_LINE_SIZE 1024
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ATAG_NONE 0x00000000

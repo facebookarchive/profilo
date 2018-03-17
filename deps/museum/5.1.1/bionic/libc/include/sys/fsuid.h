@@ -29,8 +29,8 @@
 #ifndef _SYS_FSUID_H_
 #define _SYS_FSUID_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

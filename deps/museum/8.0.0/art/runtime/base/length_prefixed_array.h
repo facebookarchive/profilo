@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_BASE_LENGTH_PREFIXED_ARRAY_H_
 #define ART_RUNTIME_BASE_LENGTH_PREFIXED_ARRAY_H_
 
-#include <stddef.h>  // for offsetof()
-#include <string.h>  // for memset()
+#include <museum/8.0.0/external/libcxx/stddef.h>  // for offsetof()
+#include <museum/8.0.0/external/libcxx/string.h>  // for memset()
 
-#include "stride_iterator.h"
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "base/iteration_range.h"
+#include <museum/8.0.0/art/runtime/stride_iterator.h>
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/iteration_range.h>
 
 namespace art {
 

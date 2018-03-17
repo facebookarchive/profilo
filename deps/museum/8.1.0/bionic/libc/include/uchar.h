@@ -30,8 +30,8 @@
 #define _UCHAR_H_
 
 #include <stddef.h>
-#include <sys/cdefs.h>
-#include <bits/mbstate_t.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/bits/mbstate_t.h>
 
 __BEGIN_DECLS
 

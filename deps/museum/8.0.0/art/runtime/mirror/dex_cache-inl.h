@@ -17,24 +17,24 @@
 #ifndef ART_RUNTIME_MIRROR_DEX_CACHE_INL_H_
 #define ART_RUNTIME_MIRROR_DEX_CACHE_INL_H_
 
-#include "dex_cache.h"
+#include <museum/8.0.0/art/runtime/mirror/dex_cache.h>
 
-#include "art_field.h"
-#include "art_method.h"
-#include "base/casts.h"
-#include "base/enums.h"
-#include "base/logging.h"
-#include "class_linker.h"
-#include "dex_file.h"
-#include "gc_root.h"
-#include "gc/heap-inl.h"
-#include "mirror/class.h"
-#include "mirror/call_site.h"
-#include "mirror/method_type.h"
-#include "runtime.h"
-#include "obj_ptr.h"
+#include <museum/8.0.0/art/runtime/art_field.h>
+#include <museum/8.0.0/art/runtime/art_method.h>
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/class_linker.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/gc/heap-inl.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/mirror/call_site.h>
+#include <museum/8.0.0/art/runtime/mirror/method_type.h>
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
 
-#include <atomic>
+#include <museum/8.0.0/external/libcxx/atomic>
 
 namespace art {
 namespace mirror {

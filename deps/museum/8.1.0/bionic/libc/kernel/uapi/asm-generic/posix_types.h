@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_POSIX_TYPES_H
 #define __ASM_GENERIC_POSIX_TYPES_H
-#include <asm/bitsperlong.h>
+#include <museum/8.1.0/bionic/libc/asm/bitsperlong.h>
 #ifndef __kernel_long_t
 typedef long __kernel_long_t;
 typedef unsigned long __kernel_ulong_t;

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef IB_USER_CM_H
 #define IB_USER_CM_H
-#include <linux/types.h>
-#include <rdma/ib_user_sa.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/rdma/ib_user_sa.h>
 #define IB_USER_CM_ABI_VERSION 5
 enum {
   IB_USER_CM_CMD_CREATE_ID,

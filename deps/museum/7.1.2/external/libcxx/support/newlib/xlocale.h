@@ -12,10 +12,10 @@
 
 #if defined(_NEWLIB_VERSION)
 
-#include <cstdlib>
-#include <clocale>
-#include <cwctype>
-#include <ctype.h>
+#include <museum/7.1.2/external/libcxx/cstdlib>
+#include <museum/7.1.2/external/libcxx/clocale>
+#include <museum/7.1.2/external/libcxx/cwctype>
+#include <museum/7.1.2/bionic/libc/ctype.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,7 +52,7 @@ static inline locale_t uselocale(locale_t) {
                      LC_MESSAGES_MASK)
 
 // Share implementation with Android's Bionic
-#include <support/xlocale/xlocale.h>
+#include <museum/7.1.2/external/libcxx/support/xlocale/xlocale.h>
 
 #ifdef __cplusplus
 } // extern "C"

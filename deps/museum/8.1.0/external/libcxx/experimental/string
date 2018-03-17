@@ -38,9 +38,9 @@ namespace pmr {
 
  */
 
-#include <experimental/__config>
-#include <string>
-#include <experimental/memory_resource>
+#include <museum/8.1.0/external/libcxx/experimental/__config>
+#include <museum/8.1.0/external/libcxx/experimental/string>
+#include <museum/8.1.0/external/libcxx/experimental/memory_resource>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

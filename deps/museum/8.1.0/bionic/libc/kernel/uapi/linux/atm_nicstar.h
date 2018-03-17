@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_NICSTAR_H
 #define LINUX_ATM_NICSTAR_H
-#include <linux/atmapi.h>
-#include <linux/atmioc.h>
+#include <museum/8.1.0/bionic/libc/linux/atmapi.h>
+#include <museum/8.1.0/bionic/libc/linux/atmioc.h>
 #define NS_GETPSTAT _IOWR('a', ATMIOC_SARPRV + 1, struct atmif_sioc)
 #define NS_SETBUFLEV _IOW('a', ATMIOC_SARPRV + 2, struct atmif_sioc)
 #define NS_ADJBUFLEV _IO('a', ATMIOC_SARPRV + 3)

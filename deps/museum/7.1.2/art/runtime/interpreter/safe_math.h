@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_INTERPRETER_SAFE_MATH_H_
 #define ART_RUNTIME_INTERPRETER_SAFE_MATH_H_
 
-#include <functional>
-#include <type_traits>
+#include <museum/7.1.2/external/libcxx/functional>
+#include <museum/7.1.2/external/libcxx/type_traits>
 
 namespace art {
 namespace interpreter {

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMSAP_H
 #define _LINUX_ATMSAP_H
-#include <linux/atmapi.h>
+#include <museum/5.1.1/bionic/libc/linux/atmapi.h>
 #define ATM_L2_NONE 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ATM_L2_ISO1745 0x01

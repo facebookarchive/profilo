@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6T_MH_H
 #define _IP6T_MH_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 struct ip6t_mh {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u8 types[2];

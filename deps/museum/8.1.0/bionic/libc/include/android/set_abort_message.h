@@ -29,7 +29,7 @@
 #ifndef _SET_ABORT_MESSAGE_H
 #define _SET_ABORT_MESSAGE_H
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

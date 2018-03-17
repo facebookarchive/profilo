@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_EXYNOS_DRM_H_
 #define _UAPI_EXYNOS_DRM_H_
-#include <drm/drm.h>
+#include <museum/5.1.1/bionic/libc/drm/drm.h>
 struct drm_exynos_gem_create {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  uint64_t size;

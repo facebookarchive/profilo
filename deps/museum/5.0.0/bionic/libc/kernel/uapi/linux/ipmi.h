@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_IPMI_H
 #define _UAPI__LINUX_IPMI_H
-#include <linux/ipmi_msgdefs.h>
-#include <linux/compiler.h>
+#include <museum/5.0.0/bionic/libc/linux/ipmi_msgdefs.h>
+#include <museum/5.0.0/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define IPMI_MAX_ADDR_SIZE 32
 struct ipmi_addr {

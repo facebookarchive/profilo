@@ -39,8 +39,8 @@
 #ifndef _REGEX_H_
 #define	_REGEX_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
 
 /* types */
 typedef off_t regoff_t;

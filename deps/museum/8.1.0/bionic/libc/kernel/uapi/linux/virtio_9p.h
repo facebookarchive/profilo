@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_9P_H
 #define _LINUX_VIRTIO_9P_H
-#include <linux/types.h>
-#include <linux/virtio_ids.h>
-#include <linux/virtio_config.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/virtio_ids.h>
+#include <museum/8.1.0/bionic/libc/linux/virtio_config.h>
 #define VIRTIO_9P_MOUNT_TAG 0
 struct virtio_9p_config {
   __u16 tag_len;

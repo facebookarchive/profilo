@@ -18,6 +18,6 @@
  ****************************************************************************/
 #ifndef __ASM_ARM_BYTEORDER_H
 #define __ASM_ARM_BYTEORDER_H
-#include <linux/byteorder/little_endian.h>
+#include <museum/5.1.1/bionic/libc/linux/byteorder/little_endian.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

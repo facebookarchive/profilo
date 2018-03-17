@@ -29,7 +29,7 @@
 #ifndef _BITS_WCTYPE_H_
 #define _BITS_WCTYPE_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

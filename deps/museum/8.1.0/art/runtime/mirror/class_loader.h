@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_LOADER_H_
 #define ART_RUNTIME_MIRROR_CLASS_LOADER_H_
 
-#include "base/mutex.h"
-#include "object.h"
-#include "object_reference.h"
-#include "obj_ptr.h"
+#include <museum/8.1.0/art/runtime/base/mutex.h>
+#include <museum/8.1.0/art/runtime/mirror/object.h>
+#include <museum/8.1.0/art/runtime/mirror/object_reference.h>
+#include <museum/8.1.0/art/runtime/obj_ptr.h>
 
 namespace art {
 

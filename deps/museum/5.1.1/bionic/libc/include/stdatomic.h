@@ -30,7 +30,7 @@
 #ifndef _STDATOMIC_H_
 #define	_STDATOMIC_H_
 
-#include <sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 
 
 #if defined(__cplusplus) && __cplusplus >= 201103L && defined(_USING_LIBCXX)
@@ -134,7 +134,7 @@ using std::atomic_uintmax_t;
 
 #else /* <atomic> unavailable, possibly because this is C, not C++ */
 
-#include <sys/types.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
 #include <stdbool.h>
 
 /*
@@ -145,9 +145,9 @@ using std::atomic_uintmax_t;
  */
 
 #include <stddef.h>  /* For ptrdiff_t.                          */
-#include <stdint.h>  /* TODO: Should pollute namespace less.    */
+#include <museum/5.1.1/bionic/libc/stdint.h>  /* TODO: Should pollute namespace less.    */
 #if __STDC_VERSION__ >= 201112L
-# include <uchar.h>  /* For char16_t and char32_t.              */
+# include <museum/5.1.1/bionic/libc/uchar.h>  /* For char16_t and char32_t.              */
 #endif
 
 #ifdef __clang__

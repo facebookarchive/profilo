@@ -29,11 +29,11 @@
 #define _SYS_TYPES_H_
 
 #include <stddef.h>
-#include <stdint.h>
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 
-#include <linux/types.h>
-#include <linux/posix_types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/posix_types.h>
 
 /* gids, uids, and pids are all 32-bit. */
 typedef __kernel_gid32_t __gid_t;
@@ -142,7 +142,7 @@ typedef unsigned int        uint_t;
 typedef unsigned int        uint;
 
 /* for some applications */
-#include <sys/sysmacros.h>
+#include <museum/5.0.0/bionic/libc/sys/sysmacros.h>
 
 #ifdef __BSD_VISIBLE
 typedef	unsigned char	u_char;

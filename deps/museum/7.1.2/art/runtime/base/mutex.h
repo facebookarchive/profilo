@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_BASE_MUTEX_H_
 #define ART_RUNTIME_BASE_MUTEX_H_
 
-#include <pthread.h>
-#include <stdint.h>
+#include <museum/7.1.2/bionic/libc/pthread.h>
+#include <museum/7.1.2/bionic/libc/stdint.h>
 
-#include <iosfwd>
-#include <string>
+#include <museum/7.1.2/external/libcxx/iosfwd>
+#include <museum/7.1.2/external/libcxx/string>
 
-#include "atomic.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "globals.h"
+#include <museum/7.1.2/art/runtime/atomic.h>
+#include <museum/7.1.2/art/runtime/base/logging.h>
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/globals.h>
 
 #if defined(__APPLE__)
 #define ART_USE_FUTEXES 0

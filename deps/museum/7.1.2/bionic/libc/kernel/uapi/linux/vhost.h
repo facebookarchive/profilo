@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _LINUX_VHOST_H
 #define _LINUX_VHOST_H
-#include <linux/types.h>
-#include <linux/compiler.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/ioctl.h>
-#include <linux/virtio_config.h>
-#include <linux/virtio_ring.h>
+#include <museum/7.1.2/bionic/libc/linux/ioctl.h>
+#include <museum/7.1.2/bionic/libc/linux/virtio_config.h>
+#include <museum/7.1.2/bionic/libc/linux/virtio_ring.h>
 struct vhost_vring_state {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   unsigned int index;

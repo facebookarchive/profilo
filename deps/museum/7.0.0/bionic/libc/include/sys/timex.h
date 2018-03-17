@@ -29,9 +29,9 @@
 #ifndef _SYS_TIMEX_H_
 #define _SYS_TIMEX_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/timex.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/types.h>
+#include <museum/7.0.0/bionic/libc/linux/timex.h>
 
 __BEGIN_DECLS
 

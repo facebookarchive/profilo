@@ -32,7 +32,7 @@
 #ifndef	_SYS_QUEUE_H_
 #define	_SYS_QUEUE_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 /*
  * This file defines five types of data structures: singly-linked lists,

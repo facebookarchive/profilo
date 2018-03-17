@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_ITERATION_RANGE_H_
 #define ART_RUNTIME_BASE_ITERATION_RANGE_H_
 
-#include <iterator>
+#include <museum/7.1.2/external/libcxx/iterator>
 
 namespace art {
 

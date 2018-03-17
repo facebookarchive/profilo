@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_QUICK_INLINE_METHOD_ANALYSER_H_
 #define ART_RUNTIME_QUICK_INLINE_METHOD_ANALYSER_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "dex_file.h"
-#include "dex_instruction.h"
-#include "method_reference.h"
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/dex_file.h>
+#include <museum/7.0.0/art/runtime/dex_instruction.h>
+#include <museum/7.0.0/art/runtime/method_reference.h>
 
 /*
  * NOTE: This code is part of the quick compiler. It lives in the runtime

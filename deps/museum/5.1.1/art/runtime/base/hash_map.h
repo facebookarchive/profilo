@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_HASH_MAP_H_
 #define ART_RUNTIME_BASE_HASH_MAP_H_
 
-#include <utility>
+#include <museum/5.1.1/external/libcxx/utility>
 
-#include "hash_set.h"
+#include <museum/5.1.1/art/runtime/base/hash_set.h>
 
 namespace art {
 

@@ -29,7 +29,7 @@
 #ifndef _BITS_SYSCONF_H_
 #define _BITS_SYSCONF_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 /* as listed by Posix sysconf() description */
 /* most of these will return -1 and ENOSYS  */

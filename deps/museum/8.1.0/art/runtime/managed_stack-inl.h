@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_MANAGED_STACK_INL_H_
 #define ART_RUNTIME_MANAGED_STACK_INL_H_
 
-#include "managed_stack.h"
+#include <museum/8.1.0/art/runtime/managed_stack.h>
 
-#include <cstring>
-#include <stdint.h>
-#include <string>
+#include <museum/8.1.0/external/libcxx/cstring>
+#include <museum/8.1.0/external/libcxx/stdint.h>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "interpreter/shadow_frame.h"
+#include <museum/8.1.0/art/runtime/interpreter/shadow_frame.h>
 
 namespace art {
 

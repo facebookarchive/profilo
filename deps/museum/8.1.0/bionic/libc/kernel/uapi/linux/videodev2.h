@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_VIDEODEV2_H
 #define _UAPI__LINUX_VIDEODEV2_H
-#include <sys/time.h>
+#include <museum/8.1.0/bionic/libc/sys/time.h>
 #include <linux/compiler.h>
-#include <linux/ioctl.h>
-#include <linux/types.h>
-#include <linux/v4l2-common.h>
-#include <linux/v4l2-controls.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/v4l2-common.h>
+#include <museum/8.1.0/bionic/libc/linux/v4l2-controls.h>
 #define VIDEO_MAX_FRAME 32
 #define VIDEO_MAX_PLANES 8
 #define v4l2_fourcc(a,b,c,d) ((__u32) (a) | ((__u32) (b) << 8) | ((__u32) (c) << 16) | ((__u32) (d) << 24))

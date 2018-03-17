@@ -261,22 +261,22 @@ void swap(vector<T,Allocator>& x, vector<T,Allocator>& y)
 
 */
 
-#include <__config>
-#include <__bit_reference>
-#include <type_traits>
-#include <climits>
-#include <limits>
-#include <initializer_list>
-#include <memory>
-#include <stdexcept>
-#include <algorithm>
-#include <cstring>
-#include <__split_buffer>
-#include <__functional_base>
+#include <museum/6.0.1/external/libcxx/__config>
+#include <museum/6.0.1/external/libcxx/__bit_reference>
+#include <museum/6.0.1/external/libcxx/type_traits>
+#include <museum/6.0.1/external/libcxx/climits>
+#include <museum/6.0.1/external/libcxx/limits>
+#include <museum/6.0.1/external/libcxx/initializer_list>
+#include <museum/6.0.1/external/libcxx/memory>
+#include <museum/6.0.1/external/libcxx/stdexcept>
+#include <museum/6.0.1/external/libcxx/algorithm>
+#include <museum/6.0.1/external/libcxx/cstring>
+#include <museum/6.0.1/external/libcxx/__split_buffer>
+#include <museum/6.0.1/external/libcxx/__functional_base>
 
-#include <__undef_min_max>
+#include <museum/6.0.1/external/libcxx/__undef_min_max>
 
-#include <__debug>
+#include <museum/6.0.1/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef __LINUX_V4L2_SUBDEV_H
 #define __LINUX_V4L2_SUBDEV_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/ioctl.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/v4l2-common.h>
-#include <linux/v4l2-mediabus.h>
+#include <museum/5.1.1/bionic/libc/linux/v4l2-common.h>
+#include <museum/5.1.1/bionic/libc/linux/v4l2-mediabus.h>
 enum v4l2_subdev_format_whence {
  V4L2_SUBDEV_FORMAT_TRY = 0,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

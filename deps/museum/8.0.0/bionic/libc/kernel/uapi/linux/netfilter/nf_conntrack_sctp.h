@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_NF_CONNTRACK_SCTP_H
 #define _UAPI_NF_CONNTRACK_SCTP_H
-#include <linux/netfilter/nf_conntrack_tuple_common.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter/nf_conntrack_tuple_common.h>
 enum sctp_conntrack {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   SCTP_CONNTRACK_NONE,

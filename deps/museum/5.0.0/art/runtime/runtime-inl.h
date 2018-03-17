@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_RUNTIME_INL_H_
 #define ART_RUNTIME_RUNTIME_INL_H_
 
-#include "runtime.h"
+#include <museum/5.0.0/art/runtime/runtime.h>
 
-#include "read_barrier-inl.h"
+#include <museum/5.0.0/art/runtime/read_barrier-inl.h>
 
 namespace art {
 

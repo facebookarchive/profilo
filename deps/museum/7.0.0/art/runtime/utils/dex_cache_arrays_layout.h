@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_UTILS_DEX_CACHE_ARRAYS_LAYOUT_H_
 #define ART_RUNTIME_UTILS_DEX_CACHE_ARRAYS_LAYOUT_H_
 
-#include "dex_file.h"
+#include <museum/7.0.0/art/runtime/dex_file.h>
 
 namespace art {
 

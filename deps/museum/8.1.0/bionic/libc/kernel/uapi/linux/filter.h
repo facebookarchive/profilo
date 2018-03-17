@@ -19,8 +19,8 @@
 #ifndef _UAPI__LINUX_FILTER_H__
 #define _UAPI__LINUX_FILTER_H__
 #include <linux/compiler.h>
-#include <linux/types.h>
-#include <linux/bpf_common.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/bpf_common.h>
 #define BPF_MAJOR_VERSION 1
 #define BPF_MINOR_VERSION 1
 struct sock_filter {

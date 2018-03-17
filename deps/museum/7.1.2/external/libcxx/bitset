@@ -117,19 +117,19 @@ template <size_t N> struct hash<std::bitset<N>>;
 #pragma GCC system_header
 #endif
 
-#include <__config>
-#include <__bit_reference>
-#include <cstddef>
-#include <climits>
-#include <string>
-#include <stdexcept>
-#include <iosfwd>
-#include <__functional_base>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/__bit_reference>
+#include <museum/7.1.2/external/libcxx/cstddef>
+#include <museum/7.1.2/external/libcxx/climits>
+#include <museum/7.1.2/external/libcxx/string>
+#include <museum/7.1.2/external/libcxx/stdexcept>
+#include <museum/7.1.2/external/libcxx/iosfwd>
+#include <museum/7.1.2/external/libcxx/__functional_base>
 #if defined(_LIBCPP_NO_EXCEPTIONS)
-    #include <cassert>
+    #include <museum/7.1.2/external/libcxx/cassert>
 #endif
 
-#include <__undef_min_max>
+#include <museum/7.1.2/external/libcxx/__undef_min_max>
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 

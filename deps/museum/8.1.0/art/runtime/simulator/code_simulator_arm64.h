@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_SIMULATOR_CODE_SIMULATOR_ARM64_H_
 #define ART_RUNTIME_SIMULATOR_CODE_SIMULATOR_ARM64_H_
 
-#include "memory"
-#include "simulator/code_simulator.h"
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/art/runtime/simulator/code_simulator.h>
 
 // TODO(VIXL): Make VIXL compile with -Wshadow.
 #pragma GCC diagnostic push

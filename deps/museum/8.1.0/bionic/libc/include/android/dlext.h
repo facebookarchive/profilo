@@ -19,9 +19,9 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>  /* for off64_t */
+#include <museum/8.1.0/bionic/libc/stdint.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>  /* for off64_t */
 
 __BEGIN_DECLS
 

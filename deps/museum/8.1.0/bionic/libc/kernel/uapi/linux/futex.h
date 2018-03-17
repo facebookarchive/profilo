@@ -19,7 +19,7 @@
 #ifndef _UAPI_LINUX_FUTEX_H
 #define _UAPI_LINUX_FUTEX_H
 #include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define FUTEX_WAIT 0
 #define FUTEX_WAKE 1
 #define FUTEX_FD 2

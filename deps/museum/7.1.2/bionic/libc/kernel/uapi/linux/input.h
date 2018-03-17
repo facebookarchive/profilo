@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_INPUT_H
 #define _UAPI_INPUT_H
-#include <sys/time.h>
-#include <sys/ioctl.h>
+#include <museum/7.1.2/bionic/libc/sys/time.h>
+#include <museum/7.1.2/bionic/libc/sys/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <sys/types.h>
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #include "input-event-codes.h"
 struct input_event {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

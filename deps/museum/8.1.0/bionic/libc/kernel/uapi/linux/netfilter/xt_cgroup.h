@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_XT_CGROUP_H
 #define _UAPI_XT_CGROUP_H
-#include <linux/types.h>
-#include <linux/limits.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/limits.h>
 struct xt_cgroup_info_v0 {
   __u32 id;
   __u32 invert;

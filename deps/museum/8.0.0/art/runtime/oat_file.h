@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_OAT_FILE_H_
 #define ART_RUNTIME_OAT_FILE_H_
 
-#include <list>
-#include <string>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/list>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "base/array_ref.h"
-#include "base/mutex.h"
-#include "base/stringpiece.h"
-#include "compiler_filter.h"
-#include "dex_file.h"
-#include "mirror/class.h"
-#include "oat.h"
-#include "os.h"
-#include "type_lookup_table.h"
-#include "utf.h"
-#include "utils.h"
+#include <museum/8.0.0/art/runtime/base/array_ref.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/base/stringpiece.h>
+#include <museum/8.0.0/art/runtime/compiler_filter.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/oat.h>
+#include <museum/8.0.0/art/runtime/os.h>
+#include <museum/8.0.0/art/runtime/type_lookup_table.h>
+#include <museum/8.0.0/art/runtime/utf.h>
+#include <museum/8.0.0/art/runtime/utils.h>
 
 namespace art {
 

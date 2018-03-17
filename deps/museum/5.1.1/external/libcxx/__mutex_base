@@ -11,10 +11,10 @@
 #ifndef _LIBCPP___MUTEX_BASE
 #define _LIBCPP___MUTEX_BASE
 
-#include <__config>
-#include <chrono>
-#include <system_error>
-#include <pthread.h>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/chrono>
+#include <museum/5.1.1/external/libcxx/system_error>
+#include <museum/5.1.1/bionic/libc/pthread.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

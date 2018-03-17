@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_MONITOR_POOL_H_
 #define ART_RUNTIME_MONITOR_POOL_H_
 
-#include "monitor.h"
+#include <museum/6.0.1/art/runtime/monitor.h>
 
-#include "base/allocator.h"
+#include <museum/6.0.1/art/runtime/base/allocator.h>
 #ifdef __LP64__
-#include <stdint.h>
-#include "atomic.h"
-#include "runtime.h"
+#include <museum/6.0.1/bionic/libc/stdint.h>
+#include <museum/6.0.1/art/runtime/atomic.h>
+#include <museum/6.0.1/art/runtime/runtime.h>
 #else
-#include "base/stl_util.h"     // STLDeleteElements
+#include <museum/6.0.1/art/runtime/base/stl_util.h>     // STLDeleteElements
 #endif
 
 namespace art {

@@ -29,14 +29,14 @@
 #ifndef _INCLUDE_SYS__SYSTEM_PROPERTIES_H
 #define _INCLUDE_SYS__SYSTEM_PROPERTIES_H
 
-#include <sys/cdefs.h>
-#include <stdint.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/stdint.h>
 
 #ifndef _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #error you should #include <sys/system_properties.h> instead
 #endif
 
-#include <sys/system_properties.h>
+#include <museum/8.0.0/bionic/libc/sys/system_properties.h>
 
 __BEGIN_DECLS
 

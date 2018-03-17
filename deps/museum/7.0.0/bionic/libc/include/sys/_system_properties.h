@@ -32,7 +32,7 @@
 #ifndef _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #error you should #include <sys/system_properties.h> instead
 #else
-#include <sys/system_properties.h>
+#include <museum/7.0.0/bionic/libc/sys/system_properties.h>
 
 typedef struct prop_msg prop_msg;
 

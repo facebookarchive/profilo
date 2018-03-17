@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_SERIO_H
 #define _UAPI_SERIO_H
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define SPIOCSTYPE _IOW('q', 0x01, unsigned long)
 #define SERIO_TIMEOUT 1
 #define SERIO_PARITY 2

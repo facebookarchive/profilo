@@ -29,12 +29,12 @@
 #ifndef _SYS_QUOTA_H_
 #define _SYS_QUOTA_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 // The uapi header uses different names from userspace, oddly.
 #define if_dqblk dqblk
 #define if_dqinfo dqinfo
-#include <linux/quota.h>
+#include <museum/8.1.0/bionic/libc/linux/quota.h>
 #undef if_dqblk
 #undef if_dqinfo
 

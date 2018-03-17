@@ -29,8 +29,8 @@
 #ifndef _BIONIC_SYS_CAPABILITY_H
 #define _BIONIC_SYS_CAPABILITY_H
 
-#include <sys/cdefs.h>
-#include <linux/capability.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/linux/capability.h>
 
 __BEGIN_DECLS
 

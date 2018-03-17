@@ -140,9 +140,9 @@ namespace std { namespace experimental { inline namespace fundamentals_v1 {
 
 */
 
-#include <experimental/__config>
-#include <functional>
-#include <stdexcept>
+#include <museum/6.0.1/external/libcxx/experimental/__config>
+#include <museum/6.0.1/external/libcxx/functional>
+#include <museum/6.0.1/external/libcxx/stdexcept>
 
 _LIBCPP_BEGIN_NAMESPACE_EXPERIMENTAL
 class _LIBCPP_EXCEPTION_ABI bad_optional_access
@@ -160,12 +160,12 @@ _LIBCPP_END_NAMESPACE_EXPERIMENTAL
 
 #if _LIBCPP_STD_VER > 11
 
-#include <initializer_list>
-#include <type_traits>
-#include <new>
-#include <__functional_base>
-#include <__undef_min_max>
-#include <__debug>
+#include <museum/6.0.1/external/libcxx/initializer_list>
+#include <museum/6.0.1/external/libcxx/experimental/type_traits>
+#include <museum/6.0.1/external/libcxx/new>
+#include <museum/6.0.1/external/libcxx/__functional_base>
+#include <museum/6.0.1/external/libcxx/__undef_min_max>
+#include <museum/6.0.1/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

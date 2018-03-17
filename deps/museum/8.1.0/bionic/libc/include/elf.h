@@ -29,16 +29,16 @@
 #ifndef _ELF_H
 #define _ELF_H
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
-#include <bits/auxvec.h>
-#include <bits/elf_arm.h>
-#include <bits/elf_arm64.h>
-#include <bits/elf_mips.h>
-#include <bits/elf_x86.h>
-#include <bits/elf_x86_64.h>
-#include <linux/elf.h>
-#include <linux/elf-em.h>
+#include <museum/8.1.0/bionic/libc/bits/auxvec.h>
+#include <museum/8.1.0/bionic/libc/bits/elf_arm.h>
+#include <museum/8.1.0/bionic/libc/bits/elf_arm64.h>
+#include <museum/8.1.0/bionic/libc/bits/elf_mips.h>
+#include <museum/8.1.0/bionic/libc/bits/elf_x86.h>
+#include <museum/8.1.0/bionic/libc/bits/elf_x86_64.h>
+#include <museum/8.1.0/bionic/libc/linux/elf.h>
+#include <museum/8.1.0/bionic/libc/linux/elf-em.h>
 
 #define ELF32_R_INFO(sym, type) ((((Elf32_Word)sym) << 8) | ((type) & 0xff))
 #define ELF64_R_INFO(sym, type) ((((Elf64_Xword)sym) << 32) | ((type) & 0xffffffff))

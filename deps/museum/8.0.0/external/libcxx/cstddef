@@ -33,7 +33,7 @@ Types:
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -41,7 +41,7 @@ Types:
 
 // Don't include our own <stddef.h>; we don't want to declare ::nullptr_t.
 #include_next <stddef.h>
-#include <__nullptr>
+#include <museum/8.0.0/external/libcxx/__nullptr>
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 

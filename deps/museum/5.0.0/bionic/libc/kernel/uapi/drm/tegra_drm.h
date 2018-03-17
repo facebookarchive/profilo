@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_TEGRA_DRM_H_
 #define _UAPI_TEGRA_DRM_H_
-#include <drm/drm.h>
+#include <museum/5.0.0/bionic/libc/drm/drm.h>
 #define DRM_TEGRA_GEM_CREATE_TILED (1 << 0)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DRM_TEGRA_GEM_CREATE_BOTTOM_UP (1 << 1)

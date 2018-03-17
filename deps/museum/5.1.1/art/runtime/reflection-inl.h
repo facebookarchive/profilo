@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_REFLECTION_INL_H_
 #define ART_RUNTIME_REFLECTION_INL_H_
 
-#include "reflection.h"
+#include <museum/5.1.1/art/runtime/reflection.h>
 
-#include "base/stringprintf.h"
-#include "common_throws.h"
-#include "jvalue.h"
-#include "primitive.h"
-#include "utils.h"
+#include <museum/5.1.1/art/runtime/base/stringprintf.h>
+#include <museum/5.1.1/art/runtime/common_throws.h>
+#include <museum/5.1.1/art/runtime/jvalue.h>
+#include <museum/5.1.1/art/runtime/primitive.h>
+#include <museum/5.1.1/art/runtime/utils.h>
 
 namespace art {
 

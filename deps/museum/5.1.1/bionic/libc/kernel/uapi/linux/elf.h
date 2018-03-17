@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ELF_H
 #define _UAPI_LINUX_ELF_H
-#include <linux/types.h>
-#include <linux/elf-em.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/elf-em.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef __u32 Elf32_Addr;
 typedef __u16 Elf32_Half;

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_CASTS_H_
 #define ART_RUNTIME_BASE_CASTS_H_
 
-#include <assert.h>
-#include <string.h>
-#include "base/macros.h"
+#include <museum/5.0.0/bionic/libc/assert.h>
+#include <museum/5.0.0/bionic/libc/string.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
 
 namespace art {
 

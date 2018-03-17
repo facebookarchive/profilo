@@ -18,7 +18,7 @@
 #define ASYNCHRONOUS_CLOSE_MONITOR_H_included
 
 #include "ScopedPthreadMutexLock.h"
-#include <pthread.h>
+#include <museum/7.0.0/bionic/libc/pthread.h>
 
 /**
  * AsynchronousCloseMonitor helps implement Java's asynchronous close semantics.

@@ -18,7 +18,7 @@
 #define ART_RUNTIME_BASE_MACROS_H_
 
 #include <stddef.h>  // for size_t
-#include <unistd.h>  // for TEMP_FAILURE_RETRY
+#include <museum/5.1.1/bionic/libc/unistd.h>  // for TEMP_FAILURE_RETRY
 
 // bionic and glibc both have TEMP_FAILURE_RETRY, but eg Mac OS' libc doesn't.
 #ifndef TEMP_FAILURE_RETRY

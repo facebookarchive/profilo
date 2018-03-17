@@ -30,13 +30,13 @@ int tolower(int c);
 int toupper(int c);
 */
 
-#include <__config>
+#include <museum/8.1.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#include_next <ctype.h>
+#include <museum/8.1.0/bionic/libc/ctype.h>
 
 #ifdef __cplusplus
 
@@ -44,8 +44,8 @@ int toupper(int c);
 // We support including .h headers inside 'extern "C"' contexts, so switch
 // back to C++ linkage before including these C++ headers.
 extern "C++" {
-  #include "support/win32/support.h"
-  #include "support/win32/locale_win32.h"
+  #include <museum/8.1.0/external/libcxx/support/win32/support.h>
+  #include <museum/8.1.0/external/libcxx/support/win32/locale_win32.h>
 }
 #endif // _LIBCPP_MSVCRT
 

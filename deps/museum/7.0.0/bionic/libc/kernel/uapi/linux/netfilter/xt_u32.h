@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_U32_H
 #define _XT_U32_H 1
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 enum xt_u32_ops {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   XT_U32_AND,

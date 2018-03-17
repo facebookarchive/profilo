@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _XT_BPF_H
 #define _XT_BPF_H
-#include <linux/filter.h>
-#include <linux/limits.h>
+#include <museum/8.0.0/bionic/libc/linux/filter.h>
+#include <museum/8.0.0/bionic/libc/linux/limits.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define XT_BPF_MAX_NUM_INSTR 64
 #define XT_BPF_PATH_MAX (XT_BPF_MAX_NUM_INSTR * sizeof(struct sock_filter))
 struct bpf_prog;

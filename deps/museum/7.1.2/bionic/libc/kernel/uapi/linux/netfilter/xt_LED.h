@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_LED_H
 #define _XT_LED_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 struct xt_led_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   char id[27];

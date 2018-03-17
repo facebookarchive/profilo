@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_PTRACE_H
 #define _UAPI_LINUX_PTRACE_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define PTRACE_TRACEME 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PTRACE_PEEKTEXT 1
@@ -83,6 +83,6 @@ struct ptrace_peeksiginfo_args {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PTRACE_O_SUSPEND_SECCOMP (1 << 21)
 #define PTRACE_O_MASK (0x000000ff | PTRACE_O_EXITKILL | PTRACE_O_SUSPEND_SECCOMP)
-#include <asm/ptrace.h>
+#include <museum/7.1.2/bionic/libc/asm/ptrace.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

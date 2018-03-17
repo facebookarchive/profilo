@@ -11,7 +11,7 @@
 #ifndef _LIBCPP_EXPERIMENTAL_CONFIG
 #define _LIBCPP_EXPERIMENTAL_CONFIG
 
-#include <__config>
+#include <museum/8.1.0/external/libcxx/experimental/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_JFFS2_H__
 #define __LINUX_JFFS2_H__
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define JFFS2_OLD_MAGIC_BITMASK 0x1984
 #define JFFS2_MAGIC_BITMASK 0x1985

@@ -243,7 +243,7 @@
 #endif
 
 #define  __BIONIC__   1
-#include <android/api-level.h>
+#include <museum/8.1.0/bionic/libc/android/api-level.h>
 
 /* glibc compatibility. */
 #if defined(__LP64__)
@@ -343,7 +343,7 @@
 /* Used to rename functions so that the compiler emits a call to 'x' rather than the function this was applied to. */
 #define __RENAME(x) __asm__(#x)
 
-#include <android/versioning.h>
+#include <museum/8.1.0/bionic/libc/android/versioning.h>
 
 #if __has_builtin(__builtin_umul_overflow) || __GNUC__ >= 5
 #if defined(__LP64__)

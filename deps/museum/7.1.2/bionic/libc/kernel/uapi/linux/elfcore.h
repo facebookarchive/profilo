@@ -18,13 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ELFCORE_H
 #define _UAPI_LINUX_ELFCORE_H
-#include <linux/types.h>
-#include <linux/signal.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/signal.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/time.h>
-#include <linux/ptrace.h>
-#include <linux/elf.h>
-#include <linux/fs.h>
+#include <museum/7.1.2/bionic/libc/linux/time.h>
+#include <museum/7.1.2/bionic/libc/linux/ptrace.h>
+#include <museum/7.1.2/bionic/libc/linux/elf.h>
+#include <museum/7.1.2/bionic/libc/linux/fs.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct elf_siginfo {
   int si_signo;

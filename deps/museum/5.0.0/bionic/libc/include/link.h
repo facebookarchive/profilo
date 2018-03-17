@@ -28,8 +28,12 @@
 #ifndef _LINK_H_
 #define _LINK_H_
 
-#include <sys/types.h>
-#include <elf.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#ifdef AOSP_ART_IS_A_DICK
+#include <museum/5.0.0/art/runtime/elf.h>
+#else
+#include <museum/5.0.0/bionic/libc/elf.h>
+#endif
 
 __BEGIN_DECLS
 

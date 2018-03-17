@@ -11,7 +11,7 @@
 #ifndef _LIBCPP_DYNARRAY
 #define _LIBCPP_DYNARRAY
 
-#include <__config>
+#include <museum/6.0.1/external/libcxx/experimental/__config>
 #if _LIBCPP_STD_VER > 11
 
 /*
@@ -97,17 +97,17 @@ public:
 
 */
 
-#include <__functional_base>
-#include <iterator>
-#include <stdexcept>
-#include <initializer_list>
-#include <new>
-#include <algorithm>
+#include <museum/6.0.1/external/libcxx/__functional_base>
+#include <museum/6.0.1/external/libcxx/iterator>
+#include <museum/6.0.1/external/libcxx/stdexcept>
+#include <museum/6.0.1/external/libcxx/initializer_list>
+#include <museum/6.0.1/external/libcxx/new>
+#include <museum/6.0.1/external/libcxx/algorithm>
 
-#include <__undef___deallocate>
+#include <museum/6.0.1/external/libcxx/__undef___deallocate>
 
 #if defined(_LIBCPP_NO_EXCEPTIONS)
-    #include <cassert>
+    #include <museum/6.0.1/external/libcxx/cassert>
 #endif
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)

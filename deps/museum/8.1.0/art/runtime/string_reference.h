@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_STRING_REFERENCE_H_
 #define ART_RUNTIME_STRING_REFERENCE_H_
 
-#include <stdint.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
 
-#include "base/logging.h"
-#include "dex_file-inl.h"
-#include "dex_file_types.h"
-#include "utf-inl.h"
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/dex_file-inl.h>
+#include <museum/8.1.0/art/runtime/dex_file_types.h>
+#include <museum/8.1.0/art/runtime/utf-inl.h>
 
 namespace art {
 

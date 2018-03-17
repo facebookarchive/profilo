@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_MII_H__
 #define _UAPI__LINUX_MII_H__
-#include <linux/types.h>
-#include <linux/ethtool.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ethtool.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define MII_BMCR 0x00
 #define MII_BMSR 0x01

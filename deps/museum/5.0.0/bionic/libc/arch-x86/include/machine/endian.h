@@ -55,7 +55,7 @@
 #endif	/* __GNUC__ */
 
 #define _BYTE_ORDER _LITTLE_ENDIAN
-#include <sys/types.h>
-#include <sys/endian.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/sys/endian.h>
 
 #endif /* _MACHINE_ENDIAN_H_ */

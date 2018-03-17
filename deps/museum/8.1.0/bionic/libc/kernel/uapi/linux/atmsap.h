@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMSAP_H
 #define _LINUX_ATMSAP_H
-#include <linux/atmapi.h>
+#include <museum/8.1.0/bionic/libc/linux/atmapi.h>
 #define ATM_L2_NONE 0
 #define ATM_L2_ISO1745 0x01
 #define ATM_L2_Q291 0x02

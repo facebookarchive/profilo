@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef DRM_FOURCC_H
 #define DRM_FOURCC_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define fourcc_code(a,b,c,d) ((__u32) (a) | ((__u32) (b) << 8) | ((__u32) (c) << 16) | ((__u32) (d) << 24))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DRM_FORMAT_BIG_ENDIAN (1 << 31)

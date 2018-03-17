@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPINFS_IDMAP_H
 #define _UAPINFS_IDMAP_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define IDMAP_NAMESZ 128
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define IDMAP_TYPE_USER 0

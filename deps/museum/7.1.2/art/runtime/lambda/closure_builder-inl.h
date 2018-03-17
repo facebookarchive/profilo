@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_LAMBDA_CLOSURE_BUILDER_INL_H_
 #define ART_RUNTIME_LAMBDA_CLOSURE_BUILDER_INL_H_
 
-#include "lambda/closure_builder.h"
-#include <string.h>
+#include <museum/7.1.2/art/runtime/lambda/closure_builder.h>
+#include <museum/7.1.2/bionic/libc/string.h>
 
 namespace art {
 namespace lambda {

@@ -29,9 +29,9 @@
 #ifndef _BITS_AUXVEC_H_
 #define _BITS_AUXVEC_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
-#include <linux/auxvec.h>
+#include <museum/8.1.0/bionic/libc/linux/auxvec.h>
 
 /* Historical arch-specific cruft. */
 #define AT_FPUCW 18 /* SuperH */

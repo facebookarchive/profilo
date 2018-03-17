@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_SECMARK_H_target
 #define _XT_SECMARK_H_target
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SECMARK_MODE_SEL 0x01
 #define SECMARK_SECCTX_MAX 256
 struct xt_secmark_target_info {

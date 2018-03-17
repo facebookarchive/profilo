@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __ARM_KVM_H__
 #define __ARM_KVM_H__
-#include <linux/types.h>
-#include <asm/ptrace.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/asm/ptrace.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define __KVM_HAVE_GUEST_DEBUG
 #define __KVM_HAVE_IRQ_LINE

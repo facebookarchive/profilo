@@ -28,11 +28,11 @@
 #ifndef ART_RUNTIME_BASE_STRINGPIECE_H_
 #define ART_RUNTIME_BASE_STRINGPIECE_H_
 
-#include <string.h>
-#include <algorithm>
-#include <cstddef>
-#include <iosfwd>
-#include <string>
+#include <museum/5.0.0/bionic/libc/string.h>
+#include <museum/5.0.0/external/libcxx/algorithm>
+#include <museum/5.0.0/external/libcxx/cstddef>
+#include <museum/5.0.0/external/libcxx/iosfwd>
+#include <museum/5.0.0/external/libcxx/string>
 
 namespace art {
 

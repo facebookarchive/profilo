@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_OFFSETS_H_
 #define ART_RUNTIME_OFFSETS_H_
 
-#include <ostream>
+#include <museum/8.0.0/external/libcxx/ostream>
 
-#include "base/enums.h"
-#include "globals.h"
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/globals.h>
 
 namespace art {
 

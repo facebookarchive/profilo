@@ -17,10 +17,10 @@
 #ifndef SCOPED_LOCAL_REF_H_included
 #define SCOPED_LOCAL_REF_H_included
 
-#include "jni.h"
+#include <museum/7.1.2/libnativehelper/jni.h>
 
 #include <stddef.h>
-#include "JNIHelp.h"  // for DISALLOW_COPY_AND_ASSIGN.
+#include <museum/7.1.2/libnativehelper/JNIHelp.h>  // for DISALLOW_COPY_AND_ASSIGN.
 
 // A smart pointer that deletes a JNI local reference when it goes out of scope.
 template<typename T>

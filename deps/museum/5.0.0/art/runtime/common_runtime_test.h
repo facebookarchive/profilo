@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_COMMON_RUNTIME_TEST_H_
 #define ART_RUNTIME_COMMON_RUNTIME_TEST_H_
 
-#include <gtest/gtest.h>
-#include <jni.h>
+#include <museum/5.0.0/art/runtime/gtest/gtest.h>
+#include <museum/5.0.0/libnativehelper/jni.h>
 
-#include <string>
+#include <museum/5.0.0/external/libcxx/string>
 
-#include "base/mutex.h"
-#include "globals.h"
-#include "os.h"
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/os.h>
 
 namespace art {
 

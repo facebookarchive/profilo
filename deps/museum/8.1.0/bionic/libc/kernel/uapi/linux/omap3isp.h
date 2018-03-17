@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef OMAP3_ISP_USER_H
 #define OMAP3_ISP_USER_H
-#include <linux/types.h>
-#include <linux/videodev2.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/videodev2.h>
 #define VIDIOC_OMAP3ISP_CCDC_CFG _IOWR('V', BASE_VIDIOC_PRIVATE + 1, struct omap3isp_ccdc_update_config)
 #define VIDIOC_OMAP3ISP_PRV_CFG _IOWR('V', BASE_VIDIOC_PRIVATE + 2, struct omap3isp_prev_update_config)
 #define VIDIOC_OMAP3ISP_AEWB_CFG _IOWR('V', BASE_VIDIOC_PRIVATE + 3, struct omap3isp_h3a_aewb_config)

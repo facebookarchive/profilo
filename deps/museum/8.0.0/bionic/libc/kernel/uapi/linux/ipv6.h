@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_IPV6_H
 #define _UAPI_IPV6_H
-#include <linux/libc-compat.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/libc-compat.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/in6.h>
-#include <asm/byteorder.h>
+#include <museum/8.0.0/bionic/libc/linux/in6.h>
+#include <museum/8.0.0/bionic/libc/asm/byteorder.h>
 #define IPV6_MIN_MTU 1280
 #if __UAPI_DEF_IN6_PKTINFO
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FUTEX_H
 #define _UAPI_LINUX_FUTEX_H
-#include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/compiler.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define FUTEX_WAIT 0
 #define FUTEX_WAKE 1

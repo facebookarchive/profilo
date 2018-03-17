@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_JOYSTICK_H
 #define _UAPI_LINUX_JOYSTICK_H
-#include <linux/types.h>
-#include <linux/input.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/input.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define JS_VERSION 0x020100
 #define JS_EVENT_BUTTON 0x01

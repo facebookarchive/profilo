@@ -28,14 +28,14 @@
 #ifndef _NETINET_IN_H_
 #define _NETINET_IN_H_
 
-#include <endian.h>
-#include <netinet/in6.h>
-#include <sys/cdefs.h>
-#include <sys/socket.h>
+#include <museum/5.0.0/bionic/libc/endian.h>
+#include <museum/5.0.0/bionic/libc/netinet/in6.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/socket.h>
 
-#include <linux/in.h>
-#include <linux/in6.h>
-#include <linux/ipv6.h>
+#include <museum/5.0.0/bionic/libc/linux/in.h>
+#include <museum/5.0.0/bionic/libc/linux/in6.h>
+#include <museum/5.0.0/bionic/libc/linux/ipv6.h>
 
 __BEGIN_DECLS
 

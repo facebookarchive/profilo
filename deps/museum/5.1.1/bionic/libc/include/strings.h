@@ -39,8 +39,8 @@
 #ifndef _STRINGS_H_
 #define _STRINGS_H_
 
-#include <sys/types.h>
-#include <sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 #if defined(__BIONIC_FORTIFY)

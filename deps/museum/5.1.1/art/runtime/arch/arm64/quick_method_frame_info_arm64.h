@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_ARCH_ARM64_QUICK_METHOD_FRAME_INFO_ARM64_H_
 #define ART_RUNTIME_ARCH_ARM64_QUICK_METHOD_FRAME_INFO_ARM64_H_
 
-#include "quick/quick_method_frame_info.h"
-#include "registers_arm64.h"
-#include "runtime.h"  // for Runtime::CalleeSaveType.
-#include "utils.h"  // for POPCOUNT
+#include <museum/5.1.1/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/5.1.1/art/runtime/arch/arm64/registers_arm64.h>
+#include <museum/5.1.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
+#include <museum/5.1.1/art/runtime/utils.h>  // for POPCOUNT
 
 namespace art {
 namespace arm64 {

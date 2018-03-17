@@ -25,9 +25,9 @@
 #ifndef NATIVEHELPER_JNIHELP_H_
 #define NATIVEHELPER_JNIHELP_H_
 
-#include "jni.h"
-#include <errno.h>
-#include <unistd.h>
+#include <museum/5.0.0/libnativehelper/jni.h>
+#include <museum/5.0.0/bionic/libc/errno.h>
+#include <museum/5.0.0/bionic/libc/unistd.h>
 
 #ifndef NELEM
 # define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))

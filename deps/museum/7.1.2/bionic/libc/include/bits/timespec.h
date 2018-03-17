@@ -29,7 +29,7 @@
 #ifndef _BITS_TIMESPEC_H_
 #define _BITS_TIMESPEC_H_
 
-#include <sys/types.h>
+#include <museum/7.1.2/bionic/libc/sys/types.h>
 
 /*
  * This file is used to include timespec definition without introducing the whole

@@ -32,13 +32,13 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_FIXED_UP_DEX_FILE_H_
 #define ART_RUNTIME_OPENJDKJVMTI_FIXED_UP_DEX_FILE_H_
 
-#include <memory>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "jni.h"
+#include <museum/8.0.0/libnativehelper/jni.h>
 #include "jvmti.h"
-#include "base/mutex.h"
-#include "dex_file.h"
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
 
 namespace openjdkjvmti {
 

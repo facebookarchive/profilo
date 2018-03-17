@@ -24,8 +24,8 @@
 #ifndef __BIG_ENDIAN_BITFIELD
 #define __BIG_ENDIAN_BITFIELD
 #endif
-#include <linux/types.h>
-#include <linux/swab.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/swab.h>
 #define __constant_htonl(x) ((__force __be32) (__u32) (x))
 #define __constant_ntohl(x) ((__force __u32) (__be32) (x))
 #define __constant_htons(x) ((__force __be16) (__u16) (x))

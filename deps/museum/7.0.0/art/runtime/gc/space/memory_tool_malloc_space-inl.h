@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_SPACE_MEMORY_TOOL_MALLOC_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_MEMORY_TOOL_MALLOC_SPACE_INL_H_
 
-#include "base/memory_tool.h"
-#include "memory_tool_malloc_space.h"
-#include "memory_tool_settings.h"
+#include <museum/7.0.0/art/runtime/base/memory_tool.h>
+#include <museum/7.0.0/art/runtime/gc/space/memory_tool_malloc_space.h>
+#include <museum/7.0.0/art/runtime/gc/space/memory_tool_settings.h>
 
 namespace art {
 namespace gc {

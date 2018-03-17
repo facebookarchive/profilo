@@ -29,10 +29,10 @@
 #ifndef _ANDROID_LEGACY_TERMIOS_INLINES_H_
 #define _ANDROID_LEGACY_TERMIOS_INLINES_H_
 
-#include <linux/termios.h>
-#include <sys/cdefs.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
+#include <museum/7.0.0/bionic/libc/linux/termios.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/ioctl.h>
+#include <museum/7.0.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

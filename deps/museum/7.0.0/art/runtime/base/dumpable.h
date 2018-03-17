@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_DUMPABLE_H_
 #define ART_RUNTIME_BASE_DUMPABLE_H_
 
-#include <ostream>
+#include <museum/7.0.0/external/libcxx/ostream>
 
-#include "base/macros.h"
+#include <museum/7.0.0/art/runtime/base/macros.h>
 
 namespace art {
 

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_USB_CH9_H
 #define _UAPI__LINUX_USB_CH9_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define USB_DIR_OUT 0
 #define USB_DIR_IN 0x80

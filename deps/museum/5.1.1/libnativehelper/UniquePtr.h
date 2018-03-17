@@ -17,7 +17,7 @@
 #ifndef UNIQUE_PTR_H_included
 #define UNIQUE_PTR_H_included
 
-#include <cstdlib> // For NULL.
+#include <museum/5.1.1/external/libcxx/cstdlib> // For NULL.
 
 // This is a fake declaration of std::swap to avoid including <algorithm>
 namespace std {
@@ -146,7 +146,7 @@ private:
 // Run these tests with:
 // g++ -g -DUNIQUE_PTR_TESTS -x c++ UniquePtr.h && ./a.out
 
-#include <stdio.h>
+#include <museum/5.1.1/bionic/libc/stdio.h>
 
 static void assert(bool b) {
     if (!b) {

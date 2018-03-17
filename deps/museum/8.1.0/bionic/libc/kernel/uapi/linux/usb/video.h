@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_VIDEO_H
 #define __LINUX_USB_VIDEO_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define UVC_SC_UNDEFINED 0x00
 #define UVC_SC_VIDEOCONTROL 0x01
 #define UVC_SC_VIDEOSTREAMING 0x02

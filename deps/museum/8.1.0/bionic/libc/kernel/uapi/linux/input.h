@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_INPUT_H
 #define _UAPI_INPUT_H
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/sys/time.h>
+#include <museum/8.1.0/bionic/libc/sys/ioctl.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #include "input-event-codes.h"
 struct input_event {
   struct timeval time;

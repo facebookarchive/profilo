@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BASE_STRINGPIECE_H_
 #define ART_RUNTIME_BASE_STRINGPIECE_H_
 
-#include <string.h>
-#include <string>
+#include <museum/7.1.2/bionic/libc/string.h>
+#include <museum/7.1.2/external/libcxx/string>
 
 namespace art {
 

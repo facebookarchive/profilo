@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_OAT_QUICK_METHOD_HEADER_H_
 #define ART_RUNTIME_OAT_QUICK_METHOD_HEADER_H_
 
-#include "arch/instruction_set.h"
-#include "base/macros.h"
-#include "quick/quick_method_frame_info.h"
-#include "stack_map.h"
-#include "utils.h"
+#include <museum/7.1.2/art/runtime/arch/instruction_set.h>
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/7.1.2/art/runtime/stack_map.h>
+#include <museum/7.1.2/art/runtime/utils.h>
 
 namespace art {
 

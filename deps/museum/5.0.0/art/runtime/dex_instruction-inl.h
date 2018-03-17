@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_DEX_INSTRUCTION_INL_H_
 #define ART_RUNTIME_DEX_INSTRUCTION_INL_H_
 
-#include "dex_instruction.h"
+#include <museum/5.0.0/art/runtime/dex_instruction.h>
 
 namespace art {
 

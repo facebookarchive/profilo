@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPIBLKTRACE_H
 #define _UAPIBLKTRACE_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum blktrace_cat {
   BLK_TC_READ = 1 << 0,
   BLK_TC_WRITE = 1 << 1,

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_IF_PACKET_H
 #define __LINUX_IF_PACKET_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct sockaddr_pkt {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  unsigned short spkt_family;

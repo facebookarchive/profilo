@@ -37,7 +37,7 @@
  * included multiple times, with and without NDEBUG defined.
  */
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 #undef assert
 #undef __assert_no_op

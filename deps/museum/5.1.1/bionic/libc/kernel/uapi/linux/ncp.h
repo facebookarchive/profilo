@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_H
 #define _LINUX_NCP_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define NCP_PTYPE (0x11)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NCP_PORT (0x0451)

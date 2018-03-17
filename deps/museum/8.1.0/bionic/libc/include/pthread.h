@@ -29,12 +29,12 @@
 #ifndef _PTHREAD_H_
 #define _PTHREAD_H_
 
-#include <limits.h>
-#include <bits/pthread_types.h>
-#include <sched.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <time.h>
+#include <museum/8.1.0/bionic/libc/limits.h>
+#include <museum/8.1.0/bionic/libc/bits/pthread_types.h>
+#include <museum/8.1.0/bionic/libc/sched.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
+#include <museum/8.1.0/bionic/libc/time.h>
 
 __BEGIN_DECLS
 

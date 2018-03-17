@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_RDS_H
 #define _LINUX_RDS_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define RDS_IB_ABI_VERSION 0x301
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SOL_RDS 276

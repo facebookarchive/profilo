@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_OBJ_PTR_H_
 #define ART_RUNTIME_OBJ_PTR_H_
 
-#include <ostream>
-#include <type_traits>
+#include <museum/8.0.0/external/libcxx/ostream>
+#include <museum/8.0.0/external/libcxx/type_traits>
 
-#include "base/macros.h"
-#include "base/mutex.h"  // For Locks::mutator_lock_.
-#include "globals.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>  // For Locks::mutator_lock_.
+#include <museum/8.0.0/art/runtime/globals.h>
 
 namespace art {
 

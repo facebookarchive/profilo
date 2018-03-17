@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_BCM_H
 #define _UAPI_CAN_BCM_H
-#include <linux/types.h>
-#include <linux/can.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/can.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct bcm_timeval {
   long tv_sec;

@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_IMAGE_INL_H_
 #define ART_RUNTIME_IMAGE_INL_H_
 
-#include "image.h"
+#include <museum/7.1.2/art/runtime/image.h>
 
-#include "art_method.h"
-#include "imtable.h"
+#include <museum/7.1.2/art/runtime/art_method.h>
+#include <museum/7.1.2/art/runtime/imtable.h>
 
 namespace art {
 

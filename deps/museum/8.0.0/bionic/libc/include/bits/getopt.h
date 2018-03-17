@@ -29,7 +29,7 @@
 #ifndef _BITS_GETOPT_H_
 #define _BITS_GETOPT_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

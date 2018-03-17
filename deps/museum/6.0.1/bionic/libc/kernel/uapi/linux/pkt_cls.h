@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_PKT_CLS_H
 #define __LINUX_PKT_CLS_H
-#include <linux/types.h>
-#include <linux/pkt_sched.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/pkt_sched.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define _TC_MAKE32(x) ((x))
 #define _TC_MAKEMASK1(n) (_TC_MAKE32(1) << _TC_MAKE32(n))

@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_EXEC_UTILS_H_
 #define ART_RUNTIME_EXEC_UTILS_H_
 
-#include <string>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/string>
+#include <museum/8.1.0/external/libcxx/vector>
 
 namespace art {
 

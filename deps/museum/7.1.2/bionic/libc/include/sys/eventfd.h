@@ -29,8 +29,8 @@
 #ifndef _SYS_EVENTFD_H
 #define _SYS_EVENTFD_H
 
-#include <sys/cdefs.h>
-#include <fcntl.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/fcntl.h>
 
 __BEGIN_DECLS
 

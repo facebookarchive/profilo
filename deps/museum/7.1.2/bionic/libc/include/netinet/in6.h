@@ -29,7 +29,7 @@
 #ifndef _NETINET_IN6_H
 #define _NETINET_IN6_H
 
-#include <linux/in6.h>
+#include <museum/7.1.2/bionic/libc/linux/in6.h>
 
 #define IN6_IS_ADDR_UNSPECIFIED(a) \
   ((*(const uint32_t*)(&(a)->s6_addr[0]) == 0) && \

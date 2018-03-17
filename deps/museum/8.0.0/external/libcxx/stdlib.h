@@ -14,7 +14,7 @@
 #pragma GCC system_header
 #endif
 
-#include_next <stdlib.h>
+#include <museum/8.0.0/bionic/libc/stdlib.h>
 
 #elif !defined(_LIBCPP_STDLIB_H)
 #define _LIBCPP_STDLIB_H
@@ -85,20 +85,20 @@ void *aligned_alloc(size_t alignment, size_t size);                       // C11
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#include_next <stdlib.h>
+#include <museum/8.0.0/bionic/libc/stdlib.h>
 
 #ifdef __cplusplus
 
 extern "C++" {
 
 #ifdef _LIBCPP_MSVCRT
-#include "support/win32/locale_win32.h"
+#include <museum/8.0.0/external/libcxx/support/win32/locale_win32.h>
 #endif // _LIBCPP_MSVCRT
 
 #undef abs

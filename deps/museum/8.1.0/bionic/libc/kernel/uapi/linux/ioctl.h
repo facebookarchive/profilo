@@ -18,5 +18,5 @@
  ****************************************************************************/
 #ifndef _LINUX_IOCTL_H
 #define _LINUX_IOCTL_H
-#include <asm/ioctl.h>
+#include <museum/8.1.0/bionic/libc/asm/ioctl.h>
 #endif

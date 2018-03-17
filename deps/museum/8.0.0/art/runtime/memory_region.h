@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_MEMORY_REGION_H_
 #define ART_RUNTIME_MEMORY_REGION_H_
 
-#include <stdint.h>
-#include <type_traits>
+#include <museum/8.0.0/external/libcxx/stdint.h>
+#include <museum/8.0.0/external/libcxx/type_traits>
 
-#include "arch/instruction_set.h"
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/value_object.h"
-#include "globals.h"
+#include <museum/8.0.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.0.0/art/runtime/base/bit_utils.h>
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/value_object.h>
+#include <museum/8.0.0/art/runtime/globals.h>
 
 namespace art {
 

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_GENERIC_SIGINFO_H
 #define _UAPI_ASM_GENERIC_SIGINFO_H
-#include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/compiler.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef union sigval {
   int sival_int;

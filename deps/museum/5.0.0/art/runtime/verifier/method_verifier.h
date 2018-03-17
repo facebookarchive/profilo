@@ -17,22 +17,22 @@
 #ifndef ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_
 #define ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_
 
-#include <memory>
-#include <set>
-#include <vector>
+#include <museum/5.0.0/external/libcxx/memory>
+#include <museum/5.0.0/external/libcxx/set>
+#include <museum/5.0.0/external/libcxx/vector>
 
-#include "base/casts.h"
-#include "base/macros.h"
-#include "base/stl_util.h"
-#include "class_reference.h"
-#include "dex_file.h"
-#include "dex_instruction.h"
-#include "instruction_flags.h"
-#include "method_reference.h"
-#include "reg_type.h"
-#include "reg_type_cache.h"
-#include "register_line.h"
-#include "safe_map.h"
+#include <museum/5.0.0/art/runtime/base/casts.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/base/stl_util.h>
+#include <museum/5.0.0/art/runtime/class_reference.h>
+#include <museum/5.0.0/art/runtime/dex_file.h>
+#include <museum/5.0.0/art/runtime/dex_instruction.h>
+#include <museum/5.0.0/art/runtime/verifier/instruction_flags.h>
+#include <museum/5.0.0/art/runtime/method_reference.h>
+#include <museum/5.0.0/art/runtime/verifier/reg_type.h>
+#include <museum/5.0.0/art/runtime/verifier/reg_type_cache.h>
+#include <museum/5.0.0/art/runtime/verifier/register_line.h>
+#include <museum/5.0.0/art/runtime/safe_map.h>
 
 namespace art {
 

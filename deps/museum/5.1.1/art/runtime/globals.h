@@ -18,9 +18,9 @@
 #define ART_RUNTIME_GLOBALS_H_
 
 #include <stddef.h>
-#include <stdint.h>
-#include "read_barrier_c.h"
-#include "read_barrier_option.h"
+#include <museum/5.1.1/bionic/libc/stdint.h>
+#include <museum/5.1.1/art/runtime/read_barrier_c.h>
+#include <museum/5.1.1/art/runtime/read_barrier_option.h>
 
 namespace art {
 

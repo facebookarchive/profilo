@@ -29,10 +29,10 @@
 #ifndef _ARPA_INET_H_
 #define _ARPA_INET_H_
 
-#include <netinet/in.h>
-#include <stdint.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.0.0/bionic/libc/netinet/in.h>
+#include <museum/8.0.0/bionic/libc/stdint.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
 
 __BEGIN_DECLS
 

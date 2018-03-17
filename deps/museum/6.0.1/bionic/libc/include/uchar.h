@@ -29,8 +29,8 @@
 #ifndef _UCHAR_H_
 #define _UCHAR_H_
 
-#include <sys/cdefs.h>
-#include <wchar.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/wchar.h>
 
 __BEGIN_DECLS
 

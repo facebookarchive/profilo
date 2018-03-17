@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_ARM_PTRACE_H
 #define _UAPI__ASM_ARM_PTRACE_H
-#include <asm/hwcap.h>
+#include <museum/7.0.0/bionic/libc/asm/hwcap.h>
 #define PTRACE_GETREGS 12
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PTRACE_SETREGS 13

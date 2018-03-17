@@ -19,6 +19,6 @@
 #ifndef _ASM_X86_UCONTEXT_H
 #define _ASM_X86_UCONTEXT_H
 #define UC_FP_XSTATE 0x1
-#include <asm-generic/ucontext.h>
+#include <museum/6.0.1/bionic/libc/asm-generic/ucontext.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

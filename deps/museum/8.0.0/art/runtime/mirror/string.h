@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_MIRROR_STRING_H_
 #define ART_RUNTIME_MIRROR_STRING_H_
 
-#include "gc_root.h"
-#include "gc/allocator_type.h"
-#include "object.h"
-#include "object_callbacks.h"
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/gc/allocator_type.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
 
 namespace art {
 

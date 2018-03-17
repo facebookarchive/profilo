@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_ATOMIC_STACK_H_
 #define ART_RUNTIME_GC_ACCOUNTING_ATOMIC_STACK_H_
 
-#include <sys/mman.h>  // For the PROT_* and MAP_* constants.
+#include <museum/8.1.0/bionic/libc/sys/mman.h>  // For the PROT_* and MAP_* constants.
 
-#include <algorithm>
-#include <memory>
-#include <string>
+#include <museum/8.1.0/external/libcxx/algorithm>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/string>
 
-#include "atomic.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "mem_map.h"
-#include "stack_reference.h"
+#include <museum/8.1.0/art/runtime/atomic.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/mem_map.h>
+#include <museum/8.1.0/art/runtime/stack_reference.h>
 
 // This implements a double-ended queue (deque) with various flavors of PushBack operations,
 // as well as PopBack and PopFront operations. We expect that all calls are performed

@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_LOCK_WORD_INL_H_
 #define ART_RUNTIME_LOCK_WORD_INL_H_
 
-#include "lock_word.h"
-#include "monitor_pool.h"
+#include <museum/5.0.0/art/runtime/lock_word.h>
+#include <museum/5.0.0/art/runtime/monitor_pool.h>
 
 namespace art {
 

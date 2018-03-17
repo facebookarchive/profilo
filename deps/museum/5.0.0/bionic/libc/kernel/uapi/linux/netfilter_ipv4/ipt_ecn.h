@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IPT_ECN_H
 #define _IPT_ECN_H
-#include <linux/netfilter/xt_ecn.h>
+#include <museum/5.0.0/bionic/libc/linux/netfilter/xt_ecn.h>
 #define ipt_ecn_info xt_ecn_info
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum {

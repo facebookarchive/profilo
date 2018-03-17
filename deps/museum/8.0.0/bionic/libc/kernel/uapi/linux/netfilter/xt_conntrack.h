@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _XT_CONNTRACK_H
 #define _XT_CONNTRACK_H
-#include <linux/types.h>
-#include <linux/netfilter.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/netfilter/nf_conntrack_tuple_common.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter/nf_conntrack_tuple_common.h>
 #define XT_CONNTRACK_STATE_BIT(ctinfo) (1 << ((ctinfo) % IP_CT_IS_REPLY + 1))
 #define XT_CONNTRACK_STATE_INVALID (1 << 0)
 #define XT_CONNTRACK_STATE_SNAT (1 << (IP_CT_NUMBER + 1))

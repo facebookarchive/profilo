@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _FC_ELS_H_
 #define _FC_ELS_H_
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 enum fc_els_cmd {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   ELS_LS_RJT = 0x01,

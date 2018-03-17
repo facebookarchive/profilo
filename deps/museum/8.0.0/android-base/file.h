@@ -17,8 +17,8 @@
 #ifndef ANDROID_BASE_FILE_H
 #define ANDROID_BASE_FILE_H
 
-#include <sys/stat.h>
-#include <string>
+#include <museum/8.0.0/bionic/libc/sys/stat.h>
+#include <museum/8.0.0/external/libcxx/string>
 
 #if !defined(_WIN32) && !defined(O_BINARY)
 #define O_BINARY 0

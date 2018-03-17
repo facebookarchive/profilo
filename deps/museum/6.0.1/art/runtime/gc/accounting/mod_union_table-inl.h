@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_MOD_UNION_TABLE_INL_H_
 #define ART_RUNTIME_GC_ACCOUNTING_MOD_UNION_TABLE_INL_H_
 
-#include "mod_union_table.h"
+#include <museum/6.0.1/art/runtime/gc/accounting/mod_union_table.h>
 
-#include "gc/space/space.h"
+#include <museum/6.0.1/art/runtime/gc/space/space.h>
 
 namespace art {
 namespace gc {

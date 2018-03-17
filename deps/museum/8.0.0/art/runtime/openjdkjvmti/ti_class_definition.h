@@ -32,7 +32,7 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_TI_CLASS_DEFINITION_H_
 #define ART_RUNTIME_OPENJDKJVMTI_TI_CLASS_DEFINITION_H_
 
-#include "art_jvmti.h"
+#include <museum/8.0.0/art/runtime/openjdkjvmti/art_jvmti.h>
 
 namespace openjdkjvmti {
 

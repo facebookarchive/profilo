@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VIRTIO_RING_H
 #define _UAPI_LINUX_VIRTIO_RING_H
-#include <stdint.h>
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/stdint.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/virtio_types.h>
+#include <museum/7.1.2/bionic/libc/linux/virtio_types.h>
 #define VRING_DESC_F_NEXT 1
 #define VRING_DESC_F_WRITE 2
 #define VRING_DESC_F_INDIRECT 4

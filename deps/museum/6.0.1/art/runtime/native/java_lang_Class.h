@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_NATIVE_JAVA_LANG_CLASS_H_
 #define ART_RUNTIME_NATIVE_JAVA_LANG_CLASS_H_
 
-#include <jni.h>
+#include <museum/6.0.1/libnativehelper/jni.h>
 
 namespace art {
 

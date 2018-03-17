@@ -20,8 +20,8 @@
 #define _UAPISOUNDCARD_H
 #define SOUND_VERSION 0x030802
 #define OPEN_SOUND_SYSTEM
-#include <linux/ioctl.h>
-#include <endian.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/endian.h>
 #define SNDCARD_ADLIB 1
 #define SNDCARD_SB 2
 #define SNDCARD_PAS 3
@@ -130,7 +130,7 @@ typedef struct seq_event_rec {
 #define SNDCTL_TMR_METRONOME _SIOW('T', 7, int)
 #define SNDCTL_TMR_SELECT _SIOW('T', 8, int)
 #define _LINUX_PATCHKEY_H_INDIRECT
-#include <linux/patchkey.h>
+#include <museum/8.1.0/bionic/libc/linux/patchkey.h>
 #undef _LINUX_PATCHKEY_H_INDIRECT
 #ifdef __BYTE_ORDER
 #if __BYTE_ORDER == __BIG_ENDIAN

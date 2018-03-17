@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_STRUTIL_H_
 #define ART_RUNTIME_STRUTIL_H_
 
-#include <string.h>
+#include <museum/5.0.0/bionic/libc/string.h>
 
 namespace art {
 

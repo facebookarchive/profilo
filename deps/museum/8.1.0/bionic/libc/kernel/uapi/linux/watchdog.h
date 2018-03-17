@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_WATCHDOG_H
 #define _UAPI_LINUX_WATCHDOG_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define WATCHDOG_IOCTL_BASE 'W'
 struct watchdog_info {
   __u32 options;

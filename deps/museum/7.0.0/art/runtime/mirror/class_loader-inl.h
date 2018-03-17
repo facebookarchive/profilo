@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_LOADER_INL_H_
 #define ART_RUNTIME_MIRROR_CLASS_LOADER_INL_H_
 
-#include "class_loader.h"
+#include <museum/7.0.0/art/runtime/mirror/class_loader.h>
 
-#include "base/mutex-inl.h"
-#include "class_table-inl.h"
+#include <museum/7.0.0/art/runtime/base/mutex-inl.h>
+#include <museum/7.0.0/art/runtime/class_table-inl.h>
 
 namespace art {
 namespace mirror {

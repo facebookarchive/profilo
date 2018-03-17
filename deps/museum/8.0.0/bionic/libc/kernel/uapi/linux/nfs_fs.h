@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NFS_FS_H
 #define _UAPI_LINUX_NFS_FS_H
-#include <linux/magic.h>
+#include <museum/8.0.0/bionic/libc/linux/magic.h>
 #define NFS_DEF_UDP_TIMEO (11)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NFS_DEF_UDP_RETRANS (3)

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_ROOT_INL_H_
 #define ART_RUNTIME_GC_ROOT_INL_H_
 
-#include "gc_root.h"
+#include <museum/8.0.0/art/runtime/gc_root.h>
 
-#include <sstream>
+#include <museum/8.0.0/external/libcxx/sstream>
 
-#include "obj_ptr-inl.h"
-#include "read_barrier-inl.h"
+#include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
+#include <museum/8.0.0/art/runtime/read_barrier-inl.h>
 
 namespace art {
 

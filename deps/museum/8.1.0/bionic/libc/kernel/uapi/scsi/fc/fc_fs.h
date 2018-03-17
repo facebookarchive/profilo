@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _FC_FS_H_
 #define _FC_FS_H_
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct fc_frame_header {
   __u8 fh_r_ctl;
   __u8 fh_d_id[3];

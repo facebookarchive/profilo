@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_BASE_HASH_SET_H_
 #define ART_RUNTIME_BASE_HASH_SET_H_
 
-#include <functional>
-#include <memory>
-#include <stdint.h>
-#include <utility>
+#include <museum/5.1.1/external/libcxx/functional>
+#include <museum/5.1.1/external/libcxx/memory>
+#include <museum/5.1.1/bionic/libc/stdint.h>
+#include <museum/5.1.1/external/libcxx/utility>
 
-#include "logging.h"
+#include <museum/5.1.1/art/runtime/base/logging.h>
 
 namespace art {
 

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_SPACE_IMAGE_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_IMAGE_SPACE_H_
 
-#include "gc/accounting/space_bitmap.h"
-#include "runtime.h"
-#include "space.h"
+#include <museum/5.0.0/art/runtime/gc/accounting/space_bitmap.h>
+#include <museum/5.0.0/art/runtime/runtime.h>
+#include <museum/5.0.0/art/runtime/gc/space/space.h>
 
 namespace art {
 

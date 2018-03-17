@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_ARCH_MIPS64_CONTEXT_MIPS64_H_
 #define ART_RUNTIME_ARCH_MIPS64_CONTEXT_MIPS64_H_
 
-#include "arch/context.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "registers_mips64.h"
+#include <museum/6.0.1/art/runtime/arch/context.h>
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/arch/mips64/registers_mips64.h>
 
 namespace art {
 namespace mips64 {

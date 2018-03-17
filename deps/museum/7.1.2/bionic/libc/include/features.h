@@ -30,6 +30,6 @@
 #define _FEATURES_H_
 
 /* Our <features.h> macro fun is all in <sys/cdefs.h>. */
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 #endif /* _FEATURES_H_ */

@@ -16,7 +16,7 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#include <linux/libc-compat.h>
+#include <museum/8.1.0/bionic/libc/linux/libc-compat.h>
 #ifndef _UAPI_LINUX_XATTR_H
 #define _UAPI_LINUX_XATTR_H
 #if __UAPI_DEF_XATTR

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __DM_LOG_USERSPACE_H__
 #define __DM_LOG_USERSPACE_H__
-#include <linux/types.h>
-#include <linux/dm-ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/dm-ioctl.h>
 #define DM_ULOG_CTR 1
 #define DM_ULOG_DTR 2
 #define DM_ULOG_PRESUSPEND 3

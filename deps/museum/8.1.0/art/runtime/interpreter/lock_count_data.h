@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_INTERPRETER_LOCK_COUNT_DATA_H_
 #define ART_RUNTIME_INTERPRETER_LOCK_COUNT_DATA_H_
 
-#include <memory>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "base/mutex.h"
+#include <museum/8.1.0/art/runtime/base/mutex.h>
 
 namespace art {
 

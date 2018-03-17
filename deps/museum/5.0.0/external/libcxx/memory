@@ -593,28 +593,28 @@ void* align(size_t alignment, size_t size, void*& ptr, size_t& space);
 
 */
 
-#include <__config>
-#include <type_traits>
-#include <typeinfo>
-#include <cstddef>
-#include <cstdint>
-#include <new>
-#include <utility>
-#include <limits>
-#include <iterator>
-#include <__functional_base>
-#include <iosfwd>
-#include <tuple>
-#include <cstring>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/type_traits>
+#include <museum/5.0.0/external/libcxx/typeinfo>
+#include <museum/5.0.0/external/libcxx/cstddef>
+#include <museum/5.0.0/external/libcxx/cstdint>
+#include <museum/5.0.0/external/libcxx/new>
+#include <museum/5.0.0/external/libcxx/utility>
+#include <museum/5.0.0/external/libcxx/limits>
+#include <museum/5.0.0/external/libcxx/iterator>
+#include <museum/5.0.0/external/libcxx/__functional_base>
+#include <museum/5.0.0/external/libcxx/iosfwd>
+#include <museum/5.0.0/external/libcxx/tuple>
+#include <museum/5.0.0/external/libcxx/cstring>
 #if defined(_LIBCPP_NO_EXCEPTIONS)
-    #include <cassert>
+    #include <museum/5.0.0/external/libcxx/cassert>
 #endif
 
 #if __has_feature(cxx_atomic)
-#  include <atomic>
+#  include <museum/5.0.0/external/libcxx/atomic>
 #endif
 
-#include <__undef_min_max>
+#include <museum/5.0.0/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

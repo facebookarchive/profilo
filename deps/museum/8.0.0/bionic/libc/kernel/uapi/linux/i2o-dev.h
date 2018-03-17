@@ -19,9 +19,9 @@
 #ifndef _I2O_DEV_H
 #define _I2O_DEV_H
 #define MAX_I2O_CONTROLLERS 32
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define I2O_MAGIC_NUMBER 'i'
 #define I2OGETIOPS _IOR(I2O_MAGIC_NUMBER, 0, __u8[MAX_I2O_CONTROLLERS])
 #define I2OHRTGET _IOWR(I2O_MAGIC_NUMBER, 1, struct i2o_cmd_hrtlct)

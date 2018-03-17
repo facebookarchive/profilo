@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_H_
 #define ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_H_
 
-#include <jni.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "offsets.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
+#include <museum/7.1.2/art/runtime/offsets.h>
 
 #define QUICK_ENTRYPOINT_OFFSET(ptr_size, x) \
     Thread::QuickEntryPointOffset<ptr_size>(OFFSETOF_MEMBER(QuickEntryPoints, x))
@@ -42,7 +42,7 @@ class Thread;
 // Pointers to functions that are called by quick compiler generated code via thread-local storage.
 struct PACKED(4) QuickEntryPoints {
 #define ENTRYPOINT_ENUM(name, rettype, ...) rettype ( * p ## name )( __VA_ARGS__ );
-#include "quick_entrypoints_list.h"
+#include <museum/7.1.2/art/runtime/entrypoints/quick/quick_entrypoints_list.h>
   QUICK_ENTRYPOINT_LIST(ENTRYPOINT_ENUM)
 #undef QUICK_ENTRYPOINT_LIST
 #undef ENTRYPOINT_ENUM

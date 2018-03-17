@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_NILFS2_ONDISK_H
 #define _LINUX_NILFS2_ONDISK_H
-#include <linux/types.h>
-#include <linux/magic.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define NILFS_INODE_BMAP_SIZE 7
 struct nilfs_inode {
   __le64 i_blocks;

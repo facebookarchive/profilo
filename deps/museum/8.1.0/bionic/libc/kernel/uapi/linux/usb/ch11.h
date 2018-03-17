@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_CH11_H
 #define __LINUX_CH11_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define USB_MAXCHILDREN 31
 #define USB_RT_HUB (USB_TYPE_CLASS | USB_RECIP_DEVICE)
 #define USB_RT_PORT (USB_TYPE_CLASS | USB_RECIP_OTHER)

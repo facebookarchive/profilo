@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ASM_X86_SIGCONTEXT32_H
 #define _ASM_X86_SIGCONTEXT32_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define X86_FXSR_MAGIC 0x0000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct _fpreg {

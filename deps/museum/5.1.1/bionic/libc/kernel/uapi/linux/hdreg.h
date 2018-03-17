@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_HDREG_H
 #define _LINUX_HDREG_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define HDIO_DRIVE_CMD_HDR_SIZE (4 * sizeof(__u8))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define HDIO_DRIVE_HOB_HDR_SIZE (8 * sizeof(__u8))

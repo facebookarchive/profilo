@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_GC_SPACE_IMAGE_SPACE_FS_H_
 #define ART_RUNTIME_GC_SPACE_IMAGE_SPACE_FS_H_
 
-#include <dirent.h>
-#include <dlfcn.h>
+#include <museum/7.0.0/bionic/libc/dirent.h>
+#include <museum/7.0.0/bionic/libc/dlfcn.h>
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/stringprintf.h"
-#include "base/unix_file/fd_file.h"
-#include "globals.h"
-#include "os.h"
-#include "runtime.h"
-#include "utils.h"
+#include <museum/7.0.0/art/runtime/base/logging.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/stringprintf.h>
+#include <museum/7.0.0/art/runtime/base/unix_file/fd_file.h>
+#include <museum/7.0.0/art/runtime/globals.h>
+#include <museum/7.0.0/art/runtime/os.h>
+#include <museum/7.0.0/art/runtime/runtime.h>
+#include <museum/7.0.0/art/runtime/utils.h>
 
 namespace art {
 namespace gc {

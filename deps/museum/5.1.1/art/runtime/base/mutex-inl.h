@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_BASE_MUTEX_INL_H_
 #define ART_RUNTIME_BASE_MUTEX_INL_H_
 
-#include <inttypes.h>
+#include <museum/5.1.1/bionic/libc/inttypes.h>
 
-#include "mutex.h"
+#include <museum/5.1.1/art/runtime/base/mutex.h>
 
 #define ATRACE_TAG ATRACE_TAG_DALVIK
 
@@ -28,17 +28,17 @@
 #define ATRACE_BEGIN(...)
 #define ATRACE_END(...)
 
-#include "base/stringprintf.h"
-#include "runtime.h"
-#include "thread.h"
+#include <museum/5.1.1/art/runtime/base/stringprintf.h>
+#include <museum/5.1.1/art/runtime/runtime.h>
+#include <museum/5.1.1/art/runtime/thread.h>
 
 namespace art {
 
 #define CHECK_MUTEX_CALL(call, args) CHECK_PTHREAD_CALL(call, args, name_)
 
 #if ART_USE_FUTEXES
-#include "linux/futex.h"
-#include "sys/syscall.h"
+#include <museum/5.1.1/bionic/libc/linux/futex.h>
+#include <museum/5.1.1/bionic/libc/sys/syscall.h>
 #ifndef SYS_futex
 #define SYS_futex __NR_futex
 #endif

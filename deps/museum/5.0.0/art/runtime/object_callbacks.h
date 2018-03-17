@@ -18,13 +18,13 @@
 #define ART_RUNTIME_OBJECT_CALLBACKS_H_
 
 // For ostream.
-#include <ostream>
+#include <museum/5.0.0/external/libcxx/ostream>
 // For uint32_t.
-#include <stdint.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
 // For size_t.
-#include <stdlib.h>
+#include <museum/5.0.0/bionic/libc/stdlib.h>
 
-#include "base/macros.h"
+#include <museum/5.0.0/art/runtime/base/macros.h>
 
 namespace art {
 namespace mirror {

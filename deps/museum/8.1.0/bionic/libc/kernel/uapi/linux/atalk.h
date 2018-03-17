@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_ATALK_H__
 #define _UAPI__LINUX_ATALK_H__
-#include <linux/types.h>
-#include <asm/byteorder.h>
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define ATPORT_FIRST 1
 #define ATPORT_RESERVED 128
 #define ATPORT_LAST 254

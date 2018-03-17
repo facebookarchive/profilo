@@ -17,30 +17,30 @@
 #ifndef ART_RUNTIME_GC_HEAP_H_
 #define ART_RUNTIME_GC_HEAP_H_
 
-#include <iosfwd>
-#include <string>
-#include <unordered_set>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/iosfwd>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/unordered_set>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "allocator_type.h"
-#include "arch/instruction_set.h"
-#include "atomic.h"
-#include "base/time_utils.h"
-#include "gc/accounting/atomic_stack.h"
-#include "gc/accounting/card_table.h"
-#include "gc/accounting/read_barrier_table.h"
-#include "gc/gc_cause.h"
-#include "gc/collector/gc_type.h"
-#include "gc/collector_type.h"
-#include "gc/space/large_object_space.h"
-#include "globals.h"
-#include "handle.h"
-#include "obj_ptr.h"
-#include "object_callbacks.h"
-#include "offsets.h"
-#include "process_state.h"
-#include "safe_map.h"
-#include "verify_object.h"
+#include <museum/8.0.0/art/runtime/gc/allocator_type.h>
+#include <museum/8.0.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.0.0/art/runtime/atomic.h>
+#include <museum/8.0.0/art/runtime/base/time_utils.h>
+#include <museum/8.0.0/art/runtime/gc/accounting/atomic_stack.h>
+#include <museum/8.0.0/art/runtime/gc/accounting/card_table.h>
+#include <museum/8.0.0/art/runtime/gc/accounting/read_barrier_table.h>
+#include <museum/8.0.0/art/runtime/gc/gc_cause.h>
+#include <museum/8.0.0/art/runtime/gc/collector/gc_type.h>
+#include <museum/8.0.0/art/runtime/gc/collector_type.h>
+#include <museum/8.0.0/art/runtime/gc/space/large_object_space.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/art/runtime/handle.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
+#include <museum/8.0.0/art/runtime/offsets.h>
+#include <museum/8.0.0/art/runtime/process_state.h>
+#include <museum/8.0.0/art/runtime/safe_map.h>
+#include <museum/8.0.0/art/runtime/verify_object.h>
 
 namespace art {
 

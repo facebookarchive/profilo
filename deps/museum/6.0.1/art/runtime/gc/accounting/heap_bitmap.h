@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_H_
 #define ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_H_
 
-#include "base/allocator.h"
-#include "base/logging.h"
-#include "object_callbacks.h"
-#include "space_bitmap.h"
+#include <museum/6.0.1/art/runtime/base/allocator.h>
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/object_callbacks.h>
+#include <museum/6.0.1/art/runtime/gc/accounting/space_bitmap.h>
 
 namespace art {
 namespace gc {

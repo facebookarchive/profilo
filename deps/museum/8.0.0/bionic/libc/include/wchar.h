@@ -28,17 +28,17 @@
 #ifndef _WCHAR_H_
 #define _WCHAR_H_
 
-#include <sys/cdefs.h>
-#include <stdio.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/stdio.h>
 
 #include <stdarg.h>
 #include <stddef.h>
-#include <time.h>
-#include <xlocale.h>
+#include <museum/8.0.0/bionic/libc/time.h>
+#include <museum/8.0.0/bionic/libc/xlocale.h>
 
-#include <bits/mbstate_t.h>
-#include <bits/wchar_limits.h>
-#include <bits/wctype.h>
+#include <museum/8.0.0/bionic/libc/bits/mbstate_t.h>
+#include <museum/8.0.0/bionic/libc/bits/wchar_limits.h>
+#include <museum/8.0.0/bionic/libc/bits/wctype.h>
 
 __BEGIN_DECLS
 

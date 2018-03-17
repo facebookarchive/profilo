@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_MIRROR_ART_METHOD_INL_H_
 #define ART_RUNTIME_MIRROR_ART_METHOD_INL_H_
 
-#include "art_method.h"
+#include <museum/5.0.0/art/runtime/mirror/art_method.h>
 
-#include "art_field.h"
-#include "class.h"
-#include "class_linker.h"
-#include "dex_cache.h"
-#include "dex_file.h"
-#include "entrypoints/entrypoint_utils.h"
-#include "method_helper.h"
-#include "object-inl.h"
-#include "object_array.h"
-#include "oat.h"
-#include "quick/quick_method_frame_info.h"
-#include "read_barrier-inl.h"
-#include "runtime-inl.h"
+#include <museum/5.0.0/art/runtime/mirror/art_field.h>
+#include <museum/5.0.0/art/runtime/mirror/class.h>
+#include <museum/5.0.0/art/runtime/class_linker.h>
+#include <museum/5.0.0/art/runtime/mirror/dex_cache.h>
+#include <museum/5.0.0/art/runtime/dex_file.h>
+#include <museum/5.0.0/art/runtime/entrypoints/entrypoint_utils.h>
+#include <museum/5.0.0/art/runtime/method_helper.h>
+#include <museum/5.0.0/art/runtime/mirror/object-inl.h>
+#include <museum/5.0.0/art/runtime/mirror/object_array.h>
+#include <museum/5.0.0/art/runtime/oat.h>
+#include <museum/5.0.0/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/5.0.0/art/runtime/read_barrier-inl.h>
+#include <museum/5.0.0/art/runtime/runtime-inl.h>
 
 namespace art {
 namespace mirror {

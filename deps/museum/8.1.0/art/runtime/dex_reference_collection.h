@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_DEX_REFERENCE_COLLECTION_H_
 #define ART_RUNTIME_DEX_REFERENCE_COLLECTION_H_
 
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
-#include <vector>
-#include <map>
+#include <museum/8.1.0/external/libcxx/vector>
+#include <museum/8.1.0/external/libcxx/map>
 
 namespace art {
 

@@ -17,19 +17,19 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_QUICK_CALLEE_SAVE_FRAME_H_
 #define ART_RUNTIME_ENTRYPOINTS_QUICK_CALLEE_SAVE_FRAME_H_
 
-#include "arch/instruction_set.h"
-#include "base/mutex.h"
-#include "runtime.h"
-#include "thread-inl.h"
+#include <museum/7.0.0/art/runtime/arch/instruction_set.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/runtime.h>
+#include <museum/7.0.0/art/runtime/thread-inl.h>
 
 // Specific frame size code is in architecture-specific files. We include this to compile-time
 // specialize the code.
-#include "arch/arm/quick_method_frame_info_arm.h"
-#include "arch/arm64/quick_method_frame_info_arm64.h"
-#include "arch/mips/quick_method_frame_info_mips.h"
-#include "arch/mips64/quick_method_frame_info_mips64.h"
-#include "arch/x86/quick_method_frame_info_x86.h"
-#include "arch/x86_64/quick_method_frame_info_x86_64.h"
+#include <museum/7.0.0/art/runtime/arch/arm/quick_method_frame_info_arm.h>
+#include <museum/7.0.0/art/runtime/arch/arm64/quick_method_frame_info_arm64.h>
+#include <museum/7.0.0/art/runtime/arch/mips/quick_method_frame_info_mips.h>
+#include <museum/7.0.0/art/runtime/arch/mips64/quick_method_frame_info_mips64.h>
+#include <museum/7.0.0/art/runtime/arch/x86/quick_method_frame_info_x86.h>
+#include <museum/7.0.0/art/runtime/arch/x86_64/quick_method_frame_info_x86_64.h>
 
 namespace art {
 class ArtMethod;

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _ASM_X86_SWAB_H
 #define _ASM_X86_SWAB_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
 #define __arch_swab32 __arch_swab32
 #ifdef __i386__

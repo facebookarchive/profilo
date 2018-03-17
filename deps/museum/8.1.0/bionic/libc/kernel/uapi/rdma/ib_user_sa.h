@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef IB_USER_SA_H
 #define IB_USER_SA_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   IB_PATH_GMP = 1,
   IB_PATH_PRIMARY = (1 << 1),

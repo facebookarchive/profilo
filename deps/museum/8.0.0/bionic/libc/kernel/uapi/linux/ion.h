@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ION_H
 #define _UAPI_LINUX_ION_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef int ion_user_handle_t;
 enum ion_heap_type {

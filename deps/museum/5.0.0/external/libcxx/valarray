@@ -339,14 +339,14 @@ template <class T> unspecified2 end(const valarray<T>& v);
 
 */
 
-#include <__config>
-#include <cstddef>
-#include <cmath>
-#include <initializer_list>
-#include <algorithm>
-#include <functional>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/cstddef>
+#include <museum/5.0.0/external/libcxx/cmath>
+#include <museum/5.0.0/external/libcxx/initializer_list>
+#include <museum/5.0.0/external/libcxx/algorithm>
+#include <museum/5.0.0/external/libcxx/functional>
 
-#include <__undef_min_max>
+#include <museum/5.0.0/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

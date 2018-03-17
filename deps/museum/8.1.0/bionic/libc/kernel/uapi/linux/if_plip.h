@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_PLIP_H
 #define _LINUX_IF_PLIP_H
-#include <linux/sockios.h>
+#include <museum/8.1.0/bionic/libc/linux/sockios.h>
 #define SIOCDEVPLIP SIOCDEVPRIVATE
 struct plipconf {
   unsigned short pcmd;

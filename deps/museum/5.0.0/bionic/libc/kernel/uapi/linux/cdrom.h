@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_CDROM_H
 #define _UAPI_LINUX_CDROM_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
+#include <museum/5.0.0/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define EDRIVE_CANT_DO_THIS EOPNOTSUPP
 #define CDROMPAUSE 0x5301

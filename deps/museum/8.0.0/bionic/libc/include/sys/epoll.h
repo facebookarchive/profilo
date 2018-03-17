@@ -29,11 +29,11 @@
 #ifndef _SYS_EPOLL_H_
 #define _SYS_EPOLL_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <signal.h> /* For sigset_t. */
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
+#include <museum/8.0.0/bionic/libc/signal.h> /* For sigset_t. */
 
-#include <linux/eventpoll.h>
+#include <museum/8.0.0/bionic/libc/linux/eventpoll.h>
 /* TODO: https://lkml.org/lkml/2017/2/23/416 has a better fix. */
 #undef EPOLLWAKEUP
 #undef EPOLLONESHOT

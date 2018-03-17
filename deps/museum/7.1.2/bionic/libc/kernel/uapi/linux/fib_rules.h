@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_FIB_RULES_H
 #define __LINUX_FIB_RULES_H
-#include <linux/types.h>
-#include <linux/rtnetlink.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/rtnetlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define FIB_RULE_PERMANENT 0x00000001
 #define FIB_RULE_INVERT 0x00000002

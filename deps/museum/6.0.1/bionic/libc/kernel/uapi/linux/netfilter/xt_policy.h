@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_POLICY_H
 #define _XT_POLICY_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define XT_POLICY_MAX_ELEM 4
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum xt_policy_flags {

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SERIAL_H
 #define _UAPI_LINUX_SERIAL_H
-#include <linux/types.h>
-#include <linux/tty_flags.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/tty_flags.h>
 struct serial_struct {
   int type;
   int line;

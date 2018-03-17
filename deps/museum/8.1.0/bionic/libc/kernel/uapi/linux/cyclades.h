@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_CYCLADES_H
 #define _UAPI_LINUX_CYCLADES_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct cyclades_monitor {
   unsigned long int_count;
   unsigned long char_count;

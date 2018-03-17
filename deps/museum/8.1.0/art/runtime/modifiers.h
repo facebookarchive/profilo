@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_MODIFIERS_H_
 #define ART_RUNTIME_MODIFIERS_H_
 
-#include <stdint.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
 
 namespace art {
 

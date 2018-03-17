@@ -25,9 +25,9 @@
 #ifndef	_FTW_H
 #define	_FTW_H
 
-#include <sys/cdefs.h>
-#include <sys/stat.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/stat.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
 /*
  * Valid flags for the 3rd argument to the function that is passed as the

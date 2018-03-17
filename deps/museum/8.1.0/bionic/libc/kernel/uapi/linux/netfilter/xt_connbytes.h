@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_CONNBYTES_H
 #define _XT_CONNBYTES_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum xt_connbytes_what {
   XT_CONNBYTES_PKTS,
   XT_CONNBYTES_BYTES,

@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BASE_ARRAY_SLICE_H_
 #define ART_RUNTIME_BASE_ARRAY_SLICE_H_
 
-#include "stride_iterator.h"
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "base/iteration_range.h"
+#include <museum/8.1.0/art/runtime/stride_iterator.h>
+#include <museum/8.1.0/art/runtime/base/bit_utils.h>
+#include <museum/8.1.0/art/runtime/base/casts.h>
+#include <museum/8.1.0/art/runtime/base/iteration_range.h>
 
 namespace art {
 

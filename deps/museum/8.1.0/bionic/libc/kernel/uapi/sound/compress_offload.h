@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef __COMPRESS_OFFLOAD_H
 #define __COMPRESS_OFFLOAD_H
-#include <linux/types.h>
-#include <sound/asound.h>
-#include <sound/compress_params.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/sound/asound.h>
+#include <museum/8.1.0/bionic/libc/sound/compress_params.h>
 #define SNDRV_COMPRESS_VERSION SNDRV_PROTOCOL_VERSION(0, 1, 2)
 struct snd_compressed_buffer {
   __u32 fragment_size;

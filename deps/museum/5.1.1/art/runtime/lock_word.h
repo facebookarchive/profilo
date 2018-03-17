@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_LOCK_WORD_H_
 #define ART_RUNTIME_LOCK_WORD_H_
 
-#include <iosfwd>
-#include <stdint.h>
+#include <museum/5.1.1/external/libcxx/iosfwd>
+#include <museum/5.1.1/bionic/libc/stdint.h>
 
-#include "base/logging.h"
-#include "utils.h"
+#include <museum/5.1.1/art/runtime/base/logging.h>
+#include <museum/5.1.1/art/runtime/utils.h>
 
 namespace art {
 namespace mirror {

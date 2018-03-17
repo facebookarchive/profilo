@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMIOC_H
 #define _LINUX_ATMIOC_H
-#include <asm/ioctl.h>
+#include <museum/5.0.0/bionic/libc/asm/ioctl.h>
 #define ATMIOC_PHYCOM 0x00
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ATMIOC_PHYCOM_END 0x0f

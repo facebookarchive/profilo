@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_MIRROR_FIELD_INL_H_
 #define ART_RUNTIME_MIRROR_FIELD_INL_H_
 
-#include "field.h"
+#include <museum/7.0.0/art/runtime/mirror/field.h>
 
-#include "art_field-inl.h"
-#include "mirror/dex_cache-inl.h"
-#include "runtime-inl.h"
+#include <museum/7.0.0/art/runtime/art_field-inl.h>
+#include <museum/7.0.0/art/runtime/mirror/dex_cache-inl.h>
+#include <museum/7.0.0/art/runtime/runtime-inl.h>
 
 namespace art {
 

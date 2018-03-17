@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_CONNMARK_H
 #define _XT_CONNMARK_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   XT_CONNMARK_SET = 0,
   XT_CONNMARK_SAVE,

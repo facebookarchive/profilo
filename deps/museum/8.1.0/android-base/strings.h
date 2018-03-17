@@ -17,9 +17,9 @@
 #ifndef ANDROID_BASE_STRINGS_H
 #define ANDROID_BASE_STRINGS_H
 
-#include <sstream>
-#include <string>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/sstream>
+#include <museum/8.1.0/external/libcxx/string>
+#include <museum/8.1.0/external/libcxx/vector>
 
 namespace android {
 namespace base {

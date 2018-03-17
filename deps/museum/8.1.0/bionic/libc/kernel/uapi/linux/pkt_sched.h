@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_PKT_SCHED_H
 #define __LINUX_PKT_SCHED_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define TC_PRIO_BESTEFFORT 0
 #define TC_PRIO_FILLER 1
 #define TC_PRIO_BULK 2

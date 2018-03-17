@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_PARSED_OPTIONS_H_
 #define ART_RUNTIME_PARSED_OPTIONS_H_
 
-#include <string>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/string>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include <jni.h>
+#include <museum/8.1.0/libnativehelper/jni.h>
 
-#include "globals.h"
-#include "gc/collector_type.h"
-#include "gc/space/large_object_space.h"
-#include "arch/instruction_set.h"
-#include "jit/profile_saver_options.h"
-#include "runtime_options.h"
+#include <museum/8.1.0/art/runtime/globals.h>
+#include <museum/8.1.0/art/runtime/gc/collector_type.h>
+#include <museum/8.1.0/art/runtime/gc/space/large_object_space.h>
+#include <museum/8.1.0/art/runtime/arch/instruction_set.h>
+#include <museum/8.1.0/art/runtime/jit/profile_saver_options.h>
+#include <museum/8.1.0/art/runtime/runtime_options.h>
 
 namespace art {
 

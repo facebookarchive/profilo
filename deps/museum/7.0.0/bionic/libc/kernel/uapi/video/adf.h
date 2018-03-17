@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_VIDEO_ADF_H_
 #define _UAPI_VIDEO_ADF_H_
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <drm/drm_fourcc.h>
-#include <drm/drm_mode.h>
+#include <museum/7.0.0/bionic/libc/drm/drm_fourcc.h>
+#include <museum/7.0.0/bionic/libc/drm/drm_mode.h>
 #define ADF_NAME_LEN 32
 #define ADF_MAX_CUSTOM_DATA_SIZE 4096
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

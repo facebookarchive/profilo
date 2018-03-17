@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_TRANSACTION_H_
 #define ART_RUNTIME_TRANSACTION_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "object_callbacks.h"
-#include "offsets.h"
-#include "primitive.h"
-#include "safe_map.h"
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/object_callbacks.h>
+#include <museum/5.0.0/art/runtime/offsets.h>
+#include <museum/5.0.0/art/runtime/primitive.h>
+#include <museum/5.0.0/art/runtime/safe_map.h>
 
-#include <list>
-#include <map>
+#include <museum/5.0.0/external/libcxx/list>
+#include <museum/5.0.0/external/libcxx/map>
 
 namespace art {
 namespace mirror {

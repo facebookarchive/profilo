@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NETDEVICE_H
 #define _UAPI_LINUX_NETDEVICE_H
-#include <linux/if.h>
-#include <linux/if_ether.h>
+#include <museum/8.0.0/bionic/libc/linux/if.h>
+#include <museum/8.0.0/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/if_packet.h>
-#include <linux/if_link.h>
+#include <museum/8.0.0/bionic/libc/linux/if_packet.h>
+#include <museum/8.0.0/bionic/libc/linux/if_link.h>
 #define MAX_ADDR_LEN 32
 #define INIT_NETDEV_GROUP 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

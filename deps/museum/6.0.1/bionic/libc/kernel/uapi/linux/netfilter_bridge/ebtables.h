@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_BRIDGE_EFF_H
 #define _UAPI__LINUX_BRIDGE_EFF_H
-#include <linux/if.h>
-#include <linux/netfilter_bridge.h>
+#include <museum/6.0.1/bionic/libc/linux/if.h>
+#include <museum/6.0.1/bionic/libc/linux/netfilter_bridge.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/if_ether.h>
+#include <museum/6.0.1/bionic/libc/linux/if_ether.h>
 #define EBT_TABLE_MAXNAMELEN 32
 #define EBT_CHAIN_MAXNAMELEN EBT_TABLE_MAXNAMELEN
 #define EBT_FUNCTION_MAXNAMELEN EBT_TABLE_MAXNAMELEN

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ZORRO_H
 #define _UAPI_LINUX_ZORRO_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define ZORRO_MANUF(id) ((id) >> 16)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define ZORRO_PROD(id) (((id) >> 8) & 0xff)
@@ -26,7 +26,7 @@
 #define ZORRO_ID(manuf,prod,epc) ((ZORRO_MANUF_ ##manuf << 16) | ((prod) << 8) | (epc))
 typedef __u32 zorro_id;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/zorro_ids.h>
+#include <museum/6.0.1/bionic/libc/linux/zorro_ids.h>
 #define GVP_PRODMASK (0xf8)
 #define GVP_SCSICLKMASK (0x01)
 enum GVP_flags {

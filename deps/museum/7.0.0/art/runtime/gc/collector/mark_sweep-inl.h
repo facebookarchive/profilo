@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_MARK_SWEEP_INL_H_
 #define ART_RUNTIME_GC_COLLECTOR_MARK_SWEEP_INL_H_
 
-#include "mark_sweep.h"
+#include <museum/7.0.0/art/runtime/gc/collector/mark_sweep.h>
 
-#include "gc/heap.h"
-#include "mirror/class-inl.h"
-#include "mirror/object_array-inl.h"
-#include "mirror/reference.h"
+#include <museum/7.0.0/art/runtime/gc/heap.h>
+#include <museum/7.0.0/art/runtime/mirror/class-inl.h>
+#include <museum/7.0.0/art/runtime/mirror/object_array-inl.h>
+#include <museum/7.0.0/art/runtime/mirror/reference.h>
 
 namespace art {
 namespace gc {

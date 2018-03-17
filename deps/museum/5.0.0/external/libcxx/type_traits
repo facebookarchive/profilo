@@ -200,8 +200,8 @@ namespace std
 }  // std
 
 */
-#include <__config>
-#include <cstddef>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/cstddef>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

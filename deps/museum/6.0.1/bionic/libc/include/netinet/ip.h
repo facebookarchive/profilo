@@ -35,11 +35,11 @@
 #ifndef _NETINET_IP_H_
 #define _NETINET_IP_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <endian.h>
-#include <netinet/in.h>
-#include <netinet/in_systm.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
+#include <museum/6.0.1/bionic/libc/endian.h>
+#include <museum/6.0.1/bionic/libc/netinet/in.h>
+#include <museum/6.0.1/bionic/libc/netinet/in_systm.h>
 
 __BEGIN_DECLS
 

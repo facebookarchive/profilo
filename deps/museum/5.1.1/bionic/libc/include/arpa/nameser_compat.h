@@ -42,14 +42,14 @@
 
 #define	__BIND		19950621	/* (DEAD) interface version stamp. */
 
-#include <endian.h>
+#include <museum/5.1.1/bionic/libc/endian.h>
 
 #ifndef BYTE_ORDER
 #if (BSD >= 199103)
-# include <machine/endian.h>
+# include <museum/5.1.1/bionic/libc/machine/endian.h>
 #else
 #ifdef __linux__
-# include <endian.h>
+# include <museum/5.1.1/bionic/libc/endian.h>
 #else
 #define	LITTLE_ENDIAN	1234	/* least-significant byte first (vax, pc) */
 #define	BIG_ENDIAN	4321	/* most-significant byte first (IBM, net) */

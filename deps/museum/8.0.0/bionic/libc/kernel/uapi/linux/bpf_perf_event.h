@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_BPF_PERF_EVENT_H__
 #define _UAPI__LINUX_BPF_PERF_EVENT_H__
-#include <linux/types.h>
-#include <linux/ptrace.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ptrace.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct bpf_perf_event_data {
   struct pt_regs regs;

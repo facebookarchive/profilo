@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_PED_H
 #define __LINUX_TC_PED_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_PEDIT 7
 enum {
   TCA_PEDIT_UNSPEC,

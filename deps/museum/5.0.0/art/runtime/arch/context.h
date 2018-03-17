@@ -18,9 +18,9 @@
 #define ART_RUNTIME_ARCH_CONTEXT_H_
 
 #include <stddef.h>
-#include <stdint.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
 
-#include "base/mutex.h"
+#include <museum/5.0.0/art/runtime/base/mutex.h>
 
 namespace art {
 

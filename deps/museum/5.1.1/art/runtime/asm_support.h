@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ASM_SUPPORT_H_
 #define ART_RUNTIME_ASM_SUPPORT_H_
 
-#include "read_barrier_c.h"
+#include <museum/5.1.1/art/runtime/read_barrier_c.h>
 
 // Value loaded into rSUSPEND for quick. When this value is counted down to zero we do a suspend
 // check.

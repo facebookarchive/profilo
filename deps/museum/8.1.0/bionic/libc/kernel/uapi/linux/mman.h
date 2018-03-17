@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MMAN_H
 #define _UAPI_LINUX_MMAN_H
-#include <asm/mman.h>
+#include <museum/8.1.0/bionic/libc/asm/mman.h>
 #define MREMAP_MAYMOVE 1
 #define MREMAP_FIXED 2
 #define OVERCOMMIT_GUESS 0

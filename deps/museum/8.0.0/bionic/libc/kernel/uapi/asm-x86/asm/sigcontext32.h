@@ -18,6 +18,6 @@
  ****************************************************************************/
 #ifndef _ASM_X86_SIGCONTEXT32_H
 #define _ASM_X86_SIGCONTEXT32_H
-#include <asm/sigcontext.h>
+#include <museum/8.0.0/bionic/libc/asm/sigcontext.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

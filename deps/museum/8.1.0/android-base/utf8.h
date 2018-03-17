@@ -18,13 +18,13 @@
 #define ANDROID_BASE_UTF8_H
 
 #ifdef _WIN32
-#include <string>
+#include <museum/8.1.0/external/libcxx/string>
 #else
 // Bring in prototypes for standard APIs so that we can import them into the utf8 namespace.
-#include <fcntl.h>      // open
-#include <stdio.h>      // fopen
-#include <sys/stat.h>   // mkdir
-#include <unistd.h>     // unlink
+#include <museum/8.1.0/bionic/libc/fcntl.h>      // open
+#include <museum/8.1.0/external/libcxx/stdio.h>      // fopen
+#include <museum/8.1.0/bionic/libc/sys/stat.h>   // mkdir
+#include <museum/8.1.0/bionic/libc/unistd.h>     // unlink
 #endif
 
 namespace android {

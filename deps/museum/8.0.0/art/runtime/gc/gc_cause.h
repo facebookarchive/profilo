@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_GC_CAUSE_H_
 #define ART_RUNTIME_GC_GC_CAUSE_H_
 
-#include <iosfwd>
+#include <museum/8.0.0/external/libcxx/iosfwd>
 
 namespace art {
 namespace gc {

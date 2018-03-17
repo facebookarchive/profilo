@@ -29,9 +29,9 @@
 #ifndef _SYS_SYSCALL_H_
 #define _SYS_SYSCALL_H_
 
-#include <asm/unistd.h> /* Linux kernel __NR_* names. */
-#include <bits/glibc-syscalls.h> /* glibc-compatible SYS_* aliases. */
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/asm/unistd.h> /* Linux kernel __NR_* names. */
+#include <museum/8.0.0/bionic/libc/bits/glibc-syscalls.h> /* glibc-compatible SYS_* aliases. */
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 /* The syscall function itself is declared in <unistd.h>, not here. */
 

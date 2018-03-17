@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_ALLOCATOR_DLMALLOC_H_
 #define ART_RUNTIME_GC_ALLOCATOR_DLMALLOC_H_
 
-#include <cstdint>
+#include <museum/8.0.0/external/libcxx/cstdint>
 
 // Configure dlmalloc for mspaces.
 // Avoid a collision with one used in llvm.
@@ -32,7 +32,7 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wredundant-decls"
-#include "../../external/dlmalloc/malloc.h"
+#include <museum/8.0.0/external/dlmalloc/malloc.h>
 #pragma GCC diagnostic pop
 
 #ifdef ART_TARGET_ANDROID

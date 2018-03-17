@@ -17,26 +17,26 @@
 #ifndef ART_RUNTIME_CLASS_LINKER_H_
 #define ART_RUNTIME_CLASS_LINKER_H_
 
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <utility>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/set>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/unordered_map>
+#include <museum/8.0.0/external/libcxx/unordered_set>
+#include <museum/8.0.0/external/libcxx/utility>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "base/enums.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "class_table.h"
-#include "dex_cache_resolved_classes.h"
-#include "dex_file.h"
-#include "dex_file_types.h"
-#include "gc_root.h"
-#include "handle.h"
-#include "jni.h"
-#include "mirror/class.h"
-#include "object_callbacks.h"
-#include "verifier/verifier_enums.h"
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/art/runtime/class_table.h>
+#include <museum/8.0.0/art/runtime/dex_cache_resolved_classes.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/dex_file_types.h>
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/handle.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/object_callbacks.h>
+#include <museum/8.0.0/art/runtime/verifier/verifier_enums.h>
 
 namespace art {
 

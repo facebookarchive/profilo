@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __RADEON_DRM_H__
 #define __RADEON_DRM_H__
-#include <drm/drm.h>
+#include <museum/6.0.1/bionic/libc/drm/drm.h>
 #ifndef __RADEON_SAREA_DEFINES__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define __RADEON_SAREA_DEFINES__

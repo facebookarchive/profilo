@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__UINPUT_H_
 #define _UAPI__UINPUT_H_
-#include <linux/types.h>
-#include <linux/input.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/input.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define UINPUT_VERSION 4
 struct uinput_ff_upload {

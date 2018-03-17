@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _CS_PROTOCOL_H
 #define _CS_PROTOCOL_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CS_DEV_FILE_NAME "/dev/cmt_speech"
 #define CS_IF_VERSION 2

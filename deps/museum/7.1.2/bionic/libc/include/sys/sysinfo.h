@@ -28,8 +28,8 @@
 #ifndef _SYS_SYSINFO_H_
 #define _SYS_SYSINFO_H_
 
-#include <sys/cdefs.h>
-#include <linux/kernel.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/linux/kernel.h>
 
 __BEGIN_DECLS
 

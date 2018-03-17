@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_GACT_H
 #define __LINUX_TC_GACT_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/pkt_cls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TCA_ACT_GACT 5
 struct tc_gact {

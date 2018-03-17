@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _LINUX_FIREWIRE_CDEV_H
 #define _LINUX_FIREWIRE_CDEV_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
-#include <linux/firewire-constants.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/firewire-constants.h>
 #define FW_CDEV_EVENT_BUS_RESET 0x00
 #define FW_CDEV_EVENT_RESPONSE 0x01
 #define FW_CDEV_EVENT_REQUEST 0x02

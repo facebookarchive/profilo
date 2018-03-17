@@ -11,11 +11,11 @@
 #ifndef _LIBCPP_FUNCTIONAL_BASE
 #define _LIBCPP_FUNCTIONAL_BASE
 
-#include <__config>
-#include <type_traits>
-#include <typeinfo>
-#include <exception>
-#include <new>
+#include <museum/6.0.1/external/libcxx/__config>
+#include <museum/6.0.1/external/libcxx/type_traits>
+#include <museum/6.0.1/external/libcxx/typeinfo>
+#include <museum/6.0.1/external/libcxx/exception>
+#include <museum/6.0.1/external/libcxx/new>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -129,7 +129,7 @@ addressof(__unsafe_unretained _Tp& __x) _NOEXCEPT
 
 #ifdef _LIBCPP_HAS_NO_VARIADICS
 
-#include <__functional_base_03>
+#include <museum/6.0.1/external/libcxx/__functional_base_03>
 
 #else  // _LIBCPP_HAS_NO_VARIADICS
 

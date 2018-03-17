@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_MTRR_H
 #define _UAPI_ASM_X86_MTRR_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/errno.h>
+#include <museum/5.1.1/bionic/libc/linux/errno.h>
 #define MTRR_IOCTL_BASE 'M'
 #ifdef __i386__
 struct mtrr_sentry {

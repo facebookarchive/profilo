@@ -17,23 +17,23 @@
 #ifndef ART_RUNTIME_UTILS_H_
 #define ART_RUNTIME_UTILS_H_
 
-#include <pthread.h>
-#include <stdlib.h>
+#include <museum/7.0.0/bionic/libc/pthread.h>
+#include <museum/7.0.0/bionic/libc/stdlib.h>
 
-#include <limits>
-#include <memory>
-#include <random>
-#include <string>
-#include <type_traits>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/limits>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/random>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/type_traits>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "arch/instruction_set.h"
-#include "base/casts.h"
-#include "base/logging.h"
-#include "base/mutex.h"
-#include "base/stringpiece.h"
-#include "globals.h"
-#include "primitive.h"
+#include <museum/7.0.0/art/runtime/arch/instruction_set.h>
+#include <museum/7.0.0/art/runtime/base/casts.h>
+#include <museum/7.0.0/art/runtime/base/logging.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/base/stringpiece.h>
+#include <museum/7.0.0/art/runtime/globals.h>
+#include <museum/7.0.0/art/runtime/primitive.h>
 
 class BacktraceMap;
 

@@ -36,10 +36,10 @@
 #ifndef _SYS_ENDIAN_H_
 #define _SYS_ENDIAN_H_
 
-#include <sys/cdefs.h>
-#include <machine/endian.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/machine/endian.h>
 
-#include <stdint.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
 
 #define _LITTLE_ENDIAN	1234
 #define _BIG_ENDIAN	4321

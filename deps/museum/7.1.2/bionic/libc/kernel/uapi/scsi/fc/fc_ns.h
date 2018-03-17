@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _FC_NS_H_
 #define _FC_NS_H_
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 #define FC_NS_SUBTYPE 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum fc_ns_req {

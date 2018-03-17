@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_SPACE_REGION_SPACE_INL_H_
 #define ART_RUNTIME_GC_SPACE_REGION_SPACE_INL_H_
 
-#include "region_space.h"
+#include <museum/7.1.2/art/runtime/gc/space/region_space.h>
 
 namespace art {
 namespace gc {

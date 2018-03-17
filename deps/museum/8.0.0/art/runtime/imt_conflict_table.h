@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_IMT_CONFLICT_TABLE_H_
 #define ART_RUNTIME_IMT_CONFLICT_TABLE_H_
 
-#include <cstddef>
+#include <museum/8.0.0/external/libcxx/cstddef>
 
-#include "base/casts.h"
-#include "base/enums.h"
-#include "base/macros.h"
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/enums.h>
+#include <museum/8.0.0/art/runtime/base/macros.h>
 
 namespace art {
 

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_MIRROR_METHOD_HANDLE_IMPL_H_
 #define ART_RUNTIME_MIRROR_METHOD_HANDLE_IMPL_H_
 
-#include "art_field.h"
-#include "art_method.h"
-#include "class.h"
-#include "gc_root.h"
-#include "object.h"
-#include "method_type.h"
+#include <museum/8.0.0/art/runtime/art_field.h>
+#include <museum/8.0.0/art/runtime/art_method.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/gc_root.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/mirror/method_type.h>
 
 namespace art {
 

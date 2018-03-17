@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NFSD_FH_H
 #define _UAPI_LINUX_NFSD_FH_H
-#include <linux/types.h>
-#include <linux/nfs.h>
-#include <linux/nfs2.h>
-#include <linux/nfs3.h>
-#include <linux/nfs4.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/nfs.h>
+#include <museum/8.1.0/bionic/libc/linux/nfs2.h>
+#include <museum/8.1.0/bionic/libc/linux/nfs3.h>
+#include <museum/8.1.0/bionic/libc/linux/nfs4.h>
 struct nfs_fhbase_old {
   __u32 fb_dcookie;
   __u32 fb_ino;

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_GENERIC_NETLINK_H
 #define _UAPI__LINUX_GENERIC_NETLINK_H
-#include <linux/types.h>
-#include <linux/netlink.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netlink.h>
 #define GENL_NAMSIZ 16
 #define GENL_MIN_ID NLMSG_MIN_TYPE
 #define GENL_MAX_ID 1023

@@ -32,18 +32,18 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_ART_JVMTI_H_
 #define ART_RUNTIME_OPENJDKJVMTI_ART_JVMTI_H_
 
-#include <memory>
-#include <type_traits>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/type_traits>
 
-#include <jni.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
-#include "base/array_slice.h"
-#include "base/casts.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "events.h"
-#include "java_vm_ext.h"
-#include "jni_env_ext.h"
+#include <museum/8.0.0/art/runtime/base/array_slice.h>
+#include <museum/8.0.0/art/runtime/base/casts.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/openjdkjvmti/events.h>
+#include <museum/8.0.0/art/runtime/java_vm_ext.h>
+#include <museum/8.0.0/art/runtime/jni_env_ext.h>
 #include "jvmti.h"
 
 namespace openjdkjvmti {

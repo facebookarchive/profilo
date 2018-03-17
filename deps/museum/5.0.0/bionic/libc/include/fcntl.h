@@ -29,12 +29,12 @@
 #ifndef _FCNTL_H
 #define _FCNTL_H
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/fadvise.h>
-#include <linux/fcntl.h>
-#include <linux/uio.h>
-#include <unistd.h>  /* this is not required, but makes client code much happier */
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/linux/fadvise.h>
+#include <museum/5.0.0/bionic/libc/linux/fcntl.h>
+#include <museum/5.0.0/bionic/libc/linux/uio.h>
+#include <museum/5.0.0/bionic/libc/unistd.h>  /* this is not required, but makes client code much happier */
 
 __BEGIN_DECLS
 

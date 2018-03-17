@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_CLASS_LINKER_INL_H_
 #define ART_RUNTIME_CLASS_LINKER_INL_H_
 
-#include "class_linker.h"
-#include "gc_root-inl.h"
-#include "gc/heap-inl.h"
-#include "mirror/art_field.h"
-#include "mirror/class_loader.h"
-#include "mirror/dex_cache-inl.h"
-#include "mirror/iftable.h"
-#include "mirror/object_array.h"
-#include "handle_scope-inl.h"
+#include <museum/5.0.0/art/runtime/class_linker.h>
+#include <museum/5.0.0/art/runtime/gc_root-inl.h>
+#include <museum/5.0.0/art/runtime/gc/heap-inl.h>
+#include <museum/5.0.0/art/runtime/mirror/art_field.h>
+#include <museum/5.0.0/art/runtime/mirror/class_loader.h>
+#include <museum/5.0.0/art/runtime/mirror/dex_cache-inl.h>
+#include <museum/5.0.0/art/runtime/mirror/iftable.h>
+#include <museum/5.0.0/art/runtime/mirror/object_array.h>
+#include <museum/5.0.0/art/runtime/handle_scope-inl.h>
 
 namespace art {
 

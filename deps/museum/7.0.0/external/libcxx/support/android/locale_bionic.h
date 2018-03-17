@@ -17,15 +17,15 @@
 extern "C" {
 #endif
 
-#include <stdlib.h>
-#include <xlocale.h>
+#include <museum/7.0.0/bionic/libc/stdlib.h>
+#include <museum/7.0.0/bionic/libc/xlocale.h>
 
 #ifdef __cplusplus
 }
 #endif
 
 // Share implementation with Newlib
-#include <support/xlocale/xlocale.h>
+#include <museum/7.0.0/external/libcxx/support/xlocale/xlocale.h>
 
 #endif // defined(__ANDROID__)
 #endif // _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_ROUTE_H
 #define _LINUX_ROUTE_H
-#include <linux/if.h>
-#include <linux/compiler.h>
+#include <museum/5.1.1/bionic/libc/linux/if.h>
+#include <museum/5.1.1/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct rtentry {
  unsigned long rt_pad1;

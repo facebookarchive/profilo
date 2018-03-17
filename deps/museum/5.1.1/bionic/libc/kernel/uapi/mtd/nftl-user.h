@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __MTD_NFTL_USER_H__
 #define __MTD_NFTL_USER_H__
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct nftl_bci {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  unsigned char ECCSig[6];

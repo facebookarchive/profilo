@@ -29,8 +29,8 @@
 #ifndef _BITS_PTHREAD_TYPES_H_
 #define _BITS_PTHREAD_TYPES_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
 
 typedef struct {
   uint32_t flags;

@@ -29,11 +29,11 @@
 #ifndef _SYS_SELECT_H_
 #define _SYS_SELECT_H_
 
-#include <sys/cdefs.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <signal.h>
-#include <string.h>
+#include <museum/5.1.1/bionic/libc/sys/cdefs.h>
+#include <museum/5.1.1/bionic/libc/sys/time.h>
+#include <museum/5.1.1/bionic/libc/sys/types.h>
+#include <museum/5.1.1/bionic/libc/signal.h>
+#include <museum/5.1.1/bionic/libc/string.h>
 
 __BEGIN_DECLS
 

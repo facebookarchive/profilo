@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_NETFILTER_XT_L2TP_H
 #define _LINUX_NETFILTER_XT_L2TP_H
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 enum xt_l2tp_type {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   XT_L2TP_TYPE_CONTROL,

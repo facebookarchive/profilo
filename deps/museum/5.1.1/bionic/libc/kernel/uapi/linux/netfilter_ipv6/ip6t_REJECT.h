@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP6T_REJECT_H
 #define _IP6T_REJECT_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 enum ip6t_reject_with {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  IP6T_ICMP6_NO_ROUTE,

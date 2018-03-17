@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_ROOT_H_
 #define ART_RUNTIME_GC_ROOT_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"       // For Locks::mutator_lock_.
-#include "object_callbacks.h"
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/base/mutex.h>       // For Locks::mutator_lock_.
+#include <museum/5.0.0/art/runtime/object_callbacks.h>
 
 namespace art {
 

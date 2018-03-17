@@ -29,10 +29,10 @@
 #ifndef _NET_ROUTE_H_
 #define _NET_ROUTE_H_
 
-#include <sys/cdefs.h>
-#include <sys/socket.h>
-#include <linux/route.h>
-#include <linux/in6.h>
-#include <linux/ipv6_route.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/route.h>
+#include <museum/8.1.0/bionic/libc/linux/in6.h>
+#include <museum/8.1.0/bionic/libc/linux/ipv6_route.h>
 
 #endif

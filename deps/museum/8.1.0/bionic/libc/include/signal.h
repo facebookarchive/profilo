@@ -29,27 +29,27 @@
 #ifndef _SIGNAL_H_
 #define _SIGNAL_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
-#include <asm/sigcontext.h>
-#include <bits/pthread_types.h>
-#include <bits/timespec.h>
-#include <limits.h>
+#include <museum/8.1.0/bionic/libc/asm/sigcontext.h>
+#include <museum/8.1.0/bionic/libc/bits/pthread_types.h>
+#include <museum/8.1.0/bionic/libc/bits/timespec.h>
+#include <museum/8.1.0/bionic/libc/limits.h>
 
 #if defined(__LP64__) || defined(__mips__)
 /* For 64-bit (and mips), the kernel's struct sigaction doesn't match the POSIX one,
  * so we need to expose our own and translate behind the scenes. */
 #  define sigaction __kernel_sigaction
-#  include <linux/signal.h>
+#  include <museum/8.1.0/bionic/libc/linux/signal.h>
 #  undef sigaction
 #else
 /* For 32-bit, we're stuck with the definitions we already shipped,
  * even though they contain a sigset_t that's too small. */
-#  include <linux/signal.h>
+#  include <museum/8.1.0/bionic/libc/linux/signal.h>
 #endif
 
-#include <sys/ucontext.h>
+#include <museum/8.1.0/bionic/libc/sys/ucontext.h>
 #define __BIONIC_HAVE_UCONTEXT_T
 
 __BEGIN_DECLS
@@ -170,6 +170,6 @@ int sigwaitinfo(const sigset_t* _Nonnull, siginfo_t*) __INTRODUCED_IN(23);
 
 __END_DECLS
 
-#include <android/legacy_signal_inlines.h>
+#include <museum/8.1.0/bionic/libc/android/legacy_signal_inlines.h>
 
 #endif /* _SIGNAL_H_ */

@@ -524,10 +524,10 @@ void atomic_signal_fence(memory_order m) noexcept;
 
 */
 
-#include <__config>
-#include <cstddef>
-#include <cstdint>
-#include <type_traits>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/cstddef>
+#include <museum/5.0.0/external/libcxx/cstdint>
+#include <museum/5.0.0/external/libcxx/type_traits>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

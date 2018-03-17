@@ -99,7 +99,7 @@ Macros:
 
 */
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -116,6 +116,6 @@ Macros:
 #   define __STDC_CONSTANT_MACROS
 #endif
 
-#include_next <stdint.h>
+#include <museum/8.0.0/bionic/libc/stdint.h>
 
 #endif  // _LIBCPP_STDINT_H

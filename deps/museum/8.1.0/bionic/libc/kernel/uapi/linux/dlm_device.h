@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_DLM_DEVICE_H
 #define _LINUX_DLM_DEVICE_H
-#include <linux/dlm.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/dlm.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define DLM_USER_LVB_LEN 32
 #define DLM_DEVICE_VERSION_MAJOR 6
 #define DLM_DEVICE_VERSION_MINOR 0

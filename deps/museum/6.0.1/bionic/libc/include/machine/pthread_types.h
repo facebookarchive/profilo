@@ -29,7 +29,7 @@
 #ifndef _MACHINE_PTHREAD_TYPES_H_
 #define _MACHINE_PTHREAD_TYPES_H_
 
-#include <sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
 
 typedef long pthread_t;
 

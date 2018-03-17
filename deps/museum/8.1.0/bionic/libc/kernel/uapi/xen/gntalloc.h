@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_PUBLIC_GNTALLOC_H__
 #define __LINUX_PUBLIC_GNTALLOC_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IOCTL_GNTALLOC_ALLOC_GREF _IOC(_IOC_NONE, 'G', 5, sizeof(struct ioctl_gntalloc_alloc_gref))
 struct ioctl_gntalloc_alloc_gref {
   __u16 domid;

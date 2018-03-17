@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __HSI_CHAR_H
 #define __HSI_CHAR_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define HSI_CHAR_MAGIC 'k'
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define HSC_IOW(num,dtype) _IOW(HSI_CHAR_MAGIC, num, dtype)

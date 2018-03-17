@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_OAT_H_
 #define ART_RUNTIME_OAT_H_
 
-#include <vector>
+#include <museum/5.1.1/external/libcxx/vector>
 
-#include "base/macros.h"
-#include "dex_file.h"
-#include "instruction_set.h"
-#include "quick/quick_method_frame_info.h"
-#include "safe_map.h"
+#include <museum/5.1.1/art/runtime/base/macros.h>
+#include <museum/5.1.1/art/runtime/dex_file.h>
+#include <museum/5.1.1/art/runtime/instruction_set.h>
+#include <museum/5.1.1/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/5.1.1/art/runtime/safe_map.h>
 
 namespace art {
 

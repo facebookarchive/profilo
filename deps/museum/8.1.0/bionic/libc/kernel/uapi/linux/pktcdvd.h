@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__PKTCDVD_H
 #define _UAPI__PKTCDVD_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define PACKET_DEBUG 1
 #define MAX_WRITERS 8
 #define PKT_RB_POOL_SIZE 512

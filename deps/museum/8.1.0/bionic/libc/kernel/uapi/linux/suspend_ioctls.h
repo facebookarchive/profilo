@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_SUSPEND_IOCTLS_H
 #define _LINUX_SUSPEND_IOCTLS_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct resume_swap_area {
   __kernel_loff_t offset;
   __u32 dev;

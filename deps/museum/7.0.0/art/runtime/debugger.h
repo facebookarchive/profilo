@@ -21,18 +21,18 @@
 #ifndef ART_RUNTIME_DEBUGGER_H_
 #define ART_RUNTIME_DEBUGGER_H_
 
-#include <pthread.h>
+#include <museum/7.0.0/bionic/libc/pthread.h>
 
-#include <set>
-#include <string>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/set>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "gc_root.h"
-#include "jdwp/jdwp.h"
-#include "jni.h"
-#include "jvalue.h"
-#include "thread.h"
-#include "thread_state.h"
+#include <museum/7.0.0/art/runtime/gc_root.h>
+#include <museum/7.0.0/art/runtime/jdwp/jdwp.h>
+#include <museum/7.0.0/libnativehelper/jni.h>
+#include <museum/7.0.0/art/runtime/jvalue.h>
+#include <museum/7.0.0/art/runtime/thread.h>
+#include <museum/7.0.0/art/runtime/thread_state.h>
 
 namespace art {
 namespace mirror {

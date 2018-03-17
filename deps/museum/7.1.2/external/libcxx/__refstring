@@ -10,11 +10,11 @@
 #ifndef _LIBCPP___REFSTRING
 #define _LIBCPP___REFSTRING
 
-#include <__config>
-#include <cstddef>
-#include <cstring>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/cstddef>
+#include <museum/7.1.2/external/libcxx/cstring>
 #ifdef __APPLE__
-#include <dlfcn.h>
+#include <museum/7.1.2/bionic/libc/dlfcn.h>
 #include <mach-o/dyld.h>
 #endif
 

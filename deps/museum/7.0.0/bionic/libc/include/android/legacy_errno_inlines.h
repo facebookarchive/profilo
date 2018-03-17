@@ -29,7 +29,7 @@
 #ifndef _ANDROID_LEGACY_ERRNO_INLINES_H
 #define _ANDROID_LEGACY_ERRNO_INLINES_H
 
-#include <sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

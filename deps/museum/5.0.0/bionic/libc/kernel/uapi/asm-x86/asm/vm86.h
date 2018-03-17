@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_X86_VM86_H
 #define _UAPI_ASM_X86_VM86_H
-#include <asm/processor-flags.h>
+#include <museum/5.0.0/bionic/libc/asm/processor-flags.h>
 #define BIOSSEG 0x0f000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define CPU_086 0

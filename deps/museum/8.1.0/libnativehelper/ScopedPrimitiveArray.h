@@ -17,7 +17,7 @@
 #ifndef SCOPED_PRIMITIVE_ARRAY_H_included
 #define SCOPED_PRIMITIVE_ARRAY_H_included
 
-#include "JNIHelp.h"
+#include <museum/8.1.0/libnativehelper/JNIHelp.h>
 
 #ifdef POINTER_TYPE
 #error POINTER_TYPE is defined.

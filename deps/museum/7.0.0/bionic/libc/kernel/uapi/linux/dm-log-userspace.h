@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __DM_LOG_USERSPACE_H__
 #define __DM_LOG_USERSPACE_H__
-#include <linux/dm-ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/dm-ioctl.h>
 #define DM_ULOG_CTR 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DM_ULOG_DTR 2

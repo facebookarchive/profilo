@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_GENERIC_INT_LL64_H
 #define _UAPI_ASM_GENERIC_INT_LL64_H
-#include <asm/bitsperlong.h>
+#include <museum/7.1.2/bionic/libc/asm/bitsperlong.h>
 #ifndef __ASSEMBLY__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef __signed__ char __s8;

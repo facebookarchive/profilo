@@ -14,7 +14,7 @@
 #pragma GCC system_header
 #endif
 
-#include_next <stdio.h>
+#include <museum/8.1.0/bionic/libc/stdio.h>
 
 #elif !defined(_LIBCPP_STDIO_H)
 #define _LIBCPP_STDIO_H
@@ -99,20 +99,20 @@ int ferror(FILE* stream);
 void perror(const char* s);
 */
 
-#include <__config>
+#include <museum/8.1.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#include_next <stdio.h>
+#include <museum/8.1.0/bionic/libc/stdio.h>
 
 #ifdef __cplusplus
 
 // snprintf
 #if defined(_LIBCPP_MSVCRT)
 extern "C++" {
-#include "support/win32/support.h"
+#include <museum/8.1.0/external/libcxx/support/win32/support.h>
 }
 #endif
 

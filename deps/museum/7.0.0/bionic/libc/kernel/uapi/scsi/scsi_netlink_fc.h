@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef SCSI_NETLINK_FC_H
 #define SCSI_NETLINK_FC_H
-#include <scsi/scsi_netlink.h>
+#include <museum/7.0.0/bionic/libc/scsi/scsi_netlink.h>
 #define FC_NL_ASYNC_EVENT 0x0100
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define FC_NL_MSGALIGN(len) (((len) + 7) & ~7)

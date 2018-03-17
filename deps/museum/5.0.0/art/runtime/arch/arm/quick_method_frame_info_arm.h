@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_ARCH_ARM_QUICK_METHOD_FRAME_INFO_ARM_H_
 #define ART_RUNTIME_ARCH_ARM_QUICK_METHOD_FRAME_INFO_ARM_H_
 
-#include "quick/quick_method_frame_info.h"
-#include "registers_arm.h"
-#include "runtime.h"  // for Runtime::CalleeSaveType.
-#include "utils.h"
+#include <museum/5.0.0/art/runtime/quick/quick_method_frame_info.h>
+#include <museum/5.0.0/art/runtime/arch/arm/registers_arm.h>
+#include <museum/5.0.0/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
+#include <museum/5.0.0/art/runtime/utils.h>
 
 namespace art {
 namespace arm {

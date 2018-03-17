@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_JVALUE_INL_H_
 #define ART_RUNTIME_JVALUE_INL_H_
 
-#include "jvalue.h"
+#include <museum/8.0.0/art/runtime/jvalue.h>
 
-#include "obj_ptr.h"
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
 
 namespace art {
 

@@ -17,30 +17,30 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_
 #define ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_
 
-#include "entrypoint_utils.h"
+#include <museum/8.1.0/art/runtime/entrypoints/entrypoint_utils.h>
 
-#include "art_field-inl.h"
-#include "art_method-inl.h"
-#include "base/enums.h"
-#include "class_linker-inl.h"
-#include "common_throws.h"
-#include "dex_file.h"
-#include "entrypoints/quick/callee_save_frame.h"
-#include "handle_scope-inl.h"
-#include "imt_conflict_table.h"
-#include "imtable-inl.h"
-#include "indirect_reference_table.h"
-#include "invoke_type.h"
-#include "jni_internal.h"
-#include "mirror/array.h"
-#include "mirror/class-inl.h"
-#include "mirror/object-inl.h"
-#include "mirror/throwable.h"
-#include "nth_caller_visitor.h"
-#include "runtime.h"
-#include "stack_map.h"
-#include "thread.h"
-#include "well_known_classes.h"
+#include <museum/8.1.0/art/runtime/art_field-inl.h>
+#include <museum/8.1.0/art/runtime/art_method-inl.h>
+#include <museum/8.1.0/art/runtime/base/enums.h>
+#include <museum/8.1.0/art/runtime/class_linker-inl.h>
+#include <museum/8.1.0/art/runtime/common_throws.h>
+#include <museum/8.1.0/art/runtime/dex_file.h>
+#include <museum/8.1.0/art/runtime/entrypoints/quick/callee_save_frame.h>
+#include <museum/8.1.0/art/runtime/handle_scope-inl.h>
+#include <museum/8.1.0/art/runtime/imt_conflict_table.h>
+#include <museum/8.1.0/art/runtime/imtable-inl.h>
+#include <museum/8.1.0/art/runtime/indirect_reference_table.h>
+#include <museum/8.1.0/art/runtime/invoke_type.h>
+#include <museum/8.1.0/art/runtime/jni_internal.h>
+#include <museum/8.1.0/art/runtime/mirror/array.h>
+#include <museum/8.1.0/art/runtime/mirror/class-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/object-inl.h>
+#include <museum/8.1.0/art/runtime/mirror/throwable.h>
+#include <museum/8.1.0/art/runtime/nth_caller_visitor.h>
+#include <museum/8.1.0/art/runtime/runtime.h>
+#include <museum/8.1.0/art/runtime/stack_map.h>
+#include <museum/8.1.0/art/runtime/thread.h>
+#include <museum/8.1.0/art/runtime/well_known_classes.h>
 
 namespace art {
 

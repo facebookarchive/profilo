@@ -28,7 +28,7 @@
 #ifndef _PATHCONF_H_
 #define _PATHCONF_H_
 
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

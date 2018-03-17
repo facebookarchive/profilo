@@ -35,7 +35,7 @@
 #ifndef _LIMITS_H_
 #define	_LIMITS_H_
 
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 
 #if __POSIX_VISIBLE
 #define	_POSIX_ARG_MAX		4096
@@ -83,10 +83,10 @@
 #define TMP_MAX                 308915776
 #endif /* __XPG_VISIBLE */
 
-#include <sys/limits.h>
+#include <museum/5.0.0/bionic/libc/sys/limits.h>
 
 #if __POSIX_VISIBLE
-#include <sys/syslimits.h>
+#include <museum/5.0.0/bionic/libc/sys/syslimits.h>
 #endif
 
 /* GLibc compatibility definitions.

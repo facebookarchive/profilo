@@ -11,10 +11,10 @@
 #ifndef _LIBCPP___BIT_REFERENCE
 #define _LIBCPP___BIT_REFERENCE
 
-#include <__config>
-#include <algorithm>
+#include <museum/5.1.1/external/libcxx/__config>
+#include <museum/5.1.1/external/libcxx/algorithm>
 
-#include <__undef_min_max>
+#include <museum/5.1.1/external/libcxx/__undef_min_max>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

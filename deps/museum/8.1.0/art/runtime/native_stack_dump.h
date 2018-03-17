@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_NATIVE_STACK_DUMP_H_
 #define ART_RUNTIME_NATIVE_STACK_DUMP_H_
 
-#include <unistd.h>
+#include <museum/8.1.0/bionic/libc/unistd.h>
 
-#include <iosfwd>
+#include <museum/8.1.0/external/libcxx/iosfwd>
 
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
 class BacktraceMap;
 

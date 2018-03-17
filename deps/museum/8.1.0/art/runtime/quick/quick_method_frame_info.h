@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_QUICK_QUICK_METHOD_FRAME_INFO_H_
 #define ART_RUNTIME_QUICK_QUICK_METHOD_FRAME_INFO_H_
 
-#include <stdint.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
 
-#include "base/macros.h"
+#include <museum/8.1.0/art/runtime/base/macros.h>
 
 namespace art {
 

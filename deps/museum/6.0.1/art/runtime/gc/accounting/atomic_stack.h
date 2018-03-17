@@ -17,16 +17,16 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_ATOMIC_STACK_H_
 #define ART_RUNTIME_GC_ACCOUNTING_ATOMIC_STACK_H_
 
-#include <algorithm>
-#include <memory>
-#include <string>
+#include <museum/6.0.1/external/libcxx/algorithm>
+#include <museum/6.0.1/external/libcxx/memory>
+#include <museum/6.0.1/external/libcxx/string>
 
-#include "atomic.h"
-#include "base/bit_utils.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "mem_map.h"
-#include "stack.h"
+#include <museum/6.0.1/art/runtime/atomic.h>
+#include <museum/6.0.1/art/runtime/base/bit_utils.h>
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/mem_map.h>
+#include <museum/6.0.1/art/runtime/stack.h>
 
 namespace art {
 namespace gc {

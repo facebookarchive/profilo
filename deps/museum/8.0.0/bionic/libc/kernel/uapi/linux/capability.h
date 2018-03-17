@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_CAPABILITY_H
 #define _UAPI_LINUX_CAPABILITY_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define _LINUX_CAPABILITY_VERSION_1 0x19980330
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define _LINUX_CAPABILITY_U32S_1 1

@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_INL_H_
 #define ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_INL_H_
 
-#include "concurrent_copying.h"
+#include <museum/7.1.2/art/runtime/gc/collector/concurrent_copying.h>
 
-#include "gc/accounting/space_bitmap-inl.h"
-#include "gc/heap.h"
-#include "gc/space/region_space.h"
-#include "lock_word.h"
+#include <museum/7.1.2/art/runtime/gc/accounting/space_bitmap-inl.h>
+#include <museum/7.1.2/art/runtime/gc/heap.h>
+#include <museum/7.1.2/art/runtime/gc/space/region_space.h>
+#include <museum/7.1.2/art/runtime/lock_word.h>
 
 namespace art {
 namespace gc {

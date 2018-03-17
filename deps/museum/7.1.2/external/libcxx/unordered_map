@@ -15,7 +15,7 @@
 
     unordered_map synopsis
 
-#include <initializer_list>
+#include <museum/7.1.2/external/libcxx/initializer_list>
 
 namespace std
 {
@@ -365,12 +365,12 @@ template <class Key, class T, class Hash, class Pred, class Alloc>
 
 */
 
-#include <__config>
-#include <__hash_table>
-#include <functional>
-#include <stdexcept>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/__hash_table>
+#include <museum/7.1.2/external/libcxx/functional>
+#include <museum/7.1.2/external/libcxx/stdexcept>
 
-#include <__debug>
+#include <museum/7.1.2/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

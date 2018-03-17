@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_JNI_INTERNAL_H_
 #define ART_RUNTIME_JNI_INTERNAL_H_
 
-#include <jni.h>
-#include <iosfwd>
-#include "nativehelper/jni_macros.h"
+#include <museum/8.0.0/libnativehelper/jni.h>
+#include <museum/8.0.0/external/libcxx/iosfwd>
+#include <museum/8.0.0/libnativehelper/jni_macros.h>
 
-#include "base/macros.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
 
 #define REGISTER_NATIVE_METHODS(jni_class_name) \
   RegisterNativeMethods(env, jni_class_name, gMethods, arraysize(gMethods))

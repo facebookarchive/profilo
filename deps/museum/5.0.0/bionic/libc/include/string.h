@@ -28,10 +28,10 @@
 #ifndef _STRING_H_
 #define _STRING_H_
 
-#include <sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #include <stddef.h>
-#include <malloc.h>
-#include <xlocale.h>
+#include <museum/5.0.0/bionic/libc/malloc.h>
+#include <museum/5.0.0/bionic/libc/xlocale.h>
 
 __BEGIN_DECLS
 

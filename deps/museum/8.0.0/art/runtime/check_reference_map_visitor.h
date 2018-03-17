@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_CHECK_REFERENCE_MAP_VISITOR_H_
 #define ART_RUNTIME_CHECK_REFERENCE_MAP_VISITOR_H_
 
-#include "art_method-inl.h"
-#include "oat_quick_method_header.h"
-#include "scoped_thread_state_change-inl.h"
-#include "stack_map.h"
+#include <museum/8.0.0/art/runtime/art_method-inl.h>
+#include <museum/8.0.0/art/runtime/oat_quick_method_header.h>
+#include <museum/8.0.0/art/runtime/scoped_thread_state_change-inl.h>
+#include <museum/8.0.0/art/runtime/stack_map.h>
 
 namespace art {
 

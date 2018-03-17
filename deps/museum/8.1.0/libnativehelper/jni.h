@@ -25,7 +25,7 @@
 #define JNI_H_
 
 #include <stdarg.h>
-#include <stdint.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
 
 /* Primitive types that match up with Java equivalents. */
 typedef uint8_t  jboolean; /* unsigned 8 bits */

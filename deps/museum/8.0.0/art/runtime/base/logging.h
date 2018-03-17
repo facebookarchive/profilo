@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_LOGGING_H_
 #define ART_RUNTIME_BASE_LOGGING_H_
 
-#include <ostream>
-#include <sstream>
+#include <museum/8.0.0/external/libcxx/ostream>
+#include <museum/8.0.0/external/libcxx/sstream>
 
-#include "android-base/logging.h"
-#include "base/macros.h"
+#include <museum/8.0.0/android-base/logging.h>
+#include <museum/8.0.0/art/runtime/base/macros.h>
 
 namespace art {
 

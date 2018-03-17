@@ -19,8 +19,8 @@
 #ifndef	_INTTYPES_H_
 #define	_INTTYPES_H_
 
-#include <stdint.h>
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/stdint.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 #ifdef __LP64__
 #define __PRI_64_prefix  "l"

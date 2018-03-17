@@ -29,9 +29,9 @@
 #ifndef _SYS_PRCTL_H
 #define _SYS_PRCTL_H
 
-#include <sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 
-#include <linux/prctl.h>
+#include <museum/6.0.1/bionic/libc/linux/prctl.h>
 
 __BEGIN_DECLS
 

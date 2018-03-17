@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_UVESAFB_H
 #define _UAPI_UVESAFB_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 struct v86_regs {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u32 ebx;

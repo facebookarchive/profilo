@@ -22,9 +22,9 @@
  * upstream-dlmalloc) but doesn't directly include it here to keep the
  * defined malloc.h interface small.
  */
-#include <sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <stddef.h>
-#include <stdio.h>
+#include <museum/6.0.1/bionic/libc/stdio.h>
 
 __BEGIN_DECLS
 

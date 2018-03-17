@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_IP_NETFILTER_H
 #define _UAPI__LINUX_IP_NETFILTER_H
-#include <linux/netfilter.h>
-#include <limits.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter.h>
+#include <museum/8.1.0/bionic/libc/limits.h>
 #define NFC_IP_SRC 0x0001
 #define NFC_IP_DST 0x0002
 #define NFC_IP_IF_IN 0x0004

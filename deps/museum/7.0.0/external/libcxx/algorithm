@@ -14,7 +14,7 @@
 /*
     algorithm synopsis
 
-#include <initializer_list>
+#include <museum/7.0.0/external/libcxx/initializer_list>
 
 namespace std
 {
@@ -620,25 +620,25 @@ template <class BidirectionalIterator, class Compare>
 
 */
 
-#include <__config>
-#include <initializer_list>
-#include <type_traits>
-#include <cstring>
-#include <utility>
-#include <memory>
-#include <iterator>
-#include <cstddef>
+#include <museum/7.0.0/external/libcxx/__config>
+#include <museum/7.0.0/external/libcxx/initializer_list>
+#include <museum/7.0.0/external/libcxx/type_traits>
+#include <museum/7.0.0/external/libcxx/cstring>
+#include <museum/7.0.0/external/libcxx/utility>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/iterator>
+#include <museum/7.0.0/external/libcxx/cstddef>
 
 #if defined(__IBMCPP__)
-#include "support/ibm/support.h"
+#include <museum/7.0.0/external/libcxx/support/ibm/support.h>
 #endif
 #if defined(_LIBCPP_MSVCRT) || defined(__MINGW32__)
-#include "support/win32/support.h"
+#include <museum/7.0.0/external/libcxx/support/win32/support.h>
 #endif
 
-#include <__undef_min_max>
+#include <museum/7.0.0/external/libcxx/__undef_min_max>
 
-#include <__debug>
+#include <museum/7.0.0/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

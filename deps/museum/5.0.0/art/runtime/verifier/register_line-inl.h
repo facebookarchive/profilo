@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_VERIFIER_REGISTER_LINE_INL_H_
 #define ART_RUNTIME_VERIFIER_REGISTER_LINE_INL_H_
 
-#include "register_line.h"
+#include <museum/5.0.0/art/runtime/verifier/register_line.h>
 
-#include "method_verifier.h"
-#include "reg_type_cache-inl.h"
+#include <museum/5.0.0/art/runtime/verifier/method_verifier.h>
+#include <museum/5.0.0/art/runtime/verifier/reg_type_cache-inl.h>
 
 namespace art {
 namespace verifier {

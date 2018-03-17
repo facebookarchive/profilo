@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_JIT_JIT_H_
 #define ART_RUNTIME_JIT_JIT_H_
 
-#include "base/arena_allocator.h"
-#include "base/histogram-inl.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "base/timing_logger.h"
-#include "object_callbacks.h"
-#include "offline_profiling_info.h"
-#include "thread_pool.h"
+#include <museum/7.0.0/art/runtime/base/arena_allocator.h>
+#include <museum/7.0.0/art/runtime/base/histogram-inl.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/base/timing_logger.h>
+#include <museum/7.0.0/art/runtime/object_callbacks.h>
+#include <museum/7.0.0/art/runtime/jit/offline_profiling_info.h>
+#include <museum/7.0.0/art/runtime/thread_pool.h>
 
 namespace art {
 

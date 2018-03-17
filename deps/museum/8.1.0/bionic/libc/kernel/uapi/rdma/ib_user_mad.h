@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef IB_USER_MAD_H
 #define IB_USER_MAD_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define IB_USER_MAD_ABI_VERSION 5
 struct ib_user_mad_hdr_old {
   __u32 id;

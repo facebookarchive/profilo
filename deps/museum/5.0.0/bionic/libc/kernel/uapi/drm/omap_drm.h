@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __OMAP_DRM_H__
 #define __OMAP_DRM_H__
-#include <drm/drm.h>
+#include <museum/5.0.0/bionic/libc/drm/drm.h>
 #define OMAP_PARAM_CHIPSET_ID 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct drm_omap_param {

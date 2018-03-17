@@ -26,7 +26,7 @@
 #define wcwidth sun_wcwidth
 #define wctype sun_wctype
 #define _WCHAR_T 1
-#include_next "wchar.h"
+#include <museum/8.0.0/bionic/libc/wchar.h>
 #undef iswalpha 
 #undef iswupper
 #undef iswlower

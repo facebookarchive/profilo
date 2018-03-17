@@ -61,9 +61,9 @@
 #ifndef _NETDB_H_
 #define _NETDB_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/socket.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/socket.h>
 
 #ifndef _PATH_HEQUIV
 # define	_PATH_HEQUIV	"/system/etc/hosts.equiv"

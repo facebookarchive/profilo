@@ -17,10 +17,10 @@
  ****************************************************************************
  ****************************************************************************/
 #ifdef __i386__
-#include <asm/posix_types_32.h>
+#include <museum/7.0.0/bionic/libc/asm/posix_types_32.h>
 #elif defined(__ILP32__)
-#include <asm/posix_types_x32.h>
+#include <museum/7.0.0/bionic/libc/asm/posix_types_x32.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #else
-#include <asm/posix_types_64.h>
+#include <museum/7.0.0/bionic/libc/asm/posix_types_64.h>
 #endif

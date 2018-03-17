@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_DSCP_H
 #define _XT_DSCP_H
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 #define XT_DSCP_MASK 0xfc
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XT_DSCP_SHIFT 2

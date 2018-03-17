@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_MARK_H
 #define _XT_MARK_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 struct xt_mark_tginfo2 {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u32 mark, mask;

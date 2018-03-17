@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_NATIVE_SUN_MISC_UNSAFE_H_
 #define ART_RUNTIME_NATIVE_SUN_MISC_UNSAFE_H_
 
-#include <jni.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
 namespace art {
 

@@ -29,16 +29,16 @@
 #ifndef _SYS_SOCKET_H_
 #define _SYS_SOCKET_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <linux/socket.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/types.h>
+#include <museum/7.0.0/bionic/libc/linux/socket.h>
 
-#include <asm/fcntl.h>
-#include <asm/socket.h>
-#include <linux/sockios.h>
-#include <linux/uio.h>
-#include <linux/types.h>
-#include <linux/compiler.h>
+#include <museum/7.0.0/bionic/libc/asm/fcntl.h>
+#include <museum/7.0.0/bionic/libc/asm/socket.h>
+#include <museum/7.0.0/bionic/libc/linux/sockios.h>
+#include <museum/7.0.0/bionic/libc/linux/uio.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/compiler.h>
 
 __BEGIN_DECLS
 

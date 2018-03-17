@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_DQBLK_XFS_H
 #define _LINUX_DQBLK_XFS_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XQM_CMD(x) (('X' << 8) + (x))
 #define XQM_COMMAND(x) (((x) & (0xff << 8)) == ('X' << 8))
 #define XQM_USRQUOTA 0

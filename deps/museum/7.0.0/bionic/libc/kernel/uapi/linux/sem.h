@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SEM_H
 #define _UAPI_LINUX_SEM_H
-#include <linux/ipc.h>
+#include <museum/7.0.0/bionic/libc/linux/ipc.h>
 #define SEM_UNDO 0x1000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define GETPID 11
@@ -44,7 +44,7 @@ struct semid_ds {
   struct sem_undo * undo;
   unsigned short sem_nsems;
 };
-#include <asm/sembuf.h>
+#include <museum/7.0.0/bionic/libc/asm/sembuf.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct sembuf {
   unsigned short sem_num;

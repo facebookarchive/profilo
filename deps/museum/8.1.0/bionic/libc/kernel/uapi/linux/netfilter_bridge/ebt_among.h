@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_AMONG_H
 #define __LINUX_BRIDGE_EBT_AMONG_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define EBT_AMONG_DST 0x01
 #define EBT_AMONG_SRC 0x02
 struct ebt_mac_wormhash_tuple {

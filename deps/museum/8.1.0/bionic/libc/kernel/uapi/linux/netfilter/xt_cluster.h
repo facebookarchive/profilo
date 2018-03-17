@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_CLUSTER_MATCH_H
 #define _XT_CLUSTER_MATCH_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum xt_cluster_flags {
   XT_CLUSTER_F_INV = (1 << 0)
 };

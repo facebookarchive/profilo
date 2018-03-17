@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SECCOMP_H
 #define _UAPI_LINUX_SECCOMP_H
-#include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/compiler.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SECCOMP_MODE_DISABLED 0
 #define SECCOMP_MODE_STRICT 1

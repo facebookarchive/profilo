@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_SOUND_FIREWIRE_H_INCLUDED
 #define _UAPI_SOUND_FIREWIRE_H_INCLUDED
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SNDRV_FIREWIRE_EVENT_LOCK_STATUS 0x000010cc
 #define SNDRV_FIREWIRE_EVENT_DICE_NOTIFICATION 0xd1ce004e

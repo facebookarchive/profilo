@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_MIRROR_OBJECT_ARRAY_H_
 #define ART_RUNTIME_MIRROR_OBJECT_ARRAY_H_
 
-#include "array.h"
-#include "obj_ptr.h"
+#include <museum/8.0.0/art/runtime/mirror/array.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
 
 namespace art {
 namespace mirror {

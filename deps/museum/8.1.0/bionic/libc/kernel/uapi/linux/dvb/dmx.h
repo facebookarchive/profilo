@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_DVBDMX_H_
 #define _UAPI_DVBDMX_H_
-#include <linux/types.h>
-#include <time.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/time.h>
 #define DMX_FILTER_SIZE 16
 enum dmx_output {
   DMX_OUT_DECODER,

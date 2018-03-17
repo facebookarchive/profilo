@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef NETROM_KERNEL_H
 #define NETROM_KERNEL_H
-#include <linux/ax25.h>
+#include <museum/6.0.1/bionic/libc/linux/ax25.h>
 #define NETROM_MTU 236
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NETROM_T1 1

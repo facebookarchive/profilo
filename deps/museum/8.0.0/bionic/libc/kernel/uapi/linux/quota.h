@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_QUOTA_
 #define _UAPI_LINUX_QUOTA_
-#include <linux/errno.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/errno.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define __DQUOT_VERSION__ "dquot_6.6.0"
 #define MAXQUOTAS 3

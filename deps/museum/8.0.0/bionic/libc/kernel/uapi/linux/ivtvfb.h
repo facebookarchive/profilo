@@ -19,7 +19,7 @@
 #ifndef __LINUX_IVTVFB_H__
 #define __LINUX_IVTVFB_H__
 #include <linux/compiler.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct ivtvfb_dma_frame {
   void __user * source;

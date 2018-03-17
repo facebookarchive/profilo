@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_GW_H
 #define _UAPI_CAN_GW_H
-#include <linux/types.h>
-#include <linux/can.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/can.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct rtcanmsg {
   __u8 can_family;

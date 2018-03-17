@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_MOUNT_H
 #define _LINUX_NCP_MOUNT_H
-#include <linux/types.h>
-#include <linux/ncp.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ncp.h>
 #define NCP_MOUNT_VERSION 3
 #define NCP_MOUNT_SOFT 0x0001
 #define NCP_MOUNT_INTR 0x0002

@@ -29,7 +29,7 @@
 #ifndef _COMPLEX_H
 #define	_COMPLEX_H
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 #ifdef __GNUC__
 #define	_Complex_I	((float _Complex)1.0i)

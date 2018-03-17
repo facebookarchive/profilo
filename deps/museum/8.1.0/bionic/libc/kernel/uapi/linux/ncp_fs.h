@@ -18,12 +18,12 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_FS_H
 #define _LINUX_NCP_FS_H
-#include <linux/fs.h>
-#include <linux/in.h>
-#include <linux/types.h>
-#include <linux/magic.h>
-#include <linux/ipx.h>
-#include <linux/ncp_no.h>
+#include <museum/8.1.0/bionic/libc/linux/fs.h>
+#include <museum/8.1.0/bionic/libc/linux/in.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/magic.h>
+#include <museum/8.1.0/bionic/libc/linux/ipx.h>
+#include <museum/8.1.0/bionic/libc/linux/ncp_no.h>
 struct ncp_ioctl_request {
   unsigned int function;
   unsigned int size;

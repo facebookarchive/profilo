@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _IP_VS_H
 #define _IP_VS_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 #define IP_VS_VERSION_CODE 0x010201
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define NVERSION(version) (version >> 16) & 0xFF, (version >> 8) & 0xFF, version & 0xFF

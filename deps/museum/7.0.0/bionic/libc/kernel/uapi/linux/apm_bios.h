@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_APM_H
 #define _UAPI_LINUX_APM_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 typedef unsigned short apm_event_t;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef unsigned short apm_eventinfo_t;
@@ -117,7 +117,7 @@ struct apm_bios_info {
 #define APM_CAP_RESUME_STANDBY_PCMCIA 0x0040
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define APM_CAP_RESUME_SUSPEND_PCMCIA 0x0080
-#include <linux/ioctl.h>
+#include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 #define APM_IOC_STANDBY _IO('A', 1)
 #define APM_IOC_SUSPEND _IO('A', 2)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -11,11 +11,11 @@
 #ifndef _LIBCPP___SSO_ALLOCATOR
 #define _LIBCPP___SSO_ALLOCATOR
 
-#include <__config>
-#include <type_traits>
-#include <new>
+#include <museum/7.1.2/external/libcxx/__config>
+#include <museum/7.1.2/external/libcxx/type_traits>
+#include <museum/7.1.2/external/libcxx/new>
 
-#include <__undef___deallocate>
+#include <museum/7.1.2/external/libcxx/__undef___deallocate>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

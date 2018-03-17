@@ -17,11 +17,11 @@
 #ifndef TO_STRING_ARRAY_H_included
 #define TO_STRING_ARRAY_H_included
 
-#include "jni.h"
-#include "ScopedLocalRef.h"
+#include <museum/7.1.2/libnativehelper/jni.h>
+#include <museum/7.1.2/libnativehelper/ScopedLocalRef.h>
 
-#include <string>
-#include <vector>
+#include <museum/7.1.2/external/libcxx/string>
+#include <museum/7.1.2/external/libcxx/vector>
 
 jobjectArray newStringArray(JNIEnv* env, size_t count);
 

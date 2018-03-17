@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_ENI_H
 #define LINUX_ATM_ENI_H
-#include <linux/atmioc.h>
+#include <museum/7.0.0/bionic/libc/linux/atmioc.h>
 struct eni_multipliers {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   int tx, rx;

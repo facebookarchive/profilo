@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_EVENTS_INL_H_
 #define ART_RUNTIME_OPENJDKJVMTI_EVENTS_INL_H_
 
-#include <array>
+#include <museum/8.0.0/external/libcxx/array>
 
-#include "events.h"
+#include <museum/8.0.0/art/runtime/openjdkjvmti/events.h>
 
-#include "art_jvmti.h"
+#include <museum/8.0.0/art/runtime/openjdkjvmti/art_jvmti.h>
 
 namespace openjdkjvmti {
 

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_LINK_H
 #define _UAPI_LINUX_IF_LINK_H
-#include <linux/types.h>
-#include <linux/netlink.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct rtnl_link_stats {
   __u32 rx_packets;

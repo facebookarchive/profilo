@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __VMWGFX_DRM_H__
 #define __VMWGFX_DRM_H__
-#include <drm/drm.h>
+#include <museum/6.0.1/bionic/libc/drm/drm.h>
 #define DRM_VMW_MAX_SURFACE_FACES 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DRM_VMW_MAX_MIP_LEVELS 24

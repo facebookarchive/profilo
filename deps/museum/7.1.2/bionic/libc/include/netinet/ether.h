@@ -25,4 +25,4 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-#include <net/if_ether.h>
+#include <museum/7.1.2/bionic/libc/net/if_ether.h>

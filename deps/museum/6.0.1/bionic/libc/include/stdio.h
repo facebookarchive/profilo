@@ -46,8 +46,8 @@
  * If you alter this comment, be sure to keep "__gnuc_va_list" in it!
  */
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/types.h>
 
 #include <stdarg.h>
 #include <stddef.h>

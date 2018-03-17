@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_NF_CONNTRACK_TCP_H
 #define _UAPI_NF_CONNTRACK_TCP_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum tcp_conntrack {
   TCP_CONNTRACK_NONE,
   TCP_CONNTRACK_SYN_SENT,

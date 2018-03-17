@@ -28,12 +28,12 @@
 #ifndef _SYS_STAT_H_
 #define _SYS_STAT_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/time.h>
-#include <linux/stat.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
+#include <museum/5.0.0/bionic/libc/sys/time.h>
+#include <museum/5.0.0/bionic/libc/linux/stat.h>
 
-#include <endian.h>
+#include <museum/5.0.0/bionic/libc/endian.h>
 
 __BEGIN_DECLS
 

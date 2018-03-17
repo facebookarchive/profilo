@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_CARD_TABLE_H_
 #define ART_RUNTIME_GC_ACCOUNTING_CARD_TABLE_H_
 
-#include <memory>
+#include <museum/5.0.0/external/libcxx/memory>
 
-#include "base/mutex.h"
-#include "globals.h"
-#include "mem_map.h"
+#include <museum/5.0.0/art/runtime/base/mutex.h>
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/mem_map.h>
 
 namespace art {
 

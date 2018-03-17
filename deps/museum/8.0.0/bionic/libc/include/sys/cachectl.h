@@ -29,7 +29,7 @@
 #ifndef _SYS_CACHECTL_H
 #define _SYS_CACHECTL_H 1
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #ifdef __mips__
 #include <asm/cachectl.h>
 #endif

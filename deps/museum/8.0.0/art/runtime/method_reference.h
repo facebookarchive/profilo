@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_METHOD_REFERENCE_H_
 #define ART_RUNTIME_METHOD_REFERENCE_H_
 
-#include <stdint.h>
-#include <string>
-#include "dex_file.h"
+#include <museum/8.0.0/external/libcxx/stdint.h>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/art/runtime/dex_file.h>
 
 namespace art {
 

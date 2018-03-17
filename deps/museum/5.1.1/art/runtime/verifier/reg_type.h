@@ -17,18 +17,18 @@
 #ifndef ART_RUNTIME_VERIFIER_REG_TYPE_H_
 #define ART_RUNTIME_VERIFIER_REG_TYPE_H_
 
-#include <limits>
-#include <stdint.h>
-#include <set>
-#include <string>
+#include <museum/5.1.1/external/libcxx/limits>
+#include <museum/5.1.1/bionic/libc/stdint.h>
+#include <museum/5.1.1/external/libcxx/set>
+#include <museum/5.1.1/external/libcxx/string>
 
-#include "jni.h"
+#include <museum/5.1.1/libnativehelper/jni.h>
 
-#include "base/macros.h"
-#include "gc_root.h"
-#include "globals.h"
-#include "object_callbacks.h"
-#include "primitive.h"
+#include <museum/5.1.1/art/runtime/base/macros.h>
+#include <museum/5.1.1/art/runtime/gc_root.h>
+#include <museum/5.1.1/art/runtime/globals.h>
+#include <museum/5.1.1/art/runtime/object_callbacks.h>
+#include <museum/5.1.1/art/runtime/primitive.h>
 
 namespace art {
 namespace mirror {

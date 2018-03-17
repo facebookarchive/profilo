@@ -17,8 +17,8 @@
 #ifndef ANDROID_BASE_CHRONO_UTILS_H
 #define ANDROID_BASE_CHRONO_UTILS_H
 
-#include <chrono>
-#include <sstream>
+#include <museum/8.1.0/external/libcxx/chrono>
+#include <museum/8.1.0/external/libcxx/sstream>
 
 using namespace std::chrono_literals;
 

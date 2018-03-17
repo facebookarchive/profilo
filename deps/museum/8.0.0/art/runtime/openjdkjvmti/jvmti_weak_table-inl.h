@@ -32,20 +32,20 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_JVMTI_WEAK_TABLE_INL_H_
 #define ART_RUNTIME_OPENJDKJVMTI_JVMTI_WEAK_TABLE_INL_H_
 
-#include "jvmti_weak_table.h"
+#include <museum/8.0.0/art/runtime/openjdkjvmti/jvmti_weak_table.h>
 
-#include <limits>
+#include <museum/8.0.0/external/libcxx/limits>
 
-#include "art_jvmti.h"
-#include "base/logging.h"
-#include "gc/allocation_listener.h"
-#include "instrumentation.h"
-#include "jni_env_ext-inl.h"
-#include "jvmti_allocator.h"
-#include "mirror/class.h"
-#include "mirror/object.h"
-#include "runtime.h"
-#include "ScopedLocalRef.h"
+#include <museum/8.0.0/art/runtime/openjdkjvmti/art_jvmti.h>
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/gc/allocation_listener.h>
+#include <museum/8.0.0/art/runtime/instrumentation.h>
+#include <museum/8.0.0/art/runtime/jni_env_ext-inl.h>
+#include <museum/8.0.0/art/runtime/openjdkjvmti/jvmti_allocator.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/runtime.h>
+#include <museum/8.0.0/libnativehelper/ScopedLocalRef.h>
 
 namespace openjdkjvmti {
 

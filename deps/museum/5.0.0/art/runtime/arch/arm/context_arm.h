@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_ARCH_ARM_CONTEXT_ARM_H_
 #define ART_RUNTIME_ARCH_ARM_CONTEXT_ARM_H_
 
-#include "arch/context.h"
-#include "base/logging.h"
-#include "registers_arm.h"
+#include <museum/5.0.0/art/runtime/arch/context.h>
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/arch/arm/registers_arm.h>
 
 namespace art {
 namespace arm {

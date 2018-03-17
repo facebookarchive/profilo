@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _USERIO_H
 #define _USERIO_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum userio_cmd_type {
   USERIO_CMD_REGISTER = 0,
   USERIO_CMD_SET_PORT_TYPE = 1,

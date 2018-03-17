@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GC_SPACE_MALLOC_SPACE_H_
 #define ART_RUNTIME_GC_SPACE_MALLOC_SPACE_H_
 
-#include "space.h"
+#include <museum/8.0.0/art/runtime/gc/space/space.h>
 
-#include <ostream>
-#include "base/memory_tool.h"
+#include <museum/8.0.0/external/libcxx/ostream>
+#include <museum/8.0.0/art/runtime/base/memory_tool.h>
 
 namespace art {
 namespace gc {

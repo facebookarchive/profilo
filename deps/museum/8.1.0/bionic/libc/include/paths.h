@@ -32,7 +32,7 @@
 #ifndef _PATHS_H_
 #define	_PATHS_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 #ifndef _PATH_BSHELL
 #define	_PATH_BSHELL	"/system/bin/sh"

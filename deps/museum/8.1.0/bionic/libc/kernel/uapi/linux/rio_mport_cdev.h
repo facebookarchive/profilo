@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _RIO_MPORT_CDEV_H_
 #define _RIO_MPORT_CDEV_H_
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 struct rio_mport_maint_io {
   __u16 rioid;
   __u8 hopcount;

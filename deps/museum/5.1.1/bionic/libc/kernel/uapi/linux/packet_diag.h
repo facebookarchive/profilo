@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __PACKET_DIAG_H__
 #define __PACKET_DIAG_H__
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 struct packet_diag_req {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __u8 sdiag_family;

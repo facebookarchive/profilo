@@ -19,12 +19,12 @@
 #ifndef _UAPI__SOUND_ASOUND_H
 #define _UAPI__SOUND_ASOUND_H
 #ifdef __linux__
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #else
-#include <sys/ioctl.h>
+#include <museum/8.0.0/bionic/libc/sys/ioctl.h>
 #endif
-#include <stdlib.h>
+#include <museum/8.0.0/bionic/libc/stdlib.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SNDRV_PROTOCOL_VERSION(major,minor,subminor) (((major) << 16) | ((minor) << 8) | (subminor))
 #define SNDRV_PROTOCOL_MAJOR(version) (((version) >> 16) & 0xffff)

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __TARGET_CORE_USER_H
 #define __TARGET_CORE_USER_H
-#include <linux/types.h>
-#include <linux/uio.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/uio.h>
 #define TCMU_VERSION "2.0"
 #define TCMU_MAILBOX_VERSION 2
 #define ALIGN_SIZE 64

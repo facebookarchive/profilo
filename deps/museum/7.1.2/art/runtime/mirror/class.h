@@ -17,22 +17,22 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_H_
 #define ART_RUNTIME_MIRROR_CLASS_H_
 
-#include "base/iteration_range.h"
-#include "dex_file.h"
-#include "class_flags.h"
-#include "gc_root.h"
-#include "gc/allocator_type.h"
-#include "imtable.h"
-#include "invoke_type.h"
-#include "modifiers.h"
-#include "object.h"
-#include "object_array.h"
-#include "object_callbacks.h"
-#include "primitive.h"
-#include "read_barrier_option.h"
-#include "stride_iterator.h"
-#include "thread.h"
-#include "utils.h"
+#include <museum/7.1.2/art/runtime/base/iteration_range.h>
+#include <museum/7.1.2/art/runtime/dex_file.h>
+#include <museum/7.1.2/art/runtime/mirror/class_flags.h>
+#include <museum/7.1.2/art/runtime/gc_root.h>
+#include <museum/7.1.2/art/runtime/gc/allocator_type.h>
+#include <museum/7.1.2/art/runtime/imtable.h>
+#include <museum/7.1.2/art/runtime/invoke_type.h>
+#include <museum/7.1.2/art/runtime/modifiers.h>
+#include <museum/7.1.2/art/runtime/mirror/object.h>
+#include <museum/7.1.2/art/runtime/mirror/object_array.h>
+#include <museum/7.1.2/art/runtime/object_callbacks.h>
+#include <museum/7.1.2/art/runtime/primitive.h>
+#include <museum/7.1.2/art/runtime/read_barrier_option.h>
+#include <museum/7.1.2/art/runtime/stride_iterator.h>
+#include <museum/7.1.2/art/runtime/thread.h>
+#include <museum/7.1.2/art/runtime/utils.h>
 
 namespace art {
 

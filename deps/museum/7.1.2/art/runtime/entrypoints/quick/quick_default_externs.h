@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_DEFAULT_EXTERNS_H_
 #define ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_DEFAULT_EXTERNS_H_
 
-#include <cstdint>
+#include <museum/7.1.2/external/libcxx/cstdint>
 
 namespace art {
 namespace mirror {

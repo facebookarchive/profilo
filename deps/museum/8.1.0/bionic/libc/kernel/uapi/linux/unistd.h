@@ -18,5 +18,5 @@
  ****************************************************************************/
 #ifndef _LINUX_UNISTD_H_
 #define _LINUX_UNISTD_H_
-#include <asm/unistd.h>
+#include <museum/8.1.0/bionic/libc/asm/unistd.h>
 #endif

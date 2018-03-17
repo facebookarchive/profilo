@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef X25_KERNEL_H
 #define X25_KERNEL_H
-#include <linux/types.h>
-#include <linux/socket.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SIOCX25GSUBSCRIP (SIOCPROTOPRIVATE + 0)
 #define SIOCX25SSUBSCRIP (SIOCPROTOPRIVATE + 1)

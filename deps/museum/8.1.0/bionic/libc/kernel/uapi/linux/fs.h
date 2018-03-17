@@ -18,9 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FS_H
 #define _UAPI_LINUX_FS_H
-#include <linux/limits.h>
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/limits.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #undef NR_OPEN
 #define INR_OPEN_CUR 1024
 #define INR_OPEN_MAX 4096

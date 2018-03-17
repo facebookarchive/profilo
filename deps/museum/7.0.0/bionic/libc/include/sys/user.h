@@ -29,7 +29,7 @@
 #ifndef _SYS_USER_H_
 #define _SYS_USER_H_
 
-#include <sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 #include <stddef.h> /* For size_t. */
 
 __BEGIN_DECLS

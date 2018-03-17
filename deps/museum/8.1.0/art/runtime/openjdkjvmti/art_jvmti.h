@@ -32,22 +32,22 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_ART_JVMTI_H_
 #define ART_RUNTIME_OPENJDKJVMTI_ART_JVMTI_H_
 
-#include <memory>
-#include <type_traits>
-#include <unordered_map>
-#include <unordered_set>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/type_traits>
+#include <museum/8.1.0/external/libcxx/unordered_map>
+#include <museum/8.1.0/external/libcxx/unordered_set>
 
-#include <jni.h>
+#include <museum/8.1.0/libnativehelper/jni.h>
 
-#include "base/casts.h"
-#include "base/logging.h"
-#include "base/macros.h"
-#include "base/strlcpy.h"
-#include "events.h"
-#include "java_vm_ext.h"
-#include "jni_env_ext.h"
+#include <museum/8.1.0/art/runtime/base/casts.h>
+#include <museum/8.1.0/art/runtime/base/logging.h>
+#include <museum/8.1.0/art/runtime/base/macros.h>
+#include <museum/8.1.0/art/runtime/base/strlcpy.h>
+#include <museum/8.1.0/art/runtime/openjdkjvmti/events.h>
+#include <museum/8.1.0/art/runtime/java_vm_ext.h>
+#include <museum/8.1.0/art/runtime/jni_env_ext.h>
 #include "jvmti.h"
-#include "ti_breakpoint.h"
+#include <museum/8.1.0/art/runtime/openjdkjvmti/ti_breakpoint.h>
 
 namespace art {
 class ArtField;

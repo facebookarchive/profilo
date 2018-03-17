@@ -33,6 +33,6 @@
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define KVM_HC_MIPS_EXIT_VM 7
 #define KVM_HC_MIPS_CONSOLE_OUTPUT 8
-#include <asm/kvm_para.h>
+#include <museum/8.0.0/bionic/libc/asm/kvm_para.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

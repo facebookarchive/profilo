@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_ARCH_X86_64_REGISTERS_X86_64_H_
 #define ART_RUNTIME_ARCH_X86_64_REGISTERS_X86_64_H_
 
-#include <iosfwd>
+#include <museum/5.1.1/external/libcxx/iosfwd>
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "globals.h"
+#include <museum/5.1.1/art/runtime/base/logging.h>
+#include <museum/5.1.1/art/runtime/base/macros.h>
+#include <museum/5.1.1/art/runtime/globals.h>
 
 namespace art {
 namespace x86_64 {

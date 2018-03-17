@@ -29,9 +29,9 @@
 #ifndef _BITS_STRCASECMP_H_
 #define _BITS_STRCASECMP_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <xlocale.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/types.h>
+#include <museum/8.0.0/bionic/libc/xlocale.h>
 
 __BEGIN_DECLS
 

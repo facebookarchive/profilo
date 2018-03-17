@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_PCI_H
 #define _LINUX_VIRTIO_PCI_H
-#include <linux/virtio_config.h>
+#include <museum/5.0.0/bionic/libc/linux/virtio_config.h>
 #define VIRTIO_PCI_HOST_FEATURES 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define VIRTIO_PCI_GUEST_FEATURES 4

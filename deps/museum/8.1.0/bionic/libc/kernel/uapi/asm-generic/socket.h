@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_SOCKET_H
 #define __ASM_GENERIC_SOCKET_H
-#include <asm/sockios.h>
+#include <museum/8.1.0/bionic/libc/asm/sockios.h>
 #define SOL_SOCKET 1
 #define SO_DEBUG 1
 #define SO_REUSEADDR 2

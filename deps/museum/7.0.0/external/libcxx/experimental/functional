@@ -14,7 +14,7 @@
 /*
    experimental/functional synopsis
 
-#include <algorithm>
+#include <museum/7.0.0/external/libcxx/experimental/algorithm>
 
 namespace std {
 namespace experimental {
@@ -87,13 +87,13 @@ inline namespace fundamentals_v1 {
 
 */
 
-#include <experimental/__config>
-#include <functional>
-#include <algorithm>
+#include <museum/7.0.0/external/libcxx/experimental/__config>
+#include <museum/7.0.0/external/libcxx/experimental/functional>
+#include <museum/7.0.0/external/libcxx/experimental/algorithm>
 
-#include <__undef_min_max>
+#include <museum/7.0.0/external/libcxx/__undef_min_max>
 
-#include <__debug>
+#include <museum/7.0.0/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

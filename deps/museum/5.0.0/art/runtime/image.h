@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_IMAGE_H_
 #define ART_RUNTIME_IMAGE_H_
 
-#include <string.h>
+#include <museum/5.0.0/bionic/libc/string.h>
 
-#include "globals.h"
-#include "mirror/object.h"
-#include "utils.h"
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/mirror/object.h>
+#include <museum/5.0.0/art/runtime/utils.h>
 
 namespace art {
 

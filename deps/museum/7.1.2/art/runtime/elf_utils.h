@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_ELF_UTILS_H_
 #define ART_RUNTIME_ELF_UTILS_H_
 
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 // Explicitly include our own elf.h to avoid Linux and other dependencies.
-#include "./elf.h"
+#include <museum/7.1.2/art/runtime/elf.h>
 
-#include "base/logging.h"
+#include <museum/7.1.2/art/runtime/base/logging.h>
 
 namespace art {
 

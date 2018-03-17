@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_VM_SOCKETS_H
 #define _UAPI_VM_SOCKETS_H
-#include <linux/socket.h>
+#include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define SO_VM_SOCKETS_BUFFER_SIZE 0
 #define SO_VM_SOCKETS_BUFFER_MIN_SIZE 1
 #define SO_VM_SOCKETS_BUFFER_MAX_SIZE 2

@@ -29,10 +29,10 @@
 #ifndef _PTY_H
 #define _PTY_H
 
-#include <sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 
-#include <termios.h>
-#include <sys/ioctl.h>
+#include <museum/6.0.1/bionic/libc/termios.h>
+#include <museum/6.0.1/bionic/libc/sys/ioctl.h>
 
 __BEGIN_DECLS
 

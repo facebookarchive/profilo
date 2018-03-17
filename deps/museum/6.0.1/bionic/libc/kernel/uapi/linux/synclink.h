@@ -19,7 +19,7 @@
 #ifndef _UAPI_SYNCLINK_H_
 #define _UAPI_SYNCLINK_H_
 #define SYNCLINK_H_VERSION 3.6
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define BIT0 0x0001
 #define BIT1 0x0002

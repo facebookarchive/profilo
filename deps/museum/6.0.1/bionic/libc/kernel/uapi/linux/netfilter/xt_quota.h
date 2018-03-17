@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_QUOTA_H
 #define _XT_QUOTA_H
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 enum xt_quota_flags {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   XT_QUOTA_INVERT = 0x1,

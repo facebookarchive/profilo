@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _XT_TCPMSS_H
 #define _XT_TCPMSS_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 struct xt_tcpmss_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __u16 mss;

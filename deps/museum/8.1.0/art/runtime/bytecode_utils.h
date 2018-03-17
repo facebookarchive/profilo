@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BYTECODE_UTILS_H_
 #define ART_RUNTIME_BYTECODE_UTILS_H_
 
-#include "base/arena_object.h"
-#include "dex_file.h"
-#include "dex_file-inl.h"
-#include "dex_instruction-inl.h"
+#include <museum/8.1.0/art/runtime/base/arena_object.h>
+#include <museum/8.1.0/art/runtime/dex_file.h>
+#include <museum/8.1.0/art/runtime/dex_file-inl.h>
+#include <museum/8.1.0/art/runtime/dex_instruction-inl.h>
 
 namespace art {
 

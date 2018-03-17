@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_FUSE_H
 #define _LINUX_FUSE_H
-#include <stdint.h>
+#include <museum/5.1.1/bionic/libc/stdint.h>
 #define FUSE_KERNEL_VERSION 7
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define FUSE_KERNEL_MINOR_VERSION 22

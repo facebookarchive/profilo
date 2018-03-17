@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_CLASS_REFERENCE_H_
 #define ART_RUNTIME_CLASS_REFERENCE_H_
 
-#include <stdint.h>
-#include <utility>
+#include <museum/7.0.0/bionic/libc/stdint.h>
+#include <museum/7.0.0/external/libcxx/utility>
 
 namespace art {
 

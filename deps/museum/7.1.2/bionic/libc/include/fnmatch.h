@@ -28,7 +28,7 @@
 #ifndef _FNMATCH_H
 #define _FNMATCH_H
 
-#include <sys/cdefs.h>
+#include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 
 __BEGIN_DECLS
 

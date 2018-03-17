@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _XT_ECN_H
 #define _XT_ECN_H
-#include <linux/types.h>
-#include <linux/netfilter/xt_dscp.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter/xt_dscp.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define XT_ECN_IP_MASK (~XT_DSCP_MASK)
 #define XT_ECN_OP_MATCH_IP 0x01

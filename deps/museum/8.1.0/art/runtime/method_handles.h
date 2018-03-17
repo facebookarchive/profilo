@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_METHOD_HANDLES_H_
 #define ART_RUNTIME_METHOD_HANDLES_H_
 
-#include <ostream>
+#include <museum/8.1.0/external/libcxx/ostream>
 
-#include "dex_instruction.h"
-#include "handle.h"
-#include "interpreter/shadow_frame.h"
-#include "jvalue.h"
-#include "mirror/class.h"
+#include <museum/8.1.0/art/runtime/dex_instruction.h>
+#include <museum/8.1.0/art/runtime/handle.h>
+#include <museum/8.1.0/art/runtime/interpreter/shadow_frame.h>
+#include <museum/8.1.0/art/runtime/jvalue.h>
+#include <museum/8.1.0/art/runtime/mirror/class.h>
 
 namespace art {
 

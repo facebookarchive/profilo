@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_NFLOG_H
 #define __LINUX_BRIDGE_EBT_NFLOG_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #define EBT_NFLOG_MASK 0x0
 #define EBT_NFLOG_PREFIX_SIZE 64
 #define EBT_NFLOG_WATCHER "nflog"

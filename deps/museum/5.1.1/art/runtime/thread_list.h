@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_THREAD_LIST_H_
 #define ART_RUNTIME_THREAD_LIST_H_
 
-#include "base/mutex.h"
-#include "gc_root.h"
-#include "jni.h"
-#include "object_callbacks.h"
+#include <museum/5.1.1/art/runtime/base/mutex.h>
+#include <museum/5.1.1/art/runtime/gc_root.h>
+#include <museum/5.1.1/libnativehelper/jni.h>
+#include <museum/5.1.1/art/runtime/object_callbacks.h>
 
-#include <bitset>
-#include <list>
+#include <museum/5.1.1/external/libcxx/bitset>
+#include <museum/5.1.1/external/libcxx/list>
 
 namespace art {
 class Closure;

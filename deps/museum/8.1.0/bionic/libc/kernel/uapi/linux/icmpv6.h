@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ICMPV6_H
 #define _UAPI_LINUX_ICMPV6_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 struct icmp6hdr {
   __u8 icmp6_type;
   __u8 icmp6_code;

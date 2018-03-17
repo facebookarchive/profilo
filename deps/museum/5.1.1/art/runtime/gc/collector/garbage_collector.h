@@ -17,14 +17,14 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_GARBAGE_COLLECTOR_H_
 #define ART_RUNTIME_GC_COLLECTOR_GARBAGE_COLLECTOR_H_
 
-#include "base/histogram.h"
-#include "base/mutex.h"
-#include "base/timing_logger.h"
-#include "gc/collector_type.h"
-#include "gc/gc_cause.h"
-#include "gc_type.h"
-#include <stdint.h>
-#include <vector>
+#include <museum/5.1.1/art/runtime/base/histogram.h>
+#include <museum/5.1.1/art/runtime/base/mutex.h>
+#include <museum/5.1.1/art/runtime/base/timing_logger.h>
+#include <museum/5.1.1/art/runtime/gc/collector_type.h>
+#include <museum/5.1.1/art/runtime/gc/gc_cause.h>
+#include <museum/5.1.1/art/runtime/gc/collector/gc_type.h>
+#include <museum/5.1.1/bionic/libc/stdint.h>
+#include <museum/5.1.1/external/libcxx/vector>
 
 namespace art {
 namespace gc {

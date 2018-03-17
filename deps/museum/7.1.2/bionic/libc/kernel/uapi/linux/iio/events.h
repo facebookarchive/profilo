@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_IIO_EVENTS_H_
 #define _UAPI_IIO_EVENTS_H_
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/7.1.2/bionic/libc/linux/ioctl.h>
+#include <museum/7.1.2/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct iio_event_data {
   __u64 id;

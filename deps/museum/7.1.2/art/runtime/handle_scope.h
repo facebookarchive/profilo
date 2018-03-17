@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_HANDLE_SCOPE_H_
 #define ART_RUNTIME_HANDLE_SCOPE_H_
 
-#include <stack>
+#include <museum/7.1.2/external/libcxx/stack>
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "handle.h"
-#include "stack.h"
-#include "verify_object.h"
+#include <museum/7.1.2/art/runtime/base/logging.h>
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/handle.h>
+#include <museum/7.1.2/art/runtime/stack.h>
+#include <museum/7.1.2/art/runtime/verify_object.h>
 
 namespace art {
 namespace mirror {

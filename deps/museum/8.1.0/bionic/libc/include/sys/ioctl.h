@@ -28,17 +28,17 @@
 #ifndef _SYS_IOCTL_H_
 #define _SYS_IOCTL_H_
 
-#include <sys/cdefs.h>
-#include <linux/ioctl.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 /*
  * NetBSD and glibc's <sys/ioctl.h> provide some of the
  * terminal-related ioctl data structures such as struct winsize.
  */
-#include <linux/termios.h>
-#include <asm/ioctls.h>
-#include <asm/termbits.h>
-#include <linux/tty.h>
+#include <museum/8.1.0/bionic/libc/linux/termios.h>
+#include <museum/8.1.0/bionic/libc/asm/ioctls.h>
+#include <museum/8.1.0/bionic/libc/asm/termbits.h>
+#include <museum/8.1.0/bionic/libc/linux/tty.h>
 
-#include <bits/ioctl.h>
+#include <museum/8.1.0/bionic/libc/bits/ioctl.h>
 
 #endif /* _SYS_IOCTL_H_ */

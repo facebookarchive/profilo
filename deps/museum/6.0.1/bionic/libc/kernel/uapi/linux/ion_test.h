@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ION_TEST_H
 #define _UAPI_LINUX_ION_TEST_H
-#include <linux/ioctl.h>
-#include <linux/types.h>
+#include <museum/6.0.1/bionic/libc/linux/ioctl.h>
+#include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct ion_test_rw_data {
   __u64 ptr;

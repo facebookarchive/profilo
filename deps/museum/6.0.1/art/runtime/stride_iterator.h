@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_STRIDE_ITERATOR_H_
 #define ART_RUNTIME_STRIDE_ITERATOR_H_
 
-#include <iterator>
+#include <museum/6.0.1/external/libcxx/iterator>
 
 namespace art {
 

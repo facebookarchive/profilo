@@ -52,14 +52,14 @@ template <> struct char_traits<wchar_t>;
 
 */
 
-#include <__config>
-#include <algorithm>  // for search and min
-#include <cstdio>     // For EOF.
-#include <memory>     // for __murmur2_or_cityhash
+#include <museum/8.1.0/external/libcxx/__config>
+#include <museum/8.1.0/external/libcxx/algorithm>  // for search and min
+#include <museum/8.1.0/external/libcxx/cstdio>     // For EOF.
+#include <museum/8.1.0/external/libcxx/memory>     // for __murmur2_or_cityhash
 
-#include <__undef_min_max>
+#include <museum/8.1.0/external/libcxx/__undef_min_max>
 
-#include <__debug>
+#include <museum/8.1.0/external/libcxx/__debug>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header

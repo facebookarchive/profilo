@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _DRM_SAREA_H_
 #define _DRM_SAREA_H_
-#include <drm/drm.h>
+#include <museum/5.0.0/bionic/libc/drm/drm.h>
 #ifdef __alpha__
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SAREA_MAX 0x2000U

@@ -13,8 +13,8 @@
 
 #pragma GCC system_header
 
-#include <string>
-#include <cstring>
+#include <museum/5.1.1/external/libcxx/string>
+#include <museum/5.1.1/external/libcxx/cstring>
 
 namespace __gnu_cxx {
 using namespace std;

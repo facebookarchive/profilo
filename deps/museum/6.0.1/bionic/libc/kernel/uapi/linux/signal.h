@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SIGNAL_H
 #define _UAPI_LINUX_SIGNAL_H
-#include <asm/signal.h>
-#include <asm/siginfo.h>
+#include <museum/6.0.1/bionic/libc/asm/signal.h>
+#include <museum/6.0.1/bionic/libc/asm/siginfo.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SS_ONSTACK 1
 #define SS_DISABLE 2

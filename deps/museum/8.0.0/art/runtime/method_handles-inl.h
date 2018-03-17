@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_METHOD_HANDLES_INL_H_
 #define ART_RUNTIME_METHOD_HANDLES_INL_H_
 
-#include "method_handles.h"
+#include <museum/8.0.0/art/runtime/method_handles.h>
 
-#include "common_throws.h"
-#include "dex_instruction.h"
-#include "interpreter/interpreter_common.h"
-#include "jvalue.h"
-#include "mirror/class.h"
-#include "mirror/method_type.h"
-#include "mirror/object.h"
-#include "reflection.h"
-#include "stack.h"
+#include <museum/8.0.0/art/runtime/common_throws.h>
+#include <museum/8.0.0/art/runtime/dex_instruction.h>
+#include <museum/8.0.0/art/runtime/interpreter/interpreter_common.h>
+#include <museum/8.0.0/art/runtime/jvalue.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/mirror/method_type.h>
+#include <museum/8.0.0/art/runtime/mirror/object.h>
+#include <museum/8.0.0/art/runtime/reflection.h>
+#include <museum/8.0.0/art/runtime/stack.h>
 
 namespace art {
 

@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NVME_H
 #define _UAPI_LINUX_NVME_H
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 struct nvme_id_power_state {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   __le16 max_power;

@@ -16,7 +16,7 @@
 
 This entire header is C99 / C++0X
 
-#include <stdint.h>  // <cinttypes> includes <cstdint>
+#include <museum/8.1.0/external/libcxx/stdint.h>  // <cinttypes> includes <cstdint>
 
 Macros:
 
@@ -231,7 +231,7 @@ uintmax_t wcstoumax(const wchar_t* restrict nptr, wchar_t** restrict endptr, int
 
 */
 
-#include <__config>
+#include <museum/8.1.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
@@ -244,11 +244,11 @@ uintmax_t wcstoumax(const wchar_t* restrict nptr, wchar_t** restrict endptr, int
 #   define __STDC_FORMAT_MACROS
 #endif
 
-#include_next <inttypes.h>
+#include <museum/8.1.0/bionic/libc/inttypes.h>
 
 #ifdef __cplusplus
 
-#include <stdint.h>
+#include <museum/8.1.0/external/libcxx/stdint.h>
 
 #undef imaxabs
 #undef imaxdiv

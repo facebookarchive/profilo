@@ -17,12 +17,12 @@
 #ifndef ART_RUNTIME_GC_ACCOUNTING_CARD_TABLE_INL_H_
 #define ART_RUNTIME_GC_ACCOUNTING_CARD_TABLE_INL_H_
 
-#include "atomic.h"
-#include "base/bit_utils.h"
-#include "base/logging.h"
-#include "card_table.h"
-#include "mem_map.h"
-#include "space_bitmap.h"
+#include <museum/7.0.0/art/runtime/atomic.h>
+#include <museum/7.0.0/art/runtime/base/bit_utils.h>
+#include <museum/7.0.0/art/runtime/base/logging.h>
+#include <museum/7.0.0/art/runtime/gc/accounting/card_table.h>
+#include <museum/7.0.0/art/runtime/mem_map.h>
+#include <museum/7.0.0/art/runtime/gc/accounting/space_bitmap.h>
 
 namespace art {
 namespace gc {

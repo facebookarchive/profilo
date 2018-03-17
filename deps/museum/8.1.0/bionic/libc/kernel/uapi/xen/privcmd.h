@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_PUBLIC_PRIVCMD_H__
 #define __LINUX_PUBLIC_PRIVCMD_H__
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
 #include <xen/interface/xen.h>
 struct privcmd_hypercall {

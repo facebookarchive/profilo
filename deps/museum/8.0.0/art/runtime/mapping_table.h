@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_MAPPING_TABLE_H_
 #define ART_RUNTIME_MAPPING_TABLE_H_
 
-#include "base/logging.h"
-#include "leb128.h"
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/leb128.h>
 
 namespace art {
 

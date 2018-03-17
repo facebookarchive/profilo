@@ -29,11 +29,11 @@
 #ifndef _STDLIB_H
 #define _STDLIB_H
 
-#include <sys/cdefs.h>
-#include <xlocale.h>
+#include <museum/6.0.1/bionic/libc/sys/cdefs.h>
+#include <museum/6.0.1/bionic/libc/xlocale.h>
 
-#include <alloca.h>
-#include <malloc.h>
+#include <museum/6.0.1/bionic/libc/alloca.h>
+#include <museum/6.0.1/bionic/libc/malloc.h>
 #include <stddef.h>
 
 __BEGIN_DECLS
@@ -173,7 +173,7 @@ extern size_t __ctype_get_mb_cur_max(void);
 #define MB_CUR_MAX __ctype_get_mb_cur_max()
 
 #if __ANDROID_API__ < 21
-#include <android/legacy_stdlib_inlines.h>
+#include <museum/6.0.1/bionic/libc/android/legacy_stdlib_inlines.h>
 #endif
 
 #if defined(__BIONIC_FORTIFY)

@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_DEX_FILE_TRACKING_REGISTRAR_H_
 #define ART_RUNTIME_DEX_FILE_TRACKING_REGISTRAR_H_
 
-#include <deque>
-#include <tuple>
+#include <museum/8.1.0/external/libcxx/deque>
+#include <museum/8.1.0/external/libcxx/tuple>
 
-#include "dex_file.h"
+#include <museum/8.1.0/art/runtime/dex_file.h>
 
 namespace art {
 namespace dex {

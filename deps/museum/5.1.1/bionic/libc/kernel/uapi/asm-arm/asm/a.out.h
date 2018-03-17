@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __ARM_A_OUT_H__
 #define __ARM_A_OUT_H__
-#include <linux/personality.h>
-#include <linux/types.h>
+#include <museum/5.1.1/bionic/libc/linux/personality.h>
+#include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct exec
 {

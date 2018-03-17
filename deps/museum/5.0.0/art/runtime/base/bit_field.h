@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_BASE_BIT_FIELD_H_
 #define ART_RUNTIME_BASE_BIT_FIELD_H_
 
-#include "globals.h"
-#include "logging.h"
+#include <museum/5.0.0/art/runtime/globals.h>
+#include <museum/5.0.0/art/runtime/base/logging.h>
 
 namespace art {
 

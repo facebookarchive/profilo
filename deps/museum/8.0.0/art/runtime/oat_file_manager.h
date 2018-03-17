@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_OAT_FILE_MANAGER_H_
 #define ART_RUNTIME_OAT_FILE_MANAGER_H_
 
-#include <memory>
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <vector>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/set>
+#include <museum/8.0.0/external/libcxx/string>
+#include <museum/8.0.0/external/libcxx/unordered_map>
+#include <museum/8.0.0/external/libcxx/vector>
 
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "jni.h"
+#include <museum/8.0.0/art/runtime/base/macros.h>
+#include <museum/8.0.0/art/runtime/base/mutex.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
 namespace art {
 

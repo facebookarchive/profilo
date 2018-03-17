@@ -17,8 +17,8 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_IMMUNE_REGION_H_
 #define ART_RUNTIME_GC_COLLECTOR_IMMUNE_REGION_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"
+#include <museum/7.1.2/art/runtime/base/macros.h>
+#include <museum/7.1.2/art/runtime/base/mutex.h>
 
 namespace art {
 namespace mirror {

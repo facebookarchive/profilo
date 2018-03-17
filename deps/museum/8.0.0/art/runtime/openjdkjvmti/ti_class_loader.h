@@ -32,36 +32,36 @@
 #ifndef ART_RUNTIME_OPENJDKJVMTI_TI_CLASS_LOADER_H_
 #define ART_RUNTIME_OPENJDKJVMTI_TI_CLASS_LOADER_H_
 
-#include <string>
+#include <museum/8.0.0/external/libcxx/string>
 
-#include <jni.h>
+#include <museum/8.0.0/libnativehelper/jni.h>
 
-#include "art_jvmti.h"
-#include "art_method.h"
-#include "base/array_slice.h"
-#include "class_linker.h"
-#include "dex_file.h"
-#include "gc_root-inl.h"
-#include "globals.h"
-#include "jni_env_ext-inl.h"
+#include <museum/8.0.0/art/runtime/openjdkjvmti/art_jvmti.h>
+#include <museum/8.0.0/art/runtime/art_method.h>
+#include <museum/8.0.0/art/runtime/base/array_slice.h>
+#include <museum/8.0.0/art/runtime/class_linker.h>
+#include <museum/8.0.0/art/runtime/dex_file.h>
+#include <museum/8.0.0/art/runtime/gc_root-inl.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/art/runtime/jni_env_ext-inl.h>
 #include "jvmti.h"
-#include "linear_alloc.h"
-#include "mem_map.h"
-#include "mirror/array-inl.h"
-#include "mirror/array.h"
-#include "mirror/class-inl.h"
-#include "mirror/class.h"
-#include "mirror/class_loader-inl.h"
-#include "mirror/string-inl.h"
-#include "oat_file.h"
-#include "obj_ptr.h"
-#include "scoped_thread_state_change-inl.h"
-#include "stack.h"
-#include "ti_class_definition.h"
-#include "thread_list.h"
-#include "transform.h"
-#include "utf.h"
-#include "utils/dex_cache_arrays_layout-inl.h"
+#include <museum/8.0.0/art/runtime/linear_alloc.h>
+#include <museum/8.0.0/art/runtime/mem_map.h>
+#include <museum/8.0.0/art/runtime/mirror/array-inl.h>
+#include <museum/8.0.0/art/runtime/mirror/array.h>
+#include <museum/8.0.0/art/runtime/mirror/class-inl.h>
+#include <museum/8.0.0/art/runtime/mirror/class.h>
+#include <museum/8.0.0/art/runtime/mirror/class_loader-inl.h>
+#include <museum/8.0.0/art/runtime/mirror/string-inl.h>
+#include <museum/8.0.0/art/runtime/oat_file.h>
+#include <museum/8.0.0/art/runtime/obj_ptr.h>
+#include <museum/8.0.0/art/runtime/scoped_thread_state_change-inl.h>
+#include <museum/8.0.0/art/runtime/stack.h>
+#include <museum/8.0.0/art/runtime/openjdkjvmti/ti_class_definition.h>
+#include <museum/8.0.0/art/runtime/thread_list.h>
+#include <museum/8.0.0/art/runtime/openjdkjvmti/transform.h>
+#include <museum/8.0.0/art/runtime/utf.h>
+#include <museum/8.0.0/art/runtime/utils/dex_cache_arrays_layout-inl.h>
 
 namespace openjdkjvmti {
 

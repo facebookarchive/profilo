@@ -17,9 +17,9 @@
  ****************************************************************************
  ****************************************************************************/
 #ifdef __i386__
-#include <asm/posix_types_32.h>
+#include <museum/8.1.0/bionic/libc/asm/posix_types_32.h>
 #elif defined(__ILP32__)
-#include <asm/posix_types_x32.h>
+#include <museum/8.1.0/bionic/libc/asm/posix_types_x32.h>
 #else
-#include <asm/posix_types_64.h>
+#include <museum/8.1.0/bionic/libc/asm/posix_types_64.h>
 #endif

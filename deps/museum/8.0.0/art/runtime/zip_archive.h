@@ -17,17 +17,17 @@
 #ifndef ART_RUNTIME_ZIP_ARCHIVE_H_
 #define ART_RUNTIME_ZIP_ARCHIVE_H_
 
-#include <stdint.h>
+#include <museum/8.0.0/external/libcxx/stdint.h>
 #include <ziparchive/zip_archive.h>
-#include <memory>
-#include <string>
+#include <museum/8.0.0/external/libcxx/memory>
+#include <museum/8.0.0/external/libcxx/string>
 
-#include "base/logging.h"
-#include "base/unix_file/random_access_file.h"
-#include "globals.h"
-#include "mem_map.h"
-#include "os.h"
-#include "safe_map.h"
+#include <museum/8.0.0/art/runtime/base/logging.h>
+#include <museum/8.0.0/art/runtime/base/unix_file/random_access_file.h>
+#include <museum/8.0.0/art/runtime/globals.h>
+#include <museum/8.0.0/art/runtime/mem_map.h>
+#include <museum/8.0.0/art/runtime/os.h>
+#include <museum/8.0.0/art/runtime/safe_map.h>
 
 namespace art {
 

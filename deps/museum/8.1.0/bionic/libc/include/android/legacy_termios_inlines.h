@@ -29,15 +29,15 @@
 #ifndef _ANDROID_LEGACY_TERMIOS_INLINES_H_
 #define _ANDROID_LEGACY_TERMIOS_INLINES_H_
 
-#include <sys/cdefs.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/ioctl.h>
+#include <museum/8.1.0/bionic/libc/sys/types.h>
 
-#include <linux/termios.h>
+#include <museum/8.1.0/bionic/libc/linux/termios.h>
 
 #if __ANDROID_API__ < __ANDROID_API_L__
 #define __BIONIC_TERMIOS_INLINE static __inline
-#include <bits/termios_inlines.h>
+#include <museum/8.1.0/bionic/libc/bits/termios_inlines.h>
 #endif
 
 #endif /* _ANDROID_LEGACY_TERMIOS_INLINES_H_ */

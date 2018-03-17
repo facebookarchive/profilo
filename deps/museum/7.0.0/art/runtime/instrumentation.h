@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_INSTRUMENTATION_H_
 #define ART_RUNTIME_INSTRUMENTATION_H_
 
-#include <stdint.h>
-#include <list>
-#include <unordered_set>
+#include <museum/7.0.0/bionic/libc/stdint.h>
+#include <museum/7.0.0/external/libcxx/list>
+#include <museum/7.0.0/external/libcxx/unordered_set>
 
-#include "arch/instruction_set.h"
-#include "base/macros.h"
-#include "base/mutex.h"
-#include "gc_root.h"
-#include "safe_map.h"
+#include <museum/7.0.0/art/runtime/arch/instruction_set.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/base/mutex.h>
+#include <museum/7.0.0/art/runtime/gc_root.h>
+#include <museum/7.0.0/art/runtime/safe_map.h>
 
 namespace art {
 namespace mirror {

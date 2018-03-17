@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _XT_CONNLIMIT_H
 #define _XT_CONNLIMIT_H
-#include <linux/types.h>
-#include <linux/netfilter.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/netfilter.h>
 struct xt_connlimit_data;
 enum {
   XT_CONNLIMIT_INVERT = 1 << 0,

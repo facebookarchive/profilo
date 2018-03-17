@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef VIRTIO_GPU_HW_H
 #define VIRTIO_GPU_HW_H
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 #define VIRTIO_GPU_F_VIRGL 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 enum virtio_gpu_ctrl_type {

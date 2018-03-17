@@ -12,7 +12,7 @@
 #define _LIBCPP_SUPPORT_IBM_XLOCALE_H
 
 #if defined(_AIX)
-#include "cstdlib"
+#include <museum/5.1.1/external/libcxx/cstdlib>
 
 #ifdef __cplusplus
 extern "C" {

@@ -29,7 +29,7 @@
 #ifndef _BITS_MBSTATE_T_H_
 #define _BITS_MBSTATE_T_H_
 
-#include <sys/cdefs.h>
+#include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 
 typedef struct {
   unsigned char __seq[4];

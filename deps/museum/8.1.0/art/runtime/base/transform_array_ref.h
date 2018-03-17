@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_BASE_TRANSFORM_ARRAY_REF_H_
 #define ART_RUNTIME_BASE_TRANSFORM_ARRAY_REF_H_
 
-#include <type_traits>
+#include <museum/8.1.0/external/libcxx/type_traits>
 
-#include "base/array_ref.h"
-#include "base/transform_iterator.h"
+#include <museum/8.1.0/art/runtime/base/array_ref.h>
+#include <museum/8.1.0/art/runtime/base/transform_iterator.h>
 
 namespace art {
 

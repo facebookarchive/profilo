@@ -17,13 +17,13 @@
 #ifndef ART_RUNTIME_MIRROR_CLASS_EXT_H_
 #define ART_RUNTIME_MIRROR_CLASS_EXT_H_
 
-#include "array.h"
-#include "class.h"
-#include "dex_cache.h"
-#include "gc_root.h"
-#include "object.h"
-#include "object_array.h"
-#include "string.h"
+#include <museum/8.1.0/art/runtime/mirror/array.h>
+#include <museum/8.1.0/art/runtime/mirror/class.h>
+#include <museum/8.1.0/art/runtime/mirror/dex_cache.h>
+#include <museum/8.1.0/art/runtime/gc_root.h>
+#include <museum/8.1.0/art/runtime/mirror/object.h>
+#include <museum/8.1.0/art/runtime/mirror/object_array.h>
+#include <museum/8.1.0/art/runtime/mirror/string.h>
 
 namespace art {
 

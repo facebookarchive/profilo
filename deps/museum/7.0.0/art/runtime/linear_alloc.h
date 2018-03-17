@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_LINEAR_ALLOC_H_
 #define ART_RUNTIME_LINEAR_ALLOC_H_
 
-#include "base/arena_allocator.h"
+#include <museum/7.0.0/art/runtime/base/arena_allocator.h>
 
 namespace art {
 

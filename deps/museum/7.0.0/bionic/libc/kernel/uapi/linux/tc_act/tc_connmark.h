@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __UAPI_TC_CONNMARK_H
 #define __UAPI_TC_CONNMARK_H
-#include <linux/types.h>
-#include <linux/pkt_cls.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/pkt_cls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TCA_ACT_CONNMARK 14
 struct tc_connmark {

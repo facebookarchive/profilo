@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_ARCH_X86_CONTEXT_X86_H_
 #define ART_RUNTIME_ARCH_X86_CONTEXT_X86_H_
 
-#include "arch/context.h"
-#include "base/logging.h"
-#include "registers_x86.h"
+#include <museum/5.0.0/art/runtime/arch/context.h>
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/arch/x86/registers_x86.h>
 
 namespace art {
 namespace x86 {

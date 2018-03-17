@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_BASE_SCOPED_ARENA_ALLOCATOR_H_
 #define ART_RUNTIME_BASE_SCOPED_ARENA_ALLOCATOR_H_
 
-#include "arena_allocator.h"
-#include "debug_stack.h"
-#include "globals.h"
-#include "logging.h"
-#include "macros.h"
+#include <museum/6.0.1/art/runtime/base/arena_allocator.h>
+#include <museum/6.0.1/art/runtime/base/debug_stack.h>
+#include <museum/6.0.1/art/runtime/globals.h>
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/macros.h>
 
 namespace art {
 

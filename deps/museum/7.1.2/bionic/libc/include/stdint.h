@@ -29,7 +29,7 @@
 #ifndef _STDINT_H
 #define _STDINT_H
 
-#include <bits/wchar_limits.h>
+#include <museum/7.1.2/bionic/libc/bits/wchar_limits.h>
 #include <stddef.h>
 
 typedef __signed char __int8_t;

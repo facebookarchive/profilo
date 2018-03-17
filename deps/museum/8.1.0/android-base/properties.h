@@ -17,15 +17,15 @@
 #ifndef ANDROID_BASE_PROPERTIES_H
 #define ANDROID_BASE_PROPERTIES_H
 
-#include <sys/cdefs.h>
+#include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 
 #if !defined(__BIONIC__)
 #error Only bionic supports system properties.
 #endif
 
-#include <chrono>
-#include <limits>
-#include <string>
+#include <museum/8.1.0/external/libcxx/chrono>
+#include <museum/8.1.0/external/libcxx/limits>
+#include <museum/8.1.0/external/libcxx/string>
 
 namespace android {
 namespace base {

@@ -18,5 +18,5 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_STRING_H_
 #define _UAPI_LINUX_STRING_H_
-#include <string.h>
+#include <museum/8.1.0/bionic/libc/string.h>
 #endif

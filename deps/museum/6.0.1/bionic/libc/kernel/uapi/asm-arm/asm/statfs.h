@@ -19,6 +19,6 @@
 #ifndef _ASMARM_STATFS_H
 #define _ASMARM_STATFS_H
 #define ARCH_PACK_STATFS64 __attribute__((packed, aligned(4)))
-#include <asm-generic/statfs.h>
+#include <museum/6.0.1/bionic/libc/asm-generic/statfs.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif

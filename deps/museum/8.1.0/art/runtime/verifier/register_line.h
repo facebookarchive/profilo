@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_VERIFIER_REGISTER_LINE_H_
 #define ART_RUNTIME_VERIFIER_REGISTER_LINE_H_
 
-#include <memory>
-#include <vector>
+#include <museum/8.1.0/external/libcxx/memory>
+#include <museum/8.1.0/external/libcxx/vector>
 
-#include "base/scoped_arena_containers.h"
-#include "safe_map.h"
+#include <museum/8.1.0/art/runtime/base/scoped_arena_containers.h>
+#include <museum/8.1.0/art/runtime/safe_map.h>
 
 namespace art {
 

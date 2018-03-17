@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_MMAN_H
 #define __ASM_GENERIC_MMAN_H
-#include <asm-generic/mman-common.h>
+#include <museum/8.1.0/bionic/libc/asm-generic/mman-common.h>
 #define MAP_GROWSDOWN 0x0100
 #define MAP_DENYWRITE 0x0800
 #define MAP_EXECUTABLE 0x1000

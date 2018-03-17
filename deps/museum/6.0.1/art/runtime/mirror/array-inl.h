@@ -17,15 +17,15 @@
 #ifndef ART_RUNTIME_MIRROR_ARRAY_INL_H_
 #define ART_RUNTIME_MIRROR_ARRAY_INL_H_
 
-#include "array.h"
+#include <museum/6.0.1/art/runtime/mirror/array.h>
 
-#include "base/bit_utils.h"
-#include "base/casts.h"
-#include "base/logging.h"
-#include "base/stringprintf.h"
-#include "class-inl.h"
-#include "gc/heap-inl.h"
-#include "thread.h"
+#include <museum/6.0.1/art/runtime/base/bit_utils.h>
+#include <museum/6.0.1/art/runtime/base/casts.h>
+#include <museum/6.0.1/art/runtime/base/logging.h>
+#include <museum/6.0.1/art/runtime/base/stringprintf.h>
+#include <museum/6.0.1/art/runtime/mirror/class-inl.h>
+#include <museum/6.0.1/art/runtime/gc/heap-inl.h>
+#include <museum/6.0.1/art/runtime/thread.h>
 
 namespace art {
 namespace mirror {

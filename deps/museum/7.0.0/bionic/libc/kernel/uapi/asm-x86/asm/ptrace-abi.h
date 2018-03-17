@@ -94,7 +94,7 @@
 #define PTRACE_SYSEMU_SINGLESTEP 32
 #define PTRACE_SINGLEBLOCK 33
 #ifndef __ASSEMBLY__
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #endif
 #endif

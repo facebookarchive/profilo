@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_JOBJECT_COMPARATOR_H_
 #define ART_RUNTIME_JOBJECT_COMPARATOR_H_
 
-#include <jni.h>
+#include <museum/7.0.0/libnativehelper/jni.h>
 
 namespace art {
 

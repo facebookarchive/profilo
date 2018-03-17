@@ -17,7 +17,7 @@
 #ifndef SCOPED_LOCAL_REF_H_included
 #define SCOPED_LOCAL_REF_H_included
 
-#include "jni.h"
+#include <museum/5.1.1/libnativehelper/jni.h>
 
 #include <stddef.h>
 

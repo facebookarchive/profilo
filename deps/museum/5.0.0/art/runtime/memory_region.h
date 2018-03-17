@@ -17,11 +17,11 @@
 #ifndef ART_RUNTIME_MEMORY_REGION_H_
 #define ART_RUNTIME_MEMORY_REGION_H_
 
-#include <stdint.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
 
-#include "base/logging.h"
-#include "base/macros.h"
-#include "globals.h"
+#include <museum/5.0.0/art/runtime/base/logging.h>
+#include <museum/5.0.0/art/runtime/base/macros.h>
+#include <museum/5.0.0/art/runtime/globals.h>
 
 namespace art {
 

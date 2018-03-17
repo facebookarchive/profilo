@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_CHECK_JNI_H_
 #define ART_RUNTIME_CHECK_JNI_H_
 
-#include <jni.h>
+#include <museum/7.1.2/libnativehelper/jni.h>
 
 namespace art {
 

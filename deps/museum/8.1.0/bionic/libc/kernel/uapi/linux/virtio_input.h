@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_INPUT_H
 #define _LINUX_VIRTIO_INPUT_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum virtio_input_config_select {
   VIRTIO_INPUT_CFG_UNSET = 0x00,
   VIRTIO_INPUT_CFG_ID_NAME = 0x01,

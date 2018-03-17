@@ -18,11 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ETHTOOL_H
 #define _UAPI_LINUX_ETHTOOL_H
-#include <linux/kernel.h>
-#include <linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/kernel.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <linux/if_ether.h>
-#include <limits.h>
+#include <museum/8.0.0/bionic/libc/linux/if_ether.h>
+#include <museum/8.0.0/bionic/libc/limits.h>
 struct ethtool_cmd {
   __u32 cmd;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_JNI_ENV_EXT_INL_H_
 #define ART_RUNTIME_JNI_ENV_EXT_INL_H_
 
-#include "jni_env_ext.h"
+#include <museum/7.0.0/art/runtime/jni_env_ext.h>
 
-#include "utils.h"
+#include <museum/7.0.0/art/runtime/utils.h>
 
 namespace art {
 

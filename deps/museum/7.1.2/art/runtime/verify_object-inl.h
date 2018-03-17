@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_VERIFY_OBJECT_INL_H_
 #define ART_RUNTIME_VERIFY_OBJECT_INL_H_
 
-#include "verify_object.h"
+#include <museum/7.1.2/art/runtime/verify_object.h>
 
-#include "gc/heap.h"
-#include "mirror/object-inl.h"
+#include <museum/7.1.2/art/runtime/gc/heap.h>
+#include <museum/7.1.2/art/runtime/mirror/object-inl.h>
 
 namespace art {
 

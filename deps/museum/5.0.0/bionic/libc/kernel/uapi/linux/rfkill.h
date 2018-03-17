@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _UAPI__RFKILL_H
 #define _UAPI__RFKILL_H
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 #define RFKILL_STATE_SOFT_BLOCKED 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define RFKILL_STATE_UNBLOCKED 1

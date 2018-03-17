@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef __LINUX__AIO_ABI_H
 #define __LINUX__AIO_ABI_H
-#include <linux/types.h>
-#include <asm/byteorder.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
+#include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 typedef __kernel_ulong_t aio_context_t;
 enum {
   IOCB_CMD_PREAD = 0,

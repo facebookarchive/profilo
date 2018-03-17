@@ -39,9 +39,9 @@ Modified for Bionic by the Android Open Source Project
 
 /* Legacy cruft for LP32 where time_t was 32-bit. */
 
-#include <sys/cdefs.h>
-#include <time.h>
-#include <stdint.h>
+#include <museum/5.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/5.0.0/bionic/libc/time.h>
+#include <museum/5.0.0/bionic/libc/stdint.h>
 
 __BEGIN_DECLS
 

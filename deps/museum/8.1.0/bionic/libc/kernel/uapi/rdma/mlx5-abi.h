@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef MLX5_ABI_USER_H
 #define MLX5_ABI_USER_H
-#include <linux/types.h>
+#include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   MLX5_QP_FLAG_SIGNATURE = 1 << 0,
   MLX5_QP_FLAG_SCATTER_CQE = 1 << 1,

@@ -18,8 +18,8 @@
  ****************************************************************************/
 #ifndef _LINUX_MTIO_H
 #define _LINUX_MTIO_H
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct mtop {
   short mt_op;

@@ -31,7 +31,7 @@
 #ifndef _JAVA_JVMTI_H_
 #define _JAVA_JVMTI_H_
 
-#include "jni.h"
+#include <museum/8.0.0/libnativehelper/jni.h>
 
 #ifdef __cplusplus
 extern "C" {

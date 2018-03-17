@@ -28,8 +28,8 @@ enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
   LO_FLAGS_DIRECT_IO = 16,
 };
-#include <asm/posix_types.h>
-#include <linux/types.h>
+#include <museum/7.0.0/bionic/libc/asm/posix_types.h>
+#include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 struct loop_info {
   int lo_number;

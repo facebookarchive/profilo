@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_TUNNEL_KEY_H
 #define __LINUX_TC_TUNNEL_KEY_H
-#include <linux/pkt_cls.h>
+#include <museum/8.0.0/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_TUNNEL_KEY 17
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define TCA_TUNNEL_KEY_ACT_SET 1

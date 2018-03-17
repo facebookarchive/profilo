@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_TERMBITS_H
 #define __ASM_GENERIC_TERMBITS_H
-#include <linux/posix_types.h>
+#include <museum/7.0.0/bionic/libc/linux/posix_types.h>
 typedef unsigned char cc_t;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 typedef unsigned int speed_t;

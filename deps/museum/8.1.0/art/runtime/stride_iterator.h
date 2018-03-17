@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_STRIDE_ITERATOR_H_
 #define ART_RUNTIME_STRIDE_ITERATOR_H_
 
-#include <iterator>
+#include <museum/8.1.0/external/libcxx/iterator>
 
-#include "base/logging.h"
+#include <museum/8.1.0/art/runtime/base/logging.h>
 
 namespace art {
 

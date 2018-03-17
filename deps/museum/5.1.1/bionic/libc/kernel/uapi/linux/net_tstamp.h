@@ -18,7 +18,7 @@
  ****************************************************************************/
 #ifndef _NET_TIMESTAMPING_H
 #define _NET_TIMESTAMPING_H
-#include <linux/socket.h>
+#include <museum/5.1.1/bionic/libc/linux/socket.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  SOF_TIMESTAMPING_TX_HARDWARE = (1<<0),

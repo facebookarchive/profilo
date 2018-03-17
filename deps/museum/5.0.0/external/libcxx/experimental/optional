@@ -16,7 +16,7 @@
 
 // C++1y
 
-#include <initializer_list>
+#include <museum/5.0.0/external/libcxx/initializer_list>
 
 namespace std { namespace experimental {
 
@@ -113,9 +113,9 @@ template <class T> struct hash<optional<T>>;
 
 */
 
-#include <__config>
-#include <functional>
-#include <stdexcept>
+#include <museum/5.0.0/external/libcxx/__config>
+#include <museum/5.0.0/external/libcxx/functional>
+#include <museum/5.0.0/external/libcxx/stdexcept>
 
 namespace std { namespace experimental {
 
@@ -144,15 +144,15 @@ public:
 
 #if _LIBCPP_STD_VER > 11
 
-#include <initializer_list>
-#include <type_traits>
-#include <new>
-#include <__functional_base>
+#include <museum/5.0.0/external/libcxx/initializer_list>
+#include <museum/5.0.0/external/libcxx/type_traits>
+#include <museum/5.0.0/external/libcxx/new>
+#include <museum/5.0.0/external/libcxx/__functional_base>
 
-#include <__undef_min_max>
+#include <museum/5.0.0/external/libcxx/__undef_min_max>
 
 #ifdef _LIBCPP_DEBUG
-#   include <__debug>
+#   include <museum/5.0.0/external/libcxx/__debug>
 #else
 #   define _LIBCPP_ASSERT(x, m) ((void)0)
 #endif

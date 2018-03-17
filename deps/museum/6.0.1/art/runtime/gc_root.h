@@ -17,9 +17,9 @@
 #ifndef ART_RUNTIME_GC_ROOT_H_
 #define ART_RUNTIME_GC_ROOT_H_
 
-#include "base/macros.h"
-#include "base/mutex.h"       // For Locks::mutator_lock_.
-#include "mirror/object_reference.h"
+#include <museum/6.0.1/art/runtime/base/macros.h>
+#include <museum/6.0.1/art/runtime/base/mutex.h>       // For Locks::mutator_lock_.
+#include <museum/6.0.1/art/runtime/mirror/object_reference.h>
 
 namespace art {
 

@@ -18,10 +18,10 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SHM_H_
 #define _UAPI_LINUX_SHM_H_
-#include <linux/ipc.h>
-#include <linux/errno.h>
+#include <museum/5.0.0/bionic/libc/linux/ipc.h>
+#include <museum/5.0.0/bionic/libc/linux/errno.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <unistd.h>
+#include <museum/5.0.0/bionic/libc/unistd.h>
 #define SHMMAX 0x2000000
 #define SHMMIN 1
 #define SHMMNI 4096
@@ -44,7 +44,7 @@ struct shmid_ds {
  void *shm_unused2;
  void *shm_unused3;
 };
-#include <asm/shmbuf.h>
+#include <museum/5.0.0/bionic/libc/asm/shmbuf.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define SHM_R 0400
 #define SHM_W 0200

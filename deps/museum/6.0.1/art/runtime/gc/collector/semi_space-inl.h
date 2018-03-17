@@ -17,10 +17,10 @@
 #ifndef ART_RUNTIME_GC_COLLECTOR_SEMI_SPACE_INL_H_
 #define ART_RUNTIME_GC_COLLECTOR_SEMI_SPACE_INL_H_
 
-#include "semi_space.h"
+#include <museum/6.0.1/art/runtime/gc/collector/semi_space.h>
 
-#include "gc/accounting/heap_bitmap.h"
-#include "mirror/object-inl.h"
+#include <museum/6.0.1/art/runtime/gc/accounting/heap_bitmap.h>
+#include <museum/6.0.1/art/runtime/mirror/object-inl.h>
 
 namespace art {
 namespace gc {

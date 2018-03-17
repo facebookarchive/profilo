@@ -19,14 +19,14 @@
 #ifndef _DRM_H_
 #define _DRM_H_
 #ifdef __linux__
-#include <linux/types.h>
+#include <museum/5.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <asm/ioctl.h>
+#include <museum/5.0.0/bionic/libc/asm/ioctl.h>
 typedef unsigned int drm_handle_t;
 #else
 #include <sys/ioccom.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#include <sys/types.h>
+#include <museum/5.0.0/bionic/libc/sys/types.h>
 typedef int8_t __s8;
 typedef uint8_t __u8;
 typedef int16_t __s16;
@@ -453,7 +453,7 @@ struct drm_prime_handle {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
  __s32 fd;
 };
-#include <drm/drm_mode.h>
+#include <museum/5.0.0/bionic/libc/drm/drm_mode.h>
 #define DRM_IOCTL_BASE 'd'
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define DRM_IO(nr) _IO(DRM_IOCTL_BASE,nr)

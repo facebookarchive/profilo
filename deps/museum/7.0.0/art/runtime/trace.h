@@ -17,21 +17,21 @@
 #ifndef ART_RUNTIME_TRACE_H_
 #define ART_RUNTIME_TRACE_H_
 
-#include <bitset>
-#include <map>
-#include <memory>
-#include <ostream>
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <vector>
+#include <museum/7.0.0/external/libcxx/bitset>
+#include <museum/7.0.0/external/libcxx/map>
+#include <museum/7.0.0/external/libcxx/memory>
+#include <museum/7.0.0/external/libcxx/ostream>
+#include <museum/7.0.0/external/libcxx/set>
+#include <museum/7.0.0/external/libcxx/string>
+#include <museum/7.0.0/external/libcxx/unordered_map>
+#include <museum/7.0.0/external/libcxx/vector>
 
-#include "atomic.h"
-#include "base/macros.h"
-#include "globals.h"
-#include "instrumentation.h"
-#include "os.h"
-#include "safe_map.h"
+#include <museum/7.0.0/art/runtime/atomic.h>
+#include <museum/7.0.0/art/runtime/base/macros.h>
+#include <museum/7.0.0/art/runtime/globals.h>
+#include <museum/7.0.0/art/runtime/instrumentation.h>
+#include <museum/7.0.0/art/runtime/os.h>
+#include <museum/7.0.0/art/runtime/safe_map.h>
 
 namespace art {
 

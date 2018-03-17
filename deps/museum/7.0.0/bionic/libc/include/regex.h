@@ -39,8 +39,8 @@
 #ifndef _REGEX_H_
 #define	_REGEX_H_
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <museum/7.0.0/bionic/libc/sys/cdefs.h>
+#include <museum/7.0.0/bionic/libc/sys/types.h>
 
 /* POSIX says regoff_t is at least as large as the larger of ptrdiff_t and
  * ssize_t. BSD uses off_t, but that interacts badly with _FILE_OFFSET_BITS. */

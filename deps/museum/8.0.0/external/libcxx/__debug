@@ -11,21 +11,21 @@
 #ifndef _LIBCPP_DEBUG_H
 #define _LIBCPP_DEBUG_H
 
-#include <__config>
+#include <museum/8.0.0/external/libcxx/__config>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #if defined(_LIBCPP_HAS_NO_NULLPTR)
-# include <cstddef>
+# include <museum/8.0.0/external/libcxx/cstddef>
 #endif
 
 #if _LIBCPP_DEBUG_LEVEL >= 1 || defined(_LIBCPP_BUILDING_LIBRARY)
-#   include <cstdlib>
-#   include <cstdio>
-#   include <cstddef>
-#   include <exception>
+#   include <museum/8.0.0/external/libcxx/cstdlib>
+#   include <museum/8.0.0/external/libcxx/cstdio>
+#   include <museum/8.0.0/external/libcxx/cstddef>
+#   include <museum/8.0.0/external/libcxx/exception>
 #endif
 
 #if _LIBCPP_DEBUG_LEVEL >= 1 && !defined(_LIBCPP_ASSERT)
