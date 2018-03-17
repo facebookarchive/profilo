@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __UAPI_HSR_NETLINK_H
 #define __UAPI_HSR_NETLINK_H
+#define _UAPI_HSR_NETLINK_H
+#define _UAPI_HSR_NETLINK_H_
+#define _HSR_NETLINK_H
+#define _HSR_NETLINK_H_
+#define _UAPI__UAPI_HSR_NETLINK_H
+#define _UAPI__UAPI_HSR_NETLINK_H_
+#define __UAPI_HSR_NETLINK_H_
 enum {
  HSR_A_UNSPEC,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

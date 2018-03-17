@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _RIO_MPORT_CDEV_H_
 #define _RIO_MPORT_CDEV_H_
+#define RIO_MPORT_CDEV_H_
+#define RIO_MPORT_CDEV_H
+#define NDK_ANDROID_SUPPORT_RIO_MPORT_CDEV_H_
+#define NDK_ANDROID_SUPPORT_RIO_MPORT_CDEV_H
+#define NDK_ANDROID_SUPPORT_UAPI_RIO_MPORT_CDEV_H_
+#define NDK_ANDROID_SUPPORT_UAPI_RIO_MPORT_CDEV_H
+#define _UAPI_RIO_MPORT_CDEV_H_
+#define _UAPI_RIO_MPORT_CDEV_H
+#define _RIO_MPORT_CDEV_H
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct rio_mport_maint_io {

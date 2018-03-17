@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_LIGHTNVM_H
 #define _UAPI_LINUX_LIGHTNVM_H
+#define UAPI_LINUX_LIGHTNVM_H
+#define UAPI_LINUX_LIGHTNVM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LIGHTNVM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LIGHTNVM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_LIGHTNVM_H
+#define NDK_ANDROID_SUPPORT_LINUX_LIGHTNVM_H_
+#define _LINUX_LIGHTNVM_H
+#define _LINUX_LIGHTNVM_H_
+#define _UAPI_LINUX_LIGHTNVM_H_
 #include <museum/8.1.0/bionic/libc/stdio.h>
 #include <museum/8.1.0/bionic/libc/sys/ioctl.h>
 #define DISK_NAME_LEN 32

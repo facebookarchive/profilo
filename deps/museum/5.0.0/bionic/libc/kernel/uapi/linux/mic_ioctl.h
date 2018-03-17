@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _MIC_IOCTL_H_
 #define _MIC_IOCTL_H_
+#define MIC_IOCTL_H_
+#define MIC_IOCTL_H
+#define _UAPI_MIC_IOCTL_H_
+#define _UAPI_MIC_IOCTL_H
+#define _MIC_IOCTL_H
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 struct mic_copy_desc {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

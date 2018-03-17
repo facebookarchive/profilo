@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ADB_H
 #define _UAPI__ADB_H
+#define UAPI__ADB_H
+#define UAPI__ADB_H_
+#define __ADB_H
+#define __ADB_H_
+#define _UAPI__ADB_H_
 #define ADB_BUSRESET 0
 #define ADB_FLUSH(id) (0x01 | ((id) << 4))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

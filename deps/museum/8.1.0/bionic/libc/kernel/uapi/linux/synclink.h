@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_SYNCLINK_H_
 #define _UAPI_SYNCLINK_H_
+#define UAPI_SYNCLINK_H_
+#define UAPI_SYNCLINK_H
+#define NDK_ANDROID_SUPPORT_UAPI_SYNCLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI_SYNCLINK_H
+#define NDK_ANDROID_SUPPORT_SYNCLINK_H_
+#define NDK_ANDROID_SUPPORT_SYNCLINK_H
+#define _SYNCLINK_H_
+#define _SYNCLINK_H
+#define _UAPI_SYNCLINK_H
 #define SYNCLINK_H_VERSION 3.6
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define BIT0 0x0001

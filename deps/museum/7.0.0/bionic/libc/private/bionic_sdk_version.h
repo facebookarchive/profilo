@@ -16,6 +16,9 @@
 
 #ifndef _BIONIC_SDK_VERSION_H_
 #define _BIONIC_SDK_VERSION_H_
+#define BIONIC_SDK_VERSION_H_
+#define BIONIC_SDK_VERSION_H
+#define _BIONIC_SDK_VERSION_H
 
 #include <stdint.h>
 

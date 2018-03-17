@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DVBOSD_H_
 #define _DVBOSD_H_
+#define DVBOSD_H_
+#define DVBOSD_H
+#define NDK_ANDROID_SUPPORT_DVBOSD_H_
+#define NDK_ANDROID_SUPPORT_DVBOSD_H
+#define NDK_ANDROID_SUPPORT_UAPI_DVBOSD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DVBOSD_H
+#define _UAPI_DVBOSD_H_
+#define _UAPI_DVBOSD_H
+#define _DVBOSD_H
 #include <linux/compiler.h>
 typedef enum {
   OSD_Close = 1,

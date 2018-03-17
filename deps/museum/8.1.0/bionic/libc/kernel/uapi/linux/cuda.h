@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_CUDA_H
 #define _UAPI_LINUX_CUDA_H
+#define UAPI_LINUX_CUDA_H
+#define UAPI_LINUX_CUDA_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_CUDA_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_CUDA_H_
+#define NDK_ANDROID_SUPPORT_LINUX_CUDA_H
+#define NDK_ANDROID_SUPPORT_LINUX_CUDA_H_
+#define _LINUX_CUDA_H
+#define _LINUX_CUDA_H_
+#define _UAPI_LINUX_CUDA_H_
 #define CUDA_WARM_START 0
 #define CUDA_AUTOPOLL 1
 #define CUDA_GET_6805_ADDR 2

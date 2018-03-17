@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_TCP_METRICS_H
 #define _LINUX_TCP_METRICS_H
+#define LINUX_TCP_METRICS_H
+#define LINUX_TCP_METRICS_H_
+#define _UAPI_LINUX_TCP_METRICS_H
+#define _UAPI_LINUX_TCP_METRICS_H_
+#define _LINUX_TCP_METRICS_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define TCP_METRICS_GENL_NAME "tcp_metrics"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

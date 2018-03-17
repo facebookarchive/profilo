@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IN_H
 #define _UAPI_LINUX_IN_H
+#define UAPI_LINUX_IN_H
+#define UAPI_LINUX_IN_H_
+#define _LINUX_IN_H
+#define _LINUX_IN_H_
+#define _UAPI_LINUX_IN_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

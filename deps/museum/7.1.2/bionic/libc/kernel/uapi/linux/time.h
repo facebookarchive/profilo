@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TIME_H
 #define _UAPI_LINUX_TIME_H
+#define UAPI_LINUX_TIME_H
+#define UAPI_LINUX_TIME_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIME_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIME_H_
+#define _LINUX_TIME_H
+#define _LINUX_TIME_H_
+#define _UAPI_LINUX_TIME_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #ifndef _STRUCT_TIMESPEC
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

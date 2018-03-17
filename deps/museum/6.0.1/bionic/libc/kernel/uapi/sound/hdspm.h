@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __SOUND_HDSPM_H
 #define __SOUND_HDSPM_H
+#define _SOUND_HDSPM_H
+#define _SOUND_HDSPM_H_
+#define _UAPI_SOUND_HDSPM_H
+#define _UAPI_SOUND_HDSPM_H_
+#define NDK_ANDROID_SUPPORT__SOUND_HDSPM_H
+#define NDK_ANDROID_SUPPORT__SOUND_HDSPM_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_HDSPM_H
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_HDSPM_H_
+#define _UAPI__SOUND_HDSPM_H
+#define _UAPI__SOUND_HDSPM_H_
+#define __SOUND_HDSPM_H_
 #define HDSPM_MAX_CHANNELS 64
 enum hdspm_io_type {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

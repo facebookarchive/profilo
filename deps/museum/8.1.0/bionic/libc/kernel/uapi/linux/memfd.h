@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MEMFD_H
 #define _UAPI_LINUX_MEMFD_H
+#define UAPI_LINUX_MEMFD_H
+#define UAPI_LINUX_MEMFD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MEMFD_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MEMFD_H_
+#define NDK_ANDROID_SUPPORT_LINUX_MEMFD_H
+#define NDK_ANDROID_SUPPORT_LINUX_MEMFD_H_
+#define _LINUX_MEMFD_H
+#define _LINUX_MEMFD_H_
+#define _UAPI_LINUX_MEMFD_H_
 #define MFD_CLOEXEC 0x0001U
 #define MFD_ALLOW_SEALING 0x0002U
 #endif

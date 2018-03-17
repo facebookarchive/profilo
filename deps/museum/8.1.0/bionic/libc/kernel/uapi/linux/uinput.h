@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__UINPUT_H_
 #define _UAPI__UINPUT_H_
+#define UAPI__UINPUT_H_
+#define UAPI__UINPUT_H
+#define NDK_ANDROID_SUPPORT_UAPI__UINPUT_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UINPUT_H
+#define NDK_ANDROID_SUPPORT__UINPUT_H_
+#define NDK_ANDROID_SUPPORT__UINPUT_H
+#define __UINPUT_H_
+#define __UINPUT_H
+#define _UAPI__UINPUT_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/input.h>
 #define UINPUT_VERSION 5

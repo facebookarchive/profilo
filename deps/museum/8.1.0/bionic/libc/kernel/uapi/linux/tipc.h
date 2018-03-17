@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_TIPC_H_
 #define _LINUX_TIPC_H_
+#define LINUX_TIPC_H_
+#define LINUX_TIPC_H
+#define NDK_ANDROID_SUPPORT_LINUX_TIPC_H_
+#define NDK_ANDROID_SUPPORT_LINUX_TIPC_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIPC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIPC_H
+#define _UAPI_LINUX_TIPC_H_
+#define _UAPI_LINUX_TIPC_H
+#define _LINUX_TIPC_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/sockios.h>
 struct tipc_portid {

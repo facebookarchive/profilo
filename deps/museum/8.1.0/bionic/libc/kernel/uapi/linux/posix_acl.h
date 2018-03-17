@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UAPI_POSIX_ACL_H
 #define __UAPI_POSIX_ACL_H
+#define _UAPI_POSIX_ACL_H
+#define _UAPI_POSIX_ACL_H_
+#define _POSIX_ACL_H
+#define _POSIX_ACL_H_
+#define NDK_ANDROID_SUPPORT__UAPI_POSIX_ACL_H
+#define NDK_ANDROID_SUPPORT__UAPI_POSIX_ACL_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_POSIX_ACL_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_POSIX_ACL_H_
+#define _UAPI__UAPI_POSIX_ACL_H
+#define _UAPI__UAPI_POSIX_ACL_H_
+#define __UAPI_POSIX_ACL_H_
 #define ACL_UNDEFINED_ID (- 1)
 #define ACL_TYPE_ACCESS (0x8000)
 #define ACL_TYPE_DEFAULT (0x4000)

@@ -28,6 +28,11 @@
 
 #ifndef _SYS_SHM_H_
 #define _SYS_SHM_H_
+#define SYS_SHM_H_
+#define SYS_SHM_H
+#define NDK_ANDROID_SUPPORT_SYS_SHM_H_
+#define NDK_ANDROID_SUPPORT_SYS_SHM_H
+#define _SYS_SHM_H
 
 #include <museum/6.0.1/bionic/libc/linux/shm.h>
 

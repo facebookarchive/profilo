@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_UVESAFB_H
 #define _UAPI_UVESAFB_H
+#define UAPI_UVESAFB_H
+#define UAPI_UVESAFB_H_
+#define NDK_ANDROID_SUPPORT_UAPI_UVESAFB_H
+#define NDK_ANDROID_SUPPORT_UAPI_UVESAFB_H_
+#define NDK_ANDROID_SUPPORT_UVESAFB_H
+#define NDK_ANDROID_SUPPORT_UVESAFB_H_
+#define _UVESAFB_H
+#define _UVESAFB_H_
+#define _UAPI_UVESAFB_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct v86_regs {
   __u32 ebx;

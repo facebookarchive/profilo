@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_IPCBUF_H
 #define __ASM_GENERIC_IPCBUF_H
+#define _ASM_GENERIC_IPCBUF_H
+#define _ASM_GENERIC_IPCBUF_H_
+#define _UAPI_ASM_GENERIC_IPCBUF_H
+#define _UAPI_ASM_GENERIC_IPCBUF_H_
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_IPCBUF_H
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_IPCBUF_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_IPCBUF_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_IPCBUF_H_
+#define _UAPI__ASM_GENERIC_IPCBUF_H
+#define _UAPI__ASM_GENERIC_IPCBUF_H_
+#define __ASM_GENERIC_IPCBUF_H_
 struct ipc64_perm {
   __kernel_key_t key;
   __kernel_uid32_t uid;

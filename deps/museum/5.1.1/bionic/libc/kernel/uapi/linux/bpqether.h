@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __BPQETHER_H
 #define __BPQETHER_H
+#define _BPQETHER_H
+#define _BPQETHER_H_
+#define _UAPI_BPQETHER_H
+#define _UAPI_BPQETHER_H_
+#define _UAPI__BPQETHER_H
+#define _UAPI__BPQETHER_H_
+#define __BPQETHER_H_
 #ifndef __LINUX_IF_ETHER_H
 #include <museum/5.1.1/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

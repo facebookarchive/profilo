@@ -27,6 +27,11 @@
  */
 #ifndef _STRING_H_
 #define _STRING_H_
+#define STRING_H_
+#define STRING_H
+#define NDK_ANDROID_SUPPORT_STRING_H_
+#define NDK_ANDROID_SUPPORT_STRING_H
+#define _STRING_H
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #include <stddef.h>

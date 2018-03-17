@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NETCONF_H_
 #define _UAPI_LINUX_NETCONF_H_
+#define UAPI_LINUX_NETCONF_H_
+#define UAPI_LINUX_NETCONF_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NETCONF_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NETCONF_H
+#define NDK_ANDROID_SUPPORT_LINUX_NETCONF_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NETCONF_H
+#define _LINUX_NETCONF_H_
+#define _LINUX_NETCONF_H
+#define _UAPI_LINUX_NETCONF_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/netlink.h>
 struct netconfmsg {

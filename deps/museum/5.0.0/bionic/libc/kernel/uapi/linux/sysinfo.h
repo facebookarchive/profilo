@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_SYSINFO_H
 #define _LINUX_SYSINFO_H
+#define LINUX_SYSINFO_H
+#define LINUX_SYSINFO_H_
+#define _UAPI_LINUX_SYSINFO_H
+#define _UAPI_LINUX_SYSINFO_H_
+#define _LINUX_SYSINFO_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define SI_LOAD_SHIFT 16
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

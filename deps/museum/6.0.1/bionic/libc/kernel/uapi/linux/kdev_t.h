@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KDEV_T_H
 #define _UAPI_LINUX_KDEV_T_H
+#define UAPI_LINUX_KDEV_T_H
+#define UAPI_LINUX_KDEV_T_H_
+#define _LINUX_KDEV_T_H
+#define _LINUX_KDEV_T_H_
+#define _UAPI_LINUX_KDEV_T_H_
 #define MAJOR(dev) ((dev) >> 8)
 #define MINOR(dev) ((dev) & 0xff)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

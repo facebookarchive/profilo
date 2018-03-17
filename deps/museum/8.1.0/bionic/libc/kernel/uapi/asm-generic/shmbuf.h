@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_SHMBUF_H
 #define __ASM_GENERIC_SHMBUF_H
+#define _ASM_GENERIC_SHMBUF_H
+#define _ASM_GENERIC_SHMBUF_H_
+#define _UAPI_ASM_GENERIC_SHMBUF_H
+#define _UAPI_ASM_GENERIC_SHMBUF_H_
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_SHMBUF_H
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_SHMBUF_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_SHMBUF_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_SHMBUF_H_
+#define _UAPI__ASM_GENERIC_SHMBUF_H
+#define _UAPI__ASM_GENERIC_SHMBUF_H_
+#define __ASM_GENERIC_SHMBUF_H_
 #include <museum/8.1.0/bionic/libc/asm/bitsperlong.h>
 struct shmid64_ds {
   struct ipc64_perm shm_perm;

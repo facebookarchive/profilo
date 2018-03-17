@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_LTALK_H
 #define _UAPI__LINUX_LTALK_H
+#define UAPI__LINUX_LTALK_H
+#define UAPI__LINUX_LTALK_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_LTALK_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_LTALK_H_
+#define NDK_ANDROID_SUPPORT__LINUX_LTALK_H
+#define NDK_ANDROID_SUPPORT__LINUX_LTALK_H_
+#define __LINUX_LTALK_H
+#define __LINUX_LTALK_H_
+#define _UAPI__LINUX_LTALK_H_
 #define LTALK_HLEN 1
 #define LTALK_MTU 600
 #define LTALK_ALEN 1

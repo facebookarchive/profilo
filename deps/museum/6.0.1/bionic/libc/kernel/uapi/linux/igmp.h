@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IGMP_H
 #define _UAPI_LINUX_IGMP_H
+#define UAPI_LINUX_IGMP_H
+#define UAPI_LINUX_IGMP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IGMP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IGMP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IGMP_H
+#define NDK_ANDROID_SUPPORT_LINUX_IGMP_H_
+#define _LINUX_IGMP_H
+#define _LINUX_IGMP_H_
+#define _UAPI_LINUX_IGMP_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

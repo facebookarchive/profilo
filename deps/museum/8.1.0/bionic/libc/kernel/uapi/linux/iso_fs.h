@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ISOFS_FS_H
 #define _ISOFS_FS_H
+#define ISOFS_FS_H
+#define ISOFS_FS_H_
+#define NDK_ANDROID_SUPPORT_ISOFS_FS_H
+#define NDK_ANDROID_SUPPORT_ISOFS_FS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ISOFS_FS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ISOFS_FS_H_
+#define _UAPI_ISOFS_FS_H
+#define _UAPI_ISOFS_FS_H_
+#define _ISOFS_FS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define ISODCL(from,to) (to - from + 1)

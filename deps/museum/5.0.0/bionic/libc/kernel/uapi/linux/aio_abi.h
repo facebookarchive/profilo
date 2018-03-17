@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX__AIO_ABI_H
 #define __LINUX__AIO_ABI_H
+#define _LINUX__AIO_ABI_H
+#define _LINUX__AIO_ABI_H_
+#define _UAPI_LINUX__AIO_ABI_H
+#define _UAPI_LINUX__AIO_ABI_H_
+#define _UAPI__LINUX__AIO_ABI_H
+#define _UAPI__LINUX__AIO_ABI_H_
+#define __LINUX__AIO_ABI_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #include <museum/5.0.0/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

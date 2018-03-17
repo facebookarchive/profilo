@@ -28,6 +28,11 @@
 
 #ifndef _XLOCALE_H_
 #define _XLOCALE_H_
+#define XLOCALE_H_
+#define XLOCALE_H
+#define NDK_ANDROID_SUPPORT_XLOCALE_H_
+#define NDK_ANDROID_SUPPORT_XLOCALE_H
+#define _XLOCALE_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

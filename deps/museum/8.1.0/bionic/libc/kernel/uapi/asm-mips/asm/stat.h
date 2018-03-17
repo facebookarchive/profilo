@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_STAT_H
 #define _ASM_STAT_H
+#define ASM_STAT_H
+#define ASM_STAT_H_
+#define NDK_ANDROID_SUPPORT_ASM_STAT_H
+#define NDK_ANDROID_SUPPORT_ASM_STAT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_STAT_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_STAT_H_
+#define _UAPI_ASM_STAT_H
+#define _UAPI_ASM_STAT_H_
+#define _ASM_STAT_H_
 #include <linux/types.h>
 #include <asm/sgidefs.h>
 #if _MIPS_SIM == _MIPS_SIM_ABI32 || _MIPS_SIM == _MIPS_SIM_NABI32

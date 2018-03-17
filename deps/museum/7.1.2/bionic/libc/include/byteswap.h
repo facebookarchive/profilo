@@ -27,6 +27,9 @@
  */
 #ifndef _BYTESWAP_H_
 #define _BYTESWAP_H_
+#define BYTESWAP_H_
+#define BYTESWAP_H
+#define _BYTESWAP_H
 
 #include <museum/7.1.2/bionic/libc/sys/endian.h>
 

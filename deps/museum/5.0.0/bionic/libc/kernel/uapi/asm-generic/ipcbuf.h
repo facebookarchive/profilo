@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_IPCBUF_H
 #define __ASM_GENERIC_IPCBUF_H
+#define _ASM_GENERIC_IPCBUF_H
+#define _ASM_GENERIC_IPCBUF_H_
+#define _UAPI_ASM_GENERIC_IPCBUF_H
+#define _UAPI_ASM_GENERIC_IPCBUF_H_
+#define _UAPI__ASM_GENERIC_IPCBUF_H
+#define _UAPI__ASM_GENERIC_IPCBUF_H_
+#define __ASM_GENERIC_IPCBUF_H_
 struct ipc64_perm {
  __kernel_key_t key;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

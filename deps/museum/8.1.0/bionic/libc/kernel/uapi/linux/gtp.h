@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_GTP_H_
 #define _UAPI_LINUX_GTP_H_
+#define UAPI_LINUX_GTP_H_
+#define UAPI_LINUX_GTP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_GTP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_GTP_H
+#define NDK_ANDROID_SUPPORT_LINUX_GTP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_GTP_H
+#define _LINUX_GTP_H_
+#define _LINUX_GTP_H
+#define _UAPI_LINUX_GTP_H
 enum gtp_genl_cmds {
   GTP_CMD_NEWPDP,
   GTP_CMD_DELPDP,

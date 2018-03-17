@@ -27,6 +27,11 @@
  */
 #ifndef _WCHAR_H_
 #define _WCHAR_H_
+#define WCHAR_H_
+#define WCHAR_H
+#define NDK_ANDROID_SUPPORT_WCHAR_H_
+#define NDK_ANDROID_SUPPORT_WCHAR_H
+#define _WCHAR_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/stdio.h>

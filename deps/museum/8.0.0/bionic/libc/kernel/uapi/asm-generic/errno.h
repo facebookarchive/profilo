@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _ASM_GENERIC_ERRNO_H
 #define _ASM_GENERIC_ERRNO_H
+#define ASM_GENERIC_ERRNO_H
+#define ASM_GENERIC_ERRNO_H_
+#define NDK_ANDROID_SUPPORT_ASM_GENERIC_ERRNO_H
+#define NDK_ANDROID_SUPPORT_ASM_GENERIC_ERRNO_H_
+#define _UAPI_ASM_GENERIC_ERRNO_H
+#define _UAPI_ASM_GENERIC_ERRNO_H_
+#define _ASM_GENERIC_ERRNO_H_
 #include <museum/8.0.0/bionic/libc/asm-generic/errno-base.h>
 #define EDEADLK 35
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

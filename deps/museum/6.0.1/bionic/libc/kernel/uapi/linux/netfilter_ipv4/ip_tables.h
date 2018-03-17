@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_IPTABLES_H
 #define _UAPI_IPTABLES_H
+#define UAPI_IPTABLES_H
+#define UAPI_IPTABLES_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IPTABLES_H
+#define NDK_ANDROID_SUPPORT_UAPI_IPTABLES_H_
+#define NDK_ANDROID_SUPPORT_IPTABLES_H
+#define NDK_ANDROID_SUPPORT_IPTABLES_H_
+#define _IPTABLES_H
+#define _IPTABLES_H_
+#define _UAPI_IPTABLES_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

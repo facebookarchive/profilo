@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__ASMARM_HWCAP_H
 #define _UAPI__ASMARM_HWCAP_H
+#define UAPI__ASMARM_HWCAP_H
+#define UAPI__ASMARM_HWCAP_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASMARM_HWCAP_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASMARM_HWCAP_H_
+#define NDK_ANDROID_SUPPORT__ASMARM_HWCAP_H
+#define NDK_ANDROID_SUPPORT__ASMARM_HWCAP_H_
+#define __ASMARM_HWCAP_H
+#define __ASMARM_HWCAP_H_
+#define _UAPI__ASMARM_HWCAP_H_
 #define HWCAP_SWP (1 << 0)
 #define HWCAP_HALF (1 << 1)
 #define HWCAP_THUMB (1 << 2)

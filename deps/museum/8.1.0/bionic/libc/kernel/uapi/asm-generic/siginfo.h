@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_GENERIC_SIGINFO_H
 #define _UAPI_ASM_GENERIC_SIGINFO_H
+#define UAPI_ASM_GENERIC_SIGINFO_H
+#define UAPI_ASM_GENERIC_SIGINFO_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_GENERIC_SIGINFO_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_GENERIC_SIGINFO_H_
+#define NDK_ANDROID_SUPPORT_ASM_GENERIC_SIGINFO_H
+#define NDK_ANDROID_SUPPORT_ASM_GENERIC_SIGINFO_H_
+#define _ASM_GENERIC_SIGINFO_H
+#define _ASM_GENERIC_SIGINFO_H_
+#define _UAPI_ASM_GENERIC_SIGINFO_H_
 #include <linux/compiler.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 typedef union sigval {

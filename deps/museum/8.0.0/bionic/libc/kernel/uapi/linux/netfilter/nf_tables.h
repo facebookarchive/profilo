@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_NF_TABLES_H
 #define _LINUX_NF_TABLES_H
+#define LINUX_NF_TABLES_H
+#define LINUX_NF_TABLES_H_
+#define _UAPI_LINUX_NF_TABLES_H
+#define _UAPI_LINUX_NF_TABLES_H_
+#define _LINUX_NF_TABLES_H_
 #define NFT_TABLE_MAXNAMELEN 32
 #define NFT_CHAIN_MAXNAMELEN 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IPT_REJECT_H
 #define _IPT_REJECT_H
+#define IPT_REJECT_H
+#define IPT_REJECT_H_
+#define _UAPI_IPT_REJECT_H
+#define _UAPI_IPT_REJECT_H_
+#define _IPT_REJECT_H_
 enum ipt_reject_with {
  IPT_ICMP_NET_UNREACHABLE,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

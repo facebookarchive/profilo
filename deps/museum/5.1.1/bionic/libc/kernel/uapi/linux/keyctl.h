@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_KEYCTL_H
 #define _LINUX_KEYCTL_H
+#define LINUX_KEYCTL_H
+#define LINUX_KEYCTL_H_
+#define _UAPI_LINUX_KEYCTL_H
+#define _UAPI_LINUX_KEYCTL_H_
+#define _LINUX_KEYCTL_H_
 #define KEY_SPEC_THREAD_KEYRING -1
 #define KEY_SPEC_PROCESS_KEYRING -2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

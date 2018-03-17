@@ -35,6 +35,8 @@
 
 #ifndef _ARM_FENV_H_
 #define _ARM_FENV_H_
+#define ARM_FENV_H_
+#define ARM_FENV_H
 
 #include <museum/5.1.1/bionic/libc/sys/types.h>
 

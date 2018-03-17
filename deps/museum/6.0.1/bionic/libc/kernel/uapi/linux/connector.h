@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__CONNECTOR_H
 #define _UAPI__CONNECTOR_H
+#define UAPI__CONNECTOR_H
+#define UAPI__CONNECTOR_H_
+#define NDK_ANDROID_SUPPORT_UAPI__CONNECTOR_H
+#define NDK_ANDROID_SUPPORT_UAPI__CONNECTOR_H_
+#define NDK_ANDROID_SUPPORT__CONNECTOR_H
+#define NDK_ANDROID_SUPPORT__CONNECTOR_H_
+#define __CONNECTOR_H
+#define __CONNECTOR_H_
+#define _UAPI__CONNECTOR_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define CN_IDX_PROC 0x1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

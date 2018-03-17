@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _IPT_ECN_H
 #define _IPT_ECN_H
+#define IPT_ECN_H
+#define IPT_ECN_H_
+#define NDK_ANDROID_SUPPORT_IPT_ECN_H
+#define NDK_ANDROID_SUPPORT_IPT_ECN_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_ECN_H
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_ECN_H_
+#define _UAPI_IPT_ECN_H
+#define _UAPI_IPT_ECN_H_
+#define _IPT_ECN_H_
 #include <museum/6.0.1/bionic/libc/linux/netfilter/xt_ecn.h>
 #define ipt_ecn_info xt_ecn_info
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

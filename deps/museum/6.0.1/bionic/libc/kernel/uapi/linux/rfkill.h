@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__RFKILL_H
 #define _UAPI__RFKILL_H
+#define UAPI__RFKILL_H
+#define UAPI__RFKILL_H_
+#define NDK_ANDROID_SUPPORT_UAPI__RFKILL_H
+#define NDK_ANDROID_SUPPORT_UAPI__RFKILL_H_
+#define NDK_ANDROID_SUPPORT__RFKILL_H
+#define NDK_ANDROID_SUPPORT__RFKILL_H_
+#define __RFKILL_H
+#define __RFKILL_H_
+#define _UAPI__RFKILL_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define RFKILL_STATE_SOFT_BLOCKED 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UAPI_ASM_MIPS_REG_H
 #define __UAPI_ASM_MIPS_REG_H
+#define _UAPI_ASM_MIPS_REG_H
+#define _UAPI_ASM_MIPS_REG_H_
+#define _ASM_MIPS_REG_H
+#define _ASM_MIPS_REG_H_
+#define NDK_ANDROID_SUPPORT__UAPI_ASM_MIPS_REG_H
+#define NDK_ANDROID_SUPPORT__UAPI_ASM_MIPS_REG_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_ASM_MIPS_REG_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_ASM_MIPS_REG_H_
+#define _UAPI__UAPI_ASM_MIPS_REG_H
+#define _UAPI__UAPI_ASM_MIPS_REG_H_
+#define __UAPI_ASM_MIPS_REG_H_
 #define MIPS32_EF_R0 6
 #define MIPS32_EF_R1 7
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

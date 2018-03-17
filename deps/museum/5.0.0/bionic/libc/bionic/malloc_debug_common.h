@@ -32,6 +32,9 @@
  */
 #ifndef MALLOC_DEBUG_COMMON_H
 #define MALLOC_DEBUG_COMMON_H
+#define _MALLOC_DEBUG_COMMON_H
+#define _MALLOC_DEBUG_COMMON_H_
+#define MALLOC_DEBUG_COMMON_H_
 
 #include <pthread.h>
 #include <stdint.h>

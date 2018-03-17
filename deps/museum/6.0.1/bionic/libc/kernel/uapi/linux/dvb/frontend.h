@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DVBFRONTEND_H_
 #define _DVBFRONTEND_H_
+#define DVBFRONTEND_H_
+#define DVBFRONTEND_H
+#define NDK_ANDROID_SUPPORT_DVBFRONTEND_H_
+#define NDK_ANDROID_SUPPORT_DVBFRONTEND_H
+#define NDK_ANDROID_SUPPORT_UAPI_DVBFRONTEND_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DVBFRONTEND_H
+#define _UAPI_DVBFRONTEND_H_
+#define _UAPI_DVBFRONTEND_H
+#define _DVBFRONTEND_H
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 typedef enum fe_type {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

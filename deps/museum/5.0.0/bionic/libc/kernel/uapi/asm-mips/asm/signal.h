@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_SIGNAL_H
 #define _UAPI_ASM_SIGNAL_H
+#define UAPI_ASM_SIGNAL_H
+#define UAPI_ASM_SIGNAL_H_
+#define _ASM_SIGNAL_H
+#define _ASM_SIGNAL_H_
+#define _UAPI_ASM_SIGNAL_H_
 #include <linux/types.h>
 #define _KERNEL__NSIG 128
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

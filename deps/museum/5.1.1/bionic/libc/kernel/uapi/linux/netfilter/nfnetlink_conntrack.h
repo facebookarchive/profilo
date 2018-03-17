@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IPCONNTRACK_NETLINK_H
 #define _IPCONNTRACK_NETLINK_H
+#define IPCONNTRACK_NETLINK_H
+#define IPCONNTRACK_NETLINK_H_
+#define _UAPI_IPCONNTRACK_NETLINK_H
+#define _UAPI_IPCONNTRACK_NETLINK_H_
+#define _IPCONNTRACK_NETLINK_H_
 #include <museum/5.1.1/bionic/libc/linux/netfilter/nfnetlink.h>
 enum cntl_msg_types {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

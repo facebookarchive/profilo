@@ -28,6 +28,9 @@
 
 #ifndef DEBUG_MALLOC_MAPDATA_H
 #define DEBUG_MALLOC_MAPDATA_H
+#define _DEBUG_MALLOC_MAPDATA_H
+#define _DEBUG_MALLOC_MAPDATA_H_
+#define DEBUG_MALLOC_MAPDATA_H_
 
 #include <sys/cdefs.h>
 

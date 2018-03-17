@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_PARPORT_H_
 #define _UAPI_PARPORT_H_
+#define UAPI_PARPORT_H_
+#define UAPI_PARPORT_H
+#define _PARPORT_H_
+#define _PARPORT_H
+#define _UAPI_PARPORT_H
 #define PARPORT_MAX 16
 #define PARPORT_IRQ_NONE - 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

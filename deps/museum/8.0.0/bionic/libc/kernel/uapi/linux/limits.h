@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_LIMITS_H
 #define _LINUX_LIMITS_H
+#define LINUX_LIMITS_H
+#define LINUX_LIMITS_H_
+#define _UAPI_LINUX_LIMITS_H
+#define _UAPI_LINUX_LIMITS_H_
+#define _LINUX_LIMITS_H_
 #define NR_OPEN 1024
 #define NGROUPS_MAX 65536
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

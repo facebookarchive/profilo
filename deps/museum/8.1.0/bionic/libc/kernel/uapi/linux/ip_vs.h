@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _IP_VS_H
 #define _IP_VS_H
+#define IP_VS_H
+#define IP_VS_H_
+#define NDK_ANDROID_SUPPORT_IP_VS_H
+#define NDK_ANDROID_SUPPORT_IP_VS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IP_VS_H
+#define NDK_ANDROID_SUPPORT_UAPI_IP_VS_H_
+#define _UAPI_IP_VS_H
+#define _UAPI_IP_VS_H_
+#define _IP_VS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IP_VS_VERSION_CODE 0x010201
 #define NVERSION(version) (version >> 16) & 0xFF, (version >> 8) & 0xFF, version & 0xFF

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ISOFS_FS_H
 #define _ISOFS_FS_H
+#define ISOFS_FS_H
+#define ISOFS_FS_H_
+#define NDK_ANDROID_SUPPORT_ISOFS_FS_H
+#define NDK_ANDROID_SUPPORT_ISOFS_FS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ISOFS_FS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ISOFS_FS_H_
+#define _UAPI_ISOFS_FS_H
+#define _UAPI_ISOFS_FS_H_
+#define _ISOFS_FS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NFSD_DEBUG_H
 #define _UAPILINUX_NFSD_DEBUG_H
+#define UAPILINUX_NFSD_DEBUG_H
+#define UAPILINUX_NFSD_DEBUG_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_NFSD_DEBUG_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_NFSD_DEBUG_H_
+#define LINUX_NFSD_DEBUG_H
+#define LINUX_NFSD_DEBUG_H_
+#define _UAPILINUX_NFSD_DEBUG_H_
 #include <museum/8.1.0/bionic/libc/linux/sunrpc/debug.h>
 #define NFSDDBG_SOCK 0x0001
 #define NFSDDBG_FH 0x0002

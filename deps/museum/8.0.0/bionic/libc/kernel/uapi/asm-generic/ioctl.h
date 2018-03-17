@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_GENERIC_IOCTL_H
 #define _UAPI_ASM_GENERIC_IOCTL_H
+#define UAPI_ASM_GENERIC_IOCTL_H
+#define UAPI_ASM_GENERIC_IOCTL_H_
+#define _ASM_GENERIC_IOCTL_H
+#define _ASM_GENERIC_IOCTL_H_
+#define _UAPI_ASM_GENERIC_IOCTL_H_
 #define _IOC_NRBITS 8
 #define _IOC_TYPEBITS 8
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

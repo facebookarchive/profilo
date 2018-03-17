@@ -28,6 +28,9 @@
 
 #ifndef MALLOC_DEBUG_DISABLE_H
 #define MALLOC_DEBUG_DISABLE_H
+#define _MALLOC_DEBUG_DISABLE_H
+#define _MALLOC_DEBUG_DISABLE_H_
+#define MALLOC_DEBUG_DISABLE_H_
 
 #include <pthread.h>
 

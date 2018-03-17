@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_UAPI_SND_ASOC_H
 #define __LINUX_UAPI_SND_ASOC_H
+#define _LINUX_UAPI_SND_ASOC_H
+#define _LINUX_UAPI_SND_ASOC_H_
+#define _UAPI_LINUX_UAPI_SND_ASOC_H
+#define _UAPI_LINUX_UAPI_SND_ASOC_H_
+#define NDK_ANDROID_SUPPORT__LINUX_UAPI_SND_ASOC_H
+#define NDK_ANDROID_SUPPORT__LINUX_UAPI_SND_ASOC_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_UAPI_SND_ASOC_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_UAPI_SND_ASOC_H_
+#define _UAPI__LINUX_UAPI_SND_ASOC_H
+#define _UAPI__LINUX_UAPI_SND_ASOC_H_
+#define __LINUX_UAPI_SND_ASOC_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/sound/asound.h>
 #define SND_SOC_TPLG_MAX_CHAN 8

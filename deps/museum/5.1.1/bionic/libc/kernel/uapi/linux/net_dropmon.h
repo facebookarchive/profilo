@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __NET_DROPMON_H
 #define __NET_DROPMON_H
+#define _NET_DROPMON_H
+#define _NET_DROPMON_H_
+#define _UAPI_NET_DROPMON_H
+#define _UAPI_NET_DROPMON_H_
+#define _UAPI__NET_DROPMON_H
+#define _UAPI__NET_DROPMON_H_
+#define __NET_DROPMON_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

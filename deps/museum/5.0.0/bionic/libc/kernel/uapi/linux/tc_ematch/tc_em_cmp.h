@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_EM_CMP_H
 #define __LINUX_TC_EM_CMP_H
+#define _LINUX_TC_EM_CMP_H
+#define _LINUX_TC_EM_CMP_H_
+#define _UAPI_LINUX_TC_EM_CMP_H
+#define _UAPI_LINUX_TC_EM_CMP_H_
+#define _UAPI__LINUX_TC_EM_CMP_H
+#define _UAPI__LINUX_TC_EM_CMP_H_
+#define __LINUX_TC_EM_CMP_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #include <museum/5.0.0/bionic/libc/linux/pkt_cls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

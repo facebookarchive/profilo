@@ -26,6 +26,11 @@
 
 #ifndef _EVENTLIB_P_H
 #define _EVENTLIB_P_H
+#define EVENTLIB_P_H
+#define EVENTLIB_P_H_
+#define NDK_ANDROID_SUPPORT_EVENTLIB_P_H
+#define NDK_ANDROID_SUPPORT_EVENTLIB_P_H_
+#define _EVENTLIB_P_H_
 
 #include <sys/param.h>
 #include <sys/types.h>

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_FDREG_H
 #define _LINUX_FDREG_H
+#define LINUX_FDREG_H
+#define LINUX_FDREG_H_
+#define _UAPI_LINUX_FDREG_H
+#define _UAPI_LINUX_FDREG_H_
+#define _LINUX_FDREG_H_
 #ifdef FDPATCHES
 #define FD_IOPORT fdc_state[fdc].address
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

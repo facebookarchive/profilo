@@ -16,6 +16,9 @@
 
 #ifndef _SYS_STATVFS_H_
 #define _SYS_STATVFS_H_
+#define SYS_STATVFS_H_
+#define SYS_STATVFS_H
+#define _SYS_STATVFS_H
 
 #include <museum/7.1.2/bionic/libc/stdint.h>
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>

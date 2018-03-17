@@ -28,6 +28,9 @@
 
 #ifndef _SET_ABORT_MESSAGE_H
 #define _SET_ABORT_MESSAGE_H
+#define SET_ABORT_MESSAGE_H
+#define SET_ABORT_MESSAGE_H_
+#define _SET_ABORT_MESSAGE_H_
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 

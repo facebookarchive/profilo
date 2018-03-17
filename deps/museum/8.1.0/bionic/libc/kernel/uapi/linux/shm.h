@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SHM_H_
 #define _UAPI_LINUX_SHM_H_
+#define UAPI_LINUX_SHM_H_
+#define UAPI_LINUX_SHM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SHM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SHM_H
+#define NDK_ANDROID_SUPPORT_LINUX_SHM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SHM_H
+#define _LINUX_SHM_H_
+#define _LINUX_SHM_H
+#define _UAPI_LINUX_SHM_H
 #include <museum/8.1.0/bionic/libc/linux/ipc.h>
 #include <museum/8.1.0/bionic/libc/linux/errno.h>
 #include <museum/8.1.0/bionic/libc/unistd.h>

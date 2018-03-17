@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_ARM_UNISTD_H
 #define _UAPI__ASM_ARM_UNISTD_H
+#define UAPI__ASM_ARM_UNISTD_H
+#define UAPI__ASM_ARM_UNISTD_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_ARM_UNISTD_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_ARM_UNISTD_H_
+#define NDK_ANDROID_SUPPORT__ASM_ARM_UNISTD_H
+#define NDK_ANDROID_SUPPORT__ASM_ARM_UNISTD_H_
+#define __ASM_ARM_UNISTD_H
+#define __ASM_ARM_UNISTD_H_
+#define _UAPI__ASM_ARM_UNISTD_H_
 #define __NR_OABI_SYSCALL_BASE 0x900000
 #define __NR_SYSCALL_BASE 0
 #include <museum/8.1.0/bionic/libc/asm/unistd-eabi.h>

@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SENDFILE_H_
 #define _SYS_SENDFILE_H_
+#define SYS_SENDFILE_H_
+#define SYS_SENDFILE_H
+#define _SYS_SENDFILE_H
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/7.0.0/bionic/libc/sys/types.h>

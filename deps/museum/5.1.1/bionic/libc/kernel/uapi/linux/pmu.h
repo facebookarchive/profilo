@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_PMU_H
 #define _UAPI_LINUX_PMU_H
+#define UAPI_LINUX_PMU_H
+#define UAPI_LINUX_PMU_H_
+#define _LINUX_PMU_H
+#define _LINUX_PMU_H_
+#define _UAPI_LINUX_PMU_H_
 #define PMU_DRIVER_VERSION 2
 #define PMU_POWER_CTRL0 0x10
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

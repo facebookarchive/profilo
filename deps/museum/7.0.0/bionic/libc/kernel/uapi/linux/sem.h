@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SEM_H
 #define _UAPI_LINUX_SEM_H
+#define UAPI_LINUX_SEM_H
+#define UAPI_LINUX_SEM_H_
+#define _LINUX_SEM_H
+#define _LINUX_SEM_H_
+#define _UAPI_LINUX_SEM_H_
 #include <museum/7.0.0/bionic/libc/linux/ipc.h>
 #define SEM_UNDO 0x1000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

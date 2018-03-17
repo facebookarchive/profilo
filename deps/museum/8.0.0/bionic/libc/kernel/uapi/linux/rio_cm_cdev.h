@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _RIO_CM_CDEV_H_
 #define _RIO_CM_CDEV_H_
+#define RIO_CM_CDEV_H_
+#define RIO_CM_CDEV_H
+#define _UAPI_RIO_CM_CDEV_H_
+#define _UAPI_RIO_CM_CDEV_H
+#define _RIO_CM_CDEV_H
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 struct rio_cm_channel {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

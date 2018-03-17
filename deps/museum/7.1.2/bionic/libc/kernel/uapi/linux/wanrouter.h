@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ROUTER_H
 #define _UAPI_ROUTER_H
+#define UAPI_ROUTER_H
+#define UAPI_ROUTER_H_
+#define _ROUTER_H
+#define _ROUTER_H_
+#define _UAPI_ROUTER_H_
 enum wan_states {
   WAN_UNCONFIGURED,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

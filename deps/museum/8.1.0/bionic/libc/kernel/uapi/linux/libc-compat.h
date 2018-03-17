@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LIBC_COMPAT_H
 #define _UAPI_LIBC_COMPAT_H
+#define UAPI_LIBC_COMPAT_H
+#define UAPI_LIBC_COMPAT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LIBC_COMPAT_H
+#define NDK_ANDROID_SUPPORT_UAPI_LIBC_COMPAT_H_
+#define NDK_ANDROID_SUPPORT_LIBC_COMPAT_H
+#define NDK_ANDROID_SUPPORT_LIBC_COMPAT_H_
+#define _LIBC_COMPAT_H
+#define _LIBC_COMPAT_H_
+#define _UAPI_LIBC_COMPAT_H_
 #ifdef __GLIBC__
 #if defined(_NET_IF_H) && defined(__USE_MISC)
 #define __UAPI_DEF_IF_IFCONF 0

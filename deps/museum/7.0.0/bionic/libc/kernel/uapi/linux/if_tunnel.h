@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_IF_TUNNEL_H_
 #define _UAPI_IF_TUNNEL_H_
+#define UAPI_IF_TUNNEL_H_
+#define UAPI_IF_TUNNEL_H
+#define _IF_TUNNEL_H_
+#define _IF_TUNNEL_H
+#define _UAPI_IF_TUNNEL_H
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #include <museum/7.0.0/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

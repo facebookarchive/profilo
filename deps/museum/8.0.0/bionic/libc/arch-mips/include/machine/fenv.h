@@ -70,6 +70,9 @@
 
 #ifndef _MIPS_FENV_H_
 #define _MIPS_FENV_H_
+#define MIPS_FENV_H_
+#define MIPS_FENV_H
+#define _MIPS_FENV_H
 
 #include <sys/types.h>
 

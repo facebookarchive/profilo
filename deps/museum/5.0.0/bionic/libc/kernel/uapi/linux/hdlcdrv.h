@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_HDLCDRV_H
 #define _UAPI_HDLCDRV_H
+#define UAPI_HDLCDRV_H
+#define UAPI_HDLCDRV_H_
+#define _HDLCDRV_H
+#define _HDLCDRV_H_
+#define _UAPI_HDLCDRV_H_
 struct hdlcdrv_params {
  int iobase;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_ALG_H
 #define _LINUX_IF_ALG_H
+#define LINUX_IF_ALG_H
+#define LINUX_IF_ALG_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IF_ALG_H
+#define NDK_ANDROID_SUPPORT_LINUX_IF_ALG_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_ALG_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_ALG_H_
+#define _UAPI_LINUX_IF_ALG_H
+#define _UAPI_LINUX_IF_ALG_H_
+#define _LINUX_IF_ALG_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 struct sockaddr_alg {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

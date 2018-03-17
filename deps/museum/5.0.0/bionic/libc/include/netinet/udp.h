@@ -27,6 +27,9 @@
  */
 #ifndef _NETINET_UDP_H
 #define _NETINET_UDP_H
+#define NETINET_UDP_H
+#define NETINET_UDP_H_
+#define _NETINET_UDP_H_
 
 /*
  * We would include linux/udp.h, but it brings in too much other stuff

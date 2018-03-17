@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_DEVGROUP_H
 #define _XT_DEVGROUP_H
+#define XT_DEVGROUP_H
+#define XT_DEVGROUP_H_
+#define _UAPI_XT_DEVGROUP_H
+#define _UAPI_XT_DEVGROUP_H_
+#define _XT_DEVGROUP_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 enum xt_devgroup_flags {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

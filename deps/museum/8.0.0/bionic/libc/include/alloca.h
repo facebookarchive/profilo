@@ -28,6 +28,9 @@
 
 #ifndef _ALLOCA_H
 #define _ALLOCA_H
+#define ALLOCA_H
+#define ALLOCA_H_
+#define _ALLOCA_H_
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

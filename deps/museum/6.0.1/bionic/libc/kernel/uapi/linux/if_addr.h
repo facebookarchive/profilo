@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_IF_ADDR_H
 #define __LINUX_IF_ADDR_H
+#define _LINUX_IF_ADDR_H
+#define _LINUX_IF_ADDR_H_
+#define _UAPI_LINUX_IF_ADDR_H
+#define _UAPI_LINUX_IF_ADDR_H_
+#define NDK_ANDROID_SUPPORT__LINUX_IF_ADDR_H
+#define NDK_ANDROID_SUPPORT__LINUX_IF_ADDR_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IF_ADDR_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IF_ADDR_H_
+#define _UAPI__LINUX_IF_ADDR_H
+#define _UAPI__LINUX_IF_ADDR_H_
+#define __LINUX_IF_ADDR_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

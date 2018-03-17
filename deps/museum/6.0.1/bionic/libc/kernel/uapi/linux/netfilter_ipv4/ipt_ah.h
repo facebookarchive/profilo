@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _IPT_AH_H
 #define _IPT_AH_H
+#define IPT_AH_H
+#define IPT_AH_H_
+#define NDK_ANDROID_SUPPORT_IPT_AH_H
+#define NDK_ANDROID_SUPPORT_IPT_AH_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_AH_H
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_AH_H_
+#define _UAPI_IPT_AH_H
+#define _UAPI_IPT_AH_H_
+#define _IPT_AH_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 struct ipt_ah {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

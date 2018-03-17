@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_SIGCONTEXT_H
 #define _UAPI__ASM_SIGCONTEXT_H
+#define UAPI__ASM_SIGCONTEXT_H
+#define UAPI__ASM_SIGCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_SIGCONTEXT_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_SIGCONTEXT_H_
+#define NDK_ANDROID_SUPPORT__ASM_SIGCONTEXT_H
+#define NDK_ANDROID_SUPPORT__ASM_SIGCONTEXT_H_
+#define __ASM_SIGCONTEXT_H
+#define __ASM_SIGCONTEXT_H_
+#define _UAPI__ASM_SIGCONTEXT_H_
 #include <linux/types.h>
 struct sigcontext {
   __u64 fault_address;

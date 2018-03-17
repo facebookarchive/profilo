@@ -28,6 +28,11 @@
 
 #ifndef _SEMAPHORE_H
 #define _SEMAPHORE_H
+#define SEMAPHORE_H
+#define SEMAPHORE_H_
+#define NDK_ANDROID_SUPPORT_SEMAPHORE_H
+#define NDK_ANDROID_SUPPORT_SEMAPHORE_H_
+#define _SEMAPHORE_H_
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

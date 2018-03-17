@@ -28,6 +28,9 @@
 
 #ifndef _SYS_TYPES_H_
 #define _SYS_TYPES_H_
+#define SYS_TYPES_H_
+#define SYS_TYPES_H
+#define _SYS_TYPES_H
 
 #include <stddef.h>
 #include <museum/8.0.0/bionic/libc/stdint.h>

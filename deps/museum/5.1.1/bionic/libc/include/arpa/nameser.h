@@ -52,6 +52,9 @@
 
 #ifndef _ARPA_NAMESER_H_
 #define _ARPA_NAMESER_H_
+#define ARPA_NAMESER_H_
+#define ARPA_NAMESER_H
+#define _ARPA_NAMESER_H
 
 #define BIND_4_COMPAT
 

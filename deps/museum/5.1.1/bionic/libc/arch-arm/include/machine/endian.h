@@ -30,6 +30,9 @@
 
 #ifndef _ARM_ENDIAN_H_
 #define _ARM_ENDIAN_H_
+#define ARM_ENDIAN_H_
+#define ARM_ENDIAN_H
+#define _ARM_ENDIAN_H
 
 #ifdef __GNUC__
 

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_STATFS_H
 #define _ASM_STATFS_H
+#define ASM_STATFS_H
+#define ASM_STATFS_H_
+#define NDK_ANDROID_SUPPORT_ASM_STATFS_H
+#define NDK_ANDROID_SUPPORT_ASM_STATFS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_STATFS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_STATFS_H_
+#define _UAPI_ASM_STATFS_H
+#define _UAPI_ASM_STATFS_H_
+#define _ASM_STATFS_H_
 #include <linux/posix_types.h>
 #include <asm/sgidefs.h>
 struct statfs {

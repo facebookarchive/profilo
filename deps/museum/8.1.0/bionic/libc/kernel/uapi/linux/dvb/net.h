@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DVBNET_H_
 #define _DVBNET_H_
+#define DVBNET_H_
+#define DVBNET_H
+#define NDK_ANDROID_SUPPORT_DVBNET_H_
+#define NDK_ANDROID_SUPPORT_DVBNET_H
+#define NDK_ANDROID_SUPPORT_UAPI_DVBNET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DVBNET_H
+#define _UAPI_DVBNET_H_
+#define _UAPI_DVBNET_H
+#define _DVBNET_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct dvb_net_if {
   __u16 pid;

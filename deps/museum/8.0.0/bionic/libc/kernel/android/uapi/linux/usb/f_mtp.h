@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_USB_F_MTP_H
 #define _UAPI_LINUX_USB_F_MTP_H
+#define UAPI_LINUX_USB_F_MTP_H
+#define UAPI_LINUX_USB_F_MTP_H_
+#define _LINUX_USB_F_MTP_H
+#define _LINUX_USB_F_MTP_H_
+#define _UAPI_LINUX_USB_F_MTP_H_
 #include <linux/ioctl.h>
 #include <linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_INPUT_EVENT_CODES_H
 #define _UAPI_INPUT_EVENT_CODES_H
+#define UAPI_INPUT_EVENT_CODES_H
+#define UAPI_INPUT_EVENT_CODES_H_
+#define _INPUT_EVENT_CODES_H
+#define _INPUT_EVENT_CODES_H_
+#define _UAPI_INPUT_EVENT_CODES_H_
 #define INPUT_PROP_POINTER 0x00
 #define INPUT_PROP_DIRECT 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

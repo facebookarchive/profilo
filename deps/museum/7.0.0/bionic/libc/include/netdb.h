@@ -60,6 +60,9 @@
 
 #ifndef _NETDB_H_
 #define _NETDB_H_
+#define NETDB_H_
+#define NETDB_H
+#define _NETDB_H
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/7.0.0/bionic/libc/sys/types.h>

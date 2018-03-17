@@ -28,6 +28,9 @@
 
 #ifndef MALLOC_DEBUG_CONFIG_H
 #define MALLOC_DEBUG_CONFIG_H
+#define _MALLOC_DEBUG_CONFIG_H
+#define _MALLOC_DEBUG_CONFIG_H_
+#define MALLOC_DEBUG_CONFIG_H_
 
 #include <stdint.h>
 

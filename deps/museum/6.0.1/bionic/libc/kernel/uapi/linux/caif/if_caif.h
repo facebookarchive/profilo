@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef IF_CAIF_H_
 #define IF_CAIF_H_
+#define _IF_CAIF_H_
+#define _IF_CAIF_H
+#define _UAPI_IF_CAIF_H_
+#define _UAPI_IF_CAIF_H
+#define _UAPIIF_CAIF_H_
+#define _UAPIIF_CAIF_H
+#define IF_CAIF_H
 #include <museum/6.0.1/bionic/libc/linux/sockios.h>
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -34,6 +34,9 @@
 
 #ifndef _NETINET_IP_H_
 #define _NETINET_IP_H_
+#define NETINET_IP_H_
+#define NETINET_IP_H
+#define _NETINET_IP_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/sys/types.h>

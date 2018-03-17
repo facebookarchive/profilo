@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SYSCALL_H_
 #define _SYS_SYSCALL_H_
+#define SYS_SYSCALL_H_
+#define SYS_SYSCALL_H
+#define _SYS_SYSCALL_H
 
 #include <museum/7.0.0/bionic/libc/asm/unistd.h> /* Linux kernel __NR_* names. */
 #include <museum/7.0.0/bionic/libc/sys/glibc-syscalls.h> /* glibc-compatible SYS_* aliases. */

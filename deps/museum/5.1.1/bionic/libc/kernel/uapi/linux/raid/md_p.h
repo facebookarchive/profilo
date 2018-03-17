@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _MD_P_H
 #define _MD_P_H
+#define MD_P_H
+#define MD_P_H_
+#define _UAPI_MD_P_H
+#define _UAPI_MD_P_H_
+#define _MD_P_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

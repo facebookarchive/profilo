@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_XT_PHYSDEV_H
 #define _UAPI_XT_PHYSDEV_H
+#define UAPI_XT_PHYSDEV_H
+#define UAPI_XT_PHYSDEV_H_
+#define _XT_PHYSDEV_H
+#define _XT_PHYSDEV_H_
+#define _UAPI_XT_PHYSDEV_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/if.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

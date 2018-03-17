@@ -28,6 +28,11 @@
 
 #ifndef _SYS_SIGNALFD_H_
 #define _SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H
+#define NDK_ANDROID_SUPPORT_SYS_SIGNALFD_H_
+#define NDK_ANDROID_SUPPORT_SYS_SIGNALFD_H
+#define _SYS_SIGNALFD_H
 
 #include <museum/6.0.1/bionic/libc/linux/signalfd.h>
 #include <museum/6.0.1/bionic/libc/signal.h>

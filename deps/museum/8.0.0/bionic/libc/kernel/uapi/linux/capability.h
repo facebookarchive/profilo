@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_CAPABILITY_H
 #define _UAPI_LINUX_CAPABILITY_H
+#define UAPI_LINUX_CAPABILITY_H
+#define UAPI_LINUX_CAPABILITY_H_
+#define _LINUX_CAPABILITY_H
+#define _LINUX_CAPABILITY_H_
+#define _UAPI_LINUX_CAPABILITY_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define _LINUX_CAPABILITY_VERSION_1 0x19980330
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

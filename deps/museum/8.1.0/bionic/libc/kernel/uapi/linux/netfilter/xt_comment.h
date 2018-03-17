@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_COMMENT_H
 #define _XT_COMMENT_H
+#define XT_COMMENT_H
+#define XT_COMMENT_H_
+#define NDK_ANDROID_SUPPORT_XT_COMMENT_H
+#define NDK_ANDROID_SUPPORT_XT_COMMENT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_COMMENT_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_COMMENT_H_
+#define _UAPI_XT_COMMENT_H
+#define _UAPI_XT_COMMENT_H_
+#define _XT_COMMENT_H_
 #define XT_MAX_COMMENT_LEN 256
 struct xt_comment_info {
   char comment[XT_MAX_COMMENT_LEN];

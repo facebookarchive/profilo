@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPIVFIO_H
 #define _UAPIVFIO_H
+#define UAPIVFIO_H
+#define UAPIVFIO_H_
+#define NDK_ANDROID_SUPPORT_UAPIVFIO_H
+#define NDK_ANDROID_SUPPORT_UAPIVFIO_H_
+#define VFIO_H
+#define VFIO_H_
+#define _UAPIVFIO_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

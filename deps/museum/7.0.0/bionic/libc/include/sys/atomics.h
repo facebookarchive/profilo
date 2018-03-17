@@ -28,6 +28,9 @@
 
 #ifndef _SYS_ATOMICS_H_
 #define _SYS_ATOMICS_H_
+#define SYS_ATOMICS_H_
+#define SYS_ATOMICS_H
+#define _SYS_ATOMICS_H
 
 /*
  * These got proper out of line definitions in L. Putting the inline definitions

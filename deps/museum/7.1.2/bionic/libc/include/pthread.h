@@ -28,6 +28,9 @@
 
 #ifndef _PTHREAD_H_
 #define _PTHREAD_H_
+#define PTHREAD_H_
+#define PTHREAD_H
+#define _PTHREAD_H
 
 #include <museum/7.1.2/bionic/libc/limits.h>
 #include <museum/7.1.2/bionic/libc/bits/pthread_types.h>

@@ -16,6 +16,9 @@
 
 #ifndef KERNEL_ARGUMENT_BLOCK_H
 #define KERNEL_ARGUMENT_BLOCK_H
+#define _KERNEL_ARGUMENT_BLOCK_H
+#define _KERNEL_ARGUMENT_BLOCK_H_
+#define KERNEL_ARGUMENT_BLOCK_H_
 
 #include <elf.h>
 #include <link.h>

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef RDMA_USER_CM_H
 #define RDMA_USER_CM_H
+#define _RDMA_USER_CM_H
+#define _RDMA_USER_CM_H_
+#define _UAPI_RDMA_USER_CM_H
+#define _UAPI_RDMA_USER_CM_H_
+#define NDK_ANDROID_SUPPORT_UAPIRDMA_USER_CM_H
+#define NDK_ANDROID_SUPPORT_UAPIRDMA_USER_CM_H_
+#define _UAPIRDMA_USER_CM_H
+#define _UAPIRDMA_USER_CM_H_
+#define RDMA_USER_CM_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #include <museum/8.1.0/bionic/libc/linux/in6.h>

@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SWAP_H_
 #define _SYS_SWAP_H_
+#define SYS_SWAP_H_
+#define SYS_SWAP_H
+#define _SYS_SWAP_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 

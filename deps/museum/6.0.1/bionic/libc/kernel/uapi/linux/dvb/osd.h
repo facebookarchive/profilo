@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DVBOSD_H_
 #define _DVBOSD_H_
+#define DVBOSD_H_
+#define DVBOSD_H
+#define NDK_ANDROID_SUPPORT_DVBOSD_H_
+#define NDK_ANDROID_SUPPORT_DVBOSD_H
+#define NDK_ANDROID_SUPPORT_UAPI_DVBOSD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DVBOSD_H
+#define _UAPI_DVBOSD_H_
+#define _UAPI_DVBOSD_H
+#define _DVBOSD_H
 #include <museum/6.0.1/bionic/libc/linux/compiler.h>
 typedef enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

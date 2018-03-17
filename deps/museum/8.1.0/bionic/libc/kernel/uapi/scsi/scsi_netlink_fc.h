@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef SCSI_NETLINK_FC_H
 #define SCSI_NETLINK_FC_H
+#define _SCSI_NETLINK_FC_H
+#define _SCSI_NETLINK_FC_H_
+#define _UAPI_SCSI_NETLINK_FC_H
+#define _UAPI_SCSI_NETLINK_FC_H_
+#define NDK_ANDROID_SUPPORT_UAPISCSI_NETLINK_FC_H
+#define NDK_ANDROID_SUPPORT_UAPISCSI_NETLINK_FC_H_
+#define _UAPISCSI_NETLINK_FC_H
+#define _UAPISCSI_NETLINK_FC_H_
+#define SCSI_NETLINK_FC_H_
 #include <museum/8.1.0/bionic/libc/scsi/scsi_netlink.h>
 #define FC_NL_ASYNC_EVENT 0x0100
 #define FC_NL_MSGALIGN(len) (((len) + 7) & ~7)

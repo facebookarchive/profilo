@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef XT_HMARK_H_
 #define XT_HMARK_H_
+#define _XT_HMARK_H_
+#define _XT_HMARK_H
+#define _UAPI_XT_HMARK_H_
+#define _UAPI_XT_HMARK_H
+#define _UAPIXT_HMARK_H_
+#define _UAPIXT_HMARK_H
+#define XT_HMARK_H
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

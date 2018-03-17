@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__IF_TUN_H
 #define _UAPI__IF_TUN_H
+#define UAPI__IF_TUN_H
+#define UAPI__IF_TUN_H_
+#define __IF_TUN_H
+#define __IF_TUN_H_
+#define _UAPI__IF_TUN_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

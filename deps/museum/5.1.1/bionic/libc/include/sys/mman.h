@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_MMAN_H_
 #define _SYS_MMAN_H_
+#define SYS_MMAN_H_
+#define SYS_MMAN_H
+#define _SYS_MMAN_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/sys/types.h>

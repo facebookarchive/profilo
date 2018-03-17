@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_SIGINFO_H
 #define _UAPI_ASM_SIGINFO_H
+#define UAPI_ASM_SIGINFO_H
+#define UAPI_ASM_SIGINFO_H_
+#define _ASM_SIGINFO_H
+#define _ASM_SIGINFO_H_
+#define _UAPI_ASM_SIGINFO_H_
 #define __ARCH_SIGEV_PREAMBLE_SIZE (sizeof(long) + 2*sizeof(int))
 #undef __ARCH_SI_TRAPNO
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

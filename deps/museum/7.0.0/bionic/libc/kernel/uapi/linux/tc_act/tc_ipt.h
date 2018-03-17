@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_IPT_H
 #define __LINUX_TC_IPT_H
+#define _LINUX_TC_IPT_H
+#define _LINUX_TC_IPT_H_
+#define _UAPI_LINUX_TC_IPT_H
+#define _UAPI_LINUX_TC_IPT_H_
+#define _UAPI__LINUX_TC_IPT_H
+#define _UAPI__LINUX_TC_IPT_H_
+#define __LINUX_TC_IPT_H_
 #include <museum/7.0.0/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_IPT 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

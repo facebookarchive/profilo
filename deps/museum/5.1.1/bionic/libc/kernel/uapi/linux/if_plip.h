@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_PLIP_H
 #define _LINUX_IF_PLIP_H
+#define LINUX_IF_PLIP_H
+#define LINUX_IF_PLIP_H_
+#define _UAPI_LINUX_IF_PLIP_H
+#define _UAPI_LINUX_IF_PLIP_H_
+#define _LINUX_IF_PLIP_H_
 #include <museum/5.1.1/bionic/libc/linux/sockios.h>
 #define SIOCDEVPLIP SIOCDEVPRIVATE
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

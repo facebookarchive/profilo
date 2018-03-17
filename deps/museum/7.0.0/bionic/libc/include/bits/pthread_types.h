@@ -28,6 +28,9 @@
 
 #ifndef _BITS_PTHREAD_TYPES_H_
 #define _BITS_PTHREAD_TYPES_H_
+#define BITS_PTHREAD_TYPES_H_
+#define BITS_PTHREAD_TYPES_H
+#define _BITS_PTHREAD_TYPES_H
 
 #include <museum/7.0.0/bionic/libc/sys/types.h>
 

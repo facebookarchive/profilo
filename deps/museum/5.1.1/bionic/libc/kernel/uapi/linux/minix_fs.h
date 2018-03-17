@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_MINIX_FS_H
 #define _LINUX_MINIX_FS_H
+#define LINUX_MINIX_FS_H
+#define LINUX_MINIX_FS_H_
+#define _UAPI_LINUX_MINIX_FS_H
+#define _UAPI_LINUX_MINIX_FS_H_
+#define _LINUX_MINIX_FS_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

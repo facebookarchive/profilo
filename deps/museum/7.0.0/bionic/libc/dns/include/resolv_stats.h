@@ -16,6 +16,9 @@
 
 #ifndef _RES_STATS_H
 #define _RES_STATS_H
+#define RES_STATS_H
+#define RES_STATS_H_
+#define _RES_STATS_H_
 
 #include <sys/socket.h>
 #include <stdbool.h>

@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_ARPREPLY_H
 #define __LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define _UAPI_LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _UAPI_LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define NDK_ANDROID_SUPPORT__LINUX_BRIDGE_EBT_ARPREPLY_H
+#define NDK_ANDROID_SUPPORT__LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_BRIDGE_EBT_ARPREPLY_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define _UAPI__LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _UAPI__LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define __LINUX_BRIDGE_EBT_ARPREPLY_H_
 #include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 struct ebt_arpreply_info {
   unsigned char mac[ETH_ALEN];

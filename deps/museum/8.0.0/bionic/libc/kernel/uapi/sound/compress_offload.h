@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __COMPRESS_OFFLOAD_H
 #define __COMPRESS_OFFLOAD_H
+#define _COMPRESS_OFFLOAD_H
+#define _COMPRESS_OFFLOAD_H_
+#define _UAPI_COMPRESS_OFFLOAD_H
+#define _UAPI_COMPRESS_OFFLOAD_H_
+#define _UAPI__COMPRESS_OFFLOAD_H
+#define _UAPI__COMPRESS_OFFLOAD_H_
+#define __COMPRESS_OFFLOAD_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/sound/asound.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

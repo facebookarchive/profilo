@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_GAMEPORT_H
 #define _UAPI_GAMEPORT_H
+#define UAPI_GAMEPORT_H
+#define UAPI_GAMEPORT_H_
+#define _GAMEPORT_H
+#define _GAMEPORT_H_
+#define _UAPI_GAMEPORT_H_
 #define GAMEPORT_MODE_DISABLED 0
 #define GAMEPORT_MODE_RAW 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

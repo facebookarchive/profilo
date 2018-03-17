@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef VIRTIO_GPU_HW_H
 #define VIRTIO_GPU_HW_H
+#define _VIRTIO_GPU_HW_H
+#define _VIRTIO_GPU_HW_H_
+#define _UAPI_VIRTIO_GPU_HW_H
+#define _UAPI_VIRTIO_GPU_HW_H_
+#define _UAPIVIRTIO_GPU_HW_H
+#define _UAPIVIRTIO_GPU_HW_H_
+#define VIRTIO_GPU_HW_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #define VIRTIO_GPU_F_VIRGL 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

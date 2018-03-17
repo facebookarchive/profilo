@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_PHONET_H
 #define _UAPILINUX_PHONET_H
+#define UAPILINUX_PHONET_H
+#define UAPILINUX_PHONET_H_
+#define LINUX_PHONET_H
+#define LINUX_PHONET_H_
+#define _UAPILINUX_PHONET_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

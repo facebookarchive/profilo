@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef LINUX_PCI_REGS_H
 #define LINUX_PCI_REGS_H
+#define _LINUX_PCI_REGS_H
+#define _LINUX_PCI_REGS_H_
+#define _UAPI_LINUX_PCI_REGS_H
+#define _UAPI_LINUX_PCI_REGS_H_
+#define _UAPILINUX_PCI_REGS_H
+#define _UAPILINUX_PCI_REGS_H_
+#define LINUX_PCI_REGS_H_
 #define PCI_CFG_SPACE_SIZE 256
 #define PCI_CFG_SPACE_EXP_SIZE 4096
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _MD_P_H
 #define _MD_P_H
+#define MD_P_H
+#define MD_P_H_
+#define NDK_ANDROID_SUPPORT_MD_P_H
+#define NDK_ANDROID_SUPPORT_MD_P_H_
+#define NDK_ANDROID_SUPPORT_UAPI_MD_P_H
+#define NDK_ANDROID_SUPPORT_UAPI_MD_P_H_
+#define _UAPI_MD_P_H
+#define _UAPI_MD_P_H_
+#define _MD_P_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #define MD_RESERVED_BYTES (64 * 1024)

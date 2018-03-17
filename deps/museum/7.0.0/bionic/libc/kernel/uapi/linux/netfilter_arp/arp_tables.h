@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ARPTABLES_H
 #define _UAPI_ARPTABLES_H
+#define UAPI_ARPTABLES_H
+#define UAPI_ARPTABLES_H_
+#define _ARPTABLES_H
+#define _ARPTABLES_H_
+#define _UAPI_ARPTABLES_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #include <museum/7.0.0/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -16,6 +16,9 @@
 
 #ifndef PTHREAD_ACCESSOR_H
 #define PTHREAD_ACCESSOR_H
+#define _PTHREAD_ACCESSOR_H
+#define _PTHREAD_ACCESSOR_H_
+#define PTHREAD_ACCESSOR_H_
 
 #include <pthread.h>
 

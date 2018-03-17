@@ -16,6 +16,11 @@
 
 #ifndef _SCOPE_GUARD_H
 #define _SCOPE_GUARD_H
+#define SCOPE_GUARD_H
+#define SCOPE_GUARD_H_
+#define NDK_ANDROID_SUPPORT_SCOPE_GUARD_H
+#define NDK_ANDROID_SUPPORT_SCOPE_GUARD_H_
+#define _SCOPE_GUARD_H_
 
 #include "private/bionic_macros.h"
 

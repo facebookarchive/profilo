@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NVME_IOCTL_H
 #define _UAPI_LINUX_NVME_IOCTL_H
+#define UAPI_LINUX_NVME_IOCTL_H
+#define UAPI_LINUX_NVME_IOCTL_H_
+#define _LINUX_NVME_IOCTL_H
+#define _LINUX_NVME_IOCTL_H_
+#define _UAPI_LINUX_NVME_IOCTL_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 struct nvme_user_io {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

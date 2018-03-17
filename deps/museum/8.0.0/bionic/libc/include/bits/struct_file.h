@@ -28,6 +28,9 @@
 
 #ifndef BITS_FILE_H
 #define BITS_FILE_H
+#define _BITS_FILE_H
+#define _BITS_FILE_H_
+#define BITS_FILE_H_
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

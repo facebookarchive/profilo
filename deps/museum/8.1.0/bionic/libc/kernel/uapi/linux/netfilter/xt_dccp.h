@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_DCCP_H_
 #define _XT_DCCP_H_
+#define XT_DCCP_H_
+#define XT_DCCP_H
+#define NDK_ANDROID_SUPPORT_XT_DCCP_H_
+#define NDK_ANDROID_SUPPORT_XT_DCCP_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_DCCP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_DCCP_H
+#define _UAPI_XT_DCCP_H_
+#define _UAPI_XT_DCCP_H
+#define _XT_DCCP_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_DCCP_SRC_PORTS 0x01
 #define XT_DCCP_DEST_PORTS 0x02

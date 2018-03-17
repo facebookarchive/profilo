@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_MAC_H
 #define _XT_MAC_H
+#define XT_MAC_H
+#define XT_MAC_H_
+#define _UAPI_XT_MAC_H
+#define _UAPI_XT_MAC_H_
+#define _XT_MAC_H_
 struct xt_mac_info {
   unsigned char srcaddr[ETH_ALEN];
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

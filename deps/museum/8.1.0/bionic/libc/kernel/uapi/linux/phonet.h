@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_PHONET_H
 #define _UAPILINUX_PHONET_H
+#define UAPILINUX_PHONET_H
+#define UAPILINUX_PHONET_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_PHONET_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_PHONET_H_
+#define LINUX_PHONET_H
+#define LINUX_PHONET_H_
+#define _UAPILINUX_PHONET_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define PN_PROTO_TRANSPORT 0

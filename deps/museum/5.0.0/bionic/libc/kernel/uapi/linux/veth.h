@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __NET_VETH_H_
 #define __NET_VETH_H_
+#define _NET_VETH_H_
+#define _NET_VETH_H
+#define _UAPI_NET_VETH_H_
+#define _UAPI_NET_VETH_H
+#define _UAPI__NET_VETH_H_
+#define _UAPI__NET_VETH_H
+#define __NET_VETH_H
 enum {
  VETH_INFO_UNSPEC,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_IF_PHONET_H
 #define _UAPILINUX_IF_PHONET_H
+#define UAPILINUX_IF_PHONET_H
+#define UAPILINUX_IF_PHONET_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_IF_PHONET_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_IF_PHONET_H_
+#define LINUX_IF_PHONET_H
+#define LINUX_IF_PHONET_H_
+#define _UAPILINUX_IF_PHONET_H_
 #define PHONET_MIN_MTU 6
 #define PHONET_MAX_MTU 65541
 #define PHONET_DEV_MTU PHONET_MAX_MTU

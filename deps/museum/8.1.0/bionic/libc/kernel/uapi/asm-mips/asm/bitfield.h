@@ -18,5 +18,16 @@
  ****************************************************************************/
 #ifndef __UAPI_ASM_BITFIELD_H
 #define __UAPI_ASM_BITFIELD_H
+#define _UAPI_ASM_BITFIELD_H
+#define _UAPI_ASM_BITFIELD_H_
+#define _ASM_BITFIELD_H
+#define _ASM_BITFIELD_H_
+#define NDK_ANDROID_SUPPORT__UAPI_ASM_BITFIELD_H
+#define NDK_ANDROID_SUPPORT__UAPI_ASM_BITFIELD_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_ASM_BITFIELD_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_ASM_BITFIELD_H_
+#define _UAPI__UAPI_ASM_BITFIELD_H
+#define _UAPI__UAPI_ASM_BITFIELD_H_
+#define __UAPI_ASM_BITFIELD_H_
 #define __BITFIELD_FIELD(field,more) more field;
 #endif

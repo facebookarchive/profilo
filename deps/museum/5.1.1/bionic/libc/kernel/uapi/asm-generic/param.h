@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_GENERIC_PARAM_H
 #define _UAPI__ASM_GENERIC_PARAM_H
+#define UAPI__ASM_GENERIC_PARAM_H
+#define UAPI__ASM_GENERIC_PARAM_H_
+#define __ASM_GENERIC_PARAM_H
+#define __ASM_GENERIC_PARAM_H_
+#define _UAPI__ASM_GENERIC_PARAM_H_
 #ifndef HZ
 #define HZ 100
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

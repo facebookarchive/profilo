@@ -27,6 +27,9 @@
  */
 #ifndef _TERMIOS_H_
 #define _TERMIOS_H_
+#define TERMIOS_H_
+#define TERMIOS_H
+#define _TERMIOS_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/ioctl.h>

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_UUID_H_
 #define _UAPI_LINUX_UUID_H_
+#define UAPI_LINUX_UUID_H_
+#define UAPI_LINUX_UUID_H
+#define _LINUX_UUID_H_
+#define _LINUX_UUID_H
+#define _UAPI_LINUX_UUID_H
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/string.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

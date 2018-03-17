@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_RTNETLINK_H
 #define _UAPI__LINUX_RTNETLINK_H
+#define UAPI__LINUX_RTNETLINK_H
+#define UAPI__LINUX_RTNETLINK_H_
+#define __LINUX_RTNETLINK_H
+#define __LINUX_RTNETLINK_H_
+#define _UAPI__LINUX_RTNETLINK_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #include <museum/5.0.0/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

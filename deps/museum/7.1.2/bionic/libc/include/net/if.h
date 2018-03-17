@@ -28,6 +28,9 @@
 
 #ifndef _NET_IF_H_
 #define _NET_IF_H_
+#define NET_IF_H_
+#define NET_IF_H
+#define _NET_IF_H
 
 #include <museum/7.1.2/bionic/libc/sys/socket.h>
 #include <museum/7.1.2/bionic/libc/linux/if.h>

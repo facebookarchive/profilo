@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_SIGCONTEXT_H
 #define _UAPI__ASM_SIGCONTEXT_H
+#define UAPI__ASM_SIGCONTEXT_H
+#define UAPI__ASM_SIGCONTEXT_H_
+#define __ASM_SIGCONTEXT_H
+#define __ASM_SIGCONTEXT_H_
+#define _UAPI__ASM_SIGCONTEXT_H_
 #include <linux/types.h>
 struct sigcontext {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

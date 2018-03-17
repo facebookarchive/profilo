@@ -28,6 +28,9 @@
 
 #ifndef _NETINET_TCP_H
 #define _NETINET_TCP_H
+#define NETINET_TCP_H
+#define NETINET_TCP_H_
+#define _NETINET_TCP_H_
 
 #include <museum/7.1.2/bionic/libc/linux/tcp.h>
 

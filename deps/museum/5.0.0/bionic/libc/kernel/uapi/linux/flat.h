@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FLAT_H
 #define _UAPI_LINUX_FLAT_H
+#define UAPI_LINUX_FLAT_H
+#define UAPI_LINUX_FLAT_H_
+#define _LINUX_FLAT_H
+#define _LINUX_FLAT_H_
+#define _UAPI_LINUX_FLAT_H_
 #define FLAT_VERSION 0x00000004L
 #define MAX_SHARED_LIBS (1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

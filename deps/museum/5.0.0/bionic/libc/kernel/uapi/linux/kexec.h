@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_KEXEC_H
 #define _UAPILINUX_KEXEC_H
+#define UAPILINUX_KEXEC_H
+#define UAPILINUX_KEXEC_H_
+#define LINUX_KEXEC_H
+#define LINUX_KEXEC_H_
+#define _UAPILINUX_KEXEC_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define KEXEC_ON_CRASH 0x00000001
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_SOM_H
 #define _LINUX_SOM_H
+#define LINUX_SOM_H
+#define LINUX_SOM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SOM_H
+#define NDK_ANDROID_SUPPORT_LINUX_SOM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOM_H_
+#define _UAPI_LINUX_SOM_H
+#define _UAPI_LINUX_SOM_H_
+#define _LINUX_SOM_H_
 #include <museum/6.0.1/bionic/libc/linux/time.h>
 #define SOM_PAGESIZE 4096
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -28,6 +28,11 @@
 
 #ifndef _BITS_PTHREAD_TYPES_H_
 #define _BITS_PTHREAD_TYPES_H_
+#define BITS_PTHREAD_TYPES_H_
+#define BITS_PTHREAD_TYPES_H
+#define NDK_ANDROID_SUPPORT_BITS_PTHREAD_TYPES_H_
+#define NDK_ANDROID_SUPPORT_BITS_PTHREAD_TYPES_H
+#define _BITS_PTHREAD_TYPES_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

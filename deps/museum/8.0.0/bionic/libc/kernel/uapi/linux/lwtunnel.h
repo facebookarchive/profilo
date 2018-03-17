@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LWTUNNEL_H_
 #define _UAPI_LWTUNNEL_H_
+#define UAPI_LWTUNNEL_H_
+#define UAPI_LWTUNNEL_H
+#define _LWTUNNEL_H_
+#define _LWTUNNEL_H
+#define _UAPI_LWTUNNEL_H
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 enum lwtunnel_encap_types {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

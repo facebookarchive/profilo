@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef NETROM_KERNEL_H
 #define NETROM_KERNEL_H
+#define _NETROM_KERNEL_H
+#define _NETROM_KERNEL_H_
+#define _UAPI_NETROM_KERNEL_H
+#define _UAPI_NETROM_KERNEL_H_
+#define NDK_ANDROID_SUPPORT_UAPINETROM_KERNEL_H
+#define NDK_ANDROID_SUPPORT_UAPINETROM_KERNEL_H_
+#define _UAPINETROM_KERNEL_H
+#define _UAPINETROM_KERNEL_H_
+#define NETROM_KERNEL_H_
 #include <museum/6.0.1/bionic/libc/linux/ax25.h>
 #define NETROM_MTU 236
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

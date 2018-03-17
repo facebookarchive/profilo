@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _PPP_IOCTL_H
 #define _PPP_IOCTL_H
+#define PPP_IOCTL_H
+#define PPP_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_PPP_IOCTL_H
+#define NDK_ANDROID_SUPPORT_PPP_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_PPP_IOCTL_H
+#define NDK_ANDROID_SUPPORT_UAPI_PPP_IOCTL_H_
+#define _UAPI_PPP_IOCTL_H
+#define _UAPI_PPP_IOCTL_H_
+#define _PPP_IOCTL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
 #include <museum/8.1.0/bionic/libc/linux/ppp_defs.h>

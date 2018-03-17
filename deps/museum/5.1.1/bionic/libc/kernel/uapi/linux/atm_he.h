@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_HE_H
 #define LINUX_ATM_HE_H
+#define _LINUX_ATM_HE_H
+#define _LINUX_ATM_HE_H_
+#define _UAPI_LINUX_ATM_HE_H
+#define _UAPI_LINUX_ATM_HE_H_
+#define _UAPILINUX_ATM_HE_H
+#define _UAPILINUX_ATM_HE_H_
+#define LINUX_ATM_HE_H_
 #include <museum/5.1.1/bionic/libc/linux/atmioc.h>
 #define HE_GET_REG _IOW('a', ATMIOC_SARPRV, struct atmif_sioc)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

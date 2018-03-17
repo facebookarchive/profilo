@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _CTTIMEOUT_NETLINK_H
 #define _CTTIMEOUT_NETLINK_H
+#define CTTIMEOUT_NETLINK_H
+#define CTTIMEOUT_NETLINK_H_
+#define _UAPI_CTTIMEOUT_NETLINK_H
+#define _UAPI_CTTIMEOUT_NETLINK_H_
+#define _CTTIMEOUT_NETLINK_H_
 #include <museum/5.0.0/bionic/libc/linux/netfilter/nfnetlink.h>
 enum ctnl_timeout_msg_types {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

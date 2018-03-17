@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UAPI_LINUX_USB_CDC_H
 #define __UAPI_LINUX_USB_CDC_H
+#define _UAPI_LINUX_USB_CDC_H
+#define _UAPI_LINUX_USB_CDC_H_
+#define _LINUX_USB_CDC_H
+#define _LINUX_USB_CDC_H_
+#define NDK_ANDROID_SUPPORT__UAPI_LINUX_USB_CDC_H
+#define NDK_ANDROID_SUPPORT__UAPI_LINUX_USB_CDC_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_LINUX_USB_CDC_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_LINUX_USB_CDC_H_
+#define _UAPI__UAPI_LINUX_USB_CDC_H
+#define _UAPI__UAPI_LINUX_USB_CDC_H_
+#define __UAPI_LINUX_USB_CDC_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define USB_CDC_SUBCLASS_ACM 0x02
 #define USB_CDC_SUBCLASS_ETHERNET 0x06

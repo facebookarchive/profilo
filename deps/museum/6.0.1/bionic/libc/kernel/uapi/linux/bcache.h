@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_BCACHE_H
 #define _LINUX_BCACHE_H
+#define LINUX_BCACHE_H
+#define LINUX_BCACHE_H_
+#define NDK_ANDROID_SUPPORT_LINUX_BCACHE_H
+#define NDK_ANDROID_SUPPORT_LINUX_BCACHE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_BCACHE_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_BCACHE_H_
+#define _UAPI_LINUX_BCACHE_H
+#define _UAPI_LINUX_BCACHE_H_
+#define _LINUX_BCACHE_H_
 #include <museum/6.0.1/bionic/libc/asm/types.h>
 #define BITMASK(name,type,field,offset,size) static inline __u64 name(const type * k) \
 { return(k->field >> offset) & ~(~0ULL << size); } static inline void SET_ ##name(type * k, __u64 v) \

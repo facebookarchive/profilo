@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_NET_H
 #define _LINUX_VIRTIO_NET_H
+#define LINUX_VIRTIO_NET_H
+#define LINUX_VIRTIO_NET_H_
+#define NDK_ANDROID_SUPPORT_LINUX_VIRTIO_NET_H
+#define NDK_ANDROID_SUPPORT_LINUX_VIRTIO_NET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VIRTIO_NET_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VIRTIO_NET_H_
+#define _UAPI_LINUX_VIRTIO_NET_H
+#define _UAPI_LINUX_VIRTIO_NET_H_
+#define _LINUX_VIRTIO_NET_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/virtio_ids.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

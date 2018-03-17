@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _BAYCOM_H
 #define _BAYCOM_H
+#define BAYCOM_H
+#define BAYCOM_H_
+#define _UAPI_BAYCOM_H
+#define _UAPI_BAYCOM_H_
+#define _BAYCOM_H_
 struct baycom_debug_data {
   unsigned long debug1;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

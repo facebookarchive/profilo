@@ -15,6 +15,9 @@
  */
 #ifndef BIONIC_ATOMIC_ARM_H
 #define BIONIC_ATOMIC_ARM_H
+#define _BIONIC_ATOMIC_ARM_H
+#define _BIONIC_ATOMIC_ARM_H_
+#define BIONIC_ATOMIC_ARM_H_
 
 __ATOMIC_INLINE__ void __bionic_memory_barrier() {
 #if defined(ANDROID_SMP) && ANDROID_SMP == 1

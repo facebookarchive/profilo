@@ -27,6 +27,9 @@
  */
 #ifndef _LINK_H_
 #define _LINK_H_
+#define LINK_H_
+#define LINK_H
+#define _LINK_H
 
 #include <museum/5.1.1/bionic/libc/sys/types.h>
 #ifdef AOSP_ART_IS_A_DICK

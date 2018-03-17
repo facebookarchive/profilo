@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__SOUND_ASOUND_H
 #define _UAPI__SOUND_ASOUND_H
+#define UAPI__SOUND_ASOUND_H
+#define UAPI__SOUND_ASOUND_H_
+#define __SOUND_ASOUND_H
+#define __SOUND_ASOUND_H_
+#define _UAPI__SOUND_ASOUND_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #include <museum/7.1.2/bionic/libc/stdlib.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

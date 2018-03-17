@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_ETHER_H
 #define _UAPI_LINUX_IF_ETHER_H
+#define UAPI_LINUX_IF_ETHER_H
+#define UAPI_LINUX_IF_ETHER_H_
+#define _LINUX_IF_ETHER_H
+#define _LINUX_IF_ETHER_H_
+#define _UAPI_LINUX_IF_ETHER_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define ETH_ALEN 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

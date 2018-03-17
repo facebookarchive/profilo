@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_IOCTL_H
 #define __ASM_IOCTL_H
+#define _ASM_IOCTL_H
+#define _ASM_IOCTL_H_
+#define _UAPI_ASM_IOCTL_H
+#define _UAPI_ASM_IOCTL_H_
+#define _UAPI__ASM_IOCTL_H
+#define _UAPI__ASM_IOCTL_H_
+#define __ASM_IOCTL_H_
 #define _IOC_SIZEBITS 13
 #define _IOC_DIRBITS 3
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

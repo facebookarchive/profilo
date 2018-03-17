@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_TERMIOS_H
 #define _LINUX_TERMIOS_H
+#define LINUX_TERMIOS_H
+#define LINUX_TERMIOS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_TERMIOS_H
+#define NDK_ANDROID_SUPPORT_LINUX_TERMIOS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TERMIOS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TERMIOS_H_
+#define _UAPI_LINUX_TERMIOS_H
+#define _UAPI_LINUX_TERMIOS_H_
+#define _LINUX_TERMIOS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/asm/termios.h>
 #define NFF 5

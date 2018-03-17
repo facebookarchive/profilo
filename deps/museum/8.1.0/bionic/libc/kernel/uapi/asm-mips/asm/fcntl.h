@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_FCNTL_H
 #define _UAPI_ASM_FCNTL_H
+#define UAPI_ASM_FCNTL_H
+#define UAPI_ASM_FCNTL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_FCNTL_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_FCNTL_H_
+#define NDK_ANDROID_SUPPORT_ASM_FCNTL_H
+#define NDK_ANDROID_SUPPORT_ASM_FCNTL_H_
+#define _ASM_FCNTL_H
+#define _ASM_FCNTL_H_
+#define _UAPI_ASM_FCNTL_H_
 #include <asm/sgidefs.h>
 #define O_APPEND 0x0008
 #define O_DSYNC 0x0010

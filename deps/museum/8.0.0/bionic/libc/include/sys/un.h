@@ -28,6 +28,9 @@
 
 #ifndef _SYS_UN_H_
 #define _SYS_UN_H_
+#define SYS_UN_H_
+#define SYS_UN_H
+#define _SYS_UN_H
 
 #include <museum/8.0.0/bionic/libc/bits/sa_family_t.h>
 #include <museum/8.0.0/bionic/libc/linux/un.h>

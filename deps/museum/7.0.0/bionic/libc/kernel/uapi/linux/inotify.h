@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_INOTIFY_H
 #define _UAPI_LINUX_INOTIFY_H
+#define UAPI_LINUX_INOTIFY_H
+#define UAPI_LINUX_INOTIFY_H_
+#define _LINUX_INOTIFY_H
+#define _LINUX_INOTIFY_H_
+#define _UAPI_LINUX_INOTIFY_H_
 #include <museum/7.0.0/bionic/libc/linux/fcntl.h>
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

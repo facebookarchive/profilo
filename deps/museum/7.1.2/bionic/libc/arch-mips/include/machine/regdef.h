@@ -36,6 +36,9 @@
  */
 #ifndef _MIPS_REGDEF_H_
 #define _MIPS_REGDEF_H_
+#define MIPS_REGDEF_H_
+#define MIPS_REGDEF_H
+#define _MIPS_REGDEF_H
 
 #if (_MIPS_SIM == _ABI64) && !defined(__mips_n64)
 #define __mips_n64 1

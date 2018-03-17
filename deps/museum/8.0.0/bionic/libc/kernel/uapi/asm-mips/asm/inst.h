@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_INST_H
 #define _UAPI_ASM_INST_H
+#define UAPI_ASM_INST_H
+#define UAPI_ASM_INST_H_
+#define _ASM_INST_H
+#define _ASM_INST_H_
+#define _UAPI_ASM_INST_H_
 #include <asm/bitfield.h>
 enum major_op {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

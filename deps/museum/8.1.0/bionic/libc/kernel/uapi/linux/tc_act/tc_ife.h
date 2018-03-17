@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UAPI_TC_IFE_H
 #define __UAPI_TC_IFE_H
+#define _UAPI_TC_IFE_H
+#define _UAPI_TC_IFE_H_
+#define _TC_IFE_H
+#define _TC_IFE_H_
+#define NDK_ANDROID_SUPPORT__UAPI_TC_IFE_H
+#define NDK_ANDROID_SUPPORT__UAPI_TC_IFE_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_TC_IFE_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_TC_IFE_H_
+#define _UAPI__UAPI_TC_IFE_H
+#define _UAPI__UAPI_TC_IFE_H_
+#define __UAPI_TC_IFE_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_IFE 25

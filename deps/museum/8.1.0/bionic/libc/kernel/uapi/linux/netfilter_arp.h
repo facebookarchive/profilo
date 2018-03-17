@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_ARP_NETFILTER_H
 #define __LINUX_ARP_NETFILTER_H
+#define _LINUX_ARP_NETFILTER_H
+#define _LINUX_ARP_NETFILTER_H_
+#define _UAPI_LINUX_ARP_NETFILTER_H
+#define _UAPI_LINUX_ARP_NETFILTER_H_
+#define NDK_ANDROID_SUPPORT__LINUX_ARP_NETFILTER_H
+#define NDK_ANDROID_SUPPORT__LINUX_ARP_NETFILTER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_ARP_NETFILTER_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_ARP_NETFILTER_H_
+#define _UAPI__LINUX_ARP_NETFILTER_H
+#define _UAPI__LINUX_ARP_NETFILTER_H_
+#define __LINUX_ARP_NETFILTER_H_
 #include <museum/8.1.0/bionic/libc/linux/netfilter.h>
 #define NF_ARP 0
 #define NF_ARP_IN 0

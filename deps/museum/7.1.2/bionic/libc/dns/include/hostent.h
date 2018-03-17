@@ -30,6 +30,9 @@
  */
 #ifndef _DNS_NET_HOSTENT_H
 #define _DNS_NET_HOSTENT_H
+#define DNS_NET_HOSTENT_H
+#define DNS_NET_HOSTENT_H_
+#define _DNS_NET_HOSTENT_H_
 
 #include <stdio.h>
 #include <netdb.h>

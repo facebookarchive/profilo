@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _FC_GS_H_
 #define _FC_GS_H_
+#define FC_GS_H_
+#define FC_GS_H
+#define _UAPI_FC_GS_H_
+#define _UAPI_FC_GS_H
+#define _FC_GS_H
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 struct fc_ct_hdr {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

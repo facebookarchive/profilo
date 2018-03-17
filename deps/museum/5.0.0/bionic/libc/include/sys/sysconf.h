@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_SYSCONF_H_
 #define _SYS_SYSCONF_H_
+#define SYS_SYSCONF_H_
+#define SYS_SYSCONF_H
+#define _SYS_SYSCONF_H
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 

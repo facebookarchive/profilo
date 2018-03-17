@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_MMAN_H
 #define __ASM_GENERIC_MMAN_H
+#define _ASM_GENERIC_MMAN_H
+#define _ASM_GENERIC_MMAN_H_
+#define _UAPI_ASM_GENERIC_MMAN_H
+#define _UAPI_ASM_GENERIC_MMAN_H_
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_MMAN_H
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_MMAN_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_MMAN_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_MMAN_H_
+#define _UAPI__ASM_GENERIC_MMAN_H
+#define _UAPI__ASM_GENERIC_MMAN_H_
+#define __ASM_GENERIC_MMAN_H_
 #include <museum/6.0.1/bionic/libc/asm-generic/mman-common.h>
 #define MAP_GROWSDOWN 0x0100
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

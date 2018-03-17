@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_SCREEN_INFO_H
 #define _UAPI_SCREEN_INFO_H
+#define UAPI_SCREEN_INFO_H
+#define UAPI_SCREEN_INFO_H_
+#define _SCREEN_INFO_H
+#define _SCREEN_INFO_H_
+#define _UAPI_SCREEN_INFO_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 struct screen_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

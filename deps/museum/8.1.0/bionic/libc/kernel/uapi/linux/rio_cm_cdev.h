@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _RIO_CM_CDEV_H_
 #define _RIO_CM_CDEV_H_
+#define RIO_CM_CDEV_H_
+#define RIO_CM_CDEV_H
+#define NDK_ANDROID_SUPPORT_RIO_CM_CDEV_H_
+#define NDK_ANDROID_SUPPORT_RIO_CM_CDEV_H
+#define NDK_ANDROID_SUPPORT_UAPI_RIO_CM_CDEV_H_
+#define NDK_ANDROID_SUPPORT_UAPI_RIO_CM_CDEV_H
+#define _UAPI_RIO_CM_CDEV_H_
+#define _UAPI_RIO_CM_CDEV_H
+#define _RIO_CM_CDEV_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct rio_cm_channel {
   __u16 id;

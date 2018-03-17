@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_GEN_STATS_H
 #define __LINUX_GEN_STATS_H
+#define _LINUX_GEN_STATS_H
+#define _LINUX_GEN_STATS_H_
+#define _UAPI_LINUX_GEN_STATS_H
+#define _UAPI_LINUX_GEN_STATS_H_
+#define _UAPI__LINUX_GEN_STATS_H
+#define _UAPI__LINUX_GEN_STATS_H_
+#define __LINUX_GEN_STATS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

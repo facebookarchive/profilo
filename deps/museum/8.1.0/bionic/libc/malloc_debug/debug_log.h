@@ -28,6 +28,9 @@
 
 #ifndef MALLOC_DEBUG_LOG_H
 #define MALLOC_DEBUG_LOG_H
+#define _MALLOC_DEBUG_LOG_H
+#define _MALLOC_DEBUG_LOG_H_
+#define MALLOC_DEBUG_LOG_H_
 
 #include <async_safe/log.h>
 

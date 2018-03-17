@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BINFMTS_H
 #define _UAPI_LINUX_BINFMTS_H
+#define UAPI_LINUX_BINFMTS_H
+#define UAPI_LINUX_BINFMTS_H_
+#define _LINUX_BINFMTS_H
+#define _LINUX_BINFMTS_H_
+#define _UAPI_LINUX_BINFMTS_H_
 #include <museum/7.1.2/bionic/libc/linux/capability.h>
 struct pt_regs;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

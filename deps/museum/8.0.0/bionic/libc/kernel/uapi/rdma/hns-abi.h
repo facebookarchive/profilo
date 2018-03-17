@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef HNS_ABI_USER_H
 #define HNS_ABI_USER_H
+#define _HNS_ABI_USER_H
+#define _HNS_ABI_USER_H_
+#define _UAPI_HNS_ABI_USER_H
+#define _UAPI_HNS_ABI_USER_H_
+#define _UAPIHNS_ABI_USER_H
+#define _UAPIHNS_ABI_USER_H_
+#define HNS_ABI_USER_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 struct hns_roce_ib_create_cq {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

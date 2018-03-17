@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef DRM_ARMADA_IOCTL_H
 #define DRM_ARMADA_IOCTL_H
+#define _DRM_ARMADA_IOCTL_H
+#define _DRM_ARMADA_IOCTL_H_
+#define _UAPI_DRM_ARMADA_IOCTL_H
+#define _UAPI_DRM_ARMADA_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_UAPIDRM_ARMADA_IOCTL_H
+#define NDK_ANDROID_SUPPORT_UAPIDRM_ARMADA_IOCTL_H_
+#define _UAPIDRM_ARMADA_IOCTL_H
+#define _UAPIDRM_ARMADA_IOCTL_H_
+#define DRM_ARMADA_IOCTL_H_
 #include "drm.h"
 #ifdef __cplusplus
 #endif

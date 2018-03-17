@@ -16,6 +16,9 @@
 
 #ifndef BIONIC_SYSTRACE_H
 #define BIONIC_SYSTRACE_H
+#define _BIONIC_SYSTRACE_H
+#define _BIONIC_SYSTRACE_H_
+#define BIONIC_SYSTRACE_H_
 
 #include "bionic_macros.h"
 

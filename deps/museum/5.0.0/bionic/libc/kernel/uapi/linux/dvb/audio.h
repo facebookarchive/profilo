@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DVBAUDIO_H_
 #define _DVBAUDIO_H_
+#define DVBAUDIO_H_
+#define DVBAUDIO_H
+#define _UAPI_DVBAUDIO_H_
+#define _UAPI_DVBAUDIO_H
+#define _DVBAUDIO_H
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 typedef enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

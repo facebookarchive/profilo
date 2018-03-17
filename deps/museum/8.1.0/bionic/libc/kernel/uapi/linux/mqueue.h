@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_MQUEUE_H
 #define _LINUX_MQUEUE_H
+#define LINUX_MQUEUE_H
+#define LINUX_MQUEUE_H_
+#define NDK_ANDROID_SUPPORT_LINUX_MQUEUE_H
+#define NDK_ANDROID_SUPPORT_LINUX_MQUEUE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MQUEUE_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MQUEUE_H_
+#define _UAPI_LINUX_MQUEUE_H
+#define _UAPI_LINUX_MQUEUE_H_
+#define _LINUX_MQUEUE_H_
 #define MQ_PRIO_MAX 32768
 #define MQ_BYTES_MAX 819200
 struct mq_attr {

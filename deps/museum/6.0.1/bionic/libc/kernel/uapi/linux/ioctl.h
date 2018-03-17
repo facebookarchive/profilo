@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_IOCTL_H
 #define _LINUX_IOCTL_H
+#define LINUX_IOCTL_H
+#define LINUX_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IOCTL_H
+#define NDK_ANDROID_SUPPORT_LINUX_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IOCTL_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IOCTL_H_
+#define _UAPI_LINUX_IOCTL_H
+#define _UAPI_LINUX_IOCTL_H_
+#define _LINUX_IOCTL_H_
 #include <museum/6.0.1/bionic/libc/asm/ioctl.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

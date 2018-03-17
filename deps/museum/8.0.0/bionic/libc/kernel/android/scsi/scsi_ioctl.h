@@ -18,6 +18,9 @@
  ****************************************************************************/
 #ifndef _SCSI_IOCTL_H
 #define _SCSI_IOCTL_H
+#define SCSI_IOCTL_H
+#define SCSI_IOCTL_H_
+#define _SCSI_IOCTL_H_
 #define SCSI_IOCTL_SEND_COMMAND 1
 #define SCSI_IOCTL_TEST_UNIT_READY 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

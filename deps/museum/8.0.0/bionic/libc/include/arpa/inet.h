@@ -28,6 +28,9 @@
 
 #ifndef _ARPA_INET_H_
 #define _ARPA_INET_H_
+#define ARPA_INET_H_
+#define ARPA_INET_H
+#define _ARPA_INET_H
 
 #include <museum/8.0.0/bionic/libc/netinet/in.h>
 #include <museum/8.0.0/bionic/libc/stdint.h>

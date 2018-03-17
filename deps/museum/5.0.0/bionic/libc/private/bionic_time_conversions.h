@@ -28,6 +28,9 @@
 
 #ifndef _BIONIC_TIME_CONVERSIONS_H
 #define _BIONIC_TIME_CONVERSIONS_H
+#define BIONIC_TIME_CONVERSIONS_H
+#define BIONIC_TIME_CONVERSIONS_H_
+#define _BIONIC_TIME_CONVERSIONS_H_
 
 #include <time.h>
 #include <sys/cdefs.h>

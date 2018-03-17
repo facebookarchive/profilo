@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__HDLC_H
 #define _UAPI__HDLC_H
+#define UAPI__HDLC_H
+#define UAPI__HDLC_H_
+#define NDK_ANDROID_SUPPORT_UAPI__HDLC_H
+#define NDK_ANDROID_SUPPORT_UAPI__HDLC_H_
+#define NDK_ANDROID_SUPPORT__HDLC_H
+#define NDK_ANDROID_SUPPORT__HDLC_H_
+#define __HDLC_H
+#define __HDLC_H_
+#define _UAPI__HDLC_H_
 #define HDLC_MAX_MTU 1500
 #define HDLC_MAX_MRU 1600
 #endif

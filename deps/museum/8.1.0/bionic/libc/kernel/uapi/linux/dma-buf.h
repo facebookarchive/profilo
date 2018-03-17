@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DMA_BUF_UAPI_H_
 #define _DMA_BUF_UAPI_H_
+#define DMA_BUF_UAPI_H_
+#define DMA_BUF_UAPI_H
+#define NDK_ANDROID_SUPPORT_DMA_BUF_UAPI_H_
+#define NDK_ANDROID_SUPPORT_DMA_BUF_UAPI_H
+#define NDK_ANDROID_SUPPORT_UAPI_DMA_BUF_UAPI_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DMA_BUF_UAPI_H
+#define _UAPI_DMA_BUF_UAPI_H_
+#define _UAPI_DMA_BUF_UAPI_H
+#define _DMA_BUF_UAPI_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct dma_buf_sync {
   __u64 flags;

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_IN_ROUTE_H
 #define _LINUX_IN_ROUTE_H
+#define LINUX_IN_ROUTE_H
+#define LINUX_IN_ROUTE_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IN_ROUTE_H
+#define NDK_ANDROID_SUPPORT_LINUX_IN_ROUTE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IN_ROUTE_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IN_ROUTE_H_
+#define _UAPI_LINUX_IN_ROUTE_H
+#define _UAPI_LINUX_IN_ROUTE_H_
+#define _LINUX_IN_ROUTE_H_
 #define RTCF_DEAD RTNH_F_DEAD
 #define RTCF_ONLINK RTNH_F_ONLINK
 #define RTCF_NOPMTUDISC RTM_F_NOPMTUDISC

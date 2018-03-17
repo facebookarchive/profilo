@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NBD_H
 #define _UAPILINUX_NBD_H
+#define UAPILINUX_NBD_H
+#define UAPILINUX_NBD_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_NBD_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_NBD_H_
+#define LINUX_NBD_H
+#define LINUX_NBD_H_
+#define _UAPILINUX_NBD_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define NBD_SET_SOCK _IO(0xab, 0)
 #define NBD_SET_BLKSIZE _IO(0xab, 1)

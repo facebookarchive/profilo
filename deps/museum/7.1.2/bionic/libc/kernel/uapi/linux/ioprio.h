@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IOPRIO_H
 #define _UAPI_LINUX_IOPRIO_H
+#define UAPI_LINUX_IOPRIO_H
+#define UAPI_LINUX_IOPRIO_H_
+#define _LINUX_IOPRIO_H
+#define _LINUX_IOPRIO_H_
+#define _UAPI_LINUX_IOPRIO_H_
 #define IOPRIO_BITS (16)
 #define IOPRIO_CLASS_SHIFT (13)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __MIC_COMMON_H_
 #define __MIC_COMMON_H_
+#define _MIC_COMMON_H_
+#define _MIC_COMMON_H
+#define _UAPI_MIC_COMMON_H_
+#define _UAPI_MIC_COMMON_H
+#define _UAPI__MIC_COMMON_H_
+#define _UAPI__MIC_COMMON_H
+#define __MIC_COMMON_H
 #include <museum/7.1.2/bionic/libc/linux/virtio_ring.h>
 #define __mic_align(a,x) (((a) + (x) - 1) & ~((x) - 1))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

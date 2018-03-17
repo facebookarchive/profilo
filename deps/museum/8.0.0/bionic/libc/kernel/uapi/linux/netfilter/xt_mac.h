@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_MAC_H
 #define _XT_MAC_H
+#define XT_MAC_H
+#define XT_MAC_H_
+#define _UAPI_XT_MAC_H
+#define _UAPI_XT_MAC_H_
+#define _XT_MAC_H_
 #include <museum/8.0.0/bionic/libc/linux/if_ether.h>
 struct xt_mac_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

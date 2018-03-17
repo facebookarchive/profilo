@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KCMP_H
 #define _UAPI_LINUX_KCMP_H
+#define UAPI_LINUX_KCMP_H
+#define UAPI_LINUX_KCMP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_KCMP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_KCMP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_KCMP_H
+#define NDK_ANDROID_SUPPORT_LINUX_KCMP_H_
+#define _LINUX_KCMP_H
+#define _LINUX_KCMP_H_
+#define _UAPI_LINUX_KCMP_H_
 enum kcmp_type {
   KCMP_FILE,
   KCMP_VM,

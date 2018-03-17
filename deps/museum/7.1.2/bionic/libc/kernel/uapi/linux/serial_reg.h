@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_SERIAL_REG_H
 #define _LINUX_SERIAL_REG_H
+#define LINUX_SERIAL_REG_H
+#define LINUX_SERIAL_REG_H_
+#define _UAPI_LINUX_SERIAL_REG_H
+#define _UAPI_LINUX_SERIAL_REG_H_
+#define _LINUX_SERIAL_REG_H_
 #define UART_RX 0
 #define UART_TX 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

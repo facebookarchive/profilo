@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASMARM_SIGCONTEXT_H
 #define _ASMARM_SIGCONTEXT_H
+#define ASMARM_SIGCONTEXT_H
+#define ASMARM_SIGCONTEXT_H_
+#define _UAPI_ASMARM_SIGCONTEXT_H
+#define _UAPI_ASMARM_SIGCONTEXT_H_
+#define _ASMARM_SIGCONTEXT_H_
 struct sigcontext {
   unsigned long trap_no;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

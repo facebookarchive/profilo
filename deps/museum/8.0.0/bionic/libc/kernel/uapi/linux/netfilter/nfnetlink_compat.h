@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NFNETLINK_COMPAT_H
 #define _NFNETLINK_COMPAT_H
+#define NFNETLINK_COMPAT_H
+#define NFNETLINK_COMPAT_H_
+#define _UAPI_NFNETLINK_COMPAT_H
+#define _UAPI_NFNETLINK_COMPAT_H_
+#define _NFNETLINK_COMPAT_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define NF_NETLINK_CONNTRACK_NEW 0x00000001
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

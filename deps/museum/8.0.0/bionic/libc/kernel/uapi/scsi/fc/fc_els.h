@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _FC_ELS_H_
 #define _FC_ELS_H_
+#define FC_ELS_H_
+#define FC_ELS_H
+#define _UAPI_FC_ELS_H_
+#define _UAPI_FC_ELS_H
+#define _FC_ELS_H
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 enum fc_els_cmd {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

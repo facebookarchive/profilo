@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_TERMBITS_H
 #define _ASM_TERMBITS_H
+#define ASM_TERMBITS_H
+#define ASM_TERMBITS_H_
+#define NDK_ANDROID_SUPPORT_ASM_TERMBITS_H
+#define NDK_ANDROID_SUPPORT_ASM_TERMBITS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_TERMBITS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_TERMBITS_H_
+#define _UAPI_ASM_TERMBITS_H
+#define _UAPI_ASM_TERMBITS_H_
+#define _ASM_TERMBITS_H_
 #include <linux/posix_types.h>
 typedef unsigned char cc_t;
 typedef unsigned int speed_t;

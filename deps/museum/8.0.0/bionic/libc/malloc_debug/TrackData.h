@@ -28,6 +28,9 @@
 
 #ifndef DEBUG_MALLOC_TRACKDATA_H
 #define DEBUG_MALLOC_TRACKDATA_H
+#define _DEBUG_MALLOC_TRACKDATA_H
+#define _DEBUG_MALLOC_TRACKDATA_H_
+#define DEBUG_MALLOC_TRACKDATA_H_
 
 #include <stdint.h>
 #include <pthread.h>

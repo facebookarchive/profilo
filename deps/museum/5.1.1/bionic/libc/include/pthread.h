@@ -28,6 +28,9 @@
 
 #ifndef _PTHREAD_H_
 #define _PTHREAD_H_
+#define PTHREAD_H_
+#define PTHREAD_H
+#define _PTHREAD_H
 
 #include <museum/5.1.1/bionic/libc/time.h>
 #include <museum/5.1.1/bionic/libc/signal.h>

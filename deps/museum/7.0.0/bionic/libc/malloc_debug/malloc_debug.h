@@ -28,6 +28,9 @@
 
 #ifndef MALLOC_DEBUG_H
 #define MALLOC_DEBUG_H
+#define _MALLOC_DEBUG_H
+#define _MALLOC_DEBUG_H_
+#define MALLOC_DEBUG_H_
 
 #include <stdint.h>
 

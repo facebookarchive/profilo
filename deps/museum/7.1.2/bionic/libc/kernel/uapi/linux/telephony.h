@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef TELEPHONY_H
 #define TELEPHONY_H
+#define _TELEPHONY_H
+#define _TELEPHONY_H_
+#define _UAPI_TELEPHONY_H
+#define _UAPI_TELEPHONY_H_
+#define _UAPITELEPHONY_H
+#define _UAPITELEPHONY_H_
+#define TELEPHONY_H_
 #define TELEPHONY_VERSION 3013
 #define PHONE_VENDOR_IXJ 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

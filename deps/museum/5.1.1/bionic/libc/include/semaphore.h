@@ -27,6 +27,9 @@
  */
 #ifndef _SEMAPHORE_H
 #define _SEMAPHORE_H
+#define SEMAPHORE_H
+#define SEMAPHORE_H_
+#define _SEMAPHORE_H_
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 

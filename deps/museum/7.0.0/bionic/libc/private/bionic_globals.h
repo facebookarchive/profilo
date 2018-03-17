@@ -28,6 +28,9 @@
 
 #ifndef _PRIVATE_BIONIC_GLOBALS_H
 #define _PRIVATE_BIONIC_GLOBALS_H
+#define PRIVATE_BIONIC_GLOBALS_H
+#define PRIVATE_BIONIC_GLOBALS_H_
+#define _PRIVATE_BIONIC_GLOBALS_H_
 
 #include <sys/cdefs.h>
 

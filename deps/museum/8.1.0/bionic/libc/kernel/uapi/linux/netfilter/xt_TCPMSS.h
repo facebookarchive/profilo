@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_TCPMSS_H
 #define _XT_TCPMSS_H
+#define XT_TCPMSS_H
+#define XT_TCPMSS_H_
+#define NDK_ANDROID_SUPPORT_XT_TCPMSS_H
+#define NDK_ANDROID_SUPPORT_XT_TCPMSS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPMSS_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPMSS_H_
+#define _UAPI_XT_TCPMSS_H
+#define _UAPI_XT_TCPMSS_H_
+#define _XT_TCPMSS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct xt_tcpmss_info {
   __u16 mss;

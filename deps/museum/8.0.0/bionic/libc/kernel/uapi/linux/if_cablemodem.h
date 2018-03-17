@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_CABLEMODEM_H_
 #define _LINUX_CABLEMODEM_H_
+#define LINUX_CABLEMODEM_H_
+#define LINUX_CABLEMODEM_H
+#define _UAPI_LINUX_CABLEMODEM_H_
+#define _UAPI_LINUX_CABLEMODEM_H
+#define _LINUX_CABLEMODEM_H
 #define SIOCGCMSTATS (SIOCDEVPRIVATE + 0)
 #define SIOCGCMFIRMWARE (SIOCDEVPRIVATE + 1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

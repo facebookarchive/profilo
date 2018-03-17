@@ -28,6 +28,11 @@
 
 #ifndef _BIONIC_SYS_CAPABILITY_H
 #define _BIONIC_SYS_CAPABILITY_H
+#define BIONIC_SYS_CAPABILITY_H
+#define BIONIC_SYS_CAPABILITY_H_
+#define NDK_ANDROID_SUPPORT_BIONIC_SYS_CAPABILITY_H
+#define NDK_ANDROID_SUPPORT_BIONIC_SYS_CAPABILITY_H_
+#define _BIONIC_SYS_CAPABILITY_H_
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <museum/6.0.1/bionic/libc/linux/capability.h>

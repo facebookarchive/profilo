@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_TCPUDP_H
 #define _XT_TCPUDP_H
+#define XT_TCPUDP_H
+#define XT_TCPUDP_H_
+#define _UAPI_XT_TCPUDP_H
+#define _UAPI_XT_TCPUDP_H_
+#define _XT_TCPUDP_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 struct xt_tcp {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

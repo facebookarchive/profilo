@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KDEV_T_H
 #define _UAPI_LINUX_KDEV_T_H
+#define UAPI_LINUX_KDEV_T_H
+#define UAPI_LINUX_KDEV_T_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_KDEV_T_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_KDEV_T_H_
+#define NDK_ANDROID_SUPPORT_LINUX_KDEV_T_H
+#define NDK_ANDROID_SUPPORT_LINUX_KDEV_T_H_
+#define _LINUX_KDEV_T_H
+#define _LINUX_KDEV_T_H_
+#define _UAPI_LINUX_KDEV_T_H_
 #define MAJOR(dev) ((dev) >> 8)
 #define MINOR(dev) ((dev) & 0xff)
 #define MKDEV(ma,mi) ((ma) << 8 | (mi))

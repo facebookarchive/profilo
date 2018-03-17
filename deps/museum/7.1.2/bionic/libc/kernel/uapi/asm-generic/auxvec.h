@@ -18,4 +18,11 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_AUXVEC_H
 #define __ASM_GENERIC_AUXVEC_H
+#define _ASM_GENERIC_AUXVEC_H
+#define _ASM_GENERIC_AUXVEC_H_
+#define _UAPI_ASM_GENERIC_AUXVEC_H
+#define _UAPI_ASM_GENERIC_AUXVEC_H_
+#define _UAPI__ASM_GENERIC_AUXVEC_H
+#define _UAPI__ASM_GENERIC_AUXVEC_H_
+#define __ASM_GENERIC_AUXVEC_H_
 #endif

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__HID_H
 #define _UAPI__HID_H
+#define UAPI__HID_H
+#define UAPI__HID_H_
+#define NDK_ANDROID_SUPPORT_UAPI__HID_H
+#define NDK_ANDROID_SUPPORT_UAPI__HID_H_
+#define NDK_ANDROID_SUPPORT__HID_H
+#define NDK_ANDROID_SUPPORT__HID_H_
+#define __HID_H
+#define __HID_H_
+#define _UAPI__HID_H_
 #define USB_INTERFACE_CLASS_HID 3
 #define USB_INTERFACE_SUBCLASS_BOOT 1
 #define USB_INTERFACE_PROTOCOL_KEYBOARD 1

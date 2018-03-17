@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _MIC_IOCTL_H_
 #define _MIC_IOCTL_H_
+#define MIC_IOCTL_H_
+#define MIC_IOCTL_H
+#define NDK_ANDROID_SUPPORT_MIC_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_MIC_IOCTL_H
+#define NDK_ANDROID_SUPPORT_UAPI_MIC_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_MIC_IOCTL_H
+#define _UAPI_MIC_IOCTL_H_
+#define _UAPI_MIC_IOCTL_H
+#define _MIC_IOCTL_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct mic_copy_desc {
   struct iovec * iov;

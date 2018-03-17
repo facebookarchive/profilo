@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_REISER_FS_H
 #define _LINUX_REISER_FS_H
+#define LINUX_REISER_FS_H
+#define LINUX_REISER_FS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_REISER_FS_H
+#define NDK_ANDROID_SUPPORT_LINUX_REISER_FS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_REISER_FS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_REISER_FS_H_
+#define _UAPI_LINUX_REISER_FS_H
+#define _UAPI_LINUX_REISER_FS_H_
+#define _LINUX_REISER_FS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define REISERFS_IOC_UNPACK _IOW(0xCD, 1, long)

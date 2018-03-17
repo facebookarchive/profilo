@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_THERMAL_H
 #define _UAPI_LINUX_THERMAL_H
+#define UAPI_LINUX_THERMAL_H
+#define UAPI_LINUX_THERMAL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_THERMAL_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_THERMAL_H_
+#define NDK_ANDROID_SUPPORT_LINUX_THERMAL_H
+#define NDK_ANDROID_SUPPORT_LINUX_THERMAL_H_
+#define _LINUX_THERMAL_H
+#define _LINUX_THERMAL_H_
+#define _UAPI_LINUX_THERMAL_H_
 #define THERMAL_NAME_LENGTH 20
 #define THERMAL_GENL_FAMILY_NAME "thermal_event"
 #define THERMAL_GENL_VERSION 0x01

@@ -16,6 +16,9 @@
 
 #ifndef _BIONIC_PAGE_H_
 #define _BIONIC_PAGE_H_
+#define BIONIC_PAGE_H_
+#define BIONIC_PAGE_H
+#define _BIONIC_PAGE_H
 
 // Get PAGE_SIZE and PAGE_MASK.
 #include <sys/user.h>

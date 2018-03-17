@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DLM_NETLINK_H
 #define _DLM_NETLINK_H
+#define DLM_NETLINK_H
+#define DLM_NETLINK_H_
+#define _UAPI_DLM_NETLINK_H
+#define _UAPI_DLM_NETLINK_H_
+#define _DLM_NETLINK_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

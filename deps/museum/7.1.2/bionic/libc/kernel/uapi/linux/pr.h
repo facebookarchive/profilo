@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_PR_H
 #define _UAPI_PR_H
+#define UAPI_PR_H
+#define UAPI_PR_H_
+#define _PR_H
+#define _PR_H_
+#define _UAPI_PR_H_
 enum pr_type {
   PR_WRITE_EXCLUSIVE = 1,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

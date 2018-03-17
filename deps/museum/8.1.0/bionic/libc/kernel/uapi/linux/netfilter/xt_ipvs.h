@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_IPVS_H
 #define _XT_IPVS_H
+#define XT_IPVS_H
+#define XT_IPVS_H_
+#define NDK_ANDROID_SUPPORT_XT_IPVS_H
+#define NDK_ANDROID_SUPPORT_XT_IPVS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_IPVS_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_IPVS_H_
+#define _UAPI_XT_IPVS_H
+#define _UAPI_XT_IPVS_H_
+#define _XT_IPVS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/netfilter.h>
 enum {

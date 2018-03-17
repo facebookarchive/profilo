@@ -4,6 +4,11 @@
 
 #ifndef _THREAD_PRIVATE_H_
 #define _THREAD_PRIVATE_H_
+#define THREAD_PRIVATE_H_
+#define THREAD_PRIVATE_H
+#define NDK_ANDROID_SUPPORT_THREAD_PRIVATE_H_
+#define NDK_ANDROID_SUPPORT_THREAD_PRIVATE_H
+#define _THREAD_PRIVATE_H
 
 #include <pthread.h>
 

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_GSMMUX_H
 #define _LINUX_GSMMUX_H
+#define LINUX_GSMMUX_H
+#define LINUX_GSMMUX_H_
+#define _UAPI_LINUX_GSMMUX_H
+#define _UAPI_LINUX_GSMMUX_H_
+#define _LINUX_GSMMUX_H_
 #include <museum/7.1.2/bionic/libc/linux/if.h>
 #include <museum/7.1.2/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

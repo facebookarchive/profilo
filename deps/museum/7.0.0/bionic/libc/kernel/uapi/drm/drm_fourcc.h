@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef DRM_FOURCC_H
 #define DRM_FOURCC_H
+#define _DRM_FOURCC_H
+#define _DRM_FOURCC_H_
+#define _UAPI_DRM_FOURCC_H
+#define _UAPI_DRM_FOURCC_H_
+#define _UAPIDRM_FOURCC_H
+#define _UAPIDRM_FOURCC_H_
+#define DRM_FOURCC_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #define fourcc_code(a,b,c,d) ((__u32) (a) | ((__u32) (b) << 8) | ((__u32) (c) << 16) | ((__u32) (d) << 24))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

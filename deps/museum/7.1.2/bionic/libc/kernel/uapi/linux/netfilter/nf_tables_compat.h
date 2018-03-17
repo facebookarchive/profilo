@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NFT_COMPAT_NFNETLINK_H_
 #define _NFT_COMPAT_NFNETLINK_H_
+#define NFT_COMPAT_NFNETLINK_H_
+#define NFT_COMPAT_NFNETLINK_H
+#define _UAPI_NFT_COMPAT_NFNETLINK_H_
+#define _UAPI_NFT_COMPAT_NFNETLINK_H
+#define _NFT_COMPAT_NFNETLINK_H
 enum nft_target_attributes {
   NFTA_TARGET_UNSPEC,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

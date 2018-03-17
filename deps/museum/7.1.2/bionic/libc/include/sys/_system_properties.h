@@ -28,6 +28,9 @@
 
 #ifndef _INCLUDE_SYS__SYSTEM_PROPERTIES_H
 #define _INCLUDE_SYS__SYSTEM_PROPERTIES_H
+#define INCLUDE_SYS__SYSTEM_PROPERTIES_H
+#define INCLUDE_SYS__SYSTEM_PROPERTIES_H_
+#define _INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 
 #ifndef _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #error you should #include <sys/system_properties.h> instead

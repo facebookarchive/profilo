@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPISOUNDCARD_H
 #define _UAPISOUNDCARD_H
+#define UAPISOUNDCARD_H
+#define UAPISOUNDCARD_H_
+#define SOUNDCARD_H
+#define SOUNDCARD_H_
+#define _UAPISOUNDCARD_H_
 #define SOUND_VERSION 0x030802
 #define OPEN_SOUND_SYSTEM
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

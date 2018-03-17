@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_NF_CONNTRACK_COMMON_H
 #define _UAPI_NF_CONNTRACK_COMMON_H
+#define UAPI_NF_CONNTRACK_COMMON_H
+#define UAPI_NF_CONNTRACK_COMMON_H_
+#define _NF_CONNTRACK_COMMON_H
+#define _NF_CONNTRACK_COMMON_H_
+#define _UAPI_NF_CONNTRACK_COMMON_H_
 enum ip_conntrack_info {
   IP_CT_ESTABLISHED,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

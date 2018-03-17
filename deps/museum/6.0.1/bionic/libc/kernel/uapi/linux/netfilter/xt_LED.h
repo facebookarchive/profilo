@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_LED_H
 #define _XT_LED_H
+#define XT_LED_H
+#define XT_LED_H_
+#define NDK_ANDROID_SUPPORT_XT_LED_H
+#define NDK_ANDROID_SUPPORT_XT_LED_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_LED_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_LED_H_
+#define _UAPI_XT_LED_H
+#define _UAPI_XT_LED_H_
+#define _XT_LED_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 struct xt_led_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -60,6 +60,11 @@
 
 #ifndef _NETDB_H_
 #define _NETDB_H_
+#define NETDB_H_
+#define NETDB_H
+#define NDK_ANDROID_SUPPORT_NETDB_H_
+#define NDK_ANDROID_SUPPORT_NETDB_H
+#define _NETDB_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

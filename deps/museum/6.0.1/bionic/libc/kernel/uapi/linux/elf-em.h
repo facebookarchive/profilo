@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_ELF_EM_H
 #define _LINUX_ELF_EM_H
+#define LINUX_ELF_EM_H
+#define LINUX_ELF_EM_H_
+#define _UAPI_LINUX_ELF_EM_H
+#define _UAPI_LINUX_ELF_EM_H_
+#define _LINUX_ELF_EM_H_
 #define EM_NONE 0
 #define EM_M32 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

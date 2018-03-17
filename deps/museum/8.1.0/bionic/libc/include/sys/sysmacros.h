@@ -28,6 +28,11 @@
 
 #ifndef _SYS_SYSMACROS_H_
 #define _SYS_SYSMACROS_H_
+#define SYS_SYSMACROS_H_
+#define SYS_SYSMACROS_H
+#define NDK_ANDROID_SUPPORT_SYS_SYSMACROS_H_
+#define NDK_ANDROID_SUPPORT_SYS_SYSMACROS_H
+#define _SYS_SYSMACROS_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

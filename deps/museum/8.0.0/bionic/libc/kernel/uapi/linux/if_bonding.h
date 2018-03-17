@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_BONDING_H
 #define _LINUX_IF_BONDING_H
+#define LINUX_IF_BONDING_H
+#define LINUX_IF_BONDING_H_
+#define _UAPI_LINUX_IF_BONDING_H
+#define _UAPI_LINUX_IF_BONDING_H_
+#define _LINUX_IF_BONDING_H_
 #include <museum/8.0.0/bionic/libc/linux/if.h>
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

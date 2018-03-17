@@ -28,6 +28,9 @@
 
 #ifndef _SIGNAL_H_
 #define _SIGNAL_H_
+#define SIGNAL_H_
+#define SIGNAL_H
+#define _SIGNAL_H
 
 #include <museum/5.0.0/bionic/libc/errno.h>
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>

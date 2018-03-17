@@ -27,6 +27,9 @@
  */
 #ifndef _BIONIC_LOCK_H
 #define _BIONIC_LOCK_H
+#define BIONIC_LOCK_H
+#define BIONIC_LOCK_H_
+#define _BIONIC_LOCK_H_
 
 #include <stdatomic.h>
 #include "private/bionic_futex.h"

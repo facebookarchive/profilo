@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DVBVERSION_H_
 #define _DVBVERSION_H_
+#define DVBVERSION_H_
+#define DVBVERSION_H
+#define _UAPI_DVBVERSION_H_
+#define _UAPI_DVBVERSION_H
+#define _DVBVERSION_H
 #define DVB_API_VERSION 5
 #define DVB_API_VERSION_MINOR 10
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

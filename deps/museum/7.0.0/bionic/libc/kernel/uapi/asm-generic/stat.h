@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_STAT_H
 #define __ASM_GENERIC_STAT_H
+#define _ASM_GENERIC_STAT_H
+#define _ASM_GENERIC_STAT_H_
+#define _UAPI_ASM_GENERIC_STAT_H
+#define _UAPI_ASM_GENERIC_STAT_H_
+#define _UAPI__ASM_GENERIC_STAT_H
+#define _UAPI__ASM_GENERIC_STAT_H_
+#define __ASM_GENERIC_STAT_H_
 #include <museum/7.0.0/bionic/libc/asm/bitsperlong.h>
 #define STAT_HAVE_NSEC 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_SETUP_H
 #define __ASM_SETUP_H
+#define _ASM_SETUP_H
+#define _ASM_SETUP_H_
+#define _UAPI_ASM_SETUP_H
+#define _UAPI_ASM_SETUP_H_
+#define NDK_ANDROID_SUPPORT__ASM_SETUP_H
+#define NDK_ANDROID_SUPPORT__ASM_SETUP_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_SETUP_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_SETUP_H_
+#define _UAPI__ASM_SETUP_H
+#define _UAPI__ASM_SETUP_H_
+#define __ASM_SETUP_H_
 #include <linux/types.h>
 #define COMMAND_LINE_SIZE 2048
 #endif

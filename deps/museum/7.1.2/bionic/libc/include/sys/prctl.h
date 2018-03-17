@@ -28,6 +28,9 @@
 
 #ifndef _SYS_PRCTL_H
 #define _SYS_PRCTL_H
+#define SYS_PRCTL_H
+#define SYS_PRCTL_H_
+#define _SYS_PRCTL_H_
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 

@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UHID_H_
 #define __UHID_H_
+#define _UHID_H_
+#define _UHID_H
+#define _UAPI_UHID_H_
+#define _UAPI_UHID_H
+#define NDK_ANDROID_SUPPORT__UHID_H_
+#define NDK_ANDROID_SUPPORT__UHID_H
+#define NDK_ANDROID_SUPPORT_UAPI__UHID_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UHID_H
+#define _UAPI__UHID_H_
+#define _UAPI__UHID_H
+#define __UHID_H
 #include <museum/6.0.1/bionic/libc/linux/input.h>
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -34,6 +34,11 @@
 
 #ifndef _LIMITS_H_
 #define _LIMITS_H_
+#define LIMITS_H_
+#define LIMITS_H
+#define NDK_ANDROID_SUPPORT_LIMITS_H_
+#define NDK_ANDROID_SUPPORT_LIMITS_H
+#define _LIMITS_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

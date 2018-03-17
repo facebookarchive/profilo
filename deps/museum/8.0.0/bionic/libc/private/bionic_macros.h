@@ -16,6 +16,9 @@
 
 #ifndef _BIONIC_MACROS_H_
 #define _BIONIC_MACROS_H_
+#define BIONIC_MACROS_H_
+#define BIONIC_MACROS_H
+#define _BIONIC_MACROS_H
 
 #include <stdint.h>
 

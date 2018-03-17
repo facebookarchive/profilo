@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_ARM_SWAB_H
 #define _UAPI__ASM_ARM_SWAB_H
+#define UAPI__ASM_ARM_SWAB_H
+#define UAPI__ASM_ARM_SWAB_H_
+#define __ASM_ARM_SWAB_H
+#define __ASM_ARM_SWAB_H_
+#define _UAPI__ASM_ARM_SWAB_H_
 #include <linux/compiler.h>
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__CODA_PSDEV_H
 #define _UAPI__CODA_PSDEV_H
+#define UAPI__CODA_PSDEV_H
+#define UAPI__CODA_PSDEV_H_
+#define __CODA_PSDEV_H
+#define __CODA_PSDEV_H_
+#define _UAPI__CODA_PSDEV_H_
 #include <museum/8.0.0/bionic/libc/linux/magic.h>
 #define CODA_PSDEV_MAJOR 67
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

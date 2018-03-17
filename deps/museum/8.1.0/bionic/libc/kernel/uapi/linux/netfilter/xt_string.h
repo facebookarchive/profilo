@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_STRING_H
 #define _XT_STRING_H
+#define XT_STRING_H
+#define XT_STRING_H_
+#define NDK_ANDROID_SUPPORT_XT_STRING_H
+#define NDK_ANDROID_SUPPORT_XT_STRING_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_STRING_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_STRING_H_
+#define _UAPI_XT_STRING_H
+#define _UAPI_XT_STRING_H_
+#define _XT_STRING_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_STRING_MAX_PATTERN_SIZE 128
 #define XT_STRING_MAX_ALGO_NAME_SIZE 16

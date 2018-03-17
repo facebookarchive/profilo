@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NF_CONNTRACK_TUPLE_COMMON_H
 #define _NF_CONNTRACK_TUPLE_COMMON_H
+#define NF_CONNTRACK_TUPLE_COMMON_H
+#define NF_CONNTRACK_TUPLE_COMMON_H_
+#define _UAPI_NF_CONNTRACK_TUPLE_COMMON_H
+#define _UAPI_NF_CONNTRACK_TUPLE_COMMON_H_
+#define _NF_CONNTRACK_TUPLE_COMMON_H_
 enum ip_conntrack_dir {
  IP_CT_DIR_ORIGINAL,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

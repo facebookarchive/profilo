@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_PTRACE_H
 #define _UAPI__ASM_PTRACE_H
+#define UAPI__ASM_PTRACE_H
+#define UAPI__ASM_PTRACE_H_
+#define __ASM_PTRACE_H
+#define __ASM_PTRACE_H_
+#define _UAPI__ASM_PTRACE_H_
 #include <linux/types.h>
 #include <asm/hwcap.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -28,6 +28,11 @@
 
 #ifndef _BITS_WCHAR_LIMITS_H_
 #define _BITS_WCHAR_LIMITS_H_
+#define BITS_WCHAR_LIMITS_H_
+#define BITS_WCHAR_LIMITS_H
+#define NDK_ANDROID_SUPPORT_BITS_WCHAR_LIMITS_H_
+#define NDK_ANDROID_SUPPORT_BITS_WCHAR_LIMITS_H
+#define _BITS_WCHAR_LIMITS_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

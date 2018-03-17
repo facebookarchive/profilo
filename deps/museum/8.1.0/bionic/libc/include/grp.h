@@ -34,6 +34,11 @@
 
 #ifndef _GRP_H_
 #define _GRP_H_
+#define GRP_H_
+#define GRP_H
+#define NDK_ANDROID_SUPPORT_GRP_H_
+#define NDK_ANDROID_SUPPORT_GRP_H
+#define _GRP_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

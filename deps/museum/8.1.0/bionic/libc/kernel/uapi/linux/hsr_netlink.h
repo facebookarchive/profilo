@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UAPI_HSR_NETLINK_H
 #define __UAPI_HSR_NETLINK_H
+#define _UAPI_HSR_NETLINK_H
+#define _UAPI_HSR_NETLINK_H_
+#define _HSR_NETLINK_H
+#define _HSR_NETLINK_H_
+#define NDK_ANDROID_SUPPORT__UAPI_HSR_NETLINK_H
+#define NDK_ANDROID_SUPPORT__UAPI_HSR_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_HSR_NETLINK_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_HSR_NETLINK_H_
+#define _UAPI__UAPI_HSR_NETLINK_H
+#define _UAPI__UAPI_HSR_NETLINK_H_
+#define __UAPI_HSR_NETLINK_H_
 enum {
   HSR_A_UNSPEC,
   HSR_A_NODE_ADDR,

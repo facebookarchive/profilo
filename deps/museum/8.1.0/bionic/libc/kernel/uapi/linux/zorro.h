@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ZORRO_H
 #define _UAPI_LINUX_ZORRO_H
+#define UAPI_LINUX_ZORRO_H
+#define UAPI_LINUX_ZORRO_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ZORRO_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ZORRO_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ZORRO_H
+#define NDK_ANDROID_SUPPORT_LINUX_ZORRO_H_
+#define _LINUX_ZORRO_H
+#define _LINUX_ZORRO_H_
+#define _UAPI_LINUX_ZORRO_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define ZORRO_MANUF(id) ((id) >> 16)
 #define ZORRO_PROD(id) (((id) >> 8) & 0xff)

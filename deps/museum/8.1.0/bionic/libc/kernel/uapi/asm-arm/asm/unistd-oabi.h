@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_ARM_UNISTD_OABI_H
 #define _UAPI_ASM_ARM_UNISTD_OABI_H 1
+#define UAPI_ASM_ARM_UNISTD_OABI_H
+#define UAPI_ASM_ARM_UNISTD_OABI_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_ARM_UNISTD_OABI_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_ARM_UNISTD_OABI_H_
+#define NDK_ANDROID_SUPPORT_ASM_ARM_UNISTD_OABI_H
+#define NDK_ANDROID_SUPPORT_ASM_ARM_UNISTD_OABI_H_
+#define _ASM_ARM_UNISTD_OABI_H
+#define _ASM_ARM_UNISTD_OABI_H_
+#define _UAPI_ASM_ARM_UNISTD_OABI_H_
 #define __NR_time (__NR_SYSCALL_BASE + 13)
 #define __NR_umount (__NR_SYSCALL_BASE + 22)
 #define __NR_stime (__NR_SYSCALL_BASE + 25)

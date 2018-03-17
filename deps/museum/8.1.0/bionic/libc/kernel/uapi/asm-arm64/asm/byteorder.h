@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_BYTEORDER_H
 #define __ASM_BYTEORDER_H
+#define _ASM_BYTEORDER_H
+#define _ASM_BYTEORDER_H_
+#define _UAPI_ASM_BYTEORDER_H
+#define _UAPI_ASM_BYTEORDER_H_
+#define NDK_ANDROID_SUPPORT__ASM_BYTEORDER_H
+#define NDK_ANDROID_SUPPORT__ASM_BYTEORDER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_BYTEORDER_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_BYTEORDER_H_
+#define _UAPI__ASM_BYTEORDER_H
+#define _UAPI__ASM_BYTEORDER_H_
+#define __ASM_BYTEORDER_H_
 #ifdef __AARCH64EB__
 #include <linux/byteorder/big_endian.h>
 #else

@@ -16,6 +16,9 @@
 
 #ifndef _BIONIC_MACROS_H_
 #define _BIONIC_MACROS_H_
+#define BIONIC_MACROS_H_
+#define BIONIC_MACROS_H
+#define _BIONIC_MACROS_H
 
 // DISALLOW_COPY_AND_ASSIGN disallows the copy and operator= functions.
 // It goes in the private: declarations in a class.

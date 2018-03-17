@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_UDP_H
 #define _UAPI_LINUX_UDP_H
+#define UAPI_LINUX_UDP_H
+#define UAPI_LINUX_UDP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_UDP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_UDP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_UDP_H
+#define NDK_ANDROID_SUPPORT_LINUX_UDP_H_
+#define _LINUX_UDP_H
+#define _LINUX_UDP_H_
+#define _UAPI_LINUX_UDP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct __kernel_udphdr {
   __be16 source;

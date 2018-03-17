@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_BALLOON_H
 #define _LINUX_VIRTIO_BALLOON_H
+#define LINUX_VIRTIO_BALLOON_H
+#define LINUX_VIRTIO_BALLOON_H_
+#define _UAPI_LINUX_VIRTIO_BALLOON_H
+#define _UAPI_LINUX_VIRTIO_BALLOON_H_
+#define _LINUX_VIRTIO_BALLOON_H_
 #include <museum/6.0.1/bionic/libc/linux/virtio_ids.h>
 #include <museum/6.0.1/bionic/libc/linux/virtio_config.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

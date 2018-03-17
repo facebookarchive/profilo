@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_REBOOT_H_
 #define _SYS_REBOOT_H_
+#define SYS_REBOOT_H_
+#define SYS_REBOOT_H
+#define _SYS_REBOOT_H
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/7.0.0/bionic/libc/linux/reboot.h>

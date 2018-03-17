@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__ULEDS_H_
 #define _UAPI__ULEDS_H_
+#define UAPI__ULEDS_H_
+#define UAPI__ULEDS_H
+#define NDK_ANDROID_SUPPORT_UAPI__ULEDS_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ULEDS_H
+#define NDK_ANDROID_SUPPORT__ULEDS_H_
+#define NDK_ANDROID_SUPPORT__ULEDS_H
+#define __ULEDS_H_
+#define __ULEDS_H
+#define _UAPI__ULEDS_H
 #define LED_MAX_NAME_SIZE 64
 struct uleds_user_dev {
   char name[LED_MAX_NAME_SIZE];

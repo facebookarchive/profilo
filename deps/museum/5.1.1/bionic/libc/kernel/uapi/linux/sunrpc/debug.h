@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SUNRPC_DEBUG_H_
 #define _UAPI_LINUX_SUNRPC_DEBUG_H_
+#define UAPI_LINUX_SUNRPC_DEBUG_H_
+#define UAPI_LINUX_SUNRPC_DEBUG_H
+#define _LINUX_SUNRPC_DEBUG_H_
+#define _LINUX_SUNRPC_DEBUG_H
+#define _UAPI_LINUX_SUNRPC_DEBUG_H
 #define RPCDBG_XPRT 0x0001
 #define RPCDBG_CALL 0x0002
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

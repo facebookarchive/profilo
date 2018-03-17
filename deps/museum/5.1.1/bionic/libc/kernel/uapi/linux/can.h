@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef CAN_H
 #define CAN_H
+#define _CAN_H
+#define _CAN_H_
+#define _UAPI_CAN_H
+#define _UAPI_CAN_H_
+#define _UAPICAN_H
+#define _UAPICAN_H_
+#define CAN_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

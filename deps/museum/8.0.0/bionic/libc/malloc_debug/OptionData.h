@@ -28,6 +28,9 @@
 
 #ifndef DEBUG_MALLOC_OPTIONDATA_H
 #define DEBUG_MALLOC_OPTIONDATA_H
+#define _DEBUG_MALLOC_OPTIONDATA_H
+#define _DEBUG_MALLOC_OPTIONDATA_H_
+#define DEBUG_MALLOC_OPTIONDATA_H_
 
 // Forward Declarations
 class DebugData;

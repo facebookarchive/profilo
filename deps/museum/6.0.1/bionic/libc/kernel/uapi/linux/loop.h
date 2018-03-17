@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_LOOP_H
 #define _UAPI_LINUX_LOOP_H
+#define UAPI_LINUX_LOOP_H
+#define UAPI_LINUX_LOOP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LOOP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LOOP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_LOOP_H
+#define NDK_ANDROID_SUPPORT_LINUX_LOOP_H_
+#define _LINUX_LOOP_H
+#define _LINUX_LOOP_H_
+#define _UAPI_LINUX_LOOP_H_
 #define LO_NAME_SIZE 64
 #define LO_KEY_SIZE 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

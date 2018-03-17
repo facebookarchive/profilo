@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_MIDI_H
 #define __LINUX_USB_MIDI_H
+#define _LINUX_USB_MIDI_H
+#define _LINUX_USB_MIDI_H_
+#define _UAPI_LINUX_USB_MIDI_H
+#define _UAPI_LINUX_USB_MIDI_H_
+#define NDK_ANDROID_SUPPORT__LINUX_USB_MIDI_H
+#define NDK_ANDROID_SUPPORT__LINUX_USB_MIDI_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_USB_MIDI_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_USB_MIDI_H_
+#define _UAPI__LINUX_USB_MIDI_H
+#define _UAPI__LINUX_USB_MIDI_H_
+#define __LINUX_USB_MIDI_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define USB_MS_HEADER 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

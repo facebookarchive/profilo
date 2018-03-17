@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_RATE_H
 #define _XT_RATE_H
+#define XT_RATE_H
+#define XT_RATE_H_
+#define NDK_ANDROID_SUPPORT_XT_RATE_H
+#define NDK_ANDROID_SUPPORT_XT_RATE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_RATE_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_RATE_H_
+#define _UAPI_XT_RATE_H
+#define _UAPI_XT_RATE_H_
+#define _XT_RATE_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_LIMIT_SCALE 10000
 struct xt_limit_priv;

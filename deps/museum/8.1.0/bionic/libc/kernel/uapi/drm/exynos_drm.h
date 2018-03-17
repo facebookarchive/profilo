@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_EXYNOS_DRM_H_
 #define _UAPI_EXYNOS_DRM_H_
+#define UAPI_EXYNOS_DRM_H_
+#define UAPI_EXYNOS_DRM_H
+#define NDK_ANDROID_SUPPORT_UAPI_EXYNOS_DRM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_EXYNOS_DRM_H
+#define NDK_ANDROID_SUPPORT_EXYNOS_DRM_H_
+#define NDK_ANDROID_SUPPORT_EXYNOS_DRM_H
+#define _EXYNOS_DRM_H_
+#define _EXYNOS_DRM_H
+#define _UAPI_EXYNOS_DRM_H
 #include "drm.h"
 #ifdef __cplusplus
 #endif

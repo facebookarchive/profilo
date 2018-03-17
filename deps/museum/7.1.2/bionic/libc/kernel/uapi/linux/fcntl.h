@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FCNTL_H
 #define _UAPI_LINUX_FCNTL_H
+#define UAPI_LINUX_FCNTL_H
+#define UAPI_LINUX_FCNTL_H_
+#define _LINUX_FCNTL_H
+#define _LINUX_FCNTL_H_
+#define _UAPI_LINUX_FCNTL_H_
 #include <museum/7.1.2/bionic/libc/asm/fcntl.h>
 #define F_SETLEASE (F_LINUX_SPECIFIC_BASE + 0)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

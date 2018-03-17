@@ -28,6 +28,9 @@
 
 #ifndef _BIONIC_TIME_CONVERSIONS_H
 #define _BIONIC_TIME_CONVERSIONS_H
+#define BIONIC_TIME_CONVERSIONS_H
+#define BIONIC_TIME_CONVERSIONS_H_
+#define _BIONIC_TIME_CONVERSIONS_H_
 
 #include <errno.h>
 #include <time.h>

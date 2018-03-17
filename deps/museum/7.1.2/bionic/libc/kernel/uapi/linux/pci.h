@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_PCI_H
 #define _UAPILINUX_PCI_H
+#define UAPILINUX_PCI_H
+#define UAPILINUX_PCI_H_
+#define LINUX_PCI_H
+#define LINUX_PCI_H_
+#define _UAPILINUX_PCI_H_
 #include <museum/7.1.2/bionic/libc/linux/pci_regs.h>
 #define PCI_DEVFN(slot,func) ((((slot) & 0x1f) << 3) | ((func) & 0x07))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

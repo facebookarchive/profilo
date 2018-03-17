@@ -28,6 +28,11 @@
 
 #ifndef _ARPA_INET_H_
 #define _ARPA_INET_H_
+#define ARPA_INET_H_
+#define ARPA_INET_H
+#define NDK_ANDROID_SUPPORT_ARPA_INET_H_
+#define NDK_ANDROID_SUPPORT_ARPA_INET_H
+#define _ARPA_INET_H
 
 #include <museum/6.0.1/bionic/libc/stdint.h>
 #include <museum/6.0.1/bionic/libc/sys/types.h>

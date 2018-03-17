@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef SCSI_BSG_FC_H
 #define SCSI_BSG_FC_H
+#define _SCSI_BSG_FC_H
+#define _SCSI_BSG_FC_H_
+#define _UAPI_SCSI_BSG_FC_H
+#define _UAPI_SCSI_BSG_FC_H_
+#define NDK_ANDROID_SUPPORT_UAPISCSI_BSG_FC_H
+#define NDK_ANDROID_SUPPORT_UAPISCSI_BSG_FC_H_
+#define _UAPISCSI_BSG_FC_H
+#define _UAPISCSI_BSG_FC_H_
+#define SCSI_BSG_FC_H_
 #define FC_DEFAULT_BSG_TIMEOUT (10 * HZ)
 #define FC_BSG_CLS_MASK 0xF0000000
 #define FC_BSG_HST_MASK 0x80000000

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _BTRFS_CTREE_H_
 #define _BTRFS_CTREE_H_
+#define BTRFS_CTREE_H_
+#define BTRFS_CTREE_H
+#define NDK_ANDROID_SUPPORT_BTRFS_CTREE_H_
+#define NDK_ANDROID_SUPPORT_BTRFS_CTREE_H
+#define NDK_ANDROID_SUPPORT_UAPI_BTRFS_CTREE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_BTRFS_CTREE_H
+#define _UAPI_BTRFS_CTREE_H_
+#define _UAPI_BTRFS_CTREE_H
+#define _BTRFS_CTREE_H
 #define BTRFS_ROOT_TREE_OBJECTID 1ULL
 #define BTRFS_EXTENT_TREE_OBJECTID 2ULL
 #define BTRFS_CHUNK_TREE_OBJECTID 3ULL

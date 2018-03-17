@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_RATEEST_TARGET_H
 #define _XT_RATEEST_TARGET_H
+#define XT_RATEEST_TARGET_H
+#define XT_RATEEST_TARGET_H_
+#define NDK_ANDROID_SUPPORT_XT_RATEEST_TARGET_H
+#define NDK_ANDROID_SUPPORT_XT_RATEEST_TARGET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_RATEEST_TARGET_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_RATEEST_TARGET_H_
+#define _UAPI_XT_RATEEST_TARGET_H
+#define _UAPI_XT_RATEEST_TARGET_H_
+#define _XT_RATEEST_TARGET_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/if.h>
 struct xt_rateest_target_info {

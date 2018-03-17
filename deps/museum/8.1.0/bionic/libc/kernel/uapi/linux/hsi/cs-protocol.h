@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _CS_PROTOCOL_H
 #define _CS_PROTOCOL_H
+#define CS_PROTOCOL_H
+#define CS_PROTOCOL_H_
+#define NDK_ANDROID_SUPPORT_CS_PROTOCOL_H
+#define NDK_ANDROID_SUPPORT_CS_PROTOCOL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CS_PROTOCOL_H
+#define NDK_ANDROID_SUPPORT_UAPI_CS_PROTOCOL_H_
+#define _UAPI_CS_PROTOCOL_H
+#define _UAPI_CS_PROTOCOL_H_
+#define _CS_PROTOCOL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define CS_DEV_FILE_NAME "/dev/cmt_speech"

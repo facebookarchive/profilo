@@ -28,6 +28,11 @@
 
 #ifndef _WCTYPE_H_
 #define _WCTYPE_H_
+#define WCTYPE_H_
+#define WCTYPE_H
+#define NDK_ANDROID_SUPPORT_WCTYPE_H_
+#define NDK_ANDROID_SUPPORT_WCTYPE_H
+#define _WCTYPE_H
 
 #include <museum/6.0.1/bionic/libc/wchar.h>
 

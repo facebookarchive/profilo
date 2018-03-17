@@ -28,6 +28,11 @@
 
 #ifndef _ASYNC_SAFE_LOG_LOG_H
 #define _ASYNC_SAFE_LOG_LOG_H
+#define ASYNC_SAFE_LOG_LOG_H
+#define ASYNC_SAFE_LOG_LOG_H_
+#define NDK_ANDROID_SUPPORT_ASYNC_SAFE_LOG_LOG_H
+#define NDK_ANDROID_SUPPORT_ASYNC_SAFE_LOG_LOG_H_
+#define _ASYNC_SAFE_LOG_LOG_H_
 
 #include <sys/cdefs.h>
 #include <stdarg.h>

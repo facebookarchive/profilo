@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPICN_PROC_H
 #define _UAPICN_PROC_H
+#define UAPICN_PROC_H
+#define UAPICN_PROC_H_
+#define CN_PROC_H
+#define CN_PROC_H_
+#define _UAPICN_PROC_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 enum proc_cn_mcast_op {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

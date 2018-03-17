@@ -24,6 +24,9 @@
 
 #ifndef _SYS_ENDIAN_H_
 #define _SYS_ENDIAN_H_
+#define SYS_ENDIAN_H_
+#define SYS_ENDIAN_H
+#define _SYS_ENDIAN_H
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 

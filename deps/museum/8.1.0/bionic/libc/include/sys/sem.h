@@ -28,6 +28,11 @@
 
 #ifndef _SYS_SEM_H_
 #define _SYS_SEM_H_
+#define SYS_SEM_H_
+#define SYS_SEM_H
+#define NDK_ANDROID_SUPPORT_SYS_SEM_H_
+#define NDK_ANDROID_SUPPORT_SYS_SEM_H
+#define _SYS_SEM_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/ipc.h>

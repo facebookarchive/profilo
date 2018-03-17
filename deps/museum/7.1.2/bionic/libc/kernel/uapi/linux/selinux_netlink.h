@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_SELINUX_NETLINK_H
 #define _LINUX_SELINUX_NETLINK_H
+#define LINUX_SELINUX_NETLINK_H
+#define LINUX_SELINUX_NETLINK_H_
+#define _UAPI_LINUX_SELINUX_NETLINK_H
+#define _UAPI_LINUX_SELINUX_NETLINK_H_
+#define _LINUX_SELINUX_NETLINK_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define SELNL_MSG_BASE 0x10
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

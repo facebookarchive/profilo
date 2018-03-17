@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_SUSPEND_IOCTLS_H
 #define _LINUX_SUSPEND_IOCTLS_H
+#define LINUX_SUSPEND_IOCTLS_H
+#define LINUX_SUSPEND_IOCTLS_H_
+#define _UAPI_LINUX_SUSPEND_IOCTLS_H
+#define _UAPI_LINUX_SUSPEND_IOCTLS_H_
+#define _LINUX_SUSPEND_IOCTLS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 struct resume_swap_area {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

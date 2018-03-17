@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SCHED_H
 #define _UAPI_LINUX_SCHED_H
+#define UAPI_LINUX_SCHED_H
+#define UAPI_LINUX_SCHED_H_
+#define _LINUX_SCHED_H
+#define _LINUX_SCHED_H_
+#define _UAPI_LINUX_SCHED_H_
 #define CSIGNAL 0x000000ff
 #define CLONE_VM 0x00000100
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

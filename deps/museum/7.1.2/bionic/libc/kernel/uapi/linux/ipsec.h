@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_IPSEC_H
 #define _LINUX_IPSEC_H
+#define LINUX_IPSEC_H
+#define LINUX_IPSEC_H_
+#define _UAPI_LINUX_IPSEC_H
+#define _UAPI_LINUX_IPSEC_H_
+#define _LINUX_IPSEC_H_
 #include <museum/7.1.2/bionic/libc/linux/pfkeyv2.h>
 #define IPSEC_PORT_ANY 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

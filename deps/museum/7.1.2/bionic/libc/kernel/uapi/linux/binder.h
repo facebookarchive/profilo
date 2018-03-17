@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BINDER_H
 #define _UAPI_LINUX_BINDER_H
+#define UAPI_LINUX_BINDER_H
+#define UAPI_LINUX_BINDER_H_
+#define _LINUX_BINDER_H
+#define _LINUX_BINDER_H_
+#define _UAPI_LINUX_BINDER_H_
 #include <museum/7.1.2/bionic/libc/linux/ioctl.h>
 #define B_PACK_CHARS(c1,c2,c3,c4) ((((c1) << 24)) | (((c2) << 16)) | (((c3) << 8)) | (c4))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

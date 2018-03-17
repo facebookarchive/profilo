@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef GIGASET_INTERFACE_H
 #define GIGASET_INTERFACE_H
+#define _GIGASET_INTERFACE_H
+#define _GIGASET_INTERFACE_H_
+#define _UAPI_GIGASET_INTERFACE_H
+#define _UAPI_GIGASET_INTERFACE_H_
+#define NDK_ANDROID_SUPPORT_UAPIGIGASET_INTERFACE_H
+#define NDK_ANDROID_SUPPORT_UAPIGIGASET_INTERFACE_H_
+#define _UAPIGIGASET_INTERFACE_H
+#define _UAPIGIGASET_INTERFACE_H_
+#define GIGASET_INTERFACE_H_
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define GIGASET_IOCTL 0x47
 #define GIGASET_REDIR _IOWR(GIGASET_IOCTL, 0, int)

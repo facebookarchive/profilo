@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_MPLS_H
 #define _UAPI_MPLS_H
+#define UAPI_MPLS_H
+#define UAPI_MPLS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_MPLS_H
+#define NDK_ANDROID_SUPPORT_UAPI_MPLS_H_
+#define NDK_ANDROID_SUPPORT_MPLS_H
+#define NDK_ANDROID_SUPPORT_MPLS_H_
+#define _MPLS_H
+#define _MPLS_H_
+#define _UAPI_MPLS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

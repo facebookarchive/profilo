@@ -27,6 +27,11 @@
  */
 #ifndef _STDLIB_H_
 #define _STDLIB_H_
+#define STDLIB_H_
+#define STDLIB_H
+#define NDK_ANDROID_SUPPORT_STDLIB_H_
+#define NDK_ANDROID_SUPPORT_STDLIB_H
+#define _STDLIB_H
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 

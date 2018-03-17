@@ -19,6 +19,11 @@
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #ifndef _UAPI_PPP_DEFS_H_
 #define _UAPI_PPP_DEFS_H_
+#define UAPI_PPP_DEFS_H_
+#define UAPI_PPP_DEFS_H
+#define _PPP_DEFS_H_
+#define _PPP_DEFS_H
+#define _UAPI_PPP_DEFS_H
 #define PPP_HDRLEN 4
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define PPP_FCSLEN 2

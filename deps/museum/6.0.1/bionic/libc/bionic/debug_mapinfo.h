@@ -28,6 +28,9 @@
 
 #ifndef DEBUG_MAPINFO_H
 #define DEBUG_MAPINFO_H
+#define _DEBUG_MAPINFO_H
+#define _DEBUG_MAPINFO_H_
+#define DEBUG_MAPINFO_H_
 
 #include <sys/cdefs.h>
 

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__CRAMFS_H
 #define _UAPI__CRAMFS_H
+#define UAPI__CRAMFS_H
+#define UAPI__CRAMFS_H_
+#define __CRAMFS_H
+#define __CRAMFS_H_
+#define _UAPI__CRAMFS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/magic.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

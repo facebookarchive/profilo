@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_UTSNAME_H
 #define _UAPI_LINUX_UTSNAME_H
+#define UAPI_LINUX_UTSNAME_H
+#define UAPI_LINUX_UTSNAME_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_UTSNAME_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_UTSNAME_H_
+#define NDK_ANDROID_SUPPORT_LINUX_UTSNAME_H
+#define NDK_ANDROID_SUPPORT_LINUX_UTSNAME_H_
+#define _LINUX_UTSNAME_H
+#define _LINUX_UTSNAME_H_
+#define _UAPI_LINUX_UTSNAME_H_
 #define __OLD_UTS_LEN 8
 struct oldold_utsname {
   char sysname[9];

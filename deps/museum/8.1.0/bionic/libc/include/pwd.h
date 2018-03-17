@@ -59,6 +59,11 @@
 
 #ifndef _PWD_H_
 #define _PWD_H_
+#define PWD_H_
+#define PWD_H
+#define NDK_ANDROID_SUPPORT_PWD_H_
+#define NDK_ANDROID_SUPPORT_PWD_H
+#define _PWD_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

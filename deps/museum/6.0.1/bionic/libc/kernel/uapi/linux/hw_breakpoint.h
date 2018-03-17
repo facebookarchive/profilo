@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_HW_BREAKPOINT_H
 #define _UAPI_LINUX_HW_BREAKPOINT_H
+#define UAPI_LINUX_HW_BREAKPOINT_H
+#define UAPI_LINUX_HW_BREAKPOINT_H_
+#define _LINUX_HW_BREAKPOINT_H
+#define _LINUX_HW_BREAKPOINT_H_
+#define _UAPI_LINUX_HW_BREAKPOINT_H_
 enum {
   HW_BREAKPOINT_LEN_1 = 1,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

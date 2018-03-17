@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_PKT_SCHED_H
 #define __LINUX_PKT_SCHED_H
+#define _LINUX_PKT_SCHED_H
+#define _LINUX_PKT_SCHED_H_
+#define _UAPI_LINUX_PKT_SCHED_H
+#define _UAPI_LINUX_PKT_SCHED_H_
+#define _UAPI__LINUX_PKT_SCHED_H
+#define _UAPI__LINUX_PKT_SCHED_H_
+#define __LINUX_PKT_SCHED_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #define TC_PRIO_BESTEFFORT 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_ATM_TCP_H
 #define _UAPILINUX_ATM_TCP_H
+#define UAPILINUX_ATM_TCP_H
+#define UAPILINUX_ATM_TCP_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_ATM_TCP_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_ATM_TCP_H_
+#define LINUX_ATM_TCP_H
+#define LINUX_ATM_TCP_H_
+#define _UAPILINUX_ATM_TCP_H_
 #include <museum/6.0.1/bionic/libc/linux/atmapi.h>
 #include <museum/6.0.1/bionic/libc/linux/atm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

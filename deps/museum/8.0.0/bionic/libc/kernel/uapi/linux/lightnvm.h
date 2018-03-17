@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_LIGHTNVM_H
 #define _UAPI_LINUX_LIGHTNVM_H
+#define UAPI_LINUX_LIGHTNVM_H
+#define UAPI_LINUX_LIGHTNVM_H_
+#define _LINUX_LIGHTNVM_H
+#define _LINUX_LIGHTNVM_H_
+#define _UAPI_LINUX_LIGHTNVM_H_
 #include <museum/8.0.0/bionic/libc/stdio.h>
 #include <museum/8.0.0/bionic/libc/sys/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

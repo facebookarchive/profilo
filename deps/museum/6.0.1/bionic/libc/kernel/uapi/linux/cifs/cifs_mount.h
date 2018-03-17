@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _CIFS_MOUNT_H
 #define _CIFS_MOUNT_H
+#define CIFS_MOUNT_H
+#define CIFS_MOUNT_H_
+#define NDK_ANDROID_SUPPORT_CIFS_MOUNT_H
+#define NDK_ANDROID_SUPPORT_CIFS_MOUNT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CIFS_MOUNT_H
+#define NDK_ANDROID_SUPPORT_UAPI_CIFS_MOUNT_H_
+#define _UAPI_CIFS_MOUNT_H
+#define _UAPI_CIFS_MOUNT_H_
+#define _CIFS_MOUNT_H_
 #define CIFS_MAX_DOMAINNAME_LEN 256
 #define CIFS_MAX_USERNAME_LEN 256
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

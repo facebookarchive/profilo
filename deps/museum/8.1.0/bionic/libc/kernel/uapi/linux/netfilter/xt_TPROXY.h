@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_TPROXY_H
 #define _XT_TPROXY_H
+#define XT_TPROXY_H
+#define XT_TPROXY_H_
+#define NDK_ANDROID_SUPPORT_XT_TPROXY_H
+#define NDK_ANDROID_SUPPORT_XT_TPROXY_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TPROXY_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TPROXY_H_
+#define _UAPI_XT_TPROXY_H
+#define _UAPI_XT_TPROXY_H_
+#define _XT_TPROXY_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/netfilter.h>
 struct xt_tproxy_target_info {

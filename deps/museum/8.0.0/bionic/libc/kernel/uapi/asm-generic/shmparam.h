@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_SHMPARAM_H
 #define __ASM_GENERIC_SHMPARAM_H
+#define _ASM_GENERIC_SHMPARAM_H
+#define _ASM_GENERIC_SHMPARAM_H_
+#define _UAPI_ASM_GENERIC_SHMPARAM_H
+#define _UAPI_ASM_GENERIC_SHMPARAM_H_
+#define _UAPI__ASM_GENERIC_SHMPARAM_H
+#define _UAPI__ASM_GENERIC_SHMPARAM_H_
+#define __ASM_GENERIC_SHMPARAM_H_
 #define SHMLBA PAGE_SIZE
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

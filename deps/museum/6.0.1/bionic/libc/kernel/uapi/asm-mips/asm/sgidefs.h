@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_SGIDEFS_H
 #define __ASM_SGIDEFS_H
+#define _ASM_SGIDEFS_H
+#define _ASM_SGIDEFS_H_
+#define _UAPI_ASM_SGIDEFS_H
+#define _UAPI_ASM_SGIDEFS_H_
+#define NDK_ANDROID_SUPPORT__ASM_SGIDEFS_H
+#define NDK_ANDROID_SUPPORT__ASM_SGIDEFS_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_SGIDEFS_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_SGIDEFS_H_
+#define _UAPI__ASM_SGIDEFS_H
+#define _UAPI__ASM_SGIDEFS_H_
+#define __ASM_SGIDEFS_H_
 #ifndef __linux__
 #error Use a Linux compiler or give up .
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

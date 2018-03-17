@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_NET_PPP_COMP_H
 #define _UAPI_NET_PPP_COMP_H
+#define UAPI_NET_PPP_COMP_H
+#define UAPI_NET_PPP_COMP_H_
+#define _NET_PPP_COMP_H
+#define _NET_PPP_COMP_H_
+#define _UAPI_NET_PPP_COMP_H_
 #define CCP_CONFREQ 1
 #define CCP_CONFACK 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

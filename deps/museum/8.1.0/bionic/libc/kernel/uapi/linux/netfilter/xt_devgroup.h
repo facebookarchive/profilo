@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_DEVGROUP_H
 #define _XT_DEVGROUP_H
+#define XT_DEVGROUP_H
+#define XT_DEVGROUP_H_
+#define NDK_ANDROID_SUPPORT_XT_DEVGROUP_H
+#define NDK_ANDROID_SUPPORT_XT_DEVGROUP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_DEVGROUP_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_DEVGROUP_H_
+#define _UAPI_XT_DEVGROUP_H
+#define _UAPI_XT_DEVGROUP_H_
+#define _XT_DEVGROUP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum xt_devgroup_flags {
   XT_DEVGROUP_MATCH_SRC = 0x1,

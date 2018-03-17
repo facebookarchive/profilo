@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_UN_H_
 #define _SYS_UN_H_
+#define SYS_UN_H_
+#define SYS_UN_H
+#define _SYS_UN_H
 
 typedef unsigned short sa_family_t;
 

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_TIOCL_H
 #define _LINUX_TIOCL_H
+#define LINUX_TIOCL_H
+#define LINUX_TIOCL_H_
+#define NDK_ANDROID_SUPPORT_LINUX_TIOCL_H
+#define NDK_ANDROID_SUPPORT_LINUX_TIOCL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIOCL_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIOCL_H_
+#define _UAPI_LINUX_TIOCL_H
+#define _UAPI_LINUX_TIOCL_H_
+#define _LINUX_TIOCL_H_
 #define TIOCL_SETSEL 2
 #define TIOCL_SELCHAR 0
 #define TIOCL_SELWORD 1

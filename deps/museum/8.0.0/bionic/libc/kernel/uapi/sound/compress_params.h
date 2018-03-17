@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __SND_COMPRESS_PARAMS_H
 #define __SND_COMPRESS_PARAMS_H
+#define _SND_COMPRESS_PARAMS_H
+#define _SND_COMPRESS_PARAMS_H_
+#define _UAPI_SND_COMPRESS_PARAMS_H
+#define _UAPI_SND_COMPRESS_PARAMS_H_
+#define _UAPI__SND_COMPRESS_PARAMS_H
+#define _UAPI__SND_COMPRESS_PARAMS_H_
+#define __SND_COMPRESS_PARAMS_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define MAX_NUM_CODECS 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

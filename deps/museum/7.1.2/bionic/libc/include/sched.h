@@ -27,6 +27,9 @@
  */
 #ifndef _SCHED_H_
 #define _SCHED_H_
+#define SCHED_H_
+#define SCHED_H
+#define _SCHED_H
 
 #include <museum/7.1.2/bionic/libc/bits/timespec.h>
 #include <museum/7.1.2/bionic/libc/linux/sched.h>

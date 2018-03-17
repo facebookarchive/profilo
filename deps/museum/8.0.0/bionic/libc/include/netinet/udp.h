@@ -28,6 +28,9 @@
 
 #ifndef _NETINET_UDP_H
 #define _NETINET_UDP_H
+#define NETINET_UDP_H
+#define NETINET_UDP_H_
+#define _NETINET_UDP_H_
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/types.h>

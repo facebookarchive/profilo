@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SELECT_H_
 #define _SYS_SELECT_H_
+#define SYS_SELECT_H_
+#define SYS_SELECT_H
+#define _SYS_SELECT_H
 
 #include <museum/7.1.2/bionic/libc/linux/time.h>
 #include <museum/7.1.2/bionic/libc/signal.h>

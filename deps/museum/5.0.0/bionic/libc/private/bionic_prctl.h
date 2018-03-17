@@ -16,6 +16,9 @@
 
 #ifndef BIONIC_PRCTL_H
 #define BIONIC_PRCTL_H
+#define _BIONIC_PRCTL_H
+#define _BIONIC_PRCTL_H_
+#define BIONIC_PRCTL_H_
 
 #include <sys/prctl.h>
 

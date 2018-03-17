@@ -28,6 +28,9 @@
 
 #ifndef _NET_ETHERNET_H_
 #define _NET_ETHERNET_H_
+#define NET_ETHERNET_H_
+#define NET_ETHERNET_H
+#define _NET_ETHERNET_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/types.h>

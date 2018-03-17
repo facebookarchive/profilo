@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_XATTR_H
 #define _UAPI_LINUX_XATTR_H
+#define UAPI_LINUX_XATTR_H
+#define UAPI_LINUX_XATTR_H_
+#define _LINUX_XATTR_H
+#define _LINUX_XATTR_H_
+#define _UAPI_LINUX_XATTR_H_
 #define XATTR_CREATE 0x1
 #define XATTR_REPLACE 0x2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

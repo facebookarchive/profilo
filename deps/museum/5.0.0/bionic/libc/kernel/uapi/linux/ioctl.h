@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_IOCTL_H
 #define _LINUX_IOCTL_H
+#define LINUX_IOCTL_H
+#define LINUX_IOCTL_H_
+#define _UAPI_LINUX_IOCTL_H
+#define _UAPI_LINUX_IOCTL_H_
+#define _LINUX_IOCTL_H_
 #include <museum/5.0.0/bionic/libc/asm/ioctl.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ULEDS_H_
 #define _UAPI__ULEDS_H_
+#define UAPI__ULEDS_H_
+#define UAPI__ULEDS_H
+#define __ULEDS_H_
+#define __ULEDS_H
+#define _UAPI__ULEDS_H
 #define LED_MAX_NAME_SIZE 64
 struct uleds_user_dev {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

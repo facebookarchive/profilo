@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_X_TABLES_H
 #define _UAPI_X_TABLES_H
+#define UAPI_X_TABLES_H
+#define UAPI_X_TABLES_H_
+#define _X_TABLES_H
+#define _X_TABLES_H_
+#define _UAPI_X_TABLES_H_
 #include <museum/7.1.2/bionic/libc/linux/kernel.h>
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

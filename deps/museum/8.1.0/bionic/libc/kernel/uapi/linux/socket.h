@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SOCKET_H
 #define _UAPI_LINUX_SOCKET_H
+#define UAPI_LINUX_SOCKET_H
+#define UAPI_LINUX_SOCKET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOCKET_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOCKET_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SOCKET_H
+#define NDK_ANDROID_SUPPORT_LINUX_SOCKET_H_
+#define _LINUX_SOCKET_H
+#define _LINUX_SOCKET_H_
+#define _UAPI_LINUX_SOCKET_H_
 #define _K_SS_MAXSIZE 128
 #define _K_SS_ALIGNSIZE (__alignof__(struct sockaddr *))
 typedef unsigned short __kernel_sa_family_t;

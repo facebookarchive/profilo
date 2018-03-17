@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_GEN_STATS_H
 #define __LINUX_GEN_STATS_H
+#define _LINUX_GEN_STATS_H
+#define _LINUX_GEN_STATS_H_
+#define _UAPI_LINUX_GEN_STATS_H
+#define _UAPI_LINUX_GEN_STATS_H_
+#define NDK_ANDROID_SUPPORT__LINUX_GEN_STATS_H
+#define NDK_ANDROID_SUPPORT__LINUX_GEN_STATS_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_GEN_STATS_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_GEN_STATS_H_
+#define _UAPI__LINUX_GEN_STATS_H
+#define _UAPI__LINUX_GEN_STATS_H_
+#define __LINUX_GEN_STATS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   TCA_STATS_UNSPEC,

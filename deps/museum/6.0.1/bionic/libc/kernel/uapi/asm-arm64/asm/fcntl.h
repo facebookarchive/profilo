@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_FCNTL_H
 #define __ASM_FCNTL_H
+#define _ASM_FCNTL_H
+#define _ASM_FCNTL_H_
+#define _UAPI_ASM_FCNTL_H
+#define _UAPI_ASM_FCNTL_H_
+#define NDK_ANDROID_SUPPORT__ASM_FCNTL_H
+#define NDK_ANDROID_SUPPORT__ASM_FCNTL_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_FCNTL_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_FCNTL_H_
+#define _UAPI__ASM_FCNTL_H
+#define _UAPI__ASM_FCNTL_H_
+#define __ASM_FCNTL_H_
 #define O_DIRECTORY 040000
 #define O_NOFOLLOW 0100000
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

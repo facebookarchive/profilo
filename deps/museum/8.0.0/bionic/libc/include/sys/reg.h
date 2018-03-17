@@ -28,6 +28,9 @@
 
 #ifndef _SYS_REG_H_
 #define _SYS_REG_H_
+#define SYS_REG_H_
+#define SYS_REG_H
+#define _SYS_REG_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

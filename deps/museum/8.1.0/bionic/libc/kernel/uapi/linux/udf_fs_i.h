@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UDF_FS_I_H
 #define _UDF_FS_I_H 1
+#define UDF_FS_I_H
+#define UDF_FS_I_H_
+#define NDK_ANDROID_SUPPORT_UDF_FS_I_H
+#define NDK_ANDROID_SUPPORT_UDF_FS_I_H_
+#define NDK_ANDROID_SUPPORT_UAPI_UDF_FS_I_H
+#define NDK_ANDROID_SUPPORT_UAPI_UDF_FS_I_H_
+#define _UAPI_UDF_FS_I_H
+#define _UAPI_UDF_FS_I_H_
+#define _UDF_FS_I_H_
 #define UDF_GETEASIZE _IOR('l', 0x40, int)
 #define UDF_GETEABLOCK _IOR('l', 0x41, void *)
 #define UDF_GETVOLIDENT _IOR('l', 0x42, void *)

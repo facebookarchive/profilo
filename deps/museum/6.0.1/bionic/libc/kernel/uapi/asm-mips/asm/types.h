@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_TYPES_H
 #define _UAPI_ASM_TYPES_H
+#define UAPI_ASM_TYPES_H
+#define UAPI_ASM_TYPES_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_TYPES_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_TYPES_H_
+#define NDK_ANDROID_SUPPORT_ASM_TYPES_H
+#define NDK_ANDROID_SUPPORT_ASM_TYPES_H_
+#define _ASM_TYPES_H
+#define _ASM_TYPES_H_
+#define _UAPI_ASM_TYPES_H_
 #include <asm-generic/int-ll64.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __NET_VETH_H_
 #define __NET_VETH_H_
+#define _NET_VETH_H_
+#define _NET_VETH_H
+#define _UAPI_NET_VETH_H_
+#define _UAPI_NET_VETH_H
+#define NDK_ANDROID_SUPPORT__NET_VETH_H_
+#define NDK_ANDROID_SUPPORT__NET_VETH_H
+#define NDK_ANDROID_SUPPORT_UAPI__NET_VETH_H_
+#define NDK_ANDROID_SUPPORT_UAPI__NET_VETH_H
+#define _UAPI__NET_VETH_H_
+#define _UAPI__NET_VETH_H
+#define __NET_VETH_H
 enum {
   VETH_INFO_UNSPEC,
   VETH_INFO_PEER,

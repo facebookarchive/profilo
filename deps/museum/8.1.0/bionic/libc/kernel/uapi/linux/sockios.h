@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_SOCKIOS_H
 #define _LINUX_SOCKIOS_H
+#define LINUX_SOCKIOS_H
+#define LINUX_SOCKIOS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SOCKIOS_H
+#define NDK_ANDROID_SUPPORT_LINUX_SOCKIOS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOCKIOS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOCKIOS_H_
+#define _UAPI_LINUX_SOCKIOS_H
+#define _UAPI_LINUX_SOCKIOS_H_
+#define _LINUX_SOCKIOS_H_
 #include <museum/8.1.0/bionic/libc/asm/sockios.h>
 #define SIOCINQ FIONREAD
 #define SIOCOUTQ TIOCOUTQ

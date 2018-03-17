@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _IPT_REJECT_H
 #define _IPT_REJECT_H
+#define IPT_REJECT_H
+#define IPT_REJECT_H_
+#define NDK_ANDROID_SUPPORT_IPT_REJECT_H
+#define NDK_ANDROID_SUPPORT_IPT_REJECT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_REJECT_H
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_REJECT_H_
+#define _UAPI_IPT_REJECT_H
+#define _UAPI_IPT_REJECT_H_
+#define _IPT_REJECT_H_
 enum ipt_reject_with {
   IPT_ICMP_NET_UNREACHABLE,
   IPT_ICMP_HOST_UNREACHABLE,

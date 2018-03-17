@@ -28,6 +28,11 @@
 
 #ifndef _SYS_VFS_H_
 #define _SYS_VFS_H_
+#define SYS_VFS_H_
+#define SYS_VFS_H
+#define NDK_ANDROID_SUPPORT_SYS_VFS_H_
+#define NDK_ANDROID_SUPPORT_SYS_VFS_H
+#define _SYS_VFS_H
 
 #include <museum/6.0.1/bionic/libc/stdint.h>
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>

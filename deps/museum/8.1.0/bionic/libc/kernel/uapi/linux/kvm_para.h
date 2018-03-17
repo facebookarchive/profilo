@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_KVM_PARA_H
 #define _UAPI__LINUX_KVM_PARA_H
+#define UAPI__LINUX_KVM_PARA_H
+#define UAPI__LINUX_KVM_PARA_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_KVM_PARA_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_KVM_PARA_H_
+#define NDK_ANDROID_SUPPORT__LINUX_KVM_PARA_H
+#define NDK_ANDROID_SUPPORT__LINUX_KVM_PARA_H_
+#define __LINUX_KVM_PARA_H
+#define __LINUX_KVM_PARA_H_
+#define _UAPI__LINUX_KVM_PARA_H_
 #define KVM_ENOSYS 1000
 #define KVM_EFAULT EFAULT
 #define KVM_E2BIG E2BIG

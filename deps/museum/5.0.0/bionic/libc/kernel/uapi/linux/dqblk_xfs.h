@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_DQBLK_XFS_H
 #define _LINUX_DQBLK_XFS_H
+#define LINUX_DQBLK_XFS_H
+#define LINUX_DQBLK_XFS_H_
+#define _UAPI_LINUX_DQBLK_XFS_H
+#define _UAPI_LINUX_DQBLK_XFS_H_
+#define _LINUX_DQBLK_XFS_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define XQM_CMD(x) (('X'<<8)+(x))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_AUDIT_H_
 #define _UAPI_LINUX_AUDIT_H_
+#define UAPI_LINUX_AUDIT_H_
+#define UAPI_LINUX_AUDIT_H
+#define _LINUX_AUDIT_H_
+#define _LINUX_AUDIT_H
+#define _UAPI_LINUX_AUDIT_H
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #include <museum/7.1.2/bionic/libc/linux/elf-em.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

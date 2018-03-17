@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef ROSE_KERNEL_H
 #define ROSE_KERNEL_H
+#define _ROSE_KERNEL_H
+#define _ROSE_KERNEL_H_
+#define _UAPI_ROSE_KERNEL_H
+#define _UAPI_ROSE_KERNEL_H_
+#define NDK_ANDROID_SUPPORT_UAPIROSE_KERNEL_H
+#define NDK_ANDROID_SUPPORT_UAPIROSE_KERNEL_H_
+#define _UAPIROSE_KERNEL_H
+#define _UAPIROSE_KERNEL_H_
+#define ROSE_KERNEL_H_
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #include <museum/8.1.0/bionic/libc/linux/ax25.h>
 #define ROSE_MTU 251

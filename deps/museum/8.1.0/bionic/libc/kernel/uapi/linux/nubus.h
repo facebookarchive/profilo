@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NUBUS_H
 #define _UAPILINUX_NUBUS_H
+#define UAPILINUX_NUBUS_H
+#define UAPILINUX_NUBUS_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_NUBUS_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_NUBUS_H_
+#define LINUX_NUBUS_H
+#define LINUX_NUBUS_H_
+#define _UAPILINUX_NUBUS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum nubus_category {
   NUBUS_CAT_BOARD = 0x0001,

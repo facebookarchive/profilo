@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _PPS_H_
 #define _PPS_H_
+#define PPS_H_
+#define PPS_H
+#define _UAPI_PPS_H_
+#define _UAPI_PPS_H
+#define _PPS_H
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define PPS_VERSION "5.3.6"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

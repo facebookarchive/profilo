@@ -39,6 +39,11 @@
 
 #ifndef _SETJMP_H_
 #define _SETJMP_H_
+#define SETJMP_H_
+#define SETJMP_H
+#define NDK_ANDROID_SUPPORT_SETJMP_H_
+#define NDK_ANDROID_SUPPORT_SETJMP_H
+#define _SETJMP_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/machine/setjmp.h>

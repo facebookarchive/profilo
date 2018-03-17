@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_ROUTE_H
 #define _LINUX_ROUTE_H
+#define LINUX_ROUTE_H
+#define LINUX_ROUTE_H_
+#define _UAPI_LINUX_ROUTE_H
+#define _UAPI_LINUX_ROUTE_H_
+#define _LINUX_ROUTE_H_
 #include <museum/8.0.0/bionic/libc/linux/if.h>
 #include <linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

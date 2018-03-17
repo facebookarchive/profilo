@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BT_BMC_H
 #define _UAPI_LINUX_BT_BMC_H
+#define UAPI_LINUX_BT_BMC_H
+#define UAPI_LINUX_BT_BMC_H_
+#define _LINUX_BT_BMC_H
+#define _LINUX_BT_BMC_H_
+#define _UAPI_LINUX_BT_BMC_H_
 #include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 #define __BT_BMC_IOCTL_MAGIC 0xb1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

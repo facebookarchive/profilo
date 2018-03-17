@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_DVBDMX_H_
 #define _UAPI_DVBDMX_H_
+#define UAPI_DVBDMX_H_
+#define UAPI_DVBDMX_H
+#define _DVBDMX_H_
+#define _DVBDMX_H
+#define _UAPI_DVBDMX_H
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/time.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

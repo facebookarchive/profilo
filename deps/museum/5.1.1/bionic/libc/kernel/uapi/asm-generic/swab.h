@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_GENERIC_SWAB_H
 #define _ASM_GENERIC_SWAB_H
+#define ASM_GENERIC_SWAB_H
+#define ASM_GENERIC_SWAB_H_
+#define _UAPI_ASM_GENERIC_SWAB_H
+#define _UAPI_ASM_GENERIC_SWAB_H_
+#define _ASM_GENERIC_SWAB_H_
 #include <museum/5.1.1/bionic/libc/asm/bitsperlong.h>
 #if __BITS_PER_LONG == 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

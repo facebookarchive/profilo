@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ICMP_H
 #define _UAPI_LINUX_ICMP_H
+#define UAPI_LINUX_ICMP_H
+#define UAPI_LINUX_ICMP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ICMP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ICMP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ICMP_H
+#define NDK_ANDROID_SUPPORT_LINUX_ICMP_H_
+#define _LINUX_ICMP_H
+#define _LINUX_ICMP_H_
+#define _UAPI_LINUX_ICMP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define ICMP_ECHOREPLY 0
 #define ICMP_DEST_UNREACH 3

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TTY_H
 #define _UAPI_LINUX_TTY_H
+#define UAPI_LINUX_TTY_H
+#define UAPI_LINUX_TTY_H_
+#define _LINUX_TTY_H
+#define _LINUX_TTY_H_
+#define _UAPI_LINUX_TTY_H_
 #define NR_LDISCS 30
 #define N_TTY 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

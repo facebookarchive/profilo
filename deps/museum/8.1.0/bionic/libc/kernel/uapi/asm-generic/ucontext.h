@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_UCONTEXT_H
 #define __ASM_GENERIC_UCONTEXT_H
+#define _ASM_GENERIC_UCONTEXT_H
+#define _ASM_GENERIC_UCONTEXT_H_
+#define _UAPI_ASM_GENERIC_UCONTEXT_H
+#define _UAPI_ASM_GENERIC_UCONTEXT_H_
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_UCONTEXT_H
+#define NDK_ANDROID_SUPPORT__ASM_GENERIC_UCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_UCONTEXT_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_GENERIC_UCONTEXT_H_
+#define _UAPI__ASM_GENERIC_UCONTEXT_H
+#define _UAPI__ASM_GENERIC_UCONTEXT_H_
+#define __ASM_GENERIC_UCONTEXT_H_
 struct ucontext {
   unsigned long uc_flags;
   struct ucontext * uc_link;

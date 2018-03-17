@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef DRM_FOURCC_H
 #define DRM_FOURCC_H
+#define _DRM_FOURCC_H
+#define _DRM_FOURCC_H_
+#define _UAPI_DRM_FOURCC_H
+#define _UAPI_DRM_FOURCC_H_
+#define _UAPIDRM_FOURCC_H
+#define _UAPIDRM_FOURCC_H_
+#define DRM_FOURCC_H_
 #include "drm.h"
 #ifdef __cplusplus
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

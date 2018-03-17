@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ELF_FDPIC_H
 #define _UAPI_LINUX_ELF_FDPIC_H
+#define UAPI_LINUX_ELF_FDPIC_H
+#define UAPI_LINUX_ELF_FDPIC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ELF_FDPIC_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ELF_FDPIC_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ELF_FDPIC_H
+#define NDK_ANDROID_SUPPORT_LINUX_ELF_FDPIC_H_
+#define _LINUX_ELF_FDPIC_H
+#define _LINUX_ELF_FDPIC_H_
+#define _UAPI_LINUX_ELF_FDPIC_H_
 #include <museum/8.1.0/bionic/libc/linux/elf.h>
 #define PT_GNU_STACK (PT_LOOS + 0x474e551)
 struct elf32_fdpic_loadseg {

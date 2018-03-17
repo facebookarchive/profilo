@@ -29,6 +29,9 @@
 
 #ifndef _FENV_H_
 #define _FENV_H_
+#define FENV_H_
+#define FENV_H
+#define _FENV_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/machine/fenv.h>

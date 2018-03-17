@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_POLICY_H
 #define _XT_POLICY_H
+#define XT_POLICY_H
+#define XT_POLICY_H_
+#define _UAPI_XT_POLICY_H
+#define _UAPI_XT_POLICY_H_
+#define _XT_POLICY_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/in.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

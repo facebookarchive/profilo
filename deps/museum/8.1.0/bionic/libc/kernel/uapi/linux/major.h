@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_MAJOR_H
 #define _LINUX_MAJOR_H
+#define LINUX_MAJOR_H
+#define LINUX_MAJOR_H_
+#define NDK_ANDROID_SUPPORT_LINUX_MAJOR_H
+#define NDK_ANDROID_SUPPORT_LINUX_MAJOR_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MAJOR_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MAJOR_H_
+#define _UAPI_LINUX_MAJOR_H
+#define _UAPI_LINUX_MAJOR_H_
+#define _LINUX_MAJOR_H_
 #define UNNAMED_MAJOR 0
 #define MEM_MAJOR 1
 #define RAMDISK_MAJOR 1

@@ -16,6 +16,9 @@
 
 #ifndef SECCOMP_BPFS_H
 #define SECCOMP_BPFS_H
+#define _SECCOMP_BPFS_H
+#define _SECCOMP_BPFS_H_
+#define SECCOMP_BPFS_H_
 
 #include <stddef.h>
 #include <linux/seccomp.h>

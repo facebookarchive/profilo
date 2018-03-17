@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __TARGET_CORE_USER_H
 #define __TARGET_CORE_USER_H
+#define _TARGET_CORE_USER_H
+#define _TARGET_CORE_USER_H_
+#define _UAPI_TARGET_CORE_USER_H
+#define _UAPI_TARGET_CORE_USER_H_
+#define NDK_ANDROID_SUPPORT__TARGET_CORE_USER_H
+#define NDK_ANDROID_SUPPORT__TARGET_CORE_USER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__TARGET_CORE_USER_H
+#define NDK_ANDROID_SUPPORT_UAPI__TARGET_CORE_USER_H_
+#define _UAPI__TARGET_CORE_USER_H
+#define _UAPI__TARGET_CORE_USER_H_
+#define __TARGET_CORE_USER_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/uio.h>
 #define TCMU_VERSION "2.0"

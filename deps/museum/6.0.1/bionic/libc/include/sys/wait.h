@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_WAIT_H_
 #define _SYS_WAIT_H_
+#define SYS_WAIT_H_
+#define SYS_WAIT_H
+#define NDK_ANDROID_SUPPORT_SYS_WAIT_H_
+#define NDK_ANDROID_SUPPORT_SYS_WAIT_H
+#define _SYS_WAIT_H
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <museum/6.0.1/bionic/libc/sys/types.h>

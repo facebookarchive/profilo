@@ -39,6 +39,9 @@
 
 #ifndef _SETJMP_H_
 #define _SETJMP_H_
+#define SETJMP_H_
+#define SETJMP_H
+#define _SETJMP_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/machine/setjmp.h>

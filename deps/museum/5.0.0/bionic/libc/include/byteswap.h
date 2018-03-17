@@ -27,6 +27,9 @@
  */
 #ifndef _BYTESWAP_H_
 #define _BYTESWAP_H_
+#define BYTESWAP_H_
+#define BYTESWAP_H
+#define _BYTESWAP_H
 
 /* endian.h rather than sys/endian.h so we get the machine-specific file. */
 #include <museum/5.0.0/bionic/libc/endian.h>

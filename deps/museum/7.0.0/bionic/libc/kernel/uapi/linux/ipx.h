@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IPX_H_
 #define _IPX_H_
+#define IPX_H_
+#define IPX_H
+#define _UAPI_IPX_H_
+#define _UAPI_IPX_H
+#define _IPX_H
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #include <museum/7.0.0/bionic/libc/linux/sockios.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

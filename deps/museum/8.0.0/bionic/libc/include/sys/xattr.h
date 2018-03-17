@@ -28,6 +28,9 @@
 
 #ifndef _SYS_XATTR_H_
 #define _SYS_XATTR_H_
+#define SYS_XATTR_H_
+#define SYS_XATTR_H
+#define _SYS_XATTR_H
 
 #include <museum/8.0.0/bionic/libc/linux/xattr.h>
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>

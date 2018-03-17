@@ -27,6 +27,11 @@
  */
 #ifndef _ENDIAN_H_
 #define _ENDIAN_H_
+#define ENDIAN_H_
+#define ENDIAN_H
+#define NDK_ANDROID_SUPPORT_ENDIAN_H_
+#define NDK_ANDROID_SUPPORT_ENDIAN_H
+#define _ENDIAN_H
 
 #include <museum/6.0.1/bionic/libc/sys/endian.h>
 

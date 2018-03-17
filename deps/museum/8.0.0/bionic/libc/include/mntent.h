@@ -28,6 +28,9 @@
 
 #ifndef _MNTENT_H_
 #define _MNTENT_H_
+#define MNTENT_H_
+#define MNTENT_H
+#define _MNTENT_H
 
 #include <museum/8.0.0/bionic/libc/stdio.h>
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>

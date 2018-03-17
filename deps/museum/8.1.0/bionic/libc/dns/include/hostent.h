@@ -30,6 +30,11 @@
  */
 #ifndef _DNS_NET_HOSTENT_H
 #define _DNS_NET_HOSTENT_H
+#define DNS_NET_HOSTENT_H
+#define DNS_NET_HOSTENT_H_
+#define NDK_ANDROID_SUPPORT_DNS_NET_HOSTENT_H
+#define NDK_ANDROID_SUPPORT_DNS_NET_HOSTENT_H_
+#define _DNS_NET_HOSTENT_H_
 
 #include <stdio.h>
 #include <netdb.h>

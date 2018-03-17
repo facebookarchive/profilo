@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _FC_FS_H_
 #define _FC_FS_H_
+#define FC_FS_H_
+#define FC_FS_H
+#define _UAPI_FC_FS_H_
+#define _UAPI_FC_FS_H
+#define _FC_FS_H
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 struct fc_frame_header {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

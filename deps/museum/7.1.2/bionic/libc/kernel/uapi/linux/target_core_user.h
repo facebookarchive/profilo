@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __TARGET_CORE_USER_H
 #define __TARGET_CORE_USER_H
+#define _TARGET_CORE_USER_H
+#define _TARGET_CORE_USER_H_
+#define _UAPI_TARGET_CORE_USER_H
+#define _UAPI_TARGET_CORE_USER_H_
+#define _UAPI__TARGET_CORE_USER_H
+#define _UAPI__TARGET_CORE_USER_H_
+#define __TARGET_CORE_USER_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #include <museum/7.1.2/bionic/libc/linux/uio.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

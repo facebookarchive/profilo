@@ -28,6 +28,11 @@
 
 #ifndef _STDINT_H
 #define _STDINT_H
+#define STDINT_H
+#define STDINT_H_
+#define NDK_ANDROID_SUPPORT_STDINT_H
+#define NDK_ANDROID_SUPPORT_STDINT_H_
+#define _STDINT_H_
 
 #include <museum/8.0.0/bionic/libc/bits/wchar_limits.h>
 #include <stddef.h>

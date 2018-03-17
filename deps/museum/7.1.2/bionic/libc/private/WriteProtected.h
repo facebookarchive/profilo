@@ -16,6 +16,9 @@
 
 #ifndef _PRIVATE_WRITEPROTECTED_H
 #define _PRIVATE_WRITEPROTECTED_H
+#define PRIVATE_WRITEPROTECTED_H
+#define PRIVATE_WRITEPROTECTED_H_
+#define _PRIVATE_WRITEPROTECTED_H_
 
 #include <errno.h>
 #include <string.h>

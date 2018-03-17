@@ -18,5 +18,16 @@
  ****************************************************************************/
 #ifndef __ASM_ARM_BYTEORDER_H
 #define __ASM_ARM_BYTEORDER_H
+#define _ASM_ARM_BYTEORDER_H
+#define _ASM_ARM_BYTEORDER_H_
+#define _UAPI_ASM_ARM_BYTEORDER_H
+#define _UAPI_ASM_ARM_BYTEORDER_H_
+#define NDK_ANDROID_SUPPORT__ASM_ARM_BYTEORDER_H
+#define NDK_ANDROID_SUPPORT__ASM_ARM_BYTEORDER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_ARM_BYTEORDER_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_ARM_BYTEORDER_H_
+#define _UAPI__ASM_ARM_BYTEORDER_H
+#define _UAPI__ASM_ARM_BYTEORDER_H_
+#define __ASM_ARM_BYTEORDER_H_
 #include <museum/8.1.0/bionic/libc/linux/byteorder/little_endian.h>
 #endif

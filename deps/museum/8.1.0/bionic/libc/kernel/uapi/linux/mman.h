@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MMAN_H
 #define _UAPI_LINUX_MMAN_H
+#define UAPI_LINUX_MMAN_H
+#define UAPI_LINUX_MMAN_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MMAN_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MMAN_H_
+#define NDK_ANDROID_SUPPORT_LINUX_MMAN_H
+#define NDK_ANDROID_SUPPORT_LINUX_MMAN_H_
+#define _LINUX_MMAN_H
+#define _LINUX_MMAN_H_
+#define _UAPI_LINUX_MMAN_H_
 #include <museum/8.1.0/bionic/libc/asm/mman.h>
 #define MREMAP_MAYMOVE 1
 #define MREMAP_FIXED 2

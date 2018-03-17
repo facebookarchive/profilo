@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _EBT_ULOG_H
 #define _EBT_ULOG_H
+#define EBT_ULOG_H
+#define EBT_ULOG_H_
+#define _UAPI_EBT_ULOG_H
+#define _UAPI_EBT_ULOG_H_
+#define _EBT_ULOG_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #define EBT_ULOG_DEFAULT_NLGROUP 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

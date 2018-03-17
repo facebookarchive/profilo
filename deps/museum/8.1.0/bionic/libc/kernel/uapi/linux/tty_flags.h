@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_TTY_FLAGS_H
 #define _LINUX_TTY_FLAGS_H
+#define LINUX_TTY_FLAGS_H
+#define LINUX_TTY_FLAGS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_TTY_FLAGS_H
+#define NDK_ANDROID_SUPPORT_LINUX_TTY_FLAGS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TTY_FLAGS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TTY_FLAGS_H_
+#define _UAPI_LINUX_TTY_FLAGS_H
+#define _UAPI_LINUX_TTY_FLAGS_H_
+#define _LINUX_TTY_FLAGS_H_
 #define ASYNCB_HUP_NOTIFY 0
 #define ASYNCB_FOURPORT 1
 #define ASYNCB_SAK 2

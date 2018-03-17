@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_LENGTH_H
 #define _XT_LENGTH_H
+#define XT_LENGTH_H
+#define XT_LENGTH_H_
+#define _UAPI_XT_LENGTH_H
+#define _UAPI_XT_LENGTH_H_
+#define _XT_LENGTH_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 struct xt_length_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_EXYNOS_DRM_H_
 #define _UAPI_EXYNOS_DRM_H_
+#define UAPI_EXYNOS_DRM_H_
+#define UAPI_EXYNOS_DRM_H
+#define _EXYNOS_DRM_H_
+#define _EXYNOS_DRM_H
+#define _UAPI_EXYNOS_DRM_H
 #include <museum/7.1.2/bionic/libc/drm/drm.h>
 struct drm_exynos_gem_create {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

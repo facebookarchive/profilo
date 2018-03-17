@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_FCNTL_H
 #define _UAPI_ASM_FCNTL_H
+#define UAPI_ASM_FCNTL_H
+#define UAPI_ASM_FCNTL_H_
+#define _ASM_FCNTL_H
+#define _ASM_FCNTL_H_
+#define _UAPI_ASM_FCNTL_H_
 #include <asm/sgidefs.h>
 #define O_APPEND 0x0008
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

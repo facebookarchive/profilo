@@ -1,5 +1,10 @@
 #ifndef _RESOLV_STATIC_H
 #define _RESOLV_STATIC_H
+#define RESOLV_STATIC_H
+#define RESOLV_STATIC_H_
+#define NDK_ANDROID_SUPPORT_RESOLV_STATIC_H
+#define NDK_ANDROID_SUPPORT_RESOLV_STATIC_H_
+#define _RESOLV_STATIC_H_
 
 #include <netdb.h>
 

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef SCSI_NETLINK_H
 #define SCSI_NETLINK_H
+#define _SCSI_NETLINK_H
+#define _SCSI_NETLINK_H_
+#define _UAPI_SCSI_NETLINK_H
+#define _UAPI_SCSI_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPISCSI_NETLINK_H
+#define NDK_ANDROID_SUPPORT_UAPISCSI_NETLINK_H_
+#define _UAPISCSI_NETLINK_H
+#define _UAPISCSI_NETLINK_H_
+#define SCSI_NETLINK_H_
 #include <museum/8.1.0/bionic/libc/linux/netlink.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SCSI_TRANSPORT_MSG NLMSG_MIN_TYPE + 1

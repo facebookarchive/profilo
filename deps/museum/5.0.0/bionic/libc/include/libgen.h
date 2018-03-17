@@ -27,6 +27,9 @@
  */
 #ifndef _LIBGEN_H
 #define _LIBGEN_H
+#define LIBGEN_H
+#define LIBGEN_H_
+#define _LIBGEN_H_
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/5.0.0/bionic/libc/sys/types.h>

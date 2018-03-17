@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMIOC_H
 #define _LINUX_ATMIOC_H
+#define LINUX_ATMIOC_H
+#define LINUX_ATMIOC_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ATMIOC_H
+#define NDK_ANDROID_SUPPORT_LINUX_ATMIOC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ATMIOC_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ATMIOC_H_
+#define _UAPI_LINUX_ATMIOC_H
+#define _UAPI_LINUX_ATMIOC_H_
+#define _LINUX_ATMIOC_H_
 #include <museum/8.1.0/bionic/libc/asm/ioctl.h>
 #define ATMIOC_PHYCOM 0x00
 #define ATMIOC_PHYCOM_END 0x0f

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef CAN_ERROR_H
 #define CAN_ERROR_H
+#define _CAN_ERROR_H
+#define _CAN_ERROR_H_
+#define _UAPI_CAN_ERROR_H
+#define _UAPI_CAN_ERROR_H_
+#define _UAPICAN_ERROR_H
+#define _UAPICAN_ERROR_H_
+#define CAN_ERROR_H_
 #define CAN_ERR_DLC 8
 #define CAN_ERR_TX_TIMEOUT 0x00000001U
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

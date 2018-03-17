@@ -28,6 +28,11 @@
 
 #ifndef _IFADDRS_H_
 #define _IFADDRS_H_
+#define IFADDRS_H_
+#define IFADDRS_H
+#define NDK_ANDROID_SUPPORT_IFADDRS_H_
+#define NDK_ANDROID_SUPPORT_IFADDRS_H
+#define _IFADDRS_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/netinet/in.h>

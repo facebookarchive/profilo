@@ -27,6 +27,11 @@
  */
 #ifndef _ERRNO_H
 #define _ERRNO_H
+#define ERRNO_H
+#define ERRNO_H_
+#define NDK_ANDROID_SUPPORT_ERRNO_H
+#define NDK_ANDROID_SUPPORT_ERRNO_H_
+#define _ERRNO_H_
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/5.0.0/bionic/libc/linux/errno.h>

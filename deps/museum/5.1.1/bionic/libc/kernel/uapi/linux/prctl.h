@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_PRCTL_H
 #define _LINUX_PRCTL_H
+#define LINUX_PRCTL_H
+#define LINUX_PRCTL_H_
+#define _UAPI_LINUX_PRCTL_H
+#define _UAPI_LINUX_PRCTL_H_
+#define _LINUX_PRCTL_H_
 #define PR_SET_PDEATHSIG 1
 #define PR_GET_PDEATHSIG 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

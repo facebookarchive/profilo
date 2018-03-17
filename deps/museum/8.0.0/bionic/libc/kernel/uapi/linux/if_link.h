@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_LINK_H
 #define _UAPI_LINUX_IF_LINK_H
+#define UAPI_LINUX_IF_LINK_H
+#define UAPI_LINUX_IF_LINK_H_
+#define _LINUX_IF_LINK_H
+#define _LINUX_IF_LINK_H_
+#define _UAPI_LINUX_IF_LINK_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/netlink.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

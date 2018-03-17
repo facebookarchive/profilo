@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef VIRTGPU_DRM_H
 #define VIRTGPU_DRM_H
+#define _VIRTGPU_DRM_H
+#define _VIRTGPU_DRM_H_
+#define _UAPI_VIRTGPU_DRM_H
+#define _UAPI_VIRTGPU_DRM_H_
+#define NDK_ANDROID_SUPPORT_UAPIVIRTGPU_DRM_H
+#define NDK_ANDROID_SUPPORT_UAPIVIRTGPU_DRM_H_
+#define _UAPIVIRTGPU_DRM_H
+#define _UAPIVIRTGPU_DRM_H_
+#define VIRTGPU_DRM_H_
 #include "drm.h"
 #ifdef __cplusplus
 #endif

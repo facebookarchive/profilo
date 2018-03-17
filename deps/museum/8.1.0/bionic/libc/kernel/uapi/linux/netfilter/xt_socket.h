@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_SOCKET_H
 #define _XT_SOCKET_H
+#define XT_SOCKET_H
+#define XT_SOCKET_H_
+#define NDK_ANDROID_SUPPORT_XT_SOCKET_H
+#define NDK_ANDROID_SUPPORT_XT_SOCKET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_SOCKET_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_SOCKET_H_
+#define _UAPI_XT_SOCKET_H
+#define _UAPI_XT_SOCKET_H_
+#define _XT_SOCKET_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   XT_SOCKET_TRANSPARENT = 1 << 0,

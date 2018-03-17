@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_CLASSIFY_H
 #define _XT_CLASSIFY_H
+#define XT_CLASSIFY_H
+#define XT_CLASSIFY_H_
+#define _UAPI_XT_CLASSIFY_H
+#define _UAPI_XT_CLASSIFY_H_
+#define _XT_CLASSIFY_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 struct xt_classify_target_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

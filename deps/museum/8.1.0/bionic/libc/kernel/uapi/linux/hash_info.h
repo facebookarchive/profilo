@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_HASH_INFO_H
 #define _UAPI_LINUX_HASH_INFO_H
+#define UAPI_LINUX_HASH_INFO_H
+#define UAPI_LINUX_HASH_INFO_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_HASH_INFO_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_HASH_INFO_H_
+#define NDK_ANDROID_SUPPORT_LINUX_HASH_INFO_H
+#define NDK_ANDROID_SUPPORT_LINUX_HASH_INFO_H_
+#define _LINUX_HASH_INFO_H
+#define _LINUX_HASH_INFO_H_
+#define _UAPI_LINUX_HASH_INFO_H_
 enum hash_algo {
   HASH_ALGO_MD4,
   HASH_ALGO_MD5,

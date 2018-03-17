@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _NFNL_CTHELPER_H_
 #define _NFNL_CTHELPER_H_
+#define NFNL_CTHELPER_H_
+#define NFNL_CTHELPER_H
+#define NDK_ANDROID_SUPPORT_NFNL_CTHELPER_H_
+#define NDK_ANDROID_SUPPORT_NFNL_CTHELPER_H
+#define NDK_ANDROID_SUPPORT_UAPI_NFNL_CTHELPER_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NFNL_CTHELPER_H
+#define _UAPI_NFNL_CTHELPER_H_
+#define _UAPI_NFNL_CTHELPER_H
+#define _NFNL_CTHELPER_H
 #define NFCT_HELPER_STATUS_DISABLED 0
 #define NFCT_HELPER_STATUS_ENABLED 1
 enum nfnl_acct_msg_types {

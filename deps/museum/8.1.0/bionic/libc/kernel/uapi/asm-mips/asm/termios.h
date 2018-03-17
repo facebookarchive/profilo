@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_TERMIOS_H
 #define _UAPI_ASM_TERMIOS_H
+#define UAPI_ASM_TERMIOS_H
+#define UAPI_ASM_TERMIOS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_TERMIOS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_TERMIOS_H_
+#define NDK_ANDROID_SUPPORT_ASM_TERMIOS_H
+#define NDK_ANDROID_SUPPORT_ASM_TERMIOS_H_
+#define _ASM_TERMIOS_H
+#define _ASM_TERMIOS_H_
+#define _UAPI_ASM_TERMIOS_H_
 #include <linux/errno.h>
 #include <asm/termbits.h>
 #include <asm/ioctls.h>

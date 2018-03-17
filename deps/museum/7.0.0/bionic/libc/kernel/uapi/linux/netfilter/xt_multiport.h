@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_MULTIPORT_H
 #define _XT_MULTIPORT_H
+#define XT_MULTIPORT_H
+#define XT_MULTIPORT_H_
+#define _UAPI_XT_MULTIPORT_H
+#define _UAPI_XT_MULTIPORT_H_
+#define _XT_MULTIPORT_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 enum xt_multiport_flags {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DVBNET_H_
 #define _DVBNET_H_
+#define DVBNET_H_
+#define DVBNET_H
+#define _UAPI_DVBNET_H_
+#define _UAPI_DVBNET_H
+#define _DVBNET_H
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 struct dvb_net_if {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

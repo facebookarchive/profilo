@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_FDDI_H
 #define _UAPI_LINUX_IF_FDDI_H
+#define UAPI_LINUX_IF_FDDI_H
+#define UAPI_LINUX_IF_FDDI_H_
+#define _LINUX_IF_FDDI_H
+#define _LINUX_IF_FDDI_H_
+#define _UAPI_LINUX_IF_FDDI_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define FDDI_K_ALEN 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

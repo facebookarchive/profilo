@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_SIGINFO_H
 #define __ASM_SIGINFO_H
+#define _ASM_SIGINFO_H
+#define _ASM_SIGINFO_H_
+#define _UAPI_ASM_SIGINFO_H
+#define _UAPI_ASM_SIGINFO_H_
+#define _UAPI__ASM_SIGINFO_H
+#define _UAPI__ASM_SIGINFO_H_
+#define __ASM_SIGINFO_H_
 #define __ARCH_SI_PREAMBLE_SIZE (4 * sizeof(int))
 #include <asm-generic/siginfo.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

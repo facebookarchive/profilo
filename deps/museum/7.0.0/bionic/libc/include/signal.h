@@ -28,6 +28,9 @@
 
 #ifndef _SIGNAL_H_
 #define _SIGNAL_H_
+#define SIGNAL_H_
+#define SIGNAL_H
+#define _SIGNAL_H
 
 #include <museum/7.0.0/bionic/libc/asm/sigcontext.h>
 #include <museum/7.0.0/bionic/libc/bits/pthread_types.h>

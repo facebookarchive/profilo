@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_TCPMSS_MATCH_H
 #define _XT_TCPMSS_MATCH_H
+#define XT_TCPMSS_MATCH_H
+#define XT_TCPMSS_MATCH_H_
+#define _UAPI_XT_TCPMSS_MATCH_H
+#define _UAPI_XT_TCPMSS_MATCH_H_
+#define _XT_TCPMSS_MATCH_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 struct xt_tcpmss_match_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

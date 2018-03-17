@@ -28,6 +28,9 @@
 
 #ifndef DEBUG_MALLOC_RECORDDATA_H
 #define DEBUG_MALLOC_RECORDDATA_H
+#define _DEBUG_MALLOC_RECORDDATA_H
+#define _DEBUG_MALLOC_RECORDDATA_H_
+#define DEBUG_MALLOC_RECORDDATA_H_
 
 #include <stdint.h>
 #include <pthread.h>

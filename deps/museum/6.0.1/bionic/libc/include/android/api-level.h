@@ -28,6 +28,9 @@
 
 #ifndef ANDROID_API_LEVEL_H
 #define ANDROID_API_LEVEL_H
+#define _ANDROID_API_LEVEL_H
+#define _ANDROID_API_LEVEL_H_
+#define ANDROID_API_LEVEL_H_
 
 /*
  * Magic version number for a current development build, which has

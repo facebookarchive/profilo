@@ -4,6 +4,9 @@
 
 #ifndef _MIPS_SETJMP_H_
 #define _MIPS_SETJMP_H_
+#define MIPS_SETJMP_H_
+#define MIPS_SETJMP_H
+#define _MIPS_SETJMP_H
 
 #ifdef __LP64__
 #define	_JBLEN	25	/* size, in 8-byte longs, of a mips64 jmp_buf/sigjmp_buf */

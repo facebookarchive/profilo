@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_NETLINK_H
 #define _UAPI_CAN_NETLINK_H
+#define UAPI_CAN_NETLINK_H
+#define UAPI_CAN_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CAN_NETLINK_H
+#define NDK_ANDROID_SUPPORT_UAPI_CAN_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_CAN_NETLINK_H
+#define NDK_ANDROID_SUPPORT_CAN_NETLINK_H_
+#define _CAN_NETLINK_H
+#define _CAN_NETLINK_H_
+#define _UAPI_CAN_NETLINK_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct can_bittiming {
   __u32 bitrate;

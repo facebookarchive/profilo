@@ -16,6 +16,9 @@
 
 #ifndef LIBC_INCLUDE_MALLOC_H_
 #define LIBC_INCLUDE_MALLOC_H_
+#define _LIBC_INCLUDE_MALLOC_H_
+#define _LIBC_INCLUDE_MALLOC_H
+#define LIBC_INCLUDE_MALLOC_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <stddef.h>

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_FIEMAP_H
 #define _LINUX_FIEMAP_H
+#define LINUX_FIEMAP_H
+#define LINUX_FIEMAP_H_
+#define _UAPI_LINUX_FIEMAP_H
+#define _UAPI_LINUX_FIEMAP_H_
+#define _LINUX_FIEMAP_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 struct fiemap_extent {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

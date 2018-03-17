@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_RDS_H
 #define _LINUX_RDS_H
+#define LINUX_RDS_H
+#define LINUX_RDS_H_
+#define _UAPI_LINUX_RDS_H
+#define _UAPI_LINUX_RDS_H_
+#define _LINUX_RDS_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #define RDS_IB_ABI_VERSION 0x301
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

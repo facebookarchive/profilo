@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_AGP_H
 #define _UAPI_AGP_H
+#define UAPI_AGP_H
+#define UAPI_AGP_H_
+#define _AGP_H
+#define _AGP_H_
+#define _UAPI_AGP_H_
 #define AGPIOC_BASE 'A'
 #define AGPIOC_INFO _IOR (AGPIOC_BASE, 0, struct agp_info*)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

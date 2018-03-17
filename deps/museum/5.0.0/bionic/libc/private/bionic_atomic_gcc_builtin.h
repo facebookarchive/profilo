@@ -15,6 +15,9 @@
  */
 #ifndef BIONIC_ATOMIC_GCC_BUILTIN_H
 #define BIONIC_ATOMIC_GCC_BUILTIN_H
+#define _BIONIC_ATOMIC_GCC_BUILTIN_H
+#define _BIONIC_ATOMIC_GCC_BUILTIN_H_
+#define BIONIC_ATOMIC_GCC_BUILTIN_H_
 
 /*
  * This header file is used by default if we don't have optimized atomic

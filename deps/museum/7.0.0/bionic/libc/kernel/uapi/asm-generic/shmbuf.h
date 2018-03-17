@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_SHMBUF_H
 #define __ASM_GENERIC_SHMBUF_H
+#define _ASM_GENERIC_SHMBUF_H
+#define _ASM_GENERIC_SHMBUF_H_
+#define _UAPI_ASM_GENERIC_SHMBUF_H
+#define _UAPI_ASM_GENERIC_SHMBUF_H_
+#define _UAPI__ASM_GENERIC_SHMBUF_H
+#define _UAPI__ASM_GENERIC_SHMBUF_H_
+#define __ASM_GENERIC_SHMBUF_H_
 #include <museum/7.0.0/bionic/libc/asm/bitsperlong.h>
 struct shmid64_ds {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

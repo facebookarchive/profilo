@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_SYSMACROS_H_
 #define _SYS_SYSMACROS_H_
+#define SYS_SYSMACROS_H_
+#define SYS_SYSMACROS_H
+#define _SYS_SYSMACROS_H
 
 /* some rogue code includes this file directly :-( */
 #ifndef _SYS_TYPES_H_

@@ -28,6 +28,9 @@
 
 #ifndef _PRIVATE_ICU_H
 #define _PRIVATE_ICU_H
+#define PRIVATE_ICU_H
+#define PRIVATE_ICU_H_
+#define _PRIVATE_ICU_H_
 
 #include <stdint.h>
 

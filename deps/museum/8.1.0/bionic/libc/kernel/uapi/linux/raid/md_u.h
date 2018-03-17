@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_MD_U_H
 #define _UAPI_MD_U_H
+#define UAPI_MD_U_H
+#define UAPI_MD_U_H_
+#define NDK_ANDROID_SUPPORT_UAPI_MD_U_H
+#define NDK_ANDROID_SUPPORT_UAPI_MD_U_H_
+#define NDK_ANDROID_SUPPORT_MD_U_H
+#define NDK_ANDROID_SUPPORT_MD_U_H_
+#define _MD_U_H
+#define _MD_U_H_
+#define _UAPI_MD_U_H_
 #define MD_MAJOR_VERSION 0
 #define MD_MINOR_VERSION 90
 #define MD_PATCHLEVEL_VERSION 3

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_MMAN_H
 #define _ASM_MMAN_H
+#define ASM_MMAN_H
+#define ASM_MMAN_H_
+#define NDK_ANDROID_SUPPORT_ASM_MMAN_H
+#define NDK_ANDROID_SUPPORT_ASM_MMAN_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_MMAN_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_MMAN_H_
+#define _UAPI_ASM_MMAN_H
+#define _UAPI_ASM_MMAN_H_
+#define _ASM_MMAN_H_
 #define PROT_NONE 0x00
 #define PROT_READ 0x01
 #define PROT_WRITE 0x02

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IPT_ECN_TARGET_H
 #define _IPT_ECN_TARGET_H
+#define IPT_ECN_TARGET_H
+#define IPT_ECN_TARGET_H_
+#define _UAPI_IPT_ECN_TARGET_H
+#define _UAPI_IPT_ECN_TARGET_H_
+#define _IPT_ECN_TARGET_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/netfilter/xt_DSCP.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

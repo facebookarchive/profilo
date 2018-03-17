@@ -28,6 +28,9 @@
 
 #ifndef _ANDROID_LEGACY_TERMIOS_INLINES_H_
 #define _ANDROID_LEGACY_TERMIOS_INLINES_H_
+#define ANDROID_LEGACY_TERMIOS_INLINES_H_
+#define ANDROID_LEGACY_TERMIOS_INLINES_H
+#define _ANDROID_LEGACY_TERMIOS_INLINES_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/ioctl.h>

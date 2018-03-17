@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef ROSE_KERNEL_H
 #define ROSE_KERNEL_H
+#define _ROSE_KERNEL_H
+#define _ROSE_KERNEL_H_
+#define _UAPI_ROSE_KERNEL_H
+#define _UAPI_ROSE_KERNEL_H_
+#define _UAPIROSE_KERNEL_H
+#define _UAPIROSE_KERNEL_H_
+#define ROSE_KERNEL_H_
 #include <museum/6.0.1/bionic/libc/linux/socket.h>
 #include <museum/6.0.1/bionic/libc/linux/ax25.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

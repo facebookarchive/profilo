@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ASHMEM_H
 #define _UAPI_LINUX_ASHMEM_H
+#define UAPI_LINUX_ASHMEM_H
+#define UAPI_LINUX_ASHMEM_H_
+#define _LINUX_ASHMEM_H
+#define _LINUX_ASHMEM_H_
+#define _UAPI_LINUX_ASHMEM_H_
 #include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 #define ASHMEM_NAME_LEN 256
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

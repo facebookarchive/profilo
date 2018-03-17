@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_INET_DIAG_H_
 #define _UAPI_INET_DIAG_H_
+#define UAPI_INET_DIAG_H_
+#define UAPI_INET_DIAG_H
+#define NDK_ANDROID_SUPPORT_UAPI_INET_DIAG_H_
+#define NDK_ANDROID_SUPPORT_UAPI_INET_DIAG_H
+#define NDK_ANDROID_SUPPORT_INET_DIAG_H_
+#define NDK_ANDROID_SUPPORT_INET_DIAG_H
+#define _INET_DIAG_H_
+#define _INET_DIAG_H
+#define _UAPI_INET_DIAG_H
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define TCPDIAG_GETSOCK 18
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

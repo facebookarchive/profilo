@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MMAN_H
 #define _UAPI_LINUX_MMAN_H
+#define UAPI_LINUX_MMAN_H
+#define UAPI_LINUX_MMAN_H_
+#define _LINUX_MMAN_H
+#define _LINUX_MMAN_H_
+#define _UAPI_LINUX_MMAN_H_
 #include <museum/8.0.0/bionic/libc/asm/mman.h>
 #define MREMAP_MAYMOVE 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

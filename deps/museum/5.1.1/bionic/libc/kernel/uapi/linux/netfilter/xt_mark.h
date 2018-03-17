@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_MARK_H
 #define _XT_MARK_H
+#define XT_MARK_H
+#define XT_MARK_H_
+#define _UAPI_XT_MARK_H
+#define _UAPI_XT_MARK_H_
+#define _XT_MARK_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 struct xt_mark_tginfo2 {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UAPI_ASM_BREAK_H
 #define __UAPI_ASM_BREAK_H
+#define _UAPI_ASM_BREAK_H
+#define _UAPI_ASM_BREAK_H_
+#define _ASM_BREAK_H
+#define _ASM_BREAK_H_
+#define NDK_ANDROID_SUPPORT__UAPI_ASM_BREAK_H
+#define NDK_ANDROID_SUPPORT__UAPI_ASM_BREAK_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_ASM_BREAK_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_ASM_BREAK_H_
+#define _UAPI__UAPI_ASM_BREAK_H
+#define _UAPI__UAPI_ASM_BREAK_H_
+#define __UAPI_ASM_BREAK_H_
 #define BRK_USERBP 0
 #define BRK_SSTEPBP 5
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _CXLFLASH_IOCTL_H
 #define _CXLFLASH_IOCTL_H
+#define CXLFLASH_IOCTL_H
+#define CXLFLASH_IOCTL_H_
+#define _UAPI_CXLFLASH_IOCTL_H
+#define _UAPI_CXLFLASH_IOCTL_H_
+#define _CXLFLASH_IOCTL_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define DK_CXLFLASH_VERSION_0 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

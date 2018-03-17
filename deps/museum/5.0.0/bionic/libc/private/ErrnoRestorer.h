@@ -16,6 +16,9 @@
 
 #ifndef ERRNO_RESTORER_H
 #define ERRNO_RESTORER_H
+#define _ERRNO_RESTORER_H
+#define _ERRNO_RESTORER_H_
+#define ERRNO_RESTORER_H_
 
 #include <errno.h>
 

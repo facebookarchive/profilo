@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_MOUNT_H
 #define _LINUX_NCP_MOUNT_H
+#define LINUX_NCP_MOUNT_H
+#define LINUX_NCP_MOUNT_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NCP_MOUNT_H
+#define NDK_ANDROID_SUPPORT_LINUX_NCP_MOUNT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NCP_MOUNT_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NCP_MOUNT_H_
+#define _UAPI_LINUX_NCP_MOUNT_H
+#define _UAPI_LINUX_NCP_MOUNT_H_
+#define _LINUX_NCP_MOUNT_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/ncp.h>
 #define NCP_MOUNT_VERSION 3

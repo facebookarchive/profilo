@@ -27,6 +27,9 @@
  */
 #ifndef _BIONIC_TIME_H
 #define _BIONIC_TIME_H
+#define BIONIC_TIME_H
+#define BIONIC_TIME_H_
+#define _BIONIC_TIME_H_
 
 #include <time.h>
 #include <sys/cdefs.h>

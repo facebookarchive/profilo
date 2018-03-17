@@ -28,6 +28,11 @@
 
 #ifndef _MACHINE_ENDIAN_H_
 #define _MACHINE_ENDIAN_H_
+#define MACHINE_ENDIAN_H_
+#define MACHINE_ENDIAN_H
+#define NDK_ANDROID_SUPPORT_MACHINE_ENDIAN_H_
+#define NDK_ANDROID_SUPPORT_MACHINE_ENDIAN_H
+#define _MACHINE_ENDIAN_H
 
 /* This file is for BSD source compatibility only. Use <endian.h> or <sys/endian.h> instead. */
 #include <museum/6.0.1/bionic/libc/sys/endian.h>

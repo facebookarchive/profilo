@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_TEAM_H_
 #define _UAPI_LINUX_IF_TEAM_H_
+#define UAPI_LINUX_IF_TEAM_H_
+#define UAPI_LINUX_IF_TEAM_H
+#define _LINUX_IF_TEAM_H_
+#define _LINUX_IF_TEAM_H
+#define _UAPI_LINUX_IF_TEAM_H
 #define TEAM_STRING_MAX_LEN 32
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

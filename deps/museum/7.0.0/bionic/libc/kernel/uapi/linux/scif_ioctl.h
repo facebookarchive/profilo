@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef SCIF_IOCTL_H
 #define SCIF_IOCTL_H
+#define _SCIF_IOCTL_H
+#define _SCIF_IOCTL_H_
+#define _UAPI_SCIF_IOCTL_H
+#define _UAPI_SCIF_IOCTL_H_
+#define _UAPISCIF_IOCTL_H
+#define _UAPISCIF_IOCTL_H_
+#define SCIF_IOCTL_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 struct scif_port_id {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

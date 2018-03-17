@@ -33,6 +33,9 @@
 
 #ifndef _NET_IF_ETHER_H_
 #define _NET_IF_ETHER_H_
+#define NET_IF_ETHER_H_
+#define NET_IF_ETHER_H
+#define _NET_IF_ETHER_H
 
 #include <museum/5.1.1/bionic/libc/sys/types.h>
 

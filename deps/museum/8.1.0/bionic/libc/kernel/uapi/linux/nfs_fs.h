@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NFS_FS_H
 #define _UAPI_LINUX_NFS_FS_H
+#define UAPI_LINUX_NFS_FS_H
+#define UAPI_LINUX_NFS_FS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NFS_FS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NFS_FS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NFS_FS_H
+#define NDK_ANDROID_SUPPORT_LINUX_NFS_FS_H_
+#define _LINUX_NFS_FS_H
+#define _LINUX_NFS_FS_H_
+#define _UAPI_LINUX_NFS_FS_H_
 #include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define NFS_DEF_UDP_TIMEO (11)
 #define NFS_DEF_UDP_RETRANS (3)

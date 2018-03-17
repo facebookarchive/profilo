@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_TUNNEL_KEY_H
 #define __LINUX_TC_TUNNEL_KEY_H
+#define _LINUX_TC_TUNNEL_KEY_H
+#define _LINUX_TC_TUNNEL_KEY_H_
+#define _UAPI_LINUX_TC_TUNNEL_KEY_H
+#define _UAPI_LINUX_TC_TUNNEL_KEY_H_
+#define NDK_ANDROID_SUPPORT__LINUX_TC_TUNNEL_KEY_H
+#define NDK_ANDROID_SUPPORT__LINUX_TC_TUNNEL_KEY_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_TC_TUNNEL_KEY_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_TC_TUNNEL_KEY_H_
+#define _UAPI__LINUX_TC_TUNNEL_KEY_H
+#define _UAPI__LINUX_TC_TUNNEL_KEY_H_
+#define __LINUX_TC_TUNNEL_KEY_H_
 #include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_TUNNEL_KEY 17
 #define TCA_TUNNEL_KEY_ACT_SET 1

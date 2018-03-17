@@ -28,6 +28,11 @@
 
 #ifndef _SYS_PRCTL_H
 #define _SYS_PRCTL_H
+#define SYS_PRCTL_H
+#define SYS_PRCTL_H_
+#define NDK_ANDROID_SUPPORT_SYS_PRCTL_H
+#define NDK_ANDROID_SUPPORT_SYS_PRCTL_H_
+#define _SYS_PRCTL_H_
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 

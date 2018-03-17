@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_STATFS_H
 #define __ASM_STATFS_H
+#define _ASM_STATFS_H
+#define _ASM_STATFS_H_
+#define _UAPI_ASM_STATFS_H
+#define _UAPI_ASM_STATFS_H_
+#define _UAPI__ASM_STATFS_H
+#define _UAPI__ASM_STATFS_H_
+#define __ASM_STATFS_H_
 #define ARCH_PACK_COMPAT_STATFS64 __attribute__((packed,aligned(4)))
 #include <asm-generic/statfs.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

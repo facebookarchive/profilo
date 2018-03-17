@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SW_SYNC_H
 #define _UAPI_LINUX_SW_SYNC_H
+#define UAPI_LINUX_SW_SYNC_H
+#define UAPI_LINUX_SW_SYNC_H_
+#define _LINUX_SW_SYNC_H
+#define _LINUX_SW_SYNC_H_
+#define _UAPI_LINUX_SW_SYNC_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 struct sw_sync_create_fence_data {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

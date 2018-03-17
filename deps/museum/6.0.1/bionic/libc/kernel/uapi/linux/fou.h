@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FOU_H
 #define _UAPI_LINUX_FOU_H
+#define UAPI_LINUX_FOU_H
+#define UAPI_LINUX_FOU_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_FOU_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_FOU_H_
+#define NDK_ANDROID_SUPPORT_LINUX_FOU_H
+#define NDK_ANDROID_SUPPORT_LINUX_FOU_H_
+#define _LINUX_FOU_H
+#define _LINUX_FOU_H_
+#define _UAPI_LINUX_FOU_H_
 #define FOU_GENL_NAME "fou"
 #define FOU_GENL_VERSION 0x1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

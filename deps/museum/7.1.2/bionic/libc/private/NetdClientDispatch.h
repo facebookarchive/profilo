@@ -16,6 +16,9 @@
 
 #ifndef PRIVATE_NETD_CLIENT_DISPATCH_H
 #define PRIVATE_NETD_CLIENT_DISPATCH_H
+#define _PRIVATE_NETD_CLIENT_DISPATCH_H
+#define _PRIVATE_NETD_CLIENT_DISPATCH_H_
+#define PRIVATE_NETD_CLIENT_DISPATCH_H_
 
 #include <sys/cdefs.h>
 #include <sys/socket.h>

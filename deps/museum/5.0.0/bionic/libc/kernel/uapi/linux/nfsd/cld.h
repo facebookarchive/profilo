@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NFSD_CLD_H
 #define _NFSD_CLD_H
+#define NFSD_CLD_H
+#define NFSD_CLD_H_
+#define _UAPI_NFSD_CLD_H
+#define _UAPI_NFSD_CLD_H_
+#define _NFSD_CLD_H_
 #define CLD_UPCALL_VERSION 1
 #define NFS4_OPAQUE_LIMIT 1024
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

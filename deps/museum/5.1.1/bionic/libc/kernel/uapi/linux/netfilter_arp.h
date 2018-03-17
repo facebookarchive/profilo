@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_ARP_NETFILTER_H
 #define __LINUX_ARP_NETFILTER_H
+#define _LINUX_ARP_NETFILTER_H
+#define _LINUX_ARP_NETFILTER_H_
+#define _UAPI_LINUX_ARP_NETFILTER_H
+#define _UAPI_LINUX_ARP_NETFILTER_H_
+#define _UAPI__LINUX_ARP_NETFILTER_H
+#define _UAPI__LINUX_ARP_NETFILTER_H_
+#define __LINUX_ARP_NETFILTER_H_
 #include <museum/5.1.1/bionic/libc/linux/netfilter.h>
 #define NF_ARP 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

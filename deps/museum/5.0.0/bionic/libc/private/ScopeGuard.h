@@ -16,6 +16,9 @@
 
 #ifndef SCOPE_GUARD_H
 #define SCOPE_GUARD_H
+#define _SCOPE_GUARD_H
+#define _SCOPE_GUARD_H_
+#define SCOPE_GUARD_H_
 
 // TODO: include explicit std::move when it becomes available
 template<typename F>

@@ -28,6 +28,9 @@
 
 #ifndef _SYS_MOUNT_H
 #define _SYS_MOUNT_H
+#define SYS_MOUNT_H
+#define SYS_MOUNT_H_
+#define _SYS_MOUNT_H_
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/sys/ioctl.h>

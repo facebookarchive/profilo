@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __SOUND_HDSPM_H
 #define __SOUND_HDSPM_H
+#define _SOUND_HDSPM_H
+#define _SOUND_HDSPM_H_
+#define _UAPI_SOUND_HDSPM_H
+#define _UAPI_SOUND_HDSPM_H_
+#define _UAPI__SOUND_HDSPM_H
+#define _UAPI__SOUND_HDSPM_H_
+#define __SOUND_HDSPM_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define HDSPM_MAX_CHANNELS 64
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

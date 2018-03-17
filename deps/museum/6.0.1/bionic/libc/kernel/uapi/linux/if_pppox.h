@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_IF_PPPOX_H
 #define _UAPI__LINUX_IF_PPPOX_H
+#define UAPI__LINUX_IF_PPPOX_H
+#define UAPI__LINUX_IF_PPPOX_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IF_PPPOX_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IF_PPPOX_H_
+#define NDK_ANDROID_SUPPORT__LINUX_IF_PPPOX_H
+#define NDK_ANDROID_SUPPORT__LINUX_IF_PPPOX_H_
+#define __LINUX_IF_PPPOX_H
+#define __LINUX_IF_PPPOX_H_
+#define _UAPI__LINUX_IF_PPPOX_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/asm/byteorder.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

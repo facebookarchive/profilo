@@ -16,6 +16,9 @@
 
 #ifndef _BIONIC_STRING_UTILS_H_
 #define _BIONIC_STRING_UTILS_H_
+#define BIONIC_STRING_UTILS_H_
+#define BIONIC_STRING_UTILS_H
+#define _BIONIC_STRING_UTILS_H
 
 #include <string.h>
 

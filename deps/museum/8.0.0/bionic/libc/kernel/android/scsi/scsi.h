@@ -18,6 +18,9 @@
  ****************************************************************************/
 #ifndef _SCSI_SCSI_H
 #define _SCSI_SCSI_H
+#define SCSI_SCSI_H
+#define SCSI_SCSI_H_
+#define _SCSI_SCSI_H_
 #include <linux/types.h>
 #include <scsi/scsi_proto.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

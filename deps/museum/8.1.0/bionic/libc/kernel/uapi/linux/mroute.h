@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_MROUTE_H
 #define _UAPI__LINUX_MROUTE_H
+#define UAPI__LINUX_MROUTE_H
+#define UAPI__LINUX_MROUTE_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_MROUTE_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_MROUTE_H_
+#define NDK_ANDROID_SUPPORT__LINUX_MROUTE_H
+#define NDK_ANDROID_SUPPORT__LINUX_MROUTE_H_
+#define __LINUX_MROUTE_H
+#define __LINUX_MROUTE_H_
+#define _UAPI__LINUX_MROUTE_H_
 #include <museum/8.1.0/bionic/libc/linux/sockios.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define MRT_BASE 200

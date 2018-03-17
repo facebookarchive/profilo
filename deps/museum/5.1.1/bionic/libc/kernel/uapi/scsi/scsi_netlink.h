@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef SCSI_NETLINK_H
 #define SCSI_NETLINK_H
+#define _SCSI_NETLINK_H
+#define _SCSI_NETLINK_H_
+#define _UAPI_SCSI_NETLINK_H
+#define _UAPI_SCSI_NETLINK_H_
+#define _UAPISCSI_NETLINK_H
+#define _UAPISCSI_NETLINK_H_
+#define SCSI_NETLINK_H_
 #include <museum/5.1.1/bionic/libc/linux/netlink.h>
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

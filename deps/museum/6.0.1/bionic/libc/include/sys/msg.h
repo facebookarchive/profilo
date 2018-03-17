@@ -28,6 +28,11 @@
 
 #ifndef _SYS_MSG_H_
 #define _SYS_MSG_H_
+#define SYS_MSG_H_
+#define SYS_MSG_H
+#define NDK_ANDROID_SUPPORT_SYS_MSG_H_
+#define NDK_ANDROID_SUPPORT_SYS_MSG_H
+#define _SYS_MSG_H
 
 #include <museum/6.0.1/bionic/libc/linux/msg.h>
 

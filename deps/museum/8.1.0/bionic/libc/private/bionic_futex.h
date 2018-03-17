@@ -27,6 +27,11 @@
  */
 #ifndef _BIONIC_FUTEX_H
 #define _BIONIC_FUTEX_H
+#define BIONIC_FUTEX_H
+#define BIONIC_FUTEX_H_
+#define NDK_ANDROID_SUPPORT_BIONIC_FUTEX_H
+#define NDK_ANDROID_SUPPORT_BIONIC_FUTEX_H_
+#define _BIONIC_FUTEX_H_
 
 #include <errno.h>
 #include <linux/futex.h>

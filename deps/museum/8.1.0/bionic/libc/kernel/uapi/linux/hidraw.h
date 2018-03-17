@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_HIDRAW_H
 #define _UAPI_HIDRAW_H
+#define UAPI_HIDRAW_H
+#define UAPI_HIDRAW_H_
+#define NDK_ANDROID_SUPPORT_UAPI_HIDRAW_H
+#define NDK_ANDROID_SUPPORT_UAPI_HIDRAW_H_
+#define NDK_ANDROID_SUPPORT_HIDRAW_H
+#define NDK_ANDROID_SUPPORT_HIDRAW_H_
+#define _HIDRAW_H
+#define _HIDRAW_H_
+#define _UAPI_HIDRAW_H_
 #include <museum/8.1.0/bionic/libc/linux/hid.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct hidraw_report_descriptor {

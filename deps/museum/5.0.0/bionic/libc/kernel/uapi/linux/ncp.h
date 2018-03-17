@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_H
 #define _LINUX_NCP_H
+#define LINUX_NCP_H
+#define LINUX_NCP_H_
+#define _UAPI_LINUX_NCP_H
+#define _UAPI_LINUX_NCP_H_
+#define _LINUX_NCP_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define NCP_PTYPE (0x11)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

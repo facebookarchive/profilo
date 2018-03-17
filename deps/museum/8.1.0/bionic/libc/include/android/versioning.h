@@ -16,6 +16,9 @@
 
 #ifndef ANDROID_VERSIONING_H
 #define ANDROID_VERSIONING_H
+#define _ANDROID_VERSIONING_H
+#define _ANDROID_VERSIONING_H_
+#define ANDROID_VERSIONING_H_
 
 #define __INTRODUCED_IN(api_level) __attribute__((annotate("introduced_in=" #api_level)))
 #define __INTRODUCED_IN_FUTURE __attribute__((annotate("introduced_in_future")))

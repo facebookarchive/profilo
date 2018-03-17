@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IPC_H
 #define _UAPI_LINUX_IPC_H
+#define UAPI_LINUX_IPC_H
+#define UAPI_LINUX_IPC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IPC_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IPC_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IPC_H
+#define NDK_ANDROID_SUPPORT_LINUX_IPC_H_
+#define _LINUX_IPC_H
+#define _LINUX_IPC_H_
+#define _UAPI_LINUX_IPC_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define IPC_PRIVATE ((__kernel_key_t) 0)
 struct __kernel_legacy_ipc_perm {

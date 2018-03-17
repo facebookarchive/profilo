@@ -4,6 +4,9 @@
 
 #ifndef _THREAD_PRIVATE_H_
 #define _THREAD_PRIVATE_H_
+#define THREAD_PRIVATE_H_
+#define THREAD_PRIVATE_H
+#define _THREAD_PRIVATE_H
 
 #include <pthread.h>
 

@@ -16,6 +16,9 @@
 
 #ifndef SCOPED_READDIR_H
 #define SCOPED_READDIR_H
+#define _SCOPED_READDIR_H
+#define _SCOPED_READDIR_H_
+#define SCOPED_READDIR_H_
 
 #include <dirent.h>
 

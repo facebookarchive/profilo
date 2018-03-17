@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_UNISTD_H_
 #define _LINUX_UNISTD_H_
+#define LINUX_UNISTD_H_
+#define LINUX_UNISTD_H
+#define _UAPI_LINUX_UNISTD_H_
+#define _UAPI_LINUX_UNISTD_H
+#define _LINUX_UNISTD_H
 #include <museum/5.1.1/bionic/libc/asm/unistd.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

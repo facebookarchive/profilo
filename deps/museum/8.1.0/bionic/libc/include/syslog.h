@@ -28,6 +28,11 @@
 
 #ifndef _SYSLOG_H
 #define _SYSLOG_H
+#define SYSLOG_H
+#define SYSLOG_H_
+#define NDK_ANDROID_SUPPORT_SYSLOG_H
+#define NDK_ANDROID_SUPPORT_SYSLOG_H_
+#define _SYSLOG_H_
 
 #include <museum/8.1.0/bionic/libc/stdio.h>
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>

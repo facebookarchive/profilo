@@ -26,6 +26,9 @@
 
 #ifndef _MACHINE_ENDIAN_H_
 #define _MACHINE_ENDIAN_H_
+#define MACHINE_ENDIAN_H_
+#define MACHINE_ENDIAN_H
+#define _MACHINE_ENDIAN_H
 
 #ifdef __GNUC__
 

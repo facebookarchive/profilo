@@ -27,6 +27,9 @@
  */
 #ifndef _ARM_MACHINE_CPU_FEATURES_H
 #define _ARM_MACHINE_CPU_FEATURES_H
+#define ARM_MACHINE_CPU_FEATURES_H
+#define ARM_MACHINE_CPU_FEATURES_H_
+#define _ARM_MACHINE_CPU_FEATURES_H_
 
 /* The purpose of this file is to define several macros corresponding
  * to CPU features that may or may not be available at build time on

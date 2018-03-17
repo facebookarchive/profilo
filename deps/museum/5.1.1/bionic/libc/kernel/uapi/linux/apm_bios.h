@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_APM_H
 #define _UAPI_LINUX_APM_H
+#define UAPI_LINUX_APM_H
+#define UAPI_LINUX_APM_H_
+#define _LINUX_APM_H
+#define _LINUX_APM_H_
+#define _UAPI_LINUX_APM_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 typedef unsigned short apm_event_t;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

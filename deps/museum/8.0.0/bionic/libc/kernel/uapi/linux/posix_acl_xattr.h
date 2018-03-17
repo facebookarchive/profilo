@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __UAPI_POSIX_ACL_XATTR_H
 #define __UAPI_POSIX_ACL_XATTR_H
+#define _UAPI_POSIX_ACL_XATTR_H
+#define _UAPI_POSIX_ACL_XATTR_H_
+#define _POSIX_ACL_XATTR_H
+#define _POSIX_ACL_XATTR_H_
+#define _UAPI__UAPI_POSIX_ACL_XATTR_H
+#define _UAPI__UAPI_POSIX_ACL_XATTR_H_
+#define __UAPI_POSIX_ACL_XATTR_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define POSIX_ACL_XATTR_VERSION 0x0002
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

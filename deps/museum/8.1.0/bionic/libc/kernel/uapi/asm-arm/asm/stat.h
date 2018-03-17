@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASMARM_STAT_H
 #define _ASMARM_STAT_H
+#define ASMARM_STAT_H
+#define ASMARM_STAT_H_
+#define NDK_ANDROID_SUPPORT_ASMARM_STAT_H
+#define NDK_ANDROID_SUPPORT_ASMARM_STAT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_STAT_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_STAT_H_
+#define _UAPI_ASMARM_STAT_H
+#define _UAPI_ASMARM_STAT_H_
+#define _ASMARM_STAT_H_
 struct __old_kernel_stat {
   unsigned short st_dev;
   unsigned short st_ino;

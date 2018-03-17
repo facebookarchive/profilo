@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_TCPMSS_H
 #define _XT_TCPMSS_H
+#define XT_TCPMSS_H
+#define XT_TCPMSS_H_
+#define _UAPI_XT_TCPMSS_H
+#define _UAPI_XT_TCPMSS_H_
+#define _XT_TCPMSS_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 struct xt_tcpmss_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

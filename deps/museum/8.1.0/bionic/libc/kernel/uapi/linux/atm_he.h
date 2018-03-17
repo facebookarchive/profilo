@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_HE_H
 #define LINUX_ATM_HE_H
+#define _LINUX_ATM_HE_H
+#define _LINUX_ATM_HE_H_
+#define _UAPI_LINUX_ATM_HE_H
+#define _UAPI_LINUX_ATM_HE_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_ATM_HE_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_ATM_HE_H_
+#define _UAPILINUX_ATM_HE_H
+#define _UAPILINUX_ATM_HE_H_
+#define LINUX_ATM_HE_H_
 #include <museum/8.1.0/bionic/libc/linux/atmioc.h>
 #define HE_GET_REG _IOW('a', ATMIOC_SARPRV, struct atmif_sioc)
 #define HE_REGTYPE_PCI 1

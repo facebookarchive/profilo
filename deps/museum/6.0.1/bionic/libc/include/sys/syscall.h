@@ -28,6 +28,11 @@
 
 #ifndef _SYS_SYSCALL_H_
 #define _SYS_SYSCALL_H_
+#define SYS_SYSCALL_H_
+#define SYS_SYSCALL_H
+#define NDK_ANDROID_SUPPORT_SYS_SYSCALL_H_
+#define NDK_ANDROID_SUPPORT_SYS_SYSCALL_H
+#define _SYS_SYSCALL_H
 
 #include <museum/6.0.1/bionic/libc/asm/unistd.h> /* Linux kernel __NR_* names. */
 #include <museum/6.0.1/bionic/libc/sys/glibc-syscalls.h> /* glibc-compatible SYS_* aliases. */

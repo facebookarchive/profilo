@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_NETFILTER_XT_IPRANGE_H
 #define _LINUX_NETFILTER_XT_IPRANGE_H 1
+#define LINUX_NETFILTER_XT_IPRANGE_H
+#define LINUX_NETFILTER_XT_IPRANGE_H_
+#define _UAPI_LINUX_NETFILTER_XT_IPRANGE_H
+#define _UAPI_LINUX_NETFILTER_XT_IPRANGE_H_
+#define _LINUX_NETFILTER_XT_IPRANGE_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #include <museum/7.1.2/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

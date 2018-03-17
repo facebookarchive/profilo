@@ -39,6 +39,11 @@
 
 #ifndef _CTYPE_H_
 #define _CTYPE_H_
+#define CTYPE_H_
+#define CTYPE_H
+#define NDK_ANDROID_SUPPORT_CTYPE_H_
+#define NDK_ANDROID_SUPPORT_CTYPE_H
+#define _CTYPE_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/xlocale.h>
@@ -46,6 +51,7 @@
 #define _CTYPE_U 0x01
 #define _CTYPE_L 0x02
 #define _CTYPE_D 0x04
+#define _CTYPE_N _CTYPE_D
 #define _CTYPE_S 0x08
 #define _CTYPE_P 0x10
 #define _CTYPE_C 0x20

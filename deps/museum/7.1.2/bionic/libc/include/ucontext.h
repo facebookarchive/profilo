@@ -28,6 +28,9 @@
 
 #ifndef _UCONTEXT_H_
 #define _UCONTEXT_H_
+#define UCONTEXT_H_
+#define UCONTEXT_H
+#define _UCONTEXT_H
 
 #include <museum/7.1.2/bionic/libc/sys/ucontext.h>
 

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef VIRTIO_GPU_HW_H
 #define VIRTIO_GPU_HW_H
+#define _VIRTIO_GPU_HW_H
+#define _VIRTIO_GPU_HW_H_
+#define _UAPI_VIRTIO_GPU_HW_H
+#define _UAPI_VIRTIO_GPU_HW_H_
+#define NDK_ANDROID_SUPPORT_UAPIVIRTIO_GPU_HW_H
+#define NDK_ANDROID_SUPPORT_UAPIVIRTIO_GPU_HW_H_
+#define _UAPIVIRTIO_GPU_HW_H
+#define _UAPIVIRTIO_GPU_HW_H_
+#define VIRTIO_GPU_HW_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define VIRTIO_GPU_F_VIRGL 0
 enum virtio_gpu_ctrl_type {

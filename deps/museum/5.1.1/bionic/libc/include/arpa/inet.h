@@ -28,6 +28,9 @@
 
 #ifndef _ARPA_INET_H_
 #define _ARPA_INET_H_
+#define ARPA_INET_H_
+#define ARPA_INET_H
+#define _ARPA_INET_H
 
 #include <museum/5.1.1/bionic/libc/stdint.h>
 #include <museum/5.1.1/bionic/libc/sys/types.h>

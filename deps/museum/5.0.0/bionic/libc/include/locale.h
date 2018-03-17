@@ -27,6 +27,11 @@
  */
 #ifndef _LOCALE_H_
 #define _LOCALE_H_
+#define LOCALE_H_
+#define LOCALE_H
+#define NDK_ANDROID_SUPPORT_LOCALE_H_
+#define NDK_ANDROID_SUPPORT_LOCALE_H
+#define _LOCALE_H
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/5.0.0/bionic/libc/xlocale.h>

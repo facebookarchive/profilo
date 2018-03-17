@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_STATISTIC_H
 #define _XT_STATISTIC_H
+#define XT_STATISTIC_H
+#define XT_STATISTIC_H_
+#define _UAPI_XT_STATISTIC_H
+#define _UAPI_XT_STATISTIC_H_
+#define _XT_STATISTIC_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 enum xt_statistic_mode {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

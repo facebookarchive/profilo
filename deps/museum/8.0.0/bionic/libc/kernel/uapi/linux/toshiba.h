@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TOSHIBA_H
 #define _UAPI_LINUX_TOSHIBA_H
+#define UAPI_LINUX_TOSHIBA_H
+#define UAPI_LINUX_TOSHIBA_H_
+#define _LINUX_TOSHIBA_H
+#define _LINUX_TOSHIBA_H_
+#define _UAPI_LINUX_TOSHIBA_H_
 #define TOSH_PROC "/proc/toshiba"
 #define TOSH_DEVICE "/dev/toshiba"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

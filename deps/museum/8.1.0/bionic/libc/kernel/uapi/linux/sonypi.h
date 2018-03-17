@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_SONYPI_H_
 #define _UAPI_SONYPI_H_
+#define UAPI_SONYPI_H_
+#define UAPI_SONYPI_H
+#define NDK_ANDROID_SUPPORT_UAPI_SONYPI_H_
+#define NDK_ANDROID_SUPPORT_UAPI_SONYPI_H
+#define NDK_ANDROID_SUPPORT_SONYPI_H_
+#define NDK_ANDROID_SUPPORT_SONYPI_H
+#define _SONYPI_H_
+#define _SONYPI_H
+#define _UAPI_SONYPI_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SONYPI_EVENT_IGNORE 0
 #define SONYPI_EVENT_JOGDIAL_DOWN 1

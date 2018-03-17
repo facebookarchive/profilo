@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_H
 #define _UAPI_CAN_H
+#define UAPI_CAN_H
+#define UAPI_CAN_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CAN_H
+#define NDK_ANDROID_SUPPORT_UAPI_CAN_H_
+#define NDK_ANDROID_SUPPORT_CAN_H
+#define NDK_ANDROID_SUPPORT_CAN_H_
+#define _CAN_H
+#define _CAN_H_
+#define _UAPI_CAN_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define CAN_EFF_FLAG 0x80000000U

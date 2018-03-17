@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_SYSINFO_H_
 #define _SYS_SYSINFO_H_
+#define SYS_SYSINFO_H_
+#define SYS_SYSINFO_H
+#define _SYS_SYSINFO_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/linux/kernel.h>

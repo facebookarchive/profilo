@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SIGNALFD_H_
 #define _SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H
+#define _SYS_SIGNALFD_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

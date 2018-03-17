@@ -28,6 +28,9 @@
 
 #ifndef _SYSLOG_H
 #define _SYSLOG_H
+#define SYSLOG_H
+#define SYSLOG_H_
+#define _SYSLOG_H_
 
 #include <museum/5.1.1/bionic/libc/stdio.h>
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>

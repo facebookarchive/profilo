@@ -28,6 +28,11 @@
 
 #ifndef _POSIX_LIMITS_H_
 #define _POSIX_LIMITS_H_
+#define POSIX_LIMITS_H_
+#define POSIX_LIMITS_H
+#define NDK_ANDROID_SUPPORT_POSIX_LIMITS_H_
+#define NDK_ANDROID_SUPPORT_POSIX_LIMITS_H
+#define _POSIX_LIMITS_H
 
 
 /* Any constant values here other than -1 or 200809L are explicitly specified by POSIX.1-2008. */

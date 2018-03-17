@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_UVESAFB_H
 #define _UAPI_UVESAFB_H
+#define UAPI_UVESAFB_H
+#define UAPI_UVESAFB_H_
+#define _UVESAFB_H
+#define _UVESAFB_H_
+#define _UAPI_UVESAFB_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 struct v86_regs {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

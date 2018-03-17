@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_MULTIPORT_H
 #define _XT_MULTIPORT_H
+#define XT_MULTIPORT_H
+#define XT_MULTIPORT_H_
+#define NDK_ANDROID_SUPPORT_XT_MULTIPORT_H
+#define NDK_ANDROID_SUPPORT_XT_MULTIPORT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_MULTIPORT_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_MULTIPORT_H_
+#define _UAPI_XT_MULTIPORT_H
+#define _UAPI_XT_MULTIPORT_H_
+#define _XT_MULTIPORT_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum xt_multiport_flags {
   XT_MULTIPORT_SOURCE,

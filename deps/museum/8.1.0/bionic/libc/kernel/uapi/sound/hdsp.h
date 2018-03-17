@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __SOUND_HDSP_H
 #define __SOUND_HDSP_H
+#define _SOUND_HDSP_H
+#define _SOUND_HDSP_H_
+#define _UAPI_SOUND_HDSP_H
+#define _UAPI_SOUND_HDSP_H_
+#define NDK_ANDROID_SUPPORT__SOUND_HDSP_H
+#define NDK_ANDROID_SUPPORT__SOUND_HDSP_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_HDSP_H
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_HDSP_H_
+#define _UAPI__SOUND_HDSP_H
+#define _UAPI__SOUND_HDSP_H_
+#define __SOUND_HDSP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define HDSP_MATRIX_MIXER_SIZE 2048
 enum HDSP_IO_Type {

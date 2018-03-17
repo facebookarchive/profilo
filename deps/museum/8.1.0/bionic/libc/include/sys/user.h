@@ -28,6 +28,11 @@
 
 #ifndef _SYS_USER_H_
 #define _SYS_USER_H_
+#define SYS_USER_H_
+#define SYS_USER_H
+#define NDK_ANDROID_SUPPORT_SYS_USER_H_
+#define NDK_ANDROID_SUPPORT_SYS_USER_H
+#define _SYS_USER_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <stddef.h> /* For size_t. */

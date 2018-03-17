@@ -28,6 +28,9 @@
 
 #ifndef _BITS_TIMESPEC_H_
 #define _BITS_TIMESPEC_H_
+#define BITS_TIMESPEC_H_
+#define BITS_TIMESPEC_H
+#define _BITS_TIMESPEC_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/types.h>

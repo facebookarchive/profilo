@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_POSIX_TYPES_H
 #define __ASM_GENERIC_POSIX_TYPES_H
+#define _ASM_GENERIC_POSIX_TYPES_H
+#define _ASM_GENERIC_POSIX_TYPES_H_
+#define _UAPI_ASM_GENERIC_POSIX_TYPES_H
+#define _UAPI_ASM_GENERIC_POSIX_TYPES_H_
+#define _UAPI__ASM_GENERIC_POSIX_TYPES_H
+#define _UAPI__ASM_GENERIC_POSIX_TYPES_H_
+#define __ASM_GENERIC_POSIX_TYPES_H_
 #include <museum/7.0.0/bionic/libc/asm/bitsperlong.h>
 #ifndef __kernel_long_t
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_SNMP_H
 #define _LINUX_SNMP_H
+#define LINUX_SNMP_H
+#define LINUX_SNMP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SNMP_H
+#define NDK_ANDROID_SUPPORT_LINUX_SNMP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SNMP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SNMP_H_
+#define _UAPI_LINUX_SNMP_H
+#define _UAPI_LINUX_SNMP_H_
+#define _LINUX_SNMP_H_
 enum {
   IPSTATS_MIB_NUM = 0,
   IPSTATS_MIB_INPKTS,

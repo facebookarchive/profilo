@@ -28,6 +28,11 @@
 
 #ifndef _STDIO_EXT_H
 #define _STDIO_EXT_H
+#define STDIO_EXT_H
+#define STDIO_EXT_H_
+#define NDK_ANDROID_SUPPORT_STDIO_EXT_H
+#define NDK_ANDROID_SUPPORT_STDIO_EXT_H_
+#define _STDIO_EXT_H_
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <museum/6.0.1/bionic/libc/stdio.h>

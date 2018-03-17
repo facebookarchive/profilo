@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_FC_H
 #define _LINUX_IF_FC_H
+#define LINUX_IF_FC_H
+#define LINUX_IF_FC_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IF_FC_H
+#define NDK_ANDROID_SUPPORT_LINUX_IF_FC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_FC_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_FC_H_
+#define _UAPI_LINUX_IF_FC_H
+#define _UAPI_LINUX_IF_FC_H_
+#define _LINUX_IF_FC_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define FC_ALEN 6
 #define FC_HLEN (sizeof(struct fch_hdr) + sizeof(struct fcllc))

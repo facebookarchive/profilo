@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __MIPS_UAPI_ASM_UCONTEXT_H
 #define __MIPS_UAPI_ASM_UCONTEXT_H
+#define _MIPS_UAPI_ASM_UCONTEXT_H
+#define _MIPS_UAPI_ASM_UCONTEXT_H_
+#define _UAPI_MIPS_UAPI_ASM_UCONTEXT_H
+#define _UAPI_MIPS_UAPI_ASM_UCONTEXT_H_
+#define NDK_ANDROID_SUPPORT__MIPS_UAPI_ASM_UCONTEXT_H
+#define NDK_ANDROID_SUPPORT__MIPS_UAPI_ASM_UCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_UAPI__MIPS_UAPI_ASM_UCONTEXT_H
+#define NDK_ANDROID_SUPPORT_UAPI__MIPS_UAPI_ASM_UCONTEXT_H_
+#define _UAPI__MIPS_UAPI_ASM_UCONTEXT_H
+#define _UAPI__MIPS_UAPI_ASM_UCONTEXT_H_
+#define __MIPS_UAPI_ASM_UCONTEXT_H_
 struct extcontext {
   unsigned int magic;
   unsigned int size;

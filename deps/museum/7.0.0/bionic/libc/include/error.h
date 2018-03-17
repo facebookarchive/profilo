@@ -28,6 +28,9 @@
 
 #ifndef _ERROR_H
 #define _ERROR_H 1
+#define ERROR_H
+#define ERROR_H_
+#define _ERROR_H_
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 

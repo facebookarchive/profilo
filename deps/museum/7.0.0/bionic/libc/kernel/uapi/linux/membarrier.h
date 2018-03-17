@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MEMBARRIER_H
 #define _UAPI_LINUX_MEMBARRIER_H
+#define UAPI_LINUX_MEMBARRIER_H
+#define UAPI_LINUX_MEMBARRIER_H_
+#define _LINUX_MEMBARRIER_H
+#define _LINUX_MEMBARRIER_H_
+#define _UAPI_LINUX_MEMBARRIER_H_
 enum membarrier_cmd {
   MEMBARRIER_CMD_QUERY = 0,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

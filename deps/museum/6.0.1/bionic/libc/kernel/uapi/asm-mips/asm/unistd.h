@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_UNISTD_H
 #define _UAPI_ASM_UNISTD_H
+#define UAPI_ASM_UNISTD_H
+#define UAPI_ASM_UNISTD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_UNISTD_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_UNISTD_H_
+#define NDK_ANDROID_SUPPORT_ASM_UNISTD_H
+#define NDK_ANDROID_SUPPORT_ASM_UNISTD_H_
+#define _ASM_UNISTD_H
+#define _ASM_UNISTD_H_
+#define _UAPI_ASM_UNISTD_H_
 #include <asm/sgidefs.h>
 #if _MIPS_SIM == _MIPS_SIM_ABI32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

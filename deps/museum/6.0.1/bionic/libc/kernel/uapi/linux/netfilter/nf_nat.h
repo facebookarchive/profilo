@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _NETFILTER_NF_NAT_H
 #define _NETFILTER_NF_NAT_H
+#define NETFILTER_NF_NAT_H
+#define NETFILTER_NF_NAT_H_
+#define NDK_ANDROID_SUPPORT_NETFILTER_NF_NAT_H
+#define NDK_ANDROID_SUPPORT_NETFILTER_NF_NAT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NETFILTER_NF_NAT_H
+#define NDK_ANDROID_SUPPORT_UAPI_NETFILTER_NF_NAT_H_
+#define _UAPI_NETFILTER_NF_NAT_H
+#define _UAPI_NETFILTER_NF_NAT_H_
+#define _NETFILTER_NF_NAT_H_
 #include <museum/6.0.1/bionic/libc/linux/netfilter.h>
 #include <museum/6.0.1/bionic/libc/linux/netfilter/nf_conntrack_tuple_common.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

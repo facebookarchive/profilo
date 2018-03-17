@@ -18,6 +18,8 @@
 // This file is completely stripped, we only need the value of TLS_SLOT_ART_THREAD_SELF
 #ifndef __BIONIC_PRIVATE_BIONIC_TLS_H_
 #define __BIONIC_PRIVATE_BIONIC_TLS_H_
+#define _BIONIC_PRIVATE_BIONIC_TLS_H_
+#define _BIONIC_PRIVATE_BIONIC_TLS_H
 
 #define TLS_SLOT_ART_THREAD_SELF 7
 

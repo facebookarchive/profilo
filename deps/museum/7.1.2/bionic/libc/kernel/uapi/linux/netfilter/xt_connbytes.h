@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_CONNBYTES_H
 #define _XT_CONNBYTES_H
+#define XT_CONNBYTES_H
+#define XT_CONNBYTES_H_
+#define _UAPI_XT_CONNBYTES_H
+#define _UAPI_XT_CONNBYTES_H_
+#define _XT_CONNBYTES_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 enum xt_connbytes_what {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

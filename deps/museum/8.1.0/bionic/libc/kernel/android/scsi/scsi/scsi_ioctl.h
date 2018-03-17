@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _SCSI_IOCTL_H
 #define _SCSI_IOCTL_H
+#define SCSI_IOCTL_H
+#define SCSI_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_SCSI_IOCTL_H
+#define NDK_ANDROID_SUPPORT_SCSI_IOCTL_H_
+#define _SCSI_IOCTL_H_
 #define SCSI_IOCTL_SEND_COMMAND 1
 #define SCSI_IOCTL_TEST_UNIT_READY 2
 #define SCSI_IOCTL_BENCHMARK_COMMAND 3

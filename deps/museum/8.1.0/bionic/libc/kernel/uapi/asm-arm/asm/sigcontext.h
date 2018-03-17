@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASMARM_SIGCONTEXT_H
 #define _ASMARM_SIGCONTEXT_H
+#define ASMARM_SIGCONTEXT_H
+#define ASMARM_SIGCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_ASMARM_SIGCONTEXT_H
+#define NDK_ANDROID_SUPPORT_ASMARM_SIGCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_SIGCONTEXT_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_SIGCONTEXT_H_
+#define _UAPI_ASMARM_SIGCONTEXT_H
+#define _UAPI_ASMARM_SIGCONTEXT_H_
+#define _ASMARM_SIGCONTEXT_H_
 struct sigcontext {
   unsigned long trap_no;
   unsigned long error_code;

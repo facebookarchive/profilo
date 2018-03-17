@@ -31,6 +31,9 @@
 
 #ifndef _WCIO_H_
 #define _WCIO_H_
+#define WCIO_H_
+#define WCIO_H
+#define _WCIO_H
 
 /* minimal requirement of SUSv2 */
 #define WCIO_UNGETWC_BUFSIZE 1

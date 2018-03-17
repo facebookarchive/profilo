@@ -28,6 +28,9 @@
 
 #ifndef _UTIME_H_
 #define _UTIME_H_
+#define UTIME_H_
+#define UTIME_H
+#define _UTIME_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/sys/types.h>

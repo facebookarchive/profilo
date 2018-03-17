@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_WAIT_H
 #define _UAPI_LINUX_WAIT_H
+#define UAPI_LINUX_WAIT_H
+#define UAPI_LINUX_WAIT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_WAIT_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_WAIT_H_
+#define NDK_ANDROID_SUPPORT_LINUX_WAIT_H
+#define NDK_ANDROID_SUPPORT_LINUX_WAIT_H_
+#define _LINUX_WAIT_H
+#define _LINUX_WAIT_H_
+#define _UAPI_LINUX_WAIT_H_
 #define WNOHANG 0x00000001
 #define WUNTRACED 0x00000002
 #define WSTOPPED WUNTRACED

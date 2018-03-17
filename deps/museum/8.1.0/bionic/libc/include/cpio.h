@@ -28,6 +28,11 @@
 
 #ifndef _CPIO_H_
 #define _CPIO_H_
+#define CPIO_H_
+#define CPIO_H
+#define NDK_ANDROID_SUPPORT_CPIO_H_
+#define NDK_ANDROID_SUPPORT_CPIO_H
+#define _CPIO_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

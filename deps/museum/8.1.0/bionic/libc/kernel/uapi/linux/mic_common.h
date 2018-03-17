@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __MIC_COMMON_H_
 #define __MIC_COMMON_H_
+#define _MIC_COMMON_H_
+#define _MIC_COMMON_H
+#define _UAPI_MIC_COMMON_H_
+#define _UAPI_MIC_COMMON_H
+#define NDK_ANDROID_SUPPORT__MIC_COMMON_H_
+#define NDK_ANDROID_SUPPORT__MIC_COMMON_H
+#define NDK_ANDROID_SUPPORT_UAPI__MIC_COMMON_H_
+#define NDK_ANDROID_SUPPORT_UAPI__MIC_COMMON_H
+#define _UAPI__MIC_COMMON_H_
+#define _UAPI__MIC_COMMON_H
+#define __MIC_COMMON_H
 #include <museum/8.1.0/bionic/libc/linux/virtio_ring.h>
 #define __mic_align(a,x) (((a) + (x) - 1) & ~((x) - 1))
 struct mic_device_desc {

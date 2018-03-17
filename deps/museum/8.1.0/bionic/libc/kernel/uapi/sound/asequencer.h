@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__SOUND_ASEQUENCER_H
 #define _UAPI__SOUND_ASEQUENCER_H
+#define UAPI__SOUND_ASEQUENCER_H
+#define UAPI__SOUND_ASEQUENCER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_ASEQUENCER_H
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_ASEQUENCER_H_
+#define NDK_ANDROID_SUPPORT__SOUND_ASEQUENCER_H
+#define NDK_ANDROID_SUPPORT__SOUND_ASEQUENCER_H_
+#define __SOUND_ASEQUENCER_H
+#define __SOUND_ASEQUENCER_H_
+#define _UAPI__SOUND_ASEQUENCER_H_
 #include <museum/8.1.0/bionic/libc/sound/asound.h>
 #define SNDRV_SEQ_VERSION SNDRV_PROTOCOL_VERSION(1, 0, 2)
 #define SNDRV_SEQ_EVENT_SYSTEM 0

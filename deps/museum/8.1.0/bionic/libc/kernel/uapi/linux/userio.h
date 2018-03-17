@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _USERIO_H
 #define _USERIO_H
+#define USERIO_H
+#define USERIO_H_
+#define NDK_ANDROID_SUPPORT_USERIO_H
+#define NDK_ANDROID_SUPPORT_USERIO_H_
+#define NDK_ANDROID_SUPPORT_UAPI_USERIO_H
+#define NDK_ANDROID_SUPPORT_UAPI_USERIO_H_
+#define _UAPI_USERIO_H
+#define _UAPI_USERIO_H_
+#define _USERIO_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum userio_cmd_type {
   USERIO_CMD_REGISTER = 0,

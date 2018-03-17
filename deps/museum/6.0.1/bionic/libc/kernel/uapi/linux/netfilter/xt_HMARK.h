@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef XT_HMARK_H_
 #define XT_HMARK_H_
+#define _XT_HMARK_H_
+#define _XT_HMARK_H
+#define _UAPI_XT_HMARK_H_
+#define _UAPI_XT_HMARK_H
+#define NDK_ANDROID_SUPPORT_UAPIXT_HMARK_H_
+#define NDK_ANDROID_SUPPORT_UAPIXT_HMARK_H
+#define _UAPIXT_HMARK_H_
+#define _UAPIXT_HMARK_H
+#define XT_HMARK_H
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

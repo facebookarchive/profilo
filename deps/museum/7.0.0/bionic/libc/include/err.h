@@ -34,6 +34,9 @@
 
 #ifndef _ERR_H_
 #define _ERR_H_
+#define ERR_H_
+#define ERR_H
+#define _ERR_H
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/7.0.0/bionic/libc/sys/types.h>

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_QUOTA_H
 #define _XT_QUOTA_H
+#define XT_QUOTA_H
+#define XT_QUOTA_H_
+#define NDK_ANDROID_SUPPORT_XT_QUOTA_H
+#define NDK_ANDROID_SUPPORT_XT_QUOTA_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_QUOTA_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_QUOTA_H_
+#define _UAPI_XT_QUOTA_H
+#define _UAPI_XT_QUOTA_H_
+#define _XT_QUOTA_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum xt_quota_flags {
   XT_QUOTA_INVERT = 0x1,

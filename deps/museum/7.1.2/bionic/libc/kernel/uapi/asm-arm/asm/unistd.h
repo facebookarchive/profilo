@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_ARM_UNISTD_H
 #define _UAPI__ASM_ARM_UNISTD_H
+#define UAPI__ASM_ARM_UNISTD_H
+#define UAPI__ASM_ARM_UNISTD_H_
+#define __ASM_ARM_UNISTD_H
+#define __ASM_ARM_UNISTD_H_
+#define _UAPI__ASM_ARM_UNISTD_H_
 #define __NR_OABI_SYSCALL_BASE 0x900000
 #define __NR_SYSCALL_BASE 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

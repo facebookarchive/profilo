@@ -28,6 +28,9 @@
 
 #ifndef _BITS_WCHAR_LIMITS_H_
 #define _BITS_WCHAR_LIMITS_H_
+#define BITS_WCHAR_LIMITS_H_
+#define BITS_WCHAR_LIMITS_H
+#define _BITS_WCHAR_LIMITS_H
 
 /* Both GCC and clang define __WCHAR_MAX__. */
 #define WCHAR_MAX __WCHAR_MAX__

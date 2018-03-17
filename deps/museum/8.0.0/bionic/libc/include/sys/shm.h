@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SHM_H_
 #define _SYS_SHM_H_
+#define SYS_SHM_H_
+#define SYS_SHM_H
+#define _SYS_SHM_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/ipc.h>

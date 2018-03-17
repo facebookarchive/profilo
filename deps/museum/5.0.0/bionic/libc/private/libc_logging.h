@@ -28,6 +28,9 @@
 
 #ifndef _LIBC_LOGGING_H
 #define _LIBC_LOGGING_H
+#define LIBC_LOGGING_H
+#define LIBC_LOGGING_H_
+#define _LIBC_LOGGING_H_
 
 #include <sys/cdefs.h>
 #include <stdarg.h>

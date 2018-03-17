@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __COMPRESS_OFFLOAD_H
 #define __COMPRESS_OFFLOAD_H
+#define _COMPRESS_OFFLOAD_H
+#define _COMPRESS_OFFLOAD_H_
+#define _UAPI_COMPRESS_OFFLOAD_H
+#define _UAPI_COMPRESS_OFFLOAD_H_
+#define NDK_ANDROID_SUPPORT__COMPRESS_OFFLOAD_H
+#define NDK_ANDROID_SUPPORT__COMPRESS_OFFLOAD_H_
+#define NDK_ANDROID_SUPPORT_UAPI__COMPRESS_OFFLOAD_H
+#define NDK_ANDROID_SUPPORT_UAPI__COMPRESS_OFFLOAD_H_
+#define _UAPI__COMPRESS_OFFLOAD_H
+#define _UAPI__COMPRESS_OFFLOAD_H_
+#define __COMPRESS_OFFLOAD_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/sound/asound.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

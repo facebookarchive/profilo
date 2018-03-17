@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef QXL_DRM_H
 #define QXL_DRM_H
+#define _QXL_DRM_H
+#define _QXL_DRM_H_
+#define _UAPI_QXL_DRM_H
+#define _UAPI_QXL_DRM_H_
+#define NDK_ANDROID_SUPPORT_UAPIQXL_DRM_H
+#define NDK_ANDROID_SUPPORT_UAPIQXL_DRM_H_
+#define _UAPIQXL_DRM_H
+#define _UAPIQXL_DRM_H_
+#define QXL_DRM_H_
 #include "drm.h"
 #ifdef __cplusplus
 #endif

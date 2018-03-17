@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_FRAD_H_
 #define _UAPI_FRAD_H_
+#define UAPI_FRAD_H_
+#define UAPI_FRAD_H
+#define _FRAD_H_
+#define _FRAD_H
+#define _UAPI_FRAD_H
 #include <museum/5.0.0/bionic/libc/linux/if.h>
 struct dlci_add
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

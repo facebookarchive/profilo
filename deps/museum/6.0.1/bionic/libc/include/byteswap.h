@@ -27,6 +27,11 @@
  */
 #ifndef _BYTESWAP_H_
 #define _BYTESWAP_H_
+#define BYTESWAP_H_
+#define BYTESWAP_H
+#define NDK_ANDROID_SUPPORT_BYTESWAP_H_
+#define NDK_ANDROID_SUPPORT_BYTESWAP_H
+#define _BYTESWAP_H
 
 /* endian.h rather than sys/endian.h so we get the machine-specific file. */
 #include <museum/6.0.1/bionic/libc/endian.h>

@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_UIO_H_
 #define _SYS_UIO_H_
+#define SYS_UIO_H_
+#define SYS_UIO_H
+#define _SYS_UIO_H
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/5.0.0/bionic/libc/sys/types.h>

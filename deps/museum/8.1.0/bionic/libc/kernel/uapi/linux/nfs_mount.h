@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_NFS_MOUNT_H
 #define _LINUX_NFS_MOUNT_H
+#define LINUX_NFS_MOUNT_H
+#define LINUX_NFS_MOUNT_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NFS_MOUNT_H
+#define NDK_ANDROID_SUPPORT_LINUX_NFS_MOUNT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NFS_MOUNT_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NFS_MOUNT_H_
+#define _UAPI_LINUX_NFS_MOUNT_H
+#define _UAPI_LINUX_NFS_MOUNT_H_
+#define _LINUX_NFS_MOUNT_H_
 #include <museum/8.1.0/bionic/libc/linux/in.h>
 #include <museum/8.1.0/bionic/libc/linux/nfs.h>
 #include <museum/8.1.0/bionic/libc/linux/nfs2.h>

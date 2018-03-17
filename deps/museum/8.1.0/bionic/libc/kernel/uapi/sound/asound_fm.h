@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __SOUND_ASOUND_FM_H
 #define __SOUND_ASOUND_FM_H
+#define _SOUND_ASOUND_FM_H
+#define _SOUND_ASOUND_FM_H_
+#define _UAPI_SOUND_ASOUND_FM_H
+#define _UAPI_SOUND_ASOUND_FM_H_
+#define NDK_ANDROID_SUPPORT__SOUND_ASOUND_FM_H
+#define NDK_ANDROID_SUPPORT__SOUND_ASOUND_FM_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_ASOUND_FM_H
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_ASOUND_FM_H_
+#define _UAPI__SOUND_ASOUND_FM_H
+#define _UAPI__SOUND_ASOUND_FM_H_
+#define __SOUND_ASOUND_FM_H_
 #define SNDRV_DM_FM_MODE_OPL2 0x00
 #define SNDRV_DM_FM_MODE_OPL3 0x01
 struct snd_dm_fm_info {

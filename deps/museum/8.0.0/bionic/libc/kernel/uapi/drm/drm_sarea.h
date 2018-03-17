@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DRM_SAREA_H_
 #define _DRM_SAREA_H_
+#define DRM_SAREA_H_
+#define DRM_SAREA_H
+#define _UAPI_DRM_SAREA_H_
+#define _UAPI_DRM_SAREA_H
+#define _DRM_SAREA_H
 #include "drm.h"
 #ifdef __cplusplus
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

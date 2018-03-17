@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_NFNETLINK_H
 #define _UAPI_NFNETLINK_H
+#define UAPI_NFNETLINK_H
+#define UAPI_NFNETLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NFNETLINK_H
+#define NDK_ANDROID_SUPPORT_UAPI_NFNETLINK_H_
+#define NDK_ANDROID_SUPPORT_NFNETLINK_H
+#define NDK_ANDROID_SUPPORT_NFNETLINK_H_
+#define _NFNETLINK_H
+#define _NFNETLINK_H_
+#define _UAPI_NFNETLINK_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/netfilter/nfnetlink_compat.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

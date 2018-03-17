@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_MMAN_H_
 #define _SYS_MMAN_H_
+#define SYS_MMAN_H_
+#define SYS_MMAN_H
+#define NDK_ANDROID_SUPPORT_SYS_MMAN_H_
+#define NDK_ANDROID_SUPPORT_SYS_MMAN_H
+#define _SYS_MMAN_H
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <museum/6.0.1/bionic/libc/sys/types.h>

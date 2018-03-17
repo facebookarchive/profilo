@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _NET_TIMESTAMPING_H
 #define _NET_TIMESTAMPING_H
+#define NET_TIMESTAMPING_H
+#define NET_TIMESTAMPING_H_
+#define NDK_ANDROID_SUPPORT_NET_TIMESTAMPING_H
+#define NDK_ANDROID_SUPPORT_NET_TIMESTAMPING_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NET_TIMESTAMPING_H
+#define NDK_ANDROID_SUPPORT_UAPI_NET_TIMESTAMPING_H_
+#define _UAPI_NET_TIMESTAMPING_H
+#define _UAPI_NET_TIMESTAMPING_H_
+#define _NET_TIMESTAMPING_H_
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 enum {
   SOF_TIMESTAMPING_TX_HARDWARE = (1 << 0),

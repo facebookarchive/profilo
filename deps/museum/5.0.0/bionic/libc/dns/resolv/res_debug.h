@@ -19,6 +19,9 @@
 
 #ifndef _RES_DEBUG_H_
 #define _RES_DEBUG_H_
+#define RES_DEBUG_H_
+#define RES_DEBUG_H
+#define _RES_DEBUG_H
 
 #ifndef DEBUG
 #   define Dprint(cond, args) /*empty*/

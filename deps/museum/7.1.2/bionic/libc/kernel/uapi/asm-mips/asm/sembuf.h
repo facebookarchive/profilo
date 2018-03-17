@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_SEMBUF_H
 #define _ASM_SEMBUF_H
+#define ASM_SEMBUF_H
+#define ASM_SEMBUF_H_
+#define _UAPI_ASM_SEMBUF_H
+#define _UAPI_ASM_SEMBUF_H_
+#define _ASM_SEMBUF_H_
 struct semid64_ds {
   struct ipc64_perm sem_perm;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

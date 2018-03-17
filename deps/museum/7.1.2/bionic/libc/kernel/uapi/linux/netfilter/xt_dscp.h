@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_DSCP_H
 #define _XT_DSCP_H
+#define XT_DSCP_H
+#define XT_DSCP_H_
+#define _UAPI_XT_DSCP_H
+#define _UAPI_XT_DSCP_H_
+#define _XT_DSCP_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define XT_DSCP_MASK 0xfc
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

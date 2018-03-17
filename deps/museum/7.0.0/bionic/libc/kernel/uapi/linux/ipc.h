@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IPC_H
 #define _UAPI_LINUX_IPC_H
+#define UAPI_LINUX_IPC_H
+#define UAPI_LINUX_IPC_H_
+#define _LINUX_IPC_H
+#define _LINUX_IPC_H_
+#define _UAPI_LINUX_IPC_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #define IPC_PRIVATE ((__kernel_key_t) 0)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

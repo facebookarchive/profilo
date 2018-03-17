@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef QXL_DRM_H
 #define QXL_DRM_H
+#define _QXL_DRM_H
+#define _QXL_DRM_H_
+#define _UAPI_QXL_DRM_H
+#define _UAPI_QXL_DRM_H_
+#define _UAPIQXL_DRM_H
+#define _UAPIQXL_DRM_H_
+#define QXL_DRM_H_
 #include <stddef.h>
 #include <museum/5.0.0/bionic/libc/drm/drm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

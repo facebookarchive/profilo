@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_STAT_H
 #define _UAPI_LINUX_STAT_H
+#define UAPI_LINUX_STAT_H
+#define UAPI_LINUX_STAT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_STAT_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_STAT_H_
+#define NDK_ANDROID_SUPPORT_LINUX_STAT_H
+#define NDK_ANDROID_SUPPORT_LINUX_STAT_H_
+#define _LINUX_STAT_H
+#define _LINUX_STAT_H_
+#define _UAPI_LINUX_STAT_H_
 #if !defined(__GLIBC__) || __GLIBC__ < 2
 #define S_IFMT 00170000
 #define S_IFSOCK 0140000

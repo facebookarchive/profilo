@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__HDLC_H
 #define _UAPI__HDLC_H
+#define UAPI__HDLC_H
+#define UAPI__HDLC_H_
+#define __HDLC_H
+#define __HDLC_H_
+#define _UAPI__HDLC_H_
 #define HDLC_MAX_MTU 1500
 #define HDLC_MAX_MRU 1600
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

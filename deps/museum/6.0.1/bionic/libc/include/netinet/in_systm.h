@@ -33,6 +33,11 @@
 
 #ifndef _NETINET_IN_SYSTM_H_
 #define _NETINET_IN_SYSTM_H_
+#define NETINET_IN_SYSTM_H_
+#define NETINET_IN_SYSTM_H
+#define NDK_ANDROID_SUPPORT_NETINET_IN_SYSTM_H_
+#define NDK_ANDROID_SUPPORT_NETINET_IN_SYSTM_H
+#define _NETINET_IN_SYSTM_H
 
 /*
  * Miscellaneous internetwork

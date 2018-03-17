@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _USERIO_H
 #define _USERIO_H
+#define USERIO_H
+#define USERIO_H_
+#define _UAPI_USERIO_H
+#define _UAPI_USERIO_H_
+#define _USERIO_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 enum userio_cmd_type {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

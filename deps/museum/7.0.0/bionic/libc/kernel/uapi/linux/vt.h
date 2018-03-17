@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VT_H
 #define _UAPI_LINUX_VT_H
+#define UAPI_LINUX_VT_H
+#define UAPI_LINUX_VT_H_
+#define _LINUX_VT_H
+#define _LINUX_VT_H_
+#define _UAPI_LINUX_VT_H_
 #define MIN_NR_CONSOLES 1
 #define MAX_NR_CONSOLES 63
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

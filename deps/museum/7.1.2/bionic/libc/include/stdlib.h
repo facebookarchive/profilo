@@ -28,6 +28,11 @@
 
 #ifndef _STDLIB_H
 #define _STDLIB_H
+#define STDLIB_H
+#define STDLIB_H_
+#define NDK_ANDROID_SUPPORT_STDLIB_H
+#define NDK_ANDROID_SUPPORT_STDLIB_H_
+#define _STDLIB_H_
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/xlocale.h>

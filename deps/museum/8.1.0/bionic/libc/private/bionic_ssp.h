@@ -28,6 +28,11 @@
 
 #ifndef _PRIVATE_SSP_H
 #define _PRIVATE_SSP_H
+#define PRIVATE_SSP_H
+#define PRIVATE_SSP_H_
+#define NDK_ANDROID_SUPPORT_PRIVATE_SSP_H
+#define NDK_ANDROID_SUPPORT_PRIVATE_SSP_H_
+#define _PRIVATE_SSP_H_
 
 #include <stdint.h>
 #include <sys/cdefs.h>

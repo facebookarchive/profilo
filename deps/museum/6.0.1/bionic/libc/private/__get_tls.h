@@ -28,6 +28,11 @@
 
 #ifndef __BIONIC_PRIVATE_GET_TLS_H_
 #define __BIONIC_PRIVATE_GET_TLS_H_
+#define _BIONIC_PRIVATE_GET_TLS_H_
+#define _BIONIC_PRIVATE_GET_TLS_H
+#define NDK_ANDROID_SUPPORT__BIONIC_PRIVATE_GET_TLS_H_
+#define NDK_ANDROID_SUPPORT__BIONIC_PRIVATE_GET_TLS_H
+#define __BIONIC_PRIVATE_GET_TLS_H
 
 #if defined(__aarch64__)
 # define __get_tls() ({ void** __val; __asm__("mrs %0, tpidr_el0" : "=r"(__val)); __val; })

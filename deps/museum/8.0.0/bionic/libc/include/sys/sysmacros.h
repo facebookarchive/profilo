@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SYSMACROS_H_
 #define _SYS_SYSMACROS_H_
+#define SYS_SYSMACROS_H_
+#define SYS_SYSMACROS_H
+#define _SYS_SYSMACROS_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

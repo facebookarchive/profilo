@@ -28,6 +28,9 @@
 
 #ifndef _BITS_LOCKF_H_
 #define _BITS_LOCKF_H_
+#define BITS_LOCKF_H_
+#define BITS_LOCKF_H
+#define _BITS_LOCKF_H
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 

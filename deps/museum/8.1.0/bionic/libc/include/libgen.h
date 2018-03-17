@@ -28,6 +28,11 @@
 
 #ifndef _LIBGEN_H
 #define _LIBGEN_H
+#define LIBGEN_H
+#define LIBGEN_H_
+#define NDK_ANDROID_SUPPORT_LIBGEN_H
+#define NDK_ANDROID_SUPPORT_LIBGEN_H_
+#define _LIBGEN_H_
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

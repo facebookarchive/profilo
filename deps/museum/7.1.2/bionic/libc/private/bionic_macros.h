@@ -16,6 +16,9 @@
 
 #ifndef _BIONIC_MACROS_H_
 #define _BIONIC_MACROS_H_
+#define BIONIC_MACROS_H_
+#define BIONIC_MACROS_H
+#define _BIONIC_MACROS_H
 
 // Frameworks OpenGL code currently leaks this header and allows
 // collisions with other declarations, e.g., from libnativehelper.

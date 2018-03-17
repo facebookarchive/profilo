@@ -18,6 +18,10 @@
  ****************************************************************************/
 #ifndef _VIRTIO_CRYPTO_H
 #define _VIRTIO_CRYPTO_H
+#define VIRTIO_CRYPTO_H_
+#define _UAPI_VIRTIO_CRYPTO_H
+#define _UAPI_VIRTIO_CRYPTO_H_
+#define _VIRTIO_CRYPTO_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/virtio_types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

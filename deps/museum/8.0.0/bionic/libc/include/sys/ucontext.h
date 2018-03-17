@@ -28,6 +28,9 @@
 
 #ifndef _SYS_UCONTEXT_H_
 #define _SYS_UCONTEXT_H_
+#define SYS_UCONTEXT_H_
+#define SYS_UCONTEXT_H
+#define _SYS_UCONTEXT_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

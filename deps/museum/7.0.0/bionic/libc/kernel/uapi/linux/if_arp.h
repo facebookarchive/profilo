@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_ARP_H
 #define _UAPI_LINUX_IF_ARP_H
+#define UAPI_LINUX_IF_ARP_H
+#define UAPI_LINUX_IF_ARP_H_
+#define _LINUX_IF_ARP_H
+#define _LINUX_IF_ARP_H_
+#define _UAPI_LINUX_IF_ARP_H_
 #include <museum/7.0.0/bionic/libc/linux/netdevice.h>
 #define ARPHRD_NETROM 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

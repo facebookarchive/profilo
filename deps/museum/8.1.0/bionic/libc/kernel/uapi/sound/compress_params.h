@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __SND_COMPRESS_PARAMS_H
 #define __SND_COMPRESS_PARAMS_H
+#define _SND_COMPRESS_PARAMS_H
+#define _SND_COMPRESS_PARAMS_H_
+#define _UAPI_SND_COMPRESS_PARAMS_H
+#define _UAPI_SND_COMPRESS_PARAMS_H_
+#define NDK_ANDROID_SUPPORT__SND_COMPRESS_PARAMS_H
+#define NDK_ANDROID_SUPPORT__SND_COMPRESS_PARAMS_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SND_COMPRESS_PARAMS_H
+#define NDK_ANDROID_SUPPORT_UAPI__SND_COMPRESS_PARAMS_H_
+#define _UAPI__SND_COMPRESS_PARAMS_H
+#define _UAPI__SND_COMPRESS_PARAMS_H_
+#define __SND_COMPRESS_PARAMS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define MAX_NUM_CODECS 32
 #define MAX_NUM_CODEC_DESCRIPTORS 32

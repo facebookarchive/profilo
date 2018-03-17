@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_EDD_H
 #define _UAPI_LINUX_EDD_H
+#define UAPI_LINUX_EDD_H
+#define UAPI_LINUX_EDD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_EDD_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_EDD_H_
+#define NDK_ANDROID_SUPPORT_LINUX_EDD_H
+#define NDK_ANDROID_SUPPORT_LINUX_EDD_H_
+#define _LINUX_EDD_H
+#define _LINUX_EDD_H_
+#define _UAPI_LINUX_EDD_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define EDDNR 0x1e9
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

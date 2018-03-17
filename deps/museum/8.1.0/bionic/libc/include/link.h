@@ -27,6 +27,11 @@
  */
 #ifndef _LINK_H_
 #define _LINK_H_
+#define LINK_H_
+#define LINK_H
+#define NDK_ANDROID_SUPPORT_LINK_H_
+#define NDK_ANDROID_SUPPORT_LINK_H
+#define _LINK_H
 
 #include <museum/8.1.0/bionic/libc/stdint.h>
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _CEC_UAPI_H
 #define _CEC_UAPI_H
+#define CEC_UAPI_H
+#define CEC_UAPI_H_
+#define _UAPI_CEC_UAPI_H
+#define _UAPI_CEC_UAPI_H_
+#define _CEC_UAPI_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/string.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

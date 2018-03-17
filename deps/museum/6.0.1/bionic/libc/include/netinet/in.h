@@ -28,6 +28,11 @@
 
 #ifndef _NETINET_IN_H_
 #define _NETINET_IN_H_
+#define NETINET_IN_H_
+#define NETINET_IN_H
+#define NDK_ANDROID_SUPPORT_NETINET_IN_H_
+#define NDK_ANDROID_SUPPORT_NETINET_IN_H
+#define _NETINET_IN_H
 
 #include <museum/6.0.1/bionic/libc/endian.h>
 #include <museum/6.0.1/bionic/libc/netinet/in6.h>

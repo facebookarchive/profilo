@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef SCIF_IOCTL_H
 #define SCIF_IOCTL_H
+#define _SCIF_IOCTL_H
+#define _SCIF_IOCTL_H_
+#define _UAPI_SCIF_IOCTL_H
+#define _UAPI_SCIF_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_UAPISCIF_IOCTL_H
+#define NDK_ANDROID_SUPPORT_UAPISCIF_IOCTL_H_
+#define _UAPISCIF_IOCTL_H
+#define _UAPISCIF_IOCTL_H_
+#define SCIF_IOCTL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct scif_port_id {
   __u16 node;

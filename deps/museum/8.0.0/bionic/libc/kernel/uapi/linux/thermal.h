@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_THERMAL_H
 #define _UAPI_LINUX_THERMAL_H
+#define UAPI_LINUX_THERMAL_H
+#define UAPI_LINUX_THERMAL_H_
+#define _LINUX_THERMAL_H
+#define _LINUX_THERMAL_H_
+#define _UAPI_LINUX_THERMAL_H_
 #define THERMAL_NAME_LENGTH 20
 #define THERMAL_GENL_FAMILY_NAME "thermal_event"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

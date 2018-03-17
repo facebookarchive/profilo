@@ -27,6 +27,9 @@
  */
 #ifndef _LINK_H_
 #define _LINK_H_
+#define LINK_H_
+#define LINK_H
+#define _LINK_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/types.h>

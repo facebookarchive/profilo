@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_POLL_H
 #define __ASM_POLL_H
+#define _ASM_POLL_H
+#define _ASM_POLL_H_
+#define _UAPI_ASM_POLL_H
+#define _UAPI_ASM_POLL_H_
+#define _UAPI__ASM_POLL_H
+#define _UAPI__ASM_POLL_H_
+#define __ASM_POLL_H_
 #define POLLWRNORM POLLOUT
 #define POLLWRBAND 0x0100
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef AFFS_HARDBLOCKS_H
 #define AFFS_HARDBLOCKS_H
+#define _AFFS_HARDBLOCKS_H
+#define _AFFS_HARDBLOCKS_H_
+#define _UAPI_AFFS_HARDBLOCKS_H
+#define _UAPI_AFFS_HARDBLOCKS_H_
+#define _UAPIAFFS_HARDBLOCKS_H
+#define _UAPIAFFS_HARDBLOCKS_H_
+#define AFFS_HARDBLOCKS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 struct RigidDiskBlock {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

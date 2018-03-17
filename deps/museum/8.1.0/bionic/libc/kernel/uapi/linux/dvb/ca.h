@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DVBCA_H_
 #define _DVBCA_H_
+#define DVBCA_H_
+#define DVBCA_H
+#define NDK_ANDROID_SUPPORT_DVBCA_H_
+#define NDK_ANDROID_SUPPORT_DVBCA_H
+#define NDK_ANDROID_SUPPORT_UAPI_DVBCA_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DVBCA_H
+#define _UAPI_DVBCA_H_
+#define _UAPI_DVBCA_H
+#define _DVBCA_H
 typedef struct ca_slot_info {
   int num;
   int type;

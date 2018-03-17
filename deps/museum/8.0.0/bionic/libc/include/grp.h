@@ -34,6 +34,9 @@
 
 #ifndef _GRP_H_
 #define _GRP_H_
+#define GRP_H_
+#define GRP_H
+#define _GRP_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/types.h>

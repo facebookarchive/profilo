@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_PARAM_H
 #define _ASM_PARAM_H
+#define ASM_PARAM_H
+#define ASM_PARAM_H_
+#define NDK_ANDROID_SUPPORT_ASM_PARAM_H
+#define NDK_ANDROID_SUPPORT_ASM_PARAM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_PARAM_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_PARAM_H_
+#define _UAPI_ASM_PARAM_H
+#define _UAPI_ASM_PARAM_H_
+#define _ASM_PARAM_H_
 #define EXEC_PAGESIZE 65536
 #include <asm-generic/param.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

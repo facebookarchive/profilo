@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SOUND_H
 #define _UAPI_LINUX_SOUND_H
+#define UAPI_LINUX_SOUND_H
+#define UAPI_LINUX_SOUND_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOUND_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SOUND_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SOUND_H
+#define NDK_ANDROID_SUPPORT_LINUX_SOUND_H_
+#define _LINUX_SOUND_H
+#define _LINUX_SOUND_H_
+#define _UAPI_LINUX_SOUND_H_
 #include <museum/8.1.0/bionic/libc/linux/fs.h>
 #define SND_DEV_CTL 0
 #define SND_DEV_SEQ 1

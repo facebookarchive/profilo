@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_ARM_IOCTLS_H
 #define __ASM_ARM_IOCTLS_H
+#define _ASM_ARM_IOCTLS_H
+#define _ASM_ARM_IOCTLS_H_
+#define _UAPI_ASM_ARM_IOCTLS_H
+#define _UAPI_ASM_ARM_IOCTLS_H_
+#define _UAPI__ASM_ARM_IOCTLS_H
+#define _UAPI__ASM_ARM_IOCTLS_H_
+#define __ASM_ARM_IOCTLS_H_
 #define FIOQSIZE 0x545E
 #include <museum/8.0.0/bionic/libc/asm-generic/ioctls.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

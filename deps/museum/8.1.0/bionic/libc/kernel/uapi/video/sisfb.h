@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SISFB_H_
 #define _UAPI_LINUX_SISFB_H_
+#define UAPI_LINUX_SISFB_H_
+#define UAPI_LINUX_SISFB_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SISFB_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SISFB_H
+#define NDK_ANDROID_SUPPORT_LINUX_SISFB_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SISFB_H
+#define _LINUX_SISFB_H_
+#define _LINUX_SISFB_H
+#define _UAPI_LINUX_SISFB_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/asm/ioctl.h>
 #define CRT2_DEFAULT 0x00000001

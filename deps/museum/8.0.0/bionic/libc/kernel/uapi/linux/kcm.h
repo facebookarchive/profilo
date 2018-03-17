@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef KCM_KERNEL_H
 #define KCM_KERNEL_H
+#define _KCM_KERNEL_H
+#define _KCM_KERNEL_H_
+#define _UAPI_KCM_KERNEL_H
+#define _UAPI_KCM_KERNEL_H_
+#define _UAPIKCM_KERNEL_H
+#define _UAPIKCM_KERNEL_H_
+#define KCM_KERNEL_H_
 struct kcm_attach {
   int fd;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

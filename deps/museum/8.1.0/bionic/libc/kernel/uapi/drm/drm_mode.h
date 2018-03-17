@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DRM_MODE_H
 #define _DRM_MODE_H
+#define DRM_MODE_H
+#define DRM_MODE_H_
+#define NDK_ANDROID_SUPPORT_DRM_MODE_H
+#define NDK_ANDROID_SUPPORT_DRM_MODE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DRM_MODE_H
+#define NDK_ANDROID_SUPPORT_UAPI_DRM_MODE_H_
+#define _UAPI_DRM_MODE_H
+#define _UAPI_DRM_MODE_H_
+#define _DRM_MODE_H_
 #include "drm.h"
 #ifdef __cplusplus
 #endif

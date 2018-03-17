@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_TCPOPTSTRIP_H
 #define _XT_TCPOPTSTRIP_H
+#define XT_TCPOPTSTRIP_H
+#define XT_TCPOPTSTRIP_H_
+#define NDK_ANDROID_SUPPORT_XT_TCPOPTSTRIP_H
+#define NDK_ANDROID_SUPPORT_XT_TCPOPTSTRIP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPOPTSTRIP_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPOPTSTRIP_H_
+#define _UAPI_XT_TCPOPTSTRIP_H
+#define _UAPI_XT_TCPOPTSTRIP_H_
+#define _XT_TCPOPTSTRIP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define tcpoptstrip_set_bit(bmap,idx) (bmap[(idx) >> 5] |= 1U << (idx & 31))
 #define tcpoptstrip_test_bit(bmap,idx) (((1U << (idx & 31)) & bmap[(idx) >> 5]) != 0)

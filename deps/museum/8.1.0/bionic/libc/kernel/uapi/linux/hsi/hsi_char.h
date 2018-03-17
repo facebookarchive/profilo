@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __HSI_CHAR_H
 #define __HSI_CHAR_H
+#define _HSI_CHAR_H
+#define _HSI_CHAR_H_
+#define _UAPI_HSI_CHAR_H
+#define _UAPI_HSI_CHAR_H_
+#define NDK_ANDROID_SUPPORT__HSI_CHAR_H
+#define NDK_ANDROID_SUPPORT__HSI_CHAR_H_
+#define NDK_ANDROID_SUPPORT_UAPI__HSI_CHAR_H
+#define NDK_ANDROID_SUPPORT_UAPI__HSI_CHAR_H_
+#define _UAPI__HSI_CHAR_H
+#define _UAPI__HSI_CHAR_H_
+#define __HSI_CHAR_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define HSI_CHAR_MAGIC 'k'
 #define HSC_IOW(num,dtype) _IOW(HSI_CHAR_MAGIC, num, dtype)

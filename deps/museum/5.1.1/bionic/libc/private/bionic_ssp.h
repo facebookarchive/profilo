@@ -28,6 +28,9 @@
 
 #ifndef _PRIVATE_SSP_H
 #define _PRIVATE_SSP_H
+#define PRIVATE_SSP_H
+#define PRIVATE_SSP_H_
+#define _PRIVATE_SSP_H_
 
 #include <stdint.h>
 #include <sys/cdefs.h>

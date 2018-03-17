@@ -28,6 +28,11 @@
 
 #ifndef _UCONTEXT_H_
 #define _UCONTEXT_H_
+#define UCONTEXT_H_
+#define UCONTEXT_H
+#define NDK_ANDROID_SUPPORT_UCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_UCONTEXT_H
+#define _UCONTEXT_H
 
 #include <museum/6.0.1/bionic/libc/sys/ucontext.h>
 

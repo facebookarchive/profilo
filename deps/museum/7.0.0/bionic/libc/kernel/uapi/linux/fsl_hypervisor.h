@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPIFSL_HYPERVISOR_H
 #define _UAPIFSL_HYPERVISOR_H
+#define UAPIFSL_HYPERVISOR_H
+#define UAPIFSL_HYPERVISOR_H_
+#define FSL_HYPERVISOR_H
+#define FSL_HYPERVISOR_H_
+#define _UAPIFSL_HYPERVISOR_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 struct fsl_hv_ioctl_restart {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

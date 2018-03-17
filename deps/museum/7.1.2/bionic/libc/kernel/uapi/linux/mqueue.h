@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_MQUEUE_H
 #define _LINUX_MQUEUE_H
+#define LINUX_MQUEUE_H
+#define LINUX_MQUEUE_H_
+#define _UAPI_LINUX_MQUEUE_H
+#define _UAPI_LINUX_MQUEUE_H_
+#define _LINUX_MQUEUE_H_
 #define MQ_PRIO_MAX 32768
 #define MQ_BYTES_MAX 819200
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

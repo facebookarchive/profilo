@@ -61,6 +61,9 @@
 
 #ifndef _PWD_H_
 #define _PWD_H_
+#define PWD_H_
+#define PWD_H
+#define _PWD_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/sys/types.h>

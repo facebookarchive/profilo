@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef CAN_GW_H
 #define CAN_GW_H
+#define _CAN_GW_H
+#define _CAN_GW_H_
+#define _UAPI_CAN_GW_H
+#define _UAPI_CAN_GW_H_
+#define _UAPICAN_GW_H
+#define _UAPICAN_GW_H_
+#define CAN_GW_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #include <museum/5.0.0/bionic/libc/linux/can.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

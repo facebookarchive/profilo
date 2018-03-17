@@ -5,6 +5,9 @@
 
 #ifndef _MACHINE_EXEC_H_
 #define _MACHINE_EXEC_H_
+#define MACHINE_EXEC_H_
+#define MACHINE_EXEC_H
+#define _MACHINE_EXEC_H
 
 #define __LDPGSZ 4096
 

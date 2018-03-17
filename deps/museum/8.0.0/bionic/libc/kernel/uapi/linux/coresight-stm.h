@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __UAPI_CORESIGHT_STM_H_
 #define __UAPI_CORESIGHT_STM_H_
+#define _UAPI_CORESIGHT_STM_H_
+#define _UAPI_CORESIGHT_STM_H
+#define _CORESIGHT_STM_H_
+#define _CORESIGHT_STM_H
+#define _UAPI__UAPI_CORESIGHT_STM_H_
+#define _UAPI__UAPI_CORESIGHT_STM_H
+#define __UAPI_CORESIGHT_STM_H
 #define STM_FLAG_TIMESTAMPED BIT(3)
 #define STM_FLAG_GUARANTEED BIT(7)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

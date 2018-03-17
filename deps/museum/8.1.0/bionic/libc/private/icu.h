@@ -28,6 +28,11 @@
 
 #ifndef _PRIVATE_ICU_H
 #define _PRIVATE_ICU_H
+#define PRIVATE_ICU_H
+#define PRIVATE_ICU_H_
+#define NDK_ANDROID_SUPPORT_PRIVATE_ICU_H
+#define NDK_ANDROID_SUPPORT_PRIVATE_ICU_H_
+#define _PRIVATE_ICU_H_
 
 #include <stdint.h>
 

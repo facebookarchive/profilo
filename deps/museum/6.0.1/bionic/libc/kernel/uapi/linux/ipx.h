@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _IPX_H_
 #define _IPX_H_
+#define IPX_H_
+#define IPX_H
+#define NDK_ANDROID_SUPPORT_IPX_H_
+#define NDK_ANDROID_SUPPORT_IPX_H
+#define NDK_ANDROID_SUPPORT_UAPI_IPX_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IPX_H
+#define _UAPI_IPX_H_
+#define _UAPI_IPX_H
+#define _IPX_H
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/sockios.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

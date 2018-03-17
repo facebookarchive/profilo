@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_UIO_H
 #define _UAPI__LINUX_UIO_H
+#define UAPI__LINUX_UIO_H
+#define UAPI__LINUX_UIO_H_
+#define __LINUX_UIO_H
+#define __LINUX_UIO_H_
+#define _UAPI__LINUX_UIO_H_
 #include <museum/7.0.0/bionic/libc/linux/compiler.h>
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

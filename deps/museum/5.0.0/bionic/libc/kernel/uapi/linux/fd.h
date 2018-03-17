@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FD_H
 #define _UAPI_LINUX_FD_H
+#define UAPI_LINUX_FD_H
+#define UAPI_LINUX_FD_H_
+#define _LINUX_FD_H
+#define _LINUX_FD_H_
+#define _UAPI_LINUX_FD_H_
 #include <museum/5.0.0/bionic/libc/linux/ioctl.h>
 #include <museum/5.0.0/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

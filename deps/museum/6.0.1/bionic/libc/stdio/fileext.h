@@ -31,6 +31,11 @@
 
 #ifndef _FILEEXT_H_
 #define _FILEEXT_H_
+#define FILEEXT_H_
+#define FILEEXT_H
+#define NDK_ANDROID_SUPPORT_FILEEXT_H_
+#define NDK_ANDROID_SUPPORT_FILEEXT_H
+#define _FILEEXT_H
 
 #include <pthread.h>
 #include <stdbool.h>

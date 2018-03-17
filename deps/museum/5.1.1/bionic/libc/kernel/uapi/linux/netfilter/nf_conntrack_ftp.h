@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_NF_CONNTRACK_FTP_H
 #define _UAPI_NF_CONNTRACK_FTP_H
+#define UAPI_NF_CONNTRACK_FTP_H
+#define UAPI_NF_CONNTRACK_FTP_H_
+#define _NF_CONNTRACK_FTP_H
+#define _NF_CONNTRACK_FTP_H_
+#define _UAPI_NF_CONNTRACK_FTP_H_
 enum nf_ct_ftp_type {
  NF_CT_FTP_PORT,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

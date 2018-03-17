@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_TIPC_CONFIG_H_
 #define _LINUX_TIPC_CONFIG_H_
+#define LINUX_TIPC_CONFIG_H_
+#define LINUX_TIPC_CONFIG_H
+#define _UAPI_LINUX_TIPC_CONFIG_H_
+#define _UAPI_LINUX_TIPC_CONFIG_H
+#define _LINUX_TIPC_CONFIG_H
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/string.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

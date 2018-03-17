@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_SET_H
 #define _XT_SET_H
+#define XT_SET_H
+#define XT_SET_H_
+#define _UAPI_XT_SET_H
+#define _UAPI_XT_SET_H_
+#define _XT_SET_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/netfilter/ipset/ip_set.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

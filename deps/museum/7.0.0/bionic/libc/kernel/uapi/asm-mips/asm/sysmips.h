@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_SYSMIPS_H
 #define _ASM_SYSMIPS_H
+#define ASM_SYSMIPS_H
+#define ASM_SYSMIPS_H_
+#define _UAPI_ASM_SYSMIPS_H
+#define _UAPI_ASM_SYSMIPS_H_
+#define _ASM_SYSMIPS_H_
 #define SETNAME 1
 #define FLUSH_CACHE 3
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

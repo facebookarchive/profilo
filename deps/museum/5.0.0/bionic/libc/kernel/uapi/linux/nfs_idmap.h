@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPINFS_IDMAP_H
 #define _UAPINFS_IDMAP_H
+#define UAPINFS_IDMAP_H
+#define UAPINFS_IDMAP_H_
+#define NFS_IDMAP_H
+#define NFS_IDMAP_H_
+#define _UAPINFS_IDMAP_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define IDMAP_NAMESZ 128
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

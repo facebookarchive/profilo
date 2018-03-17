@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_VLAN_H_
 #define _UAPI_LINUX_IF_VLAN_H_
+#define UAPI_LINUX_IF_VLAN_H_
+#define UAPI_LINUX_IF_VLAN_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_VLAN_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_VLAN_H
+#define NDK_ANDROID_SUPPORT_LINUX_IF_VLAN_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IF_VLAN_H
+#define _LINUX_IF_VLAN_H_
+#define _LINUX_IF_VLAN_H
+#define _UAPI_LINUX_IF_VLAN_H
 enum vlan_ioctl_cmds {
   ADD_VLAN_CMD,
   DEL_VLAN_CMD,

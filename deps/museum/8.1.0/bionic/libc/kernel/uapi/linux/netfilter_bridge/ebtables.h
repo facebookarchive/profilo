@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_BRIDGE_EFF_H
 #define _UAPI__LINUX_BRIDGE_EFF_H
+#define UAPI__LINUX_BRIDGE_EFF_H
+#define UAPI__LINUX_BRIDGE_EFF_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_BRIDGE_EFF_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_BRIDGE_EFF_H_
+#define NDK_ANDROID_SUPPORT__LINUX_BRIDGE_EFF_H
+#define NDK_ANDROID_SUPPORT__LINUX_BRIDGE_EFF_H_
+#define __LINUX_BRIDGE_EFF_H
+#define __LINUX_BRIDGE_EFF_H_
+#define _UAPI__LINUX_BRIDGE_EFF_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/if.h>
 #include <museum/8.1.0/bionic/libc/linux/netfilter_bridge.h>

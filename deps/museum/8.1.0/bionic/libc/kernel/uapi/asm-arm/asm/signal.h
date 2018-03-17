@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASMARM_SIGNAL_H
 #define _UAPI_ASMARM_SIGNAL_H
+#define UAPI_ASMARM_SIGNAL_H
+#define UAPI_ASMARM_SIGNAL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_SIGNAL_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_SIGNAL_H_
+#define NDK_ANDROID_SUPPORT_ASMARM_SIGNAL_H
+#define NDK_ANDROID_SUPPORT_ASMARM_SIGNAL_H_
+#define _ASMARM_SIGNAL_H
+#define _ASMARM_SIGNAL_H_
+#define _UAPI_ASMARM_SIGNAL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct siginfo;
 #define _KERNEL_NSIG 32

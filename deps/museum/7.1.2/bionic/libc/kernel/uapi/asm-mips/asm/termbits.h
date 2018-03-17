@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_TERMBITS_H
 #define _ASM_TERMBITS_H
+#define ASM_TERMBITS_H
+#define ASM_TERMBITS_H_
+#define _UAPI_ASM_TERMBITS_H
+#define _UAPI_ASM_TERMBITS_H_
+#define _ASM_TERMBITS_H_
 #include <linux/posix_types.h>
 typedef unsigned char cc_t;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

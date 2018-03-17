@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_LLC_H
 #define _UAPI__LINUX_LLC_H
+#define UAPI__LINUX_LLC_H
+#define UAPI__LINUX_LLC_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_LLC_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_LLC_H_
+#define NDK_ANDROID_SUPPORT__LINUX_LLC_H
+#define NDK_ANDROID_SUPPORT__LINUX_LLC_H_
+#define __LINUX_LLC_H
+#define __LINUX_LLC_H_
+#define _UAPI__LINUX_LLC_H_
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define __LLC_SOCK_SIZE__ 16
 struct sockaddr_llc {

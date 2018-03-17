@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ARPTABLES_H
 #define _UAPI_ARPTABLES_H
+#define UAPI_ARPTABLES_H
+#define UAPI_ARPTABLES_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ARPTABLES_H
+#define NDK_ANDROID_SUPPORT_UAPI_ARPTABLES_H_
+#define NDK_ANDROID_SUPPORT_ARPTABLES_H
+#define NDK_ANDROID_SUPPORT_ARPTABLES_H_
+#define _ARPTABLES_H
+#define _ARPTABLES_H_
+#define _UAPI_ARPTABLES_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <linux/compiler.h>
 #include <museum/8.1.0/bionic/libc/linux/if.h>

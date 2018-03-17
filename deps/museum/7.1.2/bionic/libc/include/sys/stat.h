@@ -28,6 +28,9 @@
 
 #ifndef _SYS_STAT_H_
 #define _SYS_STAT_H_
+#define SYS_STAT_H_
+#define SYS_STAT_H
+#define _SYS_STAT_H
 
 #include <museum/7.1.2/bionic/libc/bits/timespec.h>
 #include <museum/7.1.2/bionic/libc/linux/stat.h>

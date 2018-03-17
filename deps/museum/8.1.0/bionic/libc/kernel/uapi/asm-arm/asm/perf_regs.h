@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_ARM_PERF_REGS_H
 #define _ASM_ARM_PERF_REGS_H
+#define ASM_ARM_PERF_REGS_H
+#define ASM_ARM_PERF_REGS_H_
+#define NDK_ANDROID_SUPPORT_ASM_ARM_PERF_REGS_H
+#define NDK_ANDROID_SUPPORT_ASM_ARM_PERF_REGS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_ARM_PERF_REGS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_ARM_PERF_REGS_H_
+#define _UAPI_ASM_ARM_PERF_REGS_H
+#define _UAPI_ASM_ARM_PERF_REGS_H_
+#define _ASM_ARM_PERF_REGS_H_
 enum perf_event_arm_regs {
   PERF_REG_ARM_R0,
   PERF_REG_ARM_R1,

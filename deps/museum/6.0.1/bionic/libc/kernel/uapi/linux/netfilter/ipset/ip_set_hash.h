@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__IP_SET_HASH_H
 #define _UAPI__IP_SET_HASH_H
+#define UAPI__IP_SET_HASH_H
+#define UAPI__IP_SET_HASH_H_
+#define NDK_ANDROID_SUPPORT_UAPI__IP_SET_HASH_H
+#define NDK_ANDROID_SUPPORT_UAPI__IP_SET_HASH_H_
+#define NDK_ANDROID_SUPPORT__IP_SET_HASH_H
+#define NDK_ANDROID_SUPPORT__IP_SET_HASH_H_
+#define __IP_SET_HASH_H
+#define __IP_SET_HASH_H_
+#define _UAPI__IP_SET_HASH_H_
 enum {
   IPSET_ERR_HASH_FULL = IPSET_ERR_TYPE_SPECIFIC,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

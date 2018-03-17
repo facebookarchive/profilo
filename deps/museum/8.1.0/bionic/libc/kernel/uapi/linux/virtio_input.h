@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_INPUT_H
 #define _LINUX_VIRTIO_INPUT_H
+#define LINUX_VIRTIO_INPUT_H
+#define LINUX_VIRTIO_INPUT_H_
+#define NDK_ANDROID_SUPPORT_LINUX_VIRTIO_INPUT_H
+#define NDK_ANDROID_SUPPORT_LINUX_VIRTIO_INPUT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VIRTIO_INPUT_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VIRTIO_INPUT_H_
+#define _UAPI_LINUX_VIRTIO_INPUT_H
+#define _UAPI_LINUX_VIRTIO_INPUT_H_
+#define _LINUX_VIRTIO_INPUT_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum virtio_input_config_select {
   VIRTIO_INPUT_CFG_UNSET = 0x00,

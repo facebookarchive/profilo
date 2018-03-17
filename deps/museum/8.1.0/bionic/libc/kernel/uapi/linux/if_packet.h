@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_IF_PACKET_H
 #define __LINUX_IF_PACKET_H
+#define _LINUX_IF_PACKET_H
+#define _LINUX_IF_PACKET_H_
+#define _UAPI_LINUX_IF_PACKET_H
+#define _UAPI_LINUX_IF_PACKET_H_
+#define NDK_ANDROID_SUPPORT__LINUX_IF_PACKET_H
+#define NDK_ANDROID_SUPPORT__LINUX_IF_PACKET_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IF_PACKET_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IF_PACKET_H_
+#define _UAPI__LINUX_IF_PACKET_H
+#define _UAPI__LINUX_IF_PACKET_H_
+#define __LINUX_IF_PACKET_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct sockaddr_pkt {
   unsigned short spkt_family;

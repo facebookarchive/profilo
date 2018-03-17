@@ -28,6 +28,11 @@
 
 #ifndef _BITS_TERMIOS_INLINES_H_
 #define _BITS_TERMIOS_INLINES_H_
+#define BITS_TERMIOS_INLINES_H_
+#define BITS_TERMIOS_INLINES_H
+#define NDK_ANDROID_SUPPORT_BITS_TERMIOS_INLINES_H_
+#define NDK_ANDROID_SUPPORT_BITS_TERMIOS_INLINES_H
+#define _BITS_TERMIOS_INLINES_H
 
 #include <museum/8.1.0/bionic/libc/errno.h>
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>

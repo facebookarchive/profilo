@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_UVCVIDEO_H_
 #define __LINUX_UVCVIDEO_H_
+#define _LINUX_UVCVIDEO_H_
+#define _LINUX_UVCVIDEO_H
+#define _UAPI_LINUX_UVCVIDEO_H_
+#define _UAPI_LINUX_UVCVIDEO_H
+#define NDK_ANDROID_SUPPORT__LINUX_UVCVIDEO_H_
+#define NDK_ANDROID_SUPPORT__LINUX_UVCVIDEO_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_UVCVIDEO_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_UVCVIDEO_H
+#define _UAPI__LINUX_UVCVIDEO_H_
+#define _UAPI__LINUX_UVCVIDEO_H
+#define __LINUX_UVCVIDEO_H
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define UVC_CTRL_DATA_TYPE_RAW 0

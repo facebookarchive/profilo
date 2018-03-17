@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_CHECKSUM_TARGET_H
 #define _XT_CHECKSUM_TARGET_H
+#define XT_CHECKSUM_TARGET_H
+#define XT_CHECKSUM_TARGET_H_
+#define NDK_ANDROID_SUPPORT_XT_CHECKSUM_TARGET_H
+#define NDK_ANDROID_SUPPORT_XT_CHECKSUM_TARGET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_CHECKSUM_TARGET_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_CHECKSUM_TARGET_H_
+#define _UAPI_XT_CHECKSUM_TARGET_H
+#define _UAPI_XT_CHECKSUM_TARGET_H_
+#define _XT_CHECKSUM_TARGET_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_CHECKSUM_OP_FILL 0x01
 struct xt_CHECKSUM_info {

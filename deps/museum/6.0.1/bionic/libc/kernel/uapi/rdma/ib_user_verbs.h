@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef IB_USER_VERBS_H
 #define IB_USER_VERBS_H
+#define _IB_USER_VERBS_H
+#define _IB_USER_VERBS_H_
+#define _UAPI_IB_USER_VERBS_H
+#define _UAPI_IB_USER_VERBS_H_
+#define NDK_ANDROID_SUPPORT_UAPIIB_USER_VERBS_H
+#define NDK_ANDROID_SUPPORT_UAPIIB_USER_VERBS_H_
+#define _UAPIIB_USER_VERBS_H
+#define _UAPIIB_USER_VERBS_H_
+#define IB_USER_VERBS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define IB_USER_VERBS_ABI_VERSION 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_SCTP_H
 #define _UAPI_SCTP_H
+#define UAPI_SCTP_H
+#define UAPI_SCTP_H_
+#define _SCTP_H
+#define _SCTP_H_
+#define _UAPI_SCTP_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

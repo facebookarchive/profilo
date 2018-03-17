@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_VM_SOCKETS_H
 #define _UAPI_VM_SOCKETS_H
+#define UAPI_VM_SOCKETS_H
+#define UAPI_VM_SOCKETS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_VM_SOCKETS_H
+#define NDK_ANDROID_SUPPORT_UAPI_VM_SOCKETS_H_
+#define NDK_ANDROID_SUPPORT_VM_SOCKETS_H
+#define NDK_ANDROID_SUPPORT_VM_SOCKETS_H_
+#define _VM_SOCKETS_H
+#define _VM_SOCKETS_H_
+#define _UAPI_VM_SOCKETS_H_
 #include <museum/6.0.1/bionic/libc/linux/socket.h>
 #define SO_VM_SOCKETS_BUFFER_SIZE 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

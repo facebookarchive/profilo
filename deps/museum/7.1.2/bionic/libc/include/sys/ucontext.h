@@ -28,6 +28,9 @@
 
 #ifndef _SYS_UCONTEXT_H_
 #define _SYS_UCONTEXT_H_
+#define SYS_UCONTEXT_H_
+#define SYS_UCONTEXT_H
+#define _SYS_UCONTEXT_H
 
 #include <museum/7.1.2/bionic/libc/signal.h>
 #include <museum/7.1.2/bionic/libc/sys/user.h>

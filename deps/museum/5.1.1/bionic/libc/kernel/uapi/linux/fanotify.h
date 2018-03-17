@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FANOTIFY_H
 #define _UAPI_LINUX_FANOTIFY_H
+#define UAPI_LINUX_FANOTIFY_H
+#define UAPI_LINUX_FANOTIFY_H_
+#define _LINUX_FANOTIFY_H
+#define _LINUX_FANOTIFY_H_
+#define _UAPI_LINUX_FANOTIFY_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #define FAN_ACCESS 0x00000001
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

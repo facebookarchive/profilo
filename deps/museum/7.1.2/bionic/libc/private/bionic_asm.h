@@ -28,6 +28,9 @@
 
 #ifndef _PRIVATE_BIONIC_ASM_H_
 #define _PRIVATE_BIONIC_ASM_H_
+#define PRIVATE_BIONIC_ASM_H_
+#define PRIVATE_BIONIC_ASM_H
+#define _PRIVATE_BIONIC_ASM_H
 
 #include <asm/unistd.h> /* For system call numbers. */
 #define MAX_ERRNO 4095  /* For recognizing system call error returns. */

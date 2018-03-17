@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_IPC_H
 #define _SYS_IPC_H
+#define SYS_IPC_H
+#define SYS_IPC_H_
+#define NDK_ANDROID_SUPPORT_SYS_IPC_H
+#define NDK_ANDROID_SUPPORT_SYS_IPC_H_
+#define _SYS_IPC_H_
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <museum/6.0.1/bionic/libc/sys/types.h>

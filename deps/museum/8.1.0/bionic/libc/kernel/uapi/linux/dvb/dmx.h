@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_DVBDMX_H_
 #define _UAPI_DVBDMX_H_
+#define UAPI_DVBDMX_H_
+#define UAPI_DVBDMX_H
+#define NDK_ANDROID_SUPPORT_UAPI_DVBDMX_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DVBDMX_H
+#define NDK_ANDROID_SUPPORT_DVBDMX_H_
+#define NDK_ANDROID_SUPPORT_DVBDMX_H
+#define _DVBDMX_H_
+#define _DVBDMX_H
+#define _UAPI_DVBDMX_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/time.h>
 #define DMX_FILTER_SIZE 16

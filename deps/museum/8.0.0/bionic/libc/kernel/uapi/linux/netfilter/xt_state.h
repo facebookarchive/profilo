@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_STATE_H
 #define _XT_STATE_H
+#define XT_STATE_H
+#define XT_STATE_H_
+#define _UAPI_XT_STATE_H
+#define _UAPI_XT_STATE_H_
+#define _XT_STATE_H_
 #define XT_STATE_BIT(ctinfo) (1 << ((ctinfo) % IP_CT_IS_REPLY + 1))
 #define XT_STATE_INVALID (1 << 0)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_OWNER_MATCH_H
 #define _XT_OWNER_MATCH_H
+#define XT_OWNER_MATCH_H
+#define XT_OWNER_MATCH_H_
+#define _UAPI_XT_OWNER_MATCH_H
+#define _UAPI_XT_OWNER_MATCH_H_
+#define _XT_OWNER_MATCH_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

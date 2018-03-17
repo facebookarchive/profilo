@@ -28,6 +28,11 @@
 
 #ifndef _SYS_SIGNALFD_H_
 #define _SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H
+#define NDK_ANDROID_SUPPORT_SYS_SIGNALFD_H_
+#define NDK_ANDROID_SUPPORT_SYS_SIGNALFD_H
+#define _SYS_SIGNALFD_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

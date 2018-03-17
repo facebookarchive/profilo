@@ -28,6 +28,9 @@
 
 #ifndef _STDIO_EXT_H
 #define _STDIO_EXT_H
+#define STDIO_EXT_H
+#define STDIO_EXT_H_
+#define _STDIO_EXT_H_
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/stdio.h>

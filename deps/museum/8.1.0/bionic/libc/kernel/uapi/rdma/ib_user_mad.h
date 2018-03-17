@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef IB_USER_MAD_H
 #define IB_USER_MAD_H
+#define _IB_USER_MAD_H
+#define _IB_USER_MAD_H_
+#define _UAPI_IB_USER_MAD_H
+#define _UAPI_IB_USER_MAD_H_
+#define NDK_ANDROID_SUPPORT_UAPIIB_USER_MAD_H
+#define NDK_ANDROID_SUPPORT_UAPIIB_USER_MAD_H_
+#define _UAPIIB_USER_MAD_H
+#define _UAPIIB_USER_MAD_H_
+#define IB_USER_MAD_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define IB_USER_MAD_ABI_VERSION 5

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_RESOURCE_H
 #define _UAPI_LINUX_RESOURCE_H
+#define UAPI_LINUX_RESOURCE_H
+#define UAPI_LINUX_RESOURCE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_RESOURCE_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_RESOURCE_H_
+#define NDK_ANDROID_SUPPORT_LINUX_RESOURCE_H
+#define NDK_ANDROID_SUPPORT_LINUX_RESOURCE_H_
+#define _LINUX_RESOURCE_H
+#define _LINUX_RESOURCE_H_
+#define _UAPI_LINUX_RESOURCE_H_
 #include <museum/8.1.0/bionic/libc/linux/time.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define RUSAGE_SELF 0

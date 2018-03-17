@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_ARCNET_H
 #define _LINUX_IF_ARCNET_H
+#define LINUX_IF_ARCNET_H
+#define LINUX_IF_ARCNET_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IF_ARCNET_H
+#define NDK_ANDROID_SUPPORT_LINUX_IF_ARCNET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_ARCNET_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_ARCNET_H_
+#define _UAPI_LINUX_IF_ARCNET_H
+#define _UAPI_LINUX_IF_ARCNET_H_
+#define _LINUX_IF_ARCNET_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 #define ARC_P_IP 212

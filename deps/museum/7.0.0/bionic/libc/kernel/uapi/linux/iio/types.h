@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_IIO_TYPES_H_
 #define _UAPI_IIO_TYPES_H_
+#define UAPI_IIO_TYPES_H_
+#define UAPI_IIO_TYPES_H
+#define _IIO_TYPES_H_
+#define _IIO_TYPES_H
+#define _UAPI_IIO_TYPES_H
 enum iio_chan_type {
   IIO_VOLTAGE,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

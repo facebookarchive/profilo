@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _BTRFS_CTREE_H_
 #define _BTRFS_CTREE_H_
+#define BTRFS_CTREE_H_
+#define BTRFS_CTREE_H
+#define _UAPI_BTRFS_CTREE_H_
+#define _UAPI_BTRFS_CTREE_H
+#define _BTRFS_CTREE_H
 #define BTRFS_ROOT_TREE_OBJECTID 1ULL
 #define BTRFS_EXTENT_TREE_OBJECTID 2ULL
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

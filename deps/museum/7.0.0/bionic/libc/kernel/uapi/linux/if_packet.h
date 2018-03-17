@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_IF_PACKET_H
 #define __LINUX_IF_PACKET_H
+#define _LINUX_IF_PACKET_H
+#define _LINUX_IF_PACKET_H_
+#define _UAPI_LINUX_IF_PACKET_H
+#define _UAPI_LINUX_IF_PACKET_H_
+#define _UAPI__LINUX_IF_PACKET_H
+#define _UAPI__LINUX_IF_PACKET_H_
+#define __LINUX_IF_PACKET_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 struct sockaddr_pkt {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

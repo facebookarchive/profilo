@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPISDLA_H
 #define _UAPISDLA_H
+#define UAPISDLA_H
+#define UAPISDLA_H_
+#define NDK_ANDROID_SUPPORT_UAPISDLA_H
+#define NDK_ANDROID_SUPPORT_UAPISDLA_H_
+#define SDLA_H
+#define SDLA_H_
+#define _UAPISDLA_H_
 #define SDLA_TYPES
 #define SDLA_S502A 5020
 #define SDLA_S502E 5021

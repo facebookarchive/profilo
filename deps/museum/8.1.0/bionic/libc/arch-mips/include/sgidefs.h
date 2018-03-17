@@ -28,6 +28,11 @@
 
 #ifndef _SGIDEFS_H_
 #define _SGIDEFS_H_
+#define SGIDEFS_H_
+#define SGIDEFS_H
+#define NDK_ANDROID_SUPPORT_SGIDEFS_H_
+#define NDK_ANDROID_SUPPORT_SGIDEFS_H
+#define _SGIDEFS_H
 
 #include <asm/sgidefs.h>
 

@@ -28,6 +28,9 @@
 
 #ifndef _FEATURES_H_
 #define _FEATURES_H_
+#define FEATURES_H_
+#define FEATURES_H
+#define _FEATURES_H
 
 /* Our <features.h> macro fun is all in <sys/cdefs.h>. */
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>

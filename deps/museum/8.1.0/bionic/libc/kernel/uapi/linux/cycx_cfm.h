@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _CYCX_CFM_H
 #define _CYCX_CFM_H
+#define CYCX_CFM_H
+#define CYCX_CFM_H_
+#define NDK_ANDROID_SUPPORT_CYCX_CFM_H
+#define NDK_ANDROID_SUPPORT_CYCX_CFM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CYCX_CFM_H
+#define NDK_ANDROID_SUPPORT_UAPI_CYCX_CFM_H_
+#define _UAPI_CYCX_CFM_H
+#define _UAPI_CYCX_CFM_H_
+#define _CYCX_CFM_H_
 #define CFM_VERSION 2
 #define CFM_SIGNATURE "CFM - Cyclades CYCX Firmware Module"
 #define CFM_IMAGE_SIZE 0x20000

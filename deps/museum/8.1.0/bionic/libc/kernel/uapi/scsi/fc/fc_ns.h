@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _FC_NS_H_
 #define _FC_NS_H_
+#define FC_NS_H_
+#define FC_NS_H
+#define NDK_ANDROID_SUPPORT_FC_NS_H_
+#define NDK_ANDROID_SUPPORT_FC_NS_H
+#define NDK_ANDROID_SUPPORT_UAPI_FC_NS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_FC_NS_H
+#define _UAPI_FC_NS_H_
+#define _UAPI_FC_NS_H
+#define _FC_NS_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define FC_NS_SUBTYPE 2
 enum fc_ns_req {

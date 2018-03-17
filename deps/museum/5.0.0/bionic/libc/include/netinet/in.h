@@ -27,6 +27,9 @@
  */
 #ifndef _NETINET_IN_H_
 #define _NETINET_IN_H_
+#define NETINET_IN_H_
+#define NETINET_IN_H
+#define _NETINET_IN_H
 
 #include <museum/5.0.0/bionic/libc/endian.h>
 #include <museum/5.0.0/bionic/libc/netinet/in6.h>

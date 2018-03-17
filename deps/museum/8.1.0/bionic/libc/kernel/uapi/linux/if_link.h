@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_IF_LINK_H
 #define _UAPI_LINUX_IF_LINK_H
+#define UAPI_LINUX_IF_LINK_H
+#define UAPI_LINUX_IF_LINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_LINK_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_IF_LINK_H_
+#define NDK_ANDROID_SUPPORT_LINUX_IF_LINK_H
+#define NDK_ANDROID_SUPPORT_LINUX_IF_LINK_H_
+#define _LINUX_IF_LINK_H
+#define _LINUX_IF_LINK_H_
+#define _UAPI_LINUX_IF_LINK_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/netlink.h>
 struct rtnl_link_stats {

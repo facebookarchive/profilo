@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_INST_H
 #define _UAPI_ASM_INST_H
+#define UAPI_ASM_INST_H
+#define UAPI_ASM_INST_H_
+#define _ASM_INST_H
+#define _ASM_INST_H_
+#define _UAPI_ASM_INST_H_
 enum major_op {
  spec_op, bcond_op, j_op, jal_op,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

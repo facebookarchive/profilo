@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_TIME_H
 #define _XT_TIME_H 1
+#define XT_TIME_H
+#define XT_TIME_H_
+#define _UAPI_XT_TIME_H
+#define _UAPI_XT_TIME_H_
+#define _XT_TIME_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 struct xt_time_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

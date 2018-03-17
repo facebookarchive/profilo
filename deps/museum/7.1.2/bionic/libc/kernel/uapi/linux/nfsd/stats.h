@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NFSD_STATS_H
 #define _UAPILINUX_NFSD_STATS_H
+#define UAPILINUX_NFSD_STATS_H
+#define UAPILINUX_NFSD_STATS_H_
+#define LINUX_NFSD_STATS_H
+#define LINUX_NFSD_STATS_H_
+#define _UAPILINUX_NFSD_STATS_H_
 #include <museum/7.1.2/bionic/libc/linux/nfs4.h>
 #define NFSD_USAGE_WRAP (HZ * 1000000)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

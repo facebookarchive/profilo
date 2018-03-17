@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ION_H
 #define _UAPI_LINUX_ION_H
+#define UAPI_LINUX_ION_H
+#define UAPI_LINUX_ION_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ION_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ION_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ION_H
+#define NDK_ANDROID_SUPPORT_LINUX_ION_H_
+#define _LINUX_ION_H
+#define _LINUX_ION_H_
+#define _UAPI_LINUX_ION_H_
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 typedef int ion_user_handle_t;

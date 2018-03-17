@@ -19,6 +19,11 @@
 #include <museum/7.1.2/bionic/libc/linux/libc-compat.h>
 #ifndef _UAPI_LINUX_XATTR_H
 #define _UAPI_LINUX_XATTR_H
+#define UAPI_LINUX_XATTR_H
+#define UAPI_LINUX_XATTR_H_
+#define _LINUX_XATTR_H
+#define _LINUX_XATTR_H_
+#define _UAPI_LINUX_XATTR_H_
 #if __UAPI_DEF_XATTR
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 #define __USE_KERNEL_XATTR_DEFS

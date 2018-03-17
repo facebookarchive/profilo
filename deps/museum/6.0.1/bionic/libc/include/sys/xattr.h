@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_XATTR_H_
 #define _SYS_XATTR_H_
+#define SYS_XATTR_H_
+#define SYS_XATTR_H
+#define NDK_ANDROID_SUPPORT_SYS_XATTR_H_
+#define NDK_ANDROID_SUPPORT_SYS_XATTR_H
+#define _SYS_XATTR_H
 
 #include <museum/6.0.1/bionic/libc/sys/types.h>
 

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__SVM_H
 #define _UAPI__SVM_H
+#define UAPI__SVM_H
+#define UAPI__SVM_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SVM_H
+#define NDK_ANDROID_SUPPORT_UAPI__SVM_H_
+#define NDK_ANDROID_SUPPORT__SVM_H
+#define NDK_ANDROID_SUPPORT__SVM_H_
+#define __SVM_H
+#define __SVM_H_
+#define _UAPI__SVM_H_
 #define SVM_EXIT_READ_CR0 0x000
 #define SVM_EXIT_READ_CR2 0x002
 #define SVM_EXIT_READ_CR3 0x003

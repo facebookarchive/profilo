@@ -28,6 +28,11 @@
 
 #ifndef _MACHINE_TIMESPEC_H_
 #define _MACHINE_TIMESPEC_H_
+#define MACHINE_TIMESPEC_H_
+#define MACHINE_TIMESPEC_H
+#define NDK_ANDROID_SUPPORT_MACHINE_TIMESPEC_H_
+#define NDK_ANDROID_SUPPORT_MACHINE_TIMESPEC_H
+#define _MACHINE_TIMESPEC_H
 
 #include <museum/6.0.1/bionic/libc/sys/types.h>
 

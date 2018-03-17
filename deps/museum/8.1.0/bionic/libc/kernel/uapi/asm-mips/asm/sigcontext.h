@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_SIGCONTEXT_H
 #define _UAPI_ASM_SIGCONTEXT_H
+#define UAPI_ASM_SIGCONTEXT_H
+#define UAPI_ASM_SIGCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SIGCONTEXT_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SIGCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_ASM_SIGCONTEXT_H
+#define NDK_ANDROID_SUPPORT_ASM_SIGCONTEXT_H_
+#define _ASM_SIGCONTEXT_H
+#define _ASM_SIGCONTEXT_H_
+#define _UAPI_ASM_SIGCONTEXT_H_
 #include <linux/types.h>
 #include <asm/sgidefs.h>
 #define USED_FP (1 << 0)

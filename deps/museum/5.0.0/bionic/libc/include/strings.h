@@ -38,6 +38,9 @@
 
 #ifndef _STRINGS_H_
 #define _STRINGS_H_
+#define STRINGS_H_
+#define STRINGS_H
+#define _STRINGS_H
 
 #include <museum/5.0.0/bionic/libc/sys/types.h>
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>

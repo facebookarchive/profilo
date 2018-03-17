@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_FUSE_H
 #define _LINUX_FUSE_H
+#define LINUX_FUSE_H
+#define LINUX_FUSE_H_
+#define NDK_ANDROID_SUPPORT_LINUX_FUSE_H
+#define NDK_ANDROID_SUPPORT_LINUX_FUSE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_FUSE_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_FUSE_H_
+#define _UAPI_LINUX_FUSE_H
+#define _UAPI_LINUX_FUSE_H_
+#define _LINUX_FUSE_H_
 #include <museum/8.1.0/bionic/libc/stdint.h>
 #define FUSE_KERNEL_VERSION 7
 #define FUSE_KERNEL_MINOR_VERSION 26

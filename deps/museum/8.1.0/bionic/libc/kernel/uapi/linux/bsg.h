@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPIBSG_H
 #define _UAPIBSG_H
+#define UAPIBSG_H
+#define UAPIBSG_H_
+#define NDK_ANDROID_SUPPORT_UAPIBSG_H
+#define NDK_ANDROID_SUPPORT_UAPIBSG_H_
+#define BSG_H
+#define BSG_H_
+#define _UAPIBSG_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define BSG_PROTOCOL_SCSI 0
 #define BSG_SUB_PROTOCOL_SCSI_CMD 0

@@ -28,6 +28,9 @@
 
 #ifndef _PTY_H
 #define _PTY_H
+#define PTY_H
+#define PTY_H_
+#define _PTY_H_
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 

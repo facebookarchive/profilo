@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_HDREG_H
 #define _LINUX_HDREG_H
+#define LINUX_HDREG_H
+#define LINUX_HDREG_H_
+#define NDK_ANDROID_SUPPORT_LINUX_HDREG_H
+#define NDK_ANDROID_SUPPORT_LINUX_HDREG_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_HDREG_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_HDREG_H_
+#define _UAPI_LINUX_HDREG_H
+#define _UAPI_LINUX_HDREG_H_
+#define _LINUX_HDREG_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define HDIO_DRIVE_CMD_HDR_SIZE (4 * sizeof(__u8))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

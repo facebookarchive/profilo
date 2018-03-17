@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_MD_U_H
 #define _UAPI_MD_U_H
+#define UAPI_MD_U_H
+#define UAPI_MD_U_H_
+#define _MD_U_H
+#define _MD_U_H_
+#define _UAPI_MD_U_H_
 #define MD_MAJOR_VERSION 0
 #define MD_MINOR_VERSION 90
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

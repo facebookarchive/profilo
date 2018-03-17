@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_USERFAULTFD_H
 #define _LINUX_USERFAULTFD_H
+#define LINUX_USERFAULTFD_H
+#define LINUX_USERFAULTFD_H_
+#define _UAPI_LINUX_USERFAULTFD_H
+#define _UAPI_LINUX_USERFAULTFD_H_
+#define _LINUX_USERFAULTFD_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #define UFFD_API ((__u64) 0xAA)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

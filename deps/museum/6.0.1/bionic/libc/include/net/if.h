@@ -28,6 +28,11 @@
 
 #ifndef _NET_IF_H_
 #define _NET_IF_H_
+#define NET_IF_H_
+#define NET_IF_H
+#define NDK_ANDROID_SUPPORT_NET_IF_H_
+#define NDK_ANDROID_SUPPORT_NET_IF_H
+#define _NET_IF_H
 
 #include <museum/6.0.1/bionic/libc/sys/socket.h>
 #include <museum/6.0.1/bionic/libc/linux/if.h>

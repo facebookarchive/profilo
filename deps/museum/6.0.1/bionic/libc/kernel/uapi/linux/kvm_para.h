@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_KVM_PARA_H
 #define _UAPI__LINUX_KVM_PARA_H
+#define UAPI__LINUX_KVM_PARA_H
+#define UAPI__LINUX_KVM_PARA_H_
+#define __LINUX_KVM_PARA_H
+#define __LINUX_KVM_PARA_H_
+#define _UAPI__LINUX_KVM_PARA_H_
 #define KVM_ENOSYS 1000
 #define KVM_EFAULT EFAULT
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

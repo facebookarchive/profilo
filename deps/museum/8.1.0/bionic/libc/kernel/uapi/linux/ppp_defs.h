@@ -19,6 +19,15 @@
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #ifndef _UAPI_PPP_DEFS_H_
 #define _UAPI_PPP_DEFS_H_
+#define UAPI_PPP_DEFS_H_
+#define UAPI_PPP_DEFS_H
+#define NDK_ANDROID_SUPPORT_UAPI_PPP_DEFS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_PPP_DEFS_H
+#define NDK_ANDROID_SUPPORT_PPP_DEFS_H_
+#define NDK_ANDROID_SUPPORT_PPP_DEFS_H
+#define _PPP_DEFS_H_
+#define _PPP_DEFS_H
+#define _UAPI_PPP_DEFS_H
 #define PPP_HDRLEN 4
 #define PPP_FCSLEN 2
 #define PPP_MRU 1500

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_KVM_MIPS_H
 #define __LINUX_KVM_MIPS_H
+#define _LINUX_KVM_MIPS_H
+#define _LINUX_KVM_MIPS_H_
+#define _UAPI_LINUX_KVM_MIPS_H
+#define _UAPI_LINUX_KVM_MIPS_H_
+#define _UAPI__LINUX_KVM_MIPS_H
+#define _UAPI__LINUX_KVM_MIPS_H_
+#define __LINUX_KVM_MIPS_H_
 #include <linux/types.h>
 struct kvm_regs {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -15,6 +15,9 @@
  */
 #ifndef BIONIC_ATOMIC_MIPS_H
 #define BIONIC_ATOMIC_MIPS_H
+#define _BIONIC_ATOMIC_MIPS_H
+#define _BIONIC_ATOMIC_MIPS_H_
+#define BIONIC_ATOMIC_MIPS_H_
 
 /* Define a full memory barrier, this is only needed if we build the
  * platform for a multi-core device.

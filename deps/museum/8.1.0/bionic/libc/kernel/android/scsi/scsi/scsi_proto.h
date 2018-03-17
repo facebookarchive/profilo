@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _SCSI_PROTO_H_
 #define _SCSI_PROTO_H_
+#define SCSI_PROTO_H_
+#define SCSI_PROTO_H
+#define NDK_ANDROID_SUPPORT_SCSI_PROTO_H_
+#define NDK_ANDROID_SUPPORT_SCSI_PROTO_H
+#define _SCSI_PROTO_H
 #include <linux/types.h>
 #define TEST_UNIT_READY 0x00
 #define REZERO_UNIT 0x01

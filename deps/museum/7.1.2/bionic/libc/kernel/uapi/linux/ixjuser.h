@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_IXJUSER_H
 #define __LINUX_IXJUSER_H
+#define _LINUX_IXJUSER_H
+#define _LINUX_IXJUSER_H_
+#define _UAPI_LINUX_IXJUSER_H
+#define _UAPI_LINUX_IXJUSER_H_
+#define _UAPI__LINUX_IXJUSER_H
+#define _UAPI__LINUX_IXJUSER_H_
+#define __LINUX_IXJUSER_H_
 #include <museum/7.1.2/bionic/libc/linux/telephony.h>
 #define IXJCTL_DSP_RESET _IO('q', 0xC0)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPIFSL_HYPERVISOR_H
 #define _UAPIFSL_HYPERVISOR_H
+#define UAPIFSL_HYPERVISOR_H
+#define UAPIFSL_HYPERVISOR_H_
+#define NDK_ANDROID_SUPPORT_UAPIFSL_HYPERVISOR_H
+#define NDK_ANDROID_SUPPORT_UAPIFSL_HYPERVISOR_H_
+#define FSL_HYPERVISOR_H
+#define FSL_HYPERVISOR_H_
+#define _UAPIFSL_HYPERVISOR_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 struct fsl_hv_ioctl_restart {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

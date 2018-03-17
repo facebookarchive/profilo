@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IPT_LOG_H
 #define _IPT_LOG_H
+#define IPT_LOG_H
+#define IPT_LOG_H_
+#define _UAPI_IPT_LOG_H
+#define _UAPI_IPT_LOG_H_
+#define _IPT_LOG_H_
 #warning "Please update iptables, this file will be removed soon!"
 #define IPT_LOG_TCPSEQ 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

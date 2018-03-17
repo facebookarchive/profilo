@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _FC_FS_H_
 #define _FC_FS_H_
+#define FC_FS_H_
+#define FC_FS_H
+#define NDK_ANDROID_SUPPORT_FC_FS_H_
+#define NDK_ANDROID_SUPPORT_FC_FS_H
+#define NDK_ANDROID_SUPPORT_UAPI_FC_FS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_FC_FS_H
+#define _UAPI_FC_FS_H_
+#define _UAPI_FC_FS_H
+#define _FC_FS_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct fc_frame_header {
   __u8 fh_r_ctl;

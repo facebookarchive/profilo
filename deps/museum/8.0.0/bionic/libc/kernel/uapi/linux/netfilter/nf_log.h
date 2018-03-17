@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NETFILTER_NF_LOG_H
 #define _NETFILTER_NF_LOG_H
+#define NETFILTER_NF_LOG_H
+#define NETFILTER_NF_LOG_H_
+#define _UAPI_NETFILTER_NF_LOG_H
+#define _UAPI_NETFILTER_NF_LOG_H_
+#define _NETFILTER_NF_LOG_H_
 #define NF_LOG_TCPSEQ 0x01
 #define NF_LOG_TCPOPT 0x02
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

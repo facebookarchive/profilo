@@ -28,6 +28,11 @@
 
 #ifndef _SYS_STAT_H_
 #define _SYS_STAT_H_
+#define SYS_STAT_H_
+#define SYS_STAT_H
+#define NDK_ANDROID_SUPPORT_SYS_STAT_H_
+#define NDK_ANDROID_SUPPORT_SYS_STAT_H
+#define _SYS_STAT_H
 
 #include <museum/6.0.1/bionic/libc/linux/stat.h>
 #include <museum/6.0.1/bionic/libc/machine/timespec.h>

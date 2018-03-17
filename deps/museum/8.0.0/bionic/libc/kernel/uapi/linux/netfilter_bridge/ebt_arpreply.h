@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_ARPREPLY_H
 #define __LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define _UAPI_LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _UAPI_LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define _UAPI__LINUX_BRIDGE_EBT_ARPREPLY_H
+#define _UAPI__LINUX_BRIDGE_EBT_ARPREPLY_H_
+#define __LINUX_BRIDGE_EBT_ARPREPLY_H_
 #include <museum/8.0.0/bionic/libc/linux/if_ether.h>
 struct ebt_arpreply_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

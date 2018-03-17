@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FLAT_H
 #define _UAPI_LINUX_FLAT_H
+#define UAPI_LINUX_FLAT_H
+#define UAPI_LINUX_FLAT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_FLAT_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_FLAT_H_
+#define NDK_ANDROID_SUPPORT_LINUX_FLAT_H
+#define NDK_ANDROID_SUPPORT_LINUX_FLAT_H_
+#define _LINUX_FLAT_H
+#define _LINUX_FLAT_H_
+#define _UAPI_LINUX_FLAT_H_
 #define FLAT_VERSION 0x00000004L
 #define MAX_SHARED_LIBS (1)
 struct flat_hdr {

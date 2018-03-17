@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__CODA_PSDEV_H
 #define _UAPI__CODA_PSDEV_H
+#define UAPI__CODA_PSDEV_H
+#define UAPI__CODA_PSDEV_H_
+#define NDK_ANDROID_SUPPORT_UAPI__CODA_PSDEV_H
+#define NDK_ANDROID_SUPPORT_UAPI__CODA_PSDEV_H_
+#define NDK_ANDROID_SUPPORT__CODA_PSDEV_H
+#define NDK_ANDROID_SUPPORT__CODA_PSDEV_H_
+#define __CODA_PSDEV_H
+#define __CODA_PSDEV_H_
+#define _UAPI__CODA_PSDEV_H_
 #include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define CODA_PSDEV_MAJOR 67
 #define MAX_CODADEVS 5

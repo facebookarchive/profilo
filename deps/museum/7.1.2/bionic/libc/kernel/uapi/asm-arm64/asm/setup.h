@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_SETUP_H
 #define __ASM_SETUP_H
+#define _ASM_SETUP_H
+#define _ASM_SETUP_H_
+#define _UAPI_ASM_SETUP_H
+#define _UAPI_ASM_SETUP_H_
+#define _UAPI__ASM_SETUP_H
+#define _UAPI__ASM_SETUP_H_
+#define __ASM_SETUP_H_
 #include <linux/types.h>
 #define COMMAND_LINE_SIZE 2048
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

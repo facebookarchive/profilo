@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IPT_ULOG_H
 #define _IPT_ULOG_H
+#define IPT_ULOG_H
+#define IPT_ULOG_H_
+#define _UAPI_IPT_ULOG_H
+#define _UAPI_IPT_ULOG_H_
+#define _IPT_ULOG_H_
 #ifndef NETLINK_NFLOG
 #define NETLINK_NFLOG 5
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

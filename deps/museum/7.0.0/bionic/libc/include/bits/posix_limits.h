@@ -28,6 +28,9 @@
 
 #ifndef _BITS_POSIX_LIMITS_H_
 #define _BITS_POSIX_LIMITS_H_
+#define BITS_POSIX_LIMITS_H_
+#define BITS_POSIX_LIMITS_H
+#define _BITS_POSIX_LIMITS_H
 
 
 /* Any constant values here other than -1 or 200809L are explicitly specified by POSIX.1-2008. */

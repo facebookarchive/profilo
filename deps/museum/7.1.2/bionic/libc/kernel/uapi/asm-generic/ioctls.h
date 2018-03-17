@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_IOCTLS_H
 #define __ASM_GENERIC_IOCTLS_H
+#define _ASM_GENERIC_IOCTLS_H
+#define _ASM_GENERIC_IOCTLS_H_
+#define _UAPI_ASM_GENERIC_IOCTLS_H
+#define _UAPI_ASM_GENERIC_IOCTLS_H_
+#define _UAPI__ASM_GENERIC_IOCTLS_H
+#define _UAPI__ASM_GENERIC_IOCTLS_H_
+#define __ASM_GENERIC_IOCTLS_H_
 #include <museum/7.1.2/bionic/libc/linux/ioctl.h>
 #define TCGETS 0x5401
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

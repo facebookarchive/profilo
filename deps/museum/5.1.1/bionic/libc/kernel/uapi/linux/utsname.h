@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_UTSNAME_H
 #define _UAPI_LINUX_UTSNAME_H
+#define UAPI_LINUX_UTSNAME_H
+#define UAPI_LINUX_UTSNAME_H_
+#define _LINUX_UTSNAME_H
+#define _LINUX_UTSNAME_H_
+#define _UAPI_LINUX_UTSNAME_H_
 #define __OLD_UTS_LEN 8
 struct oldold_utsname {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

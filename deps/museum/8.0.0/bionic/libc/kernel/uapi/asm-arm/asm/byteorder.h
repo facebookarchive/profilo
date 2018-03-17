@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_ARM_BYTEORDER_H
 #define __ASM_ARM_BYTEORDER_H
+#define _ASM_ARM_BYTEORDER_H
+#define _ASM_ARM_BYTEORDER_H_
+#define _UAPI_ASM_ARM_BYTEORDER_H
+#define _UAPI_ASM_ARM_BYTEORDER_H_
+#define _UAPI__ASM_ARM_BYTEORDER_H
+#define _UAPI__ASM_ARM_BYTEORDER_H_
+#define __ASM_ARM_BYTEORDER_H_
 #include <museum/8.0.0/bionic/libc/linux/byteorder/little_endian.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

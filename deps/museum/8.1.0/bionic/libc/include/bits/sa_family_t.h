@@ -28,6 +28,11 @@
 
 #ifndef _BITS_SA_FAMILY_T_H_
 #define _BITS_SA_FAMILY_T_H_
+#define BITS_SA_FAMILY_T_H_
+#define BITS_SA_FAMILY_T_H
+#define NDK_ANDROID_SUPPORT_BITS_SA_FAMILY_T_H_
+#define NDK_ANDROID_SUPPORT_BITS_SA_FAMILY_T_H
+#define _BITS_SA_FAMILY_T_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

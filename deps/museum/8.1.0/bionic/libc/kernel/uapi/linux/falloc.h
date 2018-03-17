@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_FALLOC_H_
 #define _UAPI_FALLOC_H_
+#define UAPI_FALLOC_H_
+#define UAPI_FALLOC_H
+#define NDK_ANDROID_SUPPORT_UAPI_FALLOC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_FALLOC_H
+#define NDK_ANDROID_SUPPORT_FALLOC_H_
+#define NDK_ANDROID_SUPPORT_FALLOC_H
+#define _FALLOC_H_
+#define _FALLOC_H
+#define _UAPI_FALLOC_H
 #define FALLOC_FL_KEEP_SIZE 0x01
 #define FALLOC_FL_PUNCH_HOLE 0x02
 #define FALLOC_FL_NO_HIDE_STALE 0x04

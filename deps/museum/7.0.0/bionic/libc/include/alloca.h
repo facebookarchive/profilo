@@ -27,6 +27,9 @@
  */
 #ifndef _ALLOCA_H
 #define _ALLOCA_H
+#define ALLOCA_H
+#define ALLOCA_H_
+#define _ALLOCA_H_
 
 #define alloca(size)   __builtin_alloca(size)
 

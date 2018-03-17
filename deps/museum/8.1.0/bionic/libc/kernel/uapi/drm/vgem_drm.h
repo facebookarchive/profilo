@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_VGEM_DRM_H_
 #define _UAPI_VGEM_DRM_H_
+#define UAPI_VGEM_DRM_H_
+#define UAPI_VGEM_DRM_H
+#define NDK_ANDROID_SUPPORT_UAPI_VGEM_DRM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_VGEM_DRM_H
+#define NDK_ANDROID_SUPPORT_VGEM_DRM_H_
+#define NDK_ANDROID_SUPPORT_VGEM_DRM_H
+#define _VGEM_DRM_H_
+#define _VGEM_DRM_H
+#define _UAPI_VGEM_DRM_H
 #include "drm.h"
 #ifdef __cplusplus
 #endif

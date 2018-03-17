@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SIGNALFD_H_
 #define _SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H_
+#define SYS_SIGNALFD_H
+#define _SYS_SIGNALFD_H
 
 #include <museum/7.0.0/bionic/libc/linux/signalfd.h>
 #include <museum/7.0.0/bionic/libc/signal.h>

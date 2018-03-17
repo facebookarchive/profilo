@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_UCONTEXT_H
 #define _UAPI__ASM_UCONTEXT_H
+#define UAPI__ASM_UCONTEXT_H
+#define UAPI__ASM_UCONTEXT_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_UCONTEXT_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_UCONTEXT_H_
+#define NDK_ANDROID_SUPPORT__ASM_UCONTEXT_H
+#define NDK_ANDROID_SUPPORT__ASM_UCONTEXT_H_
+#define __ASM_UCONTEXT_H
+#define __ASM_UCONTEXT_H_
+#define _UAPI__ASM_UCONTEXT_H_
 #include <linux/types.h>
 struct ucontext {
   unsigned long uc_flags;

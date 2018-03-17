@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_IOCTL_H_
 #define _SYS_IOCTL_H_
+#define SYS_IOCTL_H_
+#define SYS_IOCTL_H
+#define _SYS_IOCTL_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/linux/ioctl.h>

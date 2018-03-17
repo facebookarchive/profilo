@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_BLKPG_H
 #define _UAPI__LINUX_BLKPG_H
+#define UAPI__LINUX_BLKPG_H
+#define UAPI__LINUX_BLKPG_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_BLKPG_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_BLKPG_H_
+#define NDK_ANDROID_SUPPORT__LINUX_BLKPG_H
+#define NDK_ANDROID_SUPPORT__LINUX_BLKPG_H_
+#define __LINUX_BLKPG_H
+#define __LINUX_BLKPG_H_
+#define _UAPI__LINUX_BLKPG_H_
 #include <linux/compiler.h>
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define BLKPG _IO(0x12, 105)

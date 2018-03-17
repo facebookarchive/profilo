@@ -16,6 +16,9 @@
 
 #ifndef LIBC_BIONIC_DLMALLOC_H_
 #define LIBC_BIONIC_DLMALLOC_H_
+#define _LIBC_BIONIC_DLMALLOC_H_
+#define _LIBC_BIONIC_DLMALLOC_H
+#define LIBC_BIONIC_DLMALLOC_H
 
 #include <sys/cdefs.h>
 #include <stddef.h>

@@ -1,5 +1,8 @@
 #ifndef _RESOLV_STATIC_H
 #define _RESOLV_STATIC_H
+#define RESOLV_STATIC_H
+#define RESOLV_STATIC_H_
+#define _RESOLV_STATIC_H_
 
 #include <netdb.h>
 

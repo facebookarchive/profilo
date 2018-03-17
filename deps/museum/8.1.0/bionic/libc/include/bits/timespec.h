@@ -28,6 +28,11 @@
 
 #ifndef _BITS_TIMESPEC_H_
 #define _BITS_TIMESPEC_H_
+#define BITS_TIMESPEC_H_
+#define BITS_TIMESPEC_H
+#define NDK_ANDROID_SUPPORT_BITS_TIMESPEC_H_
+#define NDK_ANDROID_SUPPORT_BITS_TIMESPEC_H
+#define _BITS_TIMESPEC_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef DRM_ARMADA_IOCTL_H
 #define DRM_ARMADA_IOCTL_H
+#define _DRM_ARMADA_IOCTL_H
+#define _DRM_ARMADA_IOCTL_H_
+#define _UAPI_DRM_ARMADA_IOCTL_H
+#define _UAPI_DRM_ARMADA_IOCTL_H_
+#define _UAPIDRM_ARMADA_IOCTL_H
+#define _UAPIDRM_ARMADA_IOCTL_H_
+#define DRM_ARMADA_IOCTL_H_
 #define DRM_ARMADA_GEM_CREATE 0x00
 #define DRM_ARMADA_GEM_MMAP 0x02
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

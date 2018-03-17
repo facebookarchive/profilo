@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef LINUX_PCI_REGS_H
 #define LINUX_PCI_REGS_H
+#define _LINUX_PCI_REGS_H
+#define _LINUX_PCI_REGS_H_
+#define _UAPI_LINUX_PCI_REGS_H
+#define _UAPI_LINUX_PCI_REGS_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_PCI_REGS_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_PCI_REGS_H_
+#define _UAPILINUX_PCI_REGS_H
+#define _UAPILINUX_PCI_REGS_H_
+#define LINUX_PCI_REGS_H_
 #define PCI_CFG_SPACE_SIZE 256
 #define PCI_CFG_SPACE_EXP_SIZE 4096
 #define PCI_STD_HEADER_SIZEOF 64

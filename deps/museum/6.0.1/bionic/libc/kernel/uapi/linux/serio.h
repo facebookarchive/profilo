@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_SERIO_H
 #define _UAPI_SERIO_H
+#define UAPI_SERIO_H
+#define UAPI_SERIO_H_
+#define NDK_ANDROID_SUPPORT_UAPI_SERIO_H
+#define NDK_ANDROID_SUPPORT_UAPI_SERIO_H_
+#define NDK_ANDROID_SUPPORT_SERIO_H
+#define NDK_ANDROID_SUPPORT_SERIO_H_
+#define _SERIO_H
+#define _SERIO_H_
+#define _UAPI_SERIO_H_
 #include <museum/6.0.1/bionic/libc/linux/ioctl.h>
 #define SPIOCSTYPE _IOW('q', 0x01, unsigned long)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

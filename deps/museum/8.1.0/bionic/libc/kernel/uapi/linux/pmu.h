@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_PMU_H
 #define _UAPI_LINUX_PMU_H
+#define UAPI_LINUX_PMU_H
+#define UAPI_LINUX_PMU_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_PMU_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_PMU_H_
+#define NDK_ANDROID_SUPPORT_LINUX_PMU_H
+#define NDK_ANDROID_SUPPORT_LINUX_PMU_H_
+#define _LINUX_PMU_H
+#define _LINUX_PMU_H_
+#define _UAPI_LINUX_PMU_H_
 #define PMU_DRIVER_VERSION 2
 #define PMU_POWER_CTRL0 0x10
 #define PMU_POWER_CTRL 0x11

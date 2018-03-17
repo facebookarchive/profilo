@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_SYNCLINK_H_
 #define _UAPI_SYNCLINK_H_
+#define UAPI_SYNCLINK_H_
+#define UAPI_SYNCLINK_H
+#define _SYNCLINK_H_
+#define _SYNCLINK_H
+#define _UAPI_SYNCLINK_H
 #define SYNCLINK_H_VERSION 3.6
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

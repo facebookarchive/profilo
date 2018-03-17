@@ -28,6 +28,11 @@
 
 #ifndef _BITS_AUXVEC_H_
 #define _BITS_AUXVEC_H_
+#define BITS_AUXVEC_H_
+#define BITS_AUXVEC_H
+#define NDK_ANDROID_SUPPORT_BITS_AUXVEC_H_
+#define NDK_ANDROID_SUPPORT_BITS_AUXVEC_H
+#define _BITS_AUXVEC_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

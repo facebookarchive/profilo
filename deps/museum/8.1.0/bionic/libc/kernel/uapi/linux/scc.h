@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_SCC_H
 #define _UAPI_SCC_H
+#define UAPI_SCC_H
+#define UAPI_SCC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_SCC_H
+#define NDK_ANDROID_SUPPORT_UAPI_SCC_H_
+#define NDK_ANDROID_SUPPORT_SCC_H
+#define NDK_ANDROID_SUPPORT_SCC_H_
+#define _SCC_H
+#define _SCC_H_
+#define _UAPI_SCC_H_
 #define PA0HZP 0x00
 #define EAGLE 0x01
 #define PC100 0x02

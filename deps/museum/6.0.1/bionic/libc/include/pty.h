@@ -28,6 +28,11 @@
 
 #ifndef _PTY_H
 #define _PTY_H
+#define PTY_H
+#define PTY_H_
+#define NDK_ANDROID_SUPPORT_PTY_H
+#define NDK_ANDROID_SUPPORT_PTY_H_
+#define _PTY_H_
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 

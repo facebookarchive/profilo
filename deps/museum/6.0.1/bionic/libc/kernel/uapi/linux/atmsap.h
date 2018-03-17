@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMSAP_H
 #define _LINUX_ATMSAP_H
+#define LINUX_ATMSAP_H
+#define LINUX_ATMSAP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ATMSAP_H
+#define NDK_ANDROID_SUPPORT_LINUX_ATMSAP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ATMSAP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ATMSAP_H_
+#define _UAPI_LINUX_ATMSAP_H
+#define _UAPI_LINUX_ATMSAP_H_
+#define _LINUX_ATMSAP_H_
 #include <museum/6.0.1/bionic/libc/linux/atmapi.h>
 #define ATM_L2_NONE 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

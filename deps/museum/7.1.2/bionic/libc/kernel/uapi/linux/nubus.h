@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NUBUS_H
 #define _UAPILINUX_NUBUS_H
+#define UAPILINUX_NUBUS_H
+#define UAPILINUX_NUBUS_H_
+#define LINUX_NUBUS_H
+#define LINUX_NUBUS_H_
+#define _UAPILINUX_NUBUS_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 enum nubus_category {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

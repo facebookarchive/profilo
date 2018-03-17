@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_NETFILTER_XT_IPRANGE_H
 #define _LINUX_NETFILTER_XT_IPRANGE_H 1
+#define LINUX_NETFILTER_XT_IPRANGE_H
+#define LINUX_NETFILTER_XT_IPRANGE_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NETFILTER_XT_IPRANGE_H
+#define NDK_ANDROID_SUPPORT_LINUX_NETFILTER_XT_IPRANGE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NETFILTER_XT_IPRANGE_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NETFILTER_XT_IPRANGE_H_
+#define _UAPI_LINUX_NETFILTER_XT_IPRANGE_H
+#define _UAPI_LINUX_NETFILTER_XT_IPRANGE_H_
+#define _LINUX_NETFILTER_XT_IPRANGE_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/netfilter.h>
 enum {

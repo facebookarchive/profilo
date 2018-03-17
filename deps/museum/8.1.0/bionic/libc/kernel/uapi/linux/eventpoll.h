@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_EVENTPOLL_H
 #define _UAPI_LINUX_EVENTPOLL_H
+#define UAPI_LINUX_EVENTPOLL_H
+#define UAPI_LINUX_EVENTPOLL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_EVENTPOLL_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_EVENTPOLL_H_
+#define NDK_ANDROID_SUPPORT_LINUX_EVENTPOLL_H
+#define NDK_ANDROID_SUPPORT_LINUX_EVENTPOLL_H_
+#define _LINUX_EVENTPOLL_H
+#define _LINUX_EVENTPOLL_H_
+#define _UAPI_LINUX_EVENTPOLL_H_
 #include <museum/8.1.0/bionic/libc/linux/fcntl.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define EPOLL_CLOEXEC O_CLOEXEC

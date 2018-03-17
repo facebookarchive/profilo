@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _VIA_DRM_H_
 #define _VIA_DRM_H_
+#define VIA_DRM_H_
+#define VIA_DRM_H
+#define _UAPI_VIA_DRM_H_
+#define _UAPI_VIA_DRM_H
+#define _VIA_DRM_H
 #include "drm.h"
 #ifdef __cplusplus
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

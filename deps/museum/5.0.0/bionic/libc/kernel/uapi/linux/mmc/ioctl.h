@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef LINUX_MMC_IOCTL_H
 #define LINUX_MMC_IOCTL_H
+#define _LINUX_MMC_IOCTL_H
+#define _LINUX_MMC_IOCTL_H_
+#define _UAPI_LINUX_MMC_IOCTL_H
+#define _UAPI_LINUX_MMC_IOCTL_H_
+#define _UAPILINUX_MMC_IOCTL_H
+#define _UAPILINUX_MMC_IOCTL_H_
+#define LINUX_MMC_IOCTL_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 struct mmc_ioc_cmd {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

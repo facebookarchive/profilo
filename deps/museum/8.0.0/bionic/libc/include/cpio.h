@@ -28,6 +28,9 @@
 
 #ifndef _CPIO_H_
 #define _CPIO_H_
+#define CPIO_H_
+#define CPIO_H
+#define _CPIO_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

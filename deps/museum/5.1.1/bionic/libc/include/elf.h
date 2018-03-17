@@ -27,6 +27,9 @@
  */
 #ifndef _ELF_H
 #define _ELF_H
+#define ELF_H
+#define ELF_H_
+#define _ELF_H_
 
 #include <museum/5.1.1/bionic/libc/linux/auxvec.h>
 #include <museum/5.1.1/bionic/libc/linux/elf.h>

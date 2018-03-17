@@ -28,6 +28,11 @@
 
 #ifndef _ELF_H
 #define _ELF_H
+#define ELF_H
+#define ELF_H_
+#define NDK_ANDROID_SUPPORT_ELF_H
+#define NDK_ANDROID_SUPPORT_ELF_H_
+#define _ELF_H_
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

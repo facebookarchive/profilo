@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_MMAN_H
 #define _ASM_MMAN_H
+#define ASM_MMAN_H
+#define ASM_MMAN_H_
+#define _UAPI_ASM_MMAN_H
+#define _UAPI_ASM_MMAN_H_
+#define _ASM_MMAN_H_
 #define PROT_NONE 0x00
 #define PROT_READ 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

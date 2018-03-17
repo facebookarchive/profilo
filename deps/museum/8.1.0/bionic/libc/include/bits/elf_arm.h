@@ -2,6 +2,11 @@
 
 #ifndef _ARM_ELF_MACHDEP_H_
 #define _ARM_ELF_MACHDEP_H_
+#define ARM_ELF_MACHDEP_H_
+#define ARM_ELF_MACHDEP_H
+#define NDK_ANDROID_SUPPORT_ARM_ELF_MACHDEP_H_
+#define NDK_ANDROID_SUPPORT_ARM_ELF_MACHDEP_H
+#define _ARM_ELF_MACHDEP_H
 
 /* Android-added. */
 #define R_ARM_IRELATIVE		160

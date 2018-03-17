@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BATMAN_ADV_H_
 #define _UAPI_LINUX_BATMAN_ADV_H_
+#define UAPI_LINUX_BATMAN_ADV_H_
+#define UAPI_LINUX_BATMAN_ADV_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_BATMAN_ADV_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_BATMAN_ADV_H
+#define NDK_ANDROID_SUPPORT_LINUX_BATMAN_ADV_H_
+#define NDK_ANDROID_SUPPORT_LINUX_BATMAN_ADV_H
+#define _LINUX_BATMAN_ADV_H_
+#define _LINUX_BATMAN_ADV_H
+#define _UAPI_LINUX_BATMAN_ADV_H
 #define BATADV_NL_NAME "batadv"
 #define BATADV_NL_MCAST_GROUP_TPMETER "tpmeter"
 enum batadv_tt_client_flags {

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__CRAMFS_H
 #define _UAPI__CRAMFS_H
+#define UAPI__CRAMFS_H
+#define UAPI__CRAMFS_H_
+#define NDK_ANDROID_SUPPORT_UAPI__CRAMFS_H
+#define NDK_ANDROID_SUPPORT_UAPI__CRAMFS_H_
+#define NDK_ANDROID_SUPPORT__CRAMFS_H
+#define NDK_ANDROID_SUPPORT__CRAMFS_H_
+#define __CRAMFS_H
+#define __CRAMFS_H_
+#define _UAPI__CRAMFS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/magic.h>
 #define CRAMFS_SIGNATURE "Compressed ROMFS"

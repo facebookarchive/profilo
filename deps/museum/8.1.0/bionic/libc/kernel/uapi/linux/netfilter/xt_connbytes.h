@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_CONNBYTES_H
 #define _XT_CONNBYTES_H
+#define XT_CONNBYTES_H
+#define XT_CONNBYTES_H_
+#define NDK_ANDROID_SUPPORT_XT_CONNBYTES_H
+#define NDK_ANDROID_SUPPORT_XT_CONNBYTES_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_CONNBYTES_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_CONNBYTES_H_
+#define _UAPI_XT_CONNBYTES_H
+#define _UAPI_XT_CONNBYTES_H_
+#define _XT_CONNBYTES_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum xt_connbytes_what {
   XT_CONNBYTES_PKTS,

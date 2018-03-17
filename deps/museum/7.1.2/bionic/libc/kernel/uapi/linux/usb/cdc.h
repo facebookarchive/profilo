@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __UAPI_LINUX_USB_CDC_H
 #define __UAPI_LINUX_USB_CDC_H
+#define _UAPI_LINUX_USB_CDC_H
+#define _UAPI_LINUX_USB_CDC_H_
+#define _LINUX_USB_CDC_H
+#define _LINUX_USB_CDC_H_
+#define _UAPI__UAPI_LINUX_USB_CDC_H
+#define _UAPI__UAPI_LINUX_USB_CDC_H_
+#define __UAPI_LINUX_USB_CDC_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define USB_CDC_SUBCLASS_ACM 0x02
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

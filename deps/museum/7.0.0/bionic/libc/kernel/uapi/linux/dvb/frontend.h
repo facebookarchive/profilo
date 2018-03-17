@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DVBFRONTEND_H_
 #define _DVBFRONTEND_H_
+#define DVBFRONTEND_H_
+#define DVBFRONTEND_H
+#define _UAPI_DVBFRONTEND_H_
+#define _UAPI_DVBFRONTEND_H
+#define _DVBFRONTEND_H
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 enum fe_type {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

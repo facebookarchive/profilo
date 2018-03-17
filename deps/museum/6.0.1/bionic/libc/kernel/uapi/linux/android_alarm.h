@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ANDROID_ALARM_H
 #define _UAPI_LINUX_ANDROID_ALARM_H
+#define UAPI_LINUX_ANDROID_ALARM_H
+#define UAPI_LINUX_ANDROID_ALARM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ANDROID_ALARM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ANDROID_ALARM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ANDROID_ALARM_H
+#define NDK_ANDROID_SUPPORT_LINUX_ANDROID_ALARM_H_
+#define _LINUX_ANDROID_ALARM_H
+#define _LINUX_ANDROID_ALARM_H_
+#define _UAPI_LINUX_ANDROID_ALARM_H_
 #include <museum/6.0.1/bionic/libc/linux/ioctl.h>
 #include <museum/6.0.1/bionic/libc/linux/time.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

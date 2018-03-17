@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _CTTIMEOUT_NETLINK_H
 #define _CTTIMEOUT_NETLINK_H
+#define CTTIMEOUT_NETLINK_H
+#define CTTIMEOUT_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_CTTIMEOUT_NETLINK_H
+#define NDK_ANDROID_SUPPORT_CTTIMEOUT_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CTTIMEOUT_NETLINK_H
+#define NDK_ANDROID_SUPPORT_UAPI_CTTIMEOUT_NETLINK_H_
+#define _UAPI_CTTIMEOUT_NETLINK_H
+#define _UAPI_CTTIMEOUT_NETLINK_H_
+#define _CTTIMEOUT_NETLINK_H_
 #include <museum/8.1.0/bionic/libc/linux/netfilter/nfnetlink.h>
 enum ctnl_timeout_msg_types {
   IPCTNL_MSG_TIMEOUT_NEW,

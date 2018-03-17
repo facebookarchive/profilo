@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _CYCX_CFM_H
 #define _CYCX_CFM_H
+#define CYCX_CFM_H
+#define CYCX_CFM_H_
+#define _UAPI_CYCX_CFM_H
+#define _UAPI_CYCX_CFM_H_
+#define _CYCX_CFM_H_
 #define CFM_VERSION 2
 #define CFM_SIGNATURE "CFM - Cyclades CYCX Firmware Module"
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

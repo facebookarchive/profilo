@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_VLAN_H
 #define __LINUX_TC_VLAN_H
+#define _LINUX_TC_VLAN_H
+#define _LINUX_TC_VLAN_H_
+#define _UAPI_LINUX_TC_VLAN_H
+#define _UAPI_LINUX_TC_VLAN_H_
+#define _UAPI__LINUX_TC_VLAN_H
+#define _UAPI__LINUX_TC_VLAN_H_
+#define __LINUX_TC_VLAN_H_
 #include <museum/8.0.0/bionic/libc/linux/pkt_cls.h>
 #define TCA_ACT_VLAN 12
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_RDS_H
 #define _LINUX_RDS_H
+#define LINUX_RDS_H
+#define LINUX_RDS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_RDS_H
+#define NDK_ANDROID_SUPPORT_LINUX_RDS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_RDS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_RDS_H_
+#define _UAPI_LINUX_RDS_H
+#define _UAPI_LINUX_RDS_H_
+#define _LINUX_RDS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define RDS_IB_ABI_VERSION 0x301
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

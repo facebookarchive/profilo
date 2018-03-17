@@ -28,6 +28,9 @@
 
 #ifndef _SYS_VFS_H_
 #define _SYS_VFS_H_
+#define SYS_VFS_H_
+#define SYS_VFS_H
+#define _SYS_VFS_H
 
 #include <museum/8.0.0/bionic/libc/stdint.h>
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>

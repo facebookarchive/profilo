@@ -28,6 +28,9 @@
 
 #ifndef _BIONIC_MBSTATE_H
 #define _BIONIC_MBSTATE_H
+#define BIONIC_MBSTATE_H
+#define BIONIC_MBSTATE_H_
+#define _BIONIC_MBSTATE_H_
 
 #include <wchar.h>
 

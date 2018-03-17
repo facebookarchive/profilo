@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_ZATM_H
 #define LINUX_ATM_ZATM_H
+#define _LINUX_ATM_ZATM_H
+#define _LINUX_ATM_ZATM_H_
+#define _UAPI_LINUX_ATM_ZATM_H
+#define _UAPI_LINUX_ATM_ZATM_H_
+#define _UAPILINUX_ATM_ZATM_H
+#define _UAPILINUX_ATM_ZATM_H_
+#define LINUX_ATM_ZATM_H_
 #include <museum/5.0.0/bionic/libc/linux/atmapi.h>
 #include <museum/5.0.0/bionic/libc/linux/atmioc.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

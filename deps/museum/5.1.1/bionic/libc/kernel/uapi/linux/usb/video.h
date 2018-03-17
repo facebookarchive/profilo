@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_VIDEO_H
 #define __LINUX_USB_VIDEO_H
+#define _LINUX_USB_VIDEO_H
+#define _LINUX_USB_VIDEO_H_
+#define _UAPI_LINUX_USB_VIDEO_H
+#define _UAPI_LINUX_USB_VIDEO_H_
+#define _UAPI__LINUX_USB_VIDEO_H
+#define _UAPI__LINUX_USB_VIDEO_H_
+#define __LINUX_USB_VIDEO_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #define UVC_SC_UNDEFINED 0x00
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

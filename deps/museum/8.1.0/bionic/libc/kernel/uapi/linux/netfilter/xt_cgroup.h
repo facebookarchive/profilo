@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_XT_CGROUP_H
 #define _UAPI_XT_CGROUP_H
+#define UAPI_XT_CGROUP_H
+#define UAPI_XT_CGROUP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_CGROUP_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_CGROUP_H_
+#define NDK_ANDROID_SUPPORT_XT_CGROUP_H
+#define NDK_ANDROID_SUPPORT_XT_CGROUP_H_
+#define _XT_CGROUP_H
+#define _XT_CGROUP_H_
+#define _UAPI_XT_CGROUP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/limits.h>
 struct xt_cgroup_info_v0 {

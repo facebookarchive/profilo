@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_UTIME_H_
 #define _SYS_UTIME_H_
+#define SYS_UTIME_H_
+#define SYS_UTIME_H
+#define _SYS_UTIME_H
 
 #include <museum/5.1.1/bionic/libc/linux/utime.h>
 

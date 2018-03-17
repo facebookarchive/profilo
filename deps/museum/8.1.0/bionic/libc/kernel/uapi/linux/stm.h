@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_STM_H
 #define _UAPI_LINUX_STM_H
+#define UAPI_LINUX_STM_H
+#define UAPI_LINUX_STM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_STM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_STM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_STM_H
+#define NDK_ANDROID_SUPPORT_LINUX_STM_H_
+#define _LINUX_STM_H
+#define _LINUX_STM_H_
+#define _UAPI_LINUX_STM_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct stp_policy_id {
   __u32 size;

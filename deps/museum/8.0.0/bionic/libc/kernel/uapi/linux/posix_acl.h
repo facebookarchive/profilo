@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __UAPI_POSIX_ACL_H
 #define __UAPI_POSIX_ACL_H
+#define _UAPI_POSIX_ACL_H
+#define _UAPI_POSIX_ACL_H_
+#define _POSIX_ACL_H
+#define _POSIX_ACL_H_
+#define _UAPI__UAPI_POSIX_ACL_H
+#define _UAPI__UAPI_POSIX_ACL_H_
+#define __UAPI_POSIX_ACL_H_
 #define ACL_UNDEFINED_ID (- 1)
 #define ACL_TYPE_ACCESS (0x8000)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

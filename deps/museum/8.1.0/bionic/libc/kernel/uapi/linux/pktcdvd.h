@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__PKTCDVD_H
 #define _UAPI__PKTCDVD_H
+#define UAPI__PKTCDVD_H
+#define UAPI__PKTCDVD_H_
+#define NDK_ANDROID_SUPPORT_UAPI__PKTCDVD_H
+#define NDK_ANDROID_SUPPORT_UAPI__PKTCDVD_H_
+#define NDK_ANDROID_SUPPORT__PKTCDVD_H
+#define NDK_ANDROID_SUPPORT__PKTCDVD_H_
+#define __PKTCDVD_H
+#define __PKTCDVD_H_
+#define _UAPI__PKTCDVD_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define PACKET_DEBUG 1
 #define MAX_WRITERS 8

@@ -31,6 +31,9 @@
 
 #ifndef _NSSWITCH_H
 #define _NSSWITCH_H	1
+#define NSSWITCH_H
+#define NSSWITCH_H_
+#define _NSSWITCH_H_
 
 #include <museum/7.1.2/bionic/libc/sys/types.h>
 #include <stdarg.h>

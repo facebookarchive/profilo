@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_STATISTIC_H
 #define _XT_STATISTIC_H
+#define XT_STATISTIC_H
+#define XT_STATISTIC_H_
+#define NDK_ANDROID_SUPPORT_XT_STATISTIC_H
+#define NDK_ANDROID_SUPPORT_XT_STATISTIC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_STATISTIC_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_STATISTIC_H_
+#define _UAPI_XT_STATISTIC_H
+#define _UAPI_XT_STATISTIC_H_
+#define _XT_STATISTIC_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 enum xt_statistic_mode {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

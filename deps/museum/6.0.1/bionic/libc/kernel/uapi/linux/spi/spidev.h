@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef SPIDEV_H
 #define SPIDEV_H
+#define _SPIDEV_H
+#define _SPIDEV_H_
+#define _UAPI_SPIDEV_H
+#define _UAPI_SPIDEV_H_
+#define _UAPISPIDEV_H
+#define _UAPISPIDEV_H_
+#define SPIDEV_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define SPI_CPHA 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

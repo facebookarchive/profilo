@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_GENERIC_SIGNAL_H
 #define _UAPI__ASM_GENERIC_SIGNAL_H
+#define UAPI__ASM_GENERIC_SIGNAL_H
+#define UAPI__ASM_GENERIC_SIGNAL_H_
+#define __ASM_GENERIC_SIGNAL_H
+#define __ASM_GENERIC_SIGNAL_H_
+#define _UAPI__ASM_GENERIC_SIGNAL_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #define _KERNEL__NSIG 64
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

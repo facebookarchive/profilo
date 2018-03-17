@@ -8,6 +8,9 @@
 
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
+#define SEARCH_H_
+#define SEARCH_H
+#define _SEARCH_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/sys/types.h>

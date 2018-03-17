@@ -16,6 +16,11 @@
 
 #ifndef _RESOLV_PARAMS_H
 #define _RESOLV_PARAMS_H
+#define RESOLV_PARAMS_H
+#define RESOLV_PARAMS_H_
+#define NDK_ANDROID_SUPPORT_RESOLV_PARAMS_H
+#define NDK_ANDROID_SUPPORT_RESOLV_PARAMS_H_
+#define _RESOLV_PARAMS_H_
 
 #include <stdint.h>
 

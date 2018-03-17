@@ -16,6 +16,9 @@
 
 #ifndef CFI_SHADOW_H
 #define CFI_SHADOW_H
+#define _CFI_SHADOW_H
+#define _CFI_SHADOW_H_
+#define CFI_SHADOW_H_
 
 #include <stdint.h>
 

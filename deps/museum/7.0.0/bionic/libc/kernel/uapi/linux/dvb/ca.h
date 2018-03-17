@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DVBCA_H_
 #define _DVBCA_H_
+#define DVBCA_H_
+#define DVBCA_H
+#define _UAPI_DVBCA_H_
+#define _UAPI_DVBCA_H
+#define _DVBCA_H
 typedef struct ca_slot_info {
   int num;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

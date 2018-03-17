@@ -27,6 +27,9 @@
  */
 #ifndef _UTMP_H_
 #define _UTMP_H_
+#define UTMP_H_
+#define UTMP_H
+#define _UTMP_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/sys/types.h>

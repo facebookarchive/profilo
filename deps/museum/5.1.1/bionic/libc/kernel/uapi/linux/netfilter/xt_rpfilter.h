@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_RPATH_H
 #define _XT_RPATH_H
+#define XT_RPATH_H
+#define XT_RPATH_H_
+#define _UAPI_XT_RPATH_H
+#define _UAPI_XT_RPATH_H_
+#define _XT_RPATH_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

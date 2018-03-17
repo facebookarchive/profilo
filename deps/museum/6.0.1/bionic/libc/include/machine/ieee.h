@@ -47,6 +47,11 @@
 
 #ifndef _MACHINE_IEEE_H_
 #define _MACHINE_IEEE_H_
+#define MACHINE_IEEE_H_
+#define MACHINE_IEEE_H
+#define NDK_ANDROID_SUPPORT_MACHINE_IEEE_H_
+#define NDK_ANDROID_SUPPORT_MACHINE_IEEE_H
+#define _MACHINE_IEEE_H
 
 #include <museum/6.0.1/bionic/libc/sys/types.h>
 

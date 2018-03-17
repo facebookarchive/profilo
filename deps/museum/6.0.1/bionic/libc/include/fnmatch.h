@@ -27,6 +27,11 @@
  */
 #ifndef _FNMATCH_H
 #define _FNMATCH_H
+#define FNMATCH_H
+#define FNMATCH_H_
+#define NDK_ANDROID_SUPPORT_FNMATCH_H
+#define NDK_ANDROID_SUPPORT_FNMATCH_H_
+#define _FNMATCH_H_
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 

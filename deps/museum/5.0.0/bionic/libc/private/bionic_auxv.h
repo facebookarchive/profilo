@@ -27,6 +27,9 @@
  */
 #ifndef _PRIVATE_BIONIC_AUXV_H_
 #define _PRIVATE_BIONIC_AUXV_H_
+#define PRIVATE_BIONIC_AUXV_H_
+#define PRIVATE_BIONIC_AUXV_H
+#define _PRIVATE_BIONIC_AUXV_H
 
 #include <elf.h>
 #include <link.h>

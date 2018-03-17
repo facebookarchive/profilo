@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NETDEVICE_H
 #define _UAPI_LINUX_NETDEVICE_H
+#define UAPI_LINUX_NETDEVICE_H
+#define UAPI_LINUX_NETDEVICE_H_
+#define _LINUX_NETDEVICE_H
+#define _LINUX_NETDEVICE_H_
+#define _UAPI_LINUX_NETDEVICE_H_
 #include <museum/7.1.2/bionic/libc/linux/if.h>
 #include <museum/7.1.2/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

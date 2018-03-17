@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_PARPORT_H_
 #define _UAPI_PARPORT_H_
+#define UAPI_PARPORT_H_
+#define UAPI_PARPORT_H
+#define NDK_ANDROID_SUPPORT_UAPI_PARPORT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_PARPORT_H
+#define NDK_ANDROID_SUPPORT_PARPORT_H_
+#define NDK_ANDROID_SUPPORT_PARPORT_H
+#define _PARPORT_H_
+#define _PARPORT_H
+#define _UAPI_PARPORT_H
 #define PARPORT_MAX 16
 #define PARPORT_IRQ_NONE - 1
 #define PARPORT_DMA_NONE - 1

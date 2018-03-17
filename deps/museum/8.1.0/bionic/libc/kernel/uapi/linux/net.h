@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NET_H
 #define _UAPI_LINUX_NET_H
+#define UAPI_LINUX_NET_H
+#define UAPI_LINUX_NET_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NET_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NET_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NET_H
+#define NDK_ANDROID_SUPPORT_LINUX_NET_H_
+#define _LINUX_NET_H
+#define _LINUX_NET_H_
+#define _UAPI_LINUX_NET_H_
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #include <museum/8.1.0/bionic/libc/asm/socket.h>
 #define NPROTO AF_MAX

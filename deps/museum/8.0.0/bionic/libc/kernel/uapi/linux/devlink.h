@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_DEVLINK_H_
 #define _UAPI_LINUX_DEVLINK_H_
+#define UAPI_LINUX_DEVLINK_H_
+#define UAPI_LINUX_DEVLINK_H
+#define _LINUX_DEVLINK_H_
+#define _LINUX_DEVLINK_H
+#define _UAPI_LINUX_DEVLINK_H
 #define DEVLINK_GENL_NAME "devlink"
 #define DEVLINK_GENL_VERSION 0x1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

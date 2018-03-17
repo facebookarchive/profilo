@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_BCM_H
 #define _UAPI_CAN_BCM_H
+#define UAPI_CAN_BCM_H
+#define UAPI_CAN_BCM_H_
+#define _CAN_BCM_H
+#define _CAN_BCM_H_
+#define _UAPI_CAN_BCM_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #include <museum/7.0.0/bionic/libc/linux/can.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

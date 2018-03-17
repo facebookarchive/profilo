@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_DSCP_TARGET_H
 #define _XT_DSCP_TARGET_H
+#define XT_DSCP_TARGET_H
+#define XT_DSCP_TARGET_H_
+#define _UAPI_XT_DSCP_TARGET_H
+#define _UAPI_XT_DSCP_TARGET_H_
+#define _XT_DSCP_TARGET_H_
 #include <museum/8.0.0/bionic/libc/linux/netfilter/xt_dscp.h>
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_TEGRA_DRM_H_
 #define _UAPI_TEGRA_DRM_H_
+#define UAPI_TEGRA_DRM_H_
+#define UAPI_TEGRA_DRM_H
+#define NDK_ANDROID_SUPPORT_UAPI_TEGRA_DRM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_TEGRA_DRM_H
+#define NDK_ANDROID_SUPPORT_TEGRA_DRM_H_
+#define NDK_ANDROID_SUPPORT_TEGRA_DRM_H
+#define _TEGRA_DRM_H_
+#define _TEGRA_DRM_H
+#define _UAPI_TEGRA_DRM_H
 #include "drm.h"
 #ifdef __cplusplus
 #endif

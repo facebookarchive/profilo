@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _CXLFLASH_IOCTL_H
 #define _CXLFLASH_IOCTL_H
+#define CXLFLASH_IOCTL_H
+#define CXLFLASH_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_CXLFLASH_IOCTL_H
+#define NDK_ANDROID_SUPPORT_CXLFLASH_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CXLFLASH_IOCTL_H
+#define NDK_ANDROID_SUPPORT_UAPI_CXLFLASH_IOCTL_H_
+#define _UAPI_CXLFLASH_IOCTL_H
+#define _UAPI_CXLFLASH_IOCTL_H_
+#define _CXLFLASH_IOCTL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define DK_CXLFLASH_VERSION_0 0
 struct dk_cxlflash_hdr {

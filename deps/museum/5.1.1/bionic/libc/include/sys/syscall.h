@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_SYSCALL_H_
 #define _SYS_SYSCALL_H_
+#define SYS_SYSCALL_H_
+#define SYS_SYSCALL_H
+#define _SYS_SYSCALL_H
 
 #include <museum/5.1.1/bionic/libc/errno.h>
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>

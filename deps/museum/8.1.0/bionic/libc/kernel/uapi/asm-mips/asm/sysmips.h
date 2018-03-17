@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_SYSMIPS_H
 #define _ASM_SYSMIPS_H
+#define ASM_SYSMIPS_H
+#define ASM_SYSMIPS_H_
+#define NDK_ANDROID_SUPPORT_ASM_SYSMIPS_H
+#define NDK_ANDROID_SUPPORT_ASM_SYSMIPS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SYSMIPS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SYSMIPS_H_
+#define _UAPI_ASM_SYSMIPS_H
+#define _UAPI_ASM_SYSMIPS_H_
+#define _ASM_SYSMIPS_H_
 #define SETNAME 1
 #define FLUSH_CACHE 3
 #define MIPS_FIXADE 7

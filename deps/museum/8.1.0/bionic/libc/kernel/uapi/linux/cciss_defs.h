@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef CCISS_DEFS_H
 #define CCISS_DEFS_H
+#define _CCISS_DEFS_H
+#define _CCISS_DEFS_H_
+#define _UAPI_CCISS_DEFS_H
+#define _UAPI_CCISS_DEFS_H_
+#define NDK_ANDROID_SUPPORT_UAPICCISS_DEFS_H
+#define NDK_ANDROID_SUPPORT_UAPICCISS_DEFS_H_
+#define _UAPICCISS_DEFS_H
+#define _UAPICCISS_DEFS_H_
+#define CCISS_DEFS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SENSEINFOBYTES 32
 #define CMD_SUCCESS 0x0000

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TIMERFD_H
 #define _UAPI_LINUX_TIMERFD_H
+#define UAPI_LINUX_TIMERFD_H
+#define UAPI_LINUX_TIMERFD_H_
+#define _LINUX_TIMERFD_H
+#define _LINUX_TIMERFD_H_
+#define _UAPI_LINUX_TIMERFD_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/fcntl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

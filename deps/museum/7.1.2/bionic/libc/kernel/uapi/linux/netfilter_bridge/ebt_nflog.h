@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_NFLOG_H
 #define __LINUX_BRIDGE_EBT_NFLOG_H
+#define _LINUX_BRIDGE_EBT_NFLOG_H
+#define _LINUX_BRIDGE_EBT_NFLOG_H_
+#define _UAPI_LINUX_BRIDGE_EBT_NFLOG_H
+#define _UAPI_LINUX_BRIDGE_EBT_NFLOG_H_
+#define _UAPI__LINUX_BRIDGE_EBT_NFLOG_H
+#define _UAPI__LINUX_BRIDGE_EBT_NFLOG_H_
+#define __LINUX_BRIDGE_EBT_NFLOG_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define EBT_NFLOG_MASK 0x0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

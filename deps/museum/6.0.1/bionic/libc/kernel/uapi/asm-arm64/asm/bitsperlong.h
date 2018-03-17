@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __ASM_BITSPERLONG_H
 #define __ASM_BITSPERLONG_H
+#define _ASM_BITSPERLONG_H
+#define _ASM_BITSPERLONG_H_
+#define _UAPI_ASM_BITSPERLONG_H
+#define _UAPI_ASM_BITSPERLONG_H_
+#define NDK_ANDROID_SUPPORT__ASM_BITSPERLONG_H
+#define NDK_ANDROID_SUPPORT__ASM_BITSPERLONG_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_BITSPERLONG_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_BITSPERLONG_H_
+#define _UAPI__ASM_BITSPERLONG_H
+#define _UAPI__ASM_BITSPERLONG_H_
+#define __ASM_BITSPERLONG_H_
 #define __BITS_PER_LONG 64
 #include <asm-generic/bitsperlong.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

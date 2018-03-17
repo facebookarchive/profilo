@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_ATMAPI_H
 #define _LINUX_ATMAPI_H
+#define LINUX_ATMAPI_H
+#define LINUX_ATMAPI_H_
+#define _UAPI_LINUX_ATMAPI_H
+#define _UAPI_LINUX_ATMAPI_H_
+#define _LINUX_ATMAPI_H_
 #if defined(__sparc__) || defined(__ia64__)
 #define __ATM_API_ALIGN __attribute__((aligned(8)))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

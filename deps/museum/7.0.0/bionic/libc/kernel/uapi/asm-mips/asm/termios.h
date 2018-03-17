@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_TERMIOS_H
 #define _UAPI_ASM_TERMIOS_H
+#define UAPI_ASM_TERMIOS_H
+#define UAPI_ASM_TERMIOS_H_
+#define _ASM_TERMIOS_H
+#define _ASM_TERMIOS_H_
+#define _UAPI_ASM_TERMIOS_H_
 #include <linux/errno.h>
 #include <asm/termbits.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

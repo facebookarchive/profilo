@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_TEE_TARGET_H
 #define _XT_TEE_TARGET_H
+#define XT_TEE_TARGET_H
+#define XT_TEE_TARGET_H_
+#define _UAPI_XT_TEE_TARGET_H
+#define _UAPI_XT_TEE_TARGET_H_
+#define _XT_TEE_TARGET_H_
 struct xt_tee_tginfo {
  union nf_inet_addr gw;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

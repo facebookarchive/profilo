@@ -27,6 +27,11 @@
  */
 #ifndef _SCHED_H_
 #define _SCHED_H_
+#define SCHED_H_
+#define SCHED_H
+#define NDK_ANDROID_SUPPORT_SCHED_H_
+#define NDK_ANDROID_SUPPORT_SCHED_H
+#define _SCHED_H
 
 #include <museum/8.1.0/bionic/libc/bits/timespec.h>
 #include <museum/8.1.0/bionic/libc/linux/sched.h>

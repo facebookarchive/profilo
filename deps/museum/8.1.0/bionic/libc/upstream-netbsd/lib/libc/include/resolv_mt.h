@@ -2,6 +2,11 @@
 
 #ifndef _RESOLV_MT_H
 #define _RESOLV_MT_H
+#define RESOLV_MT_H
+#define RESOLV_MT_H_
+#define NDK_ANDROID_SUPPORT_RESOLV_MT_H
+#define NDK_ANDROID_SUPPORT_RESOLV_MT_H_
+#define _RESOLV_MT_H_
 
 #include <sys/types.h>
 #include <netinet/in.h>

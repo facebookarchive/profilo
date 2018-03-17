@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_NFSACL_H
 #define _UAPI__LINUX_NFSACL_H
+#define UAPI__LINUX_NFSACL_H
+#define UAPI__LINUX_NFSACL_H_
+#define __LINUX_NFSACL_H
+#define __LINUX_NFSACL_H_
+#define _UAPI__LINUX_NFSACL_H_
 #define NFS_ACL_PROGRAM 100227
 #define ACLPROC2_GETACL 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

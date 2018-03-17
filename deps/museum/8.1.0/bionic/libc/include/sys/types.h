@@ -28,6 +28,11 @@
 
 #ifndef _SYS_TYPES_H_
 #define _SYS_TYPES_H_
+#define SYS_TYPES_H_
+#define SYS_TYPES_H
+#define NDK_ANDROID_SUPPORT_SYS_TYPES_H_
+#define NDK_ANDROID_SUPPORT_SYS_TYPES_H
+#define _SYS_TYPES_H
 
 #include <stddef.h>
 #include <museum/8.1.0/bionic/libc/stdint.h>

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_MMTIMER_H
 #define _LINUX_MMTIMER_H
+#define LINUX_MMTIMER_H
+#define LINUX_MMTIMER_H_
+#define NDK_ANDROID_SUPPORT_LINUX_MMTIMER_H
+#define NDK_ANDROID_SUPPORT_LINUX_MMTIMER_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MMTIMER_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MMTIMER_H_
+#define _UAPI_LINUX_MMTIMER_H
+#define _UAPI_LINUX_MMTIMER_H_
+#define _LINUX_MMTIMER_H_
 #define MMTIMER_IOCTL_BASE 'm'
 #define MMTIMER_GETOFFSET _IO(MMTIMER_IOCTL_BASE, 0)
 #define MMTIMER_GETRES _IOR(MMTIMER_IOCTL_BASE, 1, unsigned long)

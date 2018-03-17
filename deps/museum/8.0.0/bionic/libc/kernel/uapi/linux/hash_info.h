@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_HASH_INFO_H
 #define _UAPI_LINUX_HASH_INFO_H
+#define UAPI_LINUX_HASH_INFO_H
+#define UAPI_LINUX_HASH_INFO_H_
+#define _LINUX_HASH_INFO_H
+#define _LINUX_HASH_INFO_H_
+#define _UAPI_LINUX_HASH_INFO_H_
 enum hash_algo {
   HASH_ALGO_MD4,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

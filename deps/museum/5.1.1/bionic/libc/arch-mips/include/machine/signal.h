@@ -36,6 +36,9 @@
 
 #ifndef _MIPS_SIGNAL_H_
 #define _MIPS_SIGNAL_H_
+#define MIPS_SIGNAL_H_
+#define MIPS_SIGNAL_H
+#define _MIPS_SIGNAL_H
 
 #define	SC_REGMASK	(0*REGSZ)
 #define	SC_STATUS	(1*REGSZ)

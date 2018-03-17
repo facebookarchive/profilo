@@ -27,6 +27,9 @@
  */
 #ifndef LIBC_INIT_COMMON_H
 #define LIBC_INIT_COMMON_H
+#define _LIBC_INIT_COMMON_H
+#define _LIBC_INIT_COMMON_H_
+#define LIBC_INIT_COMMON_H_
 
 #include <sys/cdefs.h>
 

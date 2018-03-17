@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KCMP_H
 #define _UAPI_LINUX_KCMP_H
+#define UAPI_LINUX_KCMP_H
+#define UAPI_LINUX_KCMP_H_
+#define _LINUX_KCMP_H
+#define _LINUX_KCMP_H_
+#define _UAPI_LINUX_KCMP_H_
 enum kcmp_type {
   KCMP_FILE,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

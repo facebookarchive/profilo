@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_SOCKIOS_H
 #define __ASM_GENERIC_SOCKIOS_H
+#define _ASM_GENERIC_SOCKIOS_H
+#define _ASM_GENERIC_SOCKIOS_H_
+#define _UAPI_ASM_GENERIC_SOCKIOS_H
+#define _UAPI_ASM_GENERIC_SOCKIOS_H_
+#define _UAPI__ASM_GENERIC_SOCKIOS_H
+#define _UAPI__ASM_GENERIC_SOCKIOS_H_
+#define __ASM_GENERIC_SOCKIOS_H_
 #define FIOSETOWN 0x8901
 #define SIOCSPGRP 0x8902
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

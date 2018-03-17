@@ -28,6 +28,11 @@
 
 #ifndef _RESOLV_H_
 #define _RESOLV_H_
+#define RESOLV_H_
+#define RESOLV_H
+#define NDK_ANDROID_SUPPORT_RESOLV_H_
+#define NDK_ANDROID_SUPPORT_RESOLV_H
+#define _RESOLV_H
 
 #include <museum/8.1.0/bionic/libc/sys/param.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

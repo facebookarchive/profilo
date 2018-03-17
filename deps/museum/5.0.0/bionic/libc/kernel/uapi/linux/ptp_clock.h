@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _PTP_CLOCK_H_
 #define _PTP_CLOCK_H_
+#define PTP_CLOCK_H_
+#define PTP_CLOCK_H
+#define _UAPI_PTP_CLOCK_H_
+#define _UAPI_PTP_CLOCK_H
+#define _PTP_CLOCK_H
 #include <museum/5.0.0/bionic/libc/linux/ioctl.h>
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

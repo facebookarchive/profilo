@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_CONST_H
 #define _LINUX_CONST_H
+#define LINUX_CONST_H
+#define LINUX_CONST_H_
+#define NDK_ANDROID_SUPPORT_LINUX_CONST_H
+#define NDK_ANDROID_SUPPORT_LINUX_CONST_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_CONST_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_CONST_H_
+#define _UAPI_LINUX_CONST_H
+#define _UAPI_LINUX_CONST_H_
+#define _LINUX_CONST_H_
 #ifdef __ASSEMBLY__
 #define _AC(X,Y) X
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

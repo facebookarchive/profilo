@@ -23,6 +23,9 @@
 
 #ifndef ASSERTIONS_H
 #define ASSERTIONS_H		1
+#define _ASSERTIONS_H
+#define _ASSERTIONS_H_
+#define ASSERTIONS_H_
 
 typedef enum {
 	assert_require, assert_ensure, assert_insist, assert_invariant

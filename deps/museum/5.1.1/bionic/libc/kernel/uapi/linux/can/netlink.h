@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef CAN_NETLINK_H
 #define CAN_NETLINK_H
+#define _CAN_NETLINK_H
+#define _CAN_NETLINK_H_
+#define _UAPI_CAN_NETLINK_H
+#define _UAPI_CAN_NETLINK_H_
+#define _UAPICAN_NETLINK_H
+#define _UAPICAN_NETLINK_H_
+#define CAN_NETLINK_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 struct can_bittiming {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

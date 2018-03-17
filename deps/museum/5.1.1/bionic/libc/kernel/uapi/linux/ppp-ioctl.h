@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _PPP_IOCTL_H
 #define _PPP_IOCTL_H
+#define PPP_IOCTL_H
+#define PPP_IOCTL_H_
+#define _UAPI_PPP_IOCTL_H
+#define _UAPI_PPP_IOCTL_H_
+#define _PPP_IOCTL_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/linux/compiler.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

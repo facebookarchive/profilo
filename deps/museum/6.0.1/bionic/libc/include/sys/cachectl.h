@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_CACHECTL_H
 #define _SYS_CACHECTL_H 1
+#define SYS_CACHECTL_H
+#define SYS_CACHECTL_H_
+#define NDK_ANDROID_SUPPORT_SYS_CACHECTL_H
+#define NDK_ANDROID_SUPPORT_SYS_CACHECTL_H_
+#define _SYS_CACHECTL_H_
 
 #ifdef __mips__
 #include <asm/cachectl.h>

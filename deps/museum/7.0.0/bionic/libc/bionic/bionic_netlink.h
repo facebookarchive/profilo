@@ -28,6 +28,9 @@
 
 #ifndef BIONIC_NETLINK_H
 #define BIONIC_NETLINK_H
+#define _BIONIC_NETLINK_H
+#define _BIONIC_NETLINK_H_
+#define BIONIC_NETLINK_H_
 
 #include <sys/types.h>
 

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_GENERIC_SIGINFO_H
 #define _UAPI_ASM_GENERIC_SIGINFO_H
+#define UAPI_ASM_GENERIC_SIGINFO_H
+#define UAPI_ASM_GENERIC_SIGINFO_H_
+#define _ASM_GENERIC_SIGINFO_H
+#define _ASM_GENERIC_SIGINFO_H_
+#define _UAPI_ASM_GENERIC_SIGINFO_H_
 #include <museum/7.0.0/bionic/libc/linux/compiler.h>
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

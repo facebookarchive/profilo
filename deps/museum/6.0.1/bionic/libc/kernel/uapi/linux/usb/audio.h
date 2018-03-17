@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_USB_AUDIO_H
 #define _UAPI__LINUX_USB_AUDIO_H
+#define UAPI__LINUX_USB_AUDIO_H
+#define UAPI__LINUX_USB_AUDIO_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_USB_AUDIO_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_USB_AUDIO_H_
+#define NDK_ANDROID_SUPPORT__LINUX_USB_AUDIO_H
+#define NDK_ANDROID_SUPPORT__LINUX_USB_AUDIO_H_
+#define __LINUX_USB_AUDIO_H
+#define __LINUX_USB_AUDIO_H_
+#define _UAPI__LINUX_USB_AUDIO_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define UAC_VERSION_1 0x00
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

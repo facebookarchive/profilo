@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef NES_ABI_USER_H
 #define NES_ABI_USER_H
+#define _NES_ABI_USER_H
+#define _NES_ABI_USER_H_
+#define _UAPI_NES_ABI_USER_H
+#define _UAPI_NES_ABI_USER_H_
+#define _UAPINES_ABI_USER_H
+#define _UAPINES_ABI_USER_H_
+#define NES_ABI_USER_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define NES_ABI_USERSPACE_VER 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

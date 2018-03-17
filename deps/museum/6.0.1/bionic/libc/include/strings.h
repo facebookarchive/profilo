@@ -38,6 +38,11 @@
 
 #ifndef _STRINGS_H_
 #define _STRINGS_H_
+#define STRINGS_H_
+#define STRINGS_H
+#define NDK_ANDROID_SUPPORT_STRINGS_H_
+#define NDK_ANDROID_SUPPORT_STRINGS_H
+#define _STRINGS_H
 
 #include <museum/6.0.1/bionic/libc/sys/types.h>
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>

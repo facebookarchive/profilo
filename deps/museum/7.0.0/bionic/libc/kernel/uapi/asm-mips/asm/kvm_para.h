@@ -18,4 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_MIPS_KVM_PARA_H
 #define _UAPI_ASM_MIPS_KVM_PARA_H
+#define UAPI_ASM_MIPS_KVM_PARA_H
+#define UAPI_ASM_MIPS_KVM_PARA_H_
+#define _ASM_MIPS_KVM_PARA_H
+#define _ASM_MIPS_KVM_PARA_H_
+#define _UAPI_ASM_MIPS_KVM_PARA_H_
 #endif

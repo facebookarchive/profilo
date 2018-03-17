@@ -28,6 +28,11 @@
 
 #ifndef _UCHAR_H_
 #define _UCHAR_H_
+#define UCHAR_H_
+#define UCHAR_H
+#define NDK_ANDROID_SUPPORT_UCHAR_H_
+#define NDK_ANDROID_SUPPORT_UCHAR_H
+#define _UCHAR_H
 
 #include <stddef.h>
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>

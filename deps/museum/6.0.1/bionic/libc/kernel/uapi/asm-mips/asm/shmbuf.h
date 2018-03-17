@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_SHMBUF_H
 #define _ASM_SHMBUF_H
+#define ASM_SHMBUF_H
+#define ASM_SHMBUF_H_
+#define NDK_ANDROID_SUPPORT_ASM_SHMBUF_H
+#define NDK_ANDROID_SUPPORT_ASM_SHMBUF_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SHMBUF_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SHMBUF_H_
+#define _UAPI_ASM_SHMBUF_H
+#define _UAPI_ASM_SHMBUF_H_
+#define _ASM_SHMBUF_H_
 struct shmid64_ds {
   struct ipc64_perm shm_perm;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

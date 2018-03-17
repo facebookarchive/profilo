@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__UINPUT_H_
 #define _UAPI__UINPUT_H_
+#define UAPI__UINPUT_H_
+#define UAPI__UINPUT_H
+#define __UINPUT_H_
+#define __UINPUT_H
+#define _UAPI__UINPUT_H
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/input.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

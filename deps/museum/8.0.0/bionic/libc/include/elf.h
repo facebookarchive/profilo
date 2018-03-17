@@ -28,6 +28,9 @@
 
 #ifndef _ELF_H
 #define _ELF_H
+#define ELF_H
+#define ELF_H_
+#define _ELF_H_
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

@@ -28,6 +28,11 @@
 
 #ifndef _NET_ETHERNET_H_
 #define _NET_ETHERNET_H_
+#define NET_ETHERNET_H_
+#define NET_ETHERNET_H
+#define NDK_ANDROID_SUPPORT_NET_ETHERNET_H_
+#define NDK_ANDROID_SUPPORT_NET_ETHERNET_H
+#define _NET_ETHERNET_H
 
 #include <museum/6.0.1/bionic/libc/linux/if_ether.h>
 #include <museum/6.0.1/bionic/libc/net/if_ether.h>

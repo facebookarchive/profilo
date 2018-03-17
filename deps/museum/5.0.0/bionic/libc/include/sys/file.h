@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_FILE_H_
 #define _SYS_FILE_H_
+#define SYS_FILE_H_
+#define SYS_FILE_H
+#define _SYS_FILE_H
 
 #include <museum/5.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/5.0.0/bionic/libc/sys/types.h>

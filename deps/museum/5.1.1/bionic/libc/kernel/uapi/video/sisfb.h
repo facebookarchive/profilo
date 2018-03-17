@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SISFB_H_
 #define _UAPI_LINUX_SISFB_H_
+#define UAPI_LINUX_SISFB_H_
+#define UAPI_LINUX_SISFB_H
+#define _LINUX_SISFB_H_
+#define _LINUX_SISFB_H
+#define _UAPI_LINUX_SISFB_H
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #include <museum/5.1.1/bionic/libc/asm/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

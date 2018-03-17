@@ -28,6 +28,11 @@
 
 #ifndef _DIRENT_H_
 #define _DIRENT_H_
+#define DIRENT_H_
+#define DIRENT_H
+#define NDK_ANDROID_SUPPORT_DIRENT_H_
+#define NDK_ANDROID_SUPPORT_DIRENT_H
+#define _DIRENT_H
 
 #include <museum/8.1.0/bionic/libc/stdint.h>
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _IPT_TTL_H
 #define _IPT_TTL_H
+#define IPT_TTL_H
+#define IPT_TTL_H_
+#define NDK_ANDROID_SUPPORT_IPT_TTL_H
+#define NDK_ANDROID_SUPPORT_IPT_TTL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_TTL_H
+#define NDK_ANDROID_SUPPORT_UAPI_IPT_TTL_H_
+#define _UAPI_IPT_TTL_H
+#define _UAPI_IPT_TTL_H_
+#define _IPT_TTL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
   IPT_TTL_SET = 0,

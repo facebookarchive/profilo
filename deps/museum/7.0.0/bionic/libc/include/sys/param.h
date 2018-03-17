@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_PARAM_H_
 #define _SYS_PARAM_H_
+#define SYS_PARAM_H_
+#define SYS_PARAM_H
+#define _SYS_PARAM_H
 
 #include <museum/7.0.0/bionic/libc/limits.h>
 #include <museum/7.0.0/bionic/libc/linux/param.h>

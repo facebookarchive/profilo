@@ -18,5 +18,14 @@
  ****************************************************************************/
 #ifndef _LINUX_PARAM_H
 #define _LINUX_PARAM_H
+#define LINUX_PARAM_H
+#define LINUX_PARAM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_PARAM_H
+#define NDK_ANDROID_SUPPORT_LINUX_PARAM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_PARAM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_PARAM_H_
+#define _UAPI_LINUX_PARAM_H
+#define _UAPI_LINUX_PARAM_H_
+#define _LINUX_PARAM_H_
 #include <museum/8.1.0/bionic/libc/asm/param.h>
 #endif

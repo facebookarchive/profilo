@@ -28,6 +28,11 @@
 
 #ifndef _LIBC_EVENTS_H
 #define _LIBC_EVENTS_H
+#define LIBC_EVENTS_H
+#define LIBC_EVENTS_H_
+#define NDK_ANDROID_SUPPORT_LIBC_EVENTS_H
+#define NDK_ANDROID_SUPPORT_LIBC_EVENTS_H_
+#define _LIBC_EVENTS_H_
 
 
 // This is going to be included in assembler code so only allow #define

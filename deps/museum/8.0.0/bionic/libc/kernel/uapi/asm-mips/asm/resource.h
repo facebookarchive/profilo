@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_RESOURCE_H
 #define _ASM_RESOURCE_H
+#define ASM_RESOURCE_H
+#define ASM_RESOURCE_H_
+#define _UAPI_ASM_RESOURCE_H
+#define _UAPI_ASM_RESOURCE_H_
+#define _ASM_RESOURCE_H_
 #define RLIMIT_NOFILE 5
 #define RLIMIT_AS 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

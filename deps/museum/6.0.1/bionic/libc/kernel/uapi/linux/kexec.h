@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_KEXEC_H
 #define _UAPILINUX_KEXEC_H
+#define UAPILINUX_KEXEC_H
+#define UAPILINUX_KEXEC_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_KEXEC_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_KEXEC_H_
+#define LINUX_KEXEC_H
+#define LINUX_KEXEC_H_
+#define _UAPILINUX_KEXEC_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define KEXEC_ON_CRASH 0x00000001
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

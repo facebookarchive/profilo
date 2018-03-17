@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_TCPOPTSTRIP_H
 #define _XT_TCPOPTSTRIP_H
+#define XT_TCPOPTSTRIP_H
+#define XT_TCPOPTSTRIP_H_
+#define _UAPI_XT_TCPOPTSTRIP_H
+#define _UAPI_XT_TCPOPTSTRIP_H_
+#define _XT_TCPOPTSTRIP_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define tcpoptstrip_set_bit(bmap,idx) (bmap[(idx) >> 5] |= 1U << (idx & 31))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

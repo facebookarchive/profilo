@@ -28,6 +28,9 @@
 
 #ifndef _SIGNAL_H_
 #define _SIGNAL_H_
+#define SIGNAL_H_
+#define SIGNAL_H
+#define _SIGNAL_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/types.h>

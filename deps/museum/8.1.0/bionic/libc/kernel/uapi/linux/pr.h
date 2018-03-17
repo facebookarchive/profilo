@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_PR_H
 #define _UAPI_PR_H
+#define UAPI_PR_H
+#define UAPI_PR_H_
+#define NDK_ANDROID_SUPPORT_UAPI_PR_H
+#define NDK_ANDROID_SUPPORT_UAPI_PR_H_
+#define NDK_ANDROID_SUPPORT_PR_H
+#define NDK_ANDROID_SUPPORT_PR_H_
+#define _PR_H
+#define _PR_H_
+#define _UAPI_PR_H_
 enum pr_type {
   PR_WRITE_EXCLUSIVE = 1,
   PR_EXCLUSIVE_ACCESS = 2,

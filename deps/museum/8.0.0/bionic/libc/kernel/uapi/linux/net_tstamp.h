@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NET_TIMESTAMPING_H
 #define _NET_TIMESTAMPING_H
+#define NET_TIMESTAMPING_H
+#define NET_TIMESTAMPING_H_
+#define _UAPI_NET_TIMESTAMPING_H
+#define _UAPI_NET_TIMESTAMPING_H_
+#define _NET_TIMESTAMPING_H_
 #include <museum/8.0.0/bionic/libc/linux/socket.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

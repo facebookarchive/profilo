@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_TIPC_CONFIG_H_
 #define _LINUX_TIPC_CONFIG_H_
+#define LINUX_TIPC_CONFIG_H_
+#define LINUX_TIPC_CONFIG_H
+#define NDK_ANDROID_SUPPORT_LINUX_TIPC_CONFIG_H_
+#define NDK_ANDROID_SUPPORT_LINUX_TIPC_CONFIG_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIPC_CONFIG_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TIPC_CONFIG_H
+#define _UAPI_LINUX_TIPC_CONFIG_H_
+#define _UAPI_LINUX_TIPC_CONFIG_H
+#define _LINUX_TIPC_CONFIG_H
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #include <museum/6.0.1/bionic/libc/linux/string.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

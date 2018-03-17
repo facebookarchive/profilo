@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_NFC_H
 #define __LINUX_NFC_H
+#define _LINUX_NFC_H
+#define _LINUX_NFC_H_
+#define _UAPI_LINUX_NFC_H
+#define _UAPI_LINUX_NFC_H_
+#define NDK_ANDROID_SUPPORT__LINUX_NFC_H
+#define NDK_ANDROID_SUPPORT__LINUX_NFC_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_NFC_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_NFC_H_
+#define _UAPI__LINUX_NFC_H
+#define _UAPI__LINUX_NFC_H_
+#define __LINUX_NFC_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define NFC_GENL_NAME "nfc"

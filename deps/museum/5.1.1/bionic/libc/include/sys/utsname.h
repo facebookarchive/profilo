@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_UTSNAME_H_
 #define _SYS_UTSNAME_H_
+#define SYS_UTSNAME_H_
+#define SYS_UTSNAME_H
+#define _SYS_UTSNAME_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 

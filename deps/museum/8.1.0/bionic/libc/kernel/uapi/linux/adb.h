@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__ADB_H
 #define _UAPI__ADB_H
+#define UAPI__ADB_H
+#define UAPI__ADB_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ADB_H
+#define NDK_ANDROID_SUPPORT_UAPI__ADB_H_
+#define NDK_ANDROID_SUPPORT__ADB_H
+#define NDK_ANDROID_SUPPORT__ADB_H_
+#define __ADB_H
+#define __ADB_H_
+#define _UAPI__ADB_H_
 #define ADB_BUSRESET 0
 #define ADB_FLUSH(id) (0x01 | ((id) << 4))
 #define ADB_WRITEREG(id,reg) (0x08 | (reg) | ((id) << 4))

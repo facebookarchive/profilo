@@ -34,6 +34,9 @@
 
 #ifndef _LIMITS_H_
 #define _LIMITS_H_
+#define LIMITS_H_
+#define LIMITS_H
+#define _LIMITS_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

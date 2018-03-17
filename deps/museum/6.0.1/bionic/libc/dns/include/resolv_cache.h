@@ -27,6 +27,11 @@
  */
 #ifndef _RESOLV_CACHE_H_
 #define _RESOLV_CACHE_H_
+#define RESOLV_CACHE_H_
+#define RESOLV_CACHE_H
+#define NDK_ANDROID_SUPPORT_RESOLV_CACHE_H_
+#define NDK_ANDROID_SUPPORT_RESOLV_CACHE_H
+#define _RESOLV_CACHE_H
 
 #include <stddef.h>
 #include <sys/cdefs.h>

@@ -28,6 +28,11 @@
 
 #ifndef _NET_ROUTE_H_
 #define _NET_ROUTE_H_
+#define NET_ROUTE_H_
+#define NET_ROUTE_H
+#define NDK_ANDROID_SUPPORT_NET_ROUTE_H_
+#define NDK_ANDROID_SUPPORT_NET_ROUTE_H
+#define _NET_ROUTE_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/socket.h>

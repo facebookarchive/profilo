@@ -28,6 +28,9 @@
 
 #ifndef __BIONIC_PRIVATE_BIONIC_TLS_H_
 #define __BIONIC_PRIVATE_BIONIC_TLS_H_
+#define _BIONIC_PRIVATE_BIONIC_TLS_H_
+#define _BIONIC_PRIVATE_BIONIC_TLS_H
+#define __BIONIC_PRIVATE_BIONIC_TLS_H
 
 #include <locale.h>
 #include <mntent.h>

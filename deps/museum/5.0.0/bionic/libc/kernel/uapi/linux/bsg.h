@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPIBSG_H
 #define _UAPIBSG_H
+#define UAPIBSG_H
+#define UAPIBSG_H_
+#define BSG_H
+#define BSG_H_
+#define _UAPIBSG_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define BSG_PROTOCOL_SCSI 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_LIMITS_H
 #define _LINUX_LIMITS_H
+#define LINUX_LIMITS_H
+#define LINUX_LIMITS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_LIMITS_H
+#define NDK_ANDROID_SUPPORT_LINUX_LIMITS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LIMITS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LIMITS_H_
+#define _UAPI_LINUX_LIMITS_H
+#define _UAPI_LINUX_LIMITS_H_
+#define _LINUX_LIMITS_H_
 #define NR_OPEN 1024
 #define NGROUPS_MAX 65536
 #define _KERNEL_ARG_MAX 131072

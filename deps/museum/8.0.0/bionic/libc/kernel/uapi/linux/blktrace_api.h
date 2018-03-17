@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPIBLKTRACE_H
 #define _UAPIBLKTRACE_H
+#define UAPIBLKTRACE_H
+#define UAPIBLKTRACE_H_
+#define BLKTRACE_H
+#define BLKTRACE_H_
+#define _UAPIBLKTRACE_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 enum blktrace_cat {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef DRM_FOURCC_H
 #define DRM_FOURCC_H
+#define _DRM_FOURCC_H
+#define _DRM_FOURCC_H_
+#define _UAPI_DRM_FOURCC_H
+#define _UAPI_DRM_FOURCC_H_
+#define NDK_ANDROID_SUPPORT_UAPIDRM_FOURCC_H
+#define NDK_ANDROID_SUPPORT_UAPIDRM_FOURCC_H_
+#define _UAPIDRM_FOURCC_H
+#define _UAPIDRM_FOURCC_H_
+#define DRM_FOURCC_H_
 #include "drm.h"
 #ifdef __cplusplus
 #endif

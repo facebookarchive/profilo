@@ -27,6 +27,9 @@
  */
 #ifndef _SCHED_H_
 #define _SCHED_H_
+#define SCHED_H_
+#define SCHED_H
+#define _SCHED_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/sys/time.h>

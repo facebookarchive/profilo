@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_MIPS_SETUP_H
 #define _UAPI_MIPS_SETUP_H
+#define UAPI_MIPS_SETUP_H
+#define UAPI_MIPS_SETUP_H_
+#define _MIPS_SETUP_H
+#define _MIPS_SETUP_H_
+#define _UAPI_MIPS_SETUP_H_
 #define COMMAND_LINE_SIZE 4096
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

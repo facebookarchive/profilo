@@ -28,6 +28,11 @@
 
 #ifndef _SYS_TIME_H_
 #define _SYS_TIME_H_
+#define SYS_TIME_H_
+#define SYS_TIME_H
+#define NDK_ANDROID_SUPPORT_SYS_TIME_H_
+#define NDK_ANDROID_SUPPORT_SYS_TIME_H
+#define _SYS_TIME_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/sys/types.h>

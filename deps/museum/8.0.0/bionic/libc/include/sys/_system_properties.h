@@ -28,6 +28,9 @@
 
 #ifndef _INCLUDE_SYS__SYSTEM_PROPERTIES_H
 #define _INCLUDE_SYS__SYSTEM_PROPERTIES_H
+#define INCLUDE_SYS__SYSTEM_PROPERTIES_H
+#define INCLUDE_SYS__SYSTEM_PROPERTIES_H_
+#define _INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/stdint.h>

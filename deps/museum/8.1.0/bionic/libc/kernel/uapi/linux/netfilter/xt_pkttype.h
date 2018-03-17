@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_PKTTYPE_H
 #define _XT_PKTTYPE_H
+#define XT_PKTTYPE_H
+#define XT_PKTTYPE_H_
+#define NDK_ANDROID_SUPPORT_XT_PKTTYPE_H
+#define NDK_ANDROID_SUPPORT_XT_PKTTYPE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_PKTTYPE_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_PKTTYPE_H_
+#define _UAPI_XT_PKTTYPE_H
+#define _UAPI_XT_PKTTYPE_H_
+#define _XT_PKTTYPE_H_
 struct xt_pkttype_info {
   int pkttype;
   int invert;

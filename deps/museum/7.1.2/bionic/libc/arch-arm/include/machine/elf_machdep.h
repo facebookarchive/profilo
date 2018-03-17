@@ -2,6 +2,9 @@
 
 #ifndef _ARM_ELF_MACHDEP_H_
 #define _ARM_ELF_MACHDEP_H_
+#define ARM_ELF_MACHDEP_H_
+#define ARM_ELF_MACHDEP_H
+#define _ARM_ELF_MACHDEP_H
 
 #if defined(__ARMEB__)
 #define ELF32_MACHDEP_ENDIANNESS	ELFDATA2MSB

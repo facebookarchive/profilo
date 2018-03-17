@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_CDROM_H
 #define _UAPI_LINUX_CDROM_H
+#define UAPI_LINUX_CDROM_H
+#define UAPI_LINUX_CDROM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_CDROM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_CDROM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_CDROM_H
+#define NDK_ANDROID_SUPPORT_LINUX_CDROM_H_
+#define _LINUX_CDROM_H
+#define _LINUX_CDROM_H_
+#define _UAPI_LINUX_CDROM_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 #define EDRIVE_CANT_DO_THIS EOPNOTSUPP

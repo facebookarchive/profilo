@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_DECNET_NETFILTER_H
 #define __LINUX_DECNET_NETFILTER_H
+#define _LINUX_DECNET_NETFILTER_H
+#define _LINUX_DECNET_NETFILTER_H_
+#define _UAPI_LINUX_DECNET_NETFILTER_H
+#define _UAPI_LINUX_DECNET_NETFILTER_H_
+#define NDK_ANDROID_SUPPORT__LINUX_DECNET_NETFILTER_H
+#define NDK_ANDROID_SUPPORT__LINUX_DECNET_NETFILTER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_DECNET_NETFILTER_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_DECNET_NETFILTER_H_
+#define _UAPI__LINUX_DECNET_NETFILTER_H
+#define _UAPI__LINUX_DECNET_NETFILTER_H_
+#define __LINUX_DECNET_NETFILTER_H_
 #include <museum/8.1.0/bionic/libc/linux/netfilter.h>
 #include <museum/8.1.0/bionic/libc/limits.h>
 #define NFC_DN_SRC 0x0001

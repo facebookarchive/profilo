@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_SYNPROXY_H
 #define _XT_SYNPROXY_H
+#define XT_SYNPROXY_H
+#define XT_SYNPROXY_H_
+#define _UAPI_XT_SYNPROXY_H
+#define _UAPI_XT_SYNPROXY_H_
+#define _XT_SYNPROXY_H_
 #define XT_SYNPROXY_OPT_MSS 0x01
 #define XT_SYNPROXY_OPT_WSCALE 0x02
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

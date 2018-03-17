@@ -28,6 +28,11 @@
 
 #ifndef _SIGNAL_H_
 #define _SIGNAL_H_
+#define SIGNAL_H_
+#define SIGNAL_H
+#define NDK_ANDROID_SUPPORT_SIGNAL_H_
+#define NDK_ANDROID_SUPPORT_SIGNAL_H
+#define _SIGNAL_H
 
 #include <museum/6.0.1/bionic/libc/asm/sigcontext.h>
 #include <museum/6.0.1/bionic/libc/limits.h>

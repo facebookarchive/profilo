@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _MEYE_H_
 #define _MEYE_H_
+#define MEYE_H_
+#define MEYE_H
+#define _UAPI_MEYE_H_
+#define _UAPI_MEYE_H
+#define _MEYE_H
 struct meye_params {
   unsigned char subsample;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

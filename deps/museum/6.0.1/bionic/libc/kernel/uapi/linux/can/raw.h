@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_CAN_RAW_H
 #define _UAPI_CAN_RAW_H
+#define UAPI_CAN_RAW_H
+#define UAPI_CAN_RAW_H_
+#define NDK_ANDROID_SUPPORT_UAPI_CAN_RAW_H
+#define NDK_ANDROID_SUPPORT_UAPI_CAN_RAW_H_
+#define NDK_ANDROID_SUPPORT_CAN_RAW_H
+#define NDK_ANDROID_SUPPORT_CAN_RAW_H_
+#define _CAN_RAW_H
+#define _CAN_RAW_H_
+#define _UAPI_CAN_RAW_H_
 #include <museum/6.0.1/bionic/libc/linux/can.h>
 #define SOL_CAN_RAW (SOL_CAN_BASE + CAN_RAW)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

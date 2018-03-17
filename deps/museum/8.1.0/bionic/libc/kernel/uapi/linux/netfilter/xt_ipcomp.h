@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_IPCOMP_H
 #define _XT_IPCOMP_H
+#define XT_IPCOMP_H
+#define XT_IPCOMP_H_
+#define NDK_ANDROID_SUPPORT_XT_IPCOMP_H
+#define NDK_ANDROID_SUPPORT_XT_IPCOMP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_IPCOMP_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_IPCOMP_H_
+#define _UAPI_XT_IPCOMP_H
+#define _UAPI_XT_IPCOMP_H_
+#define _XT_IPCOMP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct xt_ipcomp {
   __u32 spis[2];

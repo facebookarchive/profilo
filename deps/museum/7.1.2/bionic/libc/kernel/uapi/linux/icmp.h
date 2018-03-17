@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ICMP_H
 #define _UAPI_LINUX_ICMP_H
+#define UAPI_LINUX_ICMP_H
+#define UAPI_LINUX_ICMP_H_
+#define _LINUX_ICMP_H
+#define _LINUX_ICMP_H_
+#define _UAPI_LINUX_ICMP_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define ICMP_ECHOREPLY 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

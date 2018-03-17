@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_ARCNET_H
 #define _LINUX_IF_ARCNET_H
+#define LINUX_IF_ARCNET_H
+#define LINUX_IF_ARCNET_H_
+#define _UAPI_LINUX_IF_ARCNET_H
+#define _UAPI_LINUX_IF_ARCNET_H_
+#define _LINUX_IF_ARCNET_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #include <museum/7.1.2/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

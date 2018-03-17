@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_ILA_H
 #define _UAPI_LINUX_ILA_H
+#define UAPI_LINUX_ILA_H
+#define UAPI_LINUX_ILA_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ILA_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ILA_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ILA_H
+#define NDK_ANDROID_SUPPORT_LINUX_ILA_H_
+#define _LINUX_ILA_H
+#define _LINUX_ILA_H_
+#define _UAPI_LINUX_ILA_H_
 #define ILA_GENL_NAME "ila"
 #define ILA_GENL_VERSION 0x1
 enum {

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_GPIO_H_
 #define _UAPI_GPIO_H_
+#define UAPI_GPIO_H_
+#define UAPI_GPIO_H
+#define _GPIO_H_
+#define _GPIO_H
+#define _UAPI_GPIO_H
 #include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

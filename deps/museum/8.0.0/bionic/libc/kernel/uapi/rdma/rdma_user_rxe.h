@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef RDMA_USER_RXE_H
 #define RDMA_USER_RXE_H
+#define _RDMA_USER_RXE_H
+#define _RDMA_USER_RXE_H_
+#define _UAPI_RDMA_USER_RXE_H
+#define _UAPI_RDMA_USER_RXE_H_
+#define _UAPIRDMA_USER_RXE_H
+#define _UAPIRDMA_USER_RXE_H_
+#define RDMA_USER_RXE_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 union rxe_gid {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,9 @@
  ****************************************************************************/
 #ifndef _SCSI_GENERIC_H
 #define _SCSI_GENERIC_H
+#define SCSI_GENERIC_H
+#define SCSI_GENERIC_H_
+#define _SCSI_GENERIC_H_
 #include <linux/compiler.h>
 typedef struct sg_iovec {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

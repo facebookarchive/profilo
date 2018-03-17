@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPISDLA_H
 #define _UAPISDLA_H
+#define UAPISDLA_H
+#define UAPISDLA_H_
+#define SDLA_H
+#define SDLA_H_
+#define _UAPISDLA_H_
 #define SDLA_TYPES
 #define SDLA_S502A 5020
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

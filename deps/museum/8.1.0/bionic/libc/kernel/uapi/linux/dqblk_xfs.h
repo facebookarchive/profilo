@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_DQBLK_XFS_H
 #define _LINUX_DQBLK_XFS_H
+#define LINUX_DQBLK_XFS_H
+#define LINUX_DQBLK_XFS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_DQBLK_XFS_H
+#define NDK_ANDROID_SUPPORT_LINUX_DQBLK_XFS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_DQBLK_XFS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_DQBLK_XFS_H_
+#define _UAPI_LINUX_DQBLK_XFS_H
+#define _UAPI_LINUX_DQBLK_XFS_H_
+#define _LINUX_DQBLK_XFS_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XQM_CMD(x) (('X' << 8) + (x))
 #define XQM_COMMAND(x) (((x) & (0xff << 8)) == ('X' << 8))

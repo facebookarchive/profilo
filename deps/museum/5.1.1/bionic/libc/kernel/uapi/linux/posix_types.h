@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_POSIX_TYPES_H
 #define _LINUX_POSIX_TYPES_H
+#define LINUX_POSIX_TYPES_H
+#define LINUX_POSIX_TYPES_H_
+#define _UAPI_LINUX_POSIX_TYPES_H
+#define _UAPI_LINUX_POSIX_TYPES_H_
+#define _LINUX_POSIX_TYPES_H_
 #include <museum/5.1.1/bionic/libc/linux/stddef.h>
 #undef __FD_SETSIZE
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

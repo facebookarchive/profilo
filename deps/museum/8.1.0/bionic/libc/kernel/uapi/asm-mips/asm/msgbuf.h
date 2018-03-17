@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_MSGBUF_H
 #define _ASM_MSGBUF_H
+#define ASM_MSGBUF_H
+#define ASM_MSGBUF_H_
+#define NDK_ANDROID_SUPPORT_ASM_MSGBUF_H
+#define NDK_ANDROID_SUPPORT_ASM_MSGBUF_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_MSGBUF_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_MSGBUF_H_
+#define _UAPI_ASM_MSGBUF_H
+#define _UAPI_ASM_MSGBUF_H_
+#define _ASM_MSGBUF_H_
 struct msqid64_ds {
   struct ipc64_perm msg_perm;
   __kernel_time_t msg_stime;

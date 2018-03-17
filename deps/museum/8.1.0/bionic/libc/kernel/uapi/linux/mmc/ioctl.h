@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef LINUX_MMC_IOCTL_H
 #define LINUX_MMC_IOCTL_H
+#define _LINUX_MMC_IOCTL_H
+#define _LINUX_MMC_IOCTL_H_
+#define _UAPI_LINUX_MMC_IOCTL_H
+#define _UAPI_LINUX_MMC_IOCTL_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_MMC_IOCTL_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_MMC_IOCTL_H_
+#define _UAPILINUX_MMC_IOCTL_H
+#define _UAPILINUX_MMC_IOCTL_H_
+#define LINUX_MMC_IOCTL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct mmc_ioc_cmd {
   int write_flag;

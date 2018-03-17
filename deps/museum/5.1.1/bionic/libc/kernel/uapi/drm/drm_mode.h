@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DRM_MODE_H
 #define _DRM_MODE_H
+#define DRM_MODE_H
+#define DRM_MODE_H_
+#define _UAPI_DRM_MODE_H
+#define _UAPI_DRM_MODE_H_
+#define _DRM_MODE_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #define DRM_DISPLAY_INFO_LEN 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

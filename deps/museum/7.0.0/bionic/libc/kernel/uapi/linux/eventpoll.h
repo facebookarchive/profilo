@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_EVENTPOLL_H
 #define _UAPI_LINUX_EVENTPOLL_H
+#define UAPI_LINUX_EVENTPOLL_H
+#define UAPI_LINUX_EVENTPOLL_H_
+#define _LINUX_EVENTPOLL_H
+#define _LINUX_EVENTPOLL_H_
+#define _UAPI_LINUX_EVENTPOLL_H_
 #include <museum/7.0.0/bionic/libc/linux/fcntl.h>
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

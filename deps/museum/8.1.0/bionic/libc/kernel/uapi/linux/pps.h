@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _PPS_H_
 #define _PPS_H_
+#define PPS_H_
+#define PPS_H
+#define NDK_ANDROID_SUPPORT_PPS_H_
+#define NDK_ANDROID_SUPPORT_PPS_H
+#define NDK_ANDROID_SUPPORT_UAPI_PPS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_PPS_H
+#define _UAPI_PPS_H_
+#define _UAPI_PPS_H
+#define _PPS_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define PPS_VERSION "5.3.6"
 #define PPS_MAX_SOURCES 16

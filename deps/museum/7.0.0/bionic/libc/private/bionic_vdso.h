@@ -27,6 +27,9 @@
  */
 #ifndef _PRIVATE_BIONIC_VDSO_H
 #define _PRIVATE_BIONIC_VDSO_H
+#define PRIVATE_BIONIC_VDSO_H
+#define PRIVATE_BIONIC_VDSO_H_
+#define _PRIVATE_BIONIC_VDSO_H_
 
 #include <time.h>
 

@@ -28,6 +28,11 @@
 
 #ifndef _ERROR_H
 #define _ERROR_H 1
+#define ERROR_H
+#define ERROR_H_
+#define NDK_ANDROID_SUPPORT_ERROR_H
+#define NDK_ANDROID_SUPPORT_ERROR_H_
+#define _ERROR_H_
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

@@ -18,6 +18,9 @@
  ****************************************************************************/
 #ifndef _SCSI_PROTO_H_
 #define _SCSI_PROTO_H_
+#define SCSI_PROTO_H_
+#define SCSI_PROTO_H
+#define _SCSI_PROTO_H
 #include <linux/types.h>
 #define TEST_UNIT_READY 0x00
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

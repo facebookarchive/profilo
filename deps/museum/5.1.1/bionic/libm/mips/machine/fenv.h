@@ -70,6 +70,8 @@
 
 #ifndef _MIPS_FENV_H_
 #define _MIPS_FENV_H_
+#define MIPS_FENV_H_
+#define MIPS_FENV_H
 
 #include <museum/5.1.1/bionic/libc/sys/types.h>
 

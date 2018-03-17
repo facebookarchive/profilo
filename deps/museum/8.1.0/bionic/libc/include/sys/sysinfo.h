@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_SYSINFO_H_
 #define _SYS_SYSINFO_H_
+#define SYS_SYSINFO_H_
+#define SYS_SYSINFO_H
+#define NDK_ANDROID_SUPPORT_SYS_SYSINFO_H_
+#define NDK_ANDROID_SUPPORT_SYS_SYSINFO_H
+#define _SYS_SYSINFO_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/linux/kernel.h>

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_SCTP_H_
 #define _XT_SCTP_H_
+#define XT_SCTP_H_
+#define XT_SCTP_H
+#define NDK_ANDROID_SUPPORT_XT_SCTP_H_
+#define NDK_ANDROID_SUPPORT_XT_SCTP_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_SCTP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_SCTP_H
+#define _UAPI_XT_SCTP_H_
+#define _UAPI_XT_SCTP_H
+#define _XT_SCTP_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_SCTP_SRC_PORTS 0x01
 #define XT_SCTP_DEST_PORTS 0x02

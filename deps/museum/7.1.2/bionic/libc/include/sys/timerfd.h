@@ -28,6 +28,9 @@
 
 #ifndef _SYS_TIMERFD_H_
 #define _SYS_TIMERFD_H_
+#define SYS_TIMERFD_H_
+#define SYS_TIMERFD_H
+#define _SYS_TIMERFD_H
 
 #include <museum/7.1.2/bionic/libc/fcntl.h> /* For O_CLOEXEC and O_NONBLOCK. */
 #include <museum/7.1.2/bionic/libc/time.h>

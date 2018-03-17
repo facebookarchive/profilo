@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_KVM_MIPS_H
 #define __LINUX_KVM_MIPS_H
+#define _LINUX_KVM_MIPS_H
+#define _LINUX_KVM_MIPS_H_
+#define _UAPI_LINUX_KVM_MIPS_H
+#define _UAPI_LINUX_KVM_MIPS_H_
+#define NDK_ANDROID_SUPPORT__LINUX_KVM_MIPS_H
+#define NDK_ANDROID_SUPPORT__LINUX_KVM_MIPS_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_KVM_MIPS_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_KVM_MIPS_H_
+#define _UAPI__LINUX_KVM_MIPS_H
+#define _UAPI__LINUX_KVM_MIPS_H_
+#define __LINUX_KVM_MIPS_H_
 #include <linux/types.h>
 struct kvm_regs {
   __u64 gpr[32];

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_AUTO_DEV_IOCTL_H
 #define _UAPI_LINUX_AUTO_DEV_IOCTL_H
+#define UAPI_LINUX_AUTO_DEV_IOCTL_H
+#define UAPI_LINUX_AUTO_DEV_IOCTL_H_
+#define _LINUX_AUTO_DEV_IOCTL_H
+#define _LINUX_AUTO_DEV_IOCTL_H_
+#define _UAPI_LINUX_AUTO_DEV_IOCTL_H_
 #include <museum/8.0.0/bionic/libc/linux/auto_fs.h>
 #include <museum/8.0.0/bionic/libc/linux/string.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

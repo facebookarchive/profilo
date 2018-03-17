@@ -33,6 +33,9 @@
 
 #ifndef _NET_IF_TYPES_H_
 #define _NET_IF_TYPES_H_
+#define NET_IF_TYPES_H_
+#define NET_IF_TYPES_H
+#define _NET_IF_TYPES_H
 
 /*
  * Interface types for benefit of parsing media address headers.

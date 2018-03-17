@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_SERIAL_CORE_H
 #define _UAPILINUX_SERIAL_CORE_H
+#define UAPILINUX_SERIAL_CORE_H
+#define UAPILINUX_SERIAL_CORE_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_SERIAL_CORE_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_SERIAL_CORE_H_
+#define LINUX_SERIAL_CORE_H
+#define LINUX_SERIAL_CORE_H_
+#define _UAPILINUX_SERIAL_CORE_H_
 #include <museum/6.0.1/bionic/libc/linux/serial.h>
 #define PORT_UNKNOWN 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

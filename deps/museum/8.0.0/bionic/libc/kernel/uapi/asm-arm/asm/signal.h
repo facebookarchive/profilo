@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASMARM_SIGNAL_H
 #define _UAPI_ASMARM_SIGNAL_H
+#define UAPI_ASMARM_SIGNAL_H
+#define UAPI_ASMARM_SIGNAL_H_
+#define _ASMARM_SIGNAL_H
+#define _ASMARM_SIGNAL_H_
+#define _UAPI_ASMARM_SIGNAL_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 struct siginfo;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

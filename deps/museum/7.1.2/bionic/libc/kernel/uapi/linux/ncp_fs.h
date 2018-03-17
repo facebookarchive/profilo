@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_FS_H
 #define _LINUX_NCP_FS_H
+#define LINUX_NCP_FS_H
+#define LINUX_NCP_FS_H_
+#define _UAPI_LINUX_NCP_FS_H
+#define _UAPI_LINUX_NCP_FS_H_
+#define _LINUX_NCP_FS_H_
 #include <museum/7.1.2/bionic/libc/linux/fs.h>
 #include <museum/7.1.2/bionic/libc/linux/in.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

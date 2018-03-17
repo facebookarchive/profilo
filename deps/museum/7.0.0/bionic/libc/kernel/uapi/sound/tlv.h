@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __UAPI_SOUND_TLV_H
 #define __UAPI_SOUND_TLV_H
+#define _UAPI_SOUND_TLV_H
+#define _UAPI_SOUND_TLV_H_
+#define _SOUND_TLV_H
+#define _SOUND_TLV_H_
+#define _UAPI__UAPI_SOUND_TLV_H
+#define _UAPI__UAPI_SOUND_TLV_H_
+#define __UAPI_SOUND_TLV_H_
 #define SNDRV_CTL_TLVT_CONTAINER 0
 #define SNDRV_CTL_TLVT_DB_SCALE 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

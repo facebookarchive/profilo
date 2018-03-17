@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SEM_H
 #define _UAPI_LINUX_SEM_H
+#define UAPI_LINUX_SEM_H
+#define UAPI_LINUX_SEM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SEM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SEM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SEM_H
+#define NDK_ANDROID_SUPPORT_LINUX_SEM_H_
+#define _LINUX_SEM_H
+#define _LINUX_SEM_H_
+#define _UAPI_LINUX_SEM_H_
 #include <museum/8.1.0/bionic/libc/linux/ipc.h>
 #define SEM_UNDO 0x1000
 #define GETPID 11

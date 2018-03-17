@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPIBLKTRACE_H
 #define _UAPIBLKTRACE_H
+#define UAPIBLKTRACE_H
+#define UAPIBLKTRACE_H_
+#define NDK_ANDROID_SUPPORT_UAPIBLKTRACE_H
+#define NDK_ANDROID_SUPPORT_UAPIBLKTRACE_H_
+#define BLKTRACE_H
+#define BLKTRACE_H_
+#define _UAPIBLKTRACE_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum blktrace_cat {
   BLK_TC_READ = 1 << 0,

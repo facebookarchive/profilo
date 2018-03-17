@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef VIRTGPU_DRM_H
 #define VIRTGPU_DRM_H
+#define _VIRTGPU_DRM_H
+#define _VIRTGPU_DRM_H_
+#define _UAPI_VIRTGPU_DRM_H
+#define _UAPI_VIRTGPU_DRM_H_
+#define _UAPIVIRTGPU_DRM_H
+#define _UAPIVIRTGPU_DRM_H_
+#define VIRTGPU_DRM_H_
 #include <stddef.h>
 #include <museum/7.0.0/bionic/libc/drm/drm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

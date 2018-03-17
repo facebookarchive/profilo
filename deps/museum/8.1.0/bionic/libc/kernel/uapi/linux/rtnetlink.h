@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_RTNETLINK_H
 #define _UAPI__LINUX_RTNETLINK_H
+#define UAPI__LINUX_RTNETLINK_H
+#define UAPI__LINUX_RTNETLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_RTNETLINK_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_RTNETLINK_H_
+#define NDK_ANDROID_SUPPORT__LINUX_RTNETLINK_H
+#define NDK_ANDROID_SUPPORT__LINUX_RTNETLINK_H_
+#define __LINUX_RTNETLINK_H
+#define __LINUX_RTNETLINK_H_
+#define _UAPI__LINUX_RTNETLINK_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/netlink.h>
 #include <museum/8.1.0/bionic/libc/linux/if_link.h>

@@ -16,6 +16,9 @@
 
 #ifndef SECCOMP_POLICY_H
 #define SECCOMP_POLICY_H
+#define _SECCOMP_POLICY_H
+#define _SECCOMP_POLICY_H_
+#define SECCOMP_POLICY_H_
 
 #include <stddef.h>
 #include <linux/filter.h>

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_PTRACE_H
 #define _UAPI_ASM_PTRACE_H
+#define UAPI_ASM_PTRACE_H
+#define UAPI_ASM_PTRACE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_PTRACE_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_PTRACE_H_
+#define NDK_ANDROID_SUPPORT_ASM_PTRACE_H
+#define NDK_ANDROID_SUPPORT_ASM_PTRACE_H_
+#define _ASM_PTRACE_H
+#define _ASM_PTRACE_H_
+#define _UAPI_ASM_PTRACE_H_
 #include <linux/types.h>
 #define FPR_BASE 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

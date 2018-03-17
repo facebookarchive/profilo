@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_SOCKETCALLS_H_
 #define _SYS_SOCKETCALLS_H_
+#define SYS_SOCKETCALLS_H_
+#define SYS_SOCKETCALLS_H
+#define NDK_ANDROID_SUPPORT_SYS_SOCKETCALLS_H_
+#define NDK_ANDROID_SUPPORT_SYS_SOCKETCALLS_H
+#define _SYS_SOCKETCALLS_H
 
 /* socketcalls by number */
 

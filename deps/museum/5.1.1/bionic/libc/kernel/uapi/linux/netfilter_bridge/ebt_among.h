@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_BRIDGE_EBT_AMONG_H
 #define __LINUX_BRIDGE_EBT_AMONG_H
+#define _LINUX_BRIDGE_EBT_AMONG_H
+#define _LINUX_BRIDGE_EBT_AMONG_H_
+#define _UAPI_LINUX_BRIDGE_EBT_AMONG_H
+#define _UAPI_LINUX_BRIDGE_EBT_AMONG_H_
+#define _UAPI__LINUX_BRIDGE_EBT_AMONG_H
+#define _UAPI__LINUX_BRIDGE_EBT_AMONG_H_
+#define __LINUX_BRIDGE_EBT_AMONG_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 #define EBT_AMONG_DST 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

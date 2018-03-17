@@ -28,6 +28,11 @@
 
 #ifndef _FCNTL_H
 #define _FCNTL_H
+#define FCNTL_H
+#define FCNTL_H_
+#define NDK_ANDROID_SUPPORT_FCNTL_H
+#define NDK_ANDROID_SUPPORT_FCNTL_H_
+#define _FCNTL_H_
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <museum/6.0.1/bionic/libc/sys/types.h>

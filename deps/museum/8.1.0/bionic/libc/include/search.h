@@ -8,6 +8,11 @@
 
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
+#define SEARCH_H_
+#define SEARCH_H
+#define NDK_ANDROID_SUPPORT_SEARCH_H_
+#define NDK_ANDROID_SUPPORT_SEARCH_H
+#define _SEARCH_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

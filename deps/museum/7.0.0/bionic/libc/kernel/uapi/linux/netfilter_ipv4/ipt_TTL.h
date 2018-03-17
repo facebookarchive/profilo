@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IPT_TTL_H
 #define _IPT_TTL_H
+#define IPT_TTL_H
+#define IPT_TTL_H_
+#define _UAPI_IPT_TTL_H
+#define _UAPI_IPT_TTL_H_
+#define _IPT_TTL_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

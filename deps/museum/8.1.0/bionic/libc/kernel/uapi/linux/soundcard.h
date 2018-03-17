@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPISOUNDCARD_H
 #define _UAPISOUNDCARD_H
+#define UAPISOUNDCARD_H
+#define UAPISOUNDCARD_H_
+#define NDK_ANDROID_SUPPORT_UAPISOUNDCARD_H
+#define NDK_ANDROID_SUPPORT_UAPISOUNDCARD_H_
+#define SOUNDCARD_H
+#define SOUNDCARD_H_
+#define _UAPISOUNDCARD_H_
 #define SOUND_VERSION 0x030802
 #define OPEN_SOUND_SYSTEM
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>

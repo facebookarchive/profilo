@@ -27,6 +27,9 @@
  */
 #ifndef _RESOLV_NETID_H
 #define _RESOLV_NETID_H
+#define RESOLV_NETID_H
+#define RESOLV_NETID_H_
+#define _RESOLV_NETID_H_
 
 /* This header contains declarations related to per-network DNS
  * server selection. They are used by system/netd/ and should not be

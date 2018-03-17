@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef LINUX_PCI_REGS_H
 #define LINUX_PCI_REGS_H
+#define _LINUX_PCI_REGS_H
+#define _LINUX_PCI_REGS_H_
+#define _UAPI_LINUX_PCI_REGS_H
+#define _UAPI_LINUX_PCI_REGS_H_
+#define _UAPILINUX_PCI_REGS_H
+#define _UAPILINUX_PCI_REGS_H_
+#define LINUX_PCI_REGS_H_
 #define PCI_STD_HEADER_SIZEOF 64
 #define PCI_VENDOR_ID 0x00
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

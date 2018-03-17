@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _NFSD_CLD_H
 #define _NFSD_CLD_H
+#define NFSD_CLD_H
+#define NFSD_CLD_H_
+#define NDK_ANDROID_SUPPORT_NFSD_CLD_H
+#define NDK_ANDROID_SUPPORT_NFSD_CLD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NFSD_CLD_H
+#define NDK_ANDROID_SUPPORT_UAPI_NFSD_CLD_H_
+#define _UAPI_NFSD_CLD_H
+#define _UAPI_NFSD_CLD_H_
+#define _NFSD_CLD_H_
 #define CLD_UPCALL_VERSION 1
 #define NFS4_OPAQUE_LIMIT 1024
 enum cld_command {

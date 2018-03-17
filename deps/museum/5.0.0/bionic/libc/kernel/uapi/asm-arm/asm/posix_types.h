@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ARCH_ARM_POSIX_TYPES_H
 #define __ARCH_ARM_POSIX_TYPES_H
+#define _ARCH_ARM_POSIX_TYPES_H
+#define _ARCH_ARM_POSIX_TYPES_H_
+#define _UAPI_ARCH_ARM_POSIX_TYPES_H
+#define _UAPI_ARCH_ARM_POSIX_TYPES_H_
+#define _UAPI__ARCH_ARM_POSIX_TYPES_H
+#define _UAPI__ARCH_ARM_POSIX_TYPES_H_
+#define __ARCH_ARM_POSIX_TYPES_H_
 typedef unsigned short __kernel_mode_t;
 #define __kernel_mode_t __kernel_mode_t
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

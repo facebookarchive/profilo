@@ -28,6 +28,11 @@
 
 #ifndef _BYTESWAP_H_
 #define _BYTESWAP_H_
+#define BYTESWAP_H_
+#define BYTESWAP_H
+#define NDK_ANDROID_SUPPORT_BYTESWAP_H_
+#define NDK_ANDROID_SUPPORT_BYTESWAP_H
+#define _BYTESWAP_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/endian.h>

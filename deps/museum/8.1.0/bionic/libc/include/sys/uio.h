@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_UIO_H_
 #define _SYS_UIO_H_
+#define SYS_UIO_H_
+#define SYS_UIO_H
+#define NDK_ANDROID_SUPPORT_SYS_UIO_H_
+#define NDK_ANDROID_SUPPORT_SYS_UIO_H
+#define _SYS_UIO_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

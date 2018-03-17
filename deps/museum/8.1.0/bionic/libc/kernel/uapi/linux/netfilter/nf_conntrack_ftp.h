@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_NF_CONNTRACK_FTP_H
 #define _UAPI_NF_CONNTRACK_FTP_H
+#define UAPI_NF_CONNTRACK_FTP_H
+#define UAPI_NF_CONNTRACK_FTP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NF_CONNTRACK_FTP_H
+#define NDK_ANDROID_SUPPORT_UAPI_NF_CONNTRACK_FTP_H_
+#define NDK_ANDROID_SUPPORT_NF_CONNTRACK_FTP_H
+#define NDK_ANDROID_SUPPORT_NF_CONNTRACK_FTP_H_
+#define _NF_CONNTRACK_FTP_H
+#define _NF_CONNTRACK_FTP_H_
+#define _UAPI_NF_CONNTRACK_FTP_H_
 enum nf_ct_ftp_type {
   NF_CT_FTP_PORT,
   NF_CT_FTP_PASV,

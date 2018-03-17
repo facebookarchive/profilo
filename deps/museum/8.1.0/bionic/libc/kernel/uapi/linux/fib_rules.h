@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_FIB_RULES_H
 #define __LINUX_FIB_RULES_H
+#define _LINUX_FIB_RULES_H
+#define _LINUX_FIB_RULES_H_
+#define _UAPI_LINUX_FIB_RULES_H
+#define _UAPI_LINUX_FIB_RULES_H_
+#define NDK_ANDROID_SUPPORT__LINUX_FIB_RULES_H
+#define NDK_ANDROID_SUPPORT__LINUX_FIB_RULES_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_FIB_RULES_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_FIB_RULES_H_
+#define _UAPI__LINUX_FIB_RULES_H
+#define _UAPI__LINUX_FIB_RULES_H_
+#define __LINUX_FIB_RULES_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/rtnetlink.h>
 #define FIB_RULE_PERMANENT 0x00000001

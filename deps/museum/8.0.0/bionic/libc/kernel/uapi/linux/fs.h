@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_FS_H
 #define _UAPI_LINUX_FS_H
+#define UAPI_LINUX_FS_H
+#define UAPI_LINUX_FS_H_
+#define _LINUX_FS_H
+#define _LINUX_FS_H_
+#define _UAPI_LINUX_FS_H_
 #include <museum/8.0.0/bionic/libc/linux/limits.h>
 #include <museum/8.0.0/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

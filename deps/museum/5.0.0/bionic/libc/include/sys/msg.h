@@ -28,6 +28,9 @@
 
 #ifndef _SYS_MSG_H_
 #define _SYS_MSG_H_
+#define SYS_MSG_H_
+#define SYS_MSG_H
+#define _SYS_MSG_H
 
 #include <museum/5.0.0/bionic/libc/linux/msg.h>
 

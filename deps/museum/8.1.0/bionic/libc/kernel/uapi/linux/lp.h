@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_LP_H
 #define _UAPI_LINUX_LP_H
+#define UAPI_LINUX_LP_H
+#define UAPI_LINUX_LP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_LP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_LP_H
+#define NDK_ANDROID_SUPPORT_LINUX_LP_H_
+#define _LINUX_LP_H
+#define _LINUX_LP_H_
+#define _UAPI_LINUX_LP_H_
 #define LP_EXIST 0x0001
 #define LP_SELEC 0x0002
 #define LP_BUSY 0x0004

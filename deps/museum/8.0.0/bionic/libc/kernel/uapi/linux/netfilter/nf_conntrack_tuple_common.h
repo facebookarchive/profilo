@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NF_CONNTRACK_TUPLE_COMMON_H
 #define _NF_CONNTRACK_TUPLE_COMMON_H
+#define NF_CONNTRACK_TUPLE_COMMON_H
+#define NF_CONNTRACK_TUPLE_COMMON_H_
+#define _UAPI_NF_CONNTRACK_TUPLE_COMMON_H
+#define _UAPI_NF_CONNTRACK_TUPLE_COMMON_H_
+#define _NF_CONNTRACK_TUPLE_COMMON_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

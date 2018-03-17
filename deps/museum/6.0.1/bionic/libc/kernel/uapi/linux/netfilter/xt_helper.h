@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_HELPER_H
 #define _XT_HELPER_H
+#define XT_HELPER_H
+#define XT_HELPER_H_
+#define NDK_ANDROID_SUPPORT_XT_HELPER_H
+#define NDK_ANDROID_SUPPORT_XT_HELPER_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_HELPER_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_HELPER_H_
+#define _UAPI_XT_HELPER_H
+#define _UAPI_XT_HELPER_H_
+#define _XT_HELPER_H_
 struct xt_helper_info {
   int invert;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

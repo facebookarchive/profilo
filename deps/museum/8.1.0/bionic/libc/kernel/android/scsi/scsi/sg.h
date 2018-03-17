@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _SCSI_GENERIC_H
 #define _SCSI_GENERIC_H
+#define SCSI_GENERIC_H
+#define SCSI_GENERIC_H_
+#define NDK_ANDROID_SUPPORT_SCSI_GENERIC_H
+#define NDK_ANDROID_SUPPORT_SCSI_GENERIC_H_
+#define _SCSI_GENERIC_H_
 #include <linux/compiler.h>
 typedef struct sg_iovec {
   void __user * iov_base;

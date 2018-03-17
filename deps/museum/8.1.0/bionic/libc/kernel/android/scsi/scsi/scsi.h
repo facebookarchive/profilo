@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _SCSI_SCSI_H
 #define _SCSI_SCSI_H
+#define SCSI_SCSI_H
+#define SCSI_SCSI_H_
+#define NDK_ANDROID_SUPPORT_SCSI_SCSI_H
+#define NDK_ANDROID_SUPPORT_SCSI_SCSI_H_
+#define _SCSI_SCSI_H_
 #include <linux/types.h>
 #include <scsi/scsi_proto.h>
 struct ccs_modesel_head {

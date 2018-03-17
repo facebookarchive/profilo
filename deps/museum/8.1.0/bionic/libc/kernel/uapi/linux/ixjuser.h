@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_IXJUSER_H
 #define __LINUX_IXJUSER_H
+#define _LINUX_IXJUSER_H
+#define _LINUX_IXJUSER_H_
+#define _UAPI_LINUX_IXJUSER_H
+#define _UAPI_LINUX_IXJUSER_H_
+#define NDK_ANDROID_SUPPORT__LINUX_IXJUSER_H
+#define NDK_ANDROID_SUPPORT__LINUX_IXJUSER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IXJUSER_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_IXJUSER_H_
+#define _UAPI__LINUX_IXJUSER_H
+#define _UAPI__LINUX_IXJUSER_H_
+#define __LINUX_IXJUSER_H_
 #include <museum/8.1.0/bionic/libc/linux/telephony.h>
 #define IXJCTL_DSP_RESET _IO('q', 0xC0)
 #define IXJCTL_RING PHONE_RING

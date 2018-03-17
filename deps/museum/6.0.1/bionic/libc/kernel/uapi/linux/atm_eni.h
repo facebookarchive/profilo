@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef LINUX_ATM_ENI_H
 #define LINUX_ATM_ENI_H
+#define _LINUX_ATM_ENI_H
+#define _LINUX_ATM_ENI_H_
+#define _UAPI_LINUX_ATM_ENI_H
+#define _UAPI_LINUX_ATM_ENI_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_ATM_ENI_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_ATM_ENI_H_
+#define _UAPILINUX_ATM_ENI_H
+#define _UAPILINUX_ATM_ENI_H_
+#define LINUX_ATM_ENI_H_
 #include <museum/6.0.1/bionic/libc/linux/atmioc.h>
 struct eni_multipliers {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

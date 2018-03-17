@@ -47,6 +47,9 @@
 
 #ifndef _MACHINE_IEEE_H_
 #define _MACHINE_IEEE_H_
+#define MACHINE_IEEE_H_
+#define MACHINE_IEEE_H
+#define _MACHINE_IEEE_H
 
 #include <museum/7.1.2/bionic/libc/sys/types.h>
 

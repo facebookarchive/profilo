@@ -27,6 +27,9 @@
  */
 #ifndef _FEATURES_H_
 #define _FEATURES_H_
+#define FEATURES_H_
+#define FEATURES_H
+#define _FEATURES_H
 
 /* certain Linux-specific programs expect a <features.h> header file
  * that defines various features macros

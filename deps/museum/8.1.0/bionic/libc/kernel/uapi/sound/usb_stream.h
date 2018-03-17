@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__SOUND_USB_STREAM_H
 #define _UAPI__SOUND_USB_STREAM_H
+#define UAPI__SOUND_USB_STREAM_H
+#define UAPI__SOUND_USB_STREAM_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_USB_STREAM_H
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_USB_STREAM_H_
+#define NDK_ANDROID_SUPPORT__SOUND_USB_STREAM_H
+#define NDK_ANDROID_SUPPORT__SOUND_USB_STREAM_H_
+#define __SOUND_USB_STREAM_H
+#define __SOUND_USB_STREAM_H_
+#define _UAPI__SOUND_USB_STREAM_H_
 #define USB_STREAM_INTERFACE_VERSION 2
 #define SNDRV_USB_STREAM_IOCTL_SET_PARAMS _IOW('H', 0x90, struct usb_stream_config)
 struct usb_stream_packet {

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef VIRTGPU_DRM_H
 #define VIRTGPU_DRM_H
+#define _VIRTGPU_DRM_H
+#define _VIRTGPU_DRM_H_
+#define _UAPI_VIRTGPU_DRM_H
+#define _UAPI_VIRTGPU_DRM_H_
+#define _UAPIVIRTGPU_DRM_H
+#define _UAPIVIRTGPU_DRM_H_
+#define VIRTGPU_DRM_H_
 #include "drm.h"
 #ifdef __cplusplus
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

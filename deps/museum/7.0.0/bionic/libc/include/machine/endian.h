@@ -28,6 +28,9 @@
 
 #ifndef _MACHINE_ENDIAN_H_
 #define _MACHINE_ENDIAN_H_
+#define MACHINE_ENDIAN_H_
+#define MACHINE_ENDIAN_H
+#define _MACHINE_ENDIAN_H
 
 /* This file is for BSD source compatibility only. Use <endian.h> or <sys/endian.h> instead. */
 #include <museum/7.0.0/bionic/libc/sys/endian.h>

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef KERNEL_IRDA_H
 #define KERNEL_IRDA_H
+#define _KERNEL_IRDA_H
+#define _KERNEL_IRDA_H_
+#define _UAPI_KERNEL_IRDA_H
+#define _UAPI_KERNEL_IRDA_H_
+#define _UAPIKERNEL_IRDA_H
+#define _UAPIKERNEL_IRDA_H_
+#define KERNEL_IRDA_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #include <museum/7.1.2/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

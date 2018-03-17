@@ -32,6 +32,11 @@
 
 #ifndef _GETOPT_H_
 #define _GETOPT_H_
+#define GETOPT_H_
+#define GETOPT_H
+#define NDK_ANDROID_SUPPORT_GETOPT_H_
+#define NDK_ANDROID_SUPPORT_GETOPT_H
+#define _GETOPT_H
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 

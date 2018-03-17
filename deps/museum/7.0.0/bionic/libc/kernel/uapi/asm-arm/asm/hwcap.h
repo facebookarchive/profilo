@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__ASMARM_HWCAP_H
 #define _UAPI__ASMARM_HWCAP_H
+#define UAPI__ASMARM_HWCAP_H
+#define UAPI__ASMARM_HWCAP_H_
+#define __ASMARM_HWCAP_H
+#define __ASMARM_HWCAP_H_
+#define _UAPI__ASMARM_HWCAP_H_
 #define HWCAP_SWP (1 << 0)
 #define HWCAP_HALF (1 << 1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

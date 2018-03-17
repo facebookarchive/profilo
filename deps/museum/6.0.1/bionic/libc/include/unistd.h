@@ -28,6 +28,11 @@
 
 #ifndef _UNISTD_H_
 #define _UNISTD_H_
+#define UNISTD_H_
+#define UNISTD_H
+#define NDK_ANDROID_SUPPORT_UNISTD_H_
+#define NDK_ANDROID_SUPPORT_UNISTD_H
+#define _UNISTD_H
 
 #include <stddef.h>
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>

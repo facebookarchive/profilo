@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _NFNL_CTHELPER_H_
 #define _NFNL_CTHELPER_H_
+#define NFNL_CTHELPER_H_
+#define NFNL_CTHELPER_H
+#define _UAPI_NFNL_CTHELPER_H_
+#define _UAPI_NFNL_CTHELPER_H
+#define _NFNL_CTHELPER_H
 #define NFCT_HELPER_STATUS_DISABLED 0
 #define NFCT_HELPER_STATUS_ENABLED 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

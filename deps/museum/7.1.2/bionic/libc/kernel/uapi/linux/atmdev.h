@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_ATMDEV_H
 #define _UAPILINUX_ATMDEV_H
+#define UAPILINUX_ATMDEV_H
+#define UAPILINUX_ATMDEV_H_
+#define LINUX_ATMDEV_H
+#define LINUX_ATMDEV_H_
+#define _UAPILINUX_ATMDEV_H_
 #include <museum/7.1.2/bionic/libc/linux/atmapi.h>
 #include <museum/7.1.2/bionic/libc/linux/atm.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

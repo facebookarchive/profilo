@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_AUXV_H_
 #define _SYS_AUXV_H_
+#define SYS_AUXV_H_
+#define SYS_AUXV_H
+#define _SYS_AUXV_H
 
 #include <museum/5.1.1/bionic/libc/linux/auxvec.h>
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>

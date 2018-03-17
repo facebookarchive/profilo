@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_BT_BMC_H
 #define _UAPI_LINUX_BT_BMC_H
+#define UAPI_LINUX_BT_BMC_H
+#define UAPI_LINUX_BT_BMC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_BT_BMC_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_BT_BMC_H_
+#define NDK_ANDROID_SUPPORT_LINUX_BT_BMC_H
+#define NDK_ANDROID_SUPPORT_LINUX_BT_BMC_H_
+#define _LINUX_BT_BMC_H
+#define _LINUX_BT_BMC_H_
+#define _UAPI_LINUX_BT_BMC_H_
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define __BT_BMC_IOCTL_MAGIC 0xb1
 #define BT_BMC_IOCTL_SMS_ATN _IO(__BT_BMC_IOCTL_MAGIC, 0x00)

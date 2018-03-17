@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPINFS_IDMAP_H
 #define _UAPINFS_IDMAP_H
+#define UAPINFS_IDMAP_H
+#define UAPINFS_IDMAP_H_
+#define NDK_ANDROID_SUPPORT_UAPINFS_IDMAP_H
+#define NDK_ANDROID_SUPPORT_UAPINFS_IDMAP_H_
+#define NFS_IDMAP_H
+#define NFS_IDMAP_H_
+#define _UAPINFS_IDMAP_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define IDMAP_NAMESZ 128
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

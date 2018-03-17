@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_CONNLIMIT_H
 #define _XT_CONNLIMIT_H
+#define XT_CONNLIMIT_H
+#define XT_CONNLIMIT_H_
+#define _UAPI_XT_CONNLIMIT_H
+#define _UAPI_XT_CONNLIMIT_H_
+#define _XT_CONNLIMIT_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 #include <museum/7.0.0/bionic/libc/linux/netfilter.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

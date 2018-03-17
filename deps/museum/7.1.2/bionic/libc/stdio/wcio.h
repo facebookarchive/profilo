@@ -31,6 +31,9 @@
 
 #ifndef _WCIO_H_
 #define _WCIO_H_
+#define WCIO_H_
+#define WCIO_H
+#define _WCIO_H
 
 #include <sys/cdefs.h>
 

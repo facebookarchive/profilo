@@ -32,6 +32,9 @@
 
 #ifndef _GETOPT_H_
 #define _GETOPT_H_
+#define GETOPT_H_
+#define GETOPT_H
+#define _GETOPT_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 

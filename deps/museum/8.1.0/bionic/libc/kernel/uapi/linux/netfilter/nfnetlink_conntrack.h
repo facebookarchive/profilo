@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _IPCONNTRACK_NETLINK_H
 #define _IPCONNTRACK_NETLINK_H
+#define IPCONNTRACK_NETLINK_H
+#define IPCONNTRACK_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_IPCONNTRACK_NETLINK_H
+#define NDK_ANDROID_SUPPORT_IPCONNTRACK_NETLINK_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IPCONNTRACK_NETLINK_H
+#define NDK_ANDROID_SUPPORT_UAPI_IPCONNTRACK_NETLINK_H_
+#define _UAPI_IPCONNTRACK_NETLINK_H
+#define _UAPI_IPCONNTRACK_NETLINK_H_
+#define _IPCONNTRACK_NETLINK_H_
 #include <museum/8.1.0/bionic/libc/linux/netfilter/nfnetlink.h>
 enum cntl_msg_types {
   IPCTNL_MSG_CT_NEW,

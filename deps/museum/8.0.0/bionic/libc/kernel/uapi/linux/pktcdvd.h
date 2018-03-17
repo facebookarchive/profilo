@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__PKTCDVD_H
 #define _UAPI__PKTCDVD_H
+#define UAPI__PKTCDVD_H
+#define UAPI__PKTCDVD_H_
+#define __PKTCDVD_H
+#define __PKTCDVD_H_
+#define _UAPI__PKTCDVD_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define PACKET_DEBUG 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

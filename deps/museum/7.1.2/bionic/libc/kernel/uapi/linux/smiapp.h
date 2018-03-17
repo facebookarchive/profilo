@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __UAPI_LINUX_SMIAPP_H_
 #define __UAPI_LINUX_SMIAPP_H_
+#define _UAPI_LINUX_SMIAPP_H_
+#define _UAPI_LINUX_SMIAPP_H
+#define _LINUX_SMIAPP_H_
+#define _LINUX_SMIAPP_H
+#define _UAPI__UAPI_LINUX_SMIAPP_H_
+#define _UAPI__UAPI_LINUX_SMIAPP_H
+#define __UAPI_LINUX_SMIAPP_H
 #define V4L2_SMIAPP_TEST_PATTERN_MODE_DISABLED 0
 #define V4L2_SMIAPP_TEST_PATTERN_MODE_SOLID_COLOUR 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

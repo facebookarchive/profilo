@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ARPT_MANGLE_H
 #define _ARPT_MANGLE_H
+#define ARPT_MANGLE_H
+#define ARPT_MANGLE_H_
+#define NDK_ANDROID_SUPPORT_ARPT_MANGLE_H
+#define NDK_ANDROID_SUPPORT_ARPT_MANGLE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ARPT_MANGLE_H
+#define NDK_ANDROID_SUPPORT_UAPI_ARPT_MANGLE_H_
+#define _UAPI_ARPT_MANGLE_H
+#define _UAPI_ARPT_MANGLE_H_
+#define _ARPT_MANGLE_H_
 #include <museum/6.0.1/bionic/libc/linux/netfilter_arp/arp_tables.h>
 #define ARPT_MANGLE_ADDR_LEN_MAX sizeof(struct in_addr)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

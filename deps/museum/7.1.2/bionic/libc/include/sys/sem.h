@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SEM_H_
 #define _SYS_SEM_H_
+#define SYS_SEM_H_
+#define SYS_SEM_H
+#define _SYS_SEM_H
 
 #include <museum/7.1.2/bionic/libc/linux/sem.h>
 

@@ -27,6 +27,11 @@
  */
 #ifndef _PTHREAD_INTERNAL_H_
 #define _PTHREAD_INTERNAL_H_
+#define PTHREAD_INTERNAL_H_
+#define PTHREAD_INTERNAL_H
+#define NDK_ANDROID_SUPPORT_PTHREAD_INTERNAL_H_
+#define NDK_ANDROID_SUPPORT_PTHREAD_INTERNAL_H
+#define _PTHREAD_INTERNAL_H
 
 #include <pthread.h>
 #include <stdatomic.h>

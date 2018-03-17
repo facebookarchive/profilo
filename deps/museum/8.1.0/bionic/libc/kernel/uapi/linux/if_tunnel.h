@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_IF_TUNNEL_H_
 #define _UAPI_IF_TUNNEL_H_
+#define UAPI_IF_TUNNEL_H_
+#define UAPI_IF_TUNNEL_H
+#define NDK_ANDROID_SUPPORT_UAPI_IF_TUNNEL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IF_TUNNEL_H
+#define NDK_ANDROID_SUPPORT_IF_TUNNEL_H_
+#define NDK_ANDROID_SUPPORT_IF_TUNNEL_H
+#define _IF_TUNNEL_H_
+#define _IF_TUNNEL_H
+#define _UAPI_IF_TUNNEL_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/if.h>
 #include <museum/8.1.0/bionic/libc/linux/ip.h>

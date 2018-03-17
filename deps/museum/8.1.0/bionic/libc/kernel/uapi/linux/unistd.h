@@ -18,5 +18,14 @@
  ****************************************************************************/
 #ifndef _LINUX_UNISTD_H_
 #define _LINUX_UNISTD_H_
+#define LINUX_UNISTD_H_
+#define LINUX_UNISTD_H
+#define NDK_ANDROID_SUPPORT_LINUX_UNISTD_H_
+#define NDK_ANDROID_SUPPORT_LINUX_UNISTD_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_UNISTD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_UNISTD_H
+#define _UAPI_LINUX_UNISTD_H_
+#define _UAPI_LINUX_UNISTD_H
+#define _LINUX_UNISTD_H
 #include <museum/8.1.0/bionic/libc/asm/unistd.h>
 #endif

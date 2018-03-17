@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_USB_CDC_WDM_H
 #define _UAPI__LINUX_USB_CDC_WDM_H
+#define UAPI__LINUX_USB_CDC_WDM_H
+#define UAPI__LINUX_USB_CDC_WDM_H_
+#define __LINUX_USB_CDC_WDM_H
+#define __LINUX_USB_CDC_WDM_H_
+#define _UAPI__LINUX_USB_CDC_WDM_H_
 #define IOCTL_WDM_MAX_COMMAND _IOR('H', 0xA0, __u16)
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

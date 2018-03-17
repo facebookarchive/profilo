@@ -27,6 +27,11 @@
  */
 #ifndef _LINK_H_
 #define _LINK_H_
+#define LINK_H_
+#define LINK_H
+#define NDK_ANDROID_SUPPORT_LINK_H_
+#define NDK_ANDROID_SUPPORT_LINK_H
+#define _LINK_H
 
 #include <museum/6.0.1/bionic/libc/sys/types.h>
 #ifdef AOSP_ART_IS_A_DICK

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_IDS_H
 #define _LINUX_VIRTIO_IDS_H
+#define LINUX_VIRTIO_IDS_H
+#define LINUX_VIRTIO_IDS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_VIRTIO_IDS_H
+#define NDK_ANDROID_SUPPORT_LINUX_VIRTIO_IDS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VIRTIO_IDS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VIRTIO_IDS_H_
+#define _UAPI_LINUX_VIRTIO_IDS_H
+#define _UAPI_LINUX_VIRTIO_IDS_H_
+#define _LINUX_VIRTIO_IDS_H_
 #define VIRTIO_ID_NET 1
 #define VIRTIO_ID_BLOCK 2
 #define VIRTIO_ID_CONSOLE 3

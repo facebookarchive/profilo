@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef MTHCA_ABI_USER_H
 #define MTHCA_ABI_USER_H
+#define _MTHCA_ABI_USER_H
+#define _MTHCA_ABI_USER_H_
+#define _UAPI_MTHCA_ABI_USER_H
+#define _UAPI_MTHCA_ABI_USER_H_
+#define NDK_ANDROID_SUPPORT_UAPIMTHCA_ABI_USER_H
+#define NDK_ANDROID_SUPPORT_UAPIMTHCA_ABI_USER_H_
+#define _UAPIMTHCA_ABI_USER_H
+#define _UAPIMTHCA_ABI_USER_H_
+#define MTHCA_ABI_USER_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define MTHCA_UVERBS_ABI_VERSION 1
 struct mthca_alloc_ucontext_resp {

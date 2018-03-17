@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_TASKSTATS_H
 #define _LINUX_TASKSTATS_H
+#define LINUX_TASKSTATS_H
+#define LINUX_TASKSTATS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_TASKSTATS_H
+#define NDK_ANDROID_SUPPORT_LINUX_TASKSTATS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TASKSTATS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TASKSTATS_H_
+#define _UAPI_LINUX_TASKSTATS_H
+#define _UAPI_LINUX_TASKSTATS_H_
+#define _LINUX_TASKSTATS_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define TASKSTATS_VERSION 8
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

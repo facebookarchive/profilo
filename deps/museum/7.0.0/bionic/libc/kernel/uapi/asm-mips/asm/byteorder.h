@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_BYTEORDER_H
 #define _ASM_BYTEORDER_H
+#define ASM_BYTEORDER_H
+#define ASM_BYTEORDER_H_
+#define _UAPI_ASM_BYTEORDER_H
+#define _UAPI_ASM_BYTEORDER_H_
+#define _ASM_BYTEORDER_H_
 #include <linux/byteorder/little_endian.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

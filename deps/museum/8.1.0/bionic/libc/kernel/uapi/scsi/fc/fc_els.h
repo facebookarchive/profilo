@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _FC_ELS_H_
 #define _FC_ELS_H_
+#define FC_ELS_H_
+#define FC_ELS_H
+#define NDK_ANDROID_SUPPORT_FC_ELS_H_
+#define NDK_ANDROID_SUPPORT_FC_ELS_H
+#define NDK_ANDROID_SUPPORT_UAPI_FC_ELS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_FC_ELS_H
+#define _UAPI_FC_ELS_H_
+#define _UAPI_FC_ELS_H
+#define _FC_ELS_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum fc_els_cmd {
   ELS_LS_RJT = 0x01,

@@ -44,18 +44,30 @@
 
 #ifndef HAVE_SYS_STAT_H
 #define HAVE_SYS_STAT_H		1
+#define _HAVE_SYS_STAT_H
+#define _HAVE_SYS_STAT_H_
+#define HAVE_SYS_STAT_H_
 #endif /* !defined HAVE_SYS_STAT_H */
 
 #ifndef HAVE_SYS_WAIT_H
 #define HAVE_SYS_WAIT_H		1
+#define _HAVE_SYS_WAIT_H
+#define _HAVE_SYS_WAIT_H_
+#define HAVE_SYS_WAIT_H_
 #endif /* !defined HAVE_SYS_WAIT_H */
 
 #ifndef HAVE_UNISTD_H
 #define HAVE_UNISTD_H		1
+#define _HAVE_UNISTD_H
+#define _HAVE_UNISTD_H_
+#define HAVE_UNISTD_H_
 #endif /* !defined HAVE_UNISTD_H */
 
 #ifndef HAVE_UTMPX_H
 #define HAVE_UTMPX_H		1
+#define _HAVE_UTMPX_H
+#define _HAVE_UTMPX_H_
+#define HAVE_UTMPX_H_
 #endif /* !defined HAVE_UTMPX_H */
 
 #ifndef NETBSD_INSPIRED
@@ -155,6 +167,9 @@
 */
 #ifndef HAVE_STDINT_H
 #define HAVE_STDINT_H \
+#define _HAVE_STDINT_H
+#define _HAVE_STDINT_H_
+#define HAVE_STDINT_H_
    (199901 <= __STDC_VERSION__ \
     || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__)	\
     || __CYGWIN__)

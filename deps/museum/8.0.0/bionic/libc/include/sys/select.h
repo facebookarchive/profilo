@@ -28,6 +28,9 @@
 
 #ifndef _SYS_SELECT_H_
 #define _SYS_SELECT_H_
+#define SYS_SELECT_H_
+#define SYS_SELECT_H
+#define _SYS_SELECT_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/sys/types.h>

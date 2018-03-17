@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SOCKET_H
 #define _UAPI_LINUX_SOCKET_H
+#define UAPI_LINUX_SOCKET_H
+#define UAPI_LINUX_SOCKET_H_
+#define _LINUX_SOCKET_H
+#define _LINUX_SOCKET_H_
+#define _UAPI_LINUX_SOCKET_H_
 #define _K_SS_MAXSIZE 128
 #define _K_SS_ALIGNSIZE (__alignof__ (struct sockaddr *))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

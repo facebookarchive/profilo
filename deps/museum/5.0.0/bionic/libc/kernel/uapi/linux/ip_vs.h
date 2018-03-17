@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _IP_VS_H
 #define _IP_VS_H
+#define IP_VS_H
+#define IP_VS_H_
+#define _UAPI_IP_VS_H
+#define _UAPI_IP_VS_H_
+#define _IP_VS_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #define IP_VS_VERSION_CODE 0x010201
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

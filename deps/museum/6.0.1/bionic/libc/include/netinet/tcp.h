@@ -28,6 +28,11 @@
 
 #ifndef _NETINET_TCP_H
 #define _NETINET_TCP_H
+#define NETINET_TCP_H
+#define NETINET_TCP_H_
+#define NDK_ANDROID_SUPPORT_NETINET_TCP_H
+#define NDK_ANDROID_SUPPORT_NETINET_TCP_H_
+#define _NETINET_TCP_H_
 
 #include <museum/6.0.1/bionic/libc/linux/tcp.h>
 

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_HIDRAW_H
 #define _UAPI_HIDRAW_H
+#define UAPI_HIDRAW_H
+#define UAPI_HIDRAW_H_
+#define _HIDRAW_H
+#define _HIDRAW_H_
+#define _UAPI_HIDRAW_H_
 #include <museum/5.1.1/bionic/libc/linux/hid.h>
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -28,6 +28,9 @@
 
 #ifndef MALLOC_DEBUG_BACKTRACE_H
 #define MALLOC_DEBUG_BACKTRACE_H
+#define _MALLOC_DEBUG_BACKTRACE_H
+#define _MALLOC_DEBUG_BACKTRACE_H_
+#define MALLOC_DEBUG_BACKTRACE_H_
 
 extern bool g_backtrace_enabled;
 

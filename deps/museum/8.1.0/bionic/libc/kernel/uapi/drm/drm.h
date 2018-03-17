@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DRM_H_
 #define _DRM_H_
+#define DRM_H_
+#define DRM_H
+#define NDK_ANDROID_SUPPORT_DRM_H_
+#define NDK_ANDROID_SUPPORT_DRM_H
+#define NDK_ANDROID_SUPPORT_UAPI_DRM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DRM_H
+#define _UAPI_DRM_H_
+#define _UAPI_DRM_H
+#define _DRM_H
 #ifdef __linux__
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/asm/ioctl.h>

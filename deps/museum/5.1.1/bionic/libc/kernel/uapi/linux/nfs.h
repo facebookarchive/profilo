@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NFS_H
 #define _UAPI_LINUX_NFS_H
+#define UAPI_LINUX_NFS_H
+#define UAPI_LINUX_NFS_H_
+#define _LINUX_NFS_H
+#define _LINUX_NFS_H_
+#define _UAPI_LINUX_NFS_H_
 #define NFS_PROGRAM 100003
 #define NFS_PORT 2049
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

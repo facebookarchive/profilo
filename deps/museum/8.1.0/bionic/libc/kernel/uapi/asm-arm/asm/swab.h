@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__ASM_ARM_SWAB_H
 #define _UAPI__ASM_ARM_SWAB_H
+#define UAPI__ASM_ARM_SWAB_H
+#define UAPI__ASM_ARM_SWAB_H_
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_ARM_SWAB_H
+#define NDK_ANDROID_SUPPORT_UAPI__ASM_ARM_SWAB_H_
+#define NDK_ANDROID_SUPPORT__ASM_ARM_SWAB_H
+#define NDK_ANDROID_SUPPORT__ASM_ARM_SWAB_H_
+#define __ASM_ARM_SWAB_H
+#define __ASM_ARM_SWAB_H_
+#define _UAPI__ASM_ARM_SWAB_H_
 #include <linux/compiler.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #ifndef __STRICT_ANSI__

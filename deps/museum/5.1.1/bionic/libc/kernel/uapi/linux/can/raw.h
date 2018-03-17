@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef CAN_RAW_H
 #define CAN_RAW_H
+#define _CAN_RAW_H
+#define _CAN_RAW_H_
+#define _UAPI_CAN_RAW_H
+#define _UAPI_CAN_RAW_H_
+#define _UAPICAN_RAW_H
+#define _UAPICAN_RAW_H_
+#define CAN_RAW_H_
 #include <museum/5.1.1/bionic/libc/linux/can.h>
 #define SOL_CAN_RAW (SOL_CAN_BASE + CAN_RAW)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

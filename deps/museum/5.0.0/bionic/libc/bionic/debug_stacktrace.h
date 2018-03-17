@@ -28,6 +28,9 @@
 
 #ifndef DEBUG_STACKTRACE_H
 #define DEBUG_STACKTRACE_H
+#define _DEBUG_STACKTRACE_H
+#define _DEBUG_STACKTRACE_H_
+#define DEBUG_STACKTRACE_H_
 
 #include <stdint.h>
 #include <sys/cdefs.h>

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DRM_MODE_H
 #define _DRM_MODE_H
+#define DRM_MODE_H
+#define DRM_MODE_H_
+#define _UAPI_DRM_MODE_H
+#define _UAPI_DRM_MODE_H_
+#define _DRM_MODE_H_
 #include "drm.h"
 #ifdef __cplusplus
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

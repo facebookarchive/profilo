@@ -16,6 +16,9 @@
 
 #ifndef LIBC_BIONIC_JEMALLOC_H_
 #define LIBC_BIONIC_JEMALLOC_H_
+#define _LIBC_BIONIC_JEMALLOC_H_
+#define _LIBC_BIONIC_JEMALLOC_H
+#define LIBC_BIONIC_JEMALLOC_H
 
 #include <jemalloc/jemalloc.h>
 #include <malloc.h>  // For struct mallinfo.

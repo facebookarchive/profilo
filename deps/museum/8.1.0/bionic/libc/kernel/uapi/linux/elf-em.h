@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_ELF_EM_H
 #define _LINUX_ELF_EM_H
+#define LINUX_ELF_EM_H
+#define LINUX_ELF_EM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_ELF_EM_H
+#define NDK_ANDROID_SUPPORT_LINUX_ELF_EM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ELF_EM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_ELF_EM_H_
+#define _UAPI_LINUX_ELF_EM_H
+#define _UAPI_LINUX_ELF_EM_H_
+#define _LINUX_ELF_EM_H_
 #define EM_NONE 0
 #define EM_M32 1
 #define EM_SPARC 2

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_HDLCDRV_H
 #define _UAPI_HDLCDRV_H
+#define UAPI_HDLCDRV_H
+#define UAPI_HDLCDRV_H_
+#define NDK_ANDROID_SUPPORT_UAPI_HDLCDRV_H
+#define NDK_ANDROID_SUPPORT_UAPI_HDLCDRV_H_
+#define NDK_ANDROID_SUPPORT_HDLCDRV_H
+#define NDK_ANDROID_SUPPORT_HDLCDRV_H_
+#define _HDLCDRV_H
+#define _HDLCDRV_H_
+#define _UAPI_HDLCDRV_H_
 struct hdlcdrv_params {
   int iobase;
   int irq;

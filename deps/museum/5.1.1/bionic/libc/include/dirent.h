@@ -28,6 +28,9 @@
 
 #ifndef _DIRENT_H_
 #define _DIRENT_H_
+#define DIRENT_H_
+#define DIRENT_H
+#define _DIRENT_H
 
 #include <museum/5.1.1/bionic/libc/stdint.h>
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>

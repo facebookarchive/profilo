@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_TOSHIBA_H
 #define _UAPI_LINUX_TOSHIBA_H
+#define UAPI_LINUX_TOSHIBA_H
+#define UAPI_LINUX_TOSHIBA_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TOSHIBA_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_TOSHIBA_H_
+#define NDK_ANDROID_SUPPORT_LINUX_TOSHIBA_H
+#define NDK_ANDROID_SUPPORT_LINUX_TOSHIBA_H_
+#define _LINUX_TOSHIBA_H
+#define _LINUX_TOSHIBA_H_
+#define _UAPI_LINUX_TOSHIBA_H_
 #define TOSH_PROC "/proc/toshiba"
 #define TOSH_DEVICE "/dev/toshiba"
 #define TOSHIBA_ACPI_PROC "/proc/acpi/toshiba"

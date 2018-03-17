@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASMARM_STATFS_H
 #define _ASMARM_STATFS_H
+#define ASMARM_STATFS_H
+#define ASMARM_STATFS_H_
+#define NDK_ANDROID_SUPPORT_ASMARM_STATFS_H
+#define NDK_ANDROID_SUPPORT_ASMARM_STATFS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_STATFS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASMARM_STATFS_H_
+#define _UAPI_ASMARM_STATFS_H
+#define _UAPI_ASMARM_STATFS_H_
+#define _ASMARM_STATFS_H_
 #define ARCH_PACK_STATFS64 __attribute__((packed, aligned(4)))
 #include <museum/6.0.1/bionic/libc/asm-generic/statfs.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

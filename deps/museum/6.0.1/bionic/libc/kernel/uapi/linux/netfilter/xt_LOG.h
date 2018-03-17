@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _XT_LOG_H
 #define _XT_LOG_H
+#define XT_LOG_H
+#define XT_LOG_H_
+#define NDK_ANDROID_SUPPORT_XT_LOG_H
+#define NDK_ANDROID_SUPPORT_XT_LOG_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_LOG_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_LOG_H_
+#define _UAPI_XT_LOG_H
+#define _UAPI_XT_LOG_H_
+#define _XT_LOG_H_
 #define XT_LOG_TCPSEQ 0x01
 #define XT_LOG_TCPOPT 0x02
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

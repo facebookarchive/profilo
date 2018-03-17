@@ -25,6 +25,9 @@
 
 #ifndef _EVENTLIB_H
 #define _EVENTLIB_H
+#define EVENTLIB_H
+#define EVENTLIB_H_
+#define _EVENTLIB_H_
 
 #include <sys/types.h>
 #include <sys/uio.h>

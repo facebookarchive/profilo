@@ -28,6 +28,11 @@
 
 #ifndef _XLOCALE_H_
 #define _XLOCALE_H_
+#define XLOCALE_H_
+#define XLOCALE_H
+#define NDK_ANDROID_SUPPORT_XLOCALE_H_
+#define NDK_ANDROID_SUPPORT_XLOCALE_H
+#define _XLOCALE_H
 
 /* If we just use void* here, GCC exposes that in error messages. */
 struct __locale_t;

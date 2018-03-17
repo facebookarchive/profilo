@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_OSF_H
 #define _XT_OSF_H
+#define XT_OSF_H
+#define XT_OSF_H_
+#define _UAPI_XT_OSF_H
+#define _UAPI_XT_OSF_H_
+#define _XT_OSF_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/ip.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

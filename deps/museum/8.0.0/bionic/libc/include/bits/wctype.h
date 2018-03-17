@@ -28,6 +28,11 @@
 
 #ifndef _BITS_WCTYPE_H_
 #define _BITS_WCTYPE_H_
+#define BITS_WCTYPE_H_
+#define BITS_WCTYPE_H
+#define NDK_ANDROID_SUPPORT_BITS_WCTYPE_H_
+#define NDK_ANDROID_SUPPORT_BITS_WCTYPE_H
+#define _BITS_WCTYPE_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

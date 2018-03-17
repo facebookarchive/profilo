@@ -27,6 +27,11 @@
  */
 #ifndef _TERMIOS_H_
 #define _TERMIOS_H_
+#define TERMIOS_H_
+#define TERMIOS_H
+#define NDK_ANDROID_SUPPORT_TERMIOS_H_
+#define NDK_ANDROID_SUPPORT_TERMIOS_H
+#define _TERMIOS_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/ioctl.h>

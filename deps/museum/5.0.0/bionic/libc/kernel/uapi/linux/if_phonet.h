@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_IF_PHONET_H
 #define _UAPILINUX_IF_PHONET_H
+#define UAPILINUX_IF_PHONET_H
+#define UAPILINUX_IF_PHONET_H_
+#define LINUX_IF_PHONET_H
+#define LINUX_IF_PHONET_H_
+#define _UAPILINUX_IF_PHONET_H_
 #define PHONET_MIN_MTU 6
 #define PHONET_MAX_MTU 65541
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

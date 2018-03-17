@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_MACSEC_H
 #define _UAPI_MACSEC_H
+#define UAPI_MACSEC_H
+#define UAPI_MACSEC_H_
+#define NDK_ANDROID_SUPPORT_UAPI_MACSEC_H
+#define NDK_ANDROID_SUPPORT_UAPI_MACSEC_H_
+#define NDK_ANDROID_SUPPORT_MACSEC_H
+#define NDK_ANDROID_SUPPORT_MACSEC_H_
+#define _MACSEC_H
+#define _MACSEC_H_
+#define _UAPI_MACSEC_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define MACSEC_GENL_NAME "macsec"
 #define MACSEC_GENL_VERSION 1

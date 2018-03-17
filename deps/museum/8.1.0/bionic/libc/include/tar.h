@@ -28,6 +28,11 @@
 
 #ifndef _TAR_H_
 #define _TAR_H_
+#define TAR_H_
+#define TAR_H
+#define NDK_ANDROID_SUPPORT_TAR_H_
+#define NDK_ANDROID_SUPPORT_TAR_H
+#define _TAR_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 

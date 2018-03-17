@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_MAJOR_H
 #define _LINUX_MAJOR_H
+#define LINUX_MAJOR_H
+#define LINUX_MAJOR_H_
+#define _UAPI_LINUX_MAJOR_H
+#define _UAPI_LINUX_MAJOR_H_
+#define _LINUX_MAJOR_H_
 #define UNNAMED_MAJOR 0
 #define MEM_MAJOR 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

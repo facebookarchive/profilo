@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef IB_USER_CM_H
 #define IB_USER_CM_H
+#define _IB_USER_CM_H
+#define _IB_USER_CM_H_
+#define _UAPI_IB_USER_CM_H
+#define _UAPI_IB_USER_CM_H_
+#define _UAPIIB_USER_CM_H
+#define _UAPIIB_USER_CM_H_
+#define IB_USER_CM_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/rdma/ib_user_sa.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

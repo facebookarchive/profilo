@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __SOUND_SFNT_INFO_H
 #define __SOUND_SFNT_INFO_H
+#define _SOUND_SFNT_INFO_H
+#define _SOUND_SFNT_INFO_H_
+#define _UAPI_SOUND_SFNT_INFO_H
+#define _UAPI_SOUND_SFNT_INFO_H_
+#define NDK_ANDROID_SUPPORT__SOUND_SFNT_INFO_H
+#define NDK_ANDROID_SUPPORT__SOUND_SFNT_INFO_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_SFNT_INFO_H
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_SFNT_INFO_H_
+#define _UAPI__SOUND_SFNT_INFO_H
+#define _UAPI__SOUND_SFNT_INFO_H_
+#define __SOUND_SFNT_INFO_H_
 #include <museum/6.0.1/bionic/libc/sound/asound.h>
 #ifdef SNDRV_BIG_ENDIAN
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

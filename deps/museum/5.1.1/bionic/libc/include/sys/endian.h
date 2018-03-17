@@ -35,6 +35,9 @@
 
 #ifndef _SYS_ENDIAN_H_
 #define _SYS_ENDIAN_H_
+#define SYS_ENDIAN_H_
+#define SYS_ENDIAN_H
+#define _SYS_ENDIAN_H
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/machine/endian.h>

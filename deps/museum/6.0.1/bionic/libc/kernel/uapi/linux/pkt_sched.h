@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_PKT_SCHED_H
 #define __LINUX_PKT_SCHED_H
+#define _LINUX_PKT_SCHED_H
+#define _LINUX_PKT_SCHED_H_
+#define _UAPI_LINUX_PKT_SCHED_H
+#define _UAPI_LINUX_PKT_SCHED_H_
+#define NDK_ANDROID_SUPPORT__LINUX_PKT_SCHED_H
+#define NDK_ANDROID_SUPPORT__LINUX_PKT_SCHED_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_PKT_SCHED_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_PKT_SCHED_H_
+#define _UAPI__LINUX_PKT_SCHED_H
+#define _UAPI__LINUX_PKT_SCHED_H_
+#define __LINUX_PKT_SCHED_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define TC_PRIO_BESTEFFORT 0
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_X_TABLES_H
 #define _UAPI_X_TABLES_H
+#define UAPI_X_TABLES_H
+#define UAPI_X_TABLES_H_
+#define NDK_ANDROID_SUPPORT_UAPI_X_TABLES_H
+#define NDK_ANDROID_SUPPORT_UAPI_X_TABLES_H_
+#define NDK_ANDROID_SUPPORT_X_TABLES_H
+#define NDK_ANDROID_SUPPORT_X_TABLES_H_
+#define _X_TABLES_H
+#define _X_TABLES_H_
+#define _UAPI_X_TABLES_H_
 #include <museum/8.1.0/bionic/libc/linux/kernel.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define XT_FUNCTION_MAXNAMELEN 30

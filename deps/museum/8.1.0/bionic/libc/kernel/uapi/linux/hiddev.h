@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_HIDDEV_H
 #define _UAPI_HIDDEV_H
+#define UAPI_HIDDEV_H
+#define UAPI_HIDDEV_H_
+#define NDK_ANDROID_SUPPORT_UAPI_HIDDEV_H
+#define NDK_ANDROID_SUPPORT_UAPI_HIDDEV_H_
+#define NDK_ANDROID_SUPPORT_HIDDEV_H
+#define NDK_ANDROID_SUPPORT_HIDDEV_H_
+#define _HIDDEV_H
+#define _HIDDEV_H_
+#define _UAPI_HIDDEV_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct hiddev_event {
   unsigned hid;

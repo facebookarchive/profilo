@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_NF_CONNTRACK_TCP_H
 #define _UAPI_NF_CONNTRACK_TCP_H
+#define UAPI_NF_CONNTRACK_TCP_H
+#define UAPI_NF_CONNTRACK_TCP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NF_CONNTRACK_TCP_H
+#define NDK_ANDROID_SUPPORT_UAPI_NF_CONNTRACK_TCP_H_
+#define NDK_ANDROID_SUPPORT_NF_CONNTRACK_TCP_H
+#define NDK_ANDROID_SUPPORT_NF_CONNTRACK_TCP_H_
+#define _NF_CONNTRACK_TCP_H
+#define _NF_CONNTRACK_TCP_H_
+#define _UAPI_NF_CONNTRACK_TCP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum tcp_conntrack {
   TCP_CONNTRACK_NONE,

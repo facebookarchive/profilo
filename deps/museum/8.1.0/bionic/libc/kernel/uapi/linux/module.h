@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_MODULE_H
 #define _UAPI_LINUX_MODULE_H
+#define UAPI_LINUX_MODULE_H
+#define UAPI_LINUX_MODULE_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MODULE_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_MODULE_H_
+#define NDK_ANDROID_SUPPORT_LINUX_MODULE_H
+#define NDK_ANDROID_SUPPORT_LINUX_MODULE_H_
+#define _LINUX_MODULE_H
+#define _LINUX_MODULE_H_
+#define _UAPI_LINUX_MODULE_H_
 #define MODULE_INIT_IGNORE_MODVERSIONS 1
 #define MODULE_INIT_IGNORE_VERMAGIC 2
 #endif

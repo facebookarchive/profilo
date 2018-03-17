@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_USERFAULTFD_H
 #define _LINUX_USERFAULTFD_H
+#define LINUX_USERFAULTFD_H
+#define LINUX_USERFAULTFD_H_
+#define NDK_ANDROID_SUPPORT_LINUX_USERFAULTFD_H
+#define NDK_ANDROID_SUPPORT_LINUX_USERFAULTFD_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_USERFAULTFD_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_USERFAULTFD_H_
+#define _UAPI_LINUX_USERFAULTFD_H
+#define _UAPI_LINUX_USERFAULTFD_H_
+#define _LINUX_USERFAULTFD_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define UFFD_API ((__u64) 0xAA)
 #define UFFD_API_FEATURES (0)

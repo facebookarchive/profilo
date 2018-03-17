@@ -28,6 +28,9 @@
 
 #ifndef _FCNTL_H
 #define _FCNTL_H
+#define FCNTL_H
+#define FCNTL_H_
+#define _FCNTL_H_
 
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/7.0.0/bionic/libc/sys/types.h>

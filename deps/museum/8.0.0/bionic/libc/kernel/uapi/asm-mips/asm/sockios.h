@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_SOCKIOS_H
 #define _ASM_SOCKIOS_H
+#define ASM_SOCKIOS_H
+#define ASM_SOCKIOS_H_
+#define _UAPI_ASM_SOCKIOS_H
+#define _UAPI_ASM_SOCKIOS_H_
+#define _ASM_SOCKIOS_H_
 #include <asm/ioctl.h>
 #define FIOGETOWN _IOR('f', 123, int)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

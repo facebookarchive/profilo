@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASM_POSIX_TYPES_H
 #define _ASM_POSIX_TYPES_H
+#define ASM_POSIX_TYPES_H
+#define ASM_POSIX_TYPES_H_
+#define _UAPI_ASM_POSIX_TYPES_H
+#define _UAPI_ASM_POSIX_TYPES_H_
+#define _ASM_POSIX_TYPES_H_
 #include <asm/sgidefs.h>
 typedef long __kernel_daddr_t;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

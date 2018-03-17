@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ATMLEC_H_
 #define _ATMLEC_H_
+#define ATMLEC_H_
+#define ATMLEC_H
+#define _UAPI_ATMLEC_H_
+#define _UAPI_ATMLEC_H
+#define _ATMLEC_H
 #include <museum/5.1.1/bionic/libc/linux/atmapi.h>
 #include <museum/5.1.1/bionic/libc/linux/atmioc.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_IIO_EVENTS_H_
 #define _UAPI_IIO_EVENTS_H_
+#define UAPI_IIO_EVENTS_H_
+#define UAPI_IIO_EVENTS_H
+#define _IIO_EVENTS_H_
+#define _IIO_EVENTS_H
+#define _UAPI_IIO_EVENTS_H
 #include <museum/7.1.2/bionic/libc/linux/ioctl.h>
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_NVRAM_H
 #define _UAPI_LINUX_NVRAM_H
+#define UAPI_LINUX_NVRAM_H
+#define UAPI_LINUX_NVRAM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NVRAM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NVRAM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NVRAM_H
+#define NDK_ANDROID_SUPPORT_LINUX_NVRAM_H_
+#define _LINUX_NVRAM_H
+#define _LINUX_NVRAM_H_
+#define _UAPI_LINUX_NVRAM_H_
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #define NVRAM_INIT _IO('p', 0x40)
 #define NVRAM_SETCKS _IO('p', 0x41)

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ULTRASOUND_H_
 #define _ULTRASOUND_H_
+#define ULTRASOUND_H_
+#define ULTRASOUND_H
+#define _UAPI_ULTRASOUND_H_
+#define _UAPI_ULTRASOUND_H
+#define _ULTRASOUND_H
 #define _GUS_NUMVOICES 0x00
 #define _GUS_VOICESAMPLE 0x01
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

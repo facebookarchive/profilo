@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _ASMARM_STAT_H
 #define _ASMARM_STAT_H
+#define ASMARM_STAT_H
+#define ASMARM_STAT_H_
+#define _UAPI_ASMARM_STAT_H
+#define _UAPI_ASMARM_STAT_H_
+#define _ASMARM_STAT_H_
 struct __old_kernel_stat {
   unsigned short st_dev;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

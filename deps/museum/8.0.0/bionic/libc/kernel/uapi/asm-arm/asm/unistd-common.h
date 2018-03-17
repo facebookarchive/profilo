@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_ARM_UNISTD_COMMON_H
 #define _UAPI_ASM_ARM_UNISTD_COMMON_H 1
+#define UAPI_ASM_ARM_UNISTD_COMMON_H
+#define UAPI_ASM_ARM_UNISTD_COMMON_H_
+#define _ASM_ARM_UNISTD_COMMON_H
+#define _ASM_ARM_UNISTD_COMMON_H_
+#define _UAPI_ASM_ARM_UNISTD_COMMON_H_
 #define __NR_restart_syscall (__NR_SYSCALL_BASE + 0)
 #define __NR_exit (__NR_SYSCALL_BASE + 1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

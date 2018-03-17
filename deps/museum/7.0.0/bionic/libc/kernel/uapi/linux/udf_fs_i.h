@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UDF_FS_I_H
 #define _UDF_FS_I_H 1
+#define UDF_FS_I_H
+#define UDF_FS_I_H_
+#define _UAPI_UDF_FS_I_H
+#define _UAPI_UDF_FS_I_H_
+#define _UDF_FS_I_H_
 #define UDF_GETEASIZE _IOR('l', 0x40, int)
 #define UDF_GETEABLOCK _IOR('l', 0x41, void *)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

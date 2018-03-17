@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef MTHCA_ABI_USER_H
 #define MTHCA_ABI_USER_H
+#define _MTHCA_ABI_USER_H
+#define _MTHCA_ABI_USER_H_
+#define _UAPI_MTHCA_ABI_USER_H
+#define _UAPI_MTHCA_ABI_USER_H_
+#define _UAPIMTHCA_ABI_USER_H
+#define _UAPIMTHCA_ABI_USER_H_
+#define MTHCA_ABI_USER_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define MTHCA_UVERBS_ABI_VERSION 1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_BRIDGE_NETFILTER_H
 #define _UAPI__LINUX_BRIDGE_NETFILTER_H
+#define UAPI__LINUX_BRIDGE_NETFILTER_H
+#define UAPI__LINUX_BRIDGE_NETFILTER_H_
+#define __LINUX_BRIDGE_NETFILTER_H
+#define __LINUX_BRIDGE_NETFILTER_H_
+#define _UAPI__LINUX_BRIDGE_NETFILTER_H_
 #include <museum/7.0.0/bionic/libc/linux/netfilter.h>
 #include <museum/7.0.0/bionic/libc/linux/if_ether.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -19,6 +19,9 @@
 
 #ifndef MEMCLUSTER_H
 #define MEMCLUSTER_H
+#define _MEMCLUSTER_H
+#define _MEMCLUSTER_H_
+#define MEMCLUSTER_H_
 
 #include <stdio.h>
 

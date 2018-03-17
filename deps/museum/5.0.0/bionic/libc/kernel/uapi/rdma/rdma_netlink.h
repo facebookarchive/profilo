@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_RDMA_NETLINK_H
 #define _UAPI_RDMA_NETLINK_H
+#define UAPI_RDMA_NETLINK_H
+#define UAPI_RDMA_NETLINK_H_
+#define _RDMA_NETLINK_H
+#define _RDMA_NETLINK_H_
+#define _UAPI_RDMA_NETLINK_H_
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

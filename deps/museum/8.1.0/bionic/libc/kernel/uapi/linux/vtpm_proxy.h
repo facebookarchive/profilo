@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_VTPM_PROXY_H
 #define _UAPI_LINUX_VTPM_PROXY_H
+#define UAPI_LINUX_VTPM_PROXY_H
+#define UAPI_LINUX_VTPM_PROXY_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VTPM_PROXY_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_VTPM_PROXY_H_
+#define NDK_ANDROID_SUPPORT_LINUX_VTPM_PROXY_H
+#define NDK_ANDROID_SUPPORT_LINUX_VTPM_PROXY_H_
+#define _LINUX_VTPM_PROXY_H
+#define _LINUX_VTPM_PROXY_H_
+#define _UAPI_LINUX_VTPM_PROXY_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 enum vtpm_proxy_flags {

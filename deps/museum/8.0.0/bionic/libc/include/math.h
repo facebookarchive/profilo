@@ -16,6 +16,11 @@
 
 #ifndef _MATH_H_
 #define _MATH_H_
+#define MATH_H_
+#define MATH_H
+#define NDK_ANDROID_SUPPORT_MATH_H_
+#define NDK_ANDROID_SUPPORT_MATH_H
+#define _MATH_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.0.0/bionic/libc/limits.h>

@@ -28,6 +28,9 @@
 
 #ifndef _SYS_QUOTA_H_
 #define _SYS_QUOTA_H_
+#define SYS_QUOTA_H_
+#define SYS_QUOTA_H
+#define _SYS_QUOTA_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

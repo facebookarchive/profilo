@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_MISC_CXL_H
 #define _UAPI_MISC_CXL_H
+#define UAPI_MISC_CXL_H
+#define UAPI_MISC_CXL_H_
+#define _MISC_CXL_H
+#define _MISC_CXL_H_
+#define _UAPI_MISC_CXL_H_
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #include <museum/7.1.2/bionic/libc/linux/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

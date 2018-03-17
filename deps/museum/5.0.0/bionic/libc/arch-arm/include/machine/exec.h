@@ -30,6 +30,9 @@
 
 #ifndef _ARM_EXEC_H_
 #define _ARM_EXEC_H_
+#define ARM_EXEC_H_
+#define ARM_EXEC_H
+#define _ARM_EXEC_H
 
 #define __LDPGSZ	4096
 

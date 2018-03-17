@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_INPUT_H
 #define _UAPI_INPUT_H
+#define UAPI_INPUT_H
+#define UAPI_INPUT_H_
+#define _INPUT_H
+#define _INPUT_H_
+#define _UAPI_INPUT_H_
 #include <museum/5.0.0/bionic/libc/sys/time.h>
 #include <museum/5.0.0/bionic/libc/sys/ioctl.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

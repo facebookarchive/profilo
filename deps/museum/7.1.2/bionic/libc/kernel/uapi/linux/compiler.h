@@ -1,5 +1,10 @@
 #ifndef _UAPI_LINUX_COMPILER_H
 #define _UAPI_LINUX_COMPILER_H
+#define UAPI_LINUX_COMPILER_H
+#define UAPI_LINUX_COMPILER_H_
+#define _LINUX_COMPILER_H
+#define _LINUX_COMPILER_H_
+#define _UAPI_LINUX_COMPILER_H_
 
 /*
  * This file is not currently in the Linux kernel tree.

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPIVMX_H
 #define _UAPIVMX_H
+#define UAPIVMX_H
+#define UAPIVMX_H_
+#define NDK_ANDROID_SUPPORT_UAPIVMX_H
+#define NDK_ANDROID_SUPPORT_UAPIVMX_H_
+#define VMX_H
+#define VMX_H_
+#define _UAPIVMX_H_
 #define VMX_EXIT_REASONS_FAILED_VMENTRY 0x80000000
 #define EXIT_REASON_EXCEPTION_NMI 0
 #define EXIT_REASON_EXTERNAL_INTERRUPT 1

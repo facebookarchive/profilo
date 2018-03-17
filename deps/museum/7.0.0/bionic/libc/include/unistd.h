@@ -28,6 +28,9 @@
 
 #ifndef _UNISTD_H_
 #define _UNISTD_H_
+#define UNISTD_H_
+#define UNISTD_H
+#define _UNISTD_H
 
 #include <stddef.h>
 #include <museum/7.0.0/bionic/libc/sys/cdefs.h>

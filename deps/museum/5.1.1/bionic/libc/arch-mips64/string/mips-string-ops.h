@@ -32,6 +32,9 @@
 
 #ifndef __MIPS_STRING_OPS_H
 #define __MIPS_STRING_OPS_H
+#define _MIPS_STRING_OPS_H
+#define _MIPS_STRING_OPS_H_
+#define __MIPS_STRING_OPS_H_
     /* This definition of the byte bitfields uses the
        assumption that the layout of the bitfields is
        equivalent to the layout in memory.  Generally,

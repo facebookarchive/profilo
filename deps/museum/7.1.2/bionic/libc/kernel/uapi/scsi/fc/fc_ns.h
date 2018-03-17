@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _FC_NS_H_
 #define _FC_NS_H_
+#define FC_NS_H_
+#define FC_NS_H
+#define _UAPI_FC_NS_H_
+#define _UAPI_FC_NS_H
+#define _FC_NS_H
 #include <museum/7.1.2/bionic/libc/linux/types.h>
 #define FC_NS_SUBTYPE 2
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

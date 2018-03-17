@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_IF_FC_H
 #define _LINUX_IF_FC_H
+#define LINUX_IF_FC_H
+#define LINUX_IF_FC_H_
+#define _UAPI_LINUX_IF_FC_H
+#define _UAPI_LINUX_IF_FC_H_
+#define _LINUX_IF_FC_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define FC_ALEN 6
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -28,6 +28,9 @@
 
 #ifndef _BIONIC_PTHREAD_H
 #define _BIONIC_PTHREAD_H
+#define BIONIC_PTHREAD_H
+#define BIONIC_PTHREAD_H_
+#define _BIONIC_PTHREAD_H_
 
 #include <sys/cdefs.h>
 

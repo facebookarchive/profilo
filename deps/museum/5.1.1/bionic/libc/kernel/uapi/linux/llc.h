@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_LLC_H
 #define _UAPI__LINUX_LLC_H
+#define UAPI__LINUX_LLC_H
+#define UAPI__LINUX_LLC_H_
+#define __LINUX_LLC_H
+#define __LINUX_LLC_H_
+#define _UAPI__LINUX_LLC_H_
 #include <museum/5.1.1/bionic/libc/linux/socket.h>
 #define __LLC_SOCK_SIZE__ 16
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

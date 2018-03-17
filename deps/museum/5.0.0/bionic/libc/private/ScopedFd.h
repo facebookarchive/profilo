@@ -16,6 +16,9 @@
 
 #ifndef SCOPED_FD_H
 #define SCOPED_FD_H
+#define _SCOPED_FD_H
+#define _SCOPED_FD_H_
+#define SCOPED_FD_H_
 
 #include <unistd.h>
 #include "bionic_macros.h"

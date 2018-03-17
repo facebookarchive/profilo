@@ -28,6 +28,11 @@
 
 #ifndef _UTIME_H_
 #define _UTIME_H_
+#define UTIME_H_
+#define UTIME_H
+#define NDK_ANDROID_SUPPORT_UTIME_H_
+#define NDK_ANDROID_SUPPORT_UTIME_H
+#define _UTIME_H
 
 #include <museum/6.0.1/bionic/libc/sys/cdefs.h>
 #include <museum/6.0.1/bionic/libc/sys/types.h>

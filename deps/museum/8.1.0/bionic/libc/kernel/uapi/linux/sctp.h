@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_SCTP_H
 #define _UAPI_SCTP_H
+#define UAPI_SCTP_H
+#define UAPI_SCTP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_SCTP_H
+#define NDK_ANDROID_SUPPORT_UAPI_SCTP_H_
+#define NDK_ANDROID_SUPPORT_SCTP_H
+#define NDK_ANDROID_SUPPORT_SCTP_H_
+#define _SCTP_H
+#define _SCTP_H_
+#define _UAPI_SCTP_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 typedef __s32 sctp_assoc_t;

@@ -28,6 +28,9 @@
 
 #ifndef _IFADDRS_H_
 #define _IFADDRS_H_
+#define IFADDRS_H_
+#define IFADDRS_H
+#define _IFADDRS_H
 
 #include <museum/7.1.2/bionic/libc/sys/cdefs.h>
 #include <museum/7.1.2/bionic/libc/netinet/in.h>

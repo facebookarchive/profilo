@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX__AIO_ABI_H
 #define __LINUX__AIO_ABI_H
+#define _LINUX__AIO_ABI_H
+#define _LINUX__AIO_ABI_H_
+#define _UAPI_LINUX__AIO_ABI_H
+#define _UAPI_LINUX__AIO_ABI_H_
+#define NDK_ANDROID_SUPPORT__LINUX__AIO_ABI_H
+#define NDK_ANDROID_SUPPORT__LINUX__AIO_ABI_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX__AIO_ABI_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX__AIO_ABI_H_
+#define _UAPI__LINUX__AIO_ABI_H
+#define _UAPI__LINUX__AIO_ABI_H_
+#define __LINUX__AIO_ABI_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/asm/byteorder.h>
 typedef __kernel_ulong_t aio_context_t;

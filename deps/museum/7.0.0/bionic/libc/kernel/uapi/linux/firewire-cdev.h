@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_FIREWIRE_CDEV_H
 #define _LINUX_FIREWIRE_CDEV_H
+#define LINUX_FIREWIRE_CDEV_H
+#define LINUX_FIREWIRE_CDEV_H_
+#define _UAPI_LINUX_FIREWIRE_CDEV_H
+#define _UAPI_LINUX_FIREWIRE_CDEV_H_
+#define _LINUX_FIREWIRE_CDEV_H_
 #include <museum/7.0.0/bionic/libc/linux/ioctl.h>
 #include <museum/7.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

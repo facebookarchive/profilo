@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_IIO_EVENTS_H_
 #define _UAPI_IIO_EVENTS_H_
+#define UAPI_IIO_EVENTS_H_
+#define UAPI_IIO_EVENTS_H
+#define NDK_ANDROID_SUPPORT_UAPI_IIO_EVENTS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_IIO_EVENTS_H
+#define NDK_ANDROID_SUPPORT_IIO_EVENTS_H_
+#define NDK_ANDROID_SUPPORT_IIO_EVENTS_H
+#define _IIO_EVENTS_H_
+#define _IIO_EVENTS_H
+#define _UAPI_IIO_EVENTS_H
 #include <museum/8.1.0/bionic/libc/linux/ioctl.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 struct iio_event_data {

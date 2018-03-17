@@ -27,6 +27,9 @@
  */
 #ifndef _ENDIAN_H_
 #define _ENDIAN_H_
+#define ENDIAN_H_
+#define ENDIAN_H
+#define _ENDIAN_H
 
 #include <museum/7.1.2/bionic/libc/sys/endian.h>
 

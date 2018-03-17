@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_DLM_DEVICE_H
 #define _LINUX_DLM_DEVICE_H
+#define LINUX_DLM_DEVICE_H
+#define LINUX_DLM_DEVICE_H_
+#define _UAPI_LINUX_DLM_DEVICE_H
+#define _UAPI_LINUX_DLM_DEVICE_H_
+#define _LINUX_DLM_DEVICE_H_
 #include <museum/5.0.0/bionic/libc/linux/dlm.h>
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

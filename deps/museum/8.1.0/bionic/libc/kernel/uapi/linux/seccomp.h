@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_SECCOMP_H
 #define _UAPI_LINUX_SECCOMP_H
+#define UAPI_LINUX_SECCOMP_H
+#define UAPI_LINUX_SECCOMP_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SECCOMP_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_SECCOMP_H_
+#define NDK_ANDROID_SUPPORT_LINUX_SECCOMP_H
+#define NDK_ANDROID_SUPPORT_LINUX_SECCOMP_H_
+#define _LINUX_SECCOMP_H
+#define _LINUX_SECCOMP_H_
+#define _UAPI_LINUX_SECCOMP_H_
 #include <linux/compiler.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define SECCOMP_MODE_DISABLED 0

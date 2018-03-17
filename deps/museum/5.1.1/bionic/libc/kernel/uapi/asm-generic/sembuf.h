@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __ASM_GENERIC_SEMBUF_H
 #define __ASM_GENERIC_SEMBUF_H
+#define _ASM_GENERIC_SEMBUF_H
+#define _ASM_GENERIC_SEMBUF_H_
+#define _UAPI_ASM_GENERIC_SEMBUF_H
+#define _UAPI_ASM_GENERIC_SEMBUF_H_
+#define _UAPI__ASM_GENERIC_SEMBUF_H
+#define _UAPI__ASM_GENERIC_SEMBUF_H_
+#define __ASM_GENERIC_SEMBUF_H_
 #include <museum/5.1.1/bionic/libc/asm/bitsperlong.h>
 struct semid64_ds {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

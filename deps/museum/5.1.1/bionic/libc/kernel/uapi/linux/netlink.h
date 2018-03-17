@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI__LINUX_NETLINK_H
 #define _UAPI__LINUX_NETLINK_H
+#define UAPI__LINUX_NETLINK_H
+#define UAPI__LINUX_NETLINK_H_
+#define __LINUX_NETLINK_H
+#define __LINUX_NETLINK_H_
+#define _UAPI__LINUX_NETLINK_H_
 #include <museum/5.1.1/bionic/libc/linux/kernel.h>
 #include <museum/5.1.1/bionic/libc/linux/socket.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_SONET_H
 #define _UAPILINUX_SONET_H
+#define UAPILINUX_SONET_H
+#define UAPILINUX_SONET_H_
+#define NDK_ANDROID_SUPPORT_UAPILINUX_SONET_H
+#define NDK_ANDROID_SUPPORT_UAPILINUX_SONET_H_
+#define LINUX_SONET_H
+#define LINUX_SONET_H_
+#define _UAPILINUX_SONET_H_
 #define __SONET_ITEMS __HANDLE_ITEM(section_bip); __HANDLE_ITEM(line_bip); __HANDLE_ITEM(path_bip); __HANDLE_ITEM(line_febe); __HANDLE_ITEM(path_febe); __HANDLE_ITEM(corr_hcs); __HANDLE_ITEM(uncorr_hcs); __HANDLE_ITEM(tx_cells); __HANDLE_ITEM(rx_cells);
 struct sonet_stats {
 #define __HANDLE_ITEM(i) int i

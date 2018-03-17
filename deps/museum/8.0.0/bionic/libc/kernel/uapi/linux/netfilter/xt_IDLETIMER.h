@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _XT_IDLETIMER_H
 #define _XT_IDLETIMER_H
+#define XT_IDLETIMER_H
+#define XT_IDLETIMER_H_
+#define _UAPI_XT_IDLETIMER_H
+#define _UAPI_XT_IDLETIMER_H_
+#define _XT_IDLETIMER_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #define MAX_IDLETIMER_LABEL_SIZE 28
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

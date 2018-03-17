@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _DVBOSD_H_
 #define _DVBOSD_H_
+#define DVBOSD_H_
+#define DVBOSD_H
+#define _UAPI_DVBOSD_H_
+#define _UAPI_DVBOSD_H
+#define _DVBOSD_H
 #include <museum/7.0.0/bionic/libc/linux/compiler.h>
 typedef enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

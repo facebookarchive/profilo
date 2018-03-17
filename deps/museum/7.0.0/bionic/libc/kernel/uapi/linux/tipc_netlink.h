@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_TIPC_NETLINK_H_
 #define _LINUX_TIPC_NETLINK_H_
+#define LINUX_TIPC_NETLINK_H_
+#define LINUX_TIPC_NETLINK_H
+#define _UAPI_LINUX_TIPC_NETLINK_H_
+#define _UAPI_LINUX_TIPC_NETLINK_H
+#define _LINUX_TIPC_NETLINK_H
 #define TIPC_GENL_V2_NAME "TIPCv2"
 #define TIPC_GENL_V2_VERSION 0x1
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,4 +18,9 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_ARM_UNISTD_EABI_H
 #define _UAPI_ASM_ARM_UNISTD_EABI_H 1
+#define UAPI_ASM_ARM_UNISTD_EABI_H
+#define UAPI_ASM_ARM_UNISTD_EABI_H_
+#define _ASM_ARM_UNISTD_EABI_H
+#define _ASM_ARM_UNISTD_EABI_H_
+#define _UAPI_ASM_ARM_UNISTD_EABI_H_
 #endif

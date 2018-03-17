@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_NCP_FS_H
 #define _LINUX_NCP_FS_H
+#define LINUX_NCP_FS_H
+#define LINUX_NCP_FS_H_
+#define NDK_ANDROID_SUPPORT_LINUX_NCP_FS_H
+#define NDK_ANDROID_SUPPORT_LINUX_NCP_FS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NCP_FS_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_NCP_FS_H_
+#define _UAPI_LINUX_NCP_FS_H
+#define _UAPI_LINUX_NCP_FS_H_
+#define _LINUX_NCP_FS_H_
 #include <museum/6.0.1/bionic/libc/linux/fs.h>
 #include <museum/6.0.1/bionic/libc/linux/in.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

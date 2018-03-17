@@ -28,6 +28,9 @@
 
 #ifndef DEBUG_MALLOC_GUARDDATA_H
 #define DEBUG_MALLOC_GUARDDATA_H
+#define _DEBUG_MALLOC_GUARDDATA_H
+#define _DEBUG_MALLOC_GUARDDATA_H_
+#define DEBUG_MALLOC_GUARDDATA_H_
 
 #include <stdint.h>
 #include <string.h>

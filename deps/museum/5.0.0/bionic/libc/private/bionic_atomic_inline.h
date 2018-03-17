@@ -16,6 +16,9 @@
 
 #ifndef BIONIC_ATOMIC_INLINE_H
 #define BIONIC_ATOMIC_INLINE_H
+#define _BIONIC_ATOMIC_INLINE_H
+#define _BIONIC_ATOMIC_INLINE_H_
+#define BIONIC_ATOMIC_INLINE_H_
 
 /*
  * Inline declarations and macros for some special-purpose atomic

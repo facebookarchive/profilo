@@ -33,6 +33,11 @@
 
 #ifndef _SGTTY_H_
 #define _SGTTY_H_
+#define SGTTY_H_
+#define SGTTY_H
+#define NDK_ANDROID_SUPPORT_SGTTY_H_
+#define NDK_ANDROID_SUPPORT_SGTTY_H
+#define _SGTTY_H
 
 #ifndef USE_OLD_TTY
 #define	USE_OLD_TTY

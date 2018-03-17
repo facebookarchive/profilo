@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_STRING_H_
 #define _UAPI_LINUX_STRING_H_
+#define UAPI_LINUX_STRING_H_
+#define UAPI_LINUX_STRING_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_STRING_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_STRING_H
+#define _LINUX_STRING_H_
+#define _LINUX_STRING_H
+#define _UAPI_LINUX_STRING_H
 #include <museum/7.1.2/bionic/libc/string.h>
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef IB_USER_SA_H
 #define IB_USER_SA_H
+#define _IB_USER_SA_H
+#define _IB_USER_SA_H_
+#define _UAPI_IB_USER_SA_H
+#define _UAPI_IB_USER_SA_H_
+#define NDK_ANDROID_SUPPORT_UAPIIB_USER_SA_H
+#define NDK_ANDROID_SUPPORT_UAPIIB_USER_SA_H_
+#define _UAPIIB_USER_SA_H
+#define _UAPIIB_USER_SA_H_
+#define IB_USER_SA_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

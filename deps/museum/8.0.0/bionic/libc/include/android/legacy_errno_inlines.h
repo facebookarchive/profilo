@@ -28,6 +28,9 @@
 
 #ifndef _ANDROID_LEGACY_ERRNO_INLINES_H
 #define _ANDROID_LEGACY_ERRNO_INLINES_H
+#define ANDROID_LEGACY_ERRNO_INLINES_H
+#define ANDROID_LEGACY_ERRNO_INLINES_H_
+#define _ANDROID_LEGACY_ERRNO_INLINES_H_
 
 #include <museum/8.0.0/bionic/libc/errno.h>
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>

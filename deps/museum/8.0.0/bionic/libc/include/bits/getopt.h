@@ -28,6 +28,9 @@
 
 #ifndef _BITS_GETOPT_H_
 #define _BITS_GETOPT_H_
+#define BITS_GETOPT_H_
+#define BITS_GETOPT_H
+#define _BITS_GETOPT_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ROUTER_H
 #define _UAPI_ROUTER_H
+#define UAPI_ROUTER_H
+#define UAPI_ROUTER_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ROUTER_H
+#define NDK_ANDROID_SUPPORT_UAPI_ROUTER_H_
+#define NDK_ANDROID_SUPPORT_ROUTER_H
+#define NDK_ANDROID_SUPPORT_ROUTER_H_
+#define _ROUTER_H
+#define _ROUTER_H_
+#define _UAPI_ROUTER_H_
 enum wan_states {
   WAN_UNCONFIGURED,
   WAN_DISCONNECTED,

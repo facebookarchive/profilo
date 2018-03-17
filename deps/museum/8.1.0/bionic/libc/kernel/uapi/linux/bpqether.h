@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __BPQETHER_H
 #define __BPQETHER_H
+#define _BPQETHER_H
+#define _BPQETHER_H_
+#define _UAPI_BPQETHER_H
+#define _UAPI_BPQETHER_H_
+#define NDK_ANDROID_SUPPORT__BPQETHER_H
+#define NDK_ANDROID_SUPPORT__BPQETHER_H_
+#define NDK_ANDROID_SUPPORT_UAPI__BPQETHER_H
+#define NDK_ANDROID_SUPPORT_UAPI__BPQETHER_H_
+#define _UAPI__BPQETHER_H
+#define _UAPI__BPQETHER_H_
+#define __BPQETHER_H_
 #include <museum/8.1.0/bionic/libc/linux/if_ether.h>
 #define SIOCSBPQETHOPT (SIOCDEVPRIVATE + 0)
 #define SIOCSBPQETHADDR (SIOCDEVPRIVATE + 1)

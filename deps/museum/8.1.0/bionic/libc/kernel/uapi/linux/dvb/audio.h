@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _DVBAUDIO_H_
 #define _DVBAUDIO_H_
+#define DVBAUDIO_H_
+#define DVBAUDIO_H
+#define NDK_ANDROID_SUPPORT_DVBAUDIO_H_
+#define NDK_ANDROID_SUPPORT_DVBAUDIO_H
+#define NDK_ANDROID_SUPPORT_UAPI_DVBAUDIO_H_
+#define NDK_ANDROID_SUPPORT_UAPI_DVBAUDIO_H
+#define _UAPI_DVBAUDIO_H_
+#define _UAPI_DVBAUDIO_H
+#define _DVBAUDIO_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 typedef enum {
   AUDIO_SOURCE_DEMUX,

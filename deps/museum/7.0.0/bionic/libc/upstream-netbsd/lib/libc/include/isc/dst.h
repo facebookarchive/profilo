@@ -2,6 +2,9 @@
 
 #ifndef DST_H
 #define DST_H
+#define _DST_H
+#define _DST_H_
+#define DST_H_
 
 #ifndef HAS_DST_KEY
 typedef struct dst_key {

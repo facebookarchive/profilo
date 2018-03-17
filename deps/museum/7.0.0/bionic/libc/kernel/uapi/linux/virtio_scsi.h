@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _LINUX_VIRTIO_SCSI_H
 #define _LINUX_VIRTIO_SCSI_H
+#define LINUX_VIRTIO_SCSI_H
+#define LINUX_VIRTIO_SCSI_H_
+#define _UAPI_LINUX_VIRTIO_SCSI_H
+#define _UAPI_LINUX_VIRTIO_SCSI_H_
+#define _LINUX_VIRTIO_SCSI_H_
 #include <museum/7.0.0/bionic/libc/linux/virtio_types.h>
 #define VIRTIO_SCSI_CDB_DEFAULT_SIZE 32
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

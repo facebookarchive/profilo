@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPILINUX_NFSD_DEBUG_H
 #define _UAPILINUX_NFSD_DEBUG_H
+#define UAPILINUX_NFSD_DEBUG_H
+#define UAPILINUX_NFSD_DEBUG_H_
+#define LINUX_NFSD_DEBUG_H
+#define LINUX_NFSD_DEBUG_H_
+#define _UAPILINUX_NFSD_DEBUG_H_
 #include <museum/7.0.0/bionic/libc/linux/sunrpc/debug.h>
 #define NFSDDBG_SOCK 0x0001
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

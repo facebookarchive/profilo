@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __UAPI_SOUND_TLV_H
 #define __UAPI_SOUND_TLV_H
+#define _UAPI_SOUND_TLV_H
+#define _UAPI_SOUND_TLV_H_
+#define _SOUND_TLV_H
+#define _SOUND_TLV_H_
+#define NDK_ANDROID_SUPPORT__UAPI_SOUND_TLV_H
+#define NDK_ANDROID_SUPPORT__UAPI_SOUND_TLV_H_
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_SOUND_TLV_H
+#define NDK_ANDROID_SUPPORT_UAPI__UAPI_SOUND_TLV_H_
+#define _UAPI__UAPI_SOUND_TLV_H
+#define _UAPI__UAPI_SOUND_TLV_H_
+#define __UAPI_SOUND_TLV_H_
 #define SNDRV_CTL_TLVT_CONTAINER 0
 #define SNDRV_CTL_TLVT_DB_SCALE 1
 #define SNDRV_CTL_TLVT_DB_LINEAR 2

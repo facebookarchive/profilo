@@ -19,6 +19,9 @@
 
 #ifndef LIST_H
 #define LIST_H 1
+#define _LIST_H
+#define _LIST_H_
+#define LIST_H_
 #include <isc/assertions.h>
 
 #define LIST(type) struct { type *head, *tail; }

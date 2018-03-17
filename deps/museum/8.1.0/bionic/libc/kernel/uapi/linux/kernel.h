@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KERNEL_H
 #define _UAPI_LINUX_KERNEL_H
+#define UAPI_LINUX_KERNEL_H
+#define UAPI_LINUX_KERNEL_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_KERNEL_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_KERNEL_H_
+#define NDK_ANDROID_SUPPORT_LINUX_KERNEL_H
+#define NDK_ANDROID_SUPPORT_LINUX_KERNEL_H_
+#define _LINUX_KERNEL_H
+#define _LINUX_KERNEL_H_
+#define _UAPI_LINUX_KERNEL_H_
 #include <museum/8.1.0/bionic/libc/linux/sysinfo.h>
 #define __ALIGN_KERNEL(x,a) __ALIGN_KERNEL_MASK(x, (typeof(x)) (a) - 1)
 #define __ALIGN_KERNEL_MASK(x,mask) (((x) + (mask)) & ~(mask))

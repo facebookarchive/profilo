@@ -4,6 +4,9 @@
 
 #ifndef _MIPS_SETJMP_H_
 #define _MIPS_SETJMP_H_
+#define MIPS_SETJMP_H_
+#define MIPS_SETJMP_H
+#define _MIPS_SETJMP_H
 
 #define	_JBLEN	157		/* size, in longs, of a jmp_buf */
 

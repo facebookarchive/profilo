@@ -27,6 +27,11 @@
  */
 #ifndef _SYS_PTRACE_H_
 #define _SYS_PTRACE_H_
+#define SYS_PTRACE_H_
+#define SYS_PTRACE_H
+#define NDK_ANDROID_SUPPORT_SYS_PTRACE_H_
+#define NDK_ANDROID_SUPPORT_SYS_PTRACE_H
+#define _SYS_PTRACE_H
 
 #include <museum/8.1.0/bionic/libc/sys/cdefs.h>
 #include <museum/8.1.0/bionic/libc/sys/types.h>

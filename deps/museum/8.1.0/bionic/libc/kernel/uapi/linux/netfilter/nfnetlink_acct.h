@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_NFNL_ACCT_H_
 #define _UAPI_NFNL_ACCT_H_
+#define UAPI_NFNL_ACCT_H_
+#define UAPI_NFNL_ACCT_H
+#define NDK_ANDROID_SUPPORT_UAPI_NFNL_ACCT_H_
+#define NDK_ANDROID_SUPPORT_UAPI_NFNL_ACCT_H
+#define NDK_ANDROID_SUPPORT_NFNL_ACCT_H_
+#define NDK_ANDROID_SUPPORT_NFNL_ACCT_H
+#define _NFNL_ACCT_H_
+#define _NFNL_ACCT_H
+#define _UAPI_NFNL_ACCT_H
 #ifndef NFACCT_NAME_MAX
 #define NFACCT_NAME_MAX 32
 #endif

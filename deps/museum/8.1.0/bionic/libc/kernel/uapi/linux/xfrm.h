@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _LINUX_XFRM_H
 #define _LINUX_XFRM_H
+#define LINUX_XFRM_H
+#define LINUX_XFRM_H_
+#define NDK_ANDROID_SUPPORT_LINUX_XFRM_H
+#define NDK_ANDROID_SUPPORT_LINUX_XFRM_H_
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_XFRM_H
+#define NDK_ANDROID_SUPPORT_UAPI_LINUX_XFRM_H_
+#define _UAPI_LINUX_XFRM_H
+#define _UAPI_LINUX_XFRM_H_
+#define _LINUX_XFRM_H_
 #include <museum/8.1.0/bionic/libc/linux/in6.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 typedef union {

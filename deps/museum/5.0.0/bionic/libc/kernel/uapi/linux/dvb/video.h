@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_DVBVIDEO_H_
 #define _UAPI_DVBVIDEO_H_
+#define UAPI_DVBVIDEO_H_
+#define UAPI_DVBVIDEO_H
+#define _DVBVIDEO_H_
+#define _DVBVIDEO_H
+#define _UAPI_DVBVIDEO_H
 #include <museum/5.0.0/bionic/libc/linux/types.h>
 #include <museum/5.0.0/bionic/libc/stdint.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

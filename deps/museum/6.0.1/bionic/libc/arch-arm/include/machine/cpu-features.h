@@ -27,6 +27,11 @@
  */
 #ifndef _ARM_MACHINE_CPU_FEATURES_H
 #define _ARM_MACHINE_CPU_FEATURES_H
+#define ARM_MACHINE_CPU_FEATURES_H
+#define ARM_MACHINE_CPU_FEATURES_H_
+#define NDK_ANDROID_SUPPORT_ARM_MACHINE_CPU_FEATURES_H
+#define NDK_ANDROID_SUPPORT_ARM_MACHINE_CPU_FEATURES_H_
+#define _ARM_MACHINE_CPU_FEATURES_H_
 
 /* __ARM_ARCH__ is a number corresponding to the ARM revision
  * we're going to support. Our toolchain doesn't define __ARM_ARCH__

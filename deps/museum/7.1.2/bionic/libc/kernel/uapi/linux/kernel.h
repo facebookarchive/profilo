@@ -18,6 +18,11 @@
  ****************************************************************************/
 #ifndef _UAPI_LINUX_KERNEL_H
 #define _UAPI_LINUX_KERNEL_H
+#define UAPI_LINUX_KERNEL_H
+#define UAPI_LINUX_KERNEL_H_
+#define _LINUX_KERNEL_H
+#define _LINUX_KERNEL_H_
+#define _UAPI_LINUX_KERNEL_H_
 #include <museum/7.1.2/bionic/libc/linux/sysinfo.h>
 #define __ALIGN_KERNEL(x,a) __ALIGN_KERNEL_MASK(x, (typeof(x)) (a) - 1)
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

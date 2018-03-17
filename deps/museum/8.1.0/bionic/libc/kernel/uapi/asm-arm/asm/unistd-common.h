@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI_ASM_ARM_UNISTD_COMMON_H
 #define _UAPI_ASM_ARM_UNISTD_COMMON_H 1
+#define UAPI_ASM_ARM_UNISTD_COMMON_H
+#define UAPI_ASM_ARM_UNISTD_COMMON_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_ARM_UNISTD_COMMON_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_ARM_UNISTD_COMMON_H_
+#define NDK_ANDROID_SUPPORT_ASM_ARM_UNISTD_COMMON_H
+#define NDK_ANDROID_SUPPORT_ASM_ARM_UNISTD_COMMON_H_
+#define _ASM_ARM_UNISTD_COMMON_H
+#define _ASM_ARM_UNISTD_COMMON_H_
+#define _UAPI_ASM_ARM_UNISTD_COMMON_H_
 #define __NR_restart_syscall (__NR_SYSCALL_BASE + 0)
 #define __NR_exit (__NR_SYSCALL_BASE + 1)
 #define __NR_fork (__NR_SYSCALL_BASE + 2)

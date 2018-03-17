@@ -18,6 +18,17 @@
  ****************************************************************************/
 #ifndef __LINUX_TC_NAT_H
 #define __LINUX_TC_NAT_H
+#define _LINUX_TC_NAT_H
+#define _LINUX_TC_NAT_H_
+#define _UAPI_LINUX_TC_NAT_H
+#define _UAPI_LINUX_TC_NAT_H_
+#define NDK_ANDROID_SUPPORT__LINUX_TC_NAT_H
+#define NDK_ANDROID_SUPPORT__LINUX_TC_NAT_H_
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_TC_NAT_H
+#define NDK_ANDROID_SUPPORT_UAPI__LINUX_TC_NAT_H_
+#define _UAPI__LINUX_TC_NAT_H
+#define _UAPI__LINUX_TC_NAT_H_
+#define __LINUX_TC_NAT_H_
 #include <museum/8.1.0/bionic/libc/linux/pkt_cls.h>
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #define TCA_ACT_NAT 9

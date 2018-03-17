@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef KERNEL_IRDA_H
 #define KERNEL_IRDA_H
+#define _KERNEL_IRDA_H
+#define _KERNEL_IRDA_H_
+#define _UAPI_KERNEL_IRDA_H
+#define _UAPI_KERNEL_IRDA_H_
+#define NDK_ANDROID_SUPPORT_UAPIKERNEL_IRDA_H
+#define NDK_ANDROID_SUPPORT_UAPIKERNEL_IRDA_H_
+#define _UAPIKERNEL_IRDA_H
+#define _UAPIKERNEL_IRDA_H_
+#define KERNEL_IRDA_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 #include <museum/8.1.0/bionic/libc/linux/socket.h>
 #define HINT_PNP 0x01

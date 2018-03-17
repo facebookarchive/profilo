@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _UAPI__SOUND_ASOUND_H
 #define _UAPI__SOUND_ASOUND_H
+#define UAPI__SOUND_ASOUND_H
+#define UAPI__SOUND_ASOUND_H_
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_ASOUND_H
+#define NDK_ANDROID_SUPPORT_UAPI__SOUND_ASOUND_H_
+#define NDK_ANDROID_SUPPORT__SOUND_ASOUND_H
+#define NDK_ANDROID_SUPPORT__SOUND_ASOUND_H_
+#define __SOUND_ASOUND_H
+#define __SOUND_ASOUND_H_
+#define _UAPI__SOUND_ASOUND_H_
 #include <museum/6.0.1/bionic/libc/linux/types.h>
 #define SNDRV_PROTOCOL_VERSION(major,minor,subminor) (((major) << 16) | ((minor) << 8) | (subminor))
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

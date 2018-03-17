@@ -27,6 +27,9 @@
  */
 #ifndef _SYS_IPC_H
 #define _SYS_IPC_H
+#define SYS_IPC_H
+#define SYS_IPC_H_
+#define _SYS_IPC_H_
 
 #include <museum/5.1.1/bionic/libc/sys/cdefs.h>
 #include <museum/5.1.1/bionic/libc/sys/types.h>

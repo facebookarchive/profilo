@@ -28,6 +28,9 @@
 
 #ifndef _TAR_H_
 #define _TAR_H_
+#define TAR_H_
+#define TAR_H
+#define _TAR_H
 
 #include <museum/8.0.0/bionic/libc/sys/cdefs.h>
 

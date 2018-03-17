@@ -18,6 +18,13 @@
  ****************************************************************************/
 #ifndef __LINUX_USB_TMC_H
 #define __LINUX_USB_TMC_H
+#define _LINUX_USB_TMC_H
+#define _LINUX_USB_TMC_H_
+#define _UAPI_LINUX_USB_TMC_H
+#define _UAPI_LINUX_USB_TMC_H_
+#define _UAPI__LINUX_USB_TMC_H
+#define _UAPI__LINUX_USB_TMC_H_
+#define __LINUX_USB_TMC_H_
 #define USBTMC_STATUS_SUCCESS 0x01
 #define USBTMC_STATUS_PENDING 0x02
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

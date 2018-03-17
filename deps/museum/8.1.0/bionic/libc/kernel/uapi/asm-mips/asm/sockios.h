@@ -18,6 +18,15 @@
  ****************************************************************************/
 #ifndef _ASM_SOCKIOS_H
 #define _ASM_SOCKIOS_H
+#define ASM_SOCKIOS_H
+#define ASM_SOCKIOS_H_
+#define NDK_ANDROID_SUPPORT_ASM_SOCKIOS_H
+#define NDK_ANDROID_SUPPORT_ASM_SOCKIOS_H_
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SOCKIOS_H
+#define NDK_ANDROID_SUPPORT_UAPI_ASM_SOCKIOS_H_
+#define _UAPI_ASM_SOCKIOS_H
+#define _UAPI_ASM_SOCKIOS_H_
+#define _ASM_SOCKIOS_H_
 #include <asm/ioctl.h>
 #define FIOGETOWN _IOR('f', 123, int)
 #define FIOSETOWN _IOW('f', 124, int)
