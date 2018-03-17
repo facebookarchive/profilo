@@ -221,7 +221,7 @@ class Runtime {
   }
 
   static Runtime* Current() {
-    return instance_;
+    return instance_();
   }
 
   // Aborts semi-cleanly. Used in the implementation of LOG(FATAL), which most
@@ -675,7 +675,7 @@ class Runtime {
   void MaybeSaveJitProfilingInfo();
 
   // A pointer to the active runtime or null.
-  static Runtime* instance_;
+  static Runtime*& instance_();
 
   // NOTE: these must match the gc::ProcessState values as they come directly from the framework.
   static constexpr int kProfileForground = 0;

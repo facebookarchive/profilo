@@ -667,7 +667,7 @@ class Runtime {
   void MaybeSaveJitProfilingInfo();
 
   // A pointer to the active runtime or null.
-  static Runtime* instance_();
+  static Runtime*& instance_();
 
   // NOTE: these must match the gc::ProcessState values as they come directly from the framework.
   static constexpr int kProfileForground = 0;

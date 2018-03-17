@@ -494,7 +494,7 @@ class Runtime {
   }
 
   // A pointer to the active runtime or NULL.
-  static Runtime* instance_();
+  static Runtime*& instance_();
 
  private:
   static void InitPlatformSignalHandlers();

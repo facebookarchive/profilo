@@ -942,16 +942,16 @@ class Thread {
 
   // Has Thread::Startup been called?
   #define is_started_ is_started_()
-  static bool is_started_;
+  static bool& is_started_;
 
   // TLS key used to retrieve the Thread*.
   #define pthread_key_self_ pthread_key_self_()
-  static pthread_key_t pthread_key_self_;
+  static pthread_key_t& pthread_key_self_;
 
   // Used to notify threads that they should attempt to resume, they will suspend again if
   // their suspend count is > 0.
   #define resume_cond_ resume_cond_()
-  static ConditionVariable* resume_cond_;
+  static ConditionVariable*& resume_cond_;
 
   /***********************************************************************************************/
   // Thread local storage. Fields are grouped by size to enable 32 <-> 64 searching to account for
