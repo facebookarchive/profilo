@@ -5,17 +5,18 @@
 library: libart
 
 headers:
-- base/logging.h
-- base/logging-inl.h
-- base/mutex.h
-- class_linker.h
-- dex_file.h
-- indirect_reference_table.h
-- jni_env_ext.h
-- runtime.h
-- stack_map.h
-- thread.h
-- utf.h
+- museum/6.0.1/art/runtime/dex_file.h
+- museum/6.0.1/art/runtime/base/logging.h
+- museum/6.0.1/art/runtime/base/logging-inl.h
+- museum/6.0.1/art/runtime/base/mutex.h
+- museum/6.0.1/art/runtime/class_linker.h
+- museum/6.0.1/art/runtime/indirect_reference_table.h
+- museum/6.0.1/art/runtime/jni_env_ext.h
+- museum/6.0.1/art/runtime/runtime.h
+- museum/6.0.1/art/runtime/stack_map.h
+- museum/6.0.1/art/runtime/thread.h
+- museum/6.0.1/art/runtime/utf.h
+- new
 
 namespaces:
 - nsName:
@@ -279,8 +280,7 @@ namespaces:
       - size_t
       - size_t
       - size_t
-      isStaticVar: true
-      skipMethodWrap: true
+      isStaticMethod: true
       returnType: size_t
       mangledNames:
       - _ZN3art8StackMap27ComputeStackMapSizeInternalEjjjjjj
@@ -302,3 +302,16 @@ namespaces:
       returnType: size_t
       mangledNames:
       - _ZN3art23ComputeModifiedUtf8HashEPKc
+    - symbolName: DescriptorToDot
+      params:
+      - char const*
+      returnType: std::string
+      mangledNames:
+      - _ZN3art15DescriptorToDotEPKc
+    - symbolName: PrettyMethod
+      params:
+      - ArtMethod*
+      - bool
+      returnType: std::string
+      mangledNames:
+      - _ZN3art12PrettyMethodEPNS_9ArtMethodEb

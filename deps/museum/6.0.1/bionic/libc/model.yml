@@ -1,0 +1,33 @@
+# Copyright 2004-present Facebook. All Rights Reserved.
+# See //native/museum/gen_cc.mustache for schema
+
+---
+library: libc
+
+headers:
+- museum/6.0.1/bionic/libc/locale.h
+
+namespaces:
+- classes:
+  - className:
+    symbols:
+    - symbolName: uselocale
+      params:
+      - locale_t
+      returnType: locale_t
+      mangledNames:
+      - uselocale
+    - symbolName: isdigit_l
+      params:
+      - int
+      - locale_t
+      returnType: int
+      mangledNames:
+      - isdigit_l
+    - symbolName: isxdigit_l
+      params:
+      - int
+      - locale_t
+      returnType: int
+      mangledNames:
+      - isxdigit_l

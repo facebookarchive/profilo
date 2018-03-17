@@ -1,0 +1,23 @@
+# Copyright 2004-present Facebook. All Rights Reserved.
+# See //native/museum/gen_cc.mustache for schema
+
+---
+library: libart
+
+headers:
+- museum/5.0.0/art/runtime/mirror/array.h
+- new
+
+namespaces:
+- nsName:
+  - art
+  - mirror
+  classes:
+  - className: Array
+    symbols:
+    - symbolName: ThrowArrayIndexOutOfBoundsException
+      params:
+      - int
+      returnType: void
+      mangledNames:
+      - _ZN3art6mirror5Array35ThrowArrayIndexOutOfBoundsExceptionEi

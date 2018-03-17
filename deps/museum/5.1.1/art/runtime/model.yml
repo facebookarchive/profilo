@@ -5,16 +5,17 @@
 library: libart
 
 headers:
-- dex_file.h
-- base/logging.h
-- base/mutex.h
-- class_linker.h
-- indirect_reference_table.h
-- jni_internal.h
-- runtime.h
-- thread.h
-- utf.h
-- stack.h
+- museum/5.1.1/art/runtime/dex_file.h
+- museum/5.1.1/art/runtime/base/logging.h
+- museum/5.1.1/art/runtime/base/mutex.h
+- museum/5.1.1/art/runtime/class_linker.h
+- museum/5.1.1/art/runtime/indirect_reference_table.h
+- museum/5.1.1/art/runtime/jni_internal.h
+- museum/5.1.1/art/runtime/runtime.h
+- museum/5.1.1/art/runtime/thread.h
+- museum/5.1.1/art/runtime/utf.h
+- museum/5.1.1/art/runtime/stack.h
+- new
 
 namespaces:
 - nsName:
@@ -44,6 +45,17 @@ namespaces:
     - symbolName: ~LogMessage
       mangledNames:
       - _ZN3art10LogMessageD1Ev
+
+  - className: LogMessageData
+    symbols:
+    - symbolName: LogMessageData
+      params:
+      - char const*
+      - int
+      - LogSeverity
+      - int
+      mangledNames:
+      - _ZN3art14LogMessageDataC1EPKciii
 
   - className: Mutex
     symbols:
@@ -257,3 +269,18 @@ namespaces:
       returnType: std::ostream&
       mangledNames:
       - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_11ThreadStateE
+
+    - symbolName: PrettyMethod
+      params:
+      - mirror::ArtMethod*
+      - bool
+      returnType: std::string
+      mangledNames:
+      - _ZN3art12PrettyMethodEPNS_6mirror9ArtMethodEb
+
+    - symbolName: DescriptorToDot
+      params:
+      - char const*
+      returnType: std::string
+      mangledNames:
+      - _ZN3art15DescriptorToDotEPKc
