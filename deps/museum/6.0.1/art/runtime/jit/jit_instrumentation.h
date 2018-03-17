@@ -29,7 +29,7 @@
 #include <museum/6.0.1/art/runtime/object_callbacks.h>
 #include <museum/6.0.1/art/runtime/thread_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class Object;
@@ -104,6 +104,6 @@ class JitInstrumentationListener : public instrumentation::InstrumentationListen
 };
 
 }  // namespace jit
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_JIT_INSTRUMENTATION_H_

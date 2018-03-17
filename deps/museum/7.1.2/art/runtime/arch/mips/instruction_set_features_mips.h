@@ -19,7 +19,7 @@
 
 #include <museum/7.1.2/art/runtime/arch/instruction_set_features.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Instruction set features relevant to the MIPS architecture.
 class MipsInstructionSetFeatures FINAL : public InstructionSetFeatures {
@@ -99,6 +99,6 @@ class MipsInstructionSetFeatures FINAL : public InstructionSetFeatures {
   DISALLOW_COPY_AND_ASSIGN(MipsInstructionSetFeatures);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS_INSTRUCTION_SET_FEATURES_MIPS_H_

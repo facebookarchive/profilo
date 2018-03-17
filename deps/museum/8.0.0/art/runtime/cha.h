@@ -26,7 +26,7 @@
 #include <museum/8.0.0/external/libcxx/unordered_map>
 #include <museum/8.0.0/external/libcxx/unordered_set>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * Class Hierarchy Analysis (CHA) tries to devirtualize virtual calls into
@@ -164,6 +164,6 @@ class ClassHierarchyAnalysis {
   DISALLOW_COPY_AND_ASSIGN(ClassHierarchyAnalysis);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CHA_H_

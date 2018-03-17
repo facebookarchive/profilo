@@ -24,7 +24,7 @@
 #include <museum/7.0.0/art/runtime/base/mutex.h>
 #include <museum/7.0.0/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ThreadPool;
 
@@ -153,6 +153,6 @@ class ThreadPool {
   DISALLOW_COPY_AND_ASSIGN(ThreadPool);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_POOL_H_

@@ -34,7 +34,7 @@
 #include <museum/7.1.2/art/runtime/thread.h>
 #include <museum/7.1.2/art/runtime/thread_state.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Class;
 class Object;
@@ -793,6 +793,6 @@ class Dbg {
 #define CHUNK_TYPE(_name) \
     static_cast<uint32_t>((_name)[0] << 24 | (_name)[1] << 16 | (_name)[2] << 8 | (_name)[3])
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEBUGGER_H_

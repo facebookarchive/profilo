@@ -27,7 +27,7 @@
 #include <museum/8.1.0/art/runtime/primitive.h>
 #include <museum/8.1.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFile;
 class ScopedObjectAccessAlreadyRunnable;
@@ -253,6 +253,6 @@ class ArtField FINAL {
   uint32_t offset_ = 0;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ART_FIELD_H_

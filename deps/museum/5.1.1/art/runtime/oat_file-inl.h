@@ -19,7 +19,7 @@
 
 #include <museum/5.1.1/art/runtime/oat_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline const OatQuickMethodHeader* OatFile::OatMethod::GetOatQuickMethodHeader() const {
   const void* code = mirror::ArtMethod::EntryPointToCodePointer(GetQuickCode());
@@ -153,6 +153,6 @@ inline const uint8_t* OatFile::OatMethod::GetVmapTable() const {
   return reinterpret_cast<const uint8_t*>(code) - offset;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_INL_H_

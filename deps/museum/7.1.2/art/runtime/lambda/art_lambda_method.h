@@ -21,7 +21,7 @@
 
 #include <museum/7.1.2/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace lambda {
 
 class ArtLambdaMethod {
@@ -111,6 +111,6 @@ class ArtLambdaMethod {
 };
 
 }  // namespace lambda
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LAMBDA_ART_LAMBDA_METHOD_H_

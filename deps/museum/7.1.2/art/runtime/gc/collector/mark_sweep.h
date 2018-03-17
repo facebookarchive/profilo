@@ -30,7 +30,7 @@
 #include <museum/7.1.2/art/runtime/object_callbacks.h>
 #include <museum/7.1.2/art/runtime/offsets.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Class;
@@ -370,6 +370,6 @@ class MarkSweep : public GarbageCollector {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_MARK_SWEEP_H_

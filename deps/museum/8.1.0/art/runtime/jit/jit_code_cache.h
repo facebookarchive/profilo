@@ -33,7 +33,7 @@
 #include <museum/8.1.0/art/runtime/safe_map.h>
 #include <museum/8.1.0/art/runtime/thread_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class LinearAlloc;
@@ -416,6 +416,6 @@ class JitCodeCache {
 };
 
 }  // namespace jit
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_JIT_CODE_CACHE_H_

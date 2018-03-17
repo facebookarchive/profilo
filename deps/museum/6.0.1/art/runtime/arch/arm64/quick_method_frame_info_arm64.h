@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/arch/arm64/registers_arm64.h>
 #include <museum/6.0.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arm64 {
 
 // Registers need to be restored but not preserved by aapcs64.
@@ -98,6 +98,6 @@ constexpr size_t Arm64CalleeSaveLrOffset(Runtime::CalleeSaveType type) {
 }
 
 }  // namespace arm64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM64_QUICK_METHOD_FRAME_INFO_ARM64_H_

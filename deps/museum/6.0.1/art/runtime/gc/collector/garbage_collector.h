@@ -27,7 +27,7 @@
 #include <museum/6.0.1/bionic/libc/stdint.h>
 #include <museum/6.0.1/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 class Heap;
@@ -197,6 +197,6 @@ class GarbageCollector : public RootVisitor {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_GARBAGE_COLLECTOR_H_

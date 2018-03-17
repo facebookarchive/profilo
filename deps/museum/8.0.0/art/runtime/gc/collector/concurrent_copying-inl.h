@@ -25,7 +25,7 @@
 #include <museum/8.0.0/art/runtime/mirror/object-readbarrier-inl.h>
 #include <museum/8.0.0/art/runtime/lock_word.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -199,6 +199,6 @@ inline bool ConcurrentCopying::IsMarkedInUnevacFromSpace(mirror::Object* from_re
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_INL_H_

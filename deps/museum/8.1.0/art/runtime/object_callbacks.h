@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Object;
   template<class MirrorType> class HeapReference;
@@ -44,6 +44,6 @@ class MarkObjectVisitor {
                                  bool do_atomic_update) = 0;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OBJECT_CALLBACKS_H_

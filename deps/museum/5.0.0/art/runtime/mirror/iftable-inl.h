@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/art/runtime/mirror/iftable.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline void IfTable::SetInterface(int32_t i, Class* interface) {
@@ -31,6 +31,6 @@ inline void IfTable::SetInterface(int32_t i, Class* interface) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_IFTABLE_INL_H_

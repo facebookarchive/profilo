@@ -36,7 +36,7 @@
 
 #include <museum/8.0.0/external/libcxx/atomic>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template <typename T>
@@ -383,6 +383,6 @@ inline void DexCache::FixupResolvedCallSites(GcRoot<mirror::CallSite>* dest,
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_DEX_CACHE_INL_H_

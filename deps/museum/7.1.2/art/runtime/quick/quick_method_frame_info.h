@@ -21,7 +21,7 @@
 
 #include <museum/7.1.2/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class PACKED(4) QuickMethodFrameInfo {
  public:
@@ -60,6 +60,6 @@ class PACKED(4) QuickMethodFrameInfo {
   uint32_t fp_spill_mask_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_QUICK_QUICK_METHOD_FRAME_INFO_H_

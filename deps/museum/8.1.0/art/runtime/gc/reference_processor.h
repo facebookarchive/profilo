@@ -22,7 +22,7 @@
 #include <museum/8.1.0/libnativehelper/jni.h>
 #include <museum/8.1.0/art/runtime/gc/reference_queue.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class IsMarkedVisitor;
 class TimingLogger;
@@ -111,6 +111,6 @@ class ReferenceProcessor {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_REFERENCE_PROCESSOR_H_

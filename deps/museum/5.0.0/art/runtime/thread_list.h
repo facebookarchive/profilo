@@ -24,7 +24,7 @@
 #include <museum/5.0.0/external/libcxx/bitset>
 #include <museum/5.0.0/external/libcxx/list>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class Closure;
 class Thread;
 class TimingLogger;
@@ -170,6 +170,6 @@ class ThreadList {
   DISALLOW_COPY_AND_ASSIGN(ThreadList);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_LIST_H_

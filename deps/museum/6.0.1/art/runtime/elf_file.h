@@ -25,7 +25,7 @@
 #include <museum/6.0.1/art/runtime/elf.h>
 #include <museum/6.0.1/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 template <typename ElfTypes>
 class ElfFileImpl;
 
@@ -100,6 +100,6 @@ class ElfFile {
   DISALLOW_COPY_AND_ASSIGN(ElfFile);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ELF_FILE_H_

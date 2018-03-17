@@ -21,7 +21,7 @@
 #include <museum/8.1.0/external/libcxx/string>
 #include <museum/8.1.0/external/libcxx/vector>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Splits a string into a vector of strings.
@@ -68,6 +68,6 @@ bool EndsWithIgnoreCase(const std::string& s, const char* suffix);
 bool EqualsIgnoreCase(const std::string& lhs, const std::string& rhs);
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_STRINGS_H

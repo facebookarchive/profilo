@@ -24,7 +24,7 @@
 #include <museum/8.1.0/art/runtime/base/timing_logger.h>
 #include <museum/8.1.0/art/runtime/gc/collector/object_byte_pair.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -95,6 +95,6 @@ class Iteration {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_ITERATION_H_

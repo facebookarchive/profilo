@@ -24,7 +24,7 @@
 #include <museum/7.0.0/art/runtime/indirect_reference_table.h>
 #include <museum/7.0.0/art/runtime/reference_table.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Array;
@@ -218,6 +218,6 @@ class JavaVMExt : public JavaVM {
   DISALLOW_COPY_AND_ASSIGN(JavaVMExt);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JAVA_VM_EXT_H_

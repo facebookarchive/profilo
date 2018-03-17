@@ -48,10 +48,10 @@ namespace openjdkjvmti {
 // are running on.
 class FixedUpDexFile {
  public:
-  static std::unique_ptr<FixedUpDexFile> Create(const art::DexFile& original)
-      REQUIRES_SHARED(art::Locks::mutator_lock_);
+  static std::unique_ptr<FixedUpDexFile> Create(const facebook::museum::MUSEUM_VERSION::art::DexFile& original)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
 
-  const art::DexFile& GetDexFile() {
+  const facebook::museum::MUSEUM_VERSION::art::DexFile& GetDexFile() {
     return *dex_file_;
   }
 
@@ -64,13 +64,13 @@ class FixedUpDexFile {
   }
 
  private:
-  explicit FixedUpDexFile(std::unique_ptr<const art::DexFile> fixed_up_dex_file,
+  explicit FixedUpDexFile(std::unique_ptr<const facebook::museum::MUSEUM_VERSION::art::DexFile> fixed_up_dex_file,
                           std::vector<unsigned char> data)
       : dex_file_(std::move(fixed_up_dex_file)),
         data_(std::move(data)) {}
 
   // the fixed up DexFile
-  std::unique_ptr<const art::DexFile> dex_file_;
+  std::unique_ptr<const facebook::museum::MUSEUM_VERSION::art::DexFile> dex_file_;
   // The backing data for dex_file_.
   const std::vector<unsigned char> data_;
 

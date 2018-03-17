@@ -33,7 +33,7 @@
 #include <museum/7.0.0/external/libcxx/unordered_map>
 #include <museum/7.0.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class RootInfo;
 
 namespace gc {
@@ -253,6 +253,6 @@ class ConcurrentCopying : public GarbageCollector {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_H_

@@ -24,7 +24,7 @@
 #include <museum/7.1.2/art/runtime/base/allocator.h>
 #include <museum/7.1.2/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Equivalent to std::map, but without operator[] and its bug-prone semantics (in particular,
 // the implicit insertion of a default-constructed value on failed lookups).
@@ -162,6 +162,6 @@ class AllocationTrackingSafeMap : public SafeMap<
     Key, T, Compare, TrackingAllocator<std::pair<const Key, T>, kTag>> {
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SAFE_MAP_H_

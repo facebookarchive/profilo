@@ -22,7 +22,7 @@
 #include <museum/5.1.1/art/runtime/verifier/method_verifier.h>
 #include <museum/5.1.1/art/runtime/verifier/reg_type_cache-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 inline RegType& RegisterLine::GetRegisterType(uint32_t vsrc) const {
@@ -32,6 +32,6 @@ inline RegType& RegisterLine::GetRegisterType(uint32_t vsrc) const {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REGISTER_LINE_INL_H_

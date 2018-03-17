@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_ALLOCATOR_TYPE_H_
 #define ART_RUNTIME_GC_ALLOCATOR_TYPE_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 // Different types of allocators.
@@ -31,6 +31,6 @@ enum AllocatorType {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ALLOCATOR_TYPE_H_

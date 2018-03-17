@@ -29,7 +29,7 @@
 #include <museum/5.0.0/art/runtime/image.h>
 #include <museum/5.0.0/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Object;
 }  // namespace mirror
@@ -179,7 +179,7 @@ class Space {
   GcRetentionPolicy gc_retention_policy_;
 
  private:
-  friend class art::gc::Heap;
+  friend class facebook::museum::MUSEUM_VERSION::art::gc::Heap;
   DISALLOW_COPY_AND_ASSIGN(Space);
 };
 std::ostream& operator<<(std::ostream& os, const Space& space);
@@ -437,6 +437,6 @@ class ContinuousMemMapAllocSpace : public MemMapSpace, public AllocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_SPACE_H_

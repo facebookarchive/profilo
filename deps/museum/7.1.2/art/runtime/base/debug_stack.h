@@ -21,7 +21,7 @@
 #include <museum/7.1.2/art/runtime/base/macros.h>
 #include <museum/7.1.2/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Helper classes for reference counting to enforce construction/destruction order and
 // usage of the top element of a stack in debug mode with no overhead in release mode.
@@ -133,6 +133,6 @@ class DebugStackIndirectTopRefImpl {
   DebugStackReferenceImpl<kIsDebug>* ref_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_DEBUG_STACK_H_

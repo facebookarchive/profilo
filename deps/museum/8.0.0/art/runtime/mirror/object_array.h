@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/mirror/array.h>
 #include <museum/8.0.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<class T>
@@ -116,6 +116,6 @@ class MANAGED ObjectArray: public Array {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_ARRAY_H_

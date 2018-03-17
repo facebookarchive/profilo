@@ -27,7 +27,7 @@
 #include <museum/6.0.1/art/runtime/method_reference.h>
 #include <museum/6.0.1/art/runtime/verifier/reg_type_cache.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Instruction;
 struct ReferenceMap2Visitor;
@@ -783,6 +783,6 @@ class MethodVerifier {
 std::ostream& operator<<(std::ostream& os, const MethodVerifier::FailureKind& rhs);
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_

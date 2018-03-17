@@ -38,7 +38,7 @@
 #include <museum/7.0.0/art/runtime/base/logging.h>
 #include <museum/7.0.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Mutex;
 
@@ -327,6 +327,6 @@ static_assert(sizeof(Atomic<int64_t>) == sizeof(int64_t), "Weird Atomic<int64> s
                 "Atomic<int64> alignment differs from that of underlying type");
 #endif
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ATOMIC_H_

@@ -27,7 +27,7 @@
 #include <museum/6.0.1/art/runtime/invoke_type.h>
 #include <museum/6.0.1/art/runtime/jvalue.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Array;
@@ -179,6 +179,6 @@ bool FillArrayData(mirror::Object* obj, const Instruction::ArrayDataPayload* pay
 template <typename INT_TYPE, typename FLOAT_TYPE>
 inline INT_TYPE art_float_to_integral(FLOAT_TYPE f);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_H_

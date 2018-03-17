@@ -26,7 +26,7 @@
 #include <museum/8.1.0/art/runtime/mirror/class_loader.h>
 #include <museum/8.1.0/art/runtime/scoped_thread_state_change.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFile;
 class OatFile;
@@ -241,5 +241,5 @@ class ClassLoaderContext {
   DISALLOW_COPY_AND_ASSIGN(ClassLoaderContext);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_CLASS_LOADER_CONTEXT_H_

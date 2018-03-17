@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/stack.h>
 #include <museum/8.1.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace interpreter {
   void ArtInterpreterToInterpreterBridge(Thread* self,
@@ -203,6 +203,6 @@ ALWAYS_INLINE bool DoFieldPutCommon(Thread* self,
   return true;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_COMMON_DEX_OPERATIONS_H_

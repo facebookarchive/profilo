@@ -19,10 +19,10 @@
 
 #include <museum/6.0.1/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void register_dalvik_system_VMDebug(JNIEnv* env);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_DALVIK_SYSTEM_VMDEBUG_H_

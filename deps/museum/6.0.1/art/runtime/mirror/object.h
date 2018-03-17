@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/offsets.h>
 #include <museum/6.0.1/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -534,6 +534,6 @@ class MANAGED LOCKABLE Object {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_H_

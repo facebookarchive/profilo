@@ -27,7 +27,7 @@
 #include <museum/5.0.0/art/runtime/utils.h>
 #include <museum/5.0.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class ArtMethod;
@@ -743,6 +743,6 @@ class StackVisitor {
   Context* const context_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STACK_H_

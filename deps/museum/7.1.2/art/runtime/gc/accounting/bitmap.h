@@ -27,7 +27,7 @@
 #include <museum/7.1.2/art/runtime/globals.h>
 #include <museum/7.1.2/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class MemMap;
 
@@ -190,6 +190,6 @@ class MemoryRangeBitmap : public Bitmap {
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_BITMAP_H_

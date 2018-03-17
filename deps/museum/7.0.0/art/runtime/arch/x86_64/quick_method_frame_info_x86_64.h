@@ -22,27 +22,27 @@
 #include <museum/7.0.0/art/runtime/arch/x86_64/registers_x86_64.h>
 #include <museum/7.0.0/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86_64 {
 
 static constexpr uint32_t kX86_64CalleeSaveRefSpills =
-    (1 << art::x86_64::RBX) | (1 << art::x86_64::RBP) | (1 << art::x86_64::R12) |
-    (1 << art::x86_64::R13) | (1 << art::x86_64::R14) | (1 << art::x86_64::R15);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::RBX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::RBP) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::R12) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::R13) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::R14) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::R15);
 static constexpr uint32_t kX86_64CalleeSaveArgSpills =
-    (1 << art::x86_64::RSI) | (1 << art::x86_64::RDX) | (1 << art::x86_64::RCX) |
-    (1 << art::x86_64::R8) | (1 << art::x86_64::R9);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::RSI) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::RDX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::RCX) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::R8) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::R9);
 static constexpr uint32_t kX86_64CalleeSaveFpArgSpills =
-    (1 << art::x86_64::XMM0) | (1 << art::x86_64::XMM1) | (1 << art::x86_64::XMM2) |
-    (1 << art::x86_64::XMM3) | (1 << art::x86_64::XMM4) | (1 << art::x86_64::XMM5) |
-    (1 << art::x86_64::XMM6) | (1 << art::x86_64::XMM7);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM0) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM1) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM2) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM3) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM4) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM5) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM6) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM7);
 static constexpr uint32_t kX86_64CalleeSaveFpSpills =
-    (1 << art::x86_64::XMM12) | (1 << art::x86_64::XMM13) |
-    (1 << art::x86_64::XMM14) | (1 << art::x86_64::XMM15);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM12) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM13) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM14) | (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::XMM15);
 
 constexpr uint32_t X86_64CalleeSaveCoreSpills(Runtime::CalleeSaveType type) {
   return kX86_64CalleeSaveRefSpills |
       (type == Runtime::kRefsAndArgs ? kX86_64CalleeSaveArgSpills : 0) |
-      (1 << art::x86_64::kNumberOfCpuRegisters);  // fake return address callee save;
+      (1 << facebook::museum::MUSEUM_VERSION::art::x86_64::kNumberOfCpuRegisters);  // fake return address callee save;
 }
 
 constexpr uint32_t X86_64CalleeSaveFpSpills(Runtime::CalleeSaveType type) {
@@ -63,6 +63,6 @@ constexpr QuickMethodFrameInfo X86_64CalleeSaveMethodFrameInfo(Runtime::CalleeSa
 }
 
 }  // namespace x86_64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_64_QUICK_METHOD_FRAME_INFO_X86_64_H_

@@ -21,7 +21,7 @@
 
 #include <museum/6.0.1/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A convenience to allow any class with a "Dump(std::ostream& os)" member function
 // but without an operator<< to be used as if it had an operator<<. Use like this:
@@ -50,6 +50,6 @@ std::ostream& operator<<(std::ostream& os, const Dumpable<T>& rhs) {
   return os;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_DUMPABLE_H_

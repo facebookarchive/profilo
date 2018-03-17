@@ -26,7 +26,7 @@
 
 #include <museum/8.0.0/android-base/thread_annotations.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #if defined(__LP64__) && (!defined(__x86_64__) || defined(__APPLE__))
 #define USE_ART_LOW_4G_ALLOCATOR 1
@@ -252,6 +252,6 @@ std::ostream& operator<<(std::ostream& os, const MemMap& mem_map);
 // Zero and release pages if possible, no requirements on alignments.
 void ZeroAndReleasePages(void* address, size_t length);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MEM_MAP_H_

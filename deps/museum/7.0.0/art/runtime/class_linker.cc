@@ -94,7 +94,7 @@
 #include "verifier/method_verifier.h"
 #include "well_known_classes.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr bool kSanityCheckObjects = kIsDebugBuild;
 static constexpr bool kVerifyArtMethodDeclaringClasses = kIsDebugBuild;
@@ -164,4 +164,4 @@ bool ClassLinker::IsQuickGenericJniStub(const void* entry_point) const {
       (quick_generic_jni_trampoline_ == entry_point);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

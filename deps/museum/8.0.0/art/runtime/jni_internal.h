@@ -26,7 +26,7 @@
 #define REGISTER_NATIVE_METHODS(jni_class_name) \
   RegisterNativeMethods(env, jni_class_name, gMethods, arraysize(gMethods))
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -64,7 +64,7 @@ static inline ArtMethod* DecodeArtMethod(jmethodID method_id) {
 }
 
 }  // namespace jni
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 facebook::museum::MUSEUM_VERSION::std::ostream& operator<<(facebook::museum::MUSEUM_VERSION::std::ostream& os, const jobjectRefType& rhs);
 

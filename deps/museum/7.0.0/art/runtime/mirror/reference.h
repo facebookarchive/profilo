@@ -25,7 +25,7 @@
 #include <museum/7.0.0/art/runtime/runtime.h>
 #include <museum/7.0.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 
@@ -128,7 +128,7 @@ class MANAGED Reference : public Object {
 
   static GcRoot<Class> java_lang_ref_Reference_;
 
-  friend struct art::ReferenceOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ReferenceOffsets;  // for verifying offset information
   friend class gc::ReferenceProcessor;
   friend class gc::ReferenceQueue;
   DISALLOW_IMPLICIT_CONSTRUCTORS(Reference);
@@ -154,11 +154,11 @@ class MANAGED FinalizerReference : public Reference {
   HeapReference<FinalizerReference> prev_;
   HeapReference<Object> zombie_;
 
-  friend struct art::FinalizerReferenceOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::FinalizerReferenceOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(FinalizerReference);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_REFERENCE_H_

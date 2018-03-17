@@ -21,7 +21,7 @@
 #include <museum/8.0.0/art/runtime/base/logging.h>
 #include <museum/8.0.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class MipsInstructionSetFeatures;
 using MipsFeaturesUniquePtr = std::unique_ptr<const MipsInstructionSetFeatures>;
@@ -113,6 +113,6 @@ class MipsInstructionSetFeatures FINAL : public InstructionSetFeatures {
   DISALLOW_COPY_AND_ASSIGN(MipsInstructionSetFeatures);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS_INSTRUCTION_SET_FEATURES_MIPS_H_

@@ -23,7 +23,7 @@
 #include <museum/8.1.0/android-base/logging.h>
 #include <museum/8.1.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Make libbase's LogSeverity more easily available.
 using ::android::base::LogSeverity;
@@ -140,7 +140,7 @@ class LogHelper {
 };
 
 // Is verbose logging enabled for the given module? Where the module is defined in LogVerbosity.
-#define VLOG_IS_ON(module) UNLIKELY(::art::gLogVerbosity.module)
+#define VLOG_IS_ON(module) UNLIKELY(::facebook::museum::MUSEUM_VERSION::art::gLogVerbosity.module)
 
 // Variant of LOG that logs when verbose logging is enabled for a module. For example,
 // VLOG(jni) << "A JNI operation was performed";
@@ -149,6 +149,6 @@ class LogHelper {
 // Return the stream associated with logging for the given module.
 #define VLOG_STREAM(module) LOG_STREAM(INFO)
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_LOGGING_H_

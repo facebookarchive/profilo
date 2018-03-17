@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/base/macros.h>
 #include <museum/8.0.0/art/runtime/verifier/verifier_enums.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 ALWAYS_INLINE
@@ -35,6 +35,6 @@ static inline bool CanCompilerHandleVerificationFailure(uint32_t encountered_fai
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_VERIFIER_COMPILER_BINDING_H_

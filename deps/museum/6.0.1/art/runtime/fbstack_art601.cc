@@ -10,13 +10,13 @@
 
 #include "fbentrypoints.h"
 
-using namespace art;
 
-using namespace facebook::art;
+using namespace facebook::museum::MUSEUM_VERSION::art;
+using namespace entrypoints;
 void* HostEntryPoints::quick_entrypoints = nullptr;
 
-namespace facebook {
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
+namespace entrypoints {
 
 static JavaVMExt* JavaVmExtFromEnv(JNIEnv* env) {
   return reinterpret_cast<JNIEnvExt*>(env)->vm;
@@ -77,5 +77,5 @@ size_t GetStackTrace(JavaFrame* frames, size_t max_frames, void* thread) {
   return visitor.idx_;
 }
 
-} // namespace art
-} // namespace facebook
+} // namespace entrypoints
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

@@ -21,21 +21,21 @@
 #include <museum/5.1.1/art/runtime/arch/mips/registers_mips.h>
 #include <museum/5.1.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mips {
 
 static constexpr uint32_t kMipsCalleeSaveRefSpills =
-    (1 << art::mips::S2) | (1 << art::mips::S3) | (1 << art::mips::S4) | (1 << art::mips::S5) |
-    (1 << art::mips::S6) | (1 << art::mips::S7) | (1 << art::mips::GP) | (1 << art::mips::FP);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips::S2) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::S3) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::S4) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::S5) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips::S6) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::S7) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::GP) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::FP);
 static constexpr uint32_t kMipsCalleeSaveArgSpills =
-    (1 << art::mips::A1) | (1 << art::mips::A2) | (1 << art::mips::A3);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips::A1) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::A2) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::A3);
 static constexpr uint32_t kMipsCalleeSaveAllSpills =
-    (1 << art::mips::S0) | (1 << art::mips::S1);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips::S0) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::S1);
 
 constexpr uint32_t MipsCalleeSaveCoreSpills(Runtime::CalleeSaveType type) {
   return kMipsCalleeSaveRefSpills |
       (type == Runtime::kRefsAndArgs ? kMipsCalleeSaveArgSpills : 0) |
-      (type == Runtime::kSaveAll ? kMipsCalleeSaveAllSpills : 0) | (1 << art::mips::RA);
+      (type == Runtime::kSaveAll ? kMipsCalleeSaveAllSpills : 0) | (1 << facebook::museum::MUSEUM_VERSION::art::mips::RA);
 }
 
 constexpr uint32_t MipsCalleeSaveFrameSize(Runtime::CalleeSaveType type) {
@@ -51,6 +51,6 @@ constexpr QuickMethodFrameInfo MipsCalleeSaveMethodFrameInfo(Runtime::CalleeSave
 }
 
 }  // namespace mips
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS_QUICK_METHOD_FRAME_INFO_MIPS_H_

@@ -22,7 +22,7 @@
 #include <museum/5.1.1/art/runtime/mirror/art_method.h>
 #include <museum/5.1.1/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class MethodHelper {
  public:
@@ -139,6 +139,6 @@ class MethodHelper {
   DISALLOW_COPY_AND_ASSIGN(MethodHelper);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_HELPER_H_

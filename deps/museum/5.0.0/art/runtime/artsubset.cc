@@ -9,7 +9,7 @@ namespace facebook {
 
 namespace {
 
-using namespace art::mirror;
+using namespace facebook::museum::MUSEUM_VERSION::art::mirror;
 
 ArtMethod* FixedFindInterfaceMethod(Class* c, const DexCache* cache, uint32_t n) {
   return c->FindInterfaceMethod(cache, n);

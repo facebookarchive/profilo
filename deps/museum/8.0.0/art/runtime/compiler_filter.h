@@ -23,7 +23,7 @@
 
 #include <museum/8.0.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class CompilerFilter FINAL {
  public:
@@ -102,6 +102,6 @@ class CompilerFilter FINAL {
 
 std::ostream& operator<<(std::ostream& os, const CompilerFilter::Filter& rhs);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_COMPILER_FILTER_H_

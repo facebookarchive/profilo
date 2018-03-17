@@ -21,7 +21,7 @@
 #include <museum/8.1.0/art/runtime/entrypoints/quick/quick_entrypoints_enum.h>
 #include <museum/8.1.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Define an enum for the entrypoints. Names are prepended a 'kQuick'.
 enum QuickEntrypointEnum
@@ -65,6 +65,6 @@ template <> inline void CheckEntrypointTypes<kQuick ## name, __VA_ARGS__>() {}; 
 bool EntrypointRequiresStackMap(QuickEntrypointEnum trampoline);
 bool EntrypointCanTriggerGC(QuickEntrypointEnum entrypoint);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_ENUM_H_

@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/object_callbacks.h>
 #include <museum/7.1.2/art/runtime/gc/reference_queue.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class TimingLogger;
 
@@ -101,6 +101,6 @@ class ReferenceProcessor {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_REFERENCE_PROCESSOR_H_

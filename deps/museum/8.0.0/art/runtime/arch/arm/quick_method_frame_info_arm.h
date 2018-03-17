@@ -22,34 +22,34 @@
 #include <museum/8.0.0/art/runtime/arch/arm/registers_arm.h>
 #include <museum/8.0.0/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arm {
 
 static constexpr uint32_t kArmCalleeSaveAlwaysSpills =
-    (1 << art::arm::LR);
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::LR);
 static constexpr uint32_t kArmCalleeSaveRefSpills =
-    (1 << art::arm::R5) | (1 << art::arm::R6)  | (1 << art::arm::R7) | (1 << art::arm::R8) |
-    (1 << art::arm::R10) | (1 << art::arm::R11);
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::R5) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R6)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R7) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R8) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::R10) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R11);
 static constexpr uint32_t kArmCalleeSaveArgSpills =
-    (1 << art::arm::R1) | (1 << art::arm::R2) | (1 << art::arm::R3);
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::R1) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R2) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R3);
 static constexpr uint32_t kArmCalleeSaveAllSpills =
-    (1 << art::arm::R4) | (1 << art::arm::R9);
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::R4) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R9);
 static constexpr uint32_t kArmCalleeSaveEverythingSpills =
-    (1 << art::arm::R0) | (1 << art::arm::R1) | (1 << art::arm::R2) | (1 << art::arm::R3) |
-    (1 << art::arm::R4) | (1 << art::arm::R9) | (1 << art::arm::R12);
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::R0) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R1) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R2) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R3) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::R4) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R9) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::R12);
 
 static constexpr uint32_t kArmCalleeSaveFpAlwaysSpills = 0;
 static constexpr uint32_t kArmCalleeSaveFpRefSpills = 0;
 static constexpr uint32_t kArmCalleeSaveFpArgSpills =
-    (1 << art::arm::S0)  | (1 << art::arm::S1)  | (1 << art::arm::S2)  | (1 << art::arm::S3)  |
-    (1 << art::arm::S4)  | (1 << art::arm::S5)  | (1 << art::arm::S6)  | (1 << art::arm::S7)  |
-    (1 << art::arm::S8)  | (1 << art::arm::S9)  | (1 << art::arm::S10) | (1 << art::arm::S11) |
-    (1 << art::arm::S12) | (1 << art::arm::S13) | (1 << art::arm::S14) | (1 << art::arm::S15);
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S0)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S1)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S2)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S3)  |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S4)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S5)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S6)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S7)  |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S8)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S9)  | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S10) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S11) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S12) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S13) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S14) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S15);
 static constexpr uint32_t kArmCalleeSaveFpAllSpills =
-    (1 << art::arm::S16) | (1 << art::arm::S17) | (1 << art::arm::S18) | (1 << art::arm::S19) |
-    (1 << art::arm::S20) | (1 << art::arm::S21) | (1 << art::arm::S22) | (1 << art::arm::S23) |
-    (1 << art::arm::S24) | (1 << art::arm::S25) | (1 << art::arm::S26) | (1 << art::arm::S27) |
-    (1 << art::arm::S28) | (1 << art::arm::S29) | (1 << art::arm::S30) | (1 << art::arm::S31);
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S16) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S17) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S18) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S19) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S20) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S21) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S22) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S23) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S24) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S25) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S26) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S27) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::arm::S28) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S29) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S30) | (1 << facebook::museum::MUSEUM_VERSION::art::arm::S31);
 static constexpr uint32_t kArmCalleeSaveFpEverythingSpills =
     kArmCalleeSaveFpArgSpills | kArmCalleeSaveFpAllSpills;
 
@@ -96,6 +96,6 @@ constexpr size_t ArmCalleeSaveLrOffset(Runtime::CalleeSaveType type) {
 }
 
 }  // namespace arm
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM_QUICK_METHOD_FRAME_INFO_ARM_H_

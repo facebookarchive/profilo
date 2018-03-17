@@ -20,7 +20,7 @@
 #include <museum/6.0.1/art/runtime/base/mutex.h>
 #include <museum/6.0.1/art/runtime/class_reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace verifier {
 
@@ -57,6 +57,6 @@ class CompilerCallbacks {
   const CallbackMode mode_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_COMPILER_CALLBACKS_H_

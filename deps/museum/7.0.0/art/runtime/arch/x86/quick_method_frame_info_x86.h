@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/arch/x86/registers_x86.h>
 #include <museum/7.0.0/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86 {
 
 enum XMM {
@@ -37,16 +37,16 @@ enum XMM {
 };
 
 static constexpr uint32_t kX86CalleeSaveRefSpills =
-    (1 << art::x86::EBP) | (1 << art::x86::ESI) | (1 << art::x86::EDI);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::EBP) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::ESI) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EDI);
 static constexpr uint32_t kX86CalleeSaveArgSpills =
-    (1 << art::x86::ECX) | (1 << art::x86::EDX) | (1 << art::x86::EBX);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::ECX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EDX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EBX);
 static constexpr uint32_t kX86CalleeSaveFpArgSpills =
-    (1 << art::x86::XMM0) | (1 << art::x86::XMM1) |
-    (1 << art::x86::XMM2) | (1 << art::x86::XMM3);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM0) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM1) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM2) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM3);
 
 constexpr uint32_t X86CalleeSaveCoreSpills(Runtime::CalleeSaveType type) {
   return kX86CalleeSaveRefSpills | (type == Runtime::kRefsAndArgs ? kX86CalleeSaveArgSpills : 0) |
-      (1 << art::x86::kNumberOfCpuRegisters);  // fake return address callee save
+      (1 << facebook::museum::MUSEUM_VERSION::art::x86::kNumberOfCpuRegisters);  // fake return address callee save
 }
 
 constexpr uint32_t X86CalleeSaveFpSpills(Runtime::CalleeSaveType type) {
@@ -66,6 +66,6 @@ constexpr QuickMethodFrameInfo X86CalleeSaveMethodFrameInfo(Runtime::CalleeSaveT
 }
 
 }  // namespace x86
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_QUICK_METHOD_FRAME_INFO_X86_H_

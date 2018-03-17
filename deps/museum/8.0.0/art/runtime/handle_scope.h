@@ -27,7 +27,7 @@
 #include <museum/8.0.0/art/runtime/stack_reference.h>
 #include <museum/8.0.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class HandleScope;
 template<class MirrorType> class ObjPtr;
@@ -318,6 +318,6 @@ class VariableSizedHandleScope : public BaseHandleScope {
   DISALLOW_COPY_AND_ASSIGN(VariableSizedHandleScope);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HANDLE_SCOPE_H_

@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/art/runtime/utf.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline uint16_t GetUtf16FromUtf8(const char** utf8_data_in) {
   uint8_t one = *(*utf8_data_in)++;
@@ -96,6 +96,6 @@ inline int CompareModifiedUtf8ToModifiedUtf8AsUtf16CodePointValues(const char* u
   return static_cast<int>(c1) - static_cast<int>(c2);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTF_INL_H_

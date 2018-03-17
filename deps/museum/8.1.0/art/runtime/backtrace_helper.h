@@ -19,7 +19,7 @@
 
 #include <unwind.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Based on debug malloc logic from libc/bionic/debug_stacktrace.cpp.
 class BacktraceCollector {
@@ -81,6 +81,6 @@ class FixedSizeBacktrace {
   size_t num_frames_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BACKTRACE_HELPER_H_

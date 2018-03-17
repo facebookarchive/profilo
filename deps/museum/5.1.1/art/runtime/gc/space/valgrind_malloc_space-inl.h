@@ -21,7 +21,7 @@
 
 #include <museum/5.1.1/art/runtime/memcheck/memcheck.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -104,6 +104,6 @@ ValgrindMallocSpace<S, A>::ValgrindMallocSpace(const std::string& name, MemMap* 
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_VALGRIND_MALLOC_SPACE_INL_H_

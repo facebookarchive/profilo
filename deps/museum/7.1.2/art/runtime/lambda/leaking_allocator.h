@@ -19,7 +19,7 @@
 #include <museum/7.1.2/external/libcxx/utility>  // std::forward
 #include <museum/7.1.2/external/libcxx/type_traits>  // std::aligned_storage
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class Thread;  // forward declaration
 
 namespace lambda {
@@ -67,6 +67,6 @@ class LeakingAllocator {
 };
 
 }  // namespace lambda
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LAMBDA_LEAKING_ALLOCATOR_H_

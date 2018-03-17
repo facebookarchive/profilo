@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/external/libcxx/string>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Parses |address| into |host| and |port|.
@@ -33,6 +33,6 @@ bool ParseNetAddress(const std::string& address, std::string* host, int* port,
                      std::string* canonical_address, std::string* error);
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_PARSENETADDRESS_H

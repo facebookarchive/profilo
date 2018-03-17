@@ -32,7 +32,7 @@
 #include <museum/5.1.1/art/runtime/read_barrier_option.h>
 #include <museum/5.1.1/art/runtime/thread_state.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class LockWord;
 template<class T> class Handle;
@@ -283,6 +283,6 @@ class MonitorInfo {
   DISALLOW_COPY_AND_ASSIGN(MonitorInfo);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MONITOR_H_

@@ -33,7 +33,7 @@
 #include <museum/5.0.0/art/runtime/handle_scope-inl.h>
 #include <museum/5.0.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // TODO: Fix no thread safety analysis when GCC can handle template specialization.
 template <const bool kAccessCheck>
@@ -661,6 +661,6 @@ static inline INT_TYPE art_float_to_integral(FLOAT_TYPE f) {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_

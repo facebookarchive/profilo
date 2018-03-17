@@ -22,7 +22,7 @@
 #include <museum/7.0.0/external/libcxx/ostream>
 #include <museum/7.0.0/external/libcxx/streambuf>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 constexpr char kIndentChar =' ';
 constexpr size_t kIndentBy1Count = 2;
@@ -156,6 +156,6 @@ class ScopedIndentation {
   DISALLOW_COPY_AND_ASSIGN(ScopedIndentation);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INDENTER_H_

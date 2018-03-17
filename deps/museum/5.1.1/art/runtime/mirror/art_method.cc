@@ -35,7 +35,7 @@
 #include "string.h"
 #include "well_known_classes.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 extern "C" void art_portable_invoke_stub(ArtMethod*, uint32_t*, uint32_t, Thread*, JValue*, char);
@@ -281,10 +281,10 @@ void ArtMethod::Invoke(Thread* self, uint32_t* args, uint32_t args_size, JValue*
   // Call the invoke stub, passing everything as arguments.
   if (UNLIKELY(!runtime->IsStarted())) {
     if (IsStatic()) {
-      art::interpreter::EnterInterpreterFromInvoke(self, this, nullptr, args, result);
+      facebook::museum::MUSEUM_VERSION::art::interpreter::EnterInterpreterFromInvoke(self, this, nullptr, args, result);
     } else {
       Object* receiver = reinterpret_cast<StackReference<Object>*>(&args[0])->AsMirrorPtr();
-      art::interpreter::EnterInterpreterFromInvoke(self, this, receiver, args + 1, result);
+      facebook::museum::MUSEUM_VERSION::art::interpreter::EnterInterpreterFromInvoke(self, this, receiver, args + 1, result);
     }
   } else {
     const bool kLogInvocationStartAndReturn = false;
@@ -368,4 +368,4 @@ void ArtMethod::UnregisterNative(Thread* self) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

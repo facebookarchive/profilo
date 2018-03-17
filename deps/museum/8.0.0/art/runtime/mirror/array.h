@@ -24,7 +24,7 @@
 #include <museum/8.0.0/art/runtime/mirror/object.h>
 #include <museum/8.0.0/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class T> class Handle;
 
@@ -233,6 +233,6 @@ class PointerArray : public Array {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ARRAY_H_

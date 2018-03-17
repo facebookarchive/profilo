@@ -24,7 +24,7 @@
 #include <museum/8.0.0/art/runtime/dex_file_types.h>
 #include <museum/8.0.0/art/runtime/utf-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A string is located by its DexFile and the string_ids_ table index into that DexFile.
 struct StringReference {
@@ -72,6 +72,6 @@ struct StringReferenceValueComparator {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STRING_REFERENCE_H_

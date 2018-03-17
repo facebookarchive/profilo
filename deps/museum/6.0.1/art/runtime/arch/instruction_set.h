@@ -22,7 +22,7 @@
 
 #include <museum/6.0.1/art/runtime/base/logging.h>  // Logging is required for FATAL in the helper functions.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum InstructionSet {
   kNone,
@@ -250,6 +250,6 @@ static inline TwoWordReturn GetTwoWordSuccessValue(uintptr_t hi, uintptr_t lo) {
 #error "Unsupported architecture"
 #endif
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_INSTRUCTION_SET_H_

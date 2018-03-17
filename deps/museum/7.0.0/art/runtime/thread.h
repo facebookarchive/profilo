@@ -44,7 +44,7 @@
 
 class BacktraceMap;
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace accounting {
@@ -1466,8 +1466,8 @@ class Thread {
 
     // Pending barriers that require passing or NULL if non-pending. Installation guarding by
     // Locks::thread_suspend_count_lock_.
-    // They work effectively as art::Barrier, but implemented directly using AtomicInteger and futex
-    // to avoid additional cost of a mutex and a condition variable, as used in art::Barrier.
+    // They work effectively as facebook::museum::MUSEUM_VERSION::art::Barrier, but implemented directly using AtomicInteger and futex
+    // to avoid additional cost of a mutex and a condition variable, as used in facebook::museum::MUSEUM_VERSION::art::Barrier.
     AtomicInteger* active_suspend_barriers[kMaxSuspendBarriers];
 
     // Entrypoint function pointers.
@@ -1589,6 +1589,6 @@ class ScopedDebugDisallowReadBarriers {
 std::ostream& operator<<(std::ostream& os, const Thread& thread);
 std::ostream& operator<<(std::ostream& os, const StackedShadowFrameType& thread);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_H_

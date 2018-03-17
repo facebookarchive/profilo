@@ -32,7 +32,7 @@
 #include <museum/6.0.1/art/runtime/modifiers.h>
 #include <museum/6.0.1/art/runtime/utf.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // TODO: remove dependencies on mirror classes, primarily by moving
 // EncodedStaticFieldValueIterator to its own file.
@@ -1392,6 +1392,6 @@ class CatchHandlerIterator {
                                 // that all typed handler does not match.
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_FILE_H_

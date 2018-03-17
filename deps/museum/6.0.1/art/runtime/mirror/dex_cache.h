@@ -24,7 +24,7 @@
 #include <museum/6.0.1/art/runtime/mirror/object.h>
 #include <museum/6.0.1/art/runtime/mirror/object_array.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct DexCacheOffsets;
 class DexFile;
@@ -162,6 +162,6 @@ class MANAGED DexCache FINAL : public Object {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_DEX_CACHE_H_

@@ -29,7 +29,7 @@
 #include <museum/7.1.2/art/runtime/profiler_options.h>
 #include <museum/7.1.2/art/runtime/runtime_options.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class CompilerCallbacks;
 class DexFile;
@@ -78,6 +78,6 @@ class ParsedOptions {
                RuntimeArgumentMap* runtime_options);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_PARSED_OPTIONS_H_

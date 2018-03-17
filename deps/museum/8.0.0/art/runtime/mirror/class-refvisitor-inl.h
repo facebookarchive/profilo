@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/art_field-inl.h>
 #include <museum/8.0.0/art/runtime/mirror/class_ext-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template <bool kVisitNativeRoots,
@@ -77,6 +77,6 @@ void Class::VisitNativeRoots(Visitor& visitor, PointerSize pointer_size) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_REFVISITOR_INL_H_

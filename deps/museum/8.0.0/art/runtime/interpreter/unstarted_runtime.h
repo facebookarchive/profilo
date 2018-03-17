@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/dex_file.h>
 #include <museum/8.0.0/art/runtime/jvalue.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class Thread;
@@ -106,6 +106,6 @@ class UnstartedRuntime {
 };
 
 }  // namespace interpreter
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_UNSTARTED_RUNTIME_H_

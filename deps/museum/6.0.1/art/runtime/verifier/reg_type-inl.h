@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/base/casts.h>
 #include <museum/6.0.1/art/runtime/mirror/class.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 inline bool RegType::CanAccess(const RegType& other) const {
@@ -181,6 +181,6 @@ inline const UndefinedType* UndefinedType::GetInstance() {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_INL_H_

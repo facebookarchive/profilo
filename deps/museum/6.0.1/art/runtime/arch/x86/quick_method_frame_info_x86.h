@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/arch/x86/registers_x86.h>
 #include <museum/6.0.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86 {
 
 enum XMM {
@@ -66,6 +66,6 @@ constexpr QuickMethodFrameInfo X86CalleeSaveMethodFrameInfo(Runtime::CalleeSaveT
 }
 
 }  // namespace x86
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_QUICK_METHOD_FRAME_INFO_X86_H_

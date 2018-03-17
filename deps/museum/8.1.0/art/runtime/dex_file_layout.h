@@ -20,7 +20,7 @@
 #include <museum/8.1.0/external/libcxx/cstdint>
 #include <museum/8.1.0/external/libcxx/iosfwd>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFile;
 
@@ -91,6 +91,6 @@ std::ostream& operator<<(std::ostream& os, const DexLayoutSections::SectionType&
 std::ostream& operator<<(std::ostream& os, const DexLayoutSection& section);
 std::ostream& operator<<(std::ostream& os, const DexLayoutSections& sections);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_FILE_LAYOUT_H_

@@ -23,7 +23,7 @@
 #define JNI_ENTRYPOINT_OFFSET(ptr_size, x) \
     Thread::JniEntryPointOffset<ptr_size>(OFFSETOF_MEMBER(JniEntryPoints, x))
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Pointers to functions that are called by JNI trampolines via thread-local storage.
 struct PACKED(4) JniEntryPoints {
@@ -31,6 +31,6 @@ struct PACKED(4) JniEntryPoints {
   void* (*pDlsymLookup)(JNIEnv* env, jobject);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_JNI_JNI_ENTRYPOINTS_H_

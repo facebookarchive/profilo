@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_HPROF_HPROF_H_
 #define ART_RUNTIME_HPROF_HPROF_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace hprof {
 
@@ -25,6 +25,6 @@ void DumpHeap(const char* filename, int fd, bool direct_to_ddms);
 
 }  // namespace hprof
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HPROF_HPROF_H_

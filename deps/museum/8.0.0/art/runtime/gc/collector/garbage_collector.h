@@ -29,7 +29,7 @@
 #include <museum/8.0.0/art/runtime/gc/collector/gc_type.h>
 #include <museum/8.0.0/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Class;
@@ -236,6 +236,6 @@ class GarbageCollector : public RootVisitor, public IsMarkedVisitor, public Mark
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_GARBAGE_COLLECTOR_H_

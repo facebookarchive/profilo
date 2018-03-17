@@ -16,12 +16,12 @@
 
 #pragma once
 
-namespace facebook {
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
+  namespace entrypoints {
 
 struct HostEntryPoints {
   static void* quick_entrypoints;
 };
 
-} // namespace art
-} // namespace facebook
+} // namespace entrypoints
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

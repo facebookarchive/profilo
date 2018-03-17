@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/runtime.h>
 #include <museum/8.1.0/art/runtime/thread-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline ScopedThreadStateChange::ScopedThreadStateChange(Thread* self, ThreadState new_thread_state)
     : self_(self), thread_state_(new_thread_state), expected_has_no_thread_(false) {
@@ -129,6 +129,6 @@ inline ScopedThreadSuspension::~ScopedThreadSuspension() {
   self_->TransitionFromSuspendedToRunnable();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_INL_H_

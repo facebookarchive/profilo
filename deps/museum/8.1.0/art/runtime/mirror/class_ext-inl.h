@@ -21,7 +21,7 @@
 
 #include <museum/8.1.0/art/runtime/art_method-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<ReadBarrierOption kReadBarrierOption, class Visitor>
@@ -42,6 +42,6 @@ void ClassExt::VisitNativeRoots(Visitor& visitor, PointerSize pointer_size) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_EXT_INL_H_

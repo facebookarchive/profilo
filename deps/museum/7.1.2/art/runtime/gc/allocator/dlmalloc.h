@@ -52,7 +52,7 @@ extern "C" void DlmallocMadviseCallback(void* start, void* end, size_t used_byte
 extern "C" void DlmallocBytesAllocatedCallback(void* start, void* end, size_t used_bytes, void* arg);
 extern "C" void DlmallocObjectsAllocatedCallback(void* start, void* end, size_t used_bytes, void* arg);
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace allocator {
 
@@ -62,6 +62,6 @@ void* ArtDlMallocMoreCore(void* mspace, intptr_t increment);
 
 }  // namespace allocator
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ALLOCATOR_DLMALLOC_H_

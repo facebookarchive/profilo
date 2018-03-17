@@ -24,7 +24,7 @@
 #include <museum/5.0.0/bionic/libc/stdint.h>
 #include <museum/5.0.0/external/libcxx/string>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class ArtMethod;
@@ -87,6 +87,6 @@ class PACKED(4) ThrowLocation {
 #endif
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THROW_LOCATION_H_

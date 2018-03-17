@@ -26,7 +26,7 @@
 #include <museum/8.1.0/art/runtime/base/bit_utils.h>
 #include <museum/8.1.0/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Returns true if an item is empty.
 template <class T>
@@ -682,6 +682,6 @@ void swap(HashSet<T, EmptyFn, HashFn, Pred, Alloc>& lhs,
   lhs.swap(rhs);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_HASH_SET_H_

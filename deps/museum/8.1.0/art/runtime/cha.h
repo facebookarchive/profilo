@@ -25,7 +25,7 @@
 #include <museum/8.1.0/external/libcxx/unordered_map>
 #include <museum/8.1.0/external/libcxx/unordered_set>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class LinearAlloc;
@@ -170,6 +170,6 @@ class ClassHierarchyAnalysis {
   DISALLOW_COPY_AND_ASSIGN(ClassHierarchyAnalysis);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CHA_H_

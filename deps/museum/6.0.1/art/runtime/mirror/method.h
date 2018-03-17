@@ -20,7 +20,7 @@
 #include <museum/6.0.1/art/runtime/mirror/abstract_method.h>
 #include <museum/6.0.1/art/runtime/gc_root.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 class Class;
@@ -88,6 +88,6 @@ class MANAGED Constructor: public AbstractMethod {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_METHOD_H_

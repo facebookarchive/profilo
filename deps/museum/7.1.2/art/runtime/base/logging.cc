@@ -2,7 +2,7 @@
 
 #include "logging.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace {
 
@@ -36,4 +36,4 @@ void LogMessage::LogLineLowStack(const char* /* unused */, unsigned int /* unuse
 class LogMessageData {
 };
 
-}
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

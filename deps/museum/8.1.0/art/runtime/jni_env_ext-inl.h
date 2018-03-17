@@ -21,7 +21,7 @@
 
 #include <museum/8.1.0/art/runtime/mirror/object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<typename T>
 inline T JNIEnvExt::AddLocalReference(ObjPtr<mirror::Object> obj) {
@@ -43,6 +43,6 @@ inline T JNIEnvExt::AddLocalReference(ObjPtr<mirror::Object> obj) {
   return reinterpret_cast<T>(ref);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JNI_ENV_EXT_INL_H_

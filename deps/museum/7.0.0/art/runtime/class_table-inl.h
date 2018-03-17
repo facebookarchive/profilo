@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/art/runtime/class_table.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class Visitor>
 void ClassTable::VisitRoots(Visitor& visitor) {
@@ -61,6 +61,6 @@ bool ClassTable::Visit(Visitor& visitor) {
 }
 
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_TABLE_INL_H_

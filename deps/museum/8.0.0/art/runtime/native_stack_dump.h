@@ -25,7 +25,7 @@
 
 class BacktraceMap;
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 
@@ -44,6 +44,6 @@ void DumpKernelStack(std::ostream& os,
                      const char* prefix = "",
                      bool include_count = true);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_STACK_DUMP_H_

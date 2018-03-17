@@ -24,7 +24,7 @@
 #include <museum/5.1.1/art/runtime/verifier/reg_type.h>
 #include <museum/5.1.1/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 class MethodVerifier;
@@ -363,6 +363,6 @@ class RegisterLine {
 std::ostream& operator<<(std::ostream& os, const RegisterLine& rhs);
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REGISTER_LINE_H_

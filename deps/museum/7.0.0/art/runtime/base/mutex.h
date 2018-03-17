@@ -41,7 +41,7 @@
 #define HAVE_TIMED_RWLOCK 0
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class SHARED_LOCKABLE ReaderWriterMutex;
 class SHARED_LOCKABLE MutatorMutex;
@@ -702,6 +702,6 @@ class Roles {
   static Uninterruptible uninterruptible_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_MUTEX_H_

@@ -32,7 +32,7 @@
 #include <museum/8.1.0/art/runtime/scoped_thread_state_change-inl.h>
 #include <museum/8.1.0/art/runtime/well_known_classes.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<ReadBarrierOption kReadBarrierOption>
 inline ObjPtr<mirror::Class> ArtField::GetDeclaringClass() {
@@ -405,6 +405,6 @@ inline ArtField* ArtField::FindStaticFieldWithOffset(ObjPtr<mirror::Class> klass
   return FindFieldWithOffset<kExactOffset>(klass->GetSFields(), field_offset);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ART_FIELD_INL_H_

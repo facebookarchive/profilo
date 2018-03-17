@@ -29,7 +29,7 @@
  *
  * See http://en.wikipedia.org/wiki/UTF-8#Modified_UTF-8 for the details.
  */
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   template<class T> class PrimitiveArray;
@@ -116,6 +116,6 @@ ALWAYS_INLINE uint16_t GetLeadingUtf16Char(uint32_t maybe_pair);
  */
 ALWAYS_INLINE uint16_t GetTrailingUtf16Char(uint32_t maybe_pair);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTF_H_

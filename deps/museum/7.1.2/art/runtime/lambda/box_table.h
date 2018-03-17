@@ -25,7 +25,7 @@
 
 #include <museum/7.1.2/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;  // forward declaration
 
@@ -45,7 +45,7 @@ struct Closure;  // forward declaration
  */
 class BoxTable FINAL {
  public:
-  using ClosureType = art::lambda::Closure*;
+  using ClosureType = facebook::museum::MUSEUM_VERSION::art::lambda::Closure*;
 
   // Boxes a closure into an object. Returns null and throws an exception on failure.
   mirror::Object* BoxLambda(const ClosureType& closure)
@@ -100,7 +100,7 @@ class BoxTable FINAL {
   // Wrap the Closure into a unique_ptr so that the HashMap can delete its memory automatically.
   using UnorderedMapKeyType = ClosureType;
 
-  // EmptyFn implementation for art::HashMap
+  // EmptyFn implementation for facebook::museum::MUSEUM_VERSION::art::HashMap
   struct EmptyFn {
     void MakeEmpty(std::pair<UnorderedMapKeyType, ValueType>& item) const
         NO_THREAD_SAFETY_ANALYSIS;  // SHARED_REQUIRES(Locks::mutator_lock_)
@@ -108,19 +108,19 @@ class BoxTable FINAL {
     bool IsEmpty(const std::pair<UnorderedMapKeyType, ValueType>& item) const;
   };
 
-  // HashFn implementation for art::HashMap
+  // HashFn implementation for facebook::museum::MUSEUM_VERSION::art::HashMap
   struct HashFn {
     size_t operator()(const UnorderedMapKeyType& key) const
         NO_THREAD_SAFETY_ANALYSIS;  // SHARED_REQUIRES(Locks::mutator_lock_)
   };
 
-  // EqualsFn implementation for art::HashMap
+  // EqualsFn implementation for facebook::museum::MUSEUM_VERSION::art::HashMap
   struct EqualsFn {
     bool operator()(const UnorderedMapKeyType& lhs, const UnorderedMapKeyType& rhs) const
         NO_THREAD_SAFETY_ANALYSIS;  // SHARED_REQUIRES(Locks::mutator_lock_)
   };
 
-  using UnorderedMap = art::HashMap<UnorderedMapKeyType,
+  using UnorderedMap = facebook::museum::MUSEUM_VERSION::art::HashMap<UnorderedMapKeyType,
                                     ValueType,
                                     EmptyFn,
                                     HashFn,
@@ -141,6 +141,6 @@ class BoxTable FINAL {
 };
 
 }  // namespace lambda
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LAMBDA_BOX_TABLE_H_

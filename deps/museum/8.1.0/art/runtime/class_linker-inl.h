@@ -31,7 +31,7 @@
 
 #include <museum/8.1.0/external/libcxx/atomic>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline mirror::Class* ClassLinker::FindArrayClass(Thread* self,
                                                   ObjPtr<mirror::Class>* element_class) {
@@ -323,6 +323,6 @@ inline void ClassLinker::VisitClassTables(const Visitor& visitor) {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_LINKER_INL_H_

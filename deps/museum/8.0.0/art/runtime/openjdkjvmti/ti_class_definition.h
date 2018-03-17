@@ -68,12 +68,12 @@ class ArtClassDefinition {
     }
   }
 
-  art::ArraySlice<const unsigned char> GetNewOriginalDexFile() const {
+  facebook::museum::MUSEUM_VERSION::art::ArraySlice<const unsigned char> GetNewOriginalDexFile() const {
     DCHECK(IsInitialized());
     if (redefined_) {
       return original_dex_file_;
     } else {
-      return art::ArraySlice<const unsigned char>();
+      return facebook::museum::MUSEUM_VERSION::art::ArraySlice<const unsigned char>();
     }
   }
 
@@ -103,9 +103,9 @@ class ArtClassDefinition {
     return protection_domain_;
   }
 
-  art::ArraySlice<const unsigned char> GetDexData() const {
+  facebook::museum::MUSEUM_VERSION::art::ArraySlice<const unsigned char> GetDexData() const {
     DCHECK(IsInitialized());
-    return art::ArraySlice<const unsigned char>(dex_data_.get(), dex_len_);
+    return facebook::museum::MUSEUM_VERSION::art::ArraySlice<const unsigned char>(dex_data_.get(), dex_len_);
   }
 
  private:
@@ -118,7 +118,7 @@ class ArtClassDefinition {
   jint dex_len_;
   JvmtiUniquePtr<unsigned char> dex_data_;
   JvmtiUniquePtr<unsigned char> original_dex_file_memory_;
-  art::ArraySlice<const unsigned char> original_dex_file_;
+  facebook::museum::MUSEUM_VERSION::art::ArraySlice<const unsigned char> original_dex_file_;
   bool redefined_;
 
   DISALLOW_COPY_AND_ASSIGN(ArtClassDefinition);

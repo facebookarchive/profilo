@@ -19,7 +19,7 @@
 
 #include <museum/7.1.2/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Runtime;
 class SignalSet;
@@ -58,6 +58,6 @@ class SignalCatcher {
   Thread* thread_ GUARDED_BY(lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SIGNAL_CATCHER_H_

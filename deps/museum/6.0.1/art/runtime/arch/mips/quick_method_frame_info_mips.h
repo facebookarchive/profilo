@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/arch/mips/registers_mips.h>
 #include <museum/6.0.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mips {
 
 static constexpr uint32_t kMipsCalleeSaveRefSpills =
@@ -60,6 +60,6 @@ constexpr QuickMethodFrameInfo MipsCalleeSaveMethodFrameInfo(Runtime::CalleeSave
 }
 
 }  // namespace mips
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS_QUICK_METHOD_FRAME_INFO_MIPS_H_

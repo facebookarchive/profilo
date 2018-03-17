@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/art/runtime/gc/reference_processor.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 inline bool ReferenceProcessor::SlowPathEnabled() {
@@ -27,6 +27,6 @@ inline bool ReferenceProcessor::SlowPathEnabled() {
 }
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_REFERENCE_PROCESSOR_INL_H_

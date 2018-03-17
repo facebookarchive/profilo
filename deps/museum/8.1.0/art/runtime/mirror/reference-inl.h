@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
 #include <museum/8.1.0/art/runtime/runtime.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t Reference::ClassSize(PointerSize pointer_size) {
@@ -56,6 +56,6 @@ inline Class* Reference::GetJavaLangRefReference() {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_REFERENCE_INL_H_

@@ -27,7 +27,7 @@
 #include <museum/5.0.0/art/runtime/mem_map.h>
 #include <museum/5.0.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Interface to GDB JIT for backtrace information.
 extern "C" {
@@ -202,6 +202,6 @@ class ElfFile {
   void GdbJITSupport();
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ELF_FILE_H_

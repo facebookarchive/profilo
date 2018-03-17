@@ -50,22 +50,22 @@
 #include <museum/7.0.0/art/runtime/thread.h>
 #include <museum/7.0.0/art/runtime/well_known_classes.h>
 
-using ::art::ArtMethod;
-using ::art::mirror::Array;
-using ::art::mirror::BooleanArray;
-using ::art::mirror::ByteArray;
-using ::art::mirror::CharArray;
-using ::art::mirror::Class;
-using ::art::mirror::ClassLoader;
-using ::art::mirror::IntArray;
-using ::art::mirror::LongArray;
-using ::art::mirror::Object;
-using ::art::mirror::ObjectArray;
-using ::art::mirror::ShortArray;
-using ::art::mirror::String;
-using ::art::mirror::Throwable;
+using ::facebook::museum::MUSEUM_VERSION::art::ArtMethod;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::Array;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::BooleanArray;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::ByteArray;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::CharArray;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::Class;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::ClassLoader;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::IntArray;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::LongArray;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::Object;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::ObjectArray;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::ShortArray;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::String;
+using ::facebook::museum::MUSEUM_VERSION::art::mirror::Throwable;
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace interpreter {
 
 // External references to all interpreter implementations.
@@ -1126,6 +1126,6 @@ EXPLICIT_DO_LIBERATE_VARIABLE_DECL(false);  // liberate-variable
 EXPLICIT_DO_LIBERATE_VARIABLE_DECL(true);   // liberate-variable
 #undef EXPLICIT_DO_LIBERATE_LAMBDA_DECL
 }  // namespace interpreter
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_INTERPRETER_COMMON_H_

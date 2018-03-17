@@ -25,7 +25,7 @@
 #include <museum/5.0.0/art/runtime/base/logging.h>
 #include <museum/5.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace accounting {
 
@@ -185,6 +185,6 @@ inline std::ostream& operator << (std::ostream& stream, const SpaceBitmap<kAlign
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_SPACE_BITMAP_INL_H_

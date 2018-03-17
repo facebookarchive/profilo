@@ -58,7 +58,7 @@ static constexpr uint8_t kJDWPEventCompositeCmd = 100U;
 static constexpr uint8_t kJDWPDdmCmdSet = 199U;  // 0xc7, or 'G'+128
 static constexpr uint8_t kJDWPDdmCmd = 1U;
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace JDWP {
 
@@ -122,6 +122,6 @@ class JdwpNetStateBase {
 
 }  // namespace JDWP
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JDWP_JDWP_PRIV_H_

@@ -42,7 +42,7 @@
 #include <museum/8.0.0/art/runtime/safe_map.h>
 #include <museum/8.0.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ConditionVariable;
 class Mutex;
@@ -1454,6 +1454,6 @@ class Heap {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_HEAP_H_

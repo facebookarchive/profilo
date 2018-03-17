@@ -22,7 +22,7 @@
 #include <museum/5.0.0/art/runtime/base/logging.h>
 #include <museum/5.0.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 /*
@@ -117,6 +117,6 @@ class DexPcToReferenceMap {
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_DEX_GC_MAP_H_

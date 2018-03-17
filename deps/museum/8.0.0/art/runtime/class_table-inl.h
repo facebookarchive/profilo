@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/class_table.h>
 #include <museum/8.0.0/art/runtime/oat_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class Visitor>
 void ClassTable::VisitRoots(Visitor& visitor) {
@@ -130,6 +130,6 @@ inline ClassTable::TableSlot::TableSlot(ObjPtr<mirror::Class> klass, uint32_t de
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_TABLE_INL_H_

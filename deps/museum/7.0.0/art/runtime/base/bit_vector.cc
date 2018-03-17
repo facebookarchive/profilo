@@ -22,7 +22,7 @@
 #include "allocator.h"
 #include "bit_vector-inl.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 uint32_t BitVector::NumSetBits(const uint32_t* storage, uint32_t end) {
   uint32_t word_end = WordIndex(end);
@@ -38,4 +38,4 @@ uint32_t BitVector::NumSetBits(const uint32_t* storage, uint32_t end) {
   return count;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

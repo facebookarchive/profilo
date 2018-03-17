@@ -23,7 +23,7 @@
 #include <museum/8.1.0/external/libcxx/limits>
 #include <museum/8.1.0/external/libcxx/string>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Parses the unsigned decimal integer in the string 's' and sets 'out' to
@@ -85,6 +85,6 @@ bool ParseInt(const std::string& s, T* out,
 }
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_PARSEINT_H

@@ -32,7 +32,7 @@
 #include <museum/5.0.0/art/runtime/thread-inl.h>
 #include <museum/5.0.0/art/runtime/verify_object-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 template <bool kInstrumented, bool kCheckLargeObject, typename PreFenceVisitor>
@@ -315,6 +315,6 @@ inline void Heap::CheckConcurrentGC(Thread* self, size_t new_num_bytes_allocated
 }
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_HEAP_INL_H_

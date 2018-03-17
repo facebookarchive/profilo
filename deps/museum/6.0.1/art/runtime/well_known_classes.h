@@ -20,7 +20,7 @@
 #include <museum/6.0.1/art/runtime/base/mutex.h>
 #include <museum/6.0.1/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Class;
 }  // namespace mirror
@@ -169,6 +169,6 @@ struct WellKnownClasses {
   static jfieldID org_apache_harmony_dalvik_ddmc_Chunk_type;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_WELL_KNOWN_CLASSES_H_

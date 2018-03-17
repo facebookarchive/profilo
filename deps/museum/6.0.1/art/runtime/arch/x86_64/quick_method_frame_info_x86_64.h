@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/arch/x86_64/registers_x86_64.h>
 #include <museum/6.0.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86_64 {
 
 static constexpr uint32_t kX86_64CalleeSaveRefSpills =
@@ -63,6 +63,6 @@ constexpr QuickMethodFrameInfo X86_64CalleeSaveMethodFrameInfo(Runtime::CalleeSa
 }
 
 }  // namespace x86_64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_64_QUICK_METHOD_FRAME_INFO_X86_64_H_

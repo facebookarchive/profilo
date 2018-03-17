@@ -25,7 +25,7 @@
 #include <museum/6.0.1/external/libcxx/set>
 #include <museum/6.0.1/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -212,6 +212,6 @@ class FreeListSpace FINAL : public LargeObjectSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_LARGE_OBJECT_SPACE_H_

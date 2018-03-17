@@ -50,7 +50,7 @@ static inline int32_t MemCmp16(const uint16_t* s0, const uint16_t* s1, size_t co
 extern "C" int32_t memcmp16_generic_static(const uint16_t* s0, const uint16_t* s1, size_t count);
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace testing {
 
@@ -61,6 +61,6 @@ int32_t MemCmp16Testing(const uint16_t* s0, const uint16_t* s1, size_t count);
 
 }  // namespace testing
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MEMCMP16_H_

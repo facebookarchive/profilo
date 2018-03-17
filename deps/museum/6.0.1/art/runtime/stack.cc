@@ -34,7 +34,7 @@
 #include "verify_object-inl.h"
 #include "vmap_table.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr bool kDebugStackWalk = false;
 
@@ -420,4 +420,4 @@ int StackVisitor::GetVRegOffsetFromQuickCode(const DexFile::CodeItem* code_item,
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

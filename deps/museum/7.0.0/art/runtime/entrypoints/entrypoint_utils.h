@@ -28,7 +28,7 @@
 #include <museum/7.0.0/art/runtime/jvalue.h>
 #include <museum/7.0.0/art/runtime/runtime.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Array;
@@ -183,6 +183,6 @@ ArtMethod* GetCalleeSaveMethodCaller(ArtMethod** sp,
                                      Runtime::CalleeSaveType type,
                                      bool do_caller_check = false);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_H_

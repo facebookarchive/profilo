@@ -29,7 +29,7 @@
 #include <museum/5.1.1/art/runtime/os.h>
 #include <museum/5.1.1/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ZipArchive;
 class MemMap;
@@ -77,6 +77,6 @@ class ZipArchive {
   DISALLOW_COPY_AND_ASSIGN(ZipArchive);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ZIP_ARCHIVE_H_

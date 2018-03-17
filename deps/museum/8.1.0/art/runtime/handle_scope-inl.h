@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/thread-current-inl.h>
 #include <museum/8.1.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<size_t kNumReferences>
 inline FixedSizeHandleScope<kNumReferences>::FixedSizeHandleScope(BaseHandleScope* link,
@@ -245,6 +245,6 @@ inline void VariableSizedHandleScope::VisitRoots(Visitor& visitor) {
 }
 
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HANDLE_SCOPE_INL_H_

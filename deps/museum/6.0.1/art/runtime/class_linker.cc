@@ -82,7 +82,7 @@
 #include "verifier/method_verifier.h"
 #include "well_known_classes.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 const void* ClassLinker::GetQuickOatCodeFor(ArtMethod* method) {
   //CHECK(!method->IsAbstract()) << PrettyMethod(method);
@@ -130,4 +130,4 @@ const void* ClassLinker::GetRuntimeQuickGenericJniStub() const {
   return GetQuickGenericJniStub();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

@@ -21,7 +21,7 @@
 
 #include <museum/5.0.0/art/runtime/read_barrier-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline QuickMethodFrameInfo Runtime::GetRuntimeMethodFrameInfo(mirror::ArtMethod* method) {
   DCHECK(method != nullptr);
@@ -66,6 +66,6 @@ inline mirror::ArtMethod* Runtime::GetCalleeSaveMethodUnchecked(CalleeSaveType t
   return callee_save_methods_[type].Read();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_RUNTIME_INL_H_

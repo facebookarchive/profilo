@@ -19,7 +19,7 @@
 
 #include <museum/8.0.0/art/runtime/arch/instruction_set_features.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Mips64InstructionSetFeatures;
 using Mips64FeaturesUniquePtr = std::unique_ptr<const Mips64InstructionSetFeatures>;
@@ -85,6 +85,6 @@ class Mips64InstructionSetFeatures FINAL : public InstructionSetFeatures {
   DISALLOW_COPY_AND_ASSIGN(Mips64InstructionSetFeatures);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS64_INSTRUCTION_SET_FEATURES_MIPS64_H_

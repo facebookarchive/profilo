@@ -23,7 +23,7 @@
 #include <museum/5.0.0/art/runtime/mirror/class-inl.h>
 #include <museum/5.0.0/art/runtime/mirror/object-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline void VerifyObject(mirror::Object* obj) {
   if (kVerifyObjectSupport > kVerifyObjectModeDisabled && obj != nullptr) {
@@ -55,6 +55,6 @@ inline bool VerifyClassClass(mirror::Class* c) {
   return c_c != nullptr && c_c == c_c->GetClass<kVerifyNone>();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFY_OBJECT_INL_H_

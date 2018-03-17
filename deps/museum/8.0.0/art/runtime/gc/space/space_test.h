@@ -30,7 +30,7 @@
 #include <museum/8.0.0/art/runtime/thread_list.h>
 #include <museum/8.0.0/art/runtime/gc/space/zygote_space.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -387,6 +387,6 @@ void SpaceTest<Super>::SizeFootPrintGrowthLimitAndTrimDriver(size_t object_size,
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_SPACE_TEST_H_

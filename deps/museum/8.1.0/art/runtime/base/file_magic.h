@@ -22,7 +22,7 @@
 
 #include <museum/8.1.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Open file and read magic number
 File OpenAndReadMagic(const char* filename, uint32_t* magic, std::string* error_msg);
@@ -31,6 +31,6 @@ File OpenAndReadMagic(const char* filename, uint32_t* magic, std::string* error_
 bool IsZipMagic(uint32_t magic);
 bool IsDexMagic(uint32_t magic);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_FILE_MAGIC_H_

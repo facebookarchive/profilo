@@ -34,7 +34,7 @@
 #include <museum/8.1.0/art/runtime/globals.h>
 #include <museum/8.1.0/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <typename T>
 bool ParseUint(const char *in, T* out) {
@@ -341,6 +341,6 @@ inline static int32_t Signum(T opnd) {
 // Madvise the largest page aligned region within begin and end.
 int MadviseLargestPageAlignedRegion(const uint8_t* begin, const uint8_t* end, int advice);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTILS_H_

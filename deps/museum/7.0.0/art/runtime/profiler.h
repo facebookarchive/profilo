@@ -33,7 +33,7 @@
 #include <museum/7.0.0/art/runtime/safe_map.h>
 #include <museum/7.0.0/art/runtime/method_reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Class;
@@ -283,6 +283,6 @@ class ProfileFile {
   ProfileMap profile_map_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_PROFILER_H_

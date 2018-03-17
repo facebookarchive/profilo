@@ -32,7 +32,7 @@
 #include <museum/8.1.0/art/runtime/obj_ptr.h>
 #include <museum/8.1.0/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Class;
 class ClassLoader;
@@ -1121,6 +1121,6 @@ std::ostream& operator<<(std::ostream& os, const RegType& rhs)
     REQUIRES_SHARED(Locks::mutator_lock_);
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_H_

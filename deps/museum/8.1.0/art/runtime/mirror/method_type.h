@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object_array.h>
 #include <museum/8.1.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct MethodTypeOffsets;
 
@@ -97,11 +97,11 @@ class MANAGED MethodType : public Object {
 
   static GcRoot<mirror::Class> static_class_;  // java.lang.invoke.MethodType.class
 
-  friend struct art::MethodTypeOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::MethodTypeOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(MethodType);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_METHOD_TYPE_H_

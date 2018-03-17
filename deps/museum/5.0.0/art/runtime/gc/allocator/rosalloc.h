@@ -33,7 +33,7 @@
 #include <museum/5.0.0/art/runtime/thread.h>
 #include <museum/5.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace allocator {
 
@@ -597,6 +597,6 @@ class RosAlloc {
 
 }  // namespace allocator
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ALLOCATOR_ROSALLOC_H_

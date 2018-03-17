@@ -20,7 +20,7 @@
 #include <museum/6.0.1/art/runtime/gc/space/malloc_space.h>
 #include <museum/6.0.1/art/runtime/gc/space/space.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 namespace collector {
@@ -168,6 +168,6 @@ class DlMallocSpace : public MallocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_DLMALLOC_SPACE_H_

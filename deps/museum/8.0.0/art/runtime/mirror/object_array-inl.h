@@ -33,7 +33,7 @@
 #include <museum/8.0.0/art/runtime/thread.h>
 #include <museum/8.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<class T>
@@ -140,7 +140,7 @@ inline void ObjectArray<T>::AssignableMemmove(int32_t dst_pos,
   }
   // Perform the memmove using int memmove then perform the write barrier.
   static_assert(sizeof(HeapReference<T>) == sizeof(uint32_t),
-                "art::mirror::HeapReference<T> and uint32_t have different sizes.");
+                "facebook::museum::MUSEUM_VERSION::art::mirror::HeapReference<T> and uint32_t have different sizes.");
   // TODO: Optimize this later?
   // We can't use memmove since it does not handle read barriers and may do by per byte copying.
   // See b/32012820.
@@ -218,7 +218,7 @@ inline void ObjectArray<T>::AssignableMemcpy(int32_t dst_pos,
   }
   // Perform the memmove using int memcpy then perform the write barrier.
   static_assert(sizeof(HeapReference<T>) == sizeof(uint32_t),
-                "art::mirror::HeapReference<T> and uint32_t have different sizes.");
+                "facebook::museum::MUSEUM_VERSION::art::mirror::HeapReference<T> and uint32_t have different sizes.");
   // TODO: Optimize this later?
   // We can't use memmove since it does not handle read barriers and may do by per byte copying.
   // See b/32012820.
@@ -375,6 +375,6 @@ inline void ObjectArray<T>::VisitReferences(const Visitor& visitor) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_ARRAY_INL_H_

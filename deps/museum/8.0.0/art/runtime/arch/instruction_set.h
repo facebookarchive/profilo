@@ -23,7 +23,7 @@
 #include <museum/8.0.0/art/runtime/base/enums.h>
 #include <museum/8.0.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum InstructionSet {
   kNone,
@@ -274,6 +274,6 @@ static inline TwoWordReturn GetTwoWordSuccessValue(uintptr_t hi, uintptr_t lo) {
 #error "Unsupported architecture"
 #endif
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_INSTRUCTION_SET_H_

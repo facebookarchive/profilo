@@ -24,7 +24,7 @@
 #include <museum/7.0.0/bionic/libc/stdint.h>
 #include <museum/7.0.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtMethod;  // forward declaration
 
 namespace mirror {
@@ -99,6 +99,6 @@ class ClosureBuilder {
 };
 
 }  // namespace lambda
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LAMBDA_CLOSURE_BUILDER_H_

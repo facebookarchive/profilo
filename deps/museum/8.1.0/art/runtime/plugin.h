@@ -20,7 +20,7 @@
 #include <museum/8.1.0/external/libcxx/string>
 #include <museum/8.1.0/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // This function is loaded from the plugin (if present) and called during runtime initialization.
 // By the time this has been called the runtime has been fully initialized but not other native
@@ -77,6 +77,6 @@ class Plugin {
 std::ostream& operator<<(std::ostream &os, Plugin const& m);
 std::ostream& operator<<(std::ostream &os, const Plugin* m);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_PLUGIN_H_

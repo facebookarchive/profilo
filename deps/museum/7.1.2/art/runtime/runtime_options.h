@@ -35,7 +35,7 @@
 #include <museum/7.1.2/bionic/libc/stdio.h>
 #include <stdarg.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class CompilerCallbacks;
 class DexFile;
@@ -80,6 +80,6 @@ struct TestProfilerOptions;
 #undef DECLARE_KEY
 
   // using RuntimeOptions = RuntimeArgumentMap;
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_RUNTIME_OPTIONS_H_

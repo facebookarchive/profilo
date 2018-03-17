@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/art/runtime/mirror/object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ClassLoaderOffsets;
 
@@ -42,11 +42,11 @@ class MANAGED ClassLoader : public Object {
   HeapReference<ClassLoader> parent_;
   HeapReference<Object> proxyCache_;
 
-  friend struct art::ClassLoaderOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ClassLoaderOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(ClassLoader);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_LOADER_H_

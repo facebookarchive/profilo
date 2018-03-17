@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 // Normal instance with at least one ref field other than the class.
@@ -65,7 +65,7 @@ static constexpr uint32_t kClassFlagReference =
     kClassFlagPhantomReference;
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_FLAGS_H_
 

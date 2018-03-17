@@ -23,7 +23,7 @@
 
 #include <museum/8.0.0/art/runtime/dex_file_types.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Data structure for passing around which classes belonging to a dex cache / dex file are resolved.
 class DexCacheResolvedClasses {
@@ -81,6 +81,6 @@ inline bool operator<(const DexCacheResolvedClasses& a, const DexCacheResolvedCl
   return a.Compare(b) < 0;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_CACHE_RESOLVED_CLASSES_H_

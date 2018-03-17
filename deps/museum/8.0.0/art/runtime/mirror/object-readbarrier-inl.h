@@ -25,7 +25,7 @@
 #include <museum/8.0.0/art/runtime/read_barrier.h>
 #include <museum/8.0.0/art/runtime/runtime.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<VerifyObjectFlags kVerifyFlags>
@@ -252,6 +252,6 @@ inline bool Object::CasFieldStrongReleaseObjectWithoutWriteBarrier(
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_READBARRIER_INL_H_

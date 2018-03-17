@@ -23,7 +23,7 @@
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 #include <museum/7.0.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct AbstractMethodOffsets;
 class ArtMethod;
@@ -67,11 +67,11 @@ class MANAGED AbstractMethod : public AccessibleObject {
   uint64_t art_method_;
   uint32_t dex_method_index_;
 
-  friend struct art::AbstractMethodOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::AbstractMethodOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(AbstractMethod);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ABSTRACT_METHOD_H_

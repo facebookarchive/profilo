@@ -22,7 +22,7 @@
 #include <museum/7.1.2/external/libcxx/string>
 #include <utils/Trace.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ScopedTrace {
  public:
@@ -37,6 +37,6 @@ class ScopedTrace {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_SYSTRACE_H_

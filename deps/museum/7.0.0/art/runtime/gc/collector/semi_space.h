@@ -30,7 +30,7 @@
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 #include <museum/7.0.0/art/runtime/offsets.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Thread;
 
@@ -278,6 +278,6 @@ class SemiSpace : public GarbageCollector {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_SEMI_SPACE_H_

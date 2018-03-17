@@ -31,7 +31,7 @@
 #include <museum/6.0.1/art/runtime/scoped_thread_state_change.h>
 #include <museum/6.0.1/art/runtime/well_known_classes.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline mirror::Class* ArtField::GetDeclaringClass() {
   mirror::Class* result = declaring_class_.Read();
@@ -333,6 +333,6 @@ inline void ArtField::VisitRoots(RootVisitorType& visitor) {
   visitor.VisitRoot(declaring_class_.AddressWithoutBarrier());
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ART_FIELD_INL_H_

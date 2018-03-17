@@ -26,7 +26,7 @@
 #include <museum/7.1.2/art/runtime/runtime.h>
 #include <museum/7.1.2/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <typename MirrorType, ReadBarrierOption kReadBarrierOption, bool kAlwaysUpdateField>
 inline MirrorType* ReadBarrier::Barrier(
@@ -239,6 +239,6 @@ inline bool ReadBarrier::HasGrayReadBarrierPointer(mirror::Object* obj,
   return is_gray;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_READ_BARRIER_INL_H_

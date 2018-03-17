@@ -19,7 +19,7 @@
 
 #include <museum/6.0.1/art/runtime/arch/instruction_set_features.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Instruction set features relevant to the X86 architecture.
 class X86InstructionSetFeatures : public InstructionSetFeatures {
@@ -98,6 +98,6 @@ class X86InstructionSetFeatures : public InstructionSetFeatures {
   DISALLOW_COPY_AND_ASSIGN(X86InstructionSetFeatures);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_INSTRUCTION_SET_FEATURES_X86_H_

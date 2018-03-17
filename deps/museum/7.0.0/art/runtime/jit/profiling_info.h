@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/base/macros.h>
 #include <museum/7.0.0/art/runtime/gc_root.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class ProfilingInfo;
@@ -207,6 +207,6 @@ class ProfilingInfo {
   DISALLOW_COPY_AND_ASSIGN(ProfilingInfo);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_PROFILING_INFO_H_

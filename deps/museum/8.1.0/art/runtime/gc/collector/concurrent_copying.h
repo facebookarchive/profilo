@@ -28,7 +28,7 @@
 #include <museum/8.1.0/external/libcxx/unordered_map>
 #include <museum/8.1.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class Closure;
 class RootInfo;
 
@@ -369,6 +369,6 @@ class ConcurrentCopying : public GarbageCollector {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_H_

@@ -22,7 +22,7 @@
 
 #include <museum/7.0.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum LogSeverity {
   NONE,            // Fake level, don't log at all.
@@ -92,40 +92,39 @@ extern const char* ProgramInvocationShortName();
 
 // Logs a message to logcat on Android otherwise to stderr. If the severity is FATAL it also causes
 // an abort. For example: LOG(FATAL) << "We didn't expect to reach here";
-#define LOG(severity) ::art::LogMessage(__FILE__, __LINE__, severity, -1).stream()
+#define LOG(severity) ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, severity, -1).stream()
 
 // A variant of LOG that also logs the current errno value. To be used when library calls fail.
-#define PLOG(severity) ::art::LogMessage(__FILE__, __LINE__, severity, errno).stream()
+#define PLOG(severity) ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, severity, errno).stream()
 
 // Marker that code is yet to be implemented.
 #define UNIMPLEMENTED(level) LOG(level) << __PRETTY_FUNCTION__ << " unimplemented "
 
 // Is verbose logging enabled for the given module? Where the module is defined in LogVerbosity.
-#define VLOG_IS_ON(module) UNLIKELY(::art::gLogVerbosity.module)
+#define VLOG_IS_ON(module) UNLIKELY(::facebook::museum::MUSEUM_VERSION::art::gLogVerbosity.module)
 
 // Variant of LOG that logs when verbose logging is enabled for a module. For example,
 // VLOG(jni) << "A JNI operation was performed";
 #define VLOG(module) \
   if (VLOG_IS_ON(module)) \
-    ::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
+    ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
 
 // Return the stream associated with logging for the given module.
-#define VLOG_STREAM(module) ::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
+#define VLOG_STREAM(module) ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
 
 // Check whether condition x holds and LOG(FATAL) if not. The value of the expression x is only
 // evaluated once. Extra logging can be appended using << after. For example,
 // CHECK(false == true) results in a log message of "Check failed: false == true".
 #define CHECK(x) \
-  if (false) \
-    ::art::LogMessage(__FILE__, __LINE__, ::art::FATAL, -1).stream() \
+  if (UNLIKELY(!(x))) \
+    ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::art::FATAL, -1).stream() \
         << "Check failed: " #x << " "
 
 // Helper for CHECK_xx(x,y) macros.
 #define CHECK_OP(LHS, RHS, OP) \
-  if (false) \
-  for (auto _values = ::art::MakeEagerEvaluator(LHS, RHS); \
+  for (auto _values = ::facebook::museum::MUSEUM_VERSION::art::MakeEagerEvaluator(LHS, RHS); \
        UNLIKELY(!(_values.lhs OP _values.rhs)); /* empty */) \
-    ::art::LogMessage(__FILE__, __LINE__, ::art::FATAL, -1).stream() \
+    ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::art::FATAL, -1).stream() \
         << "Check failed: " << #LHS << " " << #OP << " " << #RHS \
         << " (" #LHS "=" << _values.lhs << ", " #RHS "=" << _values.rhs << ") "
 
@@ -142,8 +141,8 @@ extern const char* ProgramInvocationShortName();
 
 // Helper for CHECK_STRxx(s1,s2) macros.
 #define CHECK_STROP(s1, s2, sense) \
-  if (false) \
-    LOG(::art::FATAL) << "Check failed: " \
+  if (UNLIKELY((strcmp(s1, s2) == 0) != sense)) \
+    LOG(::facebook::museum::MUSEUM_VERSION::art::FATAL) << "Check failed: " \
         << "\"" << s1 << "\"" \
         << (sense ? " == " : " != ") \
         << "\"" << s2 << "\""
@@ -158,7 +157,7 @@ extern const char* ProgramInvocationShortName();
     int rc = call args; \
     if (rc != 0) { \
       errno = rc; \
-      PLOG(::art::FATAL) << # call << " failed for " << what; \
+      PLOG(::facebook::museum::MUSEUM_VERSION::art::FATAL) << # call << " failed for " << what; \
     } \
   } while (false)
 
@@ -170,7 +169,7 @@ extern const char* ProgramInvocationShortName();
 //          n / 2;
 //    }
 #define CHECK_CONSTEXPR(x, out, dummy) \
-  (UNLIKELY(!(x))) ? (LOG(::art::FATAL) << "Check failed: " << #x out, dummy) :
+  (UNLIKELY(!(x))) ? (LOG(::facebook::museum::MUSEUM_VERSION::art::FATAL) << "Check failed: " << #x out, dummy) :
 
 
 // DCHECKs are debug variants of CHECKs only enabled in debug builds. Generally CHECK should be
@@ -181,15 +180,15 @@ static constexpr bool kEnableDChecks = false;
 static constexpr bool kEnableDChecks = true;
 #endif
 
-#define DCHECK(x) if (::art::kEnableDChecks) CHECK(x)
-#define DCHECK_EQ(x, y) if (::art::kEnableDChecks) CHECK_EQ(x, y)
-#define DCHECK_NE(x, y) if (::art::kEnableDChecks) CHECK_NE(x, y)
-#define DCHECK_LE(x, y) if (::art::kEnableDChecks) CHECK_LE(x, y)
-#define DCHECK_LT(x, y) if (::art::kEnableDChecks) CHECK_LT(x, y)
-#define DCHECK_GE(x, y) if (::art::kEnableDChecks) CHECK_GE(x, y)
-#define DCHECK_GT(x, y) if (::art::kEnableDChecks) CHECK_GT(x, y)
-#define DCHECK_STREQ(s1, s2) if (::art::kEnableDChecks) CHECK_STREQ(s1, s2)
-#define DCHECK_STRNE(s1, s2) if (::art::kEnableDChecks) CHECK_STRNE(s1, s2)
+#define DCHECK(x) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK(x)
+#define DCHECK_EQ(x, y) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_EQ(x, y)
+#define DCHECK_NE(x, y) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_NE(x, y)
+#define DCHECK_LE(x, y) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_LE(x, y)
+#define DCHECK_LT(x, y) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_LT(x, y)
+#define DCHECK_GE(x, y) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_GE(x, y)
+#define DCHECK_GT(x, y) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_GT(x, y)
+#define DCHECK_STREQ(s1, s2) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_STREQ(s1, s2)
+#define DCHECK_STRNE(s1, s2) if (::facebook::museum::MUSEUM_VERSION::art::kEnableDChecks) CHECK_STRNE(s1, s2)
 #if defined(NDEBUG)
 #define DCHECK_CONSTEXPR(x, out, dummy)
 #else
@@ -273,6 +272,6 @@ class ScopedLogSeverity {
   LogSeverity old_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_LOGGING_H_

@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/art/runtime/mirror/object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ProxyOffsets;
 
@@ -30,11 +30,11 @@ class MANAGED Proxy FINAL : public Object {
  private:
   HeapReference<Object> h_;
 
-  friend struct art::ProxyOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ProxyOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(Proxy);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_PROXY_H_

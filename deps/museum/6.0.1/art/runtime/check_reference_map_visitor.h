@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/scoped_thread_state_change.h>
 #include <museum/6.0.1/art/runtime/stack_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Helper class for tests checking that the compiler keeps track of dex registers
 // holding references.
@@ -117,6 +117,6 @@ class CheckReferenceMapVisitor : public StackVisitor {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CHECK_REFERENCE_MAP_VISITOR_H_

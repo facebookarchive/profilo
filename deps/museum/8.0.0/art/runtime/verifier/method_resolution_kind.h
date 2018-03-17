@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_VERIFIER_METHOD_RESOLUTION_KIND_H_
 #define ART_RUNTIME_VERIFIER_METHOD_RESOLUTION_KIND_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 // Values corresponding to the method resolution algorithms defined in mirror::Class.
@@ -28,6 +28,6 @@ enum MethodResolutionKind {
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_METHOD_RESOLUTION_KIND_H_

@@ -37,12 +37,12 @@
 
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtMethod;
 namespace mirror {
 class Class;
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace openjdkjvmti {
 
@@ -50,7 +50,7 @@ struct ArtJvmTiEnv;
 
 class Breakpoint {
  public:
-  Breakpoint(art::ArtMethod* m, jlocation loc);
+  Breakpoint(facebook::museum::MUSEUM_VERSION::art::ArtMethod* m, jlocation loc);
 
   // Get the hash code of this breakpoint.
   size_t hash() const;
@@ -59,7 +59,7 @@ class Breakpoint {
     return method_ == other.method_ && location_ == other.location_;
   }
 
-  art::ArtMethod* GetMethod() const {
+  facebook::museum::MUSEUM_VERSION::art::ArtMethod* GetMethod() const {
     return method_;
   }
 
@@ -68,7 +68,7 @@ class Breakpoint {
   }
 
  private:
-  art::ArtMethod* method_;
+  facebook::museum::MUSEUM_VERSION::art::ArtMethod* method_;
   jlocation location_;
 };
 
@@ -77,8 +77,8 @@ class BreakpointUtil {
   static jvmtiError SetBreakpoint(jvmtiEnv* env, jmethodID method, jlocation location);
   static jvmtiError ClearBreakpoint(jvmtiEnv* env, jmethodID method, jlocation location);
   // Used by class redefinition to remove breakpoints on redefined classes.
-  static void RemoveBreakpointsInClass(ArtJvmTiEnv* env, art::mirror::Class* klass)
-      REQUIRES(art::Locks::mutator_lock_);
+  static void RemoveBreakpointsInClass(ArtJvmTiEnv* env, facebook::museum::MUSEUM_VERSION::art::mirror::Class* klass)
+      REQUIRES(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
 };
 
 }  // namespace openjdkjvmti

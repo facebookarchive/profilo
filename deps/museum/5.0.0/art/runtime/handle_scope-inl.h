@@ -22,7 +22,7 @@
 #include <museum/5.0.0/art/runtime/handle.h>
 #include <museum/5.0.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<size_t kNumReferences>
 inline StackHandleScope<kNumReferences>::StackHandleScope(Thread* self)
@@ -41,6 +41,6 @@ inline StackHandleScope<kNumReferences>::~StackHandleScope() {
   DCHECK_EQ(top_handle_scope, this);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HANDLE_SCOPE_INL_H_

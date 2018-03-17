@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/mirror/class-refvisitor-inl.h>
 #include <museum/8.1.0/art/runtime/mirror/dex_cache-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template <bool kVisitNativeRoots,
@@ -89,6 +89,6 @@ inline void Object::VisitReferences(const Visitor& visitor,
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_REFVISITOR_INL_H_

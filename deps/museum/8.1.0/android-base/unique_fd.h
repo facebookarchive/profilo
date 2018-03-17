@@ -36,7 +36,7 @@
 //
 // unique_fd is also known as ScopedFd/ScopedFD/scoped_fd; mentioned here to help
 // you find this class if you're searching for one of those names.
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 struct DefaultCloser {
@@ -89,7 +89,7 @@ class unique_fd_impl final {
 using unique_fd = unique_fd_impl<DefaultCloser>;
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 template <typename T>
 int close(const android::base::unique_fd_impl<T>&)

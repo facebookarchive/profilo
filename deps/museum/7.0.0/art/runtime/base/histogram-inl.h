@@ -28,7 +28,7 @@
 #include <museum/7.0.0/art/runtime/base/time_utils.h>
 #include <museum/7.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <class Value> inline void Histogram<Value>::AddValue(Value value) {
   CHECK_GE(value, static_cast<Value>(0));
@@ -273,5 +273,5 @@ inline double Histogram<Value>::Percentile(double per, const CumulativeData& dat
 #pragma clang diagnostic pop
 #endif
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_BASE_HISTOGRAM_INL_H_

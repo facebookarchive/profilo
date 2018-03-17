@@ -22,7 +22,7 @@
 
 #include <museum/6.0.1/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 class InstructionFlags FINAL {
@@ -134,6 +134,6 @@ static_assert(sizeof(InstructionFlags) == sizeof(uint8_t),
               "Size of InstructionFlags not equal to uint8_t");
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_INSTRUCTION_FLAGS_H_

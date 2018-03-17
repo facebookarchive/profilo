@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/base/macros.h>
 #include <museum/8.1.0/libnativehelper/ScopedLocalRef.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 ALWAYS_INLINE inline void RegisterNativeMethodsInternal(JNIEnv* env,
                                                         const char* jni_class_name,
@@ -40,6 +40,6 @@ ALWAYS_INLINE inline void RegisterNativeMethodsInternal(JNIEnv* env,
 #define REGISTER_NATIVE_METHODS(jni_class_name) \
   RegisterNativeMethodsInternal(env, (jni_class_name), gMethods, arraysize(gMethods))
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_NATIVE_UTIL_H_

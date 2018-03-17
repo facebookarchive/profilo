@@ -36,7 +36,7 @@
 #include <museum/5.1.1/art/runtime/oat_file.h>
 #include <museum/5.1.1/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace space {
@@ -379,7 +379,7 @@ class ClassLinker {
   const void* GetQuickGenericJniTrampoline() const {
     // FB
     QuickEntryPoints* entrypoints =
-        (QuickEntryPoints*)facebook::art::HostEntryPoints::quick_entrypoints;
+        (QuickEntryPoints*)entrypoints::HostEntryPoints::quick_entrypoints;
     return reinterpret_cast<const void*>(entrypoints->pQuickGenericJniTrampoline);
     //return quick_generic_jni_trampoline_;
     // FB END
@@ -388,7 +388,7 @@ class ClassLinker {
   const void* GetQuickResolutionTrampoline() const {
     // FB
     QuickEntryPoints* entrypoints =
-        (QuickEntryPoints*)facebook::art::HostEntryPoints::quick_entrypoints;
+        (QuickEntryPoints*)entrypoints::HostEntryPoints::quick_entrypoints;
     return reinterpret_cast<const void*>(entrypoints->pQuickResolutionTrampoline);
     //return quick_resolution_trampoline_;
     // FB END
@@ -848,6 +848,6 @@ class ClassLinker {
   DISALLOW_COPY_AND_ASSIGN(ClassLinker);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_LINKER_H_

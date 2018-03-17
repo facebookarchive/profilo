@@ -26,7 +26,7 @@
 #include <museum/8.1.0/art/runtime/gc_root.h>
 #include <museum/8.1.0/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class ClassLoader;
@@ -71,7 +71,7 @@ class RegTypeCache {
     }
   }
   static void ShutDown();
-  const art::verifier::RegType& GetFromId(uint16_t id) const;
+  const facebook::museum::MUSEUM_VERSION::art::verifier::RegType& GetFromId(uint16_t id) const;
   const RegType& From(mirror::ClassLoader* loader, const char* descriptor, bool precise)
       REQUIRES_SHARED(Locks::mutator_lock_);
   // Find a RegType, returns null if not found.
@@ -204,6 +204,6 @@ class RegTypeCache {
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_H_

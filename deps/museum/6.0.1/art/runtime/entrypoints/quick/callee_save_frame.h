@@ -31,7 +31,7 @@
 #include <museum/6.0.1/art/runtime/arch/x86/quick_method_frame_info_x86.h>
 #include <museum/6.0.1/art/runtime/arch/x86_64/quick_method_frame_info_x86_64.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtMethod;
 
 class ScopedQuickEntrypointChecks {
@@ -101,6 +101,6 @@ static constexpr size_t GetCalleeSaveReturnPcOffset(InstructionSet isa,
   return GetCalleeSaveFrameSize(isa, type) - GetConstExprPointerSize(isa);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_CALLEE_SAVE_FRAME_H_

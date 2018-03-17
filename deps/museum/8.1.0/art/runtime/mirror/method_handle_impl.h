@@ -24,7 +24,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object.h>
 #include <museum/8.1.0/art/runtime/mirror/method_type.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct MethodHandleOffsets;
 struct MethodHandleImplOffsets;
@@ -111,7 +111,7 @@ class MANAGED MethodHandle : public Object {
     return MemberOffset(OFFSETOF_MEMBER(MethodHandle, handle_kind_));
   }
 
-  friend struct art::MethodHandleOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::MethodHandleOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(MethodHandle);
 };
 
@@ -138,11 +138,11 @@ class MANAGED MethodHandleImpl : public MethodHandle {
   HeapReference<mirror::Object> info_;  // Unused by the runtime.
   static GcRoot<mirror::Class> static_class_;  // java.lang.invoke.MethodHandleImpl.class
 
-  friend struct art::MethodHandleImplOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::MethodHandleImplOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(MethodHandleImpl);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_METHOD_HANDLE_IMPL_H_

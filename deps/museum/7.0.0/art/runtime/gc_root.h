@@ -21,7 +21,7 @@
 #include <museum/7.0.0/art/runtime/base/mutex.h>       // For Locks::mutator_lock_.
 #include <museum/7.0.0/art/runtime/mirror/object_reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtField;
 class ArtMethod;
 
@@ -262,6 +262,6 @@ class BufferedRootVisitor {
   size_t buffer_pos_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ROOT_H_

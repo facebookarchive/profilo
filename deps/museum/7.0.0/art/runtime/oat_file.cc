@@ -51,7 +51,7 @@
 #include "utils.h"
 #include "utils/dex_cache_arrays_layout-inl.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Whether OatFile::Open will try dlopen. Fallback is our own ELF loader.
 static constexpr bool kUseDlopen = true;
@@ -1412,4 +1412,4 @@ bool OatFile::GetDexLocationsFromDependencies(const char* dex_dependencies,
   return true;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

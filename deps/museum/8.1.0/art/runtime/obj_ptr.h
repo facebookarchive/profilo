@@ -24,7 +24,7 @@
 #include <museum/8.1.0/art/runtime/base/mutex.h>  // For Locks::mutator_lock_.
 #include <museum/8.1.0/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 constexpr bool kObjPtrPoisoning = kIsDebugBuild;
 
@@ -210,6 +210,6 @@ static inline ObjPtr<MirrorType> MakeObjPtr(ObjPtr<MirrorType> ptr) {
 template<class MirrorType>
 ALWAYS_INLINE std::ostream& operator<<(std::ostream& os, ObjPtr<MirrorType> ptr);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OBJ_PTR_H_

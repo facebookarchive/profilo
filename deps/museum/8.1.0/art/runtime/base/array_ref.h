@@ -22,7 +22,7 @@
 
 #include <museum/8.1.0/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * @brief A container that references an array.
@@ -197,7 +197,7 @@ bool operator!=(const ArrayRef<T>& lhs, const ArrayRef<T>& rhs) {
   return !(lhs == rhs);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 
 #endif  // ART_RUNTIME_BASE_ARRAY_REF_H_

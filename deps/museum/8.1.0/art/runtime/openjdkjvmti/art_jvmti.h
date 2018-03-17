@@ -49,10 +49,10 @@
 #include "jvmti.h"
 #include <museum/8.1.0/art/runtime/openjdkjvmti/ti_breakpoint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtField;
 class ArtMethod;
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace openjdkjvmti {
 
@@ -60,7 +60,7 @@ class ObjectTagTable;
 
 // A structure that is a jvmtiEnv with additional information for the runtime.
 struct ArtJvmTiEnv : public jvmtiEnv {
-  art::JavaVMExt* art_vm;
+  facebook::museum::MUSEUM_VERSION::art::JavaVMExt* art_vm;
   void* local_data;
   jvmtiCapabilities capabilities;
 
@@ -76,16 +76,16 @@ struct ArtJvmTiEnv : public jvmtiEnv {
   // or by putting a list in the ClassExt of a field's DeclaringClass.
   // TODO Maybe just have an extension to let one put a watch on every field, that would probably be
   // good enough maybe since you probably want either a few or all/almost all of them.
-  std::unordered_set<art::ArtField*> access_watched_fields;
-  std::unordered_set<art::ArtField*> modify_watched_fields;
+  std::unordered_set<facebook::museum::MUSEUM_VERSION::art::ArtField*> access_watched_fields;
+  std::unordered_set<facebook::museum::MUSEUM_VERSION::art::ArtField*> modify_watched_fields;
 
   // Set of breakpoints is unique to each jvmtiEnv.
   std::unordered_set<Breakpoint> breakpoints;
 
-  ArtJvmTiEnv(art::JavaVMExt* runtime, EventHandler* event_handler);
+  ArtJvmTiEnv(facebook::museum::MUSEUM_VERSION::art::JavaVMExt* runtime, EventHandler* event_handler);
 
   static ArtJvmTiEnv* AsArtJvmTiEnv(jvmtiEnv* env) {
-    return art::down_cast<ArtJvmTiEnv*>(env);
+    return facebook::museum::MUSEUM_VERSION::art::down_cast<ArtJvmTiEnv*>(env);
   }
 };
 

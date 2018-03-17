@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/gc_root-inl.h>
 #include <museum/8.1.0/art/runtime/oat_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class Visitor>
 void ClassTable::VisitRoots(Visitor& visitor) {
@@ -139,6 +139,6 @@ inline void ClassTable::RemoveStrongRoots(const Filter& filter) {
                       strong_roots_.end());
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_TABLE_INL_H_

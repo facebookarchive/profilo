@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 // The mode that the verifier should run as.
@@ -30,6 +30,6 @@ enum class VerifyMode : int8_t {
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_VERIFY_MODE_H_

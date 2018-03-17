@@ -25,7 +25,7 @@
 #include <museum/7.1.2/external/libcxx/set>
 #include <museum/7.1.2/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -62,7 +62,7 @@ class LargeObjectSpace : public DiscontinuousSpace, public AllocSpace {
   }
   size_t FreeList(Thread* self, size_t num_ptrs, mirror::Object** ptrs) OVERRIDE;
   // LargeObjectSpaces don't have thread local state.
-  size_t RevokeThreadLocalBuffers(art::Thread*) OVERRIDE {
+  size_t RevokeThreadLocalBuffers(facebook::museum::MUSEUM_VERSION::art::Thread*) OVERRIDE {
     return 0U;
   }
   size_t RevokeAllThreadLocalBuffers() OVERRIDE {
@@ -214,6 +214,6 @@ class FreeListSpace FINAL : public LargeObjectSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_LARGE_OBJECT_SPACE_H_

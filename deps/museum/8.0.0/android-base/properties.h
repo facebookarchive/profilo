@@ -27,7 +27,7 @@
 #include <museum/8.0.0/external/libcxx/limits>
 #include <museum/8.0.0/external/libcxx/string>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Returns the current value of the system property `key`,
@@ -73,6 +73,6 @@ bool WaitForPropertyCreation(const std::string& key,
                              std::chrono::milliseconds relative_timeout);
 
 } // namespace base
-} // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_PROPERTIES_H

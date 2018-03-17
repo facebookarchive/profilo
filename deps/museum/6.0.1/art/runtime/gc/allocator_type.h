@@ -19,7 +19,7 @@
 
 #include <museum/6.0.1/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 // Different types of allocators.
@@ -36,6 +36,6 @@ enum AllocatorType {
 std::ostream& operator<<(std::ostream& os, const AllocatorType& rhs);
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ALLOCATOR_TYPE_H_

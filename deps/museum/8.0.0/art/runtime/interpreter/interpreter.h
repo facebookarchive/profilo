@@ -21,7 +21,7 @@
 #include <museum/8.0.0/art/runtime/dex_file.h>
 #include <museum/8.0.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -63,6 +63,6 @@ void InitInterpreterTls(Thread* self);
 
 }  // namespace interpreter
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_INTERPRETER_H_

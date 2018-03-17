@@ -24,7 +24,7 @@
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 #include <museum/7.0.0/art/runtime/gc_root.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class Thread;
@@ -308,5 +308,5 @@ class AllocRecordObjectMap {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_GC_ALLOCATION_RECORD_H_

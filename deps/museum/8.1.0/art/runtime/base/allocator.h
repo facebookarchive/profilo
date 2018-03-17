@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 #include <museum/8.1.0/art/runtime/base/type_static_if.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr bool kEnableTrackingAllocator = false;
 
@@ -151,6 +151,6 @@ using TrackingAllocator = typename TypeStaticIf<kEnableTrackingAllocator,
                                                 TrackingAllocatorImpl<T, kTag>,
                                                 std::allocator<T>>::type;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ALLOCATOR_H_

@@ -28,7 +28,7 @@
 #include <museum/8.1.0/art/runtime/thread-current-inl.h>
 #include <museum/8.1.0/art/runtime/thread_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Quickly access the current thread from a JNIEnv.
 static inline Thread* ThreadForEnv(JNIEnv* env) {
@@ -390,6 +390,6 @@ inline ShadowFrame* Thread::PopShadowFrame() {
   return tlsPtr_.managed_stack.PopShadowFrame();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_INL_H_

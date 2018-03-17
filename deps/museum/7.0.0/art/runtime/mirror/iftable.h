@@ -20,7 +20,7 @@
 #include <museum/7.0.0/art/runtime/base/casts.h>
 #include <museum/7.0.0/art/runtime/mirror/object_array.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 class MANAGED IfTable FINAL : public ObjectArray<Object> {
@@ -76,6 +76,6 @@ class MANAGED IfTable FINAL : public ObjectArray<Object> {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_IFTABLE_H_

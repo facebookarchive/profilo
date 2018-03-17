@@ -34,7 +34,7 @@
 #include "cutils/properties.h"
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFile;
 
@@ -75,13 +75,13 @@ static inline bool IsAlignedParam(T x, int n) {
 }
 
 #define CHECK_ALIGNED(value, alignment) \
-  CHECK(::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
+  CHECK(::facebook::museum::MUSEUM_VERSION::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
 
 #define DCHECK_ALIGNED(value, alignment) \
-  DCHECK(::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
+  DCHECK(::facebook::museum::MUSEUM_VERSION::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
 
 #define DCHECK_ALIGNED_PARAM(value, alignment) \
-  DCHECK(::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
+  DCHECK(::facebook::museum::MUSEUM_VERSION::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
 
 // Check whether an N-bit two's-complement representation can hold value.
 static inline bool IsInt(int N, word value) {
@@ -200,7 +200,7 @@ static constexpr inline T RoundUpToPowerOfTwoRecursive(T x, size_t bit) {
 // figure 3-3, page 48, where the function is called clp2.
 template <typename T>
 static constexpr inline T RoundUpToPowerOfTwo(T x) {
-  return art::utils::detail::RoundUpToPowerOfTwoRecursive(x - 1, 1) + 1;
+  return facebook::museum::MUSEUM_VERSION::art::utils::detail::RoundUpToPowerOfTwoRecursive(x - 1, 1) + 1;
 }
 
 // Implementation is from "Hacker's Delight" by Henry S. Warren, Jr.,
@@ -529,6 +529,6 @@ struct FreeDelete {
 template <typename T>
 using UniqueCPtr = std::unique_ptr<T, FreeDelete>;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTILS_H_

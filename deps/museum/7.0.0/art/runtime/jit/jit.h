@@ -26,7 +26,7 @@
 #include <museum/7.0.0/art/runtime/jit/offline_profiling_info.h>
 #include <museum/7.0.0/art/runtime/thread_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 struct RuntimeArgumentMap;
@@ -269,6 +269,6 @@ class JitOptions {
 };
 
 }  // namespace jit
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_JIT_H_

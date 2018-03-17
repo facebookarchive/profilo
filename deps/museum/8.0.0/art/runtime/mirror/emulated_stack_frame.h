@@ -24,7 +24,7 @@
 #include <museum/8.0.0/art/runtime/mirror/string.h>
 #include <museum/8.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct EmulatedStackFrameOffsets;
 
@@ -108,11 +108,11 @@ class MANAGED EmulatedStackFrame : public Object {
 
   static GcRoot<mirror::Class> static_class_;  // dalvik.system.EmulatedStackFrame.class
 
-  friend struct art::EmulatedStackFrameOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::EmulatedStackFrameOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(EmulatedStackFrame);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_EMULATED_STACK_FRAME_H_

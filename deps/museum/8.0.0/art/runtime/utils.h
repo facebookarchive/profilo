@@ -34,7 +34,7 @@
 #include <museum/8.0.0/art/runtime/globals.h>
 #include <museum/8.0.0/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <typename T>
 bool ParseUint(const char *in, T* out) {
@@ -338,6 +338,6 @@ inline static int32_t Signum(T opnd) {
   return (opnd < 0) ? -1 : ((opnd == 0) ? 0 : 1);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTILS_H_

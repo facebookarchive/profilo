@@ -22,7 +22,7 @@
 
 #include <museum/6.0.1/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Instruction;
 
@@ -379,6 +379,6 @@ class RegisterLine {
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REGISTER_LINE_H_

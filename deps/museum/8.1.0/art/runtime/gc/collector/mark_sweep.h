@@ -29,7 +29,7 @@
 #include <museum/8.1.0/art/runtime/gc/collector/immune_spaces.h>
 #include <museum/8.1.0/art/runtime/offsets.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Class;
@@ -371,6 +371,6 @@ class MarkSweep : public GarbageCollector {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_MARK_SWEEP_H_

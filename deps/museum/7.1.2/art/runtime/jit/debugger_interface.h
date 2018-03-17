@@ -21,7 +21,7 @@
 #include <museum/7.1.2/external/libcxx/memory>
 #include <museum/7.1.2/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 extern "C" {
   struct JITCodeEntry;
@@ -44,6 +44,6 @@ void CreateJITCodeEntryForAddress(uintptr_t address, std::vector<uint8_t> symfil
 // Returns false if entry for the given address was not found.
 bool DeleteJITCodeEntryForAddress(uintptr_t address);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_DEBUGGER_INTERFACE_H_

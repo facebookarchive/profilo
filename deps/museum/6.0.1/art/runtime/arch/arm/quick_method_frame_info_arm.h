@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/arch/arm/registers_arm.h>
 #include <museum/6.0.1/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arm {
 
 static constexpr uint32_t kArmCalleeSaveAlwaysSpills =
@@ -89,6 +89,6 @@ constexpr size_t ArmCalleeSaveLrOffset(Runtime::CalleeSaveType type) {
 }
 
 }  // namespace arm
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM_QUICK_METHOD_FRAME_INFO_ARM_H_

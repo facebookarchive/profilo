@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/dex_file.h>
 #include <museum/8.0.0/art/runtime/dex_file_types.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * @class DexCacheArraysLayout
@@ -132,6 +132,6 @@ class DexCacheArraysLayout {
   static size_t ArraySize(PointerSize element_size, uint32_t num_elements);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTILS_DEX_CACHE_ARRAYS_LAYOUT_H_

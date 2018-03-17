@@ -30,7 +30,7 @@
 #include <museum/8.0.0/art/runtime/stack_reference.h>
 #include <museum/8.0.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Object;
@@ -873,6 +873,6 @@ class StackVisitor {
   const bool check_suspended_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STACK_H_

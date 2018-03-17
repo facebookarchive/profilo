@@ -26,7 +26,7 @@
 #include <museum/6.0.1/art/runtime/gc/heap.h>
 #include <museum/6.0.1/art/runtime/jni_env_ext.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Quickly access the current thread from a JNIEnv.
 static inline Thread* ThreadForEnv(JNIEnv* env) {
@@ -246,6 +246,6 @@ inline void Thread::RevokeThreadLocalAllocationStack() {
   tlsPtr_.thread_local_alloc_stack_top = nullptr;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_INL_H_

@@ -82,7 +82,7 @@
 #endif
 #endif  // ART_USE_FUTEXES
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 bool Thread::is_started_ = false;
 pthread_key_t Thread::pthread_key_self_;
@@ -191,4 +191,4 @@ Closure* Thread::GetFlipFunction() {
   return func;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

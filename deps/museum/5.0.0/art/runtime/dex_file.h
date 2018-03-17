@@ -30,7 +30,7 @@
 #include <museum/5.0.0/art/runtime/modifiers.h>
 #include <museum/5.0.0/art/runtime/utf.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // TODO: remove dependencies on mirror classes, primarily by moving
 // EncodedStaticFieldValueIterator to its own file.
@@ -838,7 +838,7 @@ class DexFile {
   // compiled without "-g", so no line number information is present).
   // Returns -2 for native methods (as expected in exception traces).
   //
-  // This is used by runtime; therefore use art::Method not art::DexFile::Method.
+  // This is used by runtime; therefore use facebook::museum::MUSEUM_VERSION::art::Method not facebook::museum::MUSEUM_VERSION::art::DexFile::Method.
   int32_t GetLineNumFromPC(mirror::ArtMethod* method, uint32_t rel_pc) const
       SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
 
@@ -1333,6 +1333,6 @@ class CatchHandlerIterator {
                                 // that all typed handler does not match.
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_FILE_H_

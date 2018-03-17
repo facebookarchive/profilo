@@ -20,7 +20,7 @@
 #include <museum/8.1.0/external/libcxx/string>
 #include <museum/8.1.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Wrapper on fork/execv to run a command in a subprocess.
 // Both of these spawn child processes using the environment as it was set when the single instance
@@ -29,6 +29,6 @@ namespace art {
 bool Exec(std::vector<std::string>& arg_vector, std::string* error_msg);
 int ExecAndReturnCode(std::vector<std::string>& arg_vector, std::string* error_msg);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_EXEC_UTILS_H_

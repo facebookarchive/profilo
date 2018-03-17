@@ -37,7 +37,7 @@
 #include <museum/7.1.2/art/runtime/mirror/string-inl.h>
 #include <museum/7.1.2/art/runtime/mirror/throwable.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t Object::ClassSize(size_t pointer_size) {
@@ -1181,6 +1181,6 @@ inline void Object::VisitReferences(const Visitor& visitor,
   }
 }
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_INL_H_

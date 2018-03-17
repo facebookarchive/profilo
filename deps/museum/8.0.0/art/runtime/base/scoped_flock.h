@@ -23,7 +23,7 @@
 #include <museum/8.0.0/art/runtime/base/macros.h>
 #include <museum/8.0.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A scoped file-lock implemented using flock. The file is locked by calling the Init function and
 // is released during destruction. Note that failing to unlock the file only causes a warning to be
@@ -79,6 +79,6 @@ class ScopedFlock {
   DISALLOW_COPY_AND_ASSIGN(ScopedFlock);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_SCOPED_FLOCK_H_

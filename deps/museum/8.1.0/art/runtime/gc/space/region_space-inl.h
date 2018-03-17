@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/gc/space/region_space.h>
 #include <museum/8.1.0/art/runtime/thread-current-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -323,6 +323,6 @@ inline size_t RegionSpace::Region::BytesAllocated() const {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_REGION_SPACE_INL_H_

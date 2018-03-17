@@ -28,7 +28,7 @@
 #include <museum/8.1.0/art/runtime/runtime.h>
 #include <museum/8.1.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Disabled for performance reasons.
 static constexpr bool kCheckDebugDisallowReadBarrierCount = false;
@@ -257,6 +257,6 @@ inline bool ReadBarrier::IsGray(mirror::Object* obj) {
   return obj->GetReadBarrierStateAcquire() == gray_state_;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_READ_BARRIER_INL_H_

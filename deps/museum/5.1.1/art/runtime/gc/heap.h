@@ -40,7 +40,7 @@
 #include <museum/5.1.1/art/runtime/thread_pool.h>
 #include <museum/5.1.1/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ConditionVariable;
 class Mutex;
@@ -1090,6 +1090,6 @@ class ScopedHeapFill {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_HEAP_H_

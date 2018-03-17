@@ -1,6 +1,6 @@
 #include <museum/5.1.1/external/libcxx/string>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
   namespace mirror {
     class ArtMethod;
   }
@@ -14,4 +14,4 @@ namespace art {
     // also don't bother faking diff-STL std::string magic, this isn't important enough
     return "";
   }
-} // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

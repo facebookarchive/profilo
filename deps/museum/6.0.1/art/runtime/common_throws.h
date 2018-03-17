@@ -20,7 +20,7 @@
 #include <museum/6.0.1/art/runtime/base/mutex.h>
 #include <museum/6.0.1/art/runtime/invoke_type.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class Object;
@@ -197,6 +197,6 @@ void ThrowVerifyError(mirror::Class* referrer, const char* fmt, ...)
     __attribute__((__format__(__printf__, 2, 3)))
     SHARED_LOCKS_REQUIRED(Locks::mutator_lock_) COLD_ATTR;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_COMMON_THROWS_H_

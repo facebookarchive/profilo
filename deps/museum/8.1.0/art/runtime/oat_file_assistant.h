@@ -30,7 +30,7 @@
 #include <museum/8.1.0/art/runtime/oat_file.h>
 #include <museum/8.1.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace space {
@@ -491,6 +491,6 @@ class OatFileAssistant {
 
 std::ostream& operator << (std::ostream& stream, const OatFileAssistant::OatStatus status);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_ASSISTANT_H_

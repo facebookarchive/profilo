@@ -19,7 +19,7 @@
 
 #include <museum/8.0.0/art/runtime/jvalue.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class Instruction;
@@ -36,6 +36,6 @@ bool MterpHandleIntrinsic(ShadowFrame* shadow_frame,
                           JValue* result_register);
 
 }  // namespace interpreter
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_INTERPRETER_INTRINSICS_H_

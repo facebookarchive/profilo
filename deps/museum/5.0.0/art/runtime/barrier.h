@@ -20,7 +20,7 @@
 #include <museum/5.0.0/external/libcxx/memory>
 #include <museum/5.0.0/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Barrier {
  public:
@@ -53,5 +53,5 @@ class Barrier {
   ConditionVariable condition_ GUARDED_BY(lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_BARRIER_H_

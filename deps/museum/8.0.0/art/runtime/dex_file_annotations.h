@@ -21,7 +21,7 @@
 
 #include <museum/8.0.0/art/runtime/mirror/object_array.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class ClassLoader;
@@ -134,6 +134,6 @@ class RuntimeEncodedStaticFieldValueIterator : public EncodedStaticFieldValueIte
 
 }  // namespace annotations
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_FILE_ANNOTATIONS_H_

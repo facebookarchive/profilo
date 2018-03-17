@@ -34,7 +34,7 @@
 #include "utils.h"
 #include "well_known_classes.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 void
@@ -97,5 +97,5 @@ ArtMethod* Class::FindInterfaceMethod(const DexCache* dex_cache, uint32_t dex_me
   return nullptr;
 }
 
-}
-}
+} // namespace mirror
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

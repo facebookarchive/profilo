@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/base/casts.h>
 #include <museum/7.1.2/art/runtime/base/iteration_range.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // An ArraySlice is an abstraction over an array or a part of an array of a particular type. It does
 // bounds checking and can be made from several common array-like structures in Art.
@@ -147,6 +147,6 @@ class ArraySlice {
   size_t element_size_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ARRAY_SLICE_H_

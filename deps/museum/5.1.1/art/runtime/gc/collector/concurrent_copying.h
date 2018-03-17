@@ -19,7 +19,7 @@
 
 #include <museum/5.1.1/art/runtime/gc/collector/garbage_collector.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -48,6 +48,6 @@ class ConcurrentCopying : public GarbageCollector {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_CONCURRENT_COPYING_H_

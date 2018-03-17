@@ -21,7 +21,7 @@
 #include <museum/8.0.0/external/libcxx/string>
 #include <museum/8.0.0/art/runtime/dex_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A method is uniquely located by its DexFile and the method_ids_ table index into that DexFile
 struct MethodReference {
@@ -44,6 +44,6 @@ struct MethodReferenceComparator {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_REFERENCE_H_

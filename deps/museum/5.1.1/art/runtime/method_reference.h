@@ -19,7 +19,7 @@
 
 #include <museum/5.1.1/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFile;
 
@@ -41,6 +41,6 @@ struct MethodReferenceComparator {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_REFERENCE_H_

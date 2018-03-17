@@ -25,7 +25,7 @@
 #include <museum/7.0.0/art/runtime/globals.h>
 #include <museum/7.0.0/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline DexCacheArraysLayout::DexCacheArraysLayout(size_t pointer_size,
                                                   const DexFile::Header& header)
@@ -114,6 +114,6 @@ inline size_t DexCacheArraysLayout::ArraySize(size_t element_size, uint32_t num_
   return element_size * num_elements;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTILS_DEX_CACHE_ARRAYS_LAYOUT_INL_H_

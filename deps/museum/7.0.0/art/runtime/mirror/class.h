@@ -37,7 +37,7 @@
 #error IMT_SIZE not defined
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -1334,7 +1334,7 @@ class MANAGED Class FINAL : public Object {
       SHARED_REQUIRES(Locks::mutator_lock_);
 
   // 'Class' Object Fields
-  // Order governed by java field ordering. See art::ClassLinker::LinkFields.
+  // Order governed by java field ordering. See facebook::museum::MUSEUM_VERSION::art::ClassLinker::LinkFields.
 
   HeapReference<Object> annotation_type_;
 
@@ -1484,7 +1484,7 @@ class MANAGED Class FINAL : public Object {
   // java.lang.Class
   static GcRoot<Class> java_lang_Class_;
 
-  friend struct art::ClassOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ClassOffsets;  // for verifying offset information
   friend class Object;  // For VisitReferences
   DISALLOW_IMPLICIT_CONSTRUCTORS(Class);
 };
@@ -1492,6 +1492,6 @@ class MANAGED Class FINAL : public Object {
 std::ostream& operator<<(std::ostream& os, const Class::Status& rhs);
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_H_

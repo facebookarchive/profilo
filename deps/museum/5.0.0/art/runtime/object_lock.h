@@ -21,7 +21,7 @@
 #include <museum/5.0.0/art/runtime/base/mutex.h>
 #include <museum/5.0.0/art/runtime/handle.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Thread;
 
@@ -45,6 +45,6 @@ class ObjectLock {
   DISALLOW_COPY_AND_ASSIGN(ObjectLock);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OBJECT_LOCK_H_

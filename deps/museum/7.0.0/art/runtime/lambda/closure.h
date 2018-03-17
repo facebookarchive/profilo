@@ -22,7 +22,7 @@
 
 #include <museum/7.0.0/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtMethod;  // forward declaration
 
 namespace mirror {
@@ -179,6 +179,6 @@ struct PACKED(sizeof(ArtLambdaMethod*)) Closure {
 };
 
 }  // namespace lambda
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LAMBDA_CLOSURE_H_

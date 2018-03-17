@@ -23,7 +23,7 @@
 #include <museum/7.0.0/art/runtime/base/value_object.h>
 #include <museum/7.0.0/art/runtime/stack.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Thread;
 
@@ -156,6 +156,6 @@ class ScopedNullHandle : public Handle<T> {
   StackReference<mirror::Object> null_ref_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HANDLE_H_

@@ -25,7 +25,7 @@
 #include "vixl/a64/simulator-a64.h"
 #pragma GCC diagnostic pop
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arm64 {
 
 class CodeSimulatorArm64 : public CodeSimulator {
@@ -52,6 +52,6 @@ class CodeSimulatorArm64 : public CodeSimulator {
 };
 
 }  // namespace arm64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SIMULATOR_CODE_SIMULATOR_ARM64_H_

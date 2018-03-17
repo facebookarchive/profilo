@@ -29,7 +29,7 @@
 #include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
 #include <museum/8.0.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // OBJ pointer helpers to avoid needing .Decode everywhere.
 #define EXPECT_OBJ_PTR_EQ(a, b) EXPECT_EQ(MakeObjPtr(a).Ptr(), MakeObjPtr(b).Ptr());
@@ -243,7 +243,7 @@ class CheckJniAbortCatcher {
     return; \
   }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace std {
 

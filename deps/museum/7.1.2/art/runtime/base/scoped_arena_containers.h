@@ -29,7 +29,7 @@
 #include <museum/7.1.2/art/runtime/base/scoped_arena_allocator.h>
 #include <museum/7.1.2/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Adapter for use of ScopedArenaAllocator in STL containers.
 // Use ScopedArenaAllocator::Adapter() to create an adapter to pass to container constructors.
@@ -247,6 +247,6 @@ class ArenaDelete<T[]> {
 template <typename T>
 using ArenaUniquePtr = std::unique_ptr<T, ArenaDelete<T>>;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_SCOPED_ARENA_CONTAINERS_H_

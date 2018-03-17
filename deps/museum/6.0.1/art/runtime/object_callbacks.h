@@ -26,7 +26,7 @@
 
 #include <museum/6.0.1/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class Object;
@@ -54,6 +54,6 @@ typedef bool (IsHeapReferenceMarkedCallback)(mirror::HeapReference<mirror::Objec
     void* arg) WARN_UNUSED;
 typedef void (ProcessMarkStackCallback)(void* arg);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OBJECT_CALLBACKS_H_

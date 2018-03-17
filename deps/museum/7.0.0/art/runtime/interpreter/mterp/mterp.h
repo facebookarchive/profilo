@@ -25,7 +25,7 @@ extern "C" void* artMterpAsmInstructionEnd[];
 extern "C" void* artMterpAsmAltInstructionStart[];
 extern "C" void* artMterpAsmAltInstructionEnd[];
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace interpreter {
 
 void InitMterpTls(Thread* self);
@@ -33,6 +33,6 @@ void CheckMterpAsmConstants();
 extern "C" bool MterpShouldSwitchInterpreters();
 
 }  // namespace interpreter
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_MTERP_MTERP_H_

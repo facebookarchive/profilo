@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/art/runtime/gc/allocator/rosalloc.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace allocator {
 
@@ -121,6 +121,6 @@ inline void* RosAlloc::Run::AllocSlot() {
 
 }  // namespace allocator
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ALLOCATOR_ROSALLOC_INL_H_

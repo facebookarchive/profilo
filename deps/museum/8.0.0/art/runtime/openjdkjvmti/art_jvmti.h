@@ -52,7 +52,7 @@ class ObjectTagTable;
 
 // A structure that is a jvmtiEnv with additional information for the runtime.
 struct ArtJvmTiEnv : public jvmtiEnv {
-  art::JavaVMExt* art_vm;
+  facebook::museum::MUSEUM_VERSION::art::JavaVMExt* art_vm;
   void* local_data;
   jvmtiCapabilities capabilities;
 
@@ -62,10 +62,10 @@ struct ArtJvmTiEnv : public jvmtiEnv {
   // Tagging is specific to the jvmtiEnv.
   std::unique_ptr<ObjectTagTable> object_tag_table;
 
-  ArtJvmTiEnv(art::JavaVMExt* runtime, EventHandler* event_handler);
+  ArtJvmTiEnv(facebook::museum::MUSEUM_VERSION::art::JavaVMExt* runtime, EventHandler* event_handler);
 
   static ArtJvmTiEnv* AsArtJvmTiEnv(jvmtiEnv* env) {
-    return art::down_cast<ArtJvmTiEnv*>(env);
+    return facebook::museum::MUSEUM_VERSION::art::down_cast<ArtJvmTiEnv*>(env);
   }
 };
 

@@ -23,7 +23,7 @@
 
 #include <museum/7.0.0/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Template class serving as a replacement for std::vector<> but adding
 // DCHECK()s for the subscript operator, front(), back(), pop_back(),
@@ -225,6 +225,6 @@ bool operator>=(const dchecked_vector<T, Alloc>& lhs, const dchecked_vector<T, A
   return !(lhs < rhs);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_DCHECKED_VECTOR_H_

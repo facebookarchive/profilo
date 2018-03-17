@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_STL_UTIL_IDENTITY_H_
 #define ART_RUNTIME_BASE_STL_UTIL_IDENTITY_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Use to suppress type deduction for a function argument.
 // See std::identity<> for more background:
@@ -36,6 +36,6 @@ struct Identity {
   using type = T;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_STL_UTIL_IDENTITY_H_

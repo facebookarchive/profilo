@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/obj_ptr.h>
 #include <museum/8.1.0/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class Object;
@@ -120,6 +120,6 @@ void InvalidReceiverError(ObjPtr<mirror::Object> o, ObjPtr<mirror::Class> c)
 void UpdateReference(Thread* self, jobject obj, ObjPtr<mirror::Object> result)
     REQUIRES_SHARED(Locks::mutator_lock_);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_REFLECTION_H_

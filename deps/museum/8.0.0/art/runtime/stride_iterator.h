@@ -21,7 +21,7 @@
 
 #include <museum/8.0.0/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<typename T>
 class StrideIterator : public std::iterator<std::forward_iterator_tag, T> {
@@ -80,6 +80,6 @@ class StrideIterator : public std::iterator<std::forward_iterator_tag, T> {
   size_t stride_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STRIDE_ITERATOR_H_

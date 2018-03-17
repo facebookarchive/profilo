@@ -27,7 +27,7 @@
 #include <museum/5.0.0/external/libcxx/list>
 #include <museum/5.0.0/external/libcxx/map>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Array;
 class Object;
@@ -191,6 +191,6 @@ class Transaction {
   DISALLOW_COPY_AND_ASSIGN(Transaction);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_TRANSACTION_H_

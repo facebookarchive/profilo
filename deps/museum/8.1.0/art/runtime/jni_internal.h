@@ -22,7 +22,7 @@
 
 #include <museum/8.1.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -55,7 +55,7 @@ static inline ArtMethod* DecodeArtMethod(jmethodID method_id) {
 }
 
 }  // namespace jni
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 facebook::museum::MUSEUM_VERSION::std::ostream& operator<<(facebook::museum::MUSEUM_VERSION::std::ostream& os, const jobjectRefType& rhs);
 

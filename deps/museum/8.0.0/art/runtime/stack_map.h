@@ -26,7 +26,7 @@
 #include <museum/8.0.0/art/runtime/method_info.h>
 #include <museum/8.0.0/art/runtime/leb128.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class VariableIndentationOutputStream;
 
@@ -104,7 +104,7 @@ class DexRegisterLocation {
 
   static_assert(
       sizeof(Kind) == 1u,
-      "art::DexRegisterLocation::Kind has a size different from one byte.");
+      "facebook::museum::MUSEUM_VERSION::art::DexRegisterLocation::Kind has a size different from one byte.");
 
   static bool IsShortLocationKind(Kind kind) {
     switch (kind) {
@@ -151,7 +151,7 @@ class DexRegisterLocation {
     UNREACHABLE();
   }
 
-  // Required by art::StackMapStream::LocationCatalogEntriesIndices.
+  // Required by facebook::museum::MUSEUM_VERSION::art::StackMapStream::LocationCatalogEntriesIndices.
   DexRegisterLocation() : kind_(Kind::kNone), value_(0) {}
 
   DexRegisterLocation(Kind kind, int32_t value) : kind_(kind), value_(value) {}
@@ -195,7 +195,7 @@ std::ostream& operator<<(std::ostream& stream, const DexRegisterLocation::Kind& 
  *
  *   [DexRegisterLocation+].
  *
- * DexRegisterLocations are either 1- or 5-byte wide (see art::DexRegisterLocation::Kind).
+ * DexRegisterLocations are either 1- or 5-byte wide (see facebook::museum::MUSEUM_VERSION::art::DexRegisterLocation::Kind).
  */
 class DexRegisterLocationCatalog {
  public:
@@ -232,8 +232,8 @@ class DexRegisterLocationCatalog {
       }
       // Data can be unaligned as the written Dex register locations can
       // either be 1-byte or 5-byte wide.  Use
-      // art::MemoryRegion::StoreUnaligned instead of
-      // art::MemoryRegion::Store to prevent unligned word accesses on ARM.
+      // facebook::museum::MUSEUM_VERSION::art::MemoryRegion::StoreUnaligned instead of
+      // facebook::museum::MUSEUM_VERSION::art::MemoryRegion::Store to prevent unligned word accesses on ARM.
       region_.StoreUnaligned<DexRegisterLocation::Kind>(offset, kind);
       region_.StoreUnaligned<int32_t>(offset + sizeof(DexRegisterLocation::Kind), value);
     }
@@ -617,7 +617,7 @@ class DexRegisterMap {
   // for a live register in this case is 0 and there is no need to
   // store it.
   static size_t SingleEntrySizeInBits(size_t number_of_location_catalog_entries) {
-    // Handle the case of 0, as we cannot pass 0 to art::WhichPowerOf2.
+    // Handle the case of 0, as we cannot pass 0 to facebook::museum::MUSEUM_VERSION::art::WhichPowerOf2.
     return number_of_location_catalog_entries == 0
         ? 0u
         : WhichPowerOf2(RoundUpToPowerOfTwo(number_of_location_catalog_entries));
@@ -1587,11 +1587,11 @@ class CodeInfo {
   size_t ComputeDexRegisterMapSizeOf(const CodeInfoEncoding& encoding,
                                      uint32_t dex_register_map_offset_in_code_info,
                                      uint16_t number_of_dex_registers) const {
-    // Offset where the actual mapping data starts within art::DexRegisterMap.
+    // Offset where the actual mapping data starts within facebook::museum::MUSEUM_VERSION::art::DexRegisterMap.
     size_t location_mapping_data_offset_in_dex_register_map =
         DexRegisterMap::GetLocationMappingDataOffset(number_of_dex_registers);
-    // Create a temporary art::DexRegisterMap to be able to call
-    // art::DexRegisterMap::GetNumberOfLiveDexRegisters and
+    // Create a temporary facebook::museum::MUSEUM_VERSION::art::DexRegisterMap to be able to call
+    // facebook::museum::MUSEUM_VERSION::art::DexRegisterMap::GetNumberOfLiveDexRegisters and
     DexRegisterMap dex_register_map_without_locations(
         MemoryRegion(region_.Subregion(dex_register_map_offset_in_code_info,
                                        location_mapping_data_offset_in_dex_register_map)));
@@ -1611,8 +1611,8 @@ class CodeInfo {
   // in `region_` and containing `number_of_dex_locations` entries.
   size_t ComputeDexRegisterLocationCatalogSize(uint32_t origin,
                                                uint32_t number_of_dex_locations) const {
-    // TODO: Ideally, we would like to use art::DexRegisterLocationCatalog::Size or
-    // art::DexRegisterLocationCatalog::FindLocationOffset, but the
+    // TODO: Ideally, we would like to use facebook::museum::MUSEUM_VERSION::art::DexRegisterLocationCatalog::Size or
+    // facebook::museum::MUSEUM_VERSION::art::DexRegisterLocationCatalog::FindLocationOffset, but the
     // DexRegisterLocationCatalog is not yet built.  Try to factor common code.
     size_t offset = origin + DexRegisterLocationCatalog::kFixedSize;
 
@@ -1643,6 +1643,6 @@ class CodeInfo {
 #undef ELEMENT_BYTE_OFFSET_AFTER
 #undef ELEMENT_BIT_OFFSET_AFTER
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STACK_MAP_H_

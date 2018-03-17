@@ -19,10 +19,10 @@
 
 #include <museum/6.0.1/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void register_java_lang_ref_FinalizerReference(JNIEnv* env);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_JAVA_LANG_REF_FINALIZERREFERENCE_H_

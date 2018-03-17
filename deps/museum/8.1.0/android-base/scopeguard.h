@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/external/libcxx/utility>  // for std::move
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 template <typename F>
@@ -55,6 +55,6 @@ ScopeGuard<T> make_scope_guard(T f) {
 }
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_SCOPEGUARD_H

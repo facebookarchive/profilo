@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/gc_root.h>
 #include <museum/8.1.0/art/runtime/mirror/object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class T> class Handle;
 struct StackTraceElementOffsets;
@@ -78,11 +78,11 @@ class MANAGED StackTraceElement FINAL : public Object {
 
   static GcRoot<Class> java_lang_StackTraceElement_;
 
-  friend struct art::StackTraceElementOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::StackTraceElementOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(StackTraceElement);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_STACK_TRACE_ELEMENT_H_

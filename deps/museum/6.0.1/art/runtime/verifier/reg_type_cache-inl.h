@@ -24,7 +24,7 @@
 #include <museum/6.0.1/art/runtime/verifier/reg_type.h>
 #include <museum/6.0.1/art/runtime/verifier/reg_type_cache.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 inline const art::verifier::RegType& RegTypeCache::GetFromId(uint16_t id) const {
@@ -119,5 +119,5 @@ inline const RegType& RegTypeCache::JavaLangObject(bool precise) {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_INL_H_

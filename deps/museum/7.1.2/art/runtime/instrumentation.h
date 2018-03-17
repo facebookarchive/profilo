@@ -27,7 +27,7 @@
 #include <museum/7.1.2/art/runtime/gc_root.h>
 #include <museum/7.1.2/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class Object;
@@ -604,7 +604,7 @@ class Instrumentation {
 std::ostream& operator<<(std::ostream& os, const Instrumentation::InstrumentationEvent& rhs);
 std::ostream& operator<<(std::ostream& os, const Instrumentation::InstrumentationLevel& rhs);
 
-// An element in the instrumentation side stack maintained in art::Thread.
+// An element in the instrumentation side stack maintained in facebook::museum::MUSEUM_VERSION::art::Thread.
 struct InstrumentationStackFrame {
   InstrumentationStackFrame(mirror::Object* this_object, ArtMethod* method,
                             uintptr_t return_pc, size_t frame_id, bool interpreter_entry)
@@ -622,6 +622,6 @@ struct InstrumentationStackFrame {
 };
 
 }  // namespace instrumentation
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INSTRUMENTATION_H_

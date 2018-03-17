@@ -19,7 +19,7 @@
 
 #include <museum/8.0.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum ThreadState {
   //                                   Thread.State   JDWP state
@@ -51,6 +51,6 @@ enum ThreadState {
 };
 std::ostream& operator<<(std::ostream& os, const ThreadState& rhs);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_STATE_H_

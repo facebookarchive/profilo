@@ -21,7 +21,7 @@
 
 #include <museum/5.0.0/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -73,6 +73,6 @@ union PACKED(4) JValue {
   mirror::Object* l;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JVALUE_H_

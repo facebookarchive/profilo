@@ -55,7 +55,7 @@
 #include <museum/8.0.0/art/runtime/interpreter/unstarted_runtime.h>
 #include <museum/8.0.0/art/runtime/well_known_classes.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace interpreter {
 
 void ThrowNullPointerExceptionFromInterpreter()
@@ -586,6 +586,6 @@ EXPLICIT_DO_INVOKE_VIRTUAL_QUICK_TEMPLATE_DECL(true);   // invoke-virtual-quick-
 #undef EXPLICIT_INSTANTIATION_DO_INVOKE_VIRTUAL_QUICK
 
 }  // namespace interpreter
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_INTERPRETER_COMMON_H_

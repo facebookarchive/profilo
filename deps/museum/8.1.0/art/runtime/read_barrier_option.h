@@ -16,7 +16,7 @@
 
 #ifndef ART_RUNTIME_READ_BARRIER_OPTION_H_
 #define ART_RUNTIME_READ_BARRIER_OPTION_H_
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Options for performing a read barrier or not.
 enum ReadBarrierOption {
@@ -24,6 +24,6 @@ enum ReadBarrierOption {
   kWithoutReadBarrier,  // Don't perform a read barrier.
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_READ_BARRIER_OPTION_H_

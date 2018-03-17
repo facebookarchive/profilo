@@ -21,7 +21,7 @@ namespace unix_file {
 class FdFile;
 }  // namespace unix_file
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 typedef ::unix_file::FdFile File;
 
@@ -53,6 +53,6 @@ class OS {
   static bool DirectoryExists(const char* name);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OS_H_

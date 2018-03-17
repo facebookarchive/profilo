@@ -20,7 +20,7 @@
 #include <museum/6.0.1/external/libcxx/functional>
 #include <museum/6.0.1/external/libcxx/type_traits>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace interpreter {
 
 // Declares a type which is the larger in bit size of the two template parameters.
@@ -60,6 +60,6 @@ static inline typename select_bigger<T1, T2>::type SafeMul(T1 a, T2 b) {
 }
 
 }  // namespace interpreter
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_SAFE_MATH_H_

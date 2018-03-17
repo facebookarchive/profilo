@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/base/macros.h>
 #include <museum/8.0.0/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A convenience to allow any class with a "Dump(std::ostream& os)" member function
 // but without an operator<< to be used as if it had an operator<<. Use like this:
@@ -72,6 +72,6 @@ std::ostream& operator<<(std::ostream& os, const MutatorLockedDumpable<T>& rhs)
   //       currently fails for this.
     NO_THREAD_SAFETY_ANALYSIS;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_DUMPABLE_H_

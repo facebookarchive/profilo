@@ -21,7 +21,7 @@
 #include <museum/7.0.0/art/runtime/leb128.h>
 #include <museum/7.0.0/art/runtime/utf.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * TypeLookupTable used to find class_def_idx by class descriptor quickly.
@@ -163,6 +163,6 @@ class TypeLookupTable {
   DISALLOW_IMPLICIT_CONSTRUCTORS(TypeLookupTable);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_TYPE_LOOKUP_TABLE_H_

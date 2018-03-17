@@ -21,7 +21,7 @@
 
 #include <museum/6.0.1/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Class;
@@ -57,6 +57,6 @@ ALWAYS_INLINE void VerifyObject(mirror::Object* obj) NO_THREAD_SAFETY_ANALYSIS;
 // Check that c.getClass() == c.getClass().getClass().
 ALWAYS_INLINE bool VerifyClassClass(mirror::Class* c) NO_THREAD_SAFETY_ANALYSIS;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFY_OBJECT_H_

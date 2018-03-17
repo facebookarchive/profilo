@@ -25,7 +25,7 @@
 #include <museum/7.1.2/art/runtime/thread-inl.h>
 #include <museum/7.1.2/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Scoped change into and out of a particular state. Handles Runnable transitions that require
 // more complicated suspension checking. The subclasses ScopedObjectAccessUnchecked and
@@ -301,6 +301,6 @@ class ScopedThreadSuspension : public ValueObject {
 };
 
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SCOPED_THREAD_STATE_CHANGE_H_

@@ -21,7 +21,7 @@
 
 #include <museum/5.1.1/art/runtime/base/hash_set.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <typename Fn>
 class HashMapWrapper {
@@ -55,6 +55,6 @@ class HashMap : public HashSet<std::pair<Key, Value>, EmptyFn, HashMapWrapper<Ha
                                HashMapWrapper<Pred>, Alloc> {
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_HASH_MAP_H_

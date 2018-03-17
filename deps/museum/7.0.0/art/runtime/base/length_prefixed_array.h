@@ -25,7 +25,7 @@
 #include <museum/7.0.0/art/runtime/base/casts.h>
 #include <museum/7.0.0/art/runtime/base/iteration_range.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<typename T>
 class LengthPrefixedArray {
@@ -116,6 +116,6 @@ IterationRange<StrideIterator<T>> MakeIterationRangeFromLengthPrefixedArray(
       MakeEmptyIterationRange(StrideIterator<T>(nullptr, 0));
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_LENGTH_PREFIXED_ARRAY_H_

@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/external/libcxx/iosfwd>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arm {
 
 // Values for registers.
@@ -93,6 +93,6 @@ enum SRegister {
 std::ostream& operator<<(std::ostream& os, const SRegister& rhs);
 
 }  // namespace arm
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM_REGISTERS_ARM_H_

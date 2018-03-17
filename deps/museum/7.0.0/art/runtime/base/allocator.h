@@ -27,7 +27,7 @@
 #include <museum/7.0.0/art/runtime/base/mutex.h>
 #include <museum/7.0.0/art/runtime/base/type_static_if.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr bool kEnableTrackingAllocator = false;
 
@@ -179,6 +179,6 @@ template<class Key,
          class Pred = std::equal_to<Key>>
 using AllocationTrackingHashMap = HashMap<
     Key, T, EmptyFn, Hash, Pred, TrackingAllocator<std::pair<Key, T>, kTag>>;
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ALLOCATOR_H_

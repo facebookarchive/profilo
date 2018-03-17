@@ -23,7 +23,7 @@
 #include <museum/5.0.0/art/runtime/base/macros.h>
 #include <museum/5.0.0/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Memory regions are useful for accessing memory with bounds check in
 // debug mode. They can be safely passed by value and do not assume ownership
@@ -109,6 +109,6 @@ class MemoryRegion {
   size_t size_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MEMORY_REGION_H_

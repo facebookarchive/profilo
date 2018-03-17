@@ -29,7 +29,7 @@
 #include <museum/7.0.0/art/runtime/base/allocator.h>
 #include <museum/7.0.0/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #if defined(__LP64__) && (!defined(__x86_64__) || defined(__APPLE__))
 #define USE_ART_LOW_4G_ALLOCATOR 1
@@ -244,6 +244,6 @@ class MemMap {
 std::ostream& operator<<(std::ostream& os, const MemMap& mem_map);
 std::ostream& operator<<(std::ostream& os, const MemMap::Maps& mem_maps);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MEM_MAP_H_

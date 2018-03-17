@@ -21,7 +21,7 @@
 #include <museum/8.1.0/art/runtime/base/logging.h>
 #include <museum/8.1.0/art/runtime/gc/accounting/space_bitmap.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 class Heap;
@@ -80,12 +80,12 @@ class HeapBitmap {
               TrackingAllocator<LargeObjectBitmap*, kAllocatorTagHeapBitmapLOS>>
       large_object_bitmaps_;
 
-  friend class art::gc::Heap;
-  friend class art::gc::collector::ConcurrentCopying;
+  friend class facebook::museum::MUSEUM_VERSION::art::gc::Heap;
+  friend class facebook::museum::MUSEUM_VERSION::art::gc::collector::ConcurrentCopying;
 };
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_H_

@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/base/array_ref.h>
 #include <museum/8.0.0/art/runtime/dex_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace optimizer {
 
 // "Decompile", that is unquicken, the code item provided, given the
@@ -34,6 +34,6 @@ bool ArtDecompileDEX(const DexFile::CodeItem& code_item,
                      bool decompile_return_instruction);
 
 }  // namespace optimizer
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_TO_DEX_DECOMPILER_H_

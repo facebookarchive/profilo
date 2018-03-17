@@ -30,7 +30,7 @@
 #include <museum/7.1.2/art/runtime/os.h>
 #include <museum/7.1.2/art/runtime/profiler.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace space {
@@ -451,6 +451,6 @@ class OatFileAssistant {
 
 std::ostream& operator << (std::ostream& stream, const OatFileAssistant::OatStatus status);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_ASSISTANT_H_

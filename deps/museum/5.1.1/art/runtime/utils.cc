@@ -2,7 +2,7 @@
 
 #include "utils.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * NOTE: These two functions are *intentionally* not calling through to the real ART functions.
@@ -15,6 +15,8 @@ namespace art {
  * compatible-enough with our std::string. However, changing every std::string parameter and return value
  * for function declarations is a little less savory than slipping in an extra eight bytes after fields.
  */
+
+// TODO: get rid of these with libcxx import
 
 std::string DotToDescriptor(char const* class_name) {
   std::string descriptor(class_name);
@@ -44,4 +46,4 @@ std::string DescriptorToDot(char const* descriptor) {
   return descriptor;
 }
 
-}
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

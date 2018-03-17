@@ -37,7 +37,7 @@
 
 #define CHECK_MUTEX_CALL(call, args) CHECK_PTHREAD_CALL(call, args, name_)
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #if ART_USE_FUTEXES
 static inline int futex(volatile int *uaddr, int op, int val, const struct timespec *timeout,
@@ -218,6 +218,6 @@ inline uint64_t ReaderWriterMutex::GetExclusiveOwnerTid() const {
 #endif
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_MUTEX_INL_H_

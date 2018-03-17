@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/gc_root.h>
 #include <museum/8.1.0/art/runtime/mirror/executable.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 class Class;
@@ -90,6 +90,6 @@ class MANAGED Constructor: public Executable {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_METHOD_H_

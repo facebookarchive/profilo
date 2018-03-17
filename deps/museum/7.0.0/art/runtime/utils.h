@@ -37,7 +37,7 @@
 
 class BacktraceMap;
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -413,6 +413,6 @@ inline void FlushInstructionCache(char* begin, char* end) {
 #endif
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTILS_H_

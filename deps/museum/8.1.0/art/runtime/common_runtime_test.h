@@ -30,7 +30,7 @@
 #include <museum/8.1.0/art/runtime/os.h>
 #include <museum/8.1.0/art/runtime/scoped_thread_state_change-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // OBJ pointer helpers to avoid needing .Decode everywhere.
 #define EXPECT_OBJ_PTR_EQ(a, b) EXPECT_EQ(MakeObjPtr(a).Ptr(), MakeObjPtr(b).Ptr());
@@ -284,6 +284,6 @@ class CheckJniAbortCatcher {
     return; \
   }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_COMMON_RUNTIME_TEST_H_

@@ -27,7 +27,7 @@
 #include <museum/7.0.0/external/libcxx/set>
 #include <museum/7.0.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -173,6 +173,6 @@ class ModUnionTableCardCache : public ModUnionTable {
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_MOD_UNION_TABLE_H_

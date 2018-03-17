@@ -30,7 +30,7 @@
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 #include <museum/7.0.0/art/runtime/runtime.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class ClassLoader;
@@ -173,6 +173,6 @@ class ClassTable {
   std::vector<GcRoot<mirror::Object>> strong_roots_ GUARDED_BY(lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_TABLE_H_

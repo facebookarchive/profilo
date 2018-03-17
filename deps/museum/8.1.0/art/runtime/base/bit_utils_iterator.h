@@ -26,7 +26,7 @@
 #include <museum/8.1.0/art/runtime/base/logging.h>
 #include <museum/8.1.0/art/runtime/base/stl_util.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Using the Curiously Recurring Template Pattern to implement everything shared
 // by LowToHighBitIterator and HighToLowBitIterator, i.e. everything but operator*().
@@ -107,6 +107,6 @@ IterationRange<HighToLowBitIterator<T>> HighToLowBits(T bits) {
       HighToLowBitIterator<T>(bits), HighToLowBitIterator<T>());
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_BIT_UTILS_ITERATOR_H_

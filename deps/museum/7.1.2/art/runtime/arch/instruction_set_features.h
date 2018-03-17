@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/base/macros.h>
 #include <museum/7.1.2/art/runtime/arch/instruction_set.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArmInstructionSetFeatures;
 class Arm64InstructionSetFeatures;
@@ -118,6 +118,6 @@ class InstructionSetFeatures {
 };
 std::ostream& operator<<(std::ostream& os, const InstructionSetFeatures& rhs);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_INSTRUCTION_SET_FEATURES_H_

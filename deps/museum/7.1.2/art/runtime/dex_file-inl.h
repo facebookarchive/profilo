@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/dex_file.h>
 #include <museum/7.1.2/art/runtime/leb128.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline int32_t DexFile::GetStringLength(const StringId& string_id) const {
   const uint8_t* ptr = begin_ + string_id.string_data_off_;
@@ -113,6 +113,6 @@ inline bool Signature::operator==(const Signature& rhs) const {
 }
 
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_FILE_INL_H_

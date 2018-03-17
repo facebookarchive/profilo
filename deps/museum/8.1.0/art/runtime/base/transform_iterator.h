@@ -22,7 +22,7 @@
 
 #include <museum/8.1.0/art/runtime/base/iteration_range.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // The transform iterator transforms values from the base iterator with a given
 // transformation function. It can serve as a replacement for std::transform(), i.e.
@@ -173,6 +173,6 @@ auto MakeTransformRange(BaseRange& range, Function f) {
                             MakeTransformIterator(range.end(), f));
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_TRANSFORM_ITERATOR_H_

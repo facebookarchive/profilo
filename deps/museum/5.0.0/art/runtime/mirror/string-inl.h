@@ -25,7 +25,7 @@
 #include <museum/5.0.0/art/runtime/thread.h>
 #include <museum/5.0.0/art/runtime/utf.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t String::ClassSize() {
@@ -79,6 +79,6 @@ inline int32_t String::GetHashCode() {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_STRING_INL_H_

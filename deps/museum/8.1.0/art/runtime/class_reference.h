@@ -20,7 +20,7 @@
 #include <museum/8.1.0/external/libcxx/stdint.h>
 #include <museum/8.1.0/external/libcxx/utility>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFile;
 
@@ -37,6 +37,6 @@ inline bool operator<(const ClassReference& lhs, const ClassReference& rhs) {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_REFERENCE_H_

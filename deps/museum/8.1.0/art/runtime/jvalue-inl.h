@@ -21,7 +21,7 @@
 
 #include <museum/8.1.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline void JValue::SetL(ObjPtr<mirror::Object> new_l) {
   l = new_l.Ptr();
@@ -45,6 +45,6 @@ DEFINE_FROM(double, D);
 
 #undef DEFINE_FROM
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JVALUE_INL_H_

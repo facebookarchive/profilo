@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/base/mutex.h>
 #include <museum/6.0.1/art/runtime/stack.h>  // StackReference
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Throwable;
@@ -102,5 +102,5 @@ class QuickExceptionHandler {
   DISALLOW_COPY_AND_ASSIGN(QuickExceptionHandler);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_QUICK_EXCEPTION_HANDLER_H_

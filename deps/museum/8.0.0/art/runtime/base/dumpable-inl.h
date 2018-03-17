@@ -21,7 +21,7 @@
 #include <museum/8.0.0/art/runtime/base/mutex.h>
 #include <museum/8.0.0/art/runtime/thread-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<typename T>
 inline std::ostream& operator<<(std::ostream& os, const MutatorLockedDumpable<T>& rhs) {
@@ -30,6 +30,6 @@ inline std::ostream& operator<<(std::ostream& os, const MutatorLockedDumpable<T>
   return os;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_DUMPABLE_INL_H_

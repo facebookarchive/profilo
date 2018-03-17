@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/external/libcxx/inttypes.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -39,6 +39,6 @@ struct ObjectBytePair {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_OBJECT_BYTE_PAIR_H_

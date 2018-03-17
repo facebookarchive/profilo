@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_DEOPTIMIZATION_KIND_H_
 #define ART_RUNTIME_DEOPTIMIZATION_KIND_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum class DeoptimizationKind {
   kAotInlineCache = 0,
@@ -48,6 +48,6 @@ inline const char* GetDeoptimizationKindName(DeoptimizationKind kind) {
 
 std::ostream& operator<<(std::ostream& os, const DeoptimizationKind& kind);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEOPTIMIZATION_KIND_H_

@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/base/logging.h>
 #include <museum/8.1.0/art/runtime/base/stl_util_identity.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Like sizeof, but count how many bits a type takes. Pass type explicitly.
 template <typename T>
@@ -200,16 +200,16 @@ inline bool IsAlignedParam(T* x, int n) {
 }
 
 #define CHECK_ALIGNED(value, alignment) \
-  CHECK(::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
+  CHECK(::facebook::museum::MUSEUM_VERSION::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
 
 #define DCHECK_ALIGNED(value, alignment) \
-  DCHECK(::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
+  DCHECK(::facebook::museum::MUSEUM_VERSION::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
 
 #define CHECK_ALIGNED_PARAM(value, alignment) \
-  CHECK(::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
+  CHECK(::facebook::museum::MUSEUM_VERSION::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
 
 #define DCHECK_ALIGNED_PARAM(value, alignment) \
-  DCHECK(::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
+  DCHECK(::facebook::museum::MUSEUM_VERSION::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
 
 inline uint16_t Low16Bits(uint32_t value) {
   return static_cast<uint16_t>(value);
@@ -363,6 +363,6 @@ inline static uint64_t ReverseBits64(uint64_t opnd) {
   return opnd;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_BIT_UTILS_H_

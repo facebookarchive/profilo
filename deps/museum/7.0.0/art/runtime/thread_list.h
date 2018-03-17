@@ -27,7 +27,7 @@
 #include <museum/7.0.0/external/libcxx/bitset>
 #include <museum/7.0.0/external/libcxx/list>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
   namespace collector {
     class GarbageCollector;
@@ -216,6 +216,6 @@ class ScopedSuspendAll : public ValueObject {
       UNLOCK_FUNCTION(Locks::mutator_lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_LIST_H_

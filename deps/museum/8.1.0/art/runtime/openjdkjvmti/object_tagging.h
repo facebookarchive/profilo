@@ -50,22 +50,22 @@ class ObjectTagTable FINAL : public JvmtiWeakTable<jlong> {
   ObjectTagTable(EventHandler* event_handler, ArtJvmTiEnv* env)
       : event_handler_(event_handler), jvmti_env_(env) {}
 
-  bool Set(art::mirror::Object* obj, jlong tag) OVERRIDE
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool Set(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, jlong tag) OVERRIDE
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_);
-  bool SetLocked(art::mirror::Object* obj, jlong tag) OVERRIDE
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool SetLocked(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, jlong tag) OVERRIDE
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
-  jlong GetTagOrZero(art::mirror::Object* obj)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  jlong GetTagOrZero(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_) {
     jlong tmp = 0;
     GetTag(obj, &tmp);
     return tmp;
   }
-  jlong GetTagOrZeroLocked(art::mirror::Object* obj)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  jlong GetTagOrZeroLocked(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_) {
     jlong tmp = 0;
     GetTagLocked(obj, &tmp);

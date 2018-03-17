@@ -41,7 +41,7 @@
 #define HAVE_TIMED_RWLOCK 0
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class LOCKABLE ReaderWriterMutex;
 class ScopedContentionRecorder;
@@ -644,6 +644,6 @@ class Locks {
   static Mutex* logging_lock_ ACQUIRED_AFTER(unexpected_signal_lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_MUTEX_H_

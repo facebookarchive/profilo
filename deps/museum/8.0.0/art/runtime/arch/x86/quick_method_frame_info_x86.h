@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/arch/x86/registers_x86.h>
 #include <museum/8.0.0/art/runtime/runtime.h>  // for Runtime::CalleeSaveType.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86 {
 
 enum XMM {
@@ -37,22 +37,22 @@ enum XMM {
 };
 
 static constexpr uint32_t kX86CalleeSaveAlwaysSpills =
-    (1 << art::x86::kNumberOfCpuRegisters);  // Fake return address callee save.
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::kNumberOfCpuRegisters);  // Fake return address callee save.
 static constexpr uint32_t kX86CalleeSaveRefSpills =
-    (1 << art::x86::EBP) | (1 << art::x86::ESI) | (1 << art::x86::EDI);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::EBP) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::ESI) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EDI);
 static constexpr uint32_t kX86CalleeSaveArgSpills =
-    (1 << art::x86::ECX) | (1 << art::x86::EDX) | (1 << art::x86::EBX);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::ECX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EDX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EBX);
 static constexpr uint32_t kX86CalleeSaveEverythingSpills =
-    (1 << art::x86::EAX) | (1 << art::x86::ECX) | (1 << art::x86::EDX) | (1 << art::x86::EBX);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::EAX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::ECX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EDX) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::EBX);
 
 static constexpr uint32_t kX86CalleeSaveFpArgSpills =
-    (1 << art::x86::XMM0) | (1 << art::x86::XMM1) |
-    (1 << art::x86::XMM2) | (1 << art::x86::XMM3);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM0) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM1) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM2) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM3);
 static constexpr uint32_t kX86CalleeSaveFpEverythingSpills =
-    (1 << art::x86::XMM0) | (1 << art::x86::XMM1) |
-    (1 << art::x86::XMM2) | (1 << art::x86::XMM3) |
-    (1 << art::x86::XMM4) | (1 << art::x86::XMM5) |
-    (1 << art::x86::XMM6) | (1 << art::x86::XMM7);
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM0) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM1) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM2) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM3) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM4) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM5) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM6) | (1 << facebook::museum::MUSEUM_VERSION::art::x86::XMM7);
 
 constexpr uint32_t X86CalleeSaveCoreSpills(Runtime::CalleeSaveType type) {
   return kX86CalleeSaveAlwaysSpills | kX86CalleeSaveRefSpills |
@@ -78,6 +78,6 @@ constexpr QuickMethodFrameInfo X86CalleeSaveMethodFrameInfo(Runtime::CalleeSaveT
 }
 
 }  // namespace x86
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_QUICK_METHOD_FRAME_INFO_X86_H_

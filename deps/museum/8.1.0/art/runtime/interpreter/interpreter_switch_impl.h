@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/jvalue.h>
 #include <museum/8.1.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ShadowFrame;
 class Thread;
@@ -38,6 +38,6 @@ JValue ExecuteSwitchImpl(Thread* self,
                          bool interpret_one_instruction) REQUIRES_SHARED(Locks::mutator_lock_);
 
 }  // namespace interpreter
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_INTERPRETER_SWITCH_IMPL_H_

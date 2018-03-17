@@ -23,7 +23,7 @@
 
 #include <museum/6.0.1/art/runtime/gc/space/valgrind_settings.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -258,6 +258,6 @@ size_t ValgrindMallocSpace<S,
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_VALGRIND_MALLOC_SPACE_INL_H_

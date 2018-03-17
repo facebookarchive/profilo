@@ -30,7 +30,7 @@
 #include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
 #include <museum/8.1.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t Array::ClassSize(PointerSize pointer_size) {
@@ -470,6 +470,6 @@ inline void PrimitiveArray<T>::SetArrayClass(ObjPtr<Class> array_class) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ARRAY_INL_H_

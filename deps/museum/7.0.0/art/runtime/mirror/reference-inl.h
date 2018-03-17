@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/art/runtime/mirror/reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t Reference::ClassSize(size_t pointer_size) {
@@ -28,6 +28,6 @@ inline uint32_t Reference::ClassSize(size_t pointer_size) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_REFERENCE_INL_H_

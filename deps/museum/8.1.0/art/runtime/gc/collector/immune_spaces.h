@@ -24,7 +24,7 @@
 
 #include <museum/8.1.0/external/libcxx/set>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 class ContinuousSpace;
@@ -90,6 +90,6 @@ class ImmuneSpaces {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_IMMUNE_SPACES_H_

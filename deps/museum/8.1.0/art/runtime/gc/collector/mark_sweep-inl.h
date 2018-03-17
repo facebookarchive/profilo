@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object_array-inl.h>
 #include <museum/8.1.0/art/runtime/mirror/reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -56,6 +56,6 @@ inline void MarkSweep::ScanObjectVisit(mirror::Object* obj,
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_MARK_SWEEP_INL_H_

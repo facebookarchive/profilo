@@ -19,7 +19,7 @@
 
 #include <museum/7.1.2/external/libcxx/iosfwd>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 // Which types of collections are able to be performed.
@@ -68,6 +68,6 @@ static constexpr CollectorType kCollectorTypeDefault =
     ;  // NOLINT [whitespace/semicolon] [5]
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_TYPE_H_

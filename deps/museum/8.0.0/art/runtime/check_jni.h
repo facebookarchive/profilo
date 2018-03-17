@@ -19,11 +19,11 @@
 
 #include <museum/8.0.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 const JNINativeInterface* GetCheckJniNativeInterface();
 const JNIInvokeInterface* GetCheckJniInvokeInterface();
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CHECK_JNI_H_

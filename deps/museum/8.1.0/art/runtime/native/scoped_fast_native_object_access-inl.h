@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/art_method.h>
 #include <museum/8.1.0/art/runtime/scoped_thread_state_change-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline ScopedFastNativeObjectAccess::ScopedFastNativeObjectAccess(JNIEnv* env)
     : ScopedObjectAccessAlreadyRunnable(env) {
@@ -32,6 +32,6 @@ inline ScopedFastNativeObjectAccess::ScopedFastNativeObjectAccess(JNIEnv* env)
   DCHECK_EQ(Self()->GetState(), kRunnable);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_SCOPED_FAST_NATIVE_OBJECT_ACCESS_INL_H_

@@ -24,7 +24,7 @@
 #include <museum/6.0.1/art/runtime/base/mutex.h>
 #include <museum/6.0.1/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ThreadPool;
 
@@ -196,6 +196,6 @@ class WorkStealingThreadPool : public ThreadPool {
   friend class WorkStealingWorker;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_POOL_H_

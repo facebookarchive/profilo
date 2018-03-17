@@ -21,7 +21,7 @@
 #include <museum/8.0.0/libnativehelper/jni.h>
 #include <museum/8.0.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 
@@ -161,6 +161,6 @@ struct WellKnownClasses {
   static void InitStringInit(JNIEnv* env);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_WELL_KNOWN_CLASSES_H_

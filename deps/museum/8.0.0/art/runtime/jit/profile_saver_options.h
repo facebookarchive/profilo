@@ -16,7 +16,7 @@
 #include <museum/8.0.0/external/libcxx/string>
 #include <museum/8.0.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ProfileSaverOptions {
  public:
@@ -115,6 +115,6 @@ struct ProfileSaverOptions {
   std::string profile_path_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_PROFILE_SAVER_OPTIONS_H_

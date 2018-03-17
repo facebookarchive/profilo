@@ -34,7 +34,7 @@
 #include <museum/8.1.0/art/runtime/runtime.h>
 #include <museum/8.1.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Test class that provides some helpers to set a test up for compilation using dex2oat.
 class Dex2oatEnvironmentTest : public CommonRuntimeTest {
@@ -216,6 +216,6 @@ class Dex2oatEnvironmentTest : public CommonRuntimeTest {
   std::string odex_dir_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX2OAT_ENVIRONMENT_TEST_H_

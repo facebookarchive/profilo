@@ -21,7 +21,7 @@
 #include <museum/5.0.0/art/runtime/leb128.h>
 #include <museum/5.0.0/art/runtime/stack.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class VmapTable {
  public:
@@ -121,6 +121,6 @@ class VmapTable {
   const uint8_t* const table_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VMAP_TABLE_H_

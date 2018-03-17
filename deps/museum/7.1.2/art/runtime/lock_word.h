@@ -24,7 +24,7 @@
 #include <museum/7.1.2/art/runtime/base/logging.h>
 #include <museum/7.1.2/art/runtime/read_barrier.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Object;
 }  // namespace mirror
@@ -261,7 +261,7 @@ class LockWord {
 };
 std::ostream& operator<<(std::ostream& os, const LockWord::LockState& code);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 
 #endif  // ART_RUNTIME_LOCK_WORD_H_

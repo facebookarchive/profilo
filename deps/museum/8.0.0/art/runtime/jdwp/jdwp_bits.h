@@ -24,7 +24,7 @@
 #include <museum/8.0.0/external/libcxx/string>
 #include <museum/8.0.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace JDWP {
 
@@ -128,6 +128,6 @@ static inline void Write8BE(uint8_t** dst, uint64_t value) {
 
 }  // namespace JDWP
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JDWP_JDWP_BITS_H_

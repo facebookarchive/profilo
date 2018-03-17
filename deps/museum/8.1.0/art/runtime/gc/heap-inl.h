@@ -37,7 +37,7 @@
 #include <museum/8.1.0/art/runtime/utils.h>
 #include <museum/8.1.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 template <bool kInstrumented, bool kCheckLargeObject, typename PreFenceVisitor>
@@ -434,6 +434,6 @@ inline void Heap::WriteBarrierEveryFieldOf(ObjPtr<mirror::Object> obj) {
 }
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_HEAP_INL_H_

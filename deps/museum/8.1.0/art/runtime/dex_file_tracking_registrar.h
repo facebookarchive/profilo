@@ -22,7 +22,7 @@
 
 #include <museum/8.1.0/art/runtime/dex_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace dex {
 namespace tracking {
 
@@ -76,6 +76,6 @@ void RegisterDexFile(const DexFile* dex_file);
 
 }  // namespace tracking
 }  // namespace dex
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_FILE_TRACKING_REGISTRAR_H_

@@ -19,7 +19,7 @@
 #include <museum/8.1.0/external/libcxx/stdlib.h>
 
 // Provide emulation for at_quick_exit/quick_exit on platforms that don't have it.
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Bionic and glibc have quick_exit, Darwin and Windows don't.
@@ -31,4 +31,4 @@ namespace base {
   using ::quick_exit;
 #endif
 }
-}
+} } } }

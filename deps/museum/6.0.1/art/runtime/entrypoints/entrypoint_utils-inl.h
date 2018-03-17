@@ -36,7 +36,7 @@
 #include <museum/6.0.1/art/runtime/runtime.h>
 #include <museum/6.0.1/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline ArtMethod* GetCalleeSaveMethodCaller(Thread* self, Runtime::CalleeSaveType type)
     SHARED_LOCKS_REQUIRED(Locks::mutator_lock_) {
@@ -659,6 +659,6 @@ inline INT_TYPE art_float_to_integral(FLOAT_TYPE f) {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_

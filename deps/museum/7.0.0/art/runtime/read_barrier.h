@@ -28,7 +28,7 @@
 // This is a C++ (not C) header file, separate from read_barrier_c.h
 // which needs to be a C header file for asm_support.h.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Object;
   template<typename MirrorType> class HeapReference;
@@ -104,6 +104,6 @@ class ReadBarrier {
   static constexpr uintptr_t rb_ptr_mask_ = 0x3;  // The low 2 bits for white|gray|black.
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_READ_BARRIER_H_

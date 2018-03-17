@@ -40,7 +40,7 @@
 #include "thread.h"
 #include "thread_list.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace instrumentation {
 
 // Instrumentation works on non-inlined frames by updating returned PCs
@@ -75,4 +75,4 @@ size_t Instrumentation::ComputeFrameId(Thread* self,
 }
 
 }  // namespace instrumentation
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

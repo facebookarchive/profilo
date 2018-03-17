@@ -29,7 +29,7 @@
  *
  * See http://en.wikipedia.org/wiki/UTF-8#Modified_UTF-8 for the details.
  */
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   template<class T> class PrimitiveArray;
@@ -98,6 +98,6 @@ int32_t ComputeUtf8Hash(const char* chars);
  */
 uint16_t GetUtf16FromUtf8(const char** utf8_data_in);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_UTF_H_

@@ -25,7 +25,7 @@
 #include <museum/8.0.0/art/runtime/verifier/method_verifier.h>
 #include <museum/8.0.0/art/runtime/verifier/verifier_deps.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 inline bool RegType::CanAccess(const RegType& other) const {
@@ -201,6 +201,6 @@ inline void* RegType::operator new(size_t size, ScopedArenaAllocator* arena) {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_INL_H_

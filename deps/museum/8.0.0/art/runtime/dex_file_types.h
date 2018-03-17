@@ -20,7 +20,7 @@
 #include <museum/8.0.0/external/libcxx/limits>
 #include <museum/8.0.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace dex {
 
 class StringIndex {
@@ -94,18 +94,18 @@ class TypeIndex {
 std::ostream& operator<<(std::ostream& os, const TypeIndex& index);
 
 }  // namespace dex
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace std {
 
-template<> struct hash<art::dex::StringIndex> {
-  size_t operator()(const art::dex::StringIndex& index) const {
+template<> struct hash<facebook::museum::MUSEUM_VERSION::art::dex::StringIndex> {
+  size_t operator()(const facebook::museum::MUSEUM_VERSION::art::dex::StringIndex& index) const {
     return hash<uint32_t>()(index.index_);
   }
 };
 
-template<> struct hash<art::dex::TypeIndex> {
-  size_t operator()(const art::dex::TypeIndex& index) const {
+template<> struct hash<facebook::museum::MUSEUM_VERSION::art::dex::TypeIndex> {
+  size_t operator()(const facebook::museum::MUSEUM_VERSION::art::dex::TypeIndex& index) const {
     return hash<uint16_t>()(index.index_);
   }
 };

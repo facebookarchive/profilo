@@ -26,7 +26,7 @@
 #include <museum/5.0.0/art/runtime/primitive.h>
 #include <museum/5.0.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ArtFieldOffsets;
 class DexFile;
@@ -182,11 +182,11 @@ class MANAGED ArtField FINAL : public Object {
 
   static GcRoot<Class> java_lang_reflect_ArtField_;
 
-  friend struct art::ArtFieldOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ArtFieldOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(ArtField);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ART_FIELD_H_

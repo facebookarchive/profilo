@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/verifier/method_verifier.h>
 #include <museum/8.0.0/art/runtime/verifier/reg_type_cache-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 // Should we dump a warning on failures to verify balanced locking? That would be an indication to
@@ -199,6 +199,6 @@ inline void RegisterLineArenaDelete::operator()(RegisterLine* ptr) const {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REGISTER_LINE_INL_H_

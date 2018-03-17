@@ -31,7 +31,7 @@
 #include "verify_object-inl.h"
 #include "vmap_table.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 mirror::Object* ShadowFrame::GetThisObject() const {
   mirror::ArtMethod* m = GetMethod();
@@ -339,4 +339,4 @@ void JavaFrameRootInfo::Describe(std::ostream& os) const {
   //    visitor->DescribeLocation() << " vreg=" << vreg_;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

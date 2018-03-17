@@ -25,7 +25,7 @@
 #include <museum/5.0.0/art/runtime/quick/quick_method_frame_info.h>
 #include <museum/5.0.0/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class PACKED(4) OatHeader {
  public:
@@ -192,6 +192,6 @@ class PACKED(4) OatQuickMethodHeader {
   uint32_t code_size_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_H_

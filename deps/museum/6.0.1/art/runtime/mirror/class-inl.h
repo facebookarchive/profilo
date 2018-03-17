@@ -35,7 +35,7 @@
 #include <museum/6.0.1/art/runtime/mirror/string.h>
 #include <museum/6.0.1/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<VerifyObjectFlags kVerifyFlags, ReadBarrierOption kReadBarrierOption>
@@ -897,6 +897,6 @@ inline void Class::CheckPointerSize(size_t pointer_size) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_INL_H_

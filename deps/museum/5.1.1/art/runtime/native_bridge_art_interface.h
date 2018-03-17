@@ -21,7 +21,7 @@
 #include <museum/5.1.1/bionic/libc/stdint.h>
 #include <museum/5.1.1/external/libcxx/string>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Mirror libnativebridge interface. Done to have the ART callbacks out of line, and not require
 // the system/core header file in other files.

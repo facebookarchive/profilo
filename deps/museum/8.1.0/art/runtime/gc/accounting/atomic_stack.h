@@ -36,7 +36,7 @@
 // - Multiple calls to AtomicPushBack*() and AtomicBumpBack() may be made concurrently,
 // provided no other calls are made at the same time.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace accounting {
 
@@ -282,6 +282,6 @@ typedef AtomicStack<mirror::Object> ObjectStack;
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_ATOMIC_STACK_H_

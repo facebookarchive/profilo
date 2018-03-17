@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/dex_file.h>
 #include <museum/7.0.0/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFileVerifier {
  public:
@@ -216,6 +216,6 @@ class DexFileVerifier {
   std::unordered_set<decltype(DexFile::ClassDef::class_idx_)> defined_classes_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_FILE_VERIFIER_H_

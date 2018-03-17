@@ -28,7 +28,7 @@
 #include <museum/8.1.0/art/runtime/gc_root.h>
 #include <museum/8.1.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class OatFile;
 
@@ -289,6 +289,6 @@ class ClassTable {
   friend class ImageWriter;  // for InsertWithoutLocks.
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_TABLE_H_

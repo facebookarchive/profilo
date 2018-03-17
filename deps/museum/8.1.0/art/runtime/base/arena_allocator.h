@@ -27,7 +27,7 @@
 #include <museum/8.1.0/art/runtime/base/macros.h>
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Arena;
 class ArenaPool;
@@ -422,6 +422,6 @@ class MemStats {
   const ssize_t lost_bytes_adjustment_;
 };  // MemStats
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ARENA_ALLOCATOR_H_

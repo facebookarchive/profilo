@@ -31,7 +31,7 @@
 
 #include <museum/8.0.0/external/libcxx/atomic>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline mirror::Class* ClassLinker::FindArrayClass(Thread* self,
                                                   ObjPtr<mirror::Class>* element_class) {
@@ -211,6 +211,6 @@ ArtMethod* ClassLinker::FindMethodForProxy(ObjPtr<mirror::Class> proxy_class,
   UNREACHABLE();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_LINKER_INL_H_

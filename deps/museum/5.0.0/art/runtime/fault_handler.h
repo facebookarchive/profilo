@@ -25,7 +25,7 @@
 
 #include <museum/5.0.0/art/runtime/base/mutex.h>   // For annotalysis.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class ArtMethod;
@@ -125,6 +125,6 @@ class JavaStackTraceHandler FINAL : public FaultHandler {
 // Statically allocated so the the signal handler can Get access to it.
 extern FaultManager fault_manager;
 
-}       // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_FAULT_HANDLER_H_
 

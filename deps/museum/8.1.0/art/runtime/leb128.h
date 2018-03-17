@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/base/logging.h>
 #include <museum/8.1.0/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Reads an unsigned LEB128 value, updating the given pointer to point
 // just past the end of the read value. This function tolerates
@@ -338,6 +338,6 @@ class Leb128EncodingVector FINAL : private Vector,
   DISALLOW_COPY_AND_ASSIGN(Leb128EncodingVector);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LEB128_H_

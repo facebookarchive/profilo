@@ -24,7 +24,7 @@
 #define INTERPRETER_ENTRYPOINT_OFFSET(ptr_size, x) \
     Thread::InterpreterEntryPointOffset<ptr_size>(OFFSETOF_MEMBER(InterpreterEntryPoints, x))
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 union JValue;
 class ShadowFrame;
@@ -38,6 +38,6 @@ struct PACKED(4) InterpreterEntryPoints {
                                            ShadowFrame* shadow_frame, JValue* result);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_INTERPRETER_INTERPRETER_ENTRYPOINTS_H_

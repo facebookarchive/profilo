@@ -17,7 +17,7 @@
 #ifndef ANDROID_BASE_MEMORY_H
 #define ANDROID_BASE_MEMORY_H
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Use memcpy for access to unaligned data on targets with alignment
@@ -36,6 +36,6 @@ static inline void put_unaligned(void* address, T v) {
 }
 
 } // namespace base
-} // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_MEMORY_H

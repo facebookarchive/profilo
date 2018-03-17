@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/base/logging.h>
 #include <museum/8.1.0/art/runtime/arch/instruction_set.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // CodeOffset is a holder for compressed code offsets. Since some architectures have alignment
 // requirements it is possible to compress code offsets to reduce stack map sizes.
@@ -87,6 +87,6 @@ inline std::ostream& operator<<(std::ostream& os, const CodeOffset& offset) {
   return os << offset.Uint32Value();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_CODE_OFFSET_H_

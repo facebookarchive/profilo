@@ -27,7 +27,7 @@
 #include <museum/5.1.1/bionic/libc/stdint.h>
 #include <museum/5.1.1/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class ClassLoader;
@@ -189,6 +189,6 @@ class RegTypeCache {
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_H_

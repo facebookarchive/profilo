@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/read_barrier_c.h>
 #include <museum/6.0.1/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr size_t KB = 1024;
 static constexpr size_t MB = KB * KB;
@@ -127,6 +127,6 @@ static constexpr bool kDefaultMustRelocate = true;
 
 static constexpr bool kArm32QuickCodeUseSoftFloat = false;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GLOBALS_H_

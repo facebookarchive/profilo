@@ -20,7 +20,7 @@
 #include <museum/5.0.0/art/runtime/entrypoints/quick/quick_entrypoints.h>
 #include <museum/5.0.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Define an enum for the entrypoints. Names are prepended a 'kQuick'.
 enum QuickEntrypointEnum
@@ -50,7 +50,7 @@ static ThreadOffset<pointer_size> GetThreadOffset(QuickEntrypointEnum trampoline
   return ThreadOffset<pointer_size>(-1);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_ENUM_H_

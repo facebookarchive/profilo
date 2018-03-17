@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object.h>
 #include <museum/8.1.0/art/runtime/mirror/object_array.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -546,12 +546,12 @@ class MANAGED DexCache FINAL : public Object {
   uint32_t num_resolved_types_;         // Number of elements in the resolved_types_ array.
   uint32_t num_strings_;                // Number of elements in the strings_ array.
 
-  friend struct art::DexCacheOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::DexCacheOffsets;  // for verifying offset information
   friend class Object;  // For VisitReferences
   DISALLOW_IMPLICIT_CONSTRUCTORS(DexCache);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_DEX_CACHE_H_

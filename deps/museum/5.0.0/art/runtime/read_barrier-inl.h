@@ -21,7 +21,7 @@
 
 #include <museum/5.0.0/art/runtime/mirror/object_reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <typename MirrorType, ReadBarrierOption kReadBarrierOption>
 inline MirrorType* ReadBarrier::Barrier(
@@ -58,6 +58,6 @@ inline MirrorType* ReadBarrier::BarrierForRoot(MirrorType** root) {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_READ_BARRIER_INL_H_

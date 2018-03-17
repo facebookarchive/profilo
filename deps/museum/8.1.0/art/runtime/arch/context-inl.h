@@ -44,11 +44,11 @@
 #error unimplemented
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 using RuntimeContextType = RUNTIME_CONTEXT_TYPE;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #undef RUNTIME_CONTEXT_TYPE
 

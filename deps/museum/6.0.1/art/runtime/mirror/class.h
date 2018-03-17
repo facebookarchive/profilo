@@ -35,7 +35,7 @@
 #error IMT_SIZE not defined
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -1318,6 +1318,6 @@ class MANAGED Class FINAL : public Object {
 std::ostream& operator<<(std::ostream& os, const Class::Status& rhs);
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_H_

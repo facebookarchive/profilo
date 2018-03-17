@@ -21,7 +21,7 @@
 
 #include <museum/5.1.1/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class SignalSet {
  public:
@@ -57,6 +57,6 @@ class SignalSet {
   sigset_t set_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SIGNAL_SET_H_

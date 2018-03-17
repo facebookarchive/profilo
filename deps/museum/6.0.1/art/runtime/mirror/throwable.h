@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/object_callbacks.h>
 #include <museum/6.0.1/art/runtime/mirror/string.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ThrowableOffsets;
 
@@ -80,6 +80,6 @@ class MANAGED Throwable : public Object {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_THROWABLE_H_

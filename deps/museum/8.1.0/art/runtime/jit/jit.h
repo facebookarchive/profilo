@@ -26,7 +26,7 @@
 #include <museum/8.1.0/art/runtime/jit/profile_compilation_info.h>
 #include <museum/8.1.0/art/runtime/thread_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class ClassLinker;
@@ -295,6 +295,6 @@ class ScopedJitSuspend {
 };
 
 }  // namespace jit
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_JIT_H_

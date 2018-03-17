@@ -24,7 +24,7 @@
 #include <museum/8.1.0/external/libcxx/stddef.h>
 #include <museum/8.1.0/external/libcxx/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace JDWP {
 
@@ -65,6 +65,6 @@ void expandBufAddLocation(ExpandBuf* pReply, const JdwpLocation& location);
 
 }  // namespace JDWP
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JDWP_JDWP_EXPAND_BUF_H_

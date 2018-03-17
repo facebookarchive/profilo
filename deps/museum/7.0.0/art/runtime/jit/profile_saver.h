@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/jit/offline_profiling_info.h>
 #include <museum/7.0.0/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ProfileSaver {
  public:
@@ -158,6 +158,6 @@ class ProfileSaver {
   DISALLOW_COPY_AND_ASSIGN(ProfileSaver);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_PROFILE_SAVER_H_

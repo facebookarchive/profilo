@@ -50,46 +50,46 @@ class EventHandler;
 // A system-weak container mapping objects to elements of the template type. This corresponds
 // to a weak hash map. For historical reasons the stored value is called "tag."
 template <typename T>
-class JvmtiWeakTable : public art::gc::SystemWeakHolder {
+class JvmtiWeakTable : public facebook::museum::MUSEUM_VERSION::art::gc::SystemWeakHolder {
  public:
   JvmtiWeakTable()
-      : art::gc::SystemWeakHolder(art::kTaggingLockLevel),
+      : facebook::museum::MUSEUM_VERSION::art::gc::SystemWeakHolder(facebook::museum::MUSEUM_VERSION::art::kTaggingLockLevel),
         update_since_last_sweep_(false) {
   }
 
   // Remove the mapping for the given object, returning whether such a mapping existed (and the old
   // value).
-  bool Remove(art::mirror::Object* obj, /* out */ T* tag)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool Remove(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* tag)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_);
-  bool RemoveLocked(art::mirror::Object* obj, /* out */ T* tag)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool RemoveLocked(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* tag)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
   // Set the mapping for the given object. Returns true if this overwrites an already existing
   // mapping.
-  virtual bool Set(art::mirror::Object* obj, T tag)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  virtual bool Set(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T tag)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_);
-  virtual bool SetLocked(art::mirror::Object* obj, T tag)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  virtual bool SetLocked(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T tag)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
   // Return the value associated with the given object. Returns true if the mapping exists, false
   // otherwise.
-  bool GetTag(art::mirror::Object* obj, /* out */ T* result)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool GetTag(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* result)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_) {
-    art::Thread* self = art::Thread::Current();
-    art::MutexLock mu(self, allow_disallow_lock_);
+    facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
+    facebook::museum::MUSEUM_VERSION::art::MutexLock mu(self, allow_disallow_lock_);
     Wait(self);
 
     return GetTagLocked(self, obj, result);
   }
-  bool GetTagLocked(art::mirror::Object* obj, /* out */ T* result)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool GetTagLocked(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* result)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_) {
-    art::Thread* self = art::Thread::Current();
+    facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
     allow_disallow_lock_.AssertHeld(self);
     Wait(self);
 
@@ -97,8 +97,8 @@ class JvmtiWeakTable : public art::gc::SystemWeakHolder {
   }
 
   // Sweep the container. DO NOT CALL MANUALLY.
-  void Sweep(art::IsMarkedVisitor* visitor)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  void Sweep(facebook::museum::MUSEUM_VERSION::art::IsMarkedVisitor* visitor)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_);
 
   // Return all objects that have a value mapping in tags.
@@ -108,7 +108,7 @@ class JvmtiWeakTable : public art::gc::SystemWeakHolder {
                               /* out */ jint* count_ptr,
                               /* out */ jobject** object_result_ptr,
                               /* out */ T** tag_result_ptr)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_);
 
   // Locking functions, to allow coarse-grained locking and amortization.
@@ -116,8 +116,8 @@ class JvmtiWeakTable : public art::gc::SystemWeakHolder {
   void Unlock() RELEASE(allow_disallow_lock_);
   void AssertLocked() ASSERT_CAPABILITY(allow_disallow_lock_);
 
-  art::mirror::Object* Find(T tag)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  facebook::museum::MUSEUM_VERSION::art::mirror::Object* Find(T tag)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_);
 
  protected:
@@ -129,18 +129,18 @@ class JvmtiWeakTable : public art::gc::SystemWeakHolder {
   virtual void HandleNullSweep(T tag ATTRIBUTE_UNUSED) {}
 
  private:
-  bool SetLocked(art::Thread* self, art::mirror::Object* obj, T tag)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool SetLocked(facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T tag)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
-  bool RemoveLocked(art::Thread* self, art::mirror::Object* obj, /* out */ T* tag)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool RemoveLocked(facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* tag)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
-  bool GetTagLocked(art::Thread* self, art::mirror::Object* obj, /* out */ T* result)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool GetTagLocked(facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* result)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_) {
-    auto it = tagged_objects_.find(art::GcRoot<art::mirror::Object>(obj));
+    auto it = tagged_objects_.find(facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>(obj));
     if (it != tagged_objects_.end()) {
       *result = it->second;
       return true;
@@ -148,7 +148,7 @@ class JvmtiWeakTable : public art::gc::SystemWeakHolder {
 
     // Performance optimization: To avoid multiple table updates, ensure that during GC we
     // only update once. See the comment on the implementation of GetTagSlowPath.
-    if (art::kUseReadBarrier &&
+    if (facebook::museum::MUSEUM_VERSION::art::kUseReadBarrier &&
         self != nullptr &&
         self->GetIsGcMarking() &&
         !update_since_last_sweep_) {
@@ -160,19 +160,19 @@ class JvmtiWeakTable : public art::gc::SystemWeakHolder {
 
   // Slow-path for GetTag. We didn't find the object, but we might be storing from-pointers and
   // are asked to retrieve with a to-pointer.
-  bool GetTagSlowPath(art::Thread* self, art::mirror::Object* obj, /* out */ T* result)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  bool GetTagSlowPath(facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* result)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
   // Update the table by doing read barriers on each element, ensuring that to-space pointers
   // are stored.
   void UpdateTableWithReadBarrier()
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
   template <bool kHandleNull>
-  void SweepImpl(art::IsMarkedVisitor* visitor)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+  void SweepImpl(facebook::museum::MUSEUM_VERSION::art::IsMarkedVisitor* visitor)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(!allow_disallow_lock_);
 
   enum TableUpdateNullTarget {
@@ -183,33 +183,33 @@ class JvmtiWeakTable : public art::gc::SystemWeakHolder {
 
   template <typename Updater, TableUpdateNullTarget kTargetNull>
   void UpdateTableWith(Updater& updater)
-      REQUIRES_SHARED(art::Locks::mutator_lock_)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_)
       REQUIRES(allow_disallow_lock_);
 
   template <typename Storage, class Allocator = std::allocator<T>>
   struct ReleasableContainer;
 
   struct HashGcRoot {
-    size_t operator()(const art::GcRoot<art::mirror::Object>& r) const
-        REQUIRES_SHARED(art::Locks::mutator_lock_) {
-      return reinterpret_cast<uintptr_t>(r.Read<art::kWithoutReadBarrier>());
+    size_t operator()(const facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>& r) const
+        REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_) {
+      return reinterpret_cast<uintptr_t>(r.Read<facebook::museum::MUSEUM_VERSION::art::kWithoutReadBarrier>());
     }
   };
 
   struct EqGcRoot {
-    bool operator()(const art::GcRoot<art::mirror::Object>& r1,
-                    const art::GcRoot<art::mirror::Object>& r2) const
-        REQUIRES_SHARED(art::Locks::mutator_lock_) {
-      return r1.Read<art::kWithoutReadBarrier>() == r2.Read<art::kWithoutReadBarrier>();
+    bool operator()(const facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>& r1,
+                    const facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>& r2) const
+        REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_) {
+      return r1.Read<facebook::museum::MUSEUM_VERSION::art::kWithoutReadBarrier>() == r2.Read<facebook::museum::MUSEUM_VERSION::art::kWithoutReadBarrier>();
     }
   };
 
-  std::unordered_map<art::GcRoot<art::mirror::Object>,
+  std::unordered_map<facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>,
                      T,
                      HashGcRoot,
                      EqGcRoot> tagged_objects_
       GUARDED_BY(allow_disallow_lock_)
-      GUARDED_BY(art::Locks::mutator_lock_);
+      GUARDED_BY(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
   // To avoid repeatedly scanning the whole table, remember if we did that since the last sweep.
   bool update_since_last_sweep_;
 };

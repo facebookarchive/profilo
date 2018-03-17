@@ -39,7 +39,7 @@
 #define kJDWPDdmCmdSet  199     /* 0xc7, or 'G'+128 */
 #define kJDWPDdmCmd     1
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace JDWP {
 
@@ -99,6 +99,6 @@ class JdwpNetStateBase {
 
 }  // namespace JDWP
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JDWP_JDWP_PRIV_H_

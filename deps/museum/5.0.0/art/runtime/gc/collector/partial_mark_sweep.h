@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/art/runtime/gc/collector/mark_sweep.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -45,6 +45,6 @@ class PartialMarkSweep : public MarkSweep {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_PARTIAL_MARK_SWEEP_H_

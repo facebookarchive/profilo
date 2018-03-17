@@ -37,7 +37,7 @@
 #include <museum/7.1.2/art/runtime/mirror/string.h>
 #include <museum/7.1.2/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<VerifyObjectFlags kVerifyFlags, ReadBarrierOption kReadBarrierOption>
@@ -661,7 +661,7 @@ inline void Class::SetName(String* name) {
 template<VerifyObjectFlags kVerifyFlags>
 inline Primitive::Type Class::GetPrimitiveType() {
   static_assert(sizeof(Primitive::Type) == sizeof(int32_t),
-                "art::Primitive::Type and int32_t have different sizes.");
+                "facebook::museum::MUSEUM_VERSION::art::Primitive::Type and int32_t have different sizes.");
   int32_t v32 = GetField32<kVerifyFlags>(OFFSET_OF_OBJECT_MEMBER(Class, primitive_type_));
   Primitive::Type type = static_cast<Primitive::Type>(v32 & 0xFFFF);
   DCHECK_EQ(static_cast<size_t>(v32 >> 16), Primitive::ComponentSizeShift(type));
@@ -671,7 +671,7 @@ inline Primitive::Type Class::GetPrimitiveType() {
 template<VerifyObjectFlags kVerifyFlags>
 inline size_t Class::GetPrimitiveTypeSizeShift() {
   static_assert(sizeof(Primitive::Type) == sizeof(int32_t),
-                "art::Primitive::Type and int32_t have different sizes.");
+                "facebook::museum::MUSEUM_VERSION::art::Primitive::Type and int32_t have different sizes.");
   int32_t v32 = GetField32<kVerifyFlags>(OFFSET_OF_OBJECT_MEMBER(Class, primitive_type_));
   size_t size_shift = static_cast<Primitive::Type>(v32 >> 16);
   DCHECK_EQ(size_shift, Primitive::ComponentSizeShift(static_cast<Primitive::Type>(v32 & 0xFFFF)));
@@ -1105,6 +1105,6 @@ inline void Class::FixupNativePointers(mirror::Class* dest,
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_INL_H_

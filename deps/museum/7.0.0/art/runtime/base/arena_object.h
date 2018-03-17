@@ -21,7 +21,7 @@
 #include <museum/7.0.0/art/runtime/base/logging.h>
 #include <museum/7.0.0/art/runtime/base/scoped_arena_allocator.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Parent for arena allocated objects giving appropriate new and delete operators.
 template<enum ArenaAllocKind kAllocKind>
@@ -65,6 +65,6 @@ class DeletableArenaObject {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ARENA_OBJECT_H_

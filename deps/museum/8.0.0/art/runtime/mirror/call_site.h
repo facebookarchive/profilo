@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/mirror/method_handle_impl.h>
 #include <museum/8.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct CallSiteOffsets;
 
@@ -54,11 +54,11 @@ class MANAGED CallSite : public Object {
 
   static GcRoot<mirror::Class> static_class_;  // java.lang.invoke.CallSite.class
 
-  friend struct art::CallSiteOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::CallSiteOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(CallSite);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CALL_SITE_H_

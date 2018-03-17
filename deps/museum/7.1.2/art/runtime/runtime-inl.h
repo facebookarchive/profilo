@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/class_linker.h>
 #include <museum/7.1.2/art/runtime/read_barrier-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline bool Runtime::IsClearedJniWeakGlobal(mirror::Object* obj) {
   return obj == GetClearedJniWeakGlobal();
@@ -77,6 +77,6 @@ inline ArtMethod* Runtime::GetCalleeSaveMethodUnchecked(CalleeSaveType type)
   return reinterpret_cast<ArtMethod*>(callee_save_methods_[type]);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_RUNTIME_INL_H_

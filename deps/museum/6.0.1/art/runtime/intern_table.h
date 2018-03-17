@@ -25,7 +25,7 @@
 #include <museum/6.0.1/art/runtime/gc_root.h>
 #include <museum/6.0.1/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace space {
@@ -237,6 +237,6 @@ class InternTable {
   Table weak_interns_ GUARDED_BY(Locks::intern_table_lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERN_TABLE_H_

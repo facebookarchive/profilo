@@ -20,7 +20,7 @@
 #include <museum/7.1.2/art/runtime/base/macros.h>
 #include <museum/7.1.2/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -82,6 +82,6 @@ class ImmuneRegion {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_IMMUNE_REGION_H_

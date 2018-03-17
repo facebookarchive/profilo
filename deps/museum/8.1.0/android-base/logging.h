@@ -63,7 +63,7 @@
 
 #include <museum/8.1.0/android-base/macros.h>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 enum LogSeverity {
@@ -436,6 +436,6 @@ class ScopedLogSeverity {
 };
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_LOGGING_H

@@ -26,7 +26,7 @@
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 #include <museum/8.1.0/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Class;
@@ -235,6 +235,6 @@ std::ostream& operator << (std::ostream& stream, const SpaceBitmap<kAlignment>& 
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_SPACE_BITMAP_H_

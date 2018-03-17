@@ -20,7 +20,7 @@
 #include <stdarg.h>
 #include <museum/7.0.0/external/libcxx/string>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Returns a string corresponding to printf-like formatting of the arguments.
 std::string StringPrintf(const char* fmt, ...)
@@ -33,6 +33,6 @@ void StringAppendF(std::string* dst, const char* fmt, ...)
 // Appends a printf-like formatting of the arguments to 'dst'.
 void StringAppendV(std::string* dst, const char* format, va_list ap);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_STRINGPRINTF_H_

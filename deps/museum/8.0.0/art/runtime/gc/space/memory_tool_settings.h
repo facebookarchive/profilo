@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_SPACE_MEMORY_TOOL_SETTINGS_H_
 #define ART_RUNTIME_GC_SPACE_MEMORY_TOOL_SETTINGS_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -27,6 +27,6 @@ static constexpr size_t kDefaultMemoryToolRedZoneBytes = 8;
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_MEMORY_TOOL_SETTINGS_H_

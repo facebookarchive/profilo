@@ -19,7 +19,7 @@
 
 #include <museum/6.0.1/art/runtime/arch/instruction_set_features.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Instruction set features relevant to the ARM64 architecture.
 class Arm64InstructionSetFeatures FINAL : public InstructionSetFeatures {
@@ -103,6 +103,6 @@ class Arm64InstructionSetFeatures FINAL : public InstructionSetFeatures {
   DISALLOW_COPY_AND_ASSIGN(Arm64InstructionSetFeatures);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM64_INSTRUCTION_SET_FEATURES_ARM64_H_

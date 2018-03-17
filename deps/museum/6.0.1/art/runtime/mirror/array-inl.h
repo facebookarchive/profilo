@@ -27,7 +27,7 @@
 #include <museum/6.0.1/art/runtime/gc/heap-inl.h>
 #include <museum/6.0.1/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t Array::ClassSize(size_t pointer_size) {
@@ -396,6 +396,6 @@ inline void PointerArray::SetElementPtrSize(uint32_t idx, T element, size_t ptr_
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ARRAY_INL_H_

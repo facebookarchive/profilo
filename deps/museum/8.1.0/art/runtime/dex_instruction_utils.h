@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/dex_instruction.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Dex invoke type corresponds to the ordering of INVOKE instructions;
 // this order is the same for range and non-range invokes.
@@ -214,6 +214,6 @@ constexpr DexMemAccessType AGetOrAPutMemAccessType(Instruction::Code code) {
   return (code >= Instruction::APUT) ? APutMemAccessType(code) : AGetMemAccessType(code);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_INSTRUCTION_UTILS_H_

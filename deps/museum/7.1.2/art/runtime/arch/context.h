@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/base/macros.h>
 #include <museum/7.1.2/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class QuickMethodFrameInfo;
 
@@ -99,6 +99,6 @@ class Context {
   };
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_CONTEXT_H_

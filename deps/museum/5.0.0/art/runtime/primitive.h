@@ -23,7 +23,7 @@
 #include <museum/5.0.0/art/runtime/base/macros.h>
 #include <museum/5.0.0/art/runtime/mirror/object_reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -122,6 +122,6 @@ class Primitive {
 
 std::ostream& operator<<(std::ostream& os, const Primitive::Type& state);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_PRIMITIVE_H_

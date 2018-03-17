@@ -32,7 +32,7 @@
 #include <museum/8.0.0/art/runtime/utf.h>
 #include <museum/8.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t String::ClassSize(PointerSize pointer_size) {
@@ -326,6 +326,6 @@ inline bool String::DexFileStringAllASCII(const char* chars, const int length) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_STRING_INL_H_

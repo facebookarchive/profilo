@@ -19,10 +19,10 @@
 
 #include <museum/8.0.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void register_java_lang_reflect_Parameter(JNIEnv* env);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_JAVA_LANG_REFLECT_PARAMETER_H_

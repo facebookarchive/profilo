@@ -24,7 +24,7 @@
 #include <museum/5.0.0/art/runtime/base/macros.h>
 #include <museum/5.0.0/art/runtime/globals.h>       // For KB.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum InstructionSet {
   kNone,
@@ -284,6 +284,6 @@ static inline TwoWordReturn GetTwoWordSuccessValue(uintptr_t hi, uintptr_t lo) {
 #error "Unsupported architecture"
 #endif
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INSTRUCTION_SET_H_

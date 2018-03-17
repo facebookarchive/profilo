@@ -24,10 +24,10 @@
 #include <museum/7.1.2/art/runtime/verifier/reg_type.h>
 #include <museum/7.1.2/art/runtime/verifier/reg_type_cache.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
-inline const art::verifier::RegType& RegTypeCache::GetFromId(uint16_t id) const {
+inline const facebook::museum::MUSEUM_VERSION::art::verifier::RegType& RegTypeCache::GetFromId(uint16_t id) const {
   DCHECK_LT(id, entries_.size());
   const RegType* result = entries_[id];
   DCHECK(result != nullptr);
@@ -131,5 +131,5 @@ inline RegTypeType& RegTypeCache::AddEntry(RegTypeType* new_entry) {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_INL_H_

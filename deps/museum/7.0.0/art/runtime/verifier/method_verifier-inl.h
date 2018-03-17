@@ -23,7 +23,7 @@
 #include <museum/7.0.0/art/runtime/mirror/dex_cache.h>
 #include <museum/7.0.0/art/runtime/handle_scope-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 inline const DexFile::CodeItem* MethodVerifier::CodeItem() const {
@@ -82,6 +82,6 @@ inline const RegType& MethodVerifier::ResolveCheckedClass(uint32_t class_idx) {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_METHOD_VERIFIER_INL_H_

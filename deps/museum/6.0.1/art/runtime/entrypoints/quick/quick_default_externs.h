@@ -19,14 +19,14 @@
 
 #include <museum/6.0.1/external/libcxx/cstdint>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Array;
 class Class;
 class Object;
 }  // namespace mirror
 class ArtMethod;
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 // These are extern declarations of assembly stubs with common names.
 

@@ -19,7 +19,7 @@
 
 #include <museum/5.1.1/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 // Which types of collections are able to be performed.
@@ -47,6 +47,6 @@ enum CollectorType {
 std::ostream& operator<<(std::ostream& os, const CollectorType& collector_type);
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_TYPE_H_

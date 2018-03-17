@@ -26,7 +26,7 @@
 #include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
 #include <museum/8.0.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -119,6 +119,6 @@ inline void IrtEntry::SetReference(ObjPtr<mirror::Object> obj) {
   references_[serial_] = GcRoot<mirror::Object>(obj);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_

@@ -20,7 +20,7 @@
 #include <museum/6.0.1/art/runtime/fbentrypoints.h>
 #include <museum/6.0.1/art/runtime/entrypoints/quick/quick_entrypoints.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #ifndef BUILDING_LIBART
 #error "File and symbols only for use within libart."
@@ -41,7 +41,7 @@ static inline const void* GetQuickImtConflictStub() {
 extern "C" void art_quick_to_interpreter_bridge(ArtMethod*);
 static inline const void* GetQuickToInterpreterBridge() {
   // FB
-  QuickEntryPoints* entrypoints = (QuickEntryPoints*) facebook::art::HostEntryPoints::quick_entrypoints;
+  QuickEntryPoints* entrypoints = (QuickEntryPoints*) facebook::museum::MUSEUM_VERSION::art::entrypoints::HostEntryPoints::quick_entrypoints;
   return reinterpret_cast<const void*>(entrypoints->pQuickToInterpreterBridge);
   // return reinterpret_cast<const void*>(art_quick_to_interpreter_bridge);
   // FB END
@@ -51,7 +51,7 @@ static inline const void* GetQuickToInterpreterBridge() {
 extern "C" void art_quick_generic_jni_trampoline(ArtMethod*);
 static inline const void* GetQuickGenericJniStub() {
   // FB
-  QuickEntryPoints* entrypoints = (QuickEntryPoints*) facebook::art::HostEntryPoints::quick_entrypoints;
+  QuickEntryPoints* entrypoints = (QuickEntryPoints*) facebook::museum::MUSEUM_VERSION::art::entrypoints::HostEntryPoints::quick_entrypoints;
   return reinterpret_cast<const void*>(entrypoints->pQuickGenericJniTrampoline);
   // return reinterpret_cast<const void*>(art_quick_generic_jni_trampoline);
   // FB END
@@ -67,7 +67,7 @@ static inline const void* GetQuickProxyInvokeHandler() {
 extern "C" void art_quick_resolution_trampoline(ArtMethod*);
 static inline const void* GetQuickResolutionStub() {
   // FB
-  QuickEntryPoints* entrypoints = (QuickEntryPoints*) facebook::art::HostEntryPoints::quick_entrypoints;
+  QuickEntryPoints* entrypoints = (QuickEntryPoints*) facebook::museum::MUSEUM_VERSION::art::entrypoints::HostEntryPoints::quick_entrypoints;
   return reinterpret_cast<const void*>(entrypoints->pQuickResolutionTrampoline);
   // return reinterpret_cast<const void*>(art_quick_resolution_trampoline);
   // FB END
@@ -93,6 +93,6 @@ static inline const void* GetQuickInstrumentationExitPc() {
   return reinterpret_cast<const void*>(art_quick_instrumentation_exit);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_RUNTIME_ASM_ENTRYPOINTS_H_

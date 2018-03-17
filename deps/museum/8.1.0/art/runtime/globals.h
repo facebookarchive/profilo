@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/read_barrier_c.h>
 #include <museum/8.1.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr size_t KB = 1024;
 static constexpr size_t MB = KB * KB;
@@ -175,6 +175,6 @@ static constexpr bool kIsVdexEnabled = false;
 // Size of a heap reference.
 static constexpr size_t kHeapReferenceSize = sizeof(uint32_t);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GLOBALS_H_

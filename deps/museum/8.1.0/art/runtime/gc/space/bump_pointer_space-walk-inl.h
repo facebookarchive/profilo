@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object-inl.h>
 #include <museum/8.1.0/art/runtime/thread-current-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -95,6 +95,6 @@ inline void BumpPointerSpace::Walk(Visitor&& visitor) {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_WALK_INL_H_

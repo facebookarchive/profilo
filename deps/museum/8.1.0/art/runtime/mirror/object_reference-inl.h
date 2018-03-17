@@ -21,7 +21,7 @@
 
 #include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<bool kPoisonReferences, class MirrorType>
@@ -44,6 +44,6 @@ bool HeapReference<MirrorType>::CasWeakRelaxed(MirrorType* expected_ptr, MirrorT
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_REFERENCE_INL_H_

@@ -23,7 +23,7 @@
 #include <museum/6.0.1/art/runtime/base/macros.h>
 #include <museum/6.0.1/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mips {
 
 enum Register {
@@ -104,6 +104,6 @@ enum FRegister {
 std::ostream& operator<<(std::ostream& os, const FRegister& rhs);
 
 }  // namespace mips
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS_REGISTERS_MIPS_H_

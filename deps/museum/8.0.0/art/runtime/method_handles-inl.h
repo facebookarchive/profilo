@@ -29,7 +29,7 @@
 #include <museum/8.0.0/art/runtime/reflection.h>
 #include <museum/8.0.0/art/runtime/stack.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline bool ConvertArgumentValue(Handle<mirror::MethodType> callsite_type,
                                  Handle<mirror::MethodType> callee_type,
@@ -134,6 +134,6 @@ bool PerformConversions(Thread* self,
   return true;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_HANDLES_INL_H_

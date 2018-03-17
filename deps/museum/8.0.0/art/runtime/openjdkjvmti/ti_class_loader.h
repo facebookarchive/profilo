@@ -70,29 +70,29 @@ namespace openjdkjvmti {
 // the same time and have less required cleanup.
 class ClassLoaderHelper {
  public:
-  static bool AddToClassLoader(art::Thread* self,
-                               art::Handle<art::mirror::ClassLoader> loader,
-                               const art::DexFile* dex_file)
-      REQUIRES_SHARED(art::Locks::mutator_lock_);
+  static bool AddToClassLoader(facebook::museum::MUSEUM_VERSION::art::Thread* self,
+                               facebook::museum::MUSEUM_VERSION::art::Handle<facebook::museum::MUSEUM_VERSION::art::mirror::ClassLoader> loader,
+                               const facebook::museum::MUSEUM_VERSION::art::DexFile* dex_file)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
 
   // Finds a java.lang.DexFile object that is associated with the given ClassLoader. Each of these
-  // j.l.DexFile objects holds several art::DexFile*s in it.
+  // j.l.DexFile objects holds several facebook::museum::MUSEUM_VERSION::art::DexFile*s in it.
   // TODO This should return the actual source java.lang.DexFile object for the klass being loaded.
-  static art::ObjPtr<art::mirror::Object> FindSourceDexFileObject(
-      art::Thread* self, art::Handle<art::mirror::ClassLoader> loader)
-      REQUIRES_SHARED(art::Locks::mutator_lock_);
+  static facebook::museum::MUSEUM_VERSION::art::ObjPtr<facebook::museum::MUSEUM_VERSION::art::mirror::Object> FindSourceDexFileObject(
+      facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::Handle<facebook::museum::MUSEUM_VERSION::art::mirror::ClassLoader> loader)
+      REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
 
-  static art::ObjPtr<art::mirror::LongArray> GetDexFileCookie(
-      art::Handle<art::mirror::Object> java_dex_file) REQUIRES_SHARED(art::Locks::mutator_lock_);
+  static facebook::museum::MUSEUM_VERSION::art::ObjPtr<facebook::museum::MUSEUM_VERSION::art::mirror::LongArray> GetDexFileCookie(
+      facebook::museum::MUSEUM_VERSION::art::Handle<facebook::museum::MUSEUM_VERSION::art::mirror::Object> java_dex_file) REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
 
-  static art::ObjPtr<art::mirror::LongArray> AllocateNewDexFileCookie(
-      art::Thread* self,
-      art::Handle<art::mirror::LongArray> old_dex_file_cookie,
-      const art::DexFile* new_dex_file) REQUIRES_SHARED(art::Locks::mutator_lock_);
+  static facebook::museum::MUSEUM_VERSION::art::ObjPtr<facebook::museum::MUSEUM_VERSION::art::mirror::LongArray> AllocateNewDexFileCookie(
+      facebook::museum::MUSEUM_VERSION::art::Thread* self,
+      facebook::museum::MUSEUM_VERSION::art::Handle<facebook::museum::MUSEUM_VERSION::art::mirror::LongArray> old_dex_file_cookie,
+      const facebook::museum::MUSEUM_VERSION::art::DexFile* new_dex_file) REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
 
-  static void UpdateJavaDexFile(art::ObjPtr<art::mirror::Object> java_dex_file,
-                                art::ObjPtr<art::mirror::LongArray> new_cookie)
-      REQUIRES(art::Roles::uninterruptible_) REQUIRES_SHARED(art::Locks::mutator_lock_);
+  static void UpdateJavaDexFile(facebook::museum::MUSEUM_VERSION::art::ObjPtr<facebook::museum::MUSEUM_VERSION::art::mirror::Object> java_dex_file,
+                                facebook::museum::MUSEUM_VERSION::art::ObjPtr<facebook::museum::MUSEUM_VERSION::art::mirror::LongArray> new_cookie)
+      REQUIRES(facebook::museum::MUSEUM_VERSION::art::Roles::uninterruptible_) REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_);
 };
 
 }  // namespace openjdkjvmti

@@ -19,12 +19,12 @@
 
 #include <museum/8.0.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct JobjectComparator {
   bool operator()(jobject jobj1, jobject jobj2) const;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JOBJECT_COMPARATOR_H_

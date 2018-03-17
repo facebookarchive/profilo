@@ -21,7 +21,7 @@
 #include <museum/5.1.1/art/runtime/verifier/reg_type_cache.h>
 #include <museum/5.1.1/art/runtime/class_linker.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 inline RegType& RegTypeCache::GetFromId(uint16_t id) const {
@@ -41,5 +41,5 @@ inline ConstantType& RegTypeCache::FromCat1Const(int32_t value, bool precise) {
 }
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_CACHE_INL_H_

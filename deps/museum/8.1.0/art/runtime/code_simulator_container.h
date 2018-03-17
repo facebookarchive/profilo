@@ -21,7 +21,7 @@
 #include <museum/8.1.0/art/runtime/base/logging.h>
 #include <museum/8.1.0/art/runtime/simulator/code_simulator.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // This container dynamically opens and closes libart-simulator.
 class CodeSimulatorContainer {
@@ -50,6 +50,6 @@ class CodeSimulatorContainer {
   DISALLOW_COPY_AND_ASSIGN(CodeSimulatorContainer);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CODE_SIMULATOR_CONTAINER_H_

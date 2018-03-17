@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/base/enums.h>
 #include <museum/8.1.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 
@@ -212,6 +212,6 @@ class ImtConflictTable {
   DISALLOW_COPY_AND_ASSIGN(ImtConflictTable);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_IMT_CONFLICT_TABLE_H_

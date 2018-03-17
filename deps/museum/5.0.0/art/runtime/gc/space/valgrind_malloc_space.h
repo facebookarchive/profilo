@@ -21,7 +21,7 @@
 
 #include <museum/5.0.0/art/runtime/valgrind.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -57,6 +57,6 @@ class ValgrindMallocSpace FINAL : public BaseMallocSpaceType {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_VALGRIND_MALLOC_SPACE_H_

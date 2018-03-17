@@ -43,7 +43,7 @@
 #include <museum/5.0.0/art/runtime/thread_state.h>
 #include <museum/5.0.0/art/runtime/throw_location.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace collector {
@@ -1174,6 +1174,6 @@ class Thread {
 std::ostream& operator<<(std::ostream& os, const Thread& thread);
 std::ostream& operator<<(std::ostream& os, const ThreadState& state);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_H_

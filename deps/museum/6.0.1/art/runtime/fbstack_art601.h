@@ -19,8 +19,8 @@
 #include <museum/6.0.1/libnativehelper/jni.h>
 #include <museum/6.0.1/bionic/libc/unistd.h>
 
-namespace facebook {
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
+namespace entrypoints {
 
 struct JavaFrame {
   uint32_t methodIdx;
@@ -31,5 +31,5 @@ void InitRuntime();
 void InstallRuntime(JNIEnv* env, void* thread);
 size_t GetStackTrace(JavaFrame* frames, size_t max_frames, void* thread);
 
-} // namespace art601
-} // namespace facebook
+} // namespace entrypoints
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art601

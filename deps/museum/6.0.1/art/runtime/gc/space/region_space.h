@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/gc/space/space.h>
 #include <museum/6.0.1/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -525,6 +525,6 @@ std::ostream& operator<<(std::ostream& os, const RegionSpace::RegionType& value)
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_REGION_SPACE_H_

@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/base/logging.h>
 #include <museum/7.0.0/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr size_t kObjectReferenceSize = 4;
 
@@ -226,6 +226,6 @@ class Primitive {
 
 std::ostream& operator<<(std::ostream& os, const Primitive::Type& state);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_PRIMITIVE_H_

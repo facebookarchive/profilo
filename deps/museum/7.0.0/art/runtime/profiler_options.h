@@ -20,7 +20,7 @@
 #include <museum/7.0.0/external/libcxx/string>
 #include <museum/7.0.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum ProfileDataType {
   kProfilerMethod,          // Method only
@@ -153,7 +153,7 @@ class ProfilerOptions {
   uint32_t max_stack_depth_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 
 #endif  // ART_RUNTIME_PROFILER_OPTIONS_H_

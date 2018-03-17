@@ -19,10 +19,10 @@
 
 #include <museum/8.1.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void register_java_util_concurrent_atomic_AtomicLong(JNIEnv* env);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_JAVA_UTIL_CONCURRENT_ATOMIC_ATOMICLONG_H_

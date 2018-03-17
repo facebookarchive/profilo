@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/dex_file.h>
 #include <museum/8.1.0/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class InstructionSetFeatures;
 
@@ -185,6 +185,6 @@ class PACKED(4) OatMethodOffsets {
   uint32_t code_offset_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_H_

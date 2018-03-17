@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/base/macros.h>
 #include <museum/8.1.0/art/runtime/gc/collector/partial_mark_sweep.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -60,6 +60,6 @@ class StickyMarkSweep FINAL : public PartialMarkSweep {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_STICKY_MARK_SWEEP_H_

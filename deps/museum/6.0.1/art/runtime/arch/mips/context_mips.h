@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/base/macros.h>
 #include <museum/6.0.1/art/runtime/arch/mips/registers_mips.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mips {
 
 class MipsContext : public Context {
@@ -86,6 +86,6 @@ class MipsContext : public Context {
   uintptr_t sp_, ra_;
 };
 }  // namespace mips
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS_CONTEXT_MIPS_H_

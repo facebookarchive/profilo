@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/mirror/object.h>
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class T> class Handle;
 struct StringOffsets;
@@ -183,13 +183,13 @@ class MANAGED String FINAL : public Object {
 
   static GcRoot<Class> java_lang_String_;
 
-  friend struct art::StringOffsets;  // for verifying offset information
-  ART_FRIEND_TEST(art::StubTest, ReadBarrierForRoot);  // For java_lang_String_.
+  friend struct facebook::museum::MUSEUM_VERSION::art::StringOffsets;  // for verifying offset information
+  ART_FRIEND_TEST(facebook::museum::MUSEUM_VERSION::art::StubTest, ReadBarrierForRoot);  // For java_lang_String_.
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(String);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_STRING_H_

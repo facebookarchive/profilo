@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/globals.h>
 #include <museum/8.1.0/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace accounting {
 
@@ -116,6 +116,6 @@ class ReadBarrierTable {
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_READ_BARRIER_TABLE_H_

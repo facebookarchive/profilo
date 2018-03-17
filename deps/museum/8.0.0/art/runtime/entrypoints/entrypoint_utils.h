@@ -30,7 +30,7 @@
 #include <museum/8.0.0/art/runtime/jvalue.h>
 #include <museum/8.0.0/art/runtime/runtime.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Array;
@@ -194,6 +194,6 @@ CallerAndOuterMethod GetCalleeSaveMethodCallerAndOuterMethod(Thread* self,
 ArtMethod* GetCalleeSaveOuterMethod(Thread* self, Runtime::CalleeSaveType type)
     REQUIRES_SHARED(Locks::mutator_lock_);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_H_

@@ -21,7 +21,7 @@
 
 #include <museum/8.0.0/art/runtime/gc/space/space.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace accounting {
 
@@ -40,6 +40,6 @@ class ModUnionTableToZygoteAllocspace : public ModUnionTableReferenceCache {
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_MOD_UNION_TABLE_INL_H_

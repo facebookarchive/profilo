@@ -25,7 +25,7 @@
 
 #include <museum/8.1.0/art/runtime/interpreter/shadow_frame.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline ShadowFrame* ManagedStack::PushShadowFrame(ShadowFrame* new_top_frame) {
   DCHECK(top_quick_frame_ == nullptr);
@@ -43,6 +43,6 @@ inline ShadowFrame* ManagedStack::PopShadowFrame() {
   return frame;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MANAGED_STACK_INL_H_

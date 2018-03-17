@@ -39,7 +39,7 @@
 #include "thread.h"
 #include "thread_list.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace instrumentation {
 
 constexpr bool kVerboseInstrumentation = false;
@@ -1066,4 +1066,4 @@ std::string InstrumentationStackFrame::Dump() const {
 }
 
 }  // namespace instrumentation
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

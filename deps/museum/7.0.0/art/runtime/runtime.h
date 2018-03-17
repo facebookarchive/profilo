@@ -41,7 +41,7 @@
 #include <museum/7.0.0/art/runtime/runtime_stats.h>
 #include <museum/7.0.0/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
   class Heap;
@@ -882,6 +882,6 @@ class Runtime {
 };
 std::ostream& operator<<(std::ostream& os, const Runtime::CalleeSaveType& rhs);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_RUNTIME_H_

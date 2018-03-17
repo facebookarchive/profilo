@@ -19,7 +19,7 @@
 
 #include <museum/8.0.0/art/runtime/base/arena_allocator.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArenaPool;
 
@@ -59,6 +59,6 @@ class LinearAlloc {
   DISALLOW_IMPLICIT_CONSTRUCTORS(LinearAlloc);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LINEAR_ALLOC_H_

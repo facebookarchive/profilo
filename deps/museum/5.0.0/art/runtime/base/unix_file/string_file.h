@@ -45,8 +45,8 @@ class StringFile : public RandomAccessFile {
   virtual int64_t Write(const char* buf, int64_t byte_count, int64_t offset);
 
   // Bonus API.
-  void Assign(const art::StringPiece& new_data);
-  const art::StringPiece ToStringPiece() const;
+  void Assign(const facebook::museum::MUSEUM_VERSION::art::StringPiece& new_data);
+  const facebook::museum::MUSEUM_VERSION::art::StringPiece ToStringPiece() const;
 
  private:
   std::string data_;

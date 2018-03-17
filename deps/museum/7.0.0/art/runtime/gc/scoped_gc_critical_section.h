@@ -21,7 +21,7 @@
 #include <museum/7.0.0/art/runtime/gc/collector_type.h>
 #include <museum/7.0.0/art/runtime/gc/gc_cause.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Thread;
 
@@ -42,6 +42,6 @@ class ScopedGCCriticalSection {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SCOPED_GC_CRITICAL_SECTION_H_

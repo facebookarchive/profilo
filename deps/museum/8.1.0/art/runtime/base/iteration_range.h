@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/external/libcxx/iterator>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Helper class that acts as a container for range-based loops, given an iteration
 // range [first, last) defined by two iterators.
@@ -65,6 +65,6 @@ inline auto ReverseRange(T (&array)[size]) {
   return ReverseRange(MakeIterationRange<T*>(array, array+size));
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ITERATION_RANGE_H_

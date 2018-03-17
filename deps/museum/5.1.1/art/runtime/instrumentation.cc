@@ -41,7 +41,7 @@
 #include "thread.h"
 #include "thread_list.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace instrumentation {
 
@@ -115,9 +115,9 @@ static void UpdateEntrypoints(mirror::ArtMethod* method, const void* quick_code,
       }
       DCHECK(!method->IsNative()) << PrettyMethod(method);
       DCHECK(!method->IsProxyMethod()) << PrettyMethod(method);
-      method->SetEntryPointFromInterpreter(art::interpreter::artInterpreterToInterpreterBridge);
+      method->SetEntryPointFromInterpreter(facebook::museum::MUSEUM_VERSION::art::interpreter::artInterpreterToInterpreterBridge);
     } else {
-      method->SetEntryPointFromInterpreter(art::artInterpreterToCompiledCodeBridge);
+      method->SetEntryPointFromInterpreter(facebook::museum::MUSEUM_VERSION::art::artInterpreterToCompiledCodeBridge);
     }
   }
 }
@@ -1155,4 +1155,4 @@ std::string InstrumentationStackFrame::Dump() const {
 }
 
 }  // namespace instrumentation
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

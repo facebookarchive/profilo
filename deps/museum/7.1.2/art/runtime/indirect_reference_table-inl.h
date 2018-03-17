@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/runtime-inl.h>
 #include <museum/7.1.2/art/runtime/verify_object-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -101,6 +101,6 @@ inline void IndirectReferenceTable::Update(IndirectRef iref, mirror::Object* obj
   table_[idx].SetReference(obj);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_

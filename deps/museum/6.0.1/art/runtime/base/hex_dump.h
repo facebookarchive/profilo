@@ -21,7 +21,7 @@
 
 #include <museum/6.0.1/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Prints a hex dump in this format:
 //
@@ -50,6 +50,6 @@ inline std::ostream& operator<<(std::ostream& os, const HexDump& rhs) {
   return os;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_HEX_DUMP_H_

@@ -33,7 +33,7 @@
 #include <museum/7.0.0/art/runtime/os.h>
 #include <museum/7.0.0/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -303,6 +303,6 @@ class Trace FINAL : public instrumentation::InstrumentationListener {
   DISALLOW_COPY_AND_ASSIGN(Trace);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_TRACE_H_

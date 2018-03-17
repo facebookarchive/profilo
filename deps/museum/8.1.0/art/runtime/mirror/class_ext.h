@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object_array.h>
 #include <museum/8.1.0/art/runtime/mirror/string.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ClassExtOffsets;
 
@@ -95,11 +95,11 @@ class MANAGED ClassExt : public Object {
 
   static GcRoot<Class> dalvik_system_ClassExt_;
 
-  friend struct art::ClassExtOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ClassExtOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(ClassExt);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_EXT_H_

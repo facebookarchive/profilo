@@ -29,7 +29,7 @@
 #include <museum/5.0.0/art/runtime/runtime.h>
 #include <museum/5.0.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #define CHECK_MUTEX_CALL(call, args) CHECK_PTHREAD_CALL(call, args, name_)
 
@@ -251,6 +251,6 @@ inline uint64_t ReaderWriterMutex::GetExclusiveOwnerTid() const {
 #endif
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_MUTEX_INL_H_

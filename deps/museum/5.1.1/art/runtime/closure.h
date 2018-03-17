@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_CLOSURE_H_
 #define ART_RUNTIME_CLOSURE_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Thread;
 
@@ -27,6 +27,6 @@ class Closure {
   virtual void Run(Thread* self) = 0;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLOSURE_H_

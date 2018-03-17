@@ -22,7 +22,7 @@
 #include <museum/5.0.0/art/runtime/read_barrier_c.h>
 #include <museum/5.0.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 typedef uint8_t byte;
 typedef intptr_t word;
@@ -120,6 +120,6 @@ static constexpr TraceClockSource kDefaultTraceClockSource = kTraceClockSourceWa
 
 static constexpr bool kDefaultMustRelocate = true;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GLOBALS_H_

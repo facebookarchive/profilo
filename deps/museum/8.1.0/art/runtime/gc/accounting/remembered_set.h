@@ -24,7 +24,7 @@
 #include <museum/8.1.0/external/libcxx/set>
 #include <museum/8.1.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 namespace collector {
@@ -81,6 +81,6 @@ class RememberedSet {
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_REMEMBERED_SET_H_

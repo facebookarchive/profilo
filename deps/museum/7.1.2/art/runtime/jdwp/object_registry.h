@@ -27,7 +27,7 @@
 #include <museum/7.1.2/art/runtime/jdwp/jdwp.h>
 #include <museum/7.1.2/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Object;
@@ -132,6 +132,6 @@ class ObjectRegistry {
   size_t next_id_ GUARDED_BY(lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JDWP_OBJECT_REGISTRY_H_

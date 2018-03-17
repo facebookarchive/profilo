@@ -27,7 +27,7 @@
 #include <museum/7.0.0/art/runtime/gc_root.h>
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -64,6 +64,6 @@ class ReferenceTable {
   size_t max_size_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_REFERENCE_TABLE_H_

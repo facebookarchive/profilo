@@ -27,7 +27,7 @@
 #include <museum/5.1.1/art/runtime/instruction_set.h>
 #include <museum/5.1.1/art/runtime/profiler_options.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class CompilerCallbacks;
 class DexFile;
@@ -125,6 +125,6 @@ class ParsedOptions {
                    double* parsed_value);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_PARSED_OPTIONS_H_

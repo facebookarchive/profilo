@@ -25,7 +25,7 @@
 #include <museum/6.0.1/art/runtime/base/arena_allocator.h>
 #include <museum/6.0.1/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Adapter for use of ArenaAllocator in STL containers.
 // Use ArenaAllocator::Adapter() to create an adapter to pass to container constructors.
@@ -197,6 +197,6 @@ inline ArenaAllocatorAdapter<void> ArenaAllocator::Adapter(ArenaAllocKind kind) 
   return ArenaAllocatorAdapter<void>(this, kind);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ARENA_CONTAINERS_H_

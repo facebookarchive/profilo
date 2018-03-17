@@ -30,7 +30,7 @@
 #include <museum/8.1.0/art/runtime/lock_word.h>
 #include <museum/8.1.0/art/runtime/offsets.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class Thread;
 
@@ -233,6 +233,6 @@ class MarkCompact : public GarbageCollector {
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_MARK_COMPACT_H_

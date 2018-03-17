@@ -20,7 +20,7 @@
 #include <museum/7.0.0/art/runtime/globals.h>
 #include <museum/7.0.0/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr uintptr_t kUintPtrTOne = 1U;
 
@@ -86,6 +86,6 @@ class BitField {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_BIT_FIELD_H_

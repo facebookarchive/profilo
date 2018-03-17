@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/base/macros.h>
 #include <museum/6.0.1/art/runtime/arch/x86_64/registers_x86_64.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86_64 {
 
 class X86_64Context : public Context {
@@ -88,6 +88,6 @@ class X86_64Context : public Context {
   uintptr_t rsp_, rip_;
 };
 }  // namespace x86_64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_64_CONTEXT_X86_64_H_

@@ -26,7 +26,7 @@
 #include <museum/8.0.0/art/runtime/obj_ptr.h>
 #include <museum/8.0.0/art/runtime/reference_table.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class JavaVMExt;
 
@@ -158,6 +158,6 @@ class ScopedJniEnvLocalRefState {
   DISALLOW_COPY_AND_ASSIGN(ScopedJniEnvLocalRefState);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JNI_ENV_EXT_H_

@@ -25,7 +25,7 @@
 #include <museum/8.1.0/external/libcxx/string>
 #include <museum/8.1.0/external/libcxx/vector>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class TimingLogger;
 
 class CumulativeLogger {
@@ -195,6 +195,6 @@ class TimingLogger {
   DISALLOW_COPY_AND_ASSIGN(TimingLogger);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_TIMING_LOGGER_H_

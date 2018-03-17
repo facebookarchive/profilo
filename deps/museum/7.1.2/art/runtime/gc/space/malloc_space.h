@@ -22,7 +22,7 @@
 #include <museum/7.1.2/external/libcxx/ostream>
 #include <museum/7.1.2/art/runtime/base/memory_tool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 namespace collector {
@@ -203,6 +203,6 @@ class MallocSpace : public ContinuousMemMapAllocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_MALLOC_SPACE_H_

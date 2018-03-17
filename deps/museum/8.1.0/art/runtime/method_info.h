@@ -21,7 +21,7 @@
 #include <museum/8.1.0/art/runtime/leb128.h>
 #include <museum/8.1.0/art/runtime/memory_region.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Method info is for not dedupe friendly data of a method. Currently it only holds methods indices.
 // Putting this data in MethodInfo instead of code infos saves ~5% oat size.
@@ -72,6 +72,6 @@ class MethodInfo {
   MemoryRegion region_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_INFO_H_

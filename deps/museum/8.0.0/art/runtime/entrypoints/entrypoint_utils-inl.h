@@ -42,7 +42,7 @@
 #include <museum/8.0.0/art/runtime/thread.h>
 #include <museum/8.0.0/art/runtime/well_known_classes.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline ArtMethod* GetResolvedMethod(ArtMethod* outer_method,
                                     const MethodInfo& method_info,
@@ -847,6 +847,6 @@ inline INT_TYPE art_float_to_integral(FLOAT_TYPE f) {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_

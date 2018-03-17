@@ -21,12 +21,12 @@
 
 #include <museum/8.0.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline void JValue::SetL(ObjPtr<mirror::Object> new_l) {
   l = new_l.Ptr();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JVALUE_INL_H_

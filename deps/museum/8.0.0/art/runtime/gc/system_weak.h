@@ -21,7 +21,7 @@
 #include <museum/8.0.0/art/runtime/object_callbacks.h>
 #include <museum/8.0.0/art/runtime/thread-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 class AbstractSystemWeakHolder {
@@ -93,6 +93,6 @@ class SystemWeakHolder : public AbstractSystemWeakHolder {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SYSTEM_WEAK_H_

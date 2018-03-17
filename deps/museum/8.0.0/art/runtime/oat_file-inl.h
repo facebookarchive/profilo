@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/oat_file.h>
 #include <museum/8.0.0/art/runtime/oat_quick_method_header.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline const OatQuickMethodHeader* OatFile::OatMethod::GetOatQuickMethodHeader() const {
   const void* code = EntryPointToCodePointer(GetOatPointer<const void*>(code_offset_));
@@ -112,6 +112,6 @@ inline const void* OatFile::OatMethod::GetQuickCode() const {
   return GetOatPointer<const void*>(GetCodeOffset());
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_INL_H_

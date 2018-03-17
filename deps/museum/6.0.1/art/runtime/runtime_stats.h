@@ -19,7 +19,7 @@
 
 #include <museum/6.0.1/bionic/libc/stdint.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // These must match the values in dalvik.system.VMDebug.
 enum StatKinds {
@@ -109,6 +109,6 @@ struct PACKED(4) RuntimeStats {
   DISALLOW_COPY_AND_ASSIGN(RuntimeStats);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_RUNTIME_STATS_H_

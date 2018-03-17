@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_PROCESS_STATE_H_
 #define ART_RUNTIME_PROCESS_STATE_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // The process state passed in from the activity manager, used to determine when to do trimming
 // and compaction.
@@ -28,6 +28,6 @@ enum ProcessState {
 
 std::ostream& operator<<(std::ostream& os, const ProcessState& process_state);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_PROCESS_STATE_H_

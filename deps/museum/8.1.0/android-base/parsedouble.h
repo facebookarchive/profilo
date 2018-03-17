@@ -22,7 +22,7 @@
 
 #include <museum/8.1.0/external/libcxx/limits>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Parse double value in the string 's' and sets 'out' to that value.
@@ -45,6 +45,6 @@ static inline bool ParseDouble(const char* s, double* out,
 }
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_PARSEDOUBLE_H

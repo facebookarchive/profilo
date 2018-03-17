@@ -19,7 +19,7 @@
 
 #include <museum/5.1.1/art/runtime/dex_instruction.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 //------------------------------------------------------------------------------
 // VRegA
@@ -470,6 +470,6 @@ inline void Instruction::GetVarArgs(uint32_t arg[5], uint16_t inst_data) const {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_INSTRUCTION_INL_H_

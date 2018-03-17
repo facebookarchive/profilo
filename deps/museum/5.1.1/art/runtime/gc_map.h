@@ -22,7 +22,7 @@
 #include <museum/5.1.1/art/runtime/base/logging.h>
 #include <museum/5.1.1/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Lightweight wrapper for native PC offset to reference bit maps.
 class NativePcOffsetToReferenceMap {
@@ -106,6 +106,6 @@ class NativePcOffsetToReferenceMap {
   const uint8_t* const data_;  // The header and table data
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_MAP_H_

@@ -20,7 +20,7 @@
 #include <museum/7.1.2/art/runtime/lambda/closure_builder.h>
 #include <museum/7.1.2/bionic/libc/string.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace lambda {
 
 template <typename T, ClosureBuilder::ShortyTypeEnum kShortyType>
@@ -40,6 +40,6 @@ void ClosureBuilder::CaptureVariablePrimitive(T value) {
 }
 
 }  // namespace lambda
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LAMBDA_CLOSURE_BUILDER_INL_H_

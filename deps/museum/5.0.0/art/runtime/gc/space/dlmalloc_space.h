@@ -20,7 +20,7 @@
 #include <museum/5.0.0/art/runtime/gc/space/malloc_space.h>
 #include <museum/5.0.0/art/runtime/gc/space/space.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 namespace collector {
@@ -68,7 +68,7 @@ class DlMallocSpace : public MallocSpace {
       SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
 
   // DlMallocSpaces don't have thread local state.
-  void RevokeThreadLocalBuffers(art::Thread*) OVERRIDE {
+  void RevokeThreadLocalBuffers(facebook::museum::MUSEUM_VERSION::art::Thread*) OVERRIDE {
   }
   void RevokeAllThreadLocalBuffers() OVERRIDE {
   }
@@ -156,6 +156,6 @@ class DlMallocSpace : public MallocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_DLMALLOC_SPACE_H_

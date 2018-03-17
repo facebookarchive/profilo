@@ -28,7 +28,7 @@
 #include <museum/5.0.0/art/runtime/scoped_thread_state_change.h>
 #include <museum/5.0.0/art/runtime/well_known_classes.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t ArtField::ClassSize() {
@@ -295,6 +295,6 @@ inline ArtField* ArtField::FromReflectedField(const ScopedObjectAccessAlreadyRun
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ART_FIELD_INL_H_

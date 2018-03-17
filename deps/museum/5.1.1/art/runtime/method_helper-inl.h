@@ -24,7 +24,7 @@
 #include <museum/5.1.1/art/runtime/runtime.h>
 #include <museum/5.1.1/art/runtime/thread-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline bool MethodHelper::HasSameNameAndSignature(MethodHelper* other) {
   const DexFile* dex_file = method_->GetDexFile();
@@ -75,6 +75,6 @@ inline mirror::String* MethodHelper::ResolveString(uint32_t string_idx) {
   return s;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_HELPER_INL_H_

@@ -19,7 +19,7 @@
 
 #include <museum/5.1.1/bionic/libc/string.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Key comparison function for C strings.
 struct CStringLt {
@@ -35,6 +35,6 @@ struct CStringEq {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STRUTIL_H_

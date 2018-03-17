@@ -49,7 +49,7 @@
 #include <linux/unistd.h>
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #if defined(__linux__)
 static constexpr bool kUseAddr2line = !kIsTargetBuild;
@@ -73,4 +73,4 @@ void SleepForever() {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

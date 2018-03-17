@@ -19,11 +19,11 @@
 #include "jit/jit.h"
 #include "jit/profile_saver.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Returns true if JIT compilations are enabled. GetJit() will be not null in this case.
 bool Runtime::UseJitCompilation() const {
   return (jit_ != nullptr) && jit_->UseJitCompilation();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

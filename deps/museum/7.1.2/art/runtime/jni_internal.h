@@ -34,7 +34,7 @@
 #define REGISTER_NATIVE_METHODS(jni_class_name) \
   RegisterNativeMethods(env, jni_class_name, gMethods, arraysize(gMethods))
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 const JNINativeInterface* GetJniNativeInterface();
 const JNINativeInterface* GetRuntimeShutdownNativeInterface();
@@ -46,7 +46,7 @@ void RegisterNativeMethods(JNIEnv* env, const char* jni_class_name, const JNINat
 
 int ThrowNewException(JNIEnv* env, jclass exception_class, const char* msg, jobject cause);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 facebook::museum::MUSEUM_VERSION::std::ostream& operator<<(facebook::museum::MUSEUM_VERSION::std::ostream& os, const jobjectRefType& rhs);
 

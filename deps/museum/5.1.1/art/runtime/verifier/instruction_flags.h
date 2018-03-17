@@ -22,7 +22,7 @@
 
 #include <museum/5.1.1/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace verifier {
 
 class InstructionFlags {
@@ -133,6 +133,6 @@ class InstructionFlags {
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_INSTRUCTION_FLAGS_H_

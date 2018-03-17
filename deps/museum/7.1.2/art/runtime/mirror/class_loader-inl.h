@@ -22,7 +22,7 @@
 #include <museum/7.1.2/art/runtime/base/mutex-inl.h>
 #include <museum/7.1.2/art/runtime/class_table-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template <bool kVisitClasses,
@@ -42,6 +42,6 @@ inline void ClassLoader::VisitReferences(mirror::Class* klass, const Visitor& vi
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_LOADER_INL_H_

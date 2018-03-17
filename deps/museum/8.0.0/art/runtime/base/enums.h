@@ -20,7 +20,7 @@
 #include <museum/8.0.0/external/libcxx/cstddef>
 #include <museum/8.0.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum class PointerSize : size_t {
   k32 = 4,
@@ -32,6 +32,6 @@ static constexpr PointerSize kRuntimePointerSize = sizeof(void*) == 8U
                                                        ? PointerSize::k64
                                                        : PointerSize::k32;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ENUMS_H_

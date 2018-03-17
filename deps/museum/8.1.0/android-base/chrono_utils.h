@@ -22,7 +22,7 @@
 
 using namespace std::chrono_literals;
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // A std::chrono clock based on CLOCK_BOOTTIME.
@@ -49,6 +49,6 @@ class Timer {
 std::ostream& operator<<(std::ostream& os, const Timer& t);
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_CHRONO_UTILS_H

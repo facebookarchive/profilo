@@ -20,7 +20,7 @@
 #include <museum/5.1.1/art/runtime/lock_word.h>
 #include <museum/5.1.1/art/runtime/monitor_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline uint32_t LockWord::ThinLockOwner() const {
   DCHECK_EQ(GetState(), kThinLocked);
@@ -57,6 +57,6 @@ inline int32_t LockWord::GetHashCode() const {
   return (value_ >> kHashShift) & kHashMask;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_LOCK_WORD_INL_H_

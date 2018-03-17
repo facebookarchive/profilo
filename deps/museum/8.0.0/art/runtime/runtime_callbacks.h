@@ -24,7 +24,7 @@
 #include <museum/8.0.0/art/runtime/dex_file.h>
 #include <museum/8.0.0/art/runtime/handle.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Class;
@@ -133,6 +133,6 @@ class RuntimeCallbacks {
       GUARDED_BY(Locks::mutator_lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_RUNTIME_CALLBACKS_H_

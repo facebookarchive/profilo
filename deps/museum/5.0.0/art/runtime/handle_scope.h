@@ -23,7 +23,7 @@
 #include <museum/5.0.0/art/runtime/stack.h>
 #include <museum/5.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }
@@ -212,6 +212,6 @@ class PACKED(4) StackHandleScope FINAL : public HandleScope {
   template<size_t kNumRefs> friend class StackHandleScope;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HANDLE_SCOPE_H_

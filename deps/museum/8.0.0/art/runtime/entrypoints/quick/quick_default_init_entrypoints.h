@@ -24,7 +24,7 @@
 #include <museum/8.0.0/art/runtime/entrypoints/quick/quick_default_externs.h>
 #include <museum/8.0.0/art/runtime/entrypoints/quick/quick_entrypoints.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void DefaultInitEntryPoints(JniEntryPoints* jpoints, QuickEntryPoints* qpoints) {
   // JNI
@@ -120,6 +120,6 @@ void DefaultInitEntryPoints(JniEntryPoints* jpoints, QuickEntryPoints* qpoints) 
   qpoints->pDeoptimize = art_quick_deoptimize_from_compiled_code;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_DEFAULT_INIT_ENTRYPOINTS_H_

@@ -20,7 +20,7 @@
 #include <stdarg.h>
 #include <museum/8.1.0/external/libcxx/string>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // These printf-like functions are implemented in terms of vsnprintf, so they
@@ -51,6 +51,6 @@ void StringAppendV(std::string* dst, const char* format, va_list ap)
 #undef FORMAT_ARCHETYPE
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_STRINGPRINTF_H

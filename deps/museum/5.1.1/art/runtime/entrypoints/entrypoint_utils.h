@@ -31,7 +31,7 @@
 #include <museum/5.1.1/art/runtime/invoke_type.h>
 #include <museum/5.1.1/art/runtime/jvalue.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Class;
@@ -219,7 +219,7 @@ static inline const void* GetPortableToQuickBridge() {
 extern "C" void art_quick_to_interpreter_bridge(mirror::ArtMethod*);
 static inline const void* GetQuickToInterpreterBridge() {
   // FB
-  QuickEntryPoints* entrypoints = (QuickEntryPoints*) facebook::art::HostEntryPoints::quick_entrypoints;
+  QuickEntryPoints* entrypoints = (QuickEntryPoints*) entrypoints::HostEntryPoints::quick_entrypoints;
   return reinterpret_cast<const void*>(entrypoints->pQuickToInterpreterBridge);
   // return reinterpret_cast<void*>(art_quick_to_interpreter_bridge);
   // FB END
@@ -250,6 +250,6 @@ static inline void* GetJniDlsymLookupStub() {
 template <typename INT_TYPE, typename FLOAT_TYPE>
 static inline INT_TYPE art_float_to_integral(FLOAT_TYPE f);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_H_

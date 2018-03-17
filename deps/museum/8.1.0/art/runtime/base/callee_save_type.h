@@ -20,7 +20,7 @@
 #include <museum/8.1.0/external/libcxx/cstddef>
 #include <museum/8.1.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Returns a special method that describes all callee saves being spilled to the stack.
 enum class CalleeSaveType : uint32_t {
@@ -32,6 +32,6 @@ enum class CalleeSaveType : uint32_t {
 };
 std::ostream& operator<<(std::ostream& os, const CalleeSaveType& rhs);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_CALLEE_SAVE_TYPE_H_

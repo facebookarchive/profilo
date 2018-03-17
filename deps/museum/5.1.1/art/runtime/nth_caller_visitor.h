@@ -21,7 +21,7 @@
 #include <museum/5.1.1/art/runtime/mirror/art_method.h>
 #include <museum/5.1.1/art/runtime/stack.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class Thread;
 
 // Walks up the stack 'n' callers, when used with Thread::WalkStack.
@@ -56,6 +56,6 @@ struct NthCallerVisitor : public StackVisitor {
   mirror::ArtMethod* caller;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NTH_CALLER_VISITOR_H_

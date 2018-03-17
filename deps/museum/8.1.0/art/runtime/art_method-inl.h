@@ -45,7 +45,7 @@
 #include <museum/8.1.0/art/runtime/thread-current-inl.h>
 #include <museum/8.1.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <ReadBarrierOption kReadBarrierOption>
 inline mirror::Class* ArtMethod::GetDeclaringClassUnchecked() {
@@ -507,6 +507,6 @@ inline void ArtMethod::UpdateEntrypoints(const Visitor& visitor, PointerSize poi
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ART_METHOD_INL_H_

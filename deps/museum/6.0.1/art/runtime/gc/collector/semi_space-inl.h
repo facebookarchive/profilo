@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/gc/accounting/heap_bitmap.h>
 #include <museum/6.0.1/art/runtime/mirror/object-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -85,6 +85,6 @@ inline void SemiSpace::MarkObject(
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_SEMI_SPACE_INL_H_

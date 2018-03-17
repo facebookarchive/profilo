@@ -27,7 +27,7 @@
 #include <museum/7.0.0/art/runtime/gc/weak_root_state.h>
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace space {
@@ -281,6 +281,6 @@ class InternTable {
   DISALLOW_COPY_AND_ASSIGN(InternTable);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERN_TABLE_H_

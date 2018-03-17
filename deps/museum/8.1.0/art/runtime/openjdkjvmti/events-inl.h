@@ -117,7 +117,7 @@ FORALL_EVENT_TYPES(GET_CALLBACK)
 // ClassFileLoadHook event types is the same, so use this helper for code deduplication.
 // TODO Locking of some type!
 template <ArtJvmtiEvent kEvent>
-inline void EventHandler::DispatchClassFileLoadHookEvent(art::Thread* thread,
+inline void EventHandler::DispatchClassFileLoadHookEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                          JNIEnv* jnienv,
                                                          jclass class_being_redefined,
                                                          jobject loader,
@@ -180,7 +180,7 @@ inline void EventHandler::DispatchClassFileLoadHookEvent(art::Thread* thread,
 // exactly the argument types of the corresponding Jvmti kEvent function pointer.
 
 template <ArtJvmtiEvent kEvent, typename ...Args>
-inline void EventHandler::DispatchEvent(art::Thread* thread, Args... args) const {
+inline void EventHandler::DispatchEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread, Args... args) const {
   for (ArtJvmTiEnv* env : envs) {
     if (env != nullptr) {
       DispatchEvent<kEvent, Args...>(env, thread, args...);
@@ -194,7 +194,7 @@ inline void EventHandler::DispatchEvent(art::Thread* thread, Args... args) const
 // TODO It would be nice to add the overwritten exceptions to the suppressed exceptions list of the
 // newest exception.
 template <ArtJvmtiEvent kEvent, typename ...Args>
-inline void EventHandler::DispatchEvent(art::Thread* thread, JNIEnv* jnienv, Args... args) const {
+inline void EventHandler::DispatchEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread, JNIEnv* jnienv, Args... args) const {
   for (ArtJvmTiEnv* env : envs) {
     if (env != nullptr) {
       ScopedLocalRef<jthrowable> thr(jnienv, jnienv->ExceptionOccurred());
@@ -208,7 +208,7 @@ inline void EventHandler::DispatchEvent(art::Thread* thread, JNIEnv* jnienv, Arg
 }
 
 template <ArtJvmtiEvent kEvent, typename ...Args>
-inline void EventHandler::DispatchEvent(ArtJvmTiEnv* env, art::Thread* thread, Args... args) const {
+inline void EventHandler::DispatchEvent(ArtJvmTiEnv* env, facebook::museum::MUSEUM_VERSION::art::Thread* thread, Args... args) const {
   using FnType = void(jvmtiEnv*, Args...);
   if (ShouldDispatch<kEvent>(env, thread)) {
     FnType* callback = impl::GetCallback<kEvent>(env);
@@ -221,12 +221,12 @@ inline void EventHandler::DispatchEvent(ArtJvmTiEnv* env, art::Thread* thread, A
 // Need to give custom specializations for Breakpoint since it needs to filter out which particular
 // methods/dex_pcs agents get notified on.
 template <>
-inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kBreakpoint>(art::Thread* thread,
+inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kBreakpoint>(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                                     JNIEnv* jnienv,
                                                                     jthread jni_thread,
                                                                     jmethodID jmethod,
                                                                     jlocation location) const {
-  art::ArtMethod* method = art::jni::DecodeArtMethod(jmethod);
+  facebook::museum::MUSEUM_VERSION::art::ArtMethod* method = facebook::museum::MUSEUM_VERSION::art::jni::DecodeArtMethod(jmethod);
   for (ArtJvmTiEnv* env : envs) {
     // Search for a breakpoint on this particular method and location.
     if (env != nullptr &&
@@ -249,7 +249,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kBreakpoint>(art::Thread*
 // TODO The spec allows us to do shortcuts like only allow one agent to ever set these watches. This
 // could make the system more performant.
 template <>
-inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldModification>(art::Thread* thread,
+inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldModification>(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                                            JNIEnv* jnienv,
                                                                            jthread jni_thread,
                                                                            jmethodID method,
@@ -263,7 +263,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldModification>(art::
     if (env != nullptr &&
         ShouldDispatch<ArtJvmtiEvent::kFieldModification>(env, thread) &&
         env->modify_watched_fields.find(
-            art::jni::DecodeArtField(field)) != env->modify_watched_fields.end()) {
+            facebook::museum::MUSEUM_VERSION::art::jni::DecodeArtField(field)) != env->modify_watched_fields.end()) {
       ScopedLocalRef<jthrowable> thr(jnienv, jnienv->ExceptionOccurred());
       jnienv->ExceptionClear();
       auto callback = impl::GetCallback<ArtJvmtiEvent::kFieldModification>(env);
@@ -285,7 +285,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldModification>(art::
 }
 
 template <>
-inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldAccess>(art::Thread* thread,
+inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldAccess>(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                                      JNIEnv* jnienv,
                                                                      jthread jni_thread,
                                                                      jmethodID method,
@@ -297,7 +297,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldAccess>(art::Thread
     if (env != nullptr &&
         ShouldDispatch<ArtJvmtiEvent::kFieldAccess>(env, thread) &&
         env->access_watched_fields.find(
-            art::jni::DecodeArtField(field)) != env->access_watched_fields.end()) {
+            facebook::museum::MUSEUM_VERSION::art::jni::DecodeArtField(field)) != env->access_watched_fields.end()) {
       ScopedLocalRef<jthrowable> thr(jnienv, jnienv->ExceptionOccurred());
       jnienv->ExceptionClear();
       auto callback = impl::GetCallback<ArtJvmtiEvent::kFieldAccess>(env);
@@ -312,7 +312,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kFieldAccess>(art::Thread
 // Need to give a custom specialization for NativeMethodBind since it has to deal with an out
 // variable.
 template <>
-inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kNativeMethodBind>(art::Thread* thread,
+inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kNativeMethodBind>(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                                           JNIEnv* jnienv,
                                                                           jthread jni_thread,
                                                                           jmethodID method,
@@ -335,7 +335,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kNativeMethodBind>(art::T
 // The following two DispatchEvent specializations dispatch to it.
 template <>
 inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookRetransformable>(
-    art::Thread* thread,
+    facebook::museum::MUSEUM_VERSION::art::Thread* thread,
     JNIEnv* jnienv,
     jclass class_being_redefined,
     jobject loader,
@@ -359,7 +359,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookRetrans
 }
 template <>
 inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookNonRetransformable>(
-    art::Thread* thread,
+    facebook::museum::MUSEUM_VERSION::art::Thread* thread,
     JNIEnv* jnienv,
     jclass class_being_redefined,
     jobject loader,
@@ -384,7 +384,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookNonRetr
 
 template <ArtJvmtiEvent kEvent>
 inline bool EventHandler::ShouldDispatch(ArtJvmTiEnv* env,
-                                         art::Thread* thread) {
+                                         facebook::museum::MUSEUM_VERSION::art::Thread* thread) {
   bool dispatch = env->event_masks.global_event_mask.Test(kEvent);
 
   if (!dispatch && thread != nullptr && env->event_masks.unioned_thread_event_mask.Test(kEvent)) {

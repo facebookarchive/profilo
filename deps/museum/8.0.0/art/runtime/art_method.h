@@ -33,7 +33,7 @@
 #include <museum/8.0.0/art/runtime/read_barrier_option.h>
 #include <museum/8.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class T> class Handle;
 class ImtConflictTable;
@@ -769,6 +769,6 @@ class MethodCallback {
       REQUIRES_SHARED(Locks::mutator_lock_) = 0;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ART_METHOD_H_

@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/obj_ptr.h>
 #include <museum/8.0.0/art/runtime/thread-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class MirrorType>
 inline bool ObjPtr<MirrorType>::IsValid() const {
@@ -59,6 +59,6 @@ inline std::ostream& operator<<(std::ostream& os, ObjPtr<MirrorType> ptr) {
   return os << ptr.PtrUnchecked();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OBJ_PTR_INL_H_

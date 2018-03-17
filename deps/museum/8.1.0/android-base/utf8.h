@@ -27,7 +27,7 @@
 #include <museum/8.1.0/bionic/libc/unistd.h>     // unlink
 #endif
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Only available on Windows because this is only needed on Windows.
@@ -101,6 +101,6 @@ using ::unlink;
 
 }  // namespace utf8
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_UTF8_H

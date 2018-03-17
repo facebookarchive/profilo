@@ -27,7 +27,7 @@
 #include <museum/8.0.0/art/runtime/base/mutex.h>
 #include <museum/8.0.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace space {
@@ -126,6 +126,6 @@ class OatFileManager {
   DISALLOW_COPY_AND_ASSIGN(OatFileManager);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_MANAGER_H_

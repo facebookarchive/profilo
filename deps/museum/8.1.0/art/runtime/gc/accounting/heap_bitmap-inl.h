@@ -21,7 +21,7 @@
 
 #include <museum/8.1.0/art/runtime/gc/accounting/space_bitmap-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace accounting {
 
@@ -116,6 +116,6 @@ inline LargeObjectBitmap* HeapBitmap::GetLargeObjectBitmap(const mirror::Object*
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_HEAP_BITMAP_INL_H_

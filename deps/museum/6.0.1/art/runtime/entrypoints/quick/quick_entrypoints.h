@@ -25,7 +25,7 @@
 #define QUICK_ENTRYPOINT_OFFSET(ptr_size, x) \
     Thread::QuickEntryPointOffset<ptr_size>(OFFSETOF_MEMBER(QuickEntryPoints, x))
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Array;
@@ -71,6 +71,6 @@ extern void ReadBarrierJni(mirror::CompressedReference<mirror::Object>* handle_o
                            Thread* self)
     NO_THREAD_SAFETY_ANALYSIS HOT_ATTR;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_H_

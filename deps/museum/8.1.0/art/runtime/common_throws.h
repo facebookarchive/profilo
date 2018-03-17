@@ -21,7 +21,7 @@
 #include <museum/8.1.0/art/runtime/invoke_type.h>
 #include <museum/8.1.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class Object;
@@ -255,6 +255,6 @@ void ThrowWrongMethodTypeException(mirror::MethodType* callee_type,
                                    mirror::MethodType* callsite_type)
     REQUIRES_SHARED(Locks::mutator_lock_) COLD_ATTR;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_COMMON_THROWS_H_

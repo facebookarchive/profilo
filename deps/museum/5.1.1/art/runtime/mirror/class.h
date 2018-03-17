@@ -66,7 +66,7 @@
 #error IMT_SIZE not defined
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ClassOffsets;
 class Signature;
@@ -1189,13 +1189,13 @@ class MANAGED Class FINAL : public Object {
   // java.lang.Class
   static GcRoot<Class> java_lang_Class_;
 
-  friend struct art::ClassOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ClassOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(Class);
 };
 
 std::ostream& operator<<(std::ostream& os, const Class::Status& rhs);
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_H_

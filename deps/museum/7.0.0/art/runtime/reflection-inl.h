@@ -26,7 +26,7 @@
 #include <museum/7.0.0/art/runtime/primitive.h>
 #include <museum/7.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline bool ConvertPrimitiveValue(bool unbox_for_result,
                                   Primitive::Type srcType, Primitive::Type dstType,
@@ -111,6 +111,6 @@ inline bool VerifyObjectIsClass(mirror::Object* o, mirror::Class* c) {
   return true;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_REFLECTION_INL_H_

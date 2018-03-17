@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_BASE_BOUNDED_FIFO_H_
 #define ART_RUNTIME_BASE_BOUNDED_FIFO_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A bounded fifo is a fifo which has a bounded size. The power of two version uses a bit mask to
 // avoid needing to deal with wrapping integers around or using a modulo operation.
@@ -66,6 +66,6 @@ class BoundedFifoPowerOfTwo {
   T data_[MaxSize];
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_BOUNDED_FIFO_H_

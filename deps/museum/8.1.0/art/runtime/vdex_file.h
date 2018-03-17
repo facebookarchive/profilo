@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/mem_map.h>
 #include <museum/8.1.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexFile;
 
@@ -180,6 +180,6 @@ class VdexFile {
   DISALLOW_COPY_AND_ASSIGN(VdexFile);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VDEX_FILE_H_

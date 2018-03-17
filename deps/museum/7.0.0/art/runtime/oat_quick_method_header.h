@@ -23,7 +23,7 @@
 #include <museum/7.0.0/art/runtime/stack_map.h>
 #include <museum/7.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 
@@ -135,6 +135,6 @@ class PACKED(4) OatQuickMethodHeader {
   uint8_t code_[0];
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_QUICK_METHOD_HEADER_H_

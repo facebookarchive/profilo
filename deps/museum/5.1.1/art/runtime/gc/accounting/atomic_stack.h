@@ -27,7 +27,7 @@
 #include <museum/5.1.1/art/runtime/mem_map.h>
 #include <museum/5.1.1/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace accounting {
 
@@ -244,6 +244,6 @@ typedef AtomicStack<mirror::Object*> ObjectStack;
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_ATOMIC_STACK_H_

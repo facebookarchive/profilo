@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_GC_GC_PAUSE_LISTENER_H_
 #define ART_RUNTIME_GC_GC_PAUSE_LISTENER_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 class GcPauseListener {
@@ -29,6 +29,6 @@ class GcPauseListener {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_GC_PAUSE_LISTENER_H_

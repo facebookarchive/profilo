@@ -21,7 +21,7 @@
 #include <museum/6.0.1/art/runtime/base/bit_vector.h>
 #include <museum/6.0.1/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline bool BitVector::IndexIterator::operator==(const IndexIterator& other) const {
   DCHECK(bit_storage_ == other.bit_storage_);
@@ -75,6 +75,6 @@ inline bool BitVector::Equal(const BitVector* src) const {
     (memcmp(storage_, src->GetRawStorage(), storage_size_ * sizeof(uint32_t)) == 0);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_BIT_VECTOR_INL_H_

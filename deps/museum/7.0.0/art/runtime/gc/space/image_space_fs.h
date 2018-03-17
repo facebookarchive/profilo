@@ -29,7 +29,7 @@
 #include <museum/7.0.0/art/runtime/runtime.h>
 #include <museum/7.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -308,6 +308,6 @@ static void TryMoveOTAArtifacts(const std::string& cache_filename, bool dalvik_c
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_IMAGE_SPACE_FS_H_

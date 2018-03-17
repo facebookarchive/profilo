@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/art/runtime/arch/instruction_set_features.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Instruction set features relevant to the MIPS64 architecture.
 class Mips64InstructionSetFeatures FINAL : public InstructionSetFeatures {
@@ -75,6 +75,6 @@ class Mips64InstructionSetFeatures FINAL : public InstructionSetFeatures {
   DISALLOW_COPY_AND_ASSIGN(Mips64InstructionSetFeatures);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS64_INSTRUCTION_SET_FEATURES_MIPS64_H_

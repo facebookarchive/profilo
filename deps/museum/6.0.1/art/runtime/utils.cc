@@ -2,7 +2,7 @@
 
 #include "utils.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * NOTE: These two functions are *intentionally* not calling through to the real ART functions.
@@ -44,4 +44,4 @@ std::string DescriptorToDot(char const* descriptor) {
   return descriptor;
 }
 
-}
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

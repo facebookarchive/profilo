@@ -26,7 +26,7 @@
 #include <museum/8.1.0/art/runtime/elf.h>
 #include <museum/8.1.0/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 extern "C" {
   struct JITCodeEntry;
@@ -227,6 +227,6 @@ class ElfFileImpl {
   DISALLOW_COPY_AND_ASSIGN(ElfFileImpl);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ELF_FILE_IMPL_H_

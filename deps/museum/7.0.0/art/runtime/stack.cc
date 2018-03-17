@@ -37,7 +37,7 @@
 #include "thread_list.h"
 #include "verify_object-inl.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr bool kDebugStackWalk = false;
 
@@ -1034,4 +1034,4 @@ bool LockCountData::CheckAllMonitorsReleasedOrThrow(Thread* self) {
   return true;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

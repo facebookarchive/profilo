@@ -21,7 +21,7 @@
 #include <museum/5.0.0/art/runtime/base/mutex.h>       // For Locks::mutator_lock_.
 #include <museum/5.0.0/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class MirrorType>
 class PACKED(4) GcRoot {
@@ -55,6 +55,6 @@ class PACKED(4) GcRoot {
   MirrorType* root_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ROOT_H_

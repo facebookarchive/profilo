@@ -19,7 +19,7 @@
 
 #include <museum/7.1.2/art/runtime/arch/instruction_set.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class CodeSimulator {
  public:
@@ -41,6 +41,6 @@ class CodeSimulator {
 
 extern "C" CodeSimulator* CreateCodeSimulator(InstructionSet target_isa);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SIMULATOR_CODE_SIMULATOR_H_

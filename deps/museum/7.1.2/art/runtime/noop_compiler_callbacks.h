@@ -19,7 +19,7 @@
 
 #include <museum/7.1.2/art/runtime/compiler_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class NoopCompilerCallbacks FINAL : public CompilerCallbacks {
  public:
@@ -40,6 +40,6 @@ class NoopCompilerCallbacks FINAL : public CompilerCallbacks {
   DISALLOW_COPY_AND_ASSIGN(NoopCompilerCallbacks);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NOOP_COMPILER_CALLBACKS_H_

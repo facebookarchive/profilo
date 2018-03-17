@@ -22,7 +22,7 @@
 #include <museum/6.0.1/art/runtime/mirror/object.h>
 #include <museum/6.0.1/art/runtime/object_callbacks.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class T> class Handle;
 struct StringOffsets;
@@ -185,6 +185,6 @@ class MANAGED String FINAL : public Object {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_STRING_H_

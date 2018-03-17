@@ -23,7 +23,7 @@
 #include <museum/8.0.0/art/runtime/handle.h>
 #include <museum/8.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct MethodHandlesLookupOffsets;
 class RootVisitor;
@@ -60,11 +60,11 @@ class MANAGED MethodHandlesLookup : public Object {
 
   static GcRoot<mirror::Class> static_class_;  // java.lang.invoke.MethodHandles.Lookup.class
 
-  friend struct art::MethodHandlesLookupOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::MethodHandlesLookupOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(MethodHandlesLookup);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_METHOD_HANDLES_LOOKUP_H_

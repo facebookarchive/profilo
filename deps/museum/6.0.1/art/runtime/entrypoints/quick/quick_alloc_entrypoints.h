@@ -21,7 +21,7 @@
 #include <museum/6.0.1/art/runtime/gc/allocator_type.h>
 #include <museum/6.0.1/art/runtime/entrypoints/quick/quick_entrypoints.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void ResetQuickAllocEntryPoints(QuickEntryPoints* qpoints);
 
@@ -36,6 +36,6 @@ void SetQuickAllocEntryPointsAllocator(gc::AllocatorType allocator)
 void SetQuickAllocEntryPointsInstrumented(bool instrumented)
     EXCLUSIVE_LOCKS_REQUIRED(Locks::mutator_lock_, Locks::runtime_shutdown_lock_);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ALLOC_ENTRYPOINTS_H_

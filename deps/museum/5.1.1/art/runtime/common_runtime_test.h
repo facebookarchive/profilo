@@ -25,7 +25,7 @@
 #include <museum/5.1.1/art/runtime/globals.h>
 #include <museum/5.1.1/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ClassLinker;
 class CompilerCallbacks;
@@ -161,7 +161,7 @@ class CheckJniAbortCatcher {
     return; \
   }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace std {
 

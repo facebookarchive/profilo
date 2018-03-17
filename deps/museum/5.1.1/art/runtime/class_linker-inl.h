@@ -27,7 +27,7 @@
 #include <museum/5.1.1/art/runtime/mirror/object_array.h>
 #include <museum/5.1.1/art/runtime/handle_scope-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline mirror::Class* ClassLinker::FindSystemClass(Thread* self, const char* descriptor) {
   return FindClass(self, descriptor, NullHandle<mirror::ClassLoader>());
@@ -209,6 +209,6 @@ inline mirror::DexCache* ClassLinker::GetDexCache(size_t idx) {
   return dex_caches_[idx].Read();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_LINKER_INL_H_

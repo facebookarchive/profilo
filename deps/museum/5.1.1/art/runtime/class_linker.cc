@@ -72,7 +72,7 @@
 #include "verifier/method_verifier.h"
 #include "well_known_classes.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Special case to get oat code without overwriting a trampoline.
 const void* ClassLinker::GetQuickOatCodeFor(mirror::ArtMethod* method) {
@@ -102,4 +102,4 @@ const void* ClassLinker::GetQuickOatCodeFor(mirror::ArtMethod* method) {
   }
   return result;
 }
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

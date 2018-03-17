@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/base/arena_allocator.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arena_allocator {
 
 static constexpr bool kArenaAllocatorPreciseTracking = kArenaAllocatorCountAllocations;
@@ -29,6 +29,6 @@ static constexpr size_t kArenaDefaultSize = kArenaAllocatorPreciseTracking
                                                 : 128 * KB;
 
 }  // namespace arena_allocator
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ARENA_ALLOCATOR_INL_H_

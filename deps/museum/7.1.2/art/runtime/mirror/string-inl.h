@@ -29,7 +29,7 @@
 #include <museum/7.1.2/art/runtime/utf.h>
 #include <museum/7.1.2/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t String::ClassSize(size_t pointer_size) {
@@ -226,6 +226,6 @@ inline int32_t String::GetHashCode() {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_STRING_INL_H_

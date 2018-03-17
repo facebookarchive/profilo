@@ -20,13 +20,13 @@
 #include <museum/8.0.0/art/runtime/base/macros.h>
 #include <museum/8.0.0/art/runtime/mirror/object_reference.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A reference from the shadow stack to a MirrorType object within the Java heap.
 template<class MirrorType>
 class PACKED(4) StackReference : public mirror::CompressedReference<MirrorType> {
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STACK_REFERENCE_H_

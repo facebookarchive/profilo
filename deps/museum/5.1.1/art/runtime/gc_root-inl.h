@@ -21,7 +21,7 @@
 
 #include <museum/5.1.1/art/runtime/read_barrier-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class MirrorType>
 template<ReadBarrierOption kReadBarrierOption>
@@ -29,5 +29,5 @@ inline MirrorType* GcRoot<MirrorType>::Read() const {
   return ReadBarrier::BarrierForRoot<MirrorType, kReadBarrierOption>(&root_);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 #endif  // ART_RUNTIME_GC_ROOT_INL_H_

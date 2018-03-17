@@ -29,15 +29,14 @@
 #include <museum/5.1.1/art/runtime/log_severity.h>
 
 #define CHECK(x) \
-  if (false) \
-    ::art::LogMessage(__FILE__, __LINE__, FATAL, -1).stream() \
+  if (UNLIKELY(!(x))) \
+    ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, FATAL, -1).stream() \
         << "Check failed: " #x << " "
 
 #define CHECK_OP(LHS, RHS, OP) \
-  if (false) \
-  for (auto _values = ::art::MakeEagerEvaluator(LHS, RHS); \
+  for (auto _values = ::facebook::museum::MUSEUM_VERSION::art::MakeEagerEvaluator(LHS, RHS); \
        UNLIKELY(!(_values.lhs OP _values.rhs)); /* empty */) \
-    ::art::LogMessage(__FILE__, __LINE__, FATAL, -1).stream() \
+    ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, FATAL, -1).stream() \
         << "Check failed: " << #LHS << " " << #OP << " " << #RHS \
         << " (" #LHS "=" << _values.lhs << ", " #RHS "=" << _values.rhs << ") "
 
@@ -133,22 +132,22 @@
 
 #endif
 
-#define LOG(severity) ::art::LogMessage(__FILE__, __LINE__, severity, -1).stream()
-#define PLOG(severity) ::art::LogMessage(__FILE__, __LINE__, severity, errno).stream()
+#define LOG(severity) ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, severity, -1).stream()
+#define PLOG(severity) ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, severity, errno).stream()
 
 #define LG LOG(INFO)
 
 #define UNIMPLEMENTED(level) LOG(level) << __PRETTY_FUNCTION__ << " unimplemented "
 
-#define VLOG_IS_ON(module) UNLIKELY(::art::gLogVerbosity.module)
-#define VLOG(module) if (VLOG_IS_ON(module)) ::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
-#define VLOG_STREAM(module) ::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
+#define VLOG_IS_ON(module) UNLIKELY(::facebook::museum::MUSEUM_VERSION::art::gLogVerbosity.module)
+#define VLOG(module) if (VLOG_IS_ON(module)) ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
+#define VLOG_STREAM(module) ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, INFO, -1).stream()
 
 //
 // Implementation details beyond this point.
 //
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <typename LHS, typename RHS>
 struct EagerEvaluator {
@@ -330,6 +329,6 @@ extern const char* GetCmdLine();
 extern const char* ProgramInvocationName();
 extern const char* ProgramInvocationShortName();
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_LOGGING_H_

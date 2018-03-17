@@ -24,7 +24,7 @@
 #include <museum/5.1.1/art/runtime/base/logging.h>
 #include <museum/5.1.1/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /*
  * Expanding bitmap, used for tracking resources.  Bits are numbered starting
@@ -250,6 +250,6 @@ class BitVector {
 };
 
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_BIT_VECTOR_H_

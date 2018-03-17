@@ -20,7 +20,7 @@
 #include <museum/7.0.0/art/runtime/base/logging.h>
 #include <museum/7.0.0/art/runtime/leb128.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // A utility for processing the raw uleb128 encoded mapping table created by the quick compiler.
 class MappingTable {
@@ -201,6 +201,6 @@ class MappingTable {
   const uint8_t* const encoded_table_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MAPPING_TABLE_H_

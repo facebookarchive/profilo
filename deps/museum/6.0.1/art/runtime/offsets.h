@@ -21,7 +21,7 @@
 
 #include <museum/6.0.1/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Allow the meaning of offsets to be strongly typed.
 class Offset {
@@ -63,6 +63,6 @@ class MemberOffset : public Offset {
   explicit MemberOffset(size_t val) : Offset(val) {}
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OFFSETS_H_

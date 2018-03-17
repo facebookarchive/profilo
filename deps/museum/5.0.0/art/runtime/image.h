@@ -23,7 +23,7 @@
 #include <museum/5.0.0/art/runtime/mirror/object.h>
 #include <museum/5.0.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // header of image files written by ImageWriter, read and validated by Space.
 class PACKED(4) ImageHeader {
@@ -164,6 +164,6 @@ class PACKED(4) ImageHeader {
   friend class ImageWriter;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_IMAGE_H_

@@ -21,7 +21,7 @@
 #include <museum/6.0.1/art/runtime/base/bit_utils.h>
 #include <museum/6.0.1/art/runtime/memory_region.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Size of a frame slot, in bytes.  This constant is a signed value,
 // to please the compiler in arithmetic operations involving int32_t
@@ -1078,6 +1078,6 @@ class CodeInfo {
   friend class StackMapStream;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STACK_MAP_H_

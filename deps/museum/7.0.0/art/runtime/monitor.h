@@ -36,7 +36,7 @@
 
 #include <museum/7.0.0/art/runtime/memalign.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class LockWord;
@@ -356,6 +356,6 @@ class MonitorInfo {
   std::vector<Thread*> waiters_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MONITOR_H_

@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/base/mutex.h>
 #include <museum/8.0.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct NonDebuggableClasses {
  public:
@@ -37,6 +37,6 @@ struct NonDebuggableClasses {
   static std::vector<jclass> non_debuggable_classes;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NON_DEBUGGABLE_CLASSES_H_

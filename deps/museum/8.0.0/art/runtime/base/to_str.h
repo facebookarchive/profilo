@@ -19,7 +19,7 @@
 
 #include <museum/8.0.0/external/libcxx/sstream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Helps you use operator<< in a const char*-like context such as our various 'F' methods with
 // format strings.
@@ -45,6 +45,6 @@ class ToStr {
   DISALLOW_COPY_AND_ASSIGN(ToStr);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_TO_STR_H_

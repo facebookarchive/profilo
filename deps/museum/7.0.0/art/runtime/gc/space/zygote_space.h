@@ -21,7 +21,7 @@
 #include <museum/7.0.0/art/runtime/gc/space/malloc_space.h>
 #include <museum/7.0.0/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 namespace space {
@@ -55,7 +55,7 @@ class ZygoteSpace FINAL : public ContinuousMemMapAllocSpace {
   size_t FreeList(Thread* self, size_t num_ptrs, mirror::Object** ptrs) OVERRIDE;
 
   // ZygoteSpaces don't have thread local state.
-  size_t RevokeThreadLocalBuffers(art::Thread*) OVERRIDE {
+  size_t RevokeThreadLocalBuffers(facebook::museum::MUSEUM_VERSION::art::Thread*) OVERRIDE {
     return 0U;
   }
   size_t RevokeAllThreadLocalBuffers() OVERRIDE {
@@ -96,6 +96,6 @@ class ZygoteSpace FINAL : public ContinuousMemMapAllocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_ZYGOTE_SPACE_H_

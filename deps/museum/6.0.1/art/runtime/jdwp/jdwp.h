@@ -31,7 +31,7 @@
 
 struct iovec;
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -502,6 +502,6 @@ class Request {
 
 }  // namespace JDWP
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JDWP_JDWP_H_

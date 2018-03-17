@@ -24,7 +24,7 @@
 #include <museum/8.0.0/art/runtime/jvalue.h>
 #include <museum/8.0.0/art/runtime/mirror/class.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class MethodHandle;
@@ -213,6 +213,6 @@ bool DoInvokePolymorphic(Thread* self,
                          JValue* result)
     REQUIRES_SHARED(Locks::mutator_lock_);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_HANDLES_H_

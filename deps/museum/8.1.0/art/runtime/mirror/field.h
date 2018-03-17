@@ -24,7 +24,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object.h>
 #include <museum/8.1.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 struct FieldOffsets;
@@ -132,11 +132,11 @@ class MANAGED Field : public AccessibleObject {
   static GcRoot<Class> static_class_;  // java.lang.reflect.Field.class.
   static GcRoot<Class> array_class_;  // array of java.lang.reflect.Field.
 
-  friend struct art::FieldOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::FieldOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(Field);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_FIELD_H_

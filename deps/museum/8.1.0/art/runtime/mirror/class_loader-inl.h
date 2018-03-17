@@ -21,7 +21,7 @@
 
 #include <museum/8.1.0/art/runtime/class_table-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template <bool kVisitClasses,
@@ -41,6 +41,6 @@ inline void ClassLoader::VisitReferences(ObjPtr<mirror::Class> klass, const Visi
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_LOADER_INL_H_

@@ -20,7 +20,7 @@
 #include <museum/7.1.2/art/runtime/gc/space/malloc_space.h>
 #include <museum/7.1.2/art/runtime/gc/space/space.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 namespace collector {
@@ -76,7 +76,7 @@ class DlMallocSpace : public MallocSpace {
   }
 
   // DlMallocSpaces don't have thread local state.
-  size_t RevokeThreadLocalBuffers(art::Thread*) OVERRIDE {
+  size_t RevokeThreadLocalBuffers(facebook::museum::MUSEUM_VERSION::art::Thread*) OVERRIDE {
     return 0U;
   }
   size_t RevokeAllThreadLocalBuffers() OVERRIDE {
@@ -168,6 +168,6 @@ class DlMallocSpace : public MallocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_DLMALLOC_SPACE_H_

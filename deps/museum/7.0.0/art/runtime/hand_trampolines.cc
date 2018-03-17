@@ -4,7 +4,7 @@
 #include <museum/7.0.0/art/runtime/elf_file_impl.h>
 #include <museum/libart.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
   class ArtMethod;
 
   std::string PrettyMethod(ArtMethod* p1, bool p2)  {
@@ -16,7 +16,7 @@ namespace art {
     // also don't bother faking diff-STL std::string magic, this isn't important enough
     return "";
   }
-} // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace facebook { namespace museum { namespace art { namespace detail {
   template<typename T>
@@ -27,7 +27,7 @@ namespace facebook { namespace museum { namespace art { namespace detail {
     return symbol;
   }
 } } } } // namespace facebook::museum::art::detail
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
    template<>
    ElfFileImpl<ElfTypes32>::~ElfFileImpl()  {
@@ -37,7 +37,7 @@ namespace art {
         (ElfFileImpl<ElfTypes32> *)>()
       (this);
   }
-} // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 
 namespace facebook { namespace museum { namespace art { namespace detail {
@@ -49,7 +49,7 @@ namespace facebook { namespace museum { namespace art { namespace detail {
     return symbol;
   }
 } } } } // namespace facebook::museum::art::detail
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
    template<>
    ElfFileImpl<ElfTypes64>::~ElfFileImpl()  {
@@ -59,4 +59,4 @@ namespace art {
         (ElfFileImpl<ElfTypes64> *)>()
       (this);
   }
-} // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

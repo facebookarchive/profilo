@@ -25,7 +25,7 @@
 #include <museum/8.1.0/art/runtime/base/macros.h>
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Object;
@@ -102,6 +102,6 @@ class PACKED(4) ManagedStack {
   ShadowFrame* top_shadow_frame_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MANAGED_STACK_H_

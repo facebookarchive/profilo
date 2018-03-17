@@ -21,7 +21,7 @@
 #include <museum/5.0.0/art/runtime/base/logging.h>
 #include <museum/5.0.0/art/runtime/arch/arm64/registers_arm64.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arm64 {
 
 class Arm64Context : public Context {
@@ -89,6 +89,6 @@ class Arm64Context : public Context {
 };
 
 }  // namespace arm64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM64_CONTEXT_ARM64_H_

@@ -20,7 +20,7 @@
 #include <museum/6.0.1/external/libcxx/algorithm>
 #include <museum/6.0.1/external/libcxx/sstream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Sort and remove duplicates of an STL vector or deque.
 template<class T>
@@ -94,6 +94,6 @@ std::string ToString(const T& v) {
   return os.str();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_STL_UTIL_H_

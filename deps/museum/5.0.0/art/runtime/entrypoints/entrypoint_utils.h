@@ -26,7 +26,7 @@
 #include <museum/5.0.0/art/runtime/invoke_type.h>
 #include <museum/5.0.0/art/runtime/jvalue.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Class;
@@ -241,6 +241,6 @@ static inline void* GetJniDlsymLookupStub() {
 template <typename INT_TYPE, typename FLOAT_TYPE>
 static inline INT_TYPE art_float_to_integral(FLOAT_TYPE f);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_H_

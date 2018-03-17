@@ -21,7 +21,7 @@
 
 #include <museum/5.1.1/art/runtime/verify_object-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }  // namespace mirror
@@ -85,6 +85,6 @@ inline mirror::Object* IndirectReferenceTable::Get(IndirectRef iref) const {
   return obj;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INDIRECT_REFERENCE_TABLE_INL_H_

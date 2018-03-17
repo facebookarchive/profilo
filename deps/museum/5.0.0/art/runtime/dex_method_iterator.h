@@ -21,7 +21,7 @@
 
 #include <museum/5.0.0/art/runtime/dex_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexMethodIterator {
  public:
@@ -144,6 +144,6 @@ class DexMethodIterator {
   bool direct_method_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEX_METHOD_ITERATOR_H_

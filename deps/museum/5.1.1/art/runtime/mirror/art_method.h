@@ -27,7 +27,7 @@
 #include <museum/5.1.1/art/runtime/read_barrier_option.h>
 #include <museum/5.1.1/art/runtime/stack.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ArtMethodOffsets;
 struct ConstructorMethodOffsets;
@@ -628,11 +628,11 @@ class MANAGED ArtMethod FINAL : public Object {
     return offset;
   }
 
-  friend struct art::ArtMethodOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ArtMethodOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(ArtMethod);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ART_METHOD_H_

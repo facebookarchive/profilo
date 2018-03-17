@@ -23,7 +23,7 @@
 #include <museum/6.0.1/art/runtime/jdwp/jdwp_constants.h>
 #include <museum/6.0.1/art/runtime/jdwp/jdwp_expand_buf.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace JDWP {
 
@@ -108,6 +108,6 @@ void EventFree(JdwpEvent* pEvent);
 
 }  // namespace JDWP
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JDWP_JDWP_EVENT_H_

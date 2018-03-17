@@ -19,10 +19,10 @@
 
 #include <museum/7.0.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void register_dalvik_system_ZygoteHooks(JNIEnv* env);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_DALVIK_SYSTEM_ZYGOTEHOOKS_H_

@@ -19,13 +19,13 @@
 
 #include <museum/7.1.2/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ValueObject {
  private:
   DISALLOW_ALLOCATION();
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_VALUE_OBJECT_H_

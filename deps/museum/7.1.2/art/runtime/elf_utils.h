@@ -24,7 +24,7 @@
 
 #include <museum/7.1.2/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Architecture dependent flags for the ELF header.
 #define EF_ARM_EABI_VER5 0x05000000
@@ -167,6 +167,6 @@ static inline bool IsDynamicSectionPointer(Elf32_Word d_tag, Elf32_Word e_machin
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ELF_UTILS_H_

@@ -20,7 +20,7 @@
 #include <museum/5.1.1/art/runtime/base/macros.h>
 #include <museum/5.1.1/art/runtime/base/mutex.h>       // For Locks::mutator_lock_.
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Object;
@@ -109,6 +109,6 @@ class PACKED(4) GcRoot {
   mutable MirrorType* root_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ROOT_H_

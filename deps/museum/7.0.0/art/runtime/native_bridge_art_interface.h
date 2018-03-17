@@ -21,7 +21,7 @@
 #include <museum/7.0.0/bionic/libc/stdint.h>
 #include <museum/7.0.0/external/libcxx/string>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Mirror libnativebridge interface. Done to have the ART callbacks out of line, and not require
 // the system/core header file in other files.
@@ -35,6 +35,6 @@ void InitializeNativeBridge(JNIEnv* env, const char* instruction_set);
 
 void UnloadNativeBridge();
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_BRIDGE_ART_INTERFACE_H_

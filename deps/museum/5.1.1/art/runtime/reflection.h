@@ -20,7 +20,7 @@
 #include <museum/5.1.1/libnativehelper/jni.h>
 #include <museum/5.1.1/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class ArtField;
   class ArtMethod;
@@ -78,6 +78,6 @@ bool VerifyAccess(Thread* self, mirror::Object* obj, mirror::Class* declaring_cl
                   uint32_t access_flags)
     SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_REFLECTION_H_

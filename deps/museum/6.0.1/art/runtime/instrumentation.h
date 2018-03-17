@@ -27,7 +27,7 @@
 #include <museum/6.0.1/art/runtime/gc_root.h>
 #include <museum/6.0.1/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Class;
   class Object;
@@ -518,6 +518,6 @@ struct InstrumentationStackFrame {
 };
 
 }  // namespace instrumentation
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INSTRUMENTATION_H_

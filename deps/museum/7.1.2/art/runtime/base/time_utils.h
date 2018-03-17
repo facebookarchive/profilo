@@ -23,7 +23,7 @@
 
 #include <museum/7.1.2/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum TimeUnit {
   kTimeUnitNanosecond,
@@ -84,6 +84,6 @@ void NanoSleep(uint64_t ns);
 // time corresponding to the indicated clock value plus the supplied offset.
 void InitTimeSpec(bool absolute, int clock, int64_t ms, int32_t ns, timespec* ts);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_TIME_UTILS_H_

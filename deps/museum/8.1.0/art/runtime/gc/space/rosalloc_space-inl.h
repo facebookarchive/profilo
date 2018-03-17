@@ -24,7 +24,7 @@
 #include <museum/8.1.0/art/runtime/gc/space/memory_tool_settings.h>
 #include <museum/8.1.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -76,6 +76,6 @@ inline size_t RosAllocSpace::MaxBytesBulkAllocatedForNonvirtual(size_t num_bytes
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_ROSALLOC_SPACE_INL_H_

@@ -32,7 +32,7 @@
 
 #include <museum/8.0.0/external/libcxx/string>
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 // Returns a string describing the given system error code. |error_code| must
@@ -41,6 +41,6 @@ namespace base {
 std::string SystemErrorCodeToString(int error_code);
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif  // ANDROID_BASE_ERRORS_H

@@ -23,7 +23,7 @@
 #include <museum/6.0.1/art/runtime/mirror/dex_cache-inl.h>
 #include <museum/6.0.1/art/runtime/runtime-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 
@@ -82,6 +82,6 @@ inline mirror::Field* Field::CreateFromArtField(Thread* self, ArtField* field,
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_FIELD_INL_H_

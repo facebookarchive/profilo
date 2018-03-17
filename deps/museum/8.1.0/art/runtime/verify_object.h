@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/base/macros.h>
 #include <museum/8.1.0/art/runtime/obj_ptr.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Class;
@@ -66,6 +66,6 @@ static inline void VerifyObject(ObjPtr<mirror::Object> obj) NO_THREAD_SAFETY_ANA
 // Check that c.getClass() == c.getClass().getClass().
 ALWAYS_INLINE bool VerifyClassClass(ObjPtr<mirror::Class> c) NO_THREAD_SAFETY_ANALYSIS;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFY_OBJECT_H_

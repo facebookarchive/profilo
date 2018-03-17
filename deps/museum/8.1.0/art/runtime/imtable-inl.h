@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/dex_file.h>
 #include <museum/8.1.0/art/runtime/utf.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static constexpr bool kImTableHashUseName = true;
 static constexpr bool kImTableHashUseCoefficients = true;
@@ -98,7 +98,7 @@ inline uint32_t ImTable::GetImtIndex(ArtMethod* method) {
   return mixed_hash % ImTable::kSize;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_IMTABLE_INL_H_
 

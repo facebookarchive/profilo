@@ -29,7 +29,7 @@
 #include <museum/8.0.0/art/runtime/method_reference.h>
 #include <museum/8.0.0/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  *  Convenient class to pass around profile information (including inline caches)
@@ -498,6 +498,6 @@ class ProfileCompilationInfo {
   ArenaSafeMap<const std::string, uint8_t> profile_key_map_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_PROFILE_COMPILATION_INFO_H_

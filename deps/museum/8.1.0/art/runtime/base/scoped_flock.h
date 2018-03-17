@@ -27,7 +27,7 @@
 #include <museum/8.1.0/art/runtime/base/unix_file/fd_file.h>
 #include <museum/8.1.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class LockedFile;
 class LockedFileCloseNoFlush;
@@ -84,6 +84,6 @@ class LockedFileCloseNoFlush {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_SCOPED_FLOCK_H_

@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/gc/space/space.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Object;
@@ -203,6 +203,6 @@ class BumpPointerSpace FINAL : public ContinuousMemMapAllocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_BUMP_POINTER_SPACE_H_

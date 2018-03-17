@@ -35,9 +35,9 @@
 #include <museum/8.0.0/libnativehelper/jni.h>
 #include "jvmti.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtField;
-}
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace openjdkjvmti {
 
@@ -69,7 +69,7 @@ class ThreadUtil {
                                    jint priority);
 
  private:
-  static art::ArtField* context_class_loader_;
+  static facebook::museum::MUSEUM_VERSION::art::ArtField* context_class_loader_;
 };
 
 }  // namespace openjdkjvmti

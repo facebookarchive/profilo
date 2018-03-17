@@ -28,7 +28,7 @@
 #include <museum/7.0.0/art/runtime/base/stl_util.h>     // STLDeleteElements
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Abstraction to keep monitors small enough to fit in a lock word (32bits). On 32bit systems the
 // monitor id loses the alignment bits of the Monitor*.
@@ -239,6 +239,6 @@ class MonitorPool {
 #endif
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MONITOR_POOL_H_

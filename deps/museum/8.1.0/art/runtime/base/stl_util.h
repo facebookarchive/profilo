@@ -23,7 +23,7 @@
 
 #include <museum/8.1.0/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // STLDeleteContainerPointers()
 //  For a range within a container of pointers, calls delete
@@ -153,6 +153,6 @@ static inline std::vector<T*> MakeNonOwningPointerVector(const std::vector<std::
   return result;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_STL_UTIL_H_

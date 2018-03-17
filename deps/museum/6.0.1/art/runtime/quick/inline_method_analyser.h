@@ -28,7 +28,7 @@
  * only to allow the debugger to check whether a method has been inlined.
  */
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace verifier {
 class MethodVerifier;
@@ -194,6 +194,6 @@ class InlineMethodAnalyser {
       SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_QUICK_INLINE_METHOD_ANALYSER_H_

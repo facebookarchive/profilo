@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/deoptimization_kind.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #ifndef BUILDING_LIBART
 #error "File and symbols only for use within libart."
@@ -87,6 +87,6 @@ static inline const void* GetQuickInstrumentationExitPc() {
   return reinterpret_cast<const void*>(art_quick_instrumentation_exit);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_RUNTIME_ASM_ENTRYPOINTS_H_

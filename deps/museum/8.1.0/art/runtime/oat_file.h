@@ -35,7 +35,7 @@
 #include <museum/8.1.0/art/runtime/utf.h>
 #include <museum/8.1.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class BitVector;
 class ElfFile;
@@ -67,7 +67,7 @@ class OatFile {
   // Special classpath that skips shared library check.
   static constexpr const char* kSpecialSharedLibrary = "&";
 
-  typedef art::OatDexFile OatDexFile;
+  typedef facebook::museum::MUSEUM_VERSION::art::OatDexFile OatDexFile;
 
   // Opens an oat file contained within the given elf file. This is always opened as
   // non-executable at the moment.
@@ -233,7 +233,7 @@ class OatFile {
 
     const OatMethodOffsets* const methods_pointer_;
 
-    friend class art::OatDexFile;
+    friend class facebook::museum::MUSEUM_VERSION::art::OatDexFile;
   };
 
   // Get the OatDexFile for the given dex_location within this oat file.
@@ -375,7 +375,7 @@ class OatFile {
 
   friend class gc::collector::DummyOatFile;  // For modifying begin_ and end_.
   friend class OatClass;
-  friend class art::OatDexFile;
+  friend class facebook::museum::MUSEUM_VERSION::art::OatDexFile;
   friend class OatDumper;  // For GetBase and GetLimit
   friend class OatFileBase;
   DISALLOW_COPY_AND_ASSIGN(OatFile);
@@ -494,6 +494,6 @@ class OatDexFile FINAL {
   DISALLOW_COPY_AND_ASSIGN(OatDexFile);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_H_

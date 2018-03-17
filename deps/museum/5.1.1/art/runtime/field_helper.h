@@ -21,7 +21,7 @@
 #include <museum/5.1.1/art/runtime/handle.h>
 #include <museum/5.1.1/art/runtime/mirror/art_field.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class FieldHelper {
  public:
@@ -49,6 +49,6 @@ class FieldHelper {
   DISALLOW_COPY_AND_ASSIGN(FieldHelper);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_FIELD_HELPER_H_

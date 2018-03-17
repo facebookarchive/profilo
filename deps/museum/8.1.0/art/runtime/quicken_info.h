@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/dex_instruction.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // QuickenInfoTable is a table of 16 bit dex indices. There is one slot fo every instruction that is
 // possibly dequickenable.
@@ -50,6 +50,6 @@ class QuickenInfoTable {
   DISALLOW_COPY_AND_ASSIGN(QuickenInfoTable);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_QUICKEN_INFO_H_

@@ -46,7 +46,7 @@
 #undef ART_RUNTIME_ASM_SUPPORT_H_
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 static inline ASM_SUPPORT_CHECK_RETURN_TYPE CheckAsmSupportOffsetsAndSizes() {
 #ifdef ASM_SUPPORT_CHECK_HEADER
@@ -60,6 +60,6 @@ static inline ASM_SUPPORT_CHECK_RETURN_TYPE CheckAsmSupportOffsetsAndSizes() {
 #endif
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ASM_SUPPORT_CHECK_H_

@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/globals.h>
 #include <museum/7.0.0/art/runtime/mirror/object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -361,6 +361,6 @@ std::ostream& operator<<(std::ostream& os, const ImageHeader::ImageSections& sec
 std::ostream& operator<<(std::ostream& os, const ImageSection& section);
 std::ostream& operator<<(std::ostream& os, const ImageHeader::StorageMode& mode);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_IMAGE_H_

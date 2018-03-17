@@ -37,10 +37,10 @@
 
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 class ArtField;
 class Thread;
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 namespace openjdkjvmti {
 
@@ -96,12 +96,12 @@ class ThreadUtil {
   // GetThreadState will be totally accurate as much as possible. This means that calling
   // ResumeThread on a thread that has state JVMTI_THREAD_STATE_SUSPENDED will not necessarily
   // cause the thread to wake up if the thread is suspended for the debugger or gc or something.
-  static jvmtiError SuspendSelf(art::Thread* self)
-      REQUIRES(!art::Locks::mutator_lock_, !art::Locks::user_code_suspension_lock_);
-  static jvmtiError SuspendOther(art::Thread* self, jthread target_jthread, art::Thread* target)
-      REQUIRES(!art::Locks::mutator_lock_, !art::Locks::user_code_suspension_lock_);
+  static jvmtiError SuspendSelf(facebook::museum::MUSEUM_VERSION::art::Thread* self)
+      REQUIRES(!facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_, !facebook::museum::MUSEUM_VERSION::art::Locks::user_code_suspension_lock_);
+  static jvmtiError SuspendOther(facebook::museum::MUSEUM_VERSION::art::Thread* self, jthread target_jthread, facebook::museum::MUSEUM_VERSION::art::Thread* target)
+      REQUIRES(!facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_, !facebook::museum::MUSEUM_VERSION::art::Locks::user_code_suspension_lock_);
 
-  static art::ArtField* context_class_loader_;
+  static facebook::museum::MUSEUM_VERSION::art::ArtField* context_class_loader_;
 };
 
 }  // namespace openjdkjvmti

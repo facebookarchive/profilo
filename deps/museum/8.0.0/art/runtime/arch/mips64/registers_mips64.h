@@ -23,7 +23,7 @@
 #include <museum/8.0.0/art/runtime/base/macros.h>
 #include <museum/8.0.0/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mips64 {
 
 enum GpuRegister {
@@ -147,6 +147,6 @@ enum VectorRegister {
 std::ostream& operator<<(std::ostream& os, const VectorRegister& rhs);
 
 }  // namespace mips64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS64_REGISTERS_MIPS64_H_

@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // The various reasons that we might be suspending a thread.
 enum class SuspendReason {
@@ -34,6 +34,6 @@ enum class SuspendReason {
 
 std::ostream& operator<<(std::ostream& os, const SuspendReason& thread);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_SUSPEND_REASON_H_

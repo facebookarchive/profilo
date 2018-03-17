@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 #include <museum/8.1.0/art/runtime/gc_root.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class StackVisitor;
 
@@ -47,6 +47,6 @@ class JavaFrameRootInfo FINAL : public RootInfo {
   const size_t vreg_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JAVA_FRAME_ROOT_INFO_H_

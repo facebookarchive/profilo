@@ -17,7 +17,7 @@
 #ifndef ART_RUNTIME_THREAD_STATE_H_
 #define ART_RUNTIME_THREAD_STATE_H_
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum ThreadState {
   //                                   Thread.State   JDWP state
@@ -44,6 +44,6 @@ enum ThreadState {
   kSuspended,                       // RUNNABLE       TS_RUNNING   suspended by GC or debugger
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_STATE_H_

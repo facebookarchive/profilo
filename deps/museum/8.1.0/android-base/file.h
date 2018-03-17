@@ -24,7 +24,7 @@
 #define O_BINARY 0
 #endif
 
-namespace android {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
 bool ReadFdToString(int fd, std::string* content);
@@ -60,6 +60,6 @@ std::string Basename(const std::string& path);
 std::string Dirname(const std::string& path);
 
 }  // namespace base
-}  // namespace android
+} } } } // namespace facebook::museum::MUSEUM_VERSION::android
 
 #endif // ANDROID_BASE_FILE_H

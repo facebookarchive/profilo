@@ -26,7 +26,7 @@
 #include <museum/7.1.2/art/runtime/method_reference.h>
 #include <museum/7.1.2/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // TODO: rename file.
 /**
@@ -178,6 +178,6 @@ class ProfileCompilationInfo {
   DexFileToProfileInfoMap info_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_JIT_OFFLINE_PROFILING_INFO_H_

@@ -25,7 +25,7 @@
 #include <museum/8.1.0/android-base/logging.h>
 #include <museum/8.1.0/art/runtime/base/stl_util_identity.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 //
 // A variant map is a heterogenous, type safe key->value map. It allows
@@ -457,6 +457,6 @@ struct VariantMap {
   StorageMap storage_map_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_VARIANT_MAP_H_

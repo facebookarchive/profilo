@@ -34,7 +34,7 @@
 #include <museum/5.1.1/art/runtime/verifier/register_line.h>
 #include <museum/5.1.1/art/runtime/safe_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ReferenceMap2Visitor;
 template<class T> class Handle;
@@ -714,6 +714,6 @@ class MethodVerifier {
 std::ostream& operator<<(std::ostream& os, const MethodVerifier::FailureKind& rhs);
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_

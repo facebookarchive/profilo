@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/scoped_thread_state_change-inl.h>
 #include <museum/8.1.0/art/runtime/well_known_classes.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Returns true if the given class loader is either a PathClassLoader or a DexClassLoader.
 // (they both have the same behaviour with respect to class lockup order)
@@ -45,6 +45,6 @@ static bool IsDelegateLastClassLoader(ScopedObjectAccessAlreadyRunnable& soa,
       soa.Decode<mirror::Class>(WellKnownClasses::dalvik_system_DelegateLastClassLoader);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_LOADER_UTILS_H_

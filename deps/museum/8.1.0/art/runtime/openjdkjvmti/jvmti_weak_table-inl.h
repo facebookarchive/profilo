@@ -51,32 +51,32 @@ namespace openjdkjvmti {
 
 template <typename T>
 void JvmtiWeakTable<T>::Lock() {
-  allow_disallow_lock_.ExclusiveLock(art::Thread::Current());
+  allow_disallow_lock_.ExclusiveLock(facebook::museum::MUSEUM_VERSION::art::Thread::Current());
 }
 template <typename T>
 void JvmtiWeakTable<T>::Unlock() {
-  allow_disallow_lock_.ExclusiveUnlock(art::Thread::Current());
+  allow_disallow_lock_.ExclusiveUnlock(facebook::museum::MUSEUM_VERSION::art::Thread::Current());
 }
 template <typename T>
 void JvmtiWeakTable<T>::AssertLocked() {
-  allow_disallow_lock_.AssertHeld(art::Thread::Current());
+  allow_disallow_lock_.AssertHeld(facebook::museum::MUSEUM_VERSION::art::Thread::Current());
 }
 
 template <typename T>
 void JvmtiWeakTable<T>::UpdateTableWithReadBarrier() {
   update_since_last_sweep_ = true;
 
-  auto WithReadBarrierUpdater = [&](const art::GcRoot<art::mirror::Object>& original_root,
-                                    art::mirror::Object* original_obj ATTRIBUTE_UNUSED)
-     REQUIRES_SHARED(art::Locks::mutator_lock_) {
-    return original_root.Read<art::kWithReadBarrier>();
+  auto WithReadBarrierUpdater = [&](const facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>& original_root,
+                                    facebook::museum::MUSEUM_VERSION::art::mirror::Object* original_obj ATTRIBUTE_UNUSED)
+     REQUIRES_SHARED(facebook::museum::MUSEUM_VERSION::art::Locks::mutator_lock_) {
+    return original_root.Read<facebook::museum::MUSEUM_VERSION::art::kWithReadBarrier>();
   };
 
   UpdateTableWith<decltype(WithReadBarrierUpdater), kIgnoreNull>(WithReadBarrierUpdater);
 }
 
 template <typename T>
-bool JvmtiWeakTable<T>::GetTagSlowPath(art::Thread* self, art::mirror::Object* obj, T* result) {
+bool JvmtiWeakTable<T>::GetTagSlowPath(facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T* result) {
   // Under concurrent GC, there is a window between moving objects and sweeping of system
   // weaks in which mutators are active. We may receive a to-space object pointer in obj,
   // but still have from-space pointers in the table. Explicitly update the table once.
@@ -86,16 +86,16 @@ bool JvmtiWeakTable<T>::GetTagSlowPath(art::Thread* self, art::mirror::Object* o
 }
 
 template <typename T>
-bool JvmtiWeakTable<T>::Remove(art::mirror::Object* obj, /* out */ T* tag) {
-  art::Thread* self = art::Thread::Current();
-  art::MutexLock mu(self, allow_disallow_lock_);
+bool JvmtiWeakTable<T>::Remove(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, /* out */ T* tag) {
+  facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
+  facebook::museum::MUSEUM_VERSION::art::MutexLock mu(self, allow_disallow_lock_);
   Wait(self);
 
   return RemoveLocked(self, obj, tag);
 }
 template <typename T>
-bool JvmtiWeakTable<T>::RemoveLocked(art::mirror::Object* obj, T* tag) {
-  art::Thread* self = art::Thread::Current();
+bool JvmtiWeakTable<T>::RemoveLocked(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T* tag) {
+  facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
   allow_disallow_lock_.AssertHeld(self);
   Wait(self);
 
@@ -103,8 +103,8 @@ bool JvmtiWeakTable<T>::RemoveLocked(art::mirror::Object* obj, T* tag) {
 }
 
 template <typename T>
-bool JvmtiWeakTable<T>::RemoveLocked(art::Thread* self, art::mirror::Object* obj, T* tag) {
-  auto it = tagged_objects_.find(art::GcRoot<art::mirror::Object>(obj));
+bool JvmtiWeakTable<T>::RemoveLocked(facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T* tag) {
+  auto it = tagged_objects_.find(facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>(obj));
   if (it != tagged_objects_.end()) {
     if (tag != nullptr) {
       *tag = it->second;
@@ -113,7 +113,7 @@ bool JvmtiWeakTable<T>::RemoveLocked(art::Thread* self, art::mirror::Object* obj
     return true;
   }
 
-  if (art::kUseReadBarrier && self->GetIsGcMarking() && !update_since_last_sweep_) {
+  if (facebook::museum::MUSEUM_VERSION::art::kUseReadBarrier && self->GetIsGcMarking() && !update_since_last_sweep_) {
     // Under concurrent GC, there is a window between moving objects and sweeping of system
     // weaks in which mutators are active. We may receive a to-space object pointer in obj,
     // but still have from-space pointers in the table. Explicitly update the table once.
@@ -131,16 +131,16 @@ bool JvmtiWeakTable<T>::RemoveLocked(art::Thread* self, art::mirror::Object* obj
 }
 
 template <typename T>
-bool JvmtiWeakTable<T>::Set(art::mirror::Object* obj, T new_tag) {
-  art::Thread* self = art::Thread::Current();
-  art::MutexLock mu(self, allow_disallow_lock_);
+bool JvmtiWeakTable<T>::Set(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T new_tag) {
+  facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
+  facebook::museum::MUSEUM_VERSION::art::MutexLock mu(self, allow_disallow_lock_);
   Wait(self);
 
   return SetLocked(self, obj, new_tag);
 }
 template <typename T>
-bool JvmtiWeakTable<T>::SetLocked(art::mirror::Object* obj, T new_tag) {
-  art::Thread* self = art::Thread::Current();
+bool JvmtiWeakTable<T>::SetLocked(facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T new_tag) {
+  facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
   allow_disallow_lock_.AssertHeld(self);
   Wait(self);
 
@@ -148,14 +148,14 @@ bool JvmtiWeakTable<T>::SetLocked(art::mirror::Object* obj, T new_tag) {
 }
 
 template <typename T>
-bool JvmtiWeakTable<T>::SetLocked(art::Thread* self, art::mirror::Object* obj, T new_tag) {
-  auto it = tagged_objects_.find(art::GcRoot<art::mirror::Object>(obj));
+bool JvmtiWeakTable<T>::SetLocked(facebook::museum::MUSEUM_VERSION::art::Thread* self, facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj, T new_tag) {
+  auto it = tagged_objects_.find(facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>(obj));
   if (it != tagged_objects_.end()) {
     it->second = new_tag;
     return true;
   }
 
-  if (art::kUseReadBarrier && self->GetIsGcMarking() && !update_since_last_sweep_) {
+  if (facebook::museum::MUSEUM_VERSION::art::kUseReadBarrier && self->GetIsGcMarking() && !update_since_last_sweep_) {
     // Under concurrent GC, there is a window between moving objects and sweeping of system
     // weaks in which mutators are active. We may receive a to-space object pointer in obj,
     // but still have from-space pointers in the table. Explicitly update the table once.
@@ -169,13 +169,13 @@ bool JvmtiWeakTable<T>::SetLocked(art::Thread* self, art::mirror::Object* obj, T
   }
 
   // New element.
-  auto insert_it = tagged_objects_.emplace(art::GcRoot<art::mirror::Object>(obj), new_tag);
+  auto insert_it = tagged_objects_.emplace(facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>(obj), new_tag);
   DCHECK(insert_it.second);
   return false;
 }
 
 template <typename T>
-void JvmtiWeakTable<T>::Sweep(art::IsMarkedVisitor* visitor) {
+void JvmtiWeakTable<T>::Sweep(facebook::museum::MUSEUM_VERSION::art::IsMarkedVisitor* visitor) {
   if (DoesHandleNullOnSweep()) {
     SweepImpl<true>(visitor);
   } else {
@@ -193,12 +193,12 @@ void JvmtiWeakTable<T>::Sweep(art::IsMarkedVisitor* visitor) {
 
 template <typename T>
 template <bool kHandleNull>
-void JvmtiWeakTable<T>::SweepImpl(art::IsMarkedVisitor* visitor) {
-  art::Thread* self = art::Thread::Current();
-  art::MutexLock mu(self, allow_disallow_lock_);
+void JvmtiWeakTable<T>::SweepImpl(facebook::museum::MUSEUM_VERSION::art::IsMarkedVisitor* visitor) {
+  facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
+  facebook::museum::MUSEUM_VERSION::art::MutexLock mu(self, allow_disallow_lock_);
 
-  auto IsMarkedUpdater = [&](const art::GcRoot<art::mirror::Object>& original_root ATTRIBUTE_UNUSED,
-                             art::mirror::Object* original_obj) {
+  auto IsMarkedUpdater = [&](const facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>& original_root ATTRIBUTE_UNUSED,
+                             facebook::museum::MUSEUM_VERSION::art::mirror::Object* original_obj) {
     return visitor->IsMarked(original_obj);
   };
 
@@ -219,8 +219,8 @@ ALWAYS_INLINE inline void JvmtiWeakTable<T>::UpdateTableWith(Updater& updater) {
 
   for (auto it = tagged_objects_.begin(); it != tagged_objects_.end();) {
     DCHECK(!it->first.IsNull());
-    art::mirror::Object* original_obj = it->first.template Read<art::kWithoutReadBarrier>();
-    art::mirror::Object* target_obj = updater(it->first, original_obj);
+    facebook::museum::MUSEUM_VERSION::art::mirror::Object* original_obj = it->first.template Read<facebook::museum::MUSEUM_VERSION::art::kWithoutReadBarrier>();
+    facebook::museum::MUSEUM_VERSION::art::mirror::Object* target_obj = updater(it->first, original_obj);
     if (original_obj != target_obj) {
       if (kTargetNull == kIgnoreNull && target_obj == nullptr) {
         // Ignore null target, don't do anything.
@@ -228,7 +228,7 @@ ALWAYS_INLINE inline void JvmtiWeakTable<T>::UpdateTableWith(Updater& updater) {
         T tag = it->second;
         it = tagged_objects_.erase(it);
         if (target_obj != nullptr) {
-          tagged_objects_.emplace(art::GcRoot<art::mirror::Object>(target_obj), tag);
+          tagged_objects_.emplace(facebook::museum::MUSEUM_VERSION::art::GcRoot<facebook::museum::MUSEUM_VERSION::art::mirror::Object>(target_obj), tag);
           DCHECK_EQ(original_bucket_count, tagged_objects_.bucket_count());
         } else if (kTargetNull == kCallHandleNull) {
           HandleNullSweep(tag);
@@ -325,11 +325,11 @@ jvmtiError JvmtiWeakTable<T>::GetTaggedObjects(jvmtiEnv* jvmti_env,
     return ERR(NULL_POINTER);
   }
 
-  art::Thread* self = art::Thread::Current();
-  art::MutexLock mu(self, allow_disallow_lock_);
+  facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
+  facebook::museum::MUSEUM_VERSION::art::MutexLock mu(self, allow_disallow_lock_);
   Wait(self);
 
-  art::JNIEnvExt* jni_env = self->GetJniEnv();
+  facebook::museum::MUSEUM_VERSION::art::JNIEnvExt* jni_env = self->GetJniEnv();
 
   constexpr size_t kDefaultSize = 10;
   size_t initial_object_size;
@@ -361,7 +361,7 @@ jvmtiError JvmtiWeakTable<T>::GetTaggedObjects(jvmtiEnv* jvmti_env,
     }
 
     if (select) {
-      art::mirror::Object* obj = pair.first.template Read<art::kWithReadBarrier>();
+      facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj = pair.first.template Read<facebook::museum::MUSEUM_VERSION::art::kWithReadBarrier>();
       if (obj != nullptr) {
         count++;
         if (object_result_ptr != nullptr) {
@@ -385,14 +385,14 @@ jvmtiError JvmtiWeakTable<T>::GetTaggedObjects(jvmtiEnv* jvmti_env,
 }
 
 template <typename T>
-art::mirror::Object* JvmtiWeakTable<T>::Find(T tag) {
-  art::Thread* self = art::Thread::Current();
-  art::MutexLock mu(self, allow_disallow_lock_);
+facebook::museum::MUSEUM_VERSION::art::mirror::Object* JvmtiWeakTable<T>::Find(T tag) {
+  facebook::museum::MUSEUM_VERSION::art::Thread* self = facebook::museum::MUSEUM_VERSION::art::Thread::Current();
+  facebook::museum::MUSEUM_VERSION::art::MutexLock mu(self, allow_disallow_lock_);
   Wait(self);
 
   for (auto& pair : tagged_objects_) {
     if (tag == pair.second) {
-      art::mirror::Object* obj = pair.first.template Read<art::kWithReadBarrier>();
+      facebook::museum::MUSEUM_VERSION::art::mirror::Object* obj = pair.first.template Read<facebook::museum::MUSEUM_VERSION::art::kWithReadBarrier>();
       if (obj != nullptr) {
         return obj;
       }

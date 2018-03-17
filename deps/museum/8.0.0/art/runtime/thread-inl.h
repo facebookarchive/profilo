@@ -33,7 +33,7 @@
 #include <museum/8.0.0/art/runtime/runtime.h>
 #include <museum/8.0.0/art/runtime/thread_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Quickly access the current thread from a JNIEnv.
 static inline Thread* ThreadForEnv(JNIEnv* env) {
@@ -386,6 +386,6 @@ inline bool Thread::ModifySuspendCount(Thread* self,
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_INL_H_

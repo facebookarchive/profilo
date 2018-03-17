@@ -20,7 +20,7 @@
 #include <museum/8.0.0/art/runtime/base/arena_object.h>
 #include <museum/8.0.0/art/runtime/base/bit_vector.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArenaAllocator;
 class ScopedArenaAllocator;
@@ -53,6 +53,6 @@ class ArenaBitVector : public BitVector, public ArenaObject<kArenaAllocGrowableB
   DISALLOW_COPY_AND_ASSIGN(ArenaBitVector);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ARENA_BIT_VECTOR_H_

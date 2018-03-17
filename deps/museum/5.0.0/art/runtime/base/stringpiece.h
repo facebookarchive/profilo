@@ -34,7 +34,7 @@
 #include <museum/5.0.0/external/libcxx/iosfwd>
 #include <museum/5.0.0/external/libcxx/string>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class StringPiece {
  private:
@@ -208,6 +208,6 @@ inline bool operator>=(const StringPiece& x, const StringPiece& y) {
 
 extern std::ostream& operator<<(std::ostream& o, const StringPiece& piece);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_STRINGPIECE_H_

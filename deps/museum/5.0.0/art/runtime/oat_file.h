@@ -30,7 +30,7 @@
 #include <museum/5.0.0/art/runtime/oat.h>
 #include <museum/5.0.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class BitVector;
 class ElfFile;
@@ -374,6 +374,6 @@ class OatFile {
   DISALLOW_COPY_AND_ASSIGN(OatFile);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_H_

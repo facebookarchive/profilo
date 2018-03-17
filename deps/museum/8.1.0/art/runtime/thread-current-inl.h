@@ -25,7 +25,7 @@
 
 #include <museum/8.1.0/bionic/libc/pthread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline Thread* Thread::Current() {
   // We rely on Thread::Current returning null for a detached thread, so it's not obvious
@@ -42,6 +42,6 @@ inline Thread* Thread::Current() {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_THREAD_CURRENT_INL_H_

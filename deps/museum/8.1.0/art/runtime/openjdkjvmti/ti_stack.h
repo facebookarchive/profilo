@@ -45,7 +45,7 @@ class StackUtil {
                                       jint max_frame_count,
                                       jvmtiStackInfo** stack_info_ptr,
                                       jint* thread_count_ptr)
-      REQUIRES(!art::Locks::thread_list_lock_);
+      REQUIRES(!facebook::museum::MUSEUM_VERSION::art::Locks::thread_list_lock_);
 
   static jvmtiError GetFrameCount(jvmtiEnv* env, jthread thread, jint* count_ptr);
 

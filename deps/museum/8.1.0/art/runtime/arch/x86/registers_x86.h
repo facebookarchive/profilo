@@ -23,7 +23,7 @@
 #include <museum/8.1.0/art/runtime/base/macros.h>
 #include <museum/8.1.0/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86 {
 
 enum Register {
@@ -42,6 +42,6 @@ enum Register {
 std::ostream& operator<<(std::ostream& os, const Register& rhs);
 
 }  // namespace x86
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_REGISTERS_X86_H_

@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/mirror/object-inl.h>
 #include <museum/8.0.0/art/runtime/obj_ptr-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline bool VerifyClassClass(ObjPtr<mirror::Class> c) {
   if (UNLIKELY(c == nullptr)) {
@@ -33,6 +33,6 @@ inline bool VerifyClassClass(ObjPtr<mirror::Class> c) {
   return c_c != nullptr && c_c == c_c->GetClass<kVerifyNone>();
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFY_OBJECT_INL_H_

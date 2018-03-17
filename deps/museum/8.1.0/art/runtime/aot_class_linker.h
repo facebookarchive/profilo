@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/class_linker.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // AotClassLinker is only used for AOT compiler, which includes some logic for class initialization
 // which will only be used in pre-compilation.
@@ -39,6 +39,6 @@ class AotClassLinker : public ClassLinker {
       REQUIRES_SHARED(Locks::mutator_lock_);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_AOT_CLASS_LINKER_H_

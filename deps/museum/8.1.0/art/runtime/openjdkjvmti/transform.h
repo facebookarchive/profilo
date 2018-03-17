@@ -51,13 +51,13 @@ class Transformer {
   static jvmtiError RetransformClassesDirect(
       ArtJvmTiEnv* env,
       EventHandler* event_handler,
-      art::Thread* self,
+      facebook::museum::MUSEUM_VERSION::art::Thread* self,
       /*in-out*/std::vector<ArtClassDefinition>* definitions);
 
   static jvmtiError RetransformClasses(ArtJvmTiEnv* env,
                                        EventHandler* event_handler,
-                                       art::Runtime* runtime,
-                                       art::Thread* self,
+                                       facebook::museum::MUSEUM_VERSION::art::Runtime* runtime,
+                                       facebook::museum::MUSEUM_VERSION::art::Thread* self,
                                        jint class_count,
                                        const jclass* classes,
                                        /*out*/std::string* error_msg);

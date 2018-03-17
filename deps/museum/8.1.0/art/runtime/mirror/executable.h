@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/mirror/object.h>
 #include <museum/8.1.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ExecutableOffsets;
 class ArtMethod;
@@ -68,11 +68,11 @@ class MANAGED Executable : public AccessibleObject {
     return MemberOffset(OFFSETOF_MEMBER(Executable, dex_method_index_));
   }
 
-  friend struct art::ExecutableOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ExecutableOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(Executable);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_EXECUTABLE_H_

@@ -32,7 +32,7 @@
 #include <museum/7.0.0/art/runtime/object_callbacks.h>
 #include <museum/7.0.0/art/runtime/primitive.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Class;
 }  // namespace mirror
@@ -930,6 +930,6 @@ std::ostream& operator<<(std::ostream& os, const RegType& rhs)
     SHARED_REQUIRES(Locks::mutator_lock_);
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_REG_TYPE_H_

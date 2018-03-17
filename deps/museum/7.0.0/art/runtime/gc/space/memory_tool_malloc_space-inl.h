@@ -21,7 +21,7 @@
 #include <museum/7.0.0/art/runtime/gc/space/memory_tool_malloc_space.h>
 #include <museum/7.0.0/art/runtime/gc/space/memory_tool_settings.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -258,6 +258,6 @@ size_t MemoryToolMallocSpace<S,
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_MEMORY_TOOL_MALLOC_SPACE_INL_H_

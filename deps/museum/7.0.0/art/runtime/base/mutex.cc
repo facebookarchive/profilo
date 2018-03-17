@@ -29,7 +29,7 @@
 #include "scoped_thread_state_change.h"
 #include "thread-inl.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 Mutex* Locks::abort_lock_ = nullptr;
 Mutex* Locks::alloc_tracker_lock_ = nullptr;
@@ -1104,4 +1104,4 @@ void Locks::InitConditions() {
   thread_exit_cond_ = new ConditionVariable("thread exit condition variable", *thread_list_lock_);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

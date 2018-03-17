@@ -28,7 +28,7 @@
 #include <museum/5.1.1/art/runtime/thread.h>
 #include <museum/5.1.1/external/libcxx/string>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<class T>
@@ -275,6 +275,6 @@ void ObjectArray<T>::VisitReferences(const Visitor& visitor) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_ARRAY_INL_H_

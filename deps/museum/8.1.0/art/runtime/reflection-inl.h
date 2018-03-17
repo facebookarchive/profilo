@@ -28,7 +28,7 @@
 #include <museum/8.1.0/art/runtime/primitive.h>
 #include <museum/8.1.0/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline bool ConvertPrimitiveValueNoThrow(Primitive::Type srcType,
                                          Primitive::Type dstType,
@@ -127,6 +127,6 @@ inline bool VerifyObjectIsClass(ObjPtr<mirror::Object> o, ObjPtr<mirror::Class> 
   return true;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_REFLECTION_INL_H_

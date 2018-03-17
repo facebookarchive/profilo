@@ -22,7 +22,7 @@
 
 #include <museum/8.1.0/art/runtime/base/mutex.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
   class Object;
@@ -69,6 +69,6 @@ class LockCountData {
   std::unique_ptr<std::vector<mirror::Object*>> monitors_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INTERPRETER_LOCK_COUNT_DATA_H_

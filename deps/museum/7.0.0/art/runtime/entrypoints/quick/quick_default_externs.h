@@ -19,19 +19,19 @@
 
 #include <museum/7.0.0/external/libcxx/cstdint>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Array;
 class Class;
 class Object;
 }  // namespace mirror
 class ArtMethod;
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 // These are extern declarations of assembly stubs with common names.
 
 // Cast entrypoints.
-extern "C" void art_quick_check_cast(const art::mirror::Class*, const art::mirror::Class*);
+extern "C" void art_quick_check_cast(const facebook::museum::MUSEUM_VERSION::art::mirror::Class*, const facebook::museum::MUSEUM_VERSION::art::mirror::Class*);
 
 // DexCache entrypoints.
 extern "C" void* art_quick_initialize_static_storage(uint32_t);
@@ -66,20 +66,20 @@ extern "C" void* art_quick_get_obj_instance(uint32_t, void*);
 extern "C" void* art_quick_get_obj_static(uint32_t);
 
 // Array entrypoints.
-extern "C" void art_quick_aput_obj_with_null_and_bound_check(art::mirror::Array*, int32_t,
-                                                             art::mirror::Object*);
-extern "C" void art_quick_aput_obj_with_bound_check(art::mirror::Array*, int32_t,
-                                                    art::mirror::Object*);
-extern "C" void art_quick_aput_obj(art::mirror::Array*, int32_t, art::mirror::Object*);
+extern "C" void art_quick_aput_obj_with_null_and_bound_check(facebook::museum::MUSEUM_VERSION::art::mirror::Array*, int32_t,
+                                                             facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
+extern "C" void art_quick_aput_obj_with_bound_check(facebook::museum::MUSEUM_VERSION::art::mirror::Array*, int32_t,
+                                                    facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
+extern "C" void art_quick_aput_obj(facebook::museum::MUSEUM_VERSION::art::mirror::Array*, int32_t, facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
 extern "C" void art_quick_handle_fill_data(void*, void*);
 
 // Lock entrypoints.
-extern "C" void art_quick_lock_object(art::mirror::Object*);
-extern "C" void art_quick_unlock_object(art::mirror::Object*);
+extern "C" void art_quick_lock_object(facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
+extern "C" void art_quick_unlock_object(facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
 
 // Lock entrypoints that do not inline any behavior (e.g., thin-locks).
-extern "C" void art_quick_lock_object_no_inline(art::mirror::Object*);
-extern "C" void art_quick_unlock_object_no_inline(art::mirror::Object*);
+extern "C" void art_quick_lock_object_no_inline(facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
+extern "C" void art_quick_unlock_object_no_inline(facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
 
 // Math entrypoints.
 extern "C" int64_t art_quick_d2l(double);
@@ -102,9 +102,9 @@ extern "C" int32_t art_quick_string_compareto(void*, void*);
 extern "C" void* art_quick_memcpy(void*, const void*, size_t);
 
 // Invoke entrypoints.
-extern "C" void art_quick_imt_conflict_trampoline(art::ArtMethod*);
-extern "C" void art_quick_resolution_trampoline(art::ArtMethod*);
-extern "C" void art_quick_to_interpreter_bridge(art::ArtMethod*);
+extern "C" void art_quick_imt_conflict_trampoline(facebook::museum::MUSEUM_VERSION::art::ArtMethod*);
+extern "C" void art_quick_resolution_trampoline(facebook::museum::MUSEUM_VERSION::art::ArtMethod*);
+extern "C" void art_quick_to_interpreter_bridge(facebook::museum::MUSEUM_VERSION::art::ArtMethod*);
 extern "C" void art_quick_invoke_direct_trampoline_with_access_check(uint32_t, void*);
 extern "C" void art_quick_invoke_interface_trampoline_with_access_check(uint32_t, void*);
 extern "C" void art_quick_invoke_static_trampoline_with_access_check(uint32_t, void*);
@@ -115,7 +115,7 @@ extern "C" void art_quick_invoke_virtual_trampoline_with_access_check(uint32_t, 
 extern "C" void art_quick_test_suspend();
 
 // Throw entrypoints.
-extern "C" void art_quick_deliver_exception(art::mirror::Object*);
+extern "C" void art_quick_deliver_exception(facebook::museum::MUSEUM_VERSION::art::mirror::Object*);
 extern "C" void art_quick_throw_array_bounds(int32_t index, int32_t limit);
 extern "C" void art_quick_throw_div_zero();
 extern "C" void art_quick_throw_no_such_method(int32_t method_idx);

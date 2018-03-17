@@ -34,7 +34,7 @@
 #include <museum/5.1.1/art/runtime/runtime.h>
 #include <museum/5.1.1/art/runtime/mirror/string.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 template<VerifyObjectFlags kVerifyFlags, ReadBarrierOption kReadBarrierOption>
@@ -781,6 +781,6 @@ inline ObjectArray<String>* Class::GetDexCacheStrings() {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_INL_H_

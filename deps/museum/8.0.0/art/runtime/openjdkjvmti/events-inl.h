@@ -114,7 +114,7 @@ FORALL_EVENT_TYPES(GET_CALLBACK)
 // ClassFileLoadHook event types is the same, so use this helper for code deduplication.
 // TODO Locking of some type!
 template <ArtJvmtiEvent kEvent>
-inline void EventHandler::DispatchClassFileLoadHookEvent(art::Thread* thread,
+inline void EventHandler::DispatchClassFileLoadHookEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                          JNIEnv* jnienv,
                                                          jclass class_being_redefined,
                                                          jobject loader,
@@ -172,7 +172,7 @@ inline void EventHandler::DispatchClassFileLoadHookEvent(art::Thread* thread,
 // exactly the argument types of the corresponding Jvmti kEvent function pointer.
 
 template <ArtJvmtiEvent kEvent, typename ...Args>
-inline void EventHandler::DispatchEvent(art::Thread* thread, Args... args) const {
+inline void EventHandler::DispatchEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread, Args... args) const {
   for (ArtJvmTiEnv* env : envs) {
     if (env != nullptr) {
       DispatchEvent<kEvent, Args...>(env, thread, args...);
@@ -181,7 +181,7 @@ inline void EventHandler::DispatchEvent(art::Thread* thread, Args... args) const
 }
 
 template <ArtJvmtiEvent kEvent, typename ...Args>
-inline void EventHandler::DispatchEvent(ArtJvmTiEnv* env, art::Thread* thread, Args... args) const {
+inline void EventHandler::DispatchEvent(ArtJvmTiEnv* env, facebook::museum::MUSEUM_VERSION::art::Thread* thread, Args... args) const {
   using FnType = void(jvmtiEnv*, Args...);
   if (ShouldDispatch<kEvent>(env, thread)) {
     FnType* callback = impl::GetCallback<kEvent>(env);
@@ -194,7 +194,7 @@ inline void EventHandler::DispatchEvent(ArtJvmTiEnv* env, art::Thread* thread, A
 // Need to give a custom specialization for NativeMethodBind since it has to deal with an out
 // variable.
 template <>
-inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kNativeMethodBind>(art::Thread* thread,
+inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kNativeMethodBind>(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                                           JNIEnv* jnienv,
                                                                           jthread jni_thread,
                                                                           jmethodID method,
@@ -217,7 +217,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kNativeMethodBind>(art::T
 // The following two DispatchEvent specializations dispatch to it.
 template <>
 inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookRetransformable>(
-    art::Thread* thread,
+    facebook::museum::MUSEUM_VERSION::art::Thread* thread,
     JNIEnv* jnienv,
     jclass class_being_redefined,
     jobject loader,
@@ -241,7 +241,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookRetrans
 }
 template <>
 inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookNonRetransformable>(
-    art::Thread* thread,
+    facebook::museum::MUSEUM_VERSION::art::Thread* thread,
     JNIEnv* jnienv,
     jclass class_being_redefined,
     jobject loader,
@@ -266,7 +266,7 @@ inline void EventHandler::DispatchEvent<ArtJvmtiEvent::kClassFileLoadHookNonRetr
 
 template <ArtJvmtiEvent kEvent>
 inline bool EventHandler::ShouldDispatch(ArtJvmTiEnv* env,
-                                         art::Thread* thread) {
+                                         facebook::museum::MUSEUM_VERSION::art::Thread* thread) {
   bool dispatch = env->event_masks.global_event_mask.Test(kEvent);
 
   if (!dispatch && thread != nullptr && env->event_masks.unioned_thread_event_mask.Test(kEvent)) {

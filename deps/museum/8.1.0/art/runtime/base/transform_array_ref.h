@@ -22,7 +22,7 @@
 #include <museum/8.1.0/art/runtime/base/array_ref.h>
 #include <museum/8.1.0/art/runtime/base/transform_iterator.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * @brief An ArrayRef<> wrapper that uses a transformation function for element access.
@@ -191,6 +191,6 @@ TransformArrayRef<const typename Container::value_type, Function> MakeTransformA
       ArrayRef<const typename Container::value_type>(container.data(), container.size()), f);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_TRANSFORM_ARRAY_REF_H_

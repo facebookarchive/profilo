@@ -19,7 +19,7 @@
 
 #include <museum/8.1.0/art/runtime/memory_region.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Bit memory region is a bit offset subregion of a normal memoryregion. This is useful for
 // abstracting away the bit start offset to avoid needing passing as an argument everywhere.
@@ -68,6 +68,6 @@ class BitMemoryRegion FINAL : public ValueObject {
   size_t bit_start_ = 0;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BIT_MEMORY_REGION_H_

@@ -24,7 +24,7 @@
 #include <museum/6.0.1/art/runtime/read_barrier_option.h>
 #include <museum/6.0.1/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 
@@ -55,6 +55,6 @@ class MANAGED AccessibleObject : public Object {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_ACCESSIBLE_OBJECT_H_

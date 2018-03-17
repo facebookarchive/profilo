@@ -28,7 +28,7 @@
     ldr xIP0, [xIP0, #:got_lo12:_ZN3art7Runtime9instance_E]
 
     // Our registers aren't intermixed - just spill in order.
-    ldr xIP0, [xIP0]  // xIP0 = & (art::Runtime * art::Runtime.instance_) .
+    ldr xIP0, [xIP0]  // xIP0 = & (facebook::museum::MUSEUM_VERSION::art::Runtime * facebook::museum::MUSEUM_VERSION::art::Runtime.instance_) .
 
     // xIP0 = (ArtMethod*) Runtime.instance_.callee_save_methods[kRefAndArgs]  .
     THIS_LOAD_REQUIRES_READ_BARRIER
@@ -90,7 +90,7 @@
     ldr xIP0, [xIP0, #:got_lo12:_ZN3art7Runtime9instance_E]
 
     // Our registers aren't intermixed - just spill in order.
-    ldr xIP0, [xIP0]  // xIP0 = & (art::Runtime * art::Runtime.instance_) .
+    ldr xIP0, [xIP0]  // xIP0 = & (facebook::museum::MUSEUM_VERSION::art::Runtime * facebook::museum::MUSEUM_VERSION::art::Runtime.instance_) .
 
     // xIP0 = (ArtMethod*) Runtime.instance_.callee_save_methods[kRefAndArgs]  .
     THIS_LOAD_REQUIRES_READ_BARRIER
@@ -256,7 +256,7 @@
     ldr xIP0, [xIP0, #:got_lo12:_ZN3art7Runtime9instance_E]
 
     // Our registers aren't intermixed - just spill in order.
-    ldr xIP0, [xIP0]  // xIP0 = & (art::Runtime * art::Runtime.instance_) .
+    ldr xIP0, [xIP0]  // xIP0 = & (facebook::museum::MUSEUM_VERSION::art::Runtime * facebook::museum::MUSEUM_VERSION::art::Runtime.instance_) .
 
     // xIP0 = (ArtMethod*) Runtime.instance_.callee_save_methods[kRefAndArgs]  .
     THIS_LOAD_REQUIRES_READ_BARRIER

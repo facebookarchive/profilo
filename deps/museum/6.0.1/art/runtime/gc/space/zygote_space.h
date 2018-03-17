@@ -21,7 +21,7 @@
 #include <museum/6.0.1/art/runtime/gc/space/malloc_space.h>
 #include <museum/6.0.1/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 namespace space {
@@ -96,6 +96,6 @@ class ZygoteSpace FINAL : public ContinuousMemMapAllocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_ZYGOTE_SPACE_H_

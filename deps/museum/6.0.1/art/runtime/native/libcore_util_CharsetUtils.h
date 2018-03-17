@@ -19,10 +19,10 @@
 
 #include <museum/6.0.1/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void register_libcore_util_CharsetUtils(JNIEnv* env);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_LIBCORE_UTIL_CHARSETUTILS_H_

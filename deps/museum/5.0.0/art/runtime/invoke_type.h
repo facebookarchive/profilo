@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/external/libcxx/iosfwd>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum InvokeType {
   kStatic,     // <<static>>
@@ -32,6 +32,6 @@ enum InvokeType {
 
 std::ostream& operator<<(std::ostream& os, const InvokeType& rhs);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INVOKE_TYPE_H_

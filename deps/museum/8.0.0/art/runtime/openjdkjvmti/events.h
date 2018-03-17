@@ -112,7 +112,7 @@ struct EventMasks {
   // It is not enough to store a Thread pointer, as these may be reused. Use the pointer and the
   // thread id.
   // Note: We could just use the tid like tracing does.
-  using UniqueThread = std::pair<art::Thread*, uint32_t>;
+  using UniqueThread = std::pair<facebook::museum::MUSEUM_VERSION::art::Thread*, uint32_t>;
   // TODO: Native thread objects are immovable, so we can use them as keys in an (unordered) map,
   //       if necessary.
   std::vector<std::pair<UniqueThread, EventMask>> thread_event_masks;
@@ -120,10 +120,10 @@ struct EventMasks {
   // A union of the per-thread events, for fast-pathing.
   EventMask unioned_thread_event_mask;
 
-  EventMask& GetEventMask(art::Thread* thread);
-  EventMask* GetEventMaskOrNull(art::Thread* thread);
-  void EnableEvent(art::Thread* thread, ArtJvmtiEvent event);
-  void DisableEvent(art::Thread* thread, ArtJvmtiEvent event);
+  EventMask& GetEventMask(facebook::museum::MUSEUM_VERSION::art::Thread* thread);
+  EventMask* GetEventMaskOrNull(facebook::museum::MUSEUM_VERSION::art::Thread* thread);
+  void EnableEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread, ArtJvmtiEvent event);
+  void DisableEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread, ArtJvmtiEvent event);
   bool IsEnabledAnywhere(ArtJvmtiEvent event);
   // Make any changes to event masks needed for the given capability changes. If caps_added is true
   // then caps is all the newly set capabilities of the jvmtiEnv. If it is false then caps is the
@@ -152,18 +152,18 @@ class EventHandler {
   }
 
   jvmtiError SetEvent(ArtJvmTiEnv* env,
-                      art::Thread* thread,
+                      facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                       ArtJvmtiEvent event,
                       jvmtiEventMode mode);
 
   // Dispatch event to all registered environments.
   template <ArtJvmtiEvent kEvent, typename ...Args>
   ALWAYS_INLINE
-  inline void DispatchEvent(art::Thread* thread, Args... args) const;
+  inline void DispatchEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread, Args... args) const;
   // Dispatch event to the given environment, only.
   template <ArtJvmtiEvent kEvent, typename ...Args>
   ALWAYS_INLINE
-  inline void DispatchEvent(ArtJvmTiEnv* env, art::Thread* thread, Args... args) const;
+  inline void DispatchEvent(ArtJvmTiEnv* env, facebook::museum::MUSEUM_VERSION::art::Thread* thread, Args... args) const;
 
   // Tell the event handler capabilities were added/lost so it can adjust the sent events.If
   // caps_added is true then caps is all the newly set capabilities of the jvmtiEnv. If it is false
@@ -176,7 +176,7 @@ class EventHandler {
  private:
   template <ArtJvmtiEvent kEvent>
   ALWAYS_INLINE
-  static inline bool ShouldDispatch(ArtJvmTiEnv* env, art::Thread* thread);
+  static inline bool ShouldDispatch(ArtJvmTiEnv* env, facebook::museum::MUSEUM_VERSION::art::Thread* thread);
 
   ALWAYS_INLINE
   inline bool NeedsEventUpdate(ArtJvmTiEnv* env,
@@ -188,7 +188,7 @@ class EventHandler {
   inline void RecalculateGlobalEventMask(ArtJvmtiEvent event);
 
   template <ArtJvmtiEvent kEvent>
-  ALWAYS_INLINE inline void DispatchClassFileLoadHookEvent(art::Thread* thread,
+  ALWAYS_INLINE inline void DispatchClassFileLoadHookEvent(facebook::museum::MUSEUM_VERSION::art::Thread* thread,
                                                            JNIEnv* jnienv,
                                                            jclass class_being_redefined,
                                                            jobject loader,

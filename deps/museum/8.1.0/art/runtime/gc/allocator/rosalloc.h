@@ -33,7 +33,7 @@
 #include <museum/8.1.0/art/runtime/globals.h>
 #include <museum/8.1.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class MemMap;
 
@@ -947,6 +947,6 @@ void* ArtRosAllocMoreCore(allocator::RosAlloc* rosalloc, intptr_t increment);
 
 }  // namespace allocator
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ALLOCATOR_ROSALLOC_H_

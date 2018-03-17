@@ -23,7 +23,7 @@
 #include <museum/7.1.2/art/runtime/base/logging.h>
 #include <museum/7.1.2/art/runtime/base/macros.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArenaStack;
 class ScopedArenaAllocator;
@@ -181,6 +181,6 @@ class ScopedArenaAllocator
   DISALLOW_COPY_AND_ASSIGN(ScopedArenaAllocator);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_SCOPED_ARENA_ALLOCATOR_H_

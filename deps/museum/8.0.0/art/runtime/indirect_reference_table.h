@@ -32,7 +32,7 @@
 #include <museum/8.0.0/art/runtime/offsets.h>
 #include <museum/8.0.0/art/runtime/read_barrier_option.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class RootInfo;
 
@@ -405,6 +405,6 @@ class IndirectReferenceTable {
   ResizableCapacity resizable_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_INDIRECT_REFERENCE_TABLE_H_

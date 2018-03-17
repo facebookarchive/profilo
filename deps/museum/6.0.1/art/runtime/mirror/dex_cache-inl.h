@@ -25,7 +25,7 @@
 #include <museum/6.0.1/art/runtime/mirror/class.h>
 #include <museum/6.0.1/art/runtime/runtime.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline uint32_t DexCache::ClassSize(size_t pointer_size) {
@@ -70,6 +70,6 @@ inline void DexCache::SetResolvedMethod(uint32_t idx, ArtMethod* method, size_t 
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_DEX_CACHE_INL_H_

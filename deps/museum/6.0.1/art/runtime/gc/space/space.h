@@ -29,7 +29,7 @@
 #include <museum/6.0.1/art/runtime/image.h>
 #include <museum/6.0.1/art/runtime/mem_map.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
   class Object;
 }  // namespace mirror
@@ -458,6 +458,6 @@ class ContinuousMemMapAllocSpace : public MemMapSpace, public AllocSpace {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_SPACE_H_

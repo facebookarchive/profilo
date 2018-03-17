@@ -23,7 +23,7 @@
 #include <museum/5.0.0/art/runtime/base/macros.h>
 #include <museum/5.0.0/art/runtime/os.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ScopedFlock {
  public:
@@ -55,6 +55,6 @@ class ScopedFlock {
   DISALLOW_COPY_AND_ASSIGN(ScopedFlock);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_SCOPED_FLOCK_H_

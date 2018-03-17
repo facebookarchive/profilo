@@ -24,7 +24,7 @@
 #include <museum/6.0.1/art/runtime/base/logging.h>
 #include <museum/6.0.1/art/runtime/base/iteration_range.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<typename T>
 static constexpr int CLZ(T x) {
@@ -153,13 +153,13 @@ static inline bool IsAlignedParam(T x, int n) {
 }
 
 #define CHECK_ALIGNED(value, alignment) \
-  CHECK(::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
+  CHECK(::facebook::museum::MUSEUM_VERSION::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
 
 #define DCHECK_ALIGNED(value, alignment) \
-  DCHECK(::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
+  DCHECK(::facebook::museum::MUSEUM_VERSION::art::IsAligned<alignment>(value)) << reinterpret_cast<const void*>(value)
 
 #define DCHECK_ALIGNED_PARAM(value, alignment) \
-  DCHECK(::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
+  DCHECK(::facebook::museum::MUSEUM_VERSION::art::IsAlignedParam(value, alignment)) << reinterpret_cast<const void*>(value)
 
 // Like sizeof, but count how many bits a type takes. Pass type explicitly.
 template <typename T>
@@ -332,6 +332,6 @@ IterationRange<HighToLowBitIterator<T>> HighToLowBits(T bits) {
       HighToLowBitIterator<T>(bits), HighToLowBitIterator<T>());
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_BIT_UTILS_H_

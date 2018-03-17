@@ -34,7 +34,7 @@
 #include <museum/6.0.1/art/runtime/runtime-inl.h>
 #include <museum/6.0.1/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 inline mirror::Class* ArtMethod::GetDeclaringClassUnchecked() {
   return declaring_class_.Read();
@@ -502,6 +502,6 @@ inline void ArtMethod::CopyFrom(const ArtMethod* src, size_t image_pointer_size)
       const_cast<ArtMethod*>(src)->GetDexCacheResolvedTypes());
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ART_METHOD_INL_H_

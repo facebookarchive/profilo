@@ -23,7 +23,7 @@
 #include <museum/5.1.1/art/runtime/gc/accounting/space_bitmap.h>
 #include <museum/5.1.1/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace accounting {
 
@@ -223,6 +223,6 @@ inline void CardTable::CheckCardValid(byte* card) const {
 
 }  // namespace accounting
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_ACCOUNTING_CARD_TABLE_INL_H_

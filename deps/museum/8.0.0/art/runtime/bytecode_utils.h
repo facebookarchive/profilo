@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/dex_file-inl.h>
 #include <museum/8.0.0/art/runtime/dex_instruction-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class CodeItemIterator : public ValueObject {
  public:
@@ -175,6 +175,6 @@ inline bool IsThrowingDexInstruction(const Instruction& instruction) {
   return instruction.IsThrow() && instruction.Opcode() != Instruction::MONITOR_EXIT;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BYTECODE_UTILS_H_

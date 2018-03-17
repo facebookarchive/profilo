@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/base/bit_utils.h>
 #include <museum/8.1.0/art/runtime/base/length_prefixed_array.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // MethodBssMappingEntry describes a mapping of up to 17 method indexes to their offsets
 // in the .bss. The highest index and its associated .bss offset are stored in plain form
@@ -52,6 +52,6 @@ struct MethodBssMappingEntry {
 
 using MethodBssMapping = LengthPrefixedArray<MethodBssMappingEntry>;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_METHOD_BSS_MAPPING_H_

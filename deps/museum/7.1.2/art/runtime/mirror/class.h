@@ -34,7 +34,7 @@
 #include <museum/7.1.2/art/runtime/thread.h>
 #include <museum/7.1.2/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -1326,7 +1326,7 @@ class MANAGED Class FINAL : public Object {
       SHARED_REQUIRES(Locks::mutator_lock_);
 
   // 'Class' Object Fields
-  // Order governed by java field ordering. See art::ClassLinker::LinkFields.
+  // Order governed by java field ordering. See facebook::museum::MUSEUM_VERSION::art::ClassLinker::LinkFields.
 
   HeapReference<Object> annotation_type_;
 
@@ -1477,7 +1477,7 @@ class MANAGED Class FINAL : public Object {
   static GcRoot<Class> java_lang_Class_;
 
   ART_FRIEND_TEST(DexCacheTest, TestResolvedFieldAccess);  // For ResolvedFieldAccessTest
-  friend struct art::ClassOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ClassOffsets;  // for verifying offset information
   friend class Object;  // For VisitReferences
   DISALLOW_IMPLICIT_CONSTRUCTORS(Class);
 };
@@ -1485,6 +1485,6 @@ class MANAGED Class FINAL : public Object {
 std::ostream& operator<<(std::ostream& os, const Class::Status& rhs);
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_CLASS_H_

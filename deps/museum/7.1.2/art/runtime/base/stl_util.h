@@ -22,7 +22,7 @@
 
 #include <museum/7.1.2/art/runtime/base/logging.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Sort and remove duplicates of an STL vector or deque.
 template<class T>
@@ -187,6 +187,6 @@ struct Identity {
   using type = T;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_STL_UTIL_H_

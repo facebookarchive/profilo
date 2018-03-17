@@ -25,7 +25,7 @@
 #include <museum/7.0.0/art/runtime/stack.h>
 #include <museum/7.0.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Object;
 }
@@ -230,6 +230,6 @@ class StackHandleScopeCollection {
   DISALLOW_COPY_AND_ASSIGN(StackHandleScopeCollection);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HANDLE_SCOPE_H_

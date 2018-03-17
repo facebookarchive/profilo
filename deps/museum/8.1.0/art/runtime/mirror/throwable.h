@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/gc_root.h>
 #include <museum/8.1.0/art/runtime/mirror/object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class RootVisitor;
 struct ThrowableOffsets;
@@ -70,11 +70,11 @@ class MANAGED Throwable : public Object {
 
   static GcRoot<Class> java_lang_Throwable_;
 
-  friend struct art::ThrowableOffsets;  // for verifying offset information
+  friend struct facebook::museum::MUSEUM_VERSION::art::ThrowableOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(Throwable);
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_THROWABLE_H_

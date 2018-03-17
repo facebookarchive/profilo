@@ -20,7 +20,7 @@
 #include <museum/6.0.1/art/runtime/base/mutex.h>  // For Locks::mutator_lock_.
 #include <museum/6.0.1/art/runtime/globals.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 class Object;
@@ -109,6 +109,6 @@ class MANAGED CompressedReference : public mirror::ObjectReference<false, Mirror
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_REFERENCE_H_

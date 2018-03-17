@@ -37,7 +37,7 @@
 #include <museum/7.0.0/art/runtime/stack_map.h>
 #include <museum/7.0.0/art/runtime/thread.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <bool kResolve = true>
 inline ArtMethod* GetResolvedMethod(ArtMethod* outer_method,
@@ -802,6 +802,6 @@ inline INT_TYPE art_float_to_integral(FLOAT_TYPE f) {
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_ENTRYPOINT_UTILS_INL_H_

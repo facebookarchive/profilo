@@ -19,10 +19,10 @@
 
 #include <museum/8.1.0/libnativehelper/jni.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 void register_org_apache_harmony_dalvik_ddmc_DdmVmInternal(JNIEnv* env);
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_NATIVE_ORG_APACHE_HARMONY_DALVIK_DDMC_DDMVMINTERNAL_H_

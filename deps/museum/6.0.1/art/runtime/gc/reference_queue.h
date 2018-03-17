@@ -29,7 +29,7 @@
 #include <museum/6.0.1/art/runtime/offsets.h>
 #include <museum/6.0.1/art/runtime/thread_pool.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class Reference;
 }  // namespace mirror
@@ -110,6 +110,6 @@ class ReferenceQueue {
 };
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_REFERENCE_QUEUE_H_

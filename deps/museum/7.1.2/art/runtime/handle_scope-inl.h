@@ -24,7 +24,7 @@
 #include <museum/7.1.2/art/runtime/thread-inl.h>
 #include <museum/7.1.2/art/runtime/verify_object-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<size_t kNumReferences>
 inline StackHandleScope<kNumReferences>::StackHandleScope(Thread* self, mirror::Object* fill_value)
@@ -125,6 +125,6 @@ inline void StackHandleScope<kNumReferences>::SetReference(size_t i, mirror::Obj
   GetReferences()[i].Assign(object);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_HANDLE_SCOPE_INL_H_

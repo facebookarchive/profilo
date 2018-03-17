@@ -29,7 +29,7 @@
 #include <museum/8.1.0/art/runtime/thread-current-inl.h>
 #include <museum/8.1.0/art/runtime/thread_list.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 // Visit objects when threads aren't suspended. If concurrent moving
@@ -164,6 +164,6 @@ inline void Heap::VisitObjectsInternal(Visitor&& visitor) {
 }
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_HEAP_VISIT_OBJECTS_INL_H_

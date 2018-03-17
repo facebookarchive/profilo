@@ -18,7 +18,7 @@
 
 #include <museum/6.0.1/external/libcxx/sstream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /* copied directly from AOSP base/logging.cc */
 /* won't actually be used, just need correct sizing information */
@@ -67,4 +67,4 @@ class LogMessageData {
   DISALLOW_COPY_AND_ASSIGN(LogMessageData);
 };
 
-}
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

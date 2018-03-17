@@ -36,7 +36,7 @@
 #include <museum/8.1.0/art/runtime/mirror/class.h>
 #include <museum/8.1.0/art/runtime/verifier/verifier_enums.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace gc {
 namespace space {
@@ -1333,6 +1333,6 @@ class ClassLoadCallback {
                             Handle<mirror::Class> klass) REQUIRES_SHARED(Locks::mutator_lock_) = 0;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_CLASS_LINKER_H_

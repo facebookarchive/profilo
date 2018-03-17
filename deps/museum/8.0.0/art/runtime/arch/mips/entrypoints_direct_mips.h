@@ -19,7 +19,7 @@
 
 #include <museum/8.0.0/art/runtime/entrypoints/quick/quick_entrypoints_enum.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /* Returns true if entrypoint contains direct reference to
    native implementation. The list is required as direct
@@ -67,6 +67,6 @@ static constexpr bool IsDirectEntrypoint(QuickEntrypointEnum entrypoint) {
       entrypoint == kQuickTanh;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS_ENTRYPOINTS_DIRECT_MIPS_H_

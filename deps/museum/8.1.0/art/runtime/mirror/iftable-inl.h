@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/mirror/iftable.h>
 #include <museum/8.1.0/art/runtime/obj_ptr-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline void IfTable::SetInterface(int32_t i, ObjPtr<Class> interface) {
@@ -39,6 +39,6 @@ inline void IfTable::SetMethodArray(int32_t i, ObjPtr<PointerArray> arr) {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_IFTABLE_INL_H_

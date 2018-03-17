@@ -24,7 +24,7 @@
 #include <museum/5.1.1/art/runtime/gc/space/image_space.h>
 #include <museum/5.1.1/art/runtime/gc/space/large_object_space.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -56,6 +56,6 @@ inline DiscontinuousSpace* Space::AsDiscontinuousSpace() {
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_SPACE_INL_H_

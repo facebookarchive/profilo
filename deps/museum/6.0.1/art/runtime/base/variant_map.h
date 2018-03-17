@@ -21,7 +21,7 @@
 #include <museum/6.0.1/external/libcxx/map>
 #include <museum/6.0.1/external/libcxx/utility>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 //
 // A variant map is a heterogenous, type safe key->value map. It allows
@@ -451,6 +451,6 @@ struct VariantMap {
   StorageMap storage_map_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_VARIANT_MAP_H_

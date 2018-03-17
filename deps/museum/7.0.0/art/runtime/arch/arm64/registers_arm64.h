@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/external/libcxx/iosfwd>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace arm64 {
 
 // Values for GP XRegisters - 64bit registers.
@@ -188,6 +188,6 @@ enum SRegister {
 std::ostream& operator<<(std::ostream& os, const SRegister& rhs);
 
 }  // namespace arm64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM64_REGISTERS_ARM64_H_

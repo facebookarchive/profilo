@@ -19,7 +19,7 @@
 
 #include <museum/6.0.1/external/libcxx/iterator>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Helper class that acts as a container for range-based loops, given an iteration
 // range [first, last) defined by two iterators.
@@ -49,6 +49,6 @@ static inline IterationRange<Iter> MakeIterationRange(const Iter& begin_it, cons
   return IterationRange<Iter>(begin_it, end_it);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_ITERATION_RANGE_H_

@@ -19,7 +19,7 @@
 
 #include <museum/8.0.0/art/runtime/arch/instruction_set_features.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArmInstructionSetFeatures;
 using ArmFeaturesUniquePtr = std::unique_ptr<const ArmInstructionSetFeatures>;
@@ -107,6 +107,6 @@ class ArmInstructionSetFeatures FINAL : public InstructionSetFeatures {
   DISALLOW_COPY_AND_ASSIGN(ArmInstructionSetFeatures);
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_ARM_INSTRUCTION_SET_FEATURES_ARM_H_

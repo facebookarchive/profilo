@@ -19,7 +19,7 @@
 
 #include <museum/6.0.1/art/runtime/oat_file.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // FB
 inline const OatHeader& OatFile::GetOatHeader() const {
@@ -177,6 +177,6 @@ inline const uint8_t* OatFile::OatMethod::GetVmapTable() const {
   return reinterpret_cast<const uint8_t*>(code) - offset;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_OAT_FILE_INL_H_

@@ -22,7 +22,7 @@
 #include <museum/7.0.0/art/runtime/base/macros.h>
 #include <museum/7.0.0/art/runtime/arch/x86/registers_x86.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace x86 {
 
 class X86Context : public Context {
@@ -105,6 +105,6 @@ class X86Context : public Context {
   uintptr_t esp_, eip_, arg0_;
 };
 }  // namespace x86
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_X86_CONTEXT_X86_H_

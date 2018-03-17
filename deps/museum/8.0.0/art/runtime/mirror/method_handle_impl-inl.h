@@ -22,7 +22,7 @@
 #include <museum/8.0.0/art/runtime/art_method-inl.h>
 #include <museum/8.0.0/art/runtime/mirror/object-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 
 inline mirror::MethodType* MethodHandle::GetMethodType() {
@@ -40,6 +40,6 @@ inline ObjPtr<mirror::Class> MethodHandle::GetTargetClass() {
 }
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_METHOD_HANDLE_IMPL_INL_H_

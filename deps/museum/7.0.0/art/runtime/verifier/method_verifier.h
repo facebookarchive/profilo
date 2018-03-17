@@ -33,7 +33,7 @@
 #include <museum/7.0.0/art/runtime/verifier/register_line.h>
 #include <museum/7.0.0/art/runtime/verifier/reg_type_cache.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class CompilerCallbacks;
 class Instruction;
@@ -843,13 +843,13 @@ class MethodVerifier {
   // Link, for the method verifier root linked list.
   MethodVerifier* link_;
 
-  friend class art::Thread;
+  friend class facebook::museum::MUSEUM_VERSION::art::Thread;
 
   DISALLOW_COPY_AND_ASSIGN(MethodVerifier);
 };
 std::ostream& operator<<(std::ostream& os, const MethodVerifier::FailureKind& rhs);
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_

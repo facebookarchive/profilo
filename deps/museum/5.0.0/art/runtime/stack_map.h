@@ -20,7 +20,7 @@
 #include <museum/5.0.0/art/runtime/base/bit_vector.h>
 #include <museum/5.0.0/art/runtime/memory_region.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /**
  * Classes in the following file are wrapper on stack map information backed
@@ -302,6 +302,6 @@ class CodeInfo {
   template<typename U> friend class StackMapStream;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_STACK_MAP_H_

@@ -23,7 +23,7 @@
 #include <museum/7.0.0/art/runtime/offsets.h>
 #include <museum/7.0.0/art/runtime/verify_object.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtField;
 class ArtMethod;
@@ -595,9 +595,9 @@ class MANAGED LOCKABLE Object {
   uint32_t x_xpadding_;    // For 8-byte alignment. TODO: get rid of this.
 #endif
 
-  friend class art::ImageWriter;
-  friend class art::Monitor;
-  friend struct art::ObjectOffsets;  // for verifying offset information
+  friend class facebook::museum::MUSEUM_VERSION::art::ImageWriter;
+  friend class facebook::museum::MUSEUM_VERSION::art::Monitor;
+  friend struct facebook::museum::MUSEUM_VERSION::art::ObjectOffsets;  // for verifying offset information
   friend class CopyObjectVisitor;  // for CopyObject().
   friend class CopyClassVisitor;   // for CopyObject().
   DISALLOW_ALLOCATION();
@@ -605,6 +605,6 @@ class MANAGED LOCKABLE Object {
 };
 
 }  // namespace mirror
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MIRROR_OBJECT_H_

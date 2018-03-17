@@ -26,7 +26,7 @@
 #define QUICK_ENTRYPOINT_OFFSET(ptr_size, x) \
     Thread::QuickEntryPointOffset<ptr_size>(OFFSETOF_MEMBER(QuickEntryPoints, x))
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 namespace mirror {
 class Array;
@@ -97,6 +97,6 @@ extern "C" mirror::Object* artReadBarrierSlow(mirror::Object* ref,
 extern "C" mirror::Object* artReadBarrierForRootSlow(GcRoot<mirror::Object>* root)
     SHARED_REQUIRES(Locks::mutator_lock_) HOT_ATTR;
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_QUICK_ENTRYPOINTS_H_

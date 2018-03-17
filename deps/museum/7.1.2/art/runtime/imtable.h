@@ -21,7 +21,7 @@
 #error IMT_SIZE not defined
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 
@@ -71,7 +71,7 @@ class ImTable {
   }
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_IMTABLE_H_
 

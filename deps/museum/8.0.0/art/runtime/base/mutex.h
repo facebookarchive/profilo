@@ -41,7 +41,7 @@
 #define HAVE_TIMED_RWLOCK 0
 #endif
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class SHARED_LOCKABLE ReaderWriterMutex;
 class SHARED_LOCKABLE MutatorMutex;
@@ -575,7 +575,7 @@ class Locks {
   static void InitConditions() NO_THREAD_SAFETY_ANALYSIS;  // Condition variables.
 
   // Destroying various lock types can emit errors that vary depending upon
-  // whether the client (art::Runtime) is currently active.  Allow the client
+  // whether the client (facebook::museum::MUSEUM_VERSION::art::Runtime) is currently active.  Allow the client
   // to set a callback that is used to check when it is acceptable to call
   // Abort.  The default behavior is that the client *is not* able to call
   // Abort if no callback is established.
@@ -751,6 +751,6 @@ class Roles {
   static Uninterruptible uninterruptible_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_BASE_MUTEX_H_

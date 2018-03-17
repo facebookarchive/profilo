@@ -19,7 +19,7 @@
 
 #include <museum/7.0.0/external/libcxx/iosfwd>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace collector {
 
@@ -41,6 +41,6 @@ std::ostream& operator<<(std::ostream& os, const GcType& policy);
 
 }  // namespace collector
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_COLLECTOR_GC_TYPE_H_

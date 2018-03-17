@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 /* copied directly from AOSP base/logging.cc */
 LogMessageData::LogMessageData(const char* file, int line, LogSeverity severity, int error)
@@ -14,4 +14,4 @@ LogMessageData::LogMessageData(const char* file, int line, LogSeverity severity,
   file = (last_slash == NULL) ? file : last_slash + 1;
 }
 
-} // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

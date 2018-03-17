@@ -22,7 +22,7 @@
 
 #include <museum/8.0.0/art/runtime/dex2oat_environment_test.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class DexoptTest : public Dex2oatEnvironmentTest {
  public:
@@ -92,6 +92,6 @@ class DexoptTest : public Dex2oatEnvironmentTest {
   std::vector<std::unique_ptr<MemMap>> image_reservation_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_DEXOPT_TEST_H_

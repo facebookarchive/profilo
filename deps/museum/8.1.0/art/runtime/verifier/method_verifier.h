@@ -34,7 +34,7 @@
 #include <museum/8.1.0/art/runtime/verifier/reg_type_cache.h>
 #include <museum/8.1.0/art/runtime/verifier/verifier_enums.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ClassLinker;
 class CompilerCallbacks;
@@ -805,13 +805,13 @@ class MethodVerifier {
   // Link, for the method verifier root linked list.
   MethodVerifier* link_;
 
-  friend class art::Thread;
+  friend class facebook::museum::MUSEUM_VERSION::art::Thread;
   friend class VerifierDepsTest;
 
   DISALLOW_COPY_AND_ASSIGN(MethodVerifier);
 };
 
 }  // namespace verifier
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_VERIFIER_METHOD_VERIFIER_H_

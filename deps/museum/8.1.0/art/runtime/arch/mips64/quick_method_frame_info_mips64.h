@@ -24,52 +24,52 @@
 #include <museum/8.1.0/art/runtime/quick/quick_method_frame_info.h>
 #include <museum/8.1.0/art/runtime/arch/mips64/registers_mips64.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mips64 {
 
 static constexpr uint32_t kMips64CalleeSaveAlwaysSpills =
-    (1 << art::mips64::RA);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::RA);
 static constexpr uint32_t kMips64CalleeSaveRefSpills =
-    (1 << art::mips64::S2) | (1 << art::mips64::S3) | (1 << art::mips64::S4) |
-    (1 << art::mips64::S5) | (1 << art::mips64::S6) | (1 << art::mips64::S7) |
-    (1 << art::mips64::GP) | (1 << art::mips64::S8);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S2) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S3) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S4) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S5) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S6) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S7) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::GP) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S8);
 static constexpr uint32_t kMips64CalleeSaveArgSpills =
-    (1 << art::mips64::A1) | (1 << art::mips64::A2) | (1 << art::mips64::A3) |
-    (1 << art::mips64::A4) | (1 << art::mips64::A5) | (1 << art::mips64::A6) |
-    (1 << art::mips64::A7);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A1) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A2) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A3) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A4) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A5) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A6) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A7);
 static constexpr uint32_t kMips64CalleeSaveAllSpills =
-    (1 << art::mips64::S0) | (1 << art::mips64::S1);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S0) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S1);
 static constexpr uint32_t kMips64CalleeSaveEverythingSpills =
-    (1 << art::mips64::AT) | (1 << art::mips64::V0) | (1 << art::mips64::V1) |
-    (1 << art::mips64::A0) | (1 << art::mips64::A1) | (1 << art::mips64::A2) |
-    (1 << art::mips64::A3) | (1 << art::mips64::A4) | (1 << art::mips64::A5) |
-    (1 << art::mips64::A6) | (1 << art::mips64::A7) | (1 << art::mips64::T0) |
-    (1 << art::mips64::T1) | (1 << art::mips64::T2) | (1 << art::mips64::T3) |
-    (1 << art::mips64::S0) | (1 << art::mips64::S1) | (1 << art::mips64::T8) |
-    (1 << art::mips64::T9);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::AT) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::V0) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::V1) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A0) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A1) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A2) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A3) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A4) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A5) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A6) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::A7) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::T0) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::T1) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::T2) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::T3) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S0) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::S1) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::T8) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::T9);
 
 static constexpr uint32_t kMips64CalleeSaveFpRefSpills = 0;
 static constexpr uint32_t kMips64CalleeSaveFpArgSpills =
-    (1 << art::mips64::F12) | (1 << art::mips64::F13) | (1 << art::mips64::F14) |
-    (1 << art::mips64::F15) | (1 << art::mips64::F16) | (1 << art::mips64::F17) |
-    (1 << art::mips64::F18) | (1 << art::mips64::F19);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F12) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F13) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F14) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F15) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F16) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F17) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F18) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F19);
 // F12 should not be necessary to spill, as A0 is always in use.
 static constexpr uint32_t kMips64CalleeSaveFpAllSpills =
-    (1 << art::mips64::F24) | (1 << art::mips64::F25) | (1 << art::mips64::F26) |
-    (1 << art::mips64::F27) | (1 << art::mips64::F28) | (1 << art::mips64::F29) |
-    (1 << art::mips64::F30) | (1 << art::mips64::F31);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F24) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F25) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F26) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F27) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F28) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F29) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F30) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F31);
 static constexpr uint32_t kMips64CalleeSaveFpEverythingSpills =
-    (1 << art::mips64::F0) | (1 << art::mips64::F1) | (1 << art::mips64::F2) |
-    (1 << art::mips64::F3) | (1 << art::mips64::F4) | (1 << art::mips64::F5) |
-    (1 << art::mips64::F6) | (1 << art::mips64::F7) | (1 << art::mips64::F8) |
-    (1 << art::mips64::F9) | (1 << art::mips64::F10) | (1 << art::mips64::F11) |
-    (1 << art::mips64::F12) | (1 << art::mips64::F13) | (1 << art::mips64::F14) |
-    (1 << art::mips64::F15) | (1 << art::mips64::F16) | (1 << art::mips64::F17) |
-    (1 << art::mips64::F18) | (1 << art::mips64::F19) | (1 << art::mips64::F20) |
-    (1 << art::mips64::F21) | (1 << art::mips64::F22) | (1 << art::mips64::F23) |
-    (1 << art::mips64::F24) | (1 << art::mips64::F25) | (1 << art::mips64::F26) |
-    (1 << art::mips64::F27) | (1 << art::mips64::F28) | (1 << art::mips64::F29) |
-    (1 << art::mips64::F30) | (1 << art::mips64::F31);
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F0) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F1) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F2) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F3) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F4) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F5) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F6) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F7) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F8) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F9) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F10) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F11) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F12) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F13) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F14) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F15) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F16) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F17) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F18) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F19) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F20) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F21) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F22) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F23) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F24) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F25) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F26) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F27) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F28) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F29) |
+    (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F30) | (1 << facebook::museum::MUSEUM_VERSION::art::mips64::F31);
 
 constexpr uint32_t Mips64CalleeSaveCoreSpills(CalleeSaveType type) {
   return kMips64CalleeSaveAlwaysSpills | kMips64CalleeSaveRefSpills |
@@ -98,6 +98,6 @@ constexpr QuickMethodFrameInfo Mips64CalleeSaveMethodFrameInfo(CalleeSaveType ty
 }
 
 }  // namespace mips64
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ARCH_MIPS64_QUICK_METHOD_FRAME_INFO_MIPS64_H_

@@ -20,7 +20,7 @@
 #include "scoped_thread_state_change.h"
 #include "thread.h"
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 OatQuickMethodHeader::OatQuickMethodHeader(
     uint32_t vmap_table_offset,
@@ -90,4 +90,4 @@ uintptr_t OatQuickMethodHeader::ToNativeQuickPc(ArtMethod* method,
   return UINTPTR_MAX;
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art

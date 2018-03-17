@@ -29,7 +29,7 @@
 #include <museum/5.0.0/art/runtime/arch/x86/quick_method_frame_info_x86.h>
 #include <museum/5.0.0/art/runtime/arch/x86_64/quick_method_frame_info_x86_64.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace mirror {
 class ArtMethod;
 }  // namespace mirror
@@ -73,6 +73,6 @@ static constexpr size_t GetCalleeSavePCOffset(InstructionSet isa, Runtime::Calle
   return GetCalleeSaveFrameSize(isa, type) - GetConstExprPointerSize(isa);
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_ENTRYPOINTS_QUICK_CALLEE_SAVE_FRAME_H_

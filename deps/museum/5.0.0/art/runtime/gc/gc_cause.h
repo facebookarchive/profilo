@@ -19,7 +19,7 @@
 
 #include <museum/5.0.0/external/libcxx/ostream>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 
 // What caused the GC?
@@ -47,6 +47,6 @@ const char* PrettyCause(GcCause cause);
 std::ostream& operator<<(std::ostream& os, const GcCause& gc_cause);
 
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_GC_CAUSE_H_

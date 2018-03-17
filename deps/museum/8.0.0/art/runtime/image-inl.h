@@ -24,7 +24,7 @@
 #include <museum/8.0.0/art/runtime/imtable.h>
 #include <museum/8.0.0/art/runtime/read_barrier-inl.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template <ReadBarrierOption kReadBarrierOption>
 inline mirror::Object* ImageHeader::GetImageRoot(ImageRoot image_root) const {
@@ -79,6 +79,6 @@ inline void ImageHeader::VisitPackedImtConflictTables(const Visitor& visitor,
   }
 }
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_IMAGE_INL_H_

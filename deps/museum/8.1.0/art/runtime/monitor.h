@@ -33,7 +33,7 @@
 #include <museum/8.1.0/art/runtime/read_barrier_option.h>
 #include <museum/8.1.0/art/runtime/thread_state.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 class ArtMethod;
 class IsMarkedVisitor;
@@ -367,6 +367,6 @@ class MonitorInfo {
   std::vector<Thread*> waiters_;
 };
 
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_MONITOR_H_

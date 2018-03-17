@@ -29,7 +29,7 @@
 #include <museum/7.1.2/art/runtime/runtime.h>
 #include <museum/7.1.2/art/runtime/utils.h>
 
-namespace art {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace gc {
 namespace space {
 
@@ -165,6 +165,6 @@ static void MarkZygoteStart(const InstructionSet isa, const uint32_t max_failed_
 
 }  // namespace space
 }  // namespace gc
-}  // namespace art
+} } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
 #endif  // ART_RUNTIME_GC_SPACE_IMAGE_SPACE_FS_H_
