@@ -14,32 +14,35 @@
  * limitations under the License.
  */
 
-#include <vector>
-
 #include <cppdistract/dso.h>
-
-using namespace facebook::cppdistract;
 
 namespace facebook {
 
-static std::vector<void*(*)()>& artSymbolLookups() {
-  static std::vector<void*(*)()> artSymbolLookups_;
-  return artSymbolLookups_;
-}
+using namespace cppdistract;
 
 dso const& libart() {
   static dso const libart("libart.so");
   return libart;
 }
 
-void registerSymbolLookup(void*(*lookup)()) {
-  artSymbolLookups().push_back(lookup);
+dso const& libcxx() {
+  static dso const libcxx("libc++.so");
+  return libcxx;
 }
 
-void preinitSymbols() {
-  for (auto symbolLookup : artSymbolLookups()) {
-    symbolLookup();
-  }
+dso const& libc() {
+  static dso const libc("libc.so");
+  return libc;
+}
+
+dso const& libnativehelper() {
+  static dso const libnativehelper("libnativehelper.so");
+  return libnativehelper;
+}
+
+dso const& libm() {
+  static dso const libm("libm.so");
+  return libm;
 }
 
 } // namespace facebook

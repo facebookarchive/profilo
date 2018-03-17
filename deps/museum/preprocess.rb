@@ -15,24 +15,41 @@
 
 require 'digest'
 require 'yaml'
+require 'json'
 
-rawmodel = ARGF.read
+modelname = ARGV[0]
+rawmodel = File.read(modelname)
 data = YAML.load(rawmodel)
 
-data['classes'].each do |classSymbols|
-  classSymbols['symbols'].each do |symbol|
-    if symbol['params'] != nil
-      newParams = []
-      idx = 1
-      symbol['params'].each do |paramType|
-        newParams << { "type" => paramType, "idx" => idx }
-        idx += 1
+(data['namespaces'] or []).each do |namespace|
+  (namespace['classes'] or []).each do |classSymbols|
+    (classSymbols['symbols'] or []).each do |symbol|
+      if symbol['params'] != nil
+        newParams = []
+        idx = 1
+        symbol['params'].each do |paramType|
+          newParams << { "type" => paramType, "idx" => idx }
+          idx += 1
+        end
+        symbol['params'] = newParams
       end
-      symbol['params'] = newParams
     end
+  end
+  if namespace['nsName'] != nil
+    namespace['hasNsName'] = true
+    nsObjs = []
+    namespace['nsName'].each do |nsName|
+      s = nsName.split
+      if s.count > 1
+        nsObjs << { "name" => s[1], "inline" => true }
+      else
+        nsObjs << { "name" => s[0] }
+      end
+    end
+    namespace['nsName'] = nsObjs
   end
 end
 
-data['modelHash'] = Digest::MD5.hexdigest rawmodel
+data['modelHash'] = Digest::MD5.hexdigest(rawmodel)
 
-puts data.to_yaml
+puts JSON.dump(data)

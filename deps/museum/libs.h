@@ -18,11 +18,20 @@
 
 namespace facebook {
 
-/**
- * Returns a dso object for libart.so
- */
-cppdistract::dso const& libart();
+using namespace cppdistract;
 
-void preinitSymbols();
+/**
+ * These methods return dso objects for the libraries they're named after.
+ */
+
+dso const& libart();
+
+dso const& libcxx();
+
+dso const& libc();
+
+dso const& libnativehelper();
+
+dso const& libm();
 
 } // namespace facebook
