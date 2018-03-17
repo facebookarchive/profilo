@@ -175,7 +175,7 @@ inline _LIBCPP_INLINE_VISIBILITY
 bool
 has_facet(const locale& __l)  _NOEXCEPT
 {
-    return __l.has_facet(_Facet::id);
+    return __l.has_facet(_Facet::get_id());
 }
 
 template <class _Facet>
@@ -183,7 +183,7 @@ inline _LIBCPP_INLINE_VISIBILITY
 const _Facet&
 use_facet(const locale& __l)
 {
-    return static_cast<const _Facet&>(*__l.use_facet(_Facet::id));
+    return static_cast<const _Facet&>(*__l.use_facet(_Facet::get_id()));
 }
 
 // template <class _CharT> class collate;
@@ -219,7 +219,7 @@ public:
         return do_hash(__lo, __hi);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     ~collate();
@@ -230,7 +230,7 @@ protected:
     virtual long do_hash(const char_type* __lo, const char_type* __hi) const;
 };
 
-template <class _CharT> locale::id collate<_CharT>::id;
+// template <class _CharT> locale::id collate<_CharT>::id;
 
 template <class _CharT>
 collate<_CharT>::~collate()
@@ -510,7 +510,7 @@ public:
         return do_narrow(__low, __high, __dfault, __to);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     ~ctype();
@@ -619,7 +619,7 @@ public:
         return do_narrow(__low, __high, __dfault, __to);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 #ifdef _CACHED_RUNES
     static const size_t table_size = _CACHED_RUNES;
@@ -877,7 +877,7 @@ public:
         return do_max_length();
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _LIBCPP_ALWAYS_INLINE
@@ -962,7 +962,7 @@ public:
         return do_max_length();
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     explicit codecvt(const char*, size_t __refs = 0);
@@ -1046,7 +1046,7 @@ public:
         return do_max_length();
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _LIBCPP_ALWAYS_INLINE
@@ -1132,7 +1132,7 @@ public:
         return do_max_length();
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _LIBCPP_ALWAYS_INLINE
@@ -1384,7 +1384,7 @@ public:
     _LIBCPP_ALWAYS_INLINE string_type truename() const    {return do_truename();}
     _LIBCPP_ALWAYS_INLINE string_type falsename() const   {return do_falsename();}
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     ~numpunct();
@@ -1415,7 +1415,7 @@ public:
     _LIBCPP_ALWAYS_INLINE string_type truename() const    {return do_truename();}
     _LIBCPP_ALWAYS_INLINE string_type falsename() const   {return do_falsename();}
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     ~numpunct();

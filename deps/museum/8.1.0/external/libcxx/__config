@@ -694,7 +694,7 @@ namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std
 
 #ifndef _LIBCPP_INLINE_VISIBILITY
 #if !defined(_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS)
-#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__visibility__("hidden"), __always_inline__))
+#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__visibility__("hidden")))
 #else
 #define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__))
 #endif

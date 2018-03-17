@@ -214,7 +214,7 @@
 #endif
 
 #ifndef _LIBCPP_INLINE_VISIBILITY
-#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__visibility__("hidden"), __always_inline__))
+#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__visibility__("hidden")))
 #endif
 
 #ifndef _LIBCPP_EXCEPTION_ABI

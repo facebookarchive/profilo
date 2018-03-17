@@ -154,10 +154,10 @@ _LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p, const facebook::museum
 _LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz) _NOEXCEPT;
 #endif
 
-inline _LIBCPP_INLINE_VISIBILITY void* operator new  (facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT {return __p;}
-inline _LIBCPP_INLINE_VISIBILITY void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT {return __p;}
-inline _LIBCPP_INLINE_VISIBILITY void  operator delete  (void*, void*) _NOEXCEPT {}
-inline _LIBCPP_INLINE_VISIBILITY void  operator delete[](void*, void*) _NOEXCEPT {}
+inline _LIBCPP_INLINE_VISIBILITY void* operator new  (facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT;
+inline _LIBCPP_INLINE_VISIBILITY void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT;
+inline _LIBCPP_INLINE_VISIBILITY void  operator delete  (void*, void*) _NOEXCEPT;
+inline _LIBCPP_INLINE_VISIBILITY void  operator delete[](void*, void*) _NOEXCEPT;
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 

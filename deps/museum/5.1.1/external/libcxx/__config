@@ -190,7 +190,7 @@
 #endif
 
 #ifndef _LIBCPP_INLINE_VISIBILITY
-#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__visibility__("hidden"), __always_inline__))
+#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__visibility__("hidden")))
 #endif
 
 #ifndef _LIBCPP_EXCEPTION_ABI
@@ -313,6 +313,10 @@ typedef __char32_t char32_t;
 #define _LIBCPP_HAS_NO_CONSTEXPR
 #endif
 
+#if !(__has_feature(cxx_relaxed_constexpr))
+#define _LIBCPP_HAS_NO_CXX14_CONSTEXPR
+#endif
+
 #if __ISO_C_VISIBLE >= 2011 || __cplusplus >= 201103L
 #if defined(__FreeBSD__)
 #define _LIBCPP_HAS_QUICK_EXIT
@@ -361,12 +365,29 @@ namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std
 
 #define _LIBCPP_NORETURN __attribute__((noreturn))
 
+#define _LIBCPP_UNUSED __attribute__((__unused__))
+
+#if _GNUC_VER >= 407
+#define _LIBCPP_UNDERLYING_TYPE(T) __underlying_type(T)
+#define _LIBCPP_IS_LITERAL(T) __is_literal_type(T)
+#endif
+
 #if !__EXCEPTIONS
 #define _LIBCPP_NO_EXCEPTIONS
 #endif
 
 #define _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+
+// constexpr was added to GCC in 4.6.
+#if _GNUC_VER < 406
 #define _LIBCPP_HAS_NO_CONSTEXPR
+// Can only use constexpr in c++11 mode.
+#elif !defined(__GXX_EXPERIMENTAL_CXX0X__) && __cplusplus < 201103L
+#define _LIBCPP_HAS_NO_CONSTEXPR
+#endif
+
+// No version of GCC supports relaxed constexpr rules
+#define _LIBCPP_HAS_NO_CXX14_CONSTEXPR
 
 #define _NOEXCEPT throw()
 #define _NOEXCEPT_(x)
@@ -427,6 +448,10 @@ namespace _LIBCPP_NAMESPACE {
 }
 using namespace _LIBCPP_NAMESPACE __attribute__((__strong__));
 } } } }
+
+#if !defined(_LIBCPP_HAS_NO_ASAN) && !defined(__SANITIZE_ADDRESS__)
+#define _LIBCPP_HAS_NO_ASAN
+#endif
 
 #elif defined(_LIBCPP_MSVC)
 
@@ -610,13 +635,17 @@ template <unsigned> struct __static_assert_check {};
 #endif
 
 #if _LIBCPP_STD_VER <= 11
-#define _LIBCPP_CONSTEXPR_AFTER_CXX11
 #define _LIBCPP_EXPLICIT_AFTER_CXX11
 #define _LIBCPP_DEPRECATED_AFTER_CXX11
 #else
-#define _LIBCPP_CONSTEXPR_AFTER_CXX11 constexpr
 #define _LIBCPP_EXPLICIT_AFTER_CXX11 explicit
 #define _LIBCPP_DEPRECATED_AFTER_CXX11 [[deprecated]]
+#endif
+
+#if _LIBCPP_STD_VER > 11 && !defined(_LIBCPP_HAS_NO_CXX14_CONSTEXPR)
+#define _LIBCPP_CONSTEXPR_AFTER_CXX11 constexpr
+#else
+#define _LIBCPP_CONSTEXPR_AFTER_CXX11
 #endif
 
 // Try to find out if RTTI is disabled.
