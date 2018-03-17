@@ -76,7 +76,7 @@ class CompilerFilter FINAL {
   // For example: given kVerifyAtRuntime, returns "verify-at-runtime".
   // The name returned corresponds to the name accepted by
   // ParseCompilerFilter.
-  static std::string NameOfFilter(Filter filter); char junk0[8];
+  static std::string NameOfFilter(Filter filter);
 
   // Parse the compiler filter from the given name.
   // Returns true and sets filter to the parsed value if name refers to a

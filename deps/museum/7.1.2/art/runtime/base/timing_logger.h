@@ -65,8 +65,8 @@ class CumulativeLogger {
   }
   static const uint64_t kAdjust = 1000;
   std::set<Histogram<uint64_t>*, HistogramComparator> histograms_ GUARDED_BY(lock_);
-  std::string name_; char junk0[8];
-  const std::string lock_name_; char junk1[8];
+  std::string name_;
+  const std::string lock_name_;
   mutable Mutex lock_ DEFAULT_MUTEX_ACQUIRED_AFTER;
   size_t iterations_ GUARDED_BY(lock_);
   uint64_t total_time_;

@@ -566,16 +566,16 @@ class Instrumentation {
   // listeners can also be deleted concurrently.
   // As a result, these lists are never trimmed. That's acceptable given the low number of
   // listeners we have.
-  std::list<InstrumentationListener*> method_entry_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_method_entry_listeners_[4];
-  std::list<InstrumentationListener*> method_exit_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_method_exit_listeners_[4];
-  std::list<InstrumentationListener*> method_unwind_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_method_unwind_listeners_[4];
-  std::list<InstrumentationListener*> branch_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_branch_listeners_[4];
+  std::list<InstrumentationListener*> method_entry_listeners_ GUARDED_BY(Locks::mutator_lock_);
+  std::list<InstrumentationListener*> method_exit_listeners_ GUARDED_BY(Locks::mutator_lock_);
+  std::list<InstrumentationListener*> method_unwind_listeners_ GUARDED_BY(Locks::mutator_lock_);
+  std::list<InstrumentationListener*> branch_listeners_ GUARDED_BY(Locks::mutator_lock_);
   std::list<InstrumentationListener*> invoke_virtual_or_interface_listeners_
-      GUARDED_BY(Locks::mutator_lock_); char junk_invoke_virtual_or_interface_listeners_[4];
-  std::list<InstrumentationListener*> dex_pc_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_dex_pc_listeners_[4];
-  std::list<InstrumentationListener*> field_read_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_field_read_listeners_[4];
-  std::list<InstrumentationListener*> field_write_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_field_write_listeners_[4];
-  std::list<InstrumentationListener*> exception_caught_listeners_ GUARDED_BY(Locks::mutator_lock_); char junk_exception_caught_listeners_[4];
+      GUARDED_BY(Locks::mutator_lock_);
+  std::list<InstrumentationListener*> dex_pc_listeners_ GUARDED_BY(Locks::mutator_lock_);
+  std::list<InstrumentationListener*> field_read_listeners_ GUARDED_BY(Locks::mutator_lock_);
+  std::list<InstrumentationListener*> field_write_listeners_ GUARDED_BY(Locks::mutator_lock_);
+  std::list<InstrumentationListener*> exception_caught_listeners_ GUARDED_BY(Locks::mutator_lock_);
 
   // The set of methods being deoptimized (by the debugger) which must be executed with interpreter
   // only.

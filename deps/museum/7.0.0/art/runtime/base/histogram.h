@@ -100,7 +100,7 @@ template <class Value> class Histogram {
   // Add more buckets to the histogram to fill in a new value that exceeded
   // the max_read_value_.
   void GrowBuckets(Value val);
-  std::string name_; char junk[8];
+  std::string name_;
   // Maximum number of buckets.
   const size_t max_buckets_;
   // Number of samples placed in histogram.

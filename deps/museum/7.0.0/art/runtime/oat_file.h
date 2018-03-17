@@ -271,7 +271,7 @@ class OatFile {
   // The oat file name.
   //
   // The image will embed this to link its associated oat file.
-  const std::string location_; char junk0[8];
+  const std::string location_;
 
   // Pointer to OatHeader.
   const uint8_t* begin_;
@@ -318,7 +318,7 @@ class OatFile {
   // NOTE: We're keeping references to contained strings in form of StringPiece and adding
   // new strings to the end. The adding of a new element must not touch any previously stored
   // elements. std::list<> and std::deque<> satisfy this requirement, std::vector<> doesn't.
-  mutable std::list<std::string> string_cache_ GUARDED_BY(secondary_lookup_lock_); char junk1[4];
+  mutable std::list<std::string> string_cache_ GUARDED_BY(secondary_lookup_lock_);
 
   friend class gc::collector::DummyOatFile;  // For modifying begin_ and end_.
   friend class OatClass;
@@ -390,8 +390,8 @@ class OatDexFile FINAL {
              uint8_t* dex_cache_arrays);
 
   const OatFile* const oat_file_;
-  const std::string dex_file_location_; char junk0[8];
-  const std::string canonical_dex_file_location_; char junk1[8];
+  const std::string dex_file_location_;
+  const std::string canonical_dex_file_location_;
   const uint32_t dex_file_location_checksum_;
   const uint8_t* const dex_file_pointer_;
   const uint8_t* lookup_table_data_;

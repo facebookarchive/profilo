@@ -217,7 +217,7 @@ class MemMap {
                            off_t offset,
                            bool low_4gb);
 
-  const std::string name_; char junk[8];
+  const std::string name_;
   uint8_t* const begin_;  // Start of data.
   size_t size_;  // Length of data.
 

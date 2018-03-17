@@ -989,7 +989,7 @@ class DexFile {
   //
   // The ClassLinker will use this to match DexFiles the boot class
   // path to DexCache::GetLocation when loading from an image.
-  const std::string location_; char pad0[8];// fb padding
+  const std::string location_;
 
   const uint32_t location_checksum_;
 
