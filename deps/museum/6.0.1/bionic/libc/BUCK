@@ -1,0 +1,46 @@
+def flattened_glob(prefix, glob_pattern, excludes = []):
+    prefix_len = len(prefix)
+    return { x[prefix_len:]: x for x in glob([prefix + glob_pattern], excludes = [prefix + e for e in excludes]) }
+
+def merge_dicts(*dicts):
+    result = {}
+    for dictionary in dicts:
+        result.update(dictionary)
+    return result
+
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load(profilo_path("deps/museum:museum_library.bzl"), "museum_library")
+
+museum_library(
+    exported_headers = {
+        exported: header for exported, header in
+            merge_dicts(
+                flattened_glob("include/", "**/*.h"),
+                flattened_glob("kernel/uapi/", "**/*.h", excludes = [
+                    "asm-arm/**",
+                    "asm-arm64/**",
+                    "asm-mips/**",
+                    "asm-x86/**",
+                ]),
+            ).items()
+    },
+    exported_platform_headers = [
+        (
+            "android-armv7",
+            merge_dicts(
+                flattened_glob("kernel/uapi/asm-arm/", "**/*.h"),
+                flattened_glob("arch-arm/include/", "**/*.h"),
+            )
+        ),
+        (
+            "android-x86",
+            merge_dicts(
+                flattened_glob("kernel/uapi/asm-x86/", "**/*.h"),
+                flattened_glob("arch-x86/include/", "**/*.h"),
+            )
+        ),
+    ],
+    extra_visibility = [
+        profilo_path("..."),
+    ],
+)

@@ -33,12 +33,12 @@
 #include <unistd.h>
 #include <vector>
 
-#if defined(ART_VERSION_5_1_1)
-  #include <fbstack_art511.h>
-#elif defined(ART_VERSION_6_0_1)
-  #include <fbstack_art601.h>
-#elif defined(ART_VERSION_7_0_0)
-  #include <fbstack_art700.h>
+#if defined(MUSEUM_VERSION_5_1_1)
+  #include <museum/5.1.1/art/runtime/fbstack_art511.h>
+#elif defined(MUSEUM_VERSION_6_0_1)
+  #include <museum/6.0.1/art/runtime/fbstack_art601.h>
+#elif defined(MUSEUM_VERSION_7_0_0)
+  #include <museum/7.0.0/art/runtime/fbstack_art700.h>
 #else
   #error "Invalid ART version"
 #endif
@@ -52,6 +52,8 @@ namespace profilo {
 namespace artcompat {
 
 namespace {
+
+using namespace museum::MUSEUM_VERSION::art::entrypoints;
 
 static const int kStackSize = 128;
 
@@ -73,11 +75,11 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(fbjni::alias_ref<jobject> thre
   auto jlrMethod_class = fbjni::findClassLocal("java/lang/reflect/Method");
   auto jlrMethod_getName = jlrMethod_class->getMethod<jstring()>("getName");
 
-#if defined(ART_VERSION_5_1_1)
+#if defined(MUSEUM_VERSION_5_1_1)
   auto jlrArtMethod_class = fbjni::findClassLocal("java/lang/reflect/ArtMethod");
   auto jlrMethod_getArtMethod = jlrMethod_class->getMethod<jobject()>("getArtMethod","()Ljava/lang/reflect/ArtMethod;");
   auto jlrArtMethod_dexMethodIndex = jlrArtMethod_class->getField<jint>("dexMethodIndex");
-#elif defined(ART_VERSION_6_0_1) || defined(ART_VERSION_7_0_0)
+#elif defined(MUSEUM_VERSION_6_0_1) || defined(MUSEUM_VERSION_7_0_0)
   auto jlrMethod_dexMethodIndex = jlrMethod_class->getField<jint>("dexMethodIndex");
 #endif
 
@@ -100,15 +102,15 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(fbjni::alias_ref<jobject> thre
     std::multimap<std::string, uint32_t> methods_map{};
     for (size_t meth_idx = 0; meth_idx < cls_methods_size; meth_idx++) {
       auto method = cls_methods->getElement(meth_idx);
-#if defined(ART_VERSION_5_1_1)
+#if defined(MUSEUM_VERSION_5_1_1)
       auto artMethod = jlrMethod_getArtMethod(method);
 #endif
       methods_map.insert(
           std::make_pair(
             jlrMethod_getName(method)->toStdString(),
-#if defined(ART_VERSION_5_1_1)
+#if defined(MUSEUM_VERSION_5_1_1)
             (uint32_t) artMethod->getFieldValue(jlrArtMethod_dexMethodIndex)
-#elif defined(ART_VERSION_6_0_1) || defined(ART_VERSION_7_0_0)
+#elif defined(MUSEUM_VERSION_6_0_1) || defined(MUSEUM_VERSION_7_0_0)
             (uint32_t) method->getFieldValue(jlrMethod_dexMethodIndex)
 #endif
        ));
@@ -136,10 +138,10 @@ size_t getCppStackTrace(
   void* nativeThread,
   std::array<uint32_t, kStackSize>& result) {
 
-  facebook::art::InstallRuntime(env, nativeThread);
+  InstallRuntime(env, nativeThread);
 
-  facebook::art::JavaFrame frames[kStackSize]{};
-  auto size = facebook::art::GetStackTrace(frames, kStackSize, nativeThread);
+  JavaFrame frames[kStackSize]{};
+  auto size = GetStackTrace(frames, kStackSize, nativeThread);
 
   for (size_t idx = 0; idx < size; idx++) {
     result[idx] = frames[idx].methodIdx;
@@ -229,12 +231,12 @@ jboolean check(JNIEnv* env, jclass) {
     auto nativePeer = jlThread->getFieldValue(jlThread_nativePeer);
     void* nativeThread = reinterpret_cast<void*>(nativePeer);
 
-#if defined(ART_VERSION_6_0_1) || defined(ART_VERSION_7_0_0)
+#if defined(MUSEUM_VERSION_6_0_1) || defined(MUSEUM_VERSION_7_0_0)
     // Initialize the runtime from the appropriate implementation for particular
     // version of ART subset.
     // As the Runtime is resolved from "libart", it's unsafe to be done in fork
     // jail.
-    facebook::art::InitRuntime();
+    InitRuntime();
 #endif
 
     forkjail::ForkJail jail([
@@ -289,11 +291,11 @@ jboolean check(JNIEnv* env, jclass) {
 
 } // namespace
 
-#if defined(ART_VERSION_5_1_1)
+#if defined(MUSEUM_VERSION_5_1_1)
 void registerNatives_5_1_1() {
-#elif defined(ART_VERSION_6_0_1)
+#elif defined(MUSEUM_VERSION_6_0_1)
 void registerNatives_6_0_1() {
-#elif defined(ART_VERSION_7_0_0)
+#elif defined(MUSEUM_VERSION_7_0_0)
 void registerNatives_7_0_0() {
 #endif
   constexpr auto kArtCompatibilityType = "com/facebook/profilo/provider/stacktrace/ArtCompatibility";
@@ -301,11 +303,11 @@ void registerNatives_7_0_0() {
   fbjni::registerNatives(
     kArtCompatibilityType,
     {
-#if defined(ART_VERSION_5_1_1)
+#if defined(MUSEUM_VERSION_5_1_1)
       makeNativeMethod("nativeCheckArt5_1", check),
-#elif defined(ART_VERSION_6_0_1)
+#elif defined(MUSEUM_VERSION_6_0_1)
       makeNativeMethod("nativeCheckArt6_0", check),
-#elif defined(ART_VERSION_7_0_0)
+#elif defined(MUSEUM_VERSION_7_0_0)
       makeNativeMethod("nativeCheckArt7_0", check),
 #endif
     });

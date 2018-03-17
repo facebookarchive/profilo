@@ -1,0 +1,59 @@
+# Copyright 2004-present Facebook. All Rights Reserved.
+# See //native/museum/gen_cc.mustache for schema
+
+
+##### WARNING ####################
+# Because of what Loom does, it's very important that this model *only* exposes
+# trampolines that are provably lock-free, REGARDLESS OF NON-AOSP MODS.
+# Realistically, this means that only static variables should be trampolined here.
+
+---
+library: libart
+
+headers:
+- museum/7.0.0/art/runtime/base/mutex.h
+- museum/7.0.0/art/runtime/runtime.h
+- museum/7.0.0/art/runtime/thread.h
+- new
+
+namespaces:
+- nsName:
+  - art
+  classes:
+  - className: Locks
+    symbols:
+    - symbolName: mutator_lock_
+      isStaticVar: true
+      returnType: MutatorMutex*
+      mangledNames:
+      - _ZN3art5Locks13mutator_lock_E
+    - symbolName: thread_suspend_count_lock_
+      isStaticVar: true
+      returnType: Mutex*
+      mangledNames:
+      - _ZN3art5Locks26thread_suspend_count_lock_E
+  - className: Runtime
+    symbols:
+    - symbolName: instance_
+      isStaticVar: true
+      skipMethodWrap: true
+      returnType: Runtime*
+      mangledNames:
+      - _ZN3art7Runtime9instance_E
+  - className: Thread
+    symbols:
+    - symbolName: resume_cond_
+      returnType: ConditionVariable*
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread12resume_cond_E
+    - symbolName: is_started_
+      returnType: bool
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread11is_started_E
+    - symbolName: pthread_key_self_
+      returnType: pthread_key_t
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread17pthread_key_self_E

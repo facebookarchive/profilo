@@ -1,0 +1,28 @@
+# Copyright 2004-present Facebook. All Rights Reserved.
+# See //native/museum/gen_cc.mustache for schema
+
+
+##### WARNING ####################
+# Because of what Loom does, it's very important that this model *only* exposes
+# trampolines that are provably lock-free, REGARDLESS OF NON-AOSP MODS.
+# Realistically, this means that only static variables should be trampolined here.
+
+---
+library: libart
+
+headers:
+- museum/6.0.1/art/runtime/runtime.h
+- new
+
+namespaces:
+- nsName:
+  - art
+  classes:
+  - className: Runtime
+    symbols:
+    - symbolName: instance_
+      isStaticVar: true
+      skipMethodWrap: true
+      returnType: Runtime*
+      mangledNames:
+      - _ZN3art7Runtime9instance_E

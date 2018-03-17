@@ -21,26 +21,26 @@
 #include <pthread.h>
 #include <stdexcept>
 
-#if defined(ART_VERSION_5_1_1)
-  #include <fbstack_art511.h>
-#elif defined(ART_VERSION_6_0_1)
-  #include <fbstack_art601.h>
-#elif defined(ART_VERSION_7_0_0)
-  #include <fbstack_art700.h>
+#if defined(MUSEUM_VERSION_5_1_1)
+  #include <museum/5.1.1/art/runtime/fbstack_art511.h>
+#elif defined(MUSEUM_VERSION_6_0_1)
+  #include <museum/6.0.1/art/runtime/fbstack_art601.h>
+#elif defined(MUSEUM_VERSION_7_0_0)
+  #include <museum/7.0.0/art/runtime/fbstack_art700.h>
 #else
   #error "Invalid ART version"
 #endif
 
-#if defined(ART_VERSION_6_0_1)
+#if defined(MUSEUM_VERSION_6_0_1)
   #include <sys/limits.h> // for PTHREAD_KEYS_MAX
   #ifndef PTHREAD_KEYS_MAX
     #define PTHREAD_KEYS_MAX 1024
   #endif
 #endif
 
-#if defined(ART_VERSION_7_0_0)
-  #include "bionic/__get_tls.h"
-  #include "bionic/bionic_tls.h"
+#if defined(MUSEUM_VERSION_7_0_0)
+  #include <museum/7.0.0/art/runtime/bionic/__get_tls.h>
+  #include <museum/7.0.0/art/runtime/bionic/bionic_tls.h>
 #endif
 
 #include "profilo/Logger.h"
@@ -53,11 +53,13 @@ namespace profiler {
 
 namespace {
 
-#if defined(ART_VERSION_5_1_1)
+using namespace museum::MUSEUM_VERSION::art::entrypoints;
+
+#if defined(MUSEUM_VERSION_5_1_1)
   static constexpr ArtVersion kVersion = kArt511;
-#elif defined(ART_VERSION_6_0_1)
+#elif defined(MUSEUM_VERSION_6_0_1)
   static constexpr ArtVersion kVersion = kArt601;
-#elif defined(ART_VERSION_7_0_0)
+#elif defined(MUSEUM_VERSION_7_0_0)
   static constexpr ArtVersion kVersion = kArt700;
 #endif
 
@@ -68,7 +70,7 @@ namespace {
 //
 // Note determineThreadInstanceTLSKey and getThreadInstanceTLSKey are not used
 // on versions >= 7. See getThreadInstance.
-#if !defined(ART_VERSION_7_0_0)
+#if !defined(MUSEUM_VERSION_7_0_0)
 pthread_key_t determineThreadInstanceTLSKey() {
   auto jlThread_class = fbjni::findClassLocal("java/lang/Thread");
   auto jlThread_nativePeer = jlThread_class->getField<jlong>("nativePeer");
@@ -79,11 +81,11 @@ pthread_key_t determineThreadInstanceTLSKey() {
   auto nativePeer = jlThread->getFieldValue(jlThread_nativePeer);
   void* nativeThread = reinterpret_cast<void*>(nativePeer);
 
-#if defined(ART_VERSION_5_1_1)
+#if defined(MUSEUM_VERSION_5_1_1)
   constexpr int32_t kMaxPthreadKey = 148;
   constexpr int32_t kUserPthreadKeyStart = 7;
   constexpr int32_t kKeyValidFlag = 0; // not actually in 5.1.1
-#elif defined(ART_VERSION_6_0_1)
+#elif defined(MUSEUM_VERSION_6_0_1)
   constexpr int32_t kMaxPthreadKey = 128;
   constexpr int32_t kUserPthreadKeyStart = 0;
   constexpr int32_t kKeyValidFlag = 1 << 31; // bionic tags keys by setting the MSB
@@ -102,12 +104,12 @@ pthread_key_t getThreadInstanceTLSKey() {
   static pthread_key_t key = determineThreadInstanceTLSKey();
   return key;
 }
-#endif // !defined(ART_VERSION_7_0_0)
+#endif // !defined(MUSEUM_VERSION_7_0_0)
 
 void* getThreadInstance() {
   // See thread.cc source for the differing behavior:
   // https://android.googlesource.com/platform/art/+/android-7.0.0_r33/runtime/thread.cc#708
-  #if defined(ART_VERSION_7_0_0)
+  #if defined(MUSEUM_VERSION_7_0_0)
     return __get_tls()[TLS_SLOT_ART_THREAD_SELF];
   #else
     return pthread_getspecific(getThreadInstanceTLSKey());
@@ -118,7 +120,7 @@ bool tryInstallRuntime() {
   try {
     void* thread_instance = getThreadInstance();
     JNIEnv* env = fbjni::Environment::current();
-    facebook::art::InstallRuntime(env, thread_instance);
+    InstallRuntime(env, thread_instance);
     return true;
   } catch(std::exception& ex) {
     // intentionally swallowed
@@ -147,9 +149,9 @@ template<> bool ArtTracer<kVersion>::collectStack(
     return false;
   }
 
-  facebook::art::JavaFrame artframes[max_depth];
-  memset(artframes, 0, sizeof(facebook::art::JavaFrame) * max_depth);
-  auto size = facebook::art::GetStackTrace(artframes, max_depth, thread);
+  JavaFrame artframes[max_depth];
+  memset(artframes, 0, sizeof(JavaFrame) * max_depth);
+  auto size = GetStackTrace(artframes, max_depth, thread);
 
   if (size >= max_depth) {
     return false;

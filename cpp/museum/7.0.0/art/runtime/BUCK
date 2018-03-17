@@ -1,0 +1,39 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "runtime",
+    srcs = glob(
+        ["**/*.cc"],
+    ),
+    header_namespace = "",
+    compiler_flags = [
+        "-std=c++11",
+        "-fvisibility=hidden",
+        "-fno-exceptions",
+        "-fpack-struct=4",
+        "-fno-rtti",
+        "-g",
+        "-Os",
+        "-Wextra",
+        "-Wno-unused-parameter",
+        "-Wno-format-security",
+        "-Wno-unused",
+        "-Wno-missing-field-initializers",
+        "-Wno-pmf-conversions",
+        "-Wno-inconsistent-missing-override",
+        "-Wno-unknown-warning-option",
+        "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v7_0_0_profilo",
+    ],
+    exported_deps = [
+        profilo_path("deps/museum/7.0.0/art/runtime:headers"),
+    ],
+    force_static = True,
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("cpp/museum/7.0.0/external/libcxx:libcxx"),
+        profilo_path("deps/museum:museum"),
+    ],
+)

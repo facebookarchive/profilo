@@ -55,17 +55,17 @@ public:
   void startTracing() override;
 };
 
-#if defined(ART_VERSION_5_1_1)
+#if defined(MUSEUM_VERSION_5_1_1)
 template class ArtTracer<kArt511>;
 using Art51Tracer = ArtTracer<kArt511>;
 #endif
 
-#if defined(ART_VERSION_6_0_1)
+#if defined(MUSEUM_VERSION_6_0_1)
 template class ArtTracer<kArt601>;
 using Art6Tracer = ArtTracer<kArt601>;
 #endif
 
-#if defined(ART_VERSION_7_0_0)
+#if defined(MUSEUM_VERSION_7_0_0)
 template class ArtTracer<kArt700>;
 using Art70Tracer = ArtTracer<kArt700>;
 #endif
