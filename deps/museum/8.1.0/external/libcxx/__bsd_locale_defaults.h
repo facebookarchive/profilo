@@ -12,8 +12,8 @@
 // we will define the mapping from an internal macro to the real BSD symbol.
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_BSD_LOCALE_DEFAULTS_H
-#define _LIBCPP_BSD_LOCALE_DEFAULTS_H
+#ifndef _MUSEUM_LIBCPP_BSD_LOCALE_DEFAULTS_H
+#define _MUSEUM_LIBCPP_BSD_LOCALE_DEFAULTS_H
 
 #define __libcpp_mb_cur_max_l(loc)                          MB_CUR_MAX_L(loc)
 #define __libcpp_btowc_l(ch, loc)                           btowc_l(ch, loc)
@@ -30,4 +30,4 @@
 #define __libcpp_asprintf_l(...)                            asprintf_l(__VA_ARGS__)
 #define __libcpp_sscanf_l(...)                              sscanf_l(__VA_ARGS__)
 
-#endif // _LIBCPP_BSD_LOCALE_DEFAULTS_H
+#endif // _MUSEUM_LIBCPP_BSD_LOCALE_DEFAULTS_H

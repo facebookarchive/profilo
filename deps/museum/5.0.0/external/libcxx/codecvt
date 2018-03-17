@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CODECVT
-#define _LIBCPP_CODECVT
+#ifndef _MUSEUM_LIBCPP_CODECVT
+#define _MUSEUM_LIBCPP_CODECVT
 
 /*
     codecvt synopsis
@@ -58,11 +58,11 @@ class codecvt_utf8_utf16
 #include <museum/5.0.0/external/libcxx/__config>
 #include <museum/5.0.0/external/libcxx/__locale>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 enum codecvt_mode
 {
@@ -76,7 +76,7 @@ enum codecvt_mode
 template <class _Elem> class __codecvt_utf8;
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf8<wchar_t>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf8<wchar_t>
     : public codecvt<wchar_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -86,7 +86,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf8(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<wchar_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -111,7 +111,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf8<char16_t>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf8<char16_t>
     : public codecvt<char16_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -121,7 +121,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf8(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char16_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -146,7 +146,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf8<char32_t>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf8<char32_t>
     : public codecvt<char32_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -156,7 +156,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf8(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char32_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -182,15 +182,15 @@ protected:
 
 template <class _Elem, unsigned long _Maxcode = 0x10ffff,
           codecvt_mode _Mode = (codecvt_mode)0>
-class _LIBCPP_TYPE_VIS_ONLY codecvt_utf8
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY codecvt_utf8
     : public __codecvt_utf8<_Elem>
 {
 public:
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt_utf8(size_t __refs = 0)
         : __codecvt_utf8<_Elem>(__refs, _Maxcode, _Mode) {}
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     ~codecvt_utf8() {}
 };
 
@@ -199,7 +199,7 @@ public:
 template <class _Elem, bool _LittleEndian> class __codecvt_utf16;
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf16<wchar_t, false>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf16<wchar_t, false>
     : public codecvt<wchar_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -209,7 +209,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<wchar_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -234,7 +234,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf16<wchar_t, true>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf16<wchar_t, true>
     : public codecvt<wchar_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -244,7 +244,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<wchar_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -269,7 +269,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf16<char16_t, false>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf16<char16_t, false>
     : public codecvt<char16_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -279,7 +279,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char16_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -304,7 +304,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf16<char16_t, true>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf16<char16_t, true>
     : public codecvt<char16_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -314,7 +314,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char16_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -339,7 +339,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf16<char32_t, false>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf16<char32_t, false>
     : public codecvt<char32_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -349,7 +349,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char32_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -374,7 +374,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf16<char32_t, true>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf16<char32_t, true>
     : public codecvt<char32_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -384,7 +384,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char32_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -410,15 +410,15 @@ protected:
 
 template <class _Elem, unsigned long _Maxcode = 0x10ffff,
           codecvt_mode _Mode = (codecvt_mode)0>
-class _LIBCPP_TYPE_VIS_ONLY codecvt_utf16
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY codecvt_utf16
     : public __codecvt_utf16<_Elem, _Mode & little_endian>
 {
 public:
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt_utf16(size_t __refs = 0)
         : __codecvt_utf16<_Elem, _Mode & little_endian>(__refs, _Maxcode, _Mode) {}
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     ~codecvt_utf16() {}
 };
 
@@ -427,7 +427,7 @@ public:
 template <class _Elem> class __codecvt_utf8_utf16;
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf8_utf16<wchar_t>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf8_utf16<wchar_t>
     : public codecvt<wchar_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -437,7 +437,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf8_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<wchar_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -462,7 +462,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf8_utf16<char32_t>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf8_utf16<char32_t>
     : public codecvt<char32_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -472,7 +472,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf8_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char32_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -497,7 +497,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS __codecvt_utf8_utf16<char16_t>
+class _MUSEUM_LIBCPP_TYPE_VIS __codecvt_utf8_utf16<char16_t>
     : public codecvt<char16_t, char, mbstate_t>
 {
     unsigned long _Maxcode_;
@@ -507,7 +507,7 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit __codecvt_utf8_utf16(size_t __refs, unsigned long _Maxcode,
                             codecvt_mode _Mode)
         : codecvt<char16_t, char, mbstate_t>(__refs), _Maxcode_(_Maxcode),
@@ -533,18 +533,18 @@ protected:
 
 template <class _Elem, unsigned long _Maxcode = 0x10ffff,
           codecvt_mode _Mode = (codecvt_mode)0>
-class _LIBCPP_TYPE_VIS_ONLY codecvt_utf8_utf16
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY codecvt_utf8_utf16
     : public __codecvt_utf8_utf16<_Elem>
 {
 public:
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt_utf8_utf16(size_t __refs = 0)
         : __codecvt_utf8_utf16<_Elem>(__refs, _Maxcode, _Mode) {}
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     ~codecvt_utf8_utf16() {}
 };
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CODECVT
+#endif  // _MUSEUM_LIBCPP_CODECVT

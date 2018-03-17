@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CSTDINT
-#define _LIBCPP_CSTDINT
+#ifndef _MUSEUM_LIBCPP_CSTDINT
+#define _MUSEUM_LIBCPP_CSTDINT
 
 /*
     cstdint synopsis
@@ -144,11 +144,11 @@ Types:
 #include <museum/7.1.2/external/libcxx/__config>
 #include <museum/7.1.2/bionic/libc/stdint.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using::int8_t;
 using::int16_t;
@@ -186,6 +186,6 @@ using::uintptr_t;
 using::intmax_t;
 using::uintmax_t;
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CSTDINT
+#endif  // _MUSEUM_LIBCPP_CSTDINT

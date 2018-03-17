@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CSTDIO
-#define _LIBCPP_CSTDIO
+#ifndef _MUSEUM_LIBCPP_CSTDIO
+#define _MUSEUM_LIBCPP_CSTDIO
 
 /*
     cstdio synopsis
@@ -99,46 +99,46 @@ void perror(const char* s);
 #include <museum/6.0.1/external/libcxx/__config>
 #include <museum/6.0.1/bionic/libc/stdio.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 // snprintf
-#if defined(_LIBCPP_MSVCRT)
+#if defined(_MUSEUM_LIBCPP_MSVCRT)
 #include <museum/6.0.1/external/libcxx/support/win32/support.h>
 #endif
 
 #ifdef getc
-inline _LIBCPP_INLINE_VISIBILITY int __libcpp_getc(FILE* __stream) {return getc(__stream);}
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int __libcpp_getc(FILE* __stream) {return getc(__stream);}
 #undef getc
-inline _LIBCPP_INLINE_VISIBILITY int getc(FILE* __stream) {return __libcpp_getc(__stream);}
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int getc(FILE* __stream) {return __libcpp_getc(__stream);}
 #endif  // getc
 
 #ifdef putc
-inline _LIBCPP_INLINE_VISIBILITY int __libcpp_putc(int __c, FILE* __stream) {return putc(__c, __stream);}
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int __libcpp_putc(int __c, FILE* __stream) {return putc(__c, __stream);}
 #undef putc
-inline _LIBCPP_INLINE_VISIBILITY int putc(int __c, FILE* __stream) {return __libcpp_putc(__c, __stream);}
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int putc(int __c, FILE* __stream) {return __libcpp_putc(__c, __stream);}
 #endif  // putc
 
 #ifdef clearerr
-inline _LIBCPP_INLINE_VISIBILITY void __libcpp_clearerr(FILE* __stream) { return clearerr(__stream); }
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void __libcpp_clearerr(FILE* __stream) { return clearerr(__stream); }
 #undef clearerr
-inline _LIBCPP_INLINE_VISIBILITY void clearerr(FILE* __stream) { return __libcpp_clearerr(__stream); }
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void clearerr(FILE* __stream) { return __libcpp_clearerr(__stream); }
 #endif  // clearerr
 
 #ifdef feof
-inline _LIBCPP_INLINE_VISIBILITY int __libcpp_feof(FILE* __stream) { return feof(__stream); }
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int __libcpp_feof(FILE* __stream) { return feof(__stream); }
 #undef feof
-inline _LIBCPP_INLINE_VISIBILITY int feof(FILE* __stream) { return __libcpp_feof(__stream); }
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int feof(FILE* __stream) { return __libcpp_feof(__stream); }
 #endif  // feof
 
 #ifdef ferror
-inline _LIBCPP_INLINE_VISIBILITY int __libcpp_ferror(FILE* __stream) { return ferror(__stream); }
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int __libcpp_ferror(FILE* __stream) { return ferror(__stream); }
 #undef ferror
-inline _LIBCPP_INLINE_VISIBILITY int ferror(FILE* __stream) { return __libcpp_ferror(__stream); }
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY int ferror(FILE* __stream) { return __libcpp_ferror(__stream); }
 #endif  // ferror
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using ::FILE;
 using ::fpos_t;
@@ -161,12 +161,12 @@ using ::scanf;
 using ::snprintf;
 using ::sprintf;
 using ::sscanf;
-#ifndef _LIBCPP_MSVCRT
+#ifndef _MUSEUM_LIBCPP_MSVCRT
 using ::vfprintf;
 using ::vfscanf;
 using ::vscanf;
 using ::vsscanf;
-#endif // _LIBCPP_MSVCRT
+#endif // _MUSEUM_LIBCPP_MSVCRT
 using ::vprintf;
 using ::vsnprintf;
 using ::vsprintf;
@@ -176,7 +176,7 @@ using ::fputc;
 using ::fputs;
 using ::getc;
 using ::getchar;
-#if _LIBCPP_STD_VER <= 11
+#if _MUSEUM_LIBCPP_STD_VER <= 11
 using ::gets;
 #endif
 using ::putc;
@@ -195,6 +195,6 @@ using ::feof;
 using ::ferror;
 using ::perror;
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CSTDIO
+#endif  // _MUSEUM_LIBCPP_CSTDIO

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_IBM_XLOCALE_H
-#define _LIBCPP_SUPPORT_IBM_XLOCALE_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_IBM_XLOCALE_H
+#define _MUSEUM_LIBCPP_SUPPORT_IBM_XLOCALE_H
 
 #if defined(_AIX)
 #include <museum/5.0.0/external/libcxx/cstdlib>
@@ -323,4 +323,4 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 }
 #endif
 #endif // defined(_AIX)
-#endif // _LIBCPP_SUPPORT_IBM_XLOCALE_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_IBM_XLOCALE_H

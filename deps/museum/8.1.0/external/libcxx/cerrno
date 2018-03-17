@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CERRNO
-#define _LIBCPP_CERRNO
+#ifndef _MUSEUM_LIBCPP_CERRNO
+#define _MUSEUM_LIBCPP_CERRNO
 
 /*
     cerrno synopsis
@@ -26,8 +26,8 @@ Macros:
 #include <museum/8.1.0/external/libcxx/__config>
 #include <museum/8.1.0/external/libcxx/errno.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#endif  // _LIBCPP_CERRNO
+#endif  // _MUSEUM_LIBCPP_CERRNO

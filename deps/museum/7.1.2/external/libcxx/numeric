@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_NUMERIC
-#define _LIBCPP_NUMERIC
+#ifndef _MUSEUM_LIBCPP_NUMERIC
+#define _MUSEUM_LIBCPP_NUMERIC
 
 /*
     numeric synopsis
@@ -60,14 +60,14 @@ template <class ForwardIterator, class T>
 #include <museum/7.1.2/external/libcxx/__config>
 #include <museum/7.1.2/external/libcxx/iterator>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _InputIterator, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 accumulate(_InputIterator __first, _InputIterator __last, _Tp __init)
 {
@@ -77,7 +77,7 @@ accumulate(_InputIterator __first, _InputIterator __last, _Tp __init)
 }
 
 template <class _InputIterator, class _Tp, class _BinaryOperation>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 accumulate(_InputIterator __first, _InputIterator __last, _Tp __init, _BinaryOperation __binary_op)
 {
@@ -87,7 +87,7 @@ accumulate(_InputIterator __first, _InputIterator __last, _Tp __init, _BinaryOpe
 }
 
 template <class _InputIterator1, class _InputIterator2, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 inner_product(_InputIterator1 __first1, _InputIterator1 __last1, _InputIterator2 __first2, _Tp __init)
 {
@@ -97,7 +97,7 @@ inner_product(_InputIterator1 __first1, _InputIterator1 __last1, _InputIterator2
 }
 
 template <class _InputIterator1, class _InputIterator2, class _Tp, class _BinaryOperation1, class _BinaryOperation2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 inner_product(_InputIterator1 __first1, _InputIterator1 __last1, _InputIterator2 __first2,
               _Tp __init, _BinaryOperation1 __binary_op1, _BinaryOperation2 __binary_op2)
@@ -108,7 +108,7 @@ inner_product(_InputIterator1 __first1, _InputIterator1 __last1, _InputIterator2
 }
 
 template <class _InputIterator, class _OutputIterator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _OutputIterator
 partial_sum(_InputIterator __first, _InputIterator __last, _OutputIterator __result)
 {
@@ -126,7 +126,7 @@ partial_sum(_InputIterator __first, _InputIterator __last, _OutputIterator __res
 }
 
 template <class _InputIterator, class _OutputIterator, class _BinaryOperation>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _OutputIterator
 partial_sum(_InputIterator __first, _InputIterator __last, _OutputIterator __result,
               _BinaryOperation __binary_op)
@@ -145,7 +145,7 @@ partial_sum(_InputIterator __first, _InputIterator __last, _OutputIterator __res
 }
 
 template <class _InputIterator, class _OutputIterator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _OutputIterator
 adjacent_difference(_InputIterator __first, _InputIterator __last, _OutputIterator __result)
 {
@@ -157,14 +157,14 @@ adjacent_difference(_InputIterator __first, _InputIterator __last, _OutputIterat
         {
             typename iterator_traits<_InputIterator>::value_type __t2(*__first);
             *__result = __t2 - __t1;
-            __t1 = _VSTD::move(__t2);
+            __t1 = _MUSEUM_VSTD::move(__t2);
         }
     }
     return __result;
 }
 
 template <class _InputIterator, class _OutputIterator, class _BinaryOperation>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _OutputIterator
 adjacent_difference(_InputIterator __first, _InputIterator __last, _OutputIterator __result,
                       _BinaryOperation __binary_op)
@@ -177,14 +177,14 @@ adjacent_difference(_InputIterator __first, _InputIterator __last, _OutputIterat
         {
             typename iterator_traits<_InputIterator>::value_type __t2(*__first);
             *__result = __binary_op(__t2, __t1);
-            __t1 = _VSTD::move(__t2);
+            __t1 = _MUSEUM_VSTD::move(__t2);
         }
     }
     return __result;
 }
 
 template <class _ForwardIterator, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 iota(_ForwardIterator __first, _ForwardIterator __last, _Tp __value_)
 {
@@ -192,6 +192,6 @@ iota(_ForwardIterator __first, _ForwardIterator __last, _Tp __value_)
         *__first = __value_;
 }
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_NUMERIC
+#endif  // _MUSEUM_LIBCPP_NUMERIC

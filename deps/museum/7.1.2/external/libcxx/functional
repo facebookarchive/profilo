@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_FUNCTIONAL
-#define _LIBCPP_FUNCTIONAL
+#ifndef _MUSEUM_LIBCPP_FUNCTIONAL
+#define _MUSEUM_LIBCPP_FUNCTIONAL
 
 /*
     functional synopsis
@@ -479,250 +479,250 @@ POLICY:  For non-variadic implementations, the number of arguments is limited
 
 #include <museum/7.1.2/external/libcxx/__functional_base>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY plus : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY plus : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x + __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY plus<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY plus<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) + _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) + _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) + _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) + _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) + _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) + _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY minus : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY minus : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x - __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY minus<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY minus<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) - _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) - _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) - _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) - _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) - _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) - _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY multiplies : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY multiplies : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x * __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY multiplies<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY multiplies<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) * _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) * _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) * _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) * _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) * _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) * _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY divides : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY divides : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x / __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY divides<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY divides<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) / _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) / _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) / _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) / _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) / _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) / _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY modulus : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY modulus : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x % __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY modulus<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY modulus<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) % _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) % _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) % _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) % _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) % _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) % _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY negate : unary_function<_Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY negate : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return -__x;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY negate<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY negate<void>
 {
     template <class _Tp>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_Tp&& __x) const
-    _NOEXCEPT_(noexcept(- _VSTD::forward<_Tp>(__x)))
-    -> decltype        (- _VSTD::forward<_Tp>(__x))
-        { return        - _VSTD::forward<_Tp>(__x); }
+    _NOEXCEPT_(noexcept(- _MUSEUM_VSTD::forward<_Tp>(__x)))
+    -> decltype        (- _MUSEUM_VSTD::forward<_Tp>(__x))
+        { return        - _MUSEUM_VSTD::forward<_Tp>(__x); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY equal_to : binary_function<_Tp, _Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY equal_to : binary_function<_Tp, _Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x, const _Tp& __y) const
         {return __x == __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY equal_to<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY equal_to<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) == _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) == _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) == _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) == _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) == _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) == _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY not_equal_to : binary_function<_Tp, _Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY not_equal_to : binary_function<_Tp, _Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x, const _Tp& __y) const
         {return __x != __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY not_equal_to<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY not_equal_to<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) != _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) != _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) != _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) != _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) != _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) != _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY greater : binary_function<_Tp, _Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY greater : binary_function<_Tp, _Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x, const _Tp& __y) const
         {return __x > __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY greater<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY greater<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) > _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) > _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) > _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) > _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) > _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) > _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
@@ -730,287 +730,287 @@ struct _LIBCPP_TYPE_VIS_ONLY greater<void>
 
 // less in <__functional_base>
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY greater_equal : binary_function<_Tp, _Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY greater_equal : binary_function<_Tp, _Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x, const _Tp& __y) const
         {return __x >= __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY greater_equal<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY greater_equal<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) >= _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) >= _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) >= _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) >= _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) >= _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) >= _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY less_equal : binary_function<_Tp, _Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY less_equal : binary_function<_Tp, _Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x, const _Tp& __y) const
         {return __x <= __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY less_equal<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY less_equal<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) <= _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) <= _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) <= _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) <= _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) <= _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) <= _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY logical_and : binary_function<_Tp, _Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY logical_and : binary_function<_Tp, _Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x, const _Tp& __y) const
         {return __x && __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY logical_and<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY logical_and<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) && _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) && _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) && _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) && _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) && _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) && _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY logical_or : binary_function<_Tp, _Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY logical_or : binary_function<_Tp, _Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x, const _Tp& __y) const
         {return __x || __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY logical_or<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY logical_or<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) || _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) || _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) || _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) || _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) || _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) || _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY logical_not : unary_function<_Tp, bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY logical_not : unary_function<_Tp, bool>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const _Tp& __x) const
         {return !__x;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY logical_not<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY logical_not<void>
 {
     template <class _Tp>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_Tp&& __x) const
-    _NOEXCEPT_(noexcept(!_VSTD::forward<_Tp>(__x)))
-    -> decltype        (!_VSTD::forward<_Tp>(__x))
-        { return        !_VSTD::forward<_Tp>(__x); }
+    _NOEXCEPT_(noexcept(!_MUSEUM_VSTD::forward<_Tp>(__x)))
+    -> decltype        (!_MUSEUM_VSTD::forward<_Tp>(__x))
+        { return        !_MUSEUM_VSTD::forward<_Tp>(__x); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY bit_and : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_and : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x & __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY bit_and<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_and<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) & _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) & _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) & _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) & _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) & _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) & _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY bit_or : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_or : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x | __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY bit_or<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_or<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) | _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) | _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) | _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) | _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) | _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) | _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
 #else
 template <class _Tp>
 #endif
-struct _LIBCPP_TYPE_VIS_ONLY bit_xor : binary_function<_Tp, _Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_xor : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x ^ __y;}
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY bit_xor<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_xor<void>
 {
     template <class _T1, class _T2>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_T1&& __t, _T2&& __u) const
-    _NOEXCEPT_(noexcept(_VSTD::forward<_T1>(__t) ^ _VSTD::forward<_T2>(__u)))
-    -> decltype        (_VSTD::forward<_T1>(__t) ^ _VSTD::forward<_T2>(__u))
-        { return        _VSTD::forward<_T1>(__t) ^ _VSTD::forward<_T2>(__u); }
+    _NOEXCEPT_(noexcept(_MUSEUM_VSTD::forward<_T1>(__t) ^ _MUSEUM_VSTD::forward<_T2>(__u)))
+    -> decltype        (_MUSEUM_VSTD::forward<_T1>(__t) ^ _MUSEUM_VSTD::forward<_T2>(__u))
+        { return        _MUSEUM_VSTD::forward<_T1>(__t) ^ _MUSEUM_VSTD::forward<_T2>(__u); }
     typedef void is_transparent;
 };
 #endif
 
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp = void>
-struct _LIBCPP_TYPE_VIS_ONLY bit_not : unary_function<_Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_not : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return ~__x;}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY bit_not<void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY bit_not<void>
 {
     template <class _Tp>
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     auto operator()(_Tp&& __x) const
-    _NOEXCEPT_(noexcept(~_VSTD::forward<_Tp>(__x)))
-    -> decltype        (~_VSTD::forward<_Tp>(__x))
-        { return        ~_VSTD::forward<_Tp>(__x); }
+    _NOEXCEPT_(noexcept(~_MUSEUM_VSTD::forward<_Tp>(__x)))
+    -> decltype        (~_MUSEUM_VSTD::forward<_Tp>(__x))
+        { return        ~_MUSEUM_VSTD::forward<_Tp>(__x); }
     typedef void is_transparent;
 };
 #endif
 
 template <class _Predicate>
-class _LIBCPP_TYPE_VIS_ONLY unary_negate
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY unary_negate
     : public unary_function<typename _Predicate::argument_type, bool>
 {
     _Predicate __pred_;
 public:
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit unary_negate(const _Predicate& __pred)
         : __pred_(__pred) {}
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const typename _Predicate::argument_type& __x) const
         {return !__pred_(__x);}
 };
 
 template <class _Predicate>
-inline _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
 unary_negate<_Predicate>
 not1(const _Predicate& __pred) {return unary_negate<_Predicate>(__pred);}
 
 template <class _Predicate>
-class _LIBCPP_TYPE_VIS_ONLY binary_negate
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY binary_negate
     : public binary_function<typename _Predicate::first_argument_type,
                              typename _Predicate::second_argument_type,
                              bool>
 {
     _Predicate __pred_;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit _LIBCPP_CONSTEXPR_AFTER_CXX11 
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 
     binary_negate(const _Predicate& __pred) : __pred_(__pred) {}
 
-    _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator()(const typename _Predicate::first_argument_type& __x,
                     const typename _Predicate::second_argument_type& __y) const
         {return !__pred_(__x, __y);}
 };
 
 template <class _Predicate>
-inline _LIBCPP_CONSTEXPR_AFTER_CXX11 _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 _MUSEUM_LIBCPP_INLINE_VISIBILITY
 binary_negate<_Predicate>
 not2(const _Predicate& __pred) {return binary_negate<_Predicate>(__pred);}
 
 template <class __Operation>
-class _LIBCPP_TYPE_VIS_ONLY binder1st
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY binder1st
     : public unary_function<typename __Operation::second_argument_type,
                             typename __Operation::result_type>
 {
@@ -1018,25 +1018,25 @@ protected:
     __Operation                               op;
     typename __Operation::first_argument_type value;
 public:
-    _LIBCPP_INLINE_VISIBILITY binder1st(const __Operation& __x,
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY binder1st(const __Operation& __x,
                                const typename __Operation::first_argument_type __y)
         : op(__x), value(__y) {}
-    _LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
         (typename __Operation::second_argument_type& __x) const
             {return op(value, __x);}
-    _LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
         (const typename __Operation::second_argument_type& __x) const
             {return op(value, __x);}
 };
 
 template <class __Operation, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 binder1st<__Operation>
 bind1st(const __Operation& __op, const _Tp& __x)
     {return binder1st<__Operation>(__op, __x);}
 
 template <class __Operation>
-class _LIBCPP_TYPE_VIS_ONLY binder2nd
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY binder2nd
     : public unary_function<typename __Operation::first_argument_type,
                             typename __Operation::result_type>
 {
@@ -1044,192 +1044,192 @@ protected:
     __Operation                                op;
     typename __Operation::second_argument_type value;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     binder2nd(const __Operation& __x, const typename __Operation::second_argument_type __y)
         : op(__x), value(__y) {}
-    _LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
         (      typename __Operation::first_argument_type& __x) const
             {return op(__x, value);}
-    _LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY typename __Operation::result_type operator()
         (const typename __Operation::first_argument_type& __x) const
             {return op(__x, value);}
 };
 
 template <class __Operation, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 binder2nd<__Operation>
 bind2nd(const __Operation& __op, const _Tp& __x)
     {return binder2nd<__Operation>(__op, __x);}
 
 template <class _Arg, class _Result>
-class _LIBCPP_TYPE_VIS_ONLY pointer_to_unary_function
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY pointer_to_unary_function
     : public unary_function<_Arg, _Result>
 {
     _Result (*__f_)(_Arg);
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit pointer_to_unary_function(_Result (*__f)(_Arg))
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit pointer_to_unary_function(_Result (*__f)(_Arg))
         : __f_(__f) {}
-    _LIBCPP_INLINE_VISIBILITY _Result operator()(_Arg __x) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Result operator()(_Arg __x) const
         {return __f_(__x);}
 };
 
 template <class _Arg, class _Result>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 pointer_to_unary_function<_Arg,_Result>
 ptr_fun(_Result (*__f)(_Arg))
     {return pointer_to_unary_function<_Arg,_Result>(__f);}
 
 template <class _Arg1, class _Arg2, class _Result>
-class _LIBCPP_TYPE_VIS_ONLY pointer_to_binary_function
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY pointer_to_binary_function
     : public binary_function<_Arg1, _Arg2, _Result>
 {
     _Result (*__f_)(_Arg1, _Arg2);
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit pointer_to_binary_function(_Result (*__f)(_Arg1, _Arg2))
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit pointer_to_binary_function(_Result (*__f)(_Arg1, _Arg2))
         : __f_(__f) {}
-    _LIBCPP_INLINE_VISIBILITY _Result operator()(_Arg1 __x, _Arg2 __y) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Result operator()(_Arg1 __x, _Arg2 __y) const
         {return __f_(__x, __y);}
 };
 
 template <class _Arg1, class _Arg2, class _Result>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 pointer_to_binary_function<_Arg1,_Arg2,_Result>
 ptr_fun(_Result (*__f)(_Arg1,_Arg2))
     {return pointer_to_binary_function<_Arg1,_Arg2,_Result>(__f);}
 
 template<class _Sp, class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY mem_fun_t : public unary_function<_Tp*, _Sp>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY mem_fun_t : public unary_function<_Tp*, _Sp>
 {
     _Sp (_Tp::*__p_)();
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit mem_fun_t(_Sp (_Tp::*__p)())
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit mem_fun_t(_Sp (_Tp::*__p)())
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp* __p) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp* __p) const
         {return (__p->*__p_)();}
 };
 
 template<class _Sp, class _Tp, class _Ap>
-class _LIBCPP_TYPE_VIS_ONLY mem_fun1_t : public binary_function<_Tp*, _Ap, _Sp>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY mem_fun1_t : public binary_function<_Tp*, _Ap, _Sp>
 {
     _Sp (_Tp::*__p_)(_Ap);
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit mem_fun1_t(_Sp (_Tp::*__p)(_Ap))
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit mem_fun1_t(_Sp (_Tp::*__p)(_Ap))
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp* __p, _Ap __x) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp* __p, _Ap __x) const
         {return (__p->*__p_)(__x);}
 };
 
 template<class _Sp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 mem_fun_t<_Sp,_Tp>
 mem_fun(_Sp (_Tp::*__f)())
     {return mem_fun_t<_Sp,_Tp>(__f);}
 
 template<class _Sp, class _Tp, class _Ap>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 mem_fun1_t<_Sp,_Tp,_Ap>
 mem_fun(_Sp (_Tp::*__f)(_Ap))
     {return mem_fun1_t<_Sp,_Tp,_Ap>(__f);}
 
 template<class _Sp, class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY mem_fun_ref_t : public unary_function<_Tp, _Sp>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY mem_fun_ref_t : public unary_function<_Tp, _Sp>
 {
     _Sp (_Tp::*__p_)();
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit mem_fun_ref_t(_Sp (_Tp::*__p)())
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit mem_fun_ref_t(_Sp (_Tp::*__p)())
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp& __p) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp& __p) const
         {return (__p.*__p_)();}
 };
 
 template<class _Sp, class _Tp, class _Ap>
-class _LIBCPP_TYPE_VIS_ONLY mem_fun1_ref_t : public binary_function<_Tp, _Ap, _Sp>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY mem_fun1_ref_t : public binary_function<_Tp, _Ap, _Sp>
 {
     _Sp (_Tp::*__p_)(_Ap);
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit mem_fun1_ref_t(_Sp (_Tp::*__p)(_Ap))
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit mem_fun1_ref_t(_Sp (_Tp::*__p)(_Ap))
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp& __p, _Ap __x) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(_Tp& __p, _Ap __x) const
         {return (__p.*__p_)(__x);}
 };
 
 template<class _Sp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 mem_fun_ref_t<_Sp,_Tp>
 mem_fun_ref(_Sp (_Tp::*__f)())
     {return mem_fun_ref_t<_Sp,_Tp>(__f);}
 
 template<class _Sp, class _Tp, class _Ap>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 mem_fun1_ref_t<_Sp,_Tp,_Ap>
 mem_fun_ref(_Sp (_Tp::*__f)(_Ap))
     {return mem_fun1_ref_t<_Sp,_Tp,_Ap>(__f);}
 
 template <class _Sp, class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY const_mem_fun_t : public unary_function<const _Tp*, _Sp>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY const_mem_fun_t : public unary_function<const _Tp*, _Sp>
 {
     _Sp (_Tp::*__p_)() const;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit const_mem_fun_t(_Sp (_Tp::*__p)() const)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit const_mem_fun_t(_Sp (_Tp::*__p)() const)
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp* __p) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp* __p) const
         {return (__p->*__p_)();}
 };
 
 template <class _Sp, class _Tp, class _Ap>
-class _LIBCPP_TYPE_VIS_ONLY const_mem_fun1_t : public binary_function<const _Tp*, _Ap, _Sp>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY const_mem_fun1_t : public binary_function<const _Tp*, _Ap, _Sp>
 {
     _Sp (_Tp::*__p_)(_Ap) const;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit const_mem_fun1_t(_Sp (_Tp::*__p)(_Ap) const)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit const_mem_fun1_t(_Sp (_Tp::*__p)(_Ap) const)
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp* __p, _Ap __x) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp* __p, _Ap __x) const
         {return (__p->*__p_)(__x);}
 };
 
 template <class _Sp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const_mem_fun_t<_Sp,_Tp>
 mem_fun(_Sp (_Tp::*__f)() const)
     {return const_mem_fun_t<_Sp,_Tp>(__f);}
 
 template <class _Sp, class _Tp, class _Ap>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const_mem_fun1_t<_Sp,_Tp,_Ap>
 mem_fun(_Sp (_Tp::*__f)(_Ap) const)
     {return const_mem_fun1_t<_Sp,_Tp,_Ap>(__f);}
 
 template <class _Sp, class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY const_mem_fun_ref_t : public unary_function<_Tp, _Sp>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY const_mem_fun_ref_t : public unary_function<_Tp, _Sp>
 {
     _Sp (_Tp::*__p_)() const;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit const_mem_fun_ref_t(_Sp (_Tp::*__p)() const)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit const_mem_fun_ref_t(_Sp (_Tp::*__p)() const)
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp& __p) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp& __p) const
         {return (__p.*__p_)();}
 };
 
 template <class _Sp, class _Tp, class _Ap>
-class _LIBCPP_TYPE_VIS_ONLY const_mem_fun1_ref_t
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY const_mem_fun1_ref_t
     : public binary_function<_Tp, _Ap, _Sp>
 {
     _Sp (_Tp::*__p_)(_Ap) const;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit const_mem_fun1_ref_t(_Sp (_Tp::*__p)(_Ap) const)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit const_mem_fun1_ref_t(_Sp (_Tp::*__p)(_Ap) const)
         : __p_(__p) {}
-    _LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp& __p, _Ap __x) const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _Sp operator()(const _Tp& __p, _Ap __x) const
         {return (__p.*__p_)(__x);}
 };
 
 template <class _Sp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const_mem_fun_ref_t<_Sp,_Tp>
 mem_fun_ref(_Sp (_Tp::*__f)() const)
     {return const_mem_fun_ref_t<_Sp,_Tp>(__f);}
 
 template <class _Sp, class _Tp, class _Ap>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const_mem_fun1_ref_t<_Sp,_Tp,_Ap>
 mem_fun_ref(_Sp (_Tp::*__f)(_Ap) const)
     {return const_mem_fun1_ref_t<_Sp,_Tp,_Ap>(__f);}
@@ -1249,15 +1249,15 @@ private:
     type __f_;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY __mem_fn(type __f) : __f_(__f) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY __mem_fn(type __f) : __f_(__f) {}
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
     // invoke
     template <class... _ArgTypes>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     typename __invoke_return<type, _ArgTypes...>::type
     operator() (_ArgTypes&&... __args) const {
-        return __invoke(__f_, _VSTD::forward<_ArgTypes>(__args)...);
+        return __invoke(__f_, _MUSEUM_VSTD::forward<_ArgTypes>(__args)...);
     }
 #else
 
@@ -1282,7 +1282,7 @@ public:
 };
 
 template<class _Rp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp _Tp::*>
 mem_fn(_Rp _Tp::* __pm)
 {
@@ -1295,12 +1295,12 @@ mem_fn(_Rp _Tp::* __pm)
 
 // bad_function_call
 
-class _LIBCPP_EXCEPTION_ABI bad_function_call
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_function_call
     : public exception
 {
 };
 
-template<class _Fp> class _LIBCPP_TYPE_VIS_ONLY function; // undefined
+template<class _Fp> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY function; // undefined
 
 namespace __function
 {
@@ -1329,7 +1329,7 @@ struct __maybe_derive_from_binary_function<_Rp(_A1, _A2)>
 
 } // namespace __function
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 namespace __function {
 
@@ -1341,17 +1341,17 @@ class __base<_Rp(_ArgTypes...)>
     __base(const __base&);
     __base& operator=(const __base&);
 public:
-    _LIBCPP_INLINE_VISIBILITY __base() {}
-    _LIBCPP_INLINE_VISIBILITY virtual ~__base() {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY __base() {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY virtual ~__base() {}
     virtual __base* __clone() const = 0;
     virtual void __clone(__base*) const = 0;
     virtual void destroy() _NOEXCEPT = 0;
     virtual void destroy_deallocate() _NOEXCEPT = 0;
     virtual _Rp operator()(_ArgTypes&& ...) = 0;
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const _NOEXCEPT = 0;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const _NOEXCEPT = 0;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _FD, class _Alloc, class _FB> class __func;
@@ -1362,33 +1362,33 @@ class __func<_Fp, _Alloc, _Rp(_ArgTypes...)>
 {
     __compressed_pair<_Fp, _Alloc> __f_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __func(_Fp&& __f)
-        : __f_(piecewise_construct, _VSTD::forward_as_tuple(_VSTD::move(__f)),
-                                    _VSTD::forward_as_tuple()) {}
-    _LIBCPP_INLINE_VISIBILITY
+        : __f_(piecewise_construct, _MUSEUM_VSTD::forward_as_tuple(_MUSEUM_VSTD::move(__f)),
+                                    _MUSEUM_VSTD::forward_as_tuple()) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __func(const _Fp& __f, const _Alloc& __a)
-        : __f_(piecewise_construct, _VSTD::forward_as_tuple(__f),
-                                    _VSTD::forward_as_tuple(__a)) {}
+        : __f_(piecewise_construct, _MUSEUM_VSTD::forward_as_tuple(__f),
+                                    _MUSEUM_VSTD::forward_as_tuple(__a)) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __func(const _Fp& __f, _Alloc&& __a)
-        : __f_(piecewise_construct, _VSTD::forward_as_tuple(__f),
-                                    _VSTD::forward_as_tuple(_VSTD::move(__a))) {}
+        : __f_(piecewise_construct, _MUSEUM_VSTD::forward_as_tuple(__f),
+                                    _MUSEUM_VSTD::forward_as_tuple(_MUSEUM_VSTD::move(__a))) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __func(_Fp&& __f, _Alloc&& __a)
-        : __f_(piecewise_construct, _VSTD::forward_as_tuple(_VSTD::move(__f)),
-                                    _VSTD::forward_as_tuple(_VSTD::move(__a))) {}
+        : __f_(piecewise_construct, _MUSEUM_VSTD::forward_as_tuple(_MUSEUM_VSTD::move(__f)),
+                                    _MUSEUM_VSTD::forward_as_tuple(_MUSEUM_VSTD::move(__a))) {}
     virtual __base<_Rp(_ArgTypes...)>* __clone() const;
     virtual void __clone(__base<_Rp(_ArgTypes...)>*) const;
     virtual void destroy() _NOEXCEPT;
     virtual void destroy_deallocate() _NOEXCEPT;
     virtual _Rp operator()(_ArgTypes&& ... __arg);
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const _NOEXCEPT;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const _NOEXCEPT;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Fp, class _Alloc, class _Rp, class ..._ArgTypes>
@@ -1434,10 +1434,10 @@ _Rp
 __func<_Fp, _Alloc, _Rp(_ArgTypes...)>::operator()(_ArgTypes&& ... __arg)
 {
     typedef __invoke_void_return_wrapper<_Rp> _Invoker;
-    return _Invoker::__call(__f_.first(), _VSTD::forward<_ArgTypes>(__arg)...);
+    return _Invoker::__call(__f_.first(), _MUSEUM_VSTD::forward<_ArgTypes>(__arg)...);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp, class ..._ArgTypes>
 const void*
@@ -1455,12 +1455,12 @@ __func<_Fp, _Alloc, _Rp(_ArgTypes...)>::target_type() const _NOEXCEPT
     return typeid(_Fp);
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 }  // __function
 
 template<class _Rp, class ..._ArgTypes>
-class _LIBCPP_TYPE_VIS_ONLY function<_Rp(_ArgTypes...)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY function<_Rp(_ArgTypes...)>
     : public __function::__maybe_derive_from_unary_function<_Rp(_ArgTypes...)>,
       public __function::__maybe_derive_from_binary_function<_Rp(_ArgTypes...)>
 {
@@ -1469,25 +1469,25 @@ class _LIBCPP_TYPE_VIS_ONLY function<_Rp(_ArgTypes...)>
     __base* __f_;
 
     template <class _Fp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const _Fp&) {return true;}
     template <class _R2, class ..._Ap>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (*__p)(_Ap...)) {return __p;}
     template <class _R2, class _Cp, class ..._Ap>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_Ap...)) {return __p;}
     template <class _R2, class _Cp, class ..._Ap>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_Ap...) const) {return __p;}
     template <class _R2, class _Cp, class ..._Ap>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_Ap...) volatile) {return __p;}
     template <class _R2, class _Cp, class ..._Ap>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_Ap...) const volatile) {return __p;}
     template <class _R2, class ..._Ap>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const function<_R2(_Ap...)>& __p) {return !!__p;}
 
     template <class _Fp, bool = !is_same<_Fp, function>::value &&
@@ -1509,9 +1509,9 @@ public:
     typedef _Rp result_type;
 
     // construct/copy/destroy:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     function() _NOEXCEPT : __f_(0) {}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     function(nullptr_t) _NOEXCEPT : __f_(0) {}
     function(const function&);
     function(function&&) _NOEXCEPT;
@@ -1523,10 +1523,10 @@ public:
                                       >::type* = 0);
 
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&) _NOEXCEPT : __f_(0) {}
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&, nullptr_t) _NOEXCEPT : __f_(0) {}
     template<class _Alloc>
       function(allocator_arg_t, const _Alloc&, const function&);
@@ -1553,13 +1553,13 @@ public:
     // function modifiers:
     void swap(function&) _NOEXCEPT;
     template<class _Fp, class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       void assign(_Fp&& __f, const _Alloc& __a)
-        {function(allocator_arg, __a, _VSTD::forward<_Fp>(__f)).swap(*this);}
+        {function(allocator_arg, __a, _MUSEUM_VSTD::forward<_Fp>(__f)).swap(*this);}
 
     // function capacity:
-    _LIBCPP_INLINE_VISIBILITY
-        _LIBCPP_EXPLICIT operator bool() const _NOEXCEPT {return __f_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_EXPLICIT operator bool() const _NOEXCEPT {return __f_;}
 
     // deleted overloads close possible hole in the type system
     template<class _R2, class... _ArgTypes2>
@@ -1570,12 +1570,12 @@ public:
     // function invocation:
     _Rp operator()(_ArgTypes...) const;
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     // function target access:
     const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const _NOEXCEPT;
     template <typename _Tp> _Tp* target() _NOEXCEPT;
     template <typename _Tp> const _Tp* target() const _NOEXCEPT;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp, class ..._ArgTypes>
@@ -1660,7 +1660,7 @@ function<_Rp(_ArgTypes...)>::function(_Fp __f,
         if (sizeof(_FF) <= sizeof(__buf_) && is_nothrow_copy_constructible<_Fp>::value)
         {
             __f_ = (__base*)&__buf_;
-            ::new (__f_) _FF(_VSTD::move(__f));
+            ::new (__f_) _FF(_MUSEUM_VSTD::move(__f));
         }
         else
         {
@@ -1668,7 +1668,7 @@ function<_Rp(_ArgTypes...)>::function(_Fp __f,
             _Ap __a;
             typedef __allocator_destructor<_Ap> _Dp;
             unique_ptr<__base, _Dp> __hold(__a.allocate(1), _Dp(__a, 1));
-            ::new (__hold.get()) _FF(_VSTD::move(__f), allocator<_Fp>(__a));
+            ::new (__hold.get()) _FF(_MUSEUM_VSTD::move(__f), allocator<_Fp>(__a));
             __f_ = __hold.release();
         }
     }
@@ -1690,13 +1690,13 @@ function<_Rp(_ArgTypes...)>::function(allocator_arg_t, const _Alloc& __a0, _Fp _
             is_nothrow_copy_constructible<_Fp>::value && is_nothrow_copy_constructible<_Ap>::value)
         {
             __f_ = (__base*)&__buf_;
-            ::new (__f_) _FF(_VSTD::move(__f), _Alloc(__a));
+            ::new (__f_) _FF(_MUSEUM_VSTD::move(__f), _Alloc(__a));
         }
         else
         {
             typedef __allocator_destructor<_Ap> _Dp;
             unique_ptr<__base, _Dp> __hold(__a.allocate(1), _Dp(__a, 1));
-            ::new (__hold.get()) _FF(_VSTD::move(__f), _Alloc(__a));
+            ::new (__hold.get()) _FF(_MUSEUM_VSTD::move(__f), _Alloc(__a));
             __f_ = __hold.release();
         }
     }
@@ -1756,7 +1756,7 @@ typename enable_if
 >::type
 function<_Rp(_ArgTypes...)>::operator=(_Fp&& __f)
 {
-    function(_VSTD::forward<_Fp>(__f)).swap(*this);
+    function(_MUSEUM_VSTD::forward<_Fp>(__f)).swap(*this);
     return *this;
 }
 
@@ -1803,21 +1803,21 @@ function<_Rp(_ArgTypes...)>::swap(function& __f) _NOEXCEPT
         __f_ = (__base*)&__buf_;
     }
     else
-        _VSTD::swap(__f_, __f.__f_);
+        _MUSEUM_VSTD::swap(__f_, __f.__f_);
 }
 
 template<class _Rp, class ..._ArgTypes>
 _Rp
 function<_Rp(_ArgTypes...)>::operator()(_ArgTypes... __arg) const
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     if (__f_ == 0)
         throw bad_function_call();
-#endif  // _LIBCPP_NO_EXCEPTIONS
-    return (*__f_)(_VSTD::forward<_ArgTypes>(__arg)...);
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
+    return (*__f_)(_MUSEUM_VSTD::forward<_ArgTypes>(__arg)...);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp, class ..._ArgTypes>
 const facebook::museum::MUSEUM_VERSION::std::type_info&
@@ -1848,35 +1848,35 @@ function<_Rp(_ArgTypes...)>::target() const _NOEXCEPT
     return (const _Tp*)__f_->target(typeid(_Tp));
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template <class _Rp, class... _ArgTypes>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator==(const function<_Rp(_ArgTypes...)>& __f, nullptr_t) _NOEXCEPT {return !__f;}
 
 template <class _Rp, class... _ArgTypes>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator==(nullptr_t, const function<_Rp(_ArgTypes...)>& __f) _NOEXCEPT {return !__f;}
 
 template <class _Rp, class... _ArgTypes>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator!=(const function<_Rp(_ArgTypes...)>& __f, nullptr_t) _NOEXCEPT {return (bool)__f;}
 
 template <class _Rp, class... _ArgTypes>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator!=(nullptr_t, const function<_Rp(_ArgTypes...)>& __f) _NOEXCEPT {return (bool)__f;}
 
 template <class _Rp, class... _ArgTypes>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(function<_Rp(_ArgTypes...)>& __x, function<_Rp(_ArgTypes...)>& __y) _NOEXCEPT
 {return __x.swap(__y);}
 
-#else // _LIBCPP_HAS_NO_VARIADICS
+#else // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 #include <museum/7.1.2/external/libcxx/__functional_03>
 
@@ -1887,11 +1887,11 @@ swap(function<_Rp(_ArgTypes...)>& __x, function<_Rp(_ArgTypes...)>& __y) _NOEXCE
 //==============================================================================
 
 template<class _Tp> struct __is_bind_expression : public false_type {};
-template<class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_bind_expression
+template<class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_bind_expression
     : public __is_bind_expression<typename remove_cv<_Tp>::type> {};
 
 template<class _Tp> struct __is_placeholder : public integral_constant<int, 0> {};
-template<class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_placeholder
+template<class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_placeholder
     : public __is_placeholder<typename remove_cv<_Tp>::type> {};
 
 namespace placeholders
@@ -1899,16 +1899,16 @@ namespace placeholders
 
 template <int _Np> struct __ph {};
 
-_LIBCPP_FUNC_VIS extern __ph<1>   _1;
-_LIBCPP_FUNC_VIS extern __ph<2>   _2;
-_LIBCPP_FUNC_VIS extern __ph<3>   _3;
-_LIBCPP_FUNC_VIS extern __ph<4>   _4;
-_LIBCPP_FUNC_VIS extern __ph<5>   _5;
-_LIBCPP_FUNC_VIS extern __ph<6>   _6;
-_LIBCPP_FUNC_VIS extern __ph<7>   _7;
-_LIBCPP_FUNC_VIS extern __ph<8>   _8;
-_LIBCPP_FUNC_VIS extern __ph<9>   _9;
-_LIBCPP_FUNC_VIS extern __ph<10> _10;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<1>   _1;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<2>   _2;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<3>   _3;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<4>   _4;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<5>   _5;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<6>   _6;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<7>   _7;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<8>   _8;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<9>   _9;
+_MUSEUM_LIBCPP_FUNC_VIS extern __ph<10> _10;
 
 }  // placeholders
 
@@ -1917,10 +1917,10 @@ struct __is_placeholder<placeholders::__ph<_Np> >
     : public integral_constant<int, _Np> {};
 
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp&
 __mu(reference_wrapper<_Tp> __t, _Uj&)
 {
@@ -1928,15 +1928,15 @@ __mu(reference_wrapper<_Tp> __t, _Uj&)
 }
 
 template <class _Ti, class ..._Uj, size_t ..._Indx>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename __invoke_of<_Ti&, _Uj...>::type
 __mu_expand(_Ti& __ti, tuple<_Uj...>& __uj, __tuple_indices<_Indx...>)
 {
-    return __ti(_VSTD::forward<_Uj>(_VSTD::get<_Indx>(__uj))...);
+    return __ti(_MUSEUM_VSTD::forward<_Uj>(_MUSEUM_VSTD::get<_Indx>(__uj))...);
 }
 
 template <class _Ti, class ..._Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename __lazy_enable_if
 <
     is_bind_expression<_Ti>::value,
@@ -1958,7 +1958,7 @@ struct __mu_return2<true, _Ti, _Uj>
 };
 
 template <class _Ti, class _Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     0 < is_placeholder<_Ti>::value,
@@ -1967,11 +1967,11 @@ typename enable_if
 __mu(_Ti&, _Uj& __uj)
 {
     const size_t _Indx = is_placeholder<_Ti>::value - 1;
-    return _VSTD::forward<typename tuple_element<_Indx, _Uj>::type>(_VSTD::get<_Indx>(__uj));
+    return _MUSEUM_VSTD::forward<typename tuple_element<_Indx, _Uj>::type>(_MUSEUM_VSTD::get<_Indx>(__uj));
 }
 
 template <class _Ti, class _Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     !is_bind_expression<_Ti>::value &&
@@ -2089,12 +2089,12 @@ struct __bind_return<_Fp, const tuple<_BoundArgs...>, _TupleUj, true>
 };
 
 template <class _Fp, class _BoundArgs, size_t ..._Indx, class _Args>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename __bind_return<_Fp, _BoundArgs, _Args>::type
 __apply_functor(_Fp& __f, _BoundArgs& __bound_args, __tuple_indices<_Indx...>,
                 _Args&& __args)
 {
-    return __invoke(__f, __mu(_VSTD::get<_Indx>(__bound_args), __args)...);
+    return __invoke(__f, __mu(_MUSEUM_VSTD::get<_Indx>(__bound_args), __args)...);
 }
 
 template<class _Fp, class ..._BoundArgs>
@@ -2110,14 +2110,14 @@ private:
 
     typedef typename __make_tuple_indices<sizeof...(_BoundArgs)>::type __indices;
 public:
-#ifdef _LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
+#ifdef _MUSEUM_LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind(const __bind& __b)
         : __f_(__b.__f_),
           __bound_args_(__b.__bound_args_) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind& operator=(const __bind& __b)
     {
         __f_ = __b.__f_;
@@ -2125,20 +2125,20 @@ public:
         return *this;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind(__bind&& __b)
-        : __f_(_VSTD::move(__b.__f_)),
-          __bound_args_(_VSTD::move(__b.__bound_args_)) {}
+        : __f_(_MUSEUM_VSTD::move(__b.__f_)),
+          __bound_args_(_MUSEUM_VSTD::move(__b.__bound_args_)) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind& operator=(__bind&& __b)
     {
-        __f_ = _VSTD::move(__b.__f_);
-        __bound_args_ = _VSTD::move(__b.__bound_args_);
+        __f_ = _MUSEUM_VSTD::move(__b.__f_);
+        __bound_args_ = _MUSEUM_VSTD::move(__b.__bound_args_);
         return *this;
     }
 
-#endif  // _LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
 
     template <class _Gp, class ..._BA,
               class = typename enable_if
@@ -2147,27 +2147,27 @@ public:
                                   !is_same<typename remove_reference<_Gp>::type,
                                            __bind>::value
                                >::type>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       explicit __bind(_Gp&& __f, _BA&& ...__bound_args)
-        : __f_(_VSTD::forward<_Gp>(__f)),
-          __bound_args_(_VSTD::forward<_BA>(__bound_args)...) {}
+        : __f_(_MUSEUM_VSTD::forward<_Gp>(__f)),
+          __bound_args_(_MUSEUM_VSTD::forward<_BA>(__bound_args)...) {}
 
     template <class ..._Args>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         typename __bind_return<_Fd, _Td, tuple<_Args&&...> >::type
         operator()(_Args&& ...__args)
         {
             return __apply_functor(__f_, __bound_args_, __indices(),
-                                  tuple<_Args&&...>(_VSTD::forward<_Args>(__args)...));
+                                  tuple<_Args&&...>(_MUSEUM_VSTD::forward<_Args>(__args)...));
         }
 
     template <class ..._Args>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         typename __bind_return<const _Fd, const _Td, tuple<_Args&&...> >::type
         operator()(_Args&& ...__args) const
         {
             return __apply_functor(__f_, __bound_args_, __indices(),
-                                   tuple<_Args&&...>(_VSTD::forward<_Args>(__args)...));
+                                   tuple<_Args&&...>(_MUSEUM_VSTD::forward<_Args>(__args)...));
         }
 };
 
@@ -2184,31 +2184,31 @@ class __bind_r
 public:
     typedef _Rp result_type;
 
-#ifdef _LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
+#ifdef _MUSEUM_LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind_r(const __bind_r& __b)
-        : base(_VSTD::forward<const base&>(__b)) {}
+        : base(_MUSEUM_VSTD::forward<const base&>(__b)) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind_r& operator=(const __bind_r& __b)
     {
-        base::operator=(_VSTD::forward<const base&>(__b));
+        base::operator=(_MUSEUM_VSTD::forward<const base&>(__b));
         return *this;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind_r(__bind_r&& __b)
-        : base(_VSTD::forward<base>(__b)) {}
+        : base(_MUSEUM_VSTD::forward<base>(__b)) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __bind_r& operator=(__bind_r&& __b)
     {
-        base::operator=(_VSTD::forward<base>(__b));
+        base::operator=(_MUSEUM_VSTD::forward<base>(__b));
         return *this;
     }
 
-#endif  // _LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS
 
     template <class _Gp, class ..._BA,
               class = typename enable_if
@@ -2217,13 +2217,13 @@ public:
                                   !is_same<typename remove_reference<_Gp>::type,
                                            __bind_r>::value
                                >::type>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       explicit __bind_r(_Gp&& __f, _BA&& ...__bound_args)
-        : base(_VSTD::forward<_Gp>(__f),
-               _VSTD::forward<_BA>(__bound_args)...) {}
+        : base(_MUSEUM_VSTD::forward<_Gp>(__f),
+               _MUSEUM_VSTD::forward<_BA>(__bound_args)...) {}
 
     template <class ..._Args>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         typename enable_if
         <
             is_convertible<typename __bind_return<_Fd, _Td, tuple<_Args&&...> >::type,
@@ -2233,11 +2233,11 @@ public:
         operator()(_Args&& ...__args)
         {
             typedef __invoke_void_return_wrapper<_Rp> _Invoker;
-            return _Invoker::__call(static_cast<base&>(*this), _VSTD::forward<_Args>(__args)...);
+            return _Invoker::__call(static_cast<base&>(*this), _MUSEUM_VSTD::forward<_Args>(__args)...);
         }
 
     template <class ..._Args>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         typename enable_if
         <
             is_convertible<typename __bind_return<const _Fd, const _Td, tuple<_Args&&...> >::type,
@@ -2247,7 +2247,7 @@ public:
         operator()(_Args&& ...__args) const
         {
             typedef __invoke_void_return_wrapper<_Rp> _Invoker;
-            return _Invoker::__call(static_cast<base const&>(*this), _VSTD::forward<_Args>(__args)...);
+            return _Invoker::__call(static_cast<base const&>(*this), _MUSEUM_VSTD::forward<_Args>(__args)...);
         }
 };
 
@@ -2255,150 +2255,150 @@ template<class _Rp, class _Fp, class ..._BoundArgs>
 struct __is_bind_expression<__bind_r<_Rp, _Fp, _BoundArgs...> > : public true_type {};
 
 template<class _Fp, class ..._BoundArgs>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __bind<_Fp, _BoundArgs...>
 bind(_Fp&& __f, _BoundArgs&&... __bound_args)
 {
     typedef __bind<_Fp, _BoundArgs...> type;
-    return type(_VSTD::forward<_Fp>(__f), _VSTD::forward<_BoundArgs>(__bound_args)...);
+    return type(_MUSEUM_VSTD::forward<_Fp>(__f), _MUSEUM_VSTD::forward<_BoundArgs>(__bound_args)...);
 }
 
 template<class _Rp, class _Fp, class ..._BoundArgs>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __bind_r<_Rp, _Fp, _BoundArgs...>
 bind(_Fp&& __f, _BoundArgs&&... __bound_args)
 {
     typedef __bind_r<_Rp, _Fp, _BoundArgs...> type;
-    return type(_VSTD::forward<_Fp>(__f), _VSTD::forward<_BoundArgs>(__bound_args)...);
+    return type(_MUSEUM_VSTD::forward<_Fp>(__f), _MUSEUM_VSTD::forward<_BoundArgs>(__bound_args)...);
 }
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<bool>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<bool>
     : public unary_function<bool, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(bool __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<char>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<char>
     : public unary_function<char, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(char __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<signed char>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<signed char>
     : public unary_function<signed char, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(signed char __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<unsigned char>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<unsigned char>
     : public unary_function<unsigned char, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(unsigned char __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
-#ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_UNICODE_CHARS
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<char16_t>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<char16_t>
     : public unary_function<char16_t, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(char16_t __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<char32_t>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<char32_t>
     : public unary_function<char32_t, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(char32_t __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
-#endif  // _LIBCPP_HAS_NO_UNICODE_CHARS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_UNICODE_CHARS
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<wchar_t>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<wchar_t>
     : public unary_function<wchar_t, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(wchar_t __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<short>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<short>
     : public unary_function<short, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(short __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<unsigned short>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<unsigned short>
     : public unary_function<unsigned short, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(unsigned short __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<int>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<int>
     : public unary_function<int, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(int __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<unsigned int>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<unsigned int>
     : public unary_function<unsigned int, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(unsigned int __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<long>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<long>
     : public unary_function<long, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(long __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<unsigned long>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<unsigned long>
     : public unary_function<unsigned long, size_t>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(unsigned long __v) const _NOEXCEPT {return static_cast<size_t>(__v);}
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<long long>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<long long>
     : public __scalar_hash<long long>
 {
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<unsigned long long>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<unsigned long long>
     : public __scalar_hash<unsigned long long>
 {
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<float>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<float>
     : public __scalar_hash<float>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(float __v) const _NOEXCEPT
     {
         // -0.0 and 0.0 should return same hash
@@ -2409,10 +2409,10 @@ struct _LIBCPP_TYPE_VIS_ONLY hash<float>
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<double>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<double>
     : public __scalar_hash<double>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(double __v) const _NOEXCEPT
     {
         // -0.0 and 0.0 should return same hash
@@ -2423,10 +2423,10 @@ struct _LIBCPP_TYPE_VIS_ONLY hash<double>
 };
 
 template <>
-struct _LIBCPP_TYPE_VIS_ONLY hash<long double>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<long double>
     : public __scalar_hash<long double>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(long double __v) const _NOEXCEPT
     {
         // -0.0 and 0.0 should return same hash
@@ -2472,14 +2472,14 @@ struct _LIBCPP_TYPE_VIS_ONLY hash<long double>
     }
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY hash
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash
     : public unary_function<_Tp, size_t>
 {
     static_assert(is_enum<_Tp>::value, "This hash only works for enumeration types");
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t operator()(_Tp __v) const _NOEXCEPT
     {
         typedef typename underlying_type<_Tp>::type type;
@@ -2489,16 +2489,16 @@ struct _LIBCPP_TYPE_VIS_ONLY hash
 #endif
 
 
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
 template <class _Fn, class ..._Args>
 result_of_t<_Fn&&(_Args&&...)>
 invoke(_Fn&& __f, _Args&&... __args) {
-    return __invoke(_VSTD::forward<_Fn>(__f), _VSTD::forward<_Args>(__args)...);
+    return __invoke(_MUSEUM_VSTD::forward<_Fn>(__f), _MUSEUM_VSTD::forward<_Args>(__args)...);
 }
 #endif
 
 // struct hash<T*> in <memory>
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_FUNCTIONAL
+#endif  // _MUSEUM_LIBCPP_FUNCTIONAL

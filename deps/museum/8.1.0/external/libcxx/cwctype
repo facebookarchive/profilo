@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CWCTYPE
-#define _LIBCPP_CWCTYPE
+#ifndef _MUSEUM_LIBCPP_CWCTYPE
+#define _MUSEUM_LIBCPP_CWCTYPE
 
 /*
     cwctype synopsis
@@ -54,11 +54,11 @@ wctrans_t wctrans(const char* property);
 #include <museum/8.1.0/external/libcxx/cctype>
 #include <museum/8.1.0/external/libcxx/wctype.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using ::wint_t;
 using ::wctrans_t;
@@ -82,6 +82,6 @@ using ::towupper;
 using ::towctrans;
 using ::wctrans;
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CWCTYPE
+#endif  // _MUSEUM_LIBCPP_CWCTYPE

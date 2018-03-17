@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_EXPERIMENTAL_TYPE_TRAITS
-#define _LIBCPP_EXPERIMENTAL_TYPE_TRAITS
+#ifndef _MUSEUM_LIBCPP_EXPERIMENTAL_TYPE_TRAITS
+#define _MUSEUM_LIBCPP_EXPERIMENTAL_TYPE_TRAITS
 
 /**
     experimental/type_traits synopsis
@@ -180,221 +180,221 @@ inline namespace fundamentals_v1 {
 
 #include <museum/6.0.1/external/libcxx/experimental/__config>
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 
 #include <museum/6.0.1/external/libcxx/experimental/type_traits>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_LFTS
 
 #if __has_feature(cxx_variable_templates)
 
 // C++14 20.10.4.1, primary type categories
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_void_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_void_v
     = is_void<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_null_pointer_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_null_pointer_v
     = is_null_pointer<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_integral_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_integral_v
     = is_integral<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_floating_point_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_floating_point_v
     = is_floating_point<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_array_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_array_v
     = is_array<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_pointer_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_pointer_v
     = is_pointer<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_lvalue_reference_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_lvalue_reference_v
     = is_lvalue_reference<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_rvalue_reference_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_rvalue_reference_v
     = is_rvalue_reference<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_member_object_pointer_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_member_object_pointer_v
     = is_member_object_pointer<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_member_function_pointer_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_member_function_pointer_v
     = is_member_function_pointer<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_enum_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_enum_v
     = is_enum<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_union_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_union_v
     = is_union<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_class_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_class_v
     = is_class<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_function_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_function_v
     = is_function<_Tp>::value;
 
 // C++14 20.10.4.2,  composite type categories
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_reference_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_reference_v
     = is_reference<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_arithmetic_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_arithmetic_v
     = is_arithmetic<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_fundamental_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_fundamental_v
     = is_fundamental<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_object_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_object_v
     = is_object<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_scalar_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_scalar_v
     = is_scalar<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_compound_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_compound_v
     = is_compound<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_member_pointer_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_member_pointer_v
     = is_member_pointer<_Tp>::value;
 
 // C++14 20.10.4.3, type properties
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_const_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_const_v
     = is_const<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_volatile_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_volatile_v
     = is_volatile<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivial_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivial_v
     = is_trivial<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivially_copyable_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_copyable_v
     = is_trivially_copyable<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_standard_layout_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_standard_layout_v
     = is_standard_layout<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_pod_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_pod_v
     = is_pod<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_literal_type_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_literal_type_v
     = is_literal_type<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_empty_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_empty_v
     = is_empty<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_polymorphic_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_polymorphic_v
     = is_polymorphic<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_abstract_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_abstract_v
     = is_abstract<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_final_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_final_v
     = is_final<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_signed_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_signed_v
     = is_signed<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_unsigned_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_unsigned_v
     = is_unsigned<_Tp>::value;
 
-template <class _Tp, class ..._Ts> _LIBCPP_CONSTEXPR bool is_constructible_v
+template <class _Tp, class ..._Ts> _MUSEUM_LIBCPP_CONSTEXPR bool is_constructible_v
     = is_constructible<_Tp, _Ts...>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_default_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_default_constructible_v
     = is_default_constructible<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_copy_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_copy_constructible_v
     = is_copy_constructible<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_move_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_move_constructible_v
     = is_move_constructible<_Tp>::value;
 
-template <class _Tp, class _Up> _LIBCPP_CONSTEXPR bool is_assignable_v
+template <class _Tp, class _Up> _MUSEUM_LIBCPP_CONSTEXPR bool is_assignable_v
     = is_assignable<_Tp, _Up>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_copy_assignable_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_copy_assignable_v
     = is_copy_assignable<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_move_assignable_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_move_assignable_v
     = is_move_assignable<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_destructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_destructible_v
     = is_destructible<_Tp>::value;
 
-template <class _Tp, class ..._Ts> _LIBCPP_CONSTEXPR bool is_trivially_constructible_v
+template <class _Tp, class ..._Ts> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_constructible_v
     = is_trivially_constructible<_Tp, _Ts...>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivially_default_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_default_constructible_v
     = is_trivially_default_constructible<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivially_copy_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_copy_constructible_v
     = is_trivially_copy_constructible<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivially_move_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_move_constructible_v
     = is_trivially_move_constructible<_Tp>::value;
 
-template <class _Tp, class _Up> _LIBCPP_CONSTEXPR bool is_trivially_assignable_v
+template <class _Tp, class _Up> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_assignable_v
     = is_trivially_assignable<_Tp, _Up>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivially_copy_assignable_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_copy_assignable_v
     = is_trivially_copy_assignable<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivially_move_assignable_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_move_assignable_v
     = is_trivially_move_assignable<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_trivially_destructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_trivially_destructible_v
     = is_trivially_destructible<_Tp>::value;
 
-template <class _Tp, class ..._Ts> _LIBCPP_CONSTEXPR bool is_nothrow_constructible_v
+template <class _Tp, class ..._Ts> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_constructible_v
     = is_nothrow_constructible<_Tp, _Ts...>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_nothrow_default_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_default_constructible_v
     = is_nothrow_default_constructible<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_nothrow_copy_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_copy_constructible_v
     = is_nothrow_copy_constructible<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_nothrow_move_constructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_move_constructible_v
     = is_nothrow_move_constructible<_Tp>::value;
 
-template <class _Tp, class _Up> _LIBCPP_CONSTEXPR bool is_nothrow_assignable_v
+template <class _Tp, class _Up> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_assignable_v
     = is_nothrow_assignable<_Tp, _Up>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_nothrow_copy_assignable_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_copy_assignable_v
     = is_nothrow_copy_assignable<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_nothrow_move_assignable_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_move_assignable_v
     = is_nothrow_move_assignable<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_nothrow_destructible_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_nothrow_destructible_v
     = is_nothrow_destructible<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool has_virtual_destructor_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool has_virtual_destructor_v
     = has_virtual_destructor<_Tp>::value;
 
 // C++14 20.10.5, type properties queries
 
-template <class _Tp> _LIBCPP_CONSTEXPR size_t alignment_of_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR size_t alignment_of_v
     = alignment_of<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR size_t rank_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR size_t rank_v
     = rank<_Tp>::value;
 
-template <class _Tp, unsigned _Id = 0> _LIBCPP_CONSTEXPR size_t extent_v
+template <class _Tp, unsigned _Id = 0> _MUSEUM_LIBCPP_CONSTEXPR size_t extent_v
     = extent<_Tp, _Id>::value;
 
 // C++14 20.10.6, type relations
 
-template <class _Tp, class _Up> _LIBCPP_CONSTEXPR bool is_same_v
+template <class _Tp, class _Up> _MUSEUM_LIBCPP_CONSTEXPR bool is_same_v
     = is_same<_Tp, _Up>::value;
 
-template <class _Tp, class _Up> _LIBCPP_CONSTEXPR bool is_base_of_v
+template <class _Tp, class _Up> _MUSEUM_LIBCPP_CONSTEXPR bool is_base_of_v
     = is_base_of<_Tp, _Up>::value;
 
-template <class _Tp, class _Up> _LIBCPP_CONSTEXPR bool is_convertible_v
+template <class _Tp, class _Up> _MUSEUM_LIBCPP_CONSTEXPR bool is_convertible_v
     = is_convertible<_Tp, _Up>::value;
 
 #endif /* __has_feature(cxx_variable_templates) */
@@ -402,16 +402,16 @@ template <class _Tp, class _Up> _LIBCPP_CONSTEXPR bool is_convertible_v
 // 3.3.2, Other type transformations
 /*
 template <class>
-class _LIBCPP_TYPE_VIS_ONLY raw_invocation_type;
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY raw_invocation_type;
 
 template <class _Fn, class ..._Args>
-class _LIBCPP_TYPE_VIS_ONLY raw_invocation_type<_Fn(_Args...)>;
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY raw_invocation_type<_Fn(_Args...)>;
 
 template <class>
-class _LIBCPP_TYPE_VIS_ONLY invokation_type;
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY invokation_type;
 
 template <class _Fn, class ..._Args>
-class _LIBCPP_TYPE_VIS_ONLY invokation_type<_Fn(_Args...)>;
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY invokation_type<_Fn(_Args...)>;
 
 template <class _Tp>
 using invokation_type_t = typename invokation_type<_Tp>::type;
@@ -420,8 +420,8 @@ template <class _Tp>
 using raw_invocation_type_t = typename raw_invocation_type<_Tp>::type;
 */
 
-_LIBCPP_END_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_END_NAMESPACE_LFTS
 
-#endif /* _LIBCPP_STD_VER > 11 */
+#endif /* _MUSEUM_LIBCPP_STD_VER > 11 */
 
-#endif /* _LIBCPP_EXPERIMENTAL_TYPE_TRAITS */
+#endif /* _MUSEUM_LIBCPP_EXPERIMENTAL_TYPE_TRAITS */

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_WCTYPE_H
-#define _LIBCPP_WCTYPE_H
+#ifndef _MUSEUM_LIBCPP_WCTYPE_H
+#define _MUSEUM_LIBCPP_WCTYPE_H
 
 /*
     wctype.h synopsis
@@ -47,7 +47,7 @@ wctrans_t wctrans(const char* property);
 
 #include <museum/8.1.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -76,4 +76,4 @@ wctrans_t wctrans(const char* property);
 
 #endif  // __cplusplus
 
-#endif  // _LIBCPP_WCTYPE_H
+#endif  // _MUSEUM_LIBCPP_WCTYPE_H

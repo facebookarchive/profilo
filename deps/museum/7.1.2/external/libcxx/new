@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_NEW
-#define _LIBCPP_NEW
+#ifndef _MUSEUM_LIBCPP_NEW
+#define _MUSEUM_LIBCPP_NEW
 
 /*
     new synopsis
@@ -72,14 +72,14 @@ void  operator delete[](void* ptr, void*) noexcept;
 
 #include <museum/7.1.2/external/libcxx/__undef___deallocate>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {
 
-class _LIBCPP_EXCEPTION_ABI bad_alloc
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_alloc
     : public exception
 {
 public:
@@ -88,7 +88,7 @@ public:
     virtual const char* what() const _NOEXCEPT;
 };
 
-class _LIBCPP_EXCEPTION_ABI bad_array_new_length
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_array_new_length
     : public bad_alloc
 {
 public:
@@ -97,9 +97,9 @@ public:
     virtual const char* what() const _NOEXCEPT;
 };
 
-#if defined(_LIBCPP_BUILDING_NEW) || (_LIBCPP_STD_VER > 11)
+#if defined(_MUSEUM_LIBCPP_BUILDING_NEW) || (_MUSEUM_LIBCPP_STD_VER > 11)
 
-class _LIBCPP_EXCEPTION_ABI bad_array_length
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_array_length
     : public bad_alloc
 {
 public:
@@ -108,75 +108,75 @@ public:
     virtual const char* what() const _NOEXCEPT;
 };
 
-#define _LIBCPP_BAD_ARRAY_LENGTH_DEFINED
+#define _MUSEUM_LIBCPP_BAD_ARRAY_LENGTH_DEFINED
 
-#endif  // defined(_LIBCPP_BUILDING_NEW) || (_LIBCPP_STD_VER > 11)
+#endif  // defined(_MUSEUM_LIBCPP_BUILDING_NEW) || (_MUSEUM_LIBCPP_STD_VER > 11)
 
-_LIBCPP_FUNC_VIS void __throw_bad_alloc();  // not in C++ spec
+_MUSEUM_LIBCPP_FUNC_VIS void __throw_bad_alloc();  // not in C++ spec
 
-struct _LIBCPP_TYPE_VIS nothrow_t {};
-extern _LIBCPP_FUNC_VIS const nothrow_t nothrow;
+struct _MUSEUM_LIBCPP_TYPE_VIS nothrow_t {};
+extern _MUSEUM_LIBCPP_FUNC_VIS const nothrow_t nothrow;
 typedef void (*new_handler)();
-_LIBCPP_FUNC_VIS new_handler set_new_handler(new_handler) _NOEXCEPT;
-_LIBCPP_FUNC_VIS new_handler get_new_handler() _NOEXCEPT;
+_MUSEUM_LIBCPP_FUNC_VIS new_handler set_new_handler(new_handler) _NOEXCEPT;
+_MUSEUM_LIBCPP_FUNC_VIS new_handler get_new_handler() _NOEXCEPT;
 
 } } } }  // facebook::museum::MUSEUM_VERSION::std
 
 #if defined(_WIN32) && !defined(cxx_EXPORTS)
-# define _LIBCPP_NEW_DELETE_VIS _LIBCPP_FUNC_VIS_ONLY
+# define _MUSEUM_LIBCPP_NEW_DELETE_VIS _MUSEUM_LIBCPP_FUNC_VIS_ONLY
 #else
-# define _LIBCPP_NEW_DELETE_VIS _LIBCPP_FUNC_VIS
+# define _MUSEUM_LIBCPP_NEW_DELETE_VIS _MUSEUM_LIBCPP_FUNC_VIS
 #endif
 
-_LIBCPP_NEW_DELETE_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz)
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz)
 #if !__has_feature(cxx_noexcept)
     throw(facebook::museum::MUSEUM_VERSION::std::bad_alloc)
 #endif
 ;
-_LIBCPP_NEW_DELETE_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
-_LIBCPP_NEW_DELETE_VIS void  operator delete(void* __p) _NOEXCEPT;
-_LIBCPP_NEW_DELETE_VIS void  operator delete(void* __p, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
-#if defined(_LIBCPP_BUILDING_NEW) || _LIBCPP_STD_VER >= 14 || \
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void* operator new(facebook::museum::MUSEUM_VERSION::std::size_t __sz, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void  operator delete(void* __p) _NOEXCEPT;
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void  operator delete(void* __p, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
+#if defined(_MUSEUM_LIBCPP_BUILDING_NEW) || _MUSEUM_LIBCPP_STD_VER >= 14 || \
     (defined(__cpp_sized_deallocation) && __cpp_sized_deallocation >= 201309)
-_LIBCPP_NEW_DELETE_VIS void  operator delete(void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz) _NOEXCEPT;
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void  operator delete(void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz) _NOEXCEPT;
 #endif
 
-_LIBCPP_NEW_DELETE_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz)
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz)
 #if !__has_feature(cxx_noexcept)
     throw(facebook::museum::MUSEUM_VERSION::std::bad_alloc)
 #endif
 ;
-_LIBCPP_NEW_DELETE_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
-_LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p) _NOEXCEPT;
-_LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
-#if defined(_LIBCPP_BUILDING_NEW) || _LIBCPP_STD_VER >= 14 || \
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t __sz, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT _NOALIAS;
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p) _NOEXCEPT;
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p, const facebook::museum::MUSEUM_VERSION::std::nothrow_t&) _NOEXCEPT;
+#if defined(_MUSEUM_LIBCPP_BUILDING_NEW) || _MUSEUM_LIBCPP_STD_VER >= 14 || \
     (defined(__cpp_sized_deallocation) && __cpp_sized_deallocation >= 201309)
-_LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz) _NOEXCEPT;
+_MUSEUM_LIBCPP_NEW_DELETE_VIS void  operator delete[](void* __p, facebook::museum::MUSEUM_VERSION::std::size_t __sz) _NOEXCEPT;
 #endif
 
-inline _LIBCPP_INLINE_VISIBILITY void* operator new  (facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT;
-inline _LIBCPP_INLINE_VISIBILITY void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT;
-inline _LIBCPP_INLINE_VISIBILITY void  operator delete  (void*, void*) _NOEXCEPT;
-inline _LIBCPP_INLINE_VISIBILITY void  operator delete[](void*, void*) _NOEXCEPT;
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void* operator new  (facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT;
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void* operator new[](facebook::museum::MUSEUM_VERSION::std::size_t, void* __p) _NOEXCEPT;
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void  operator delete  (void*, void*) _NOEXCEPT;
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void  operator delete[](void*, void*) _NOEXCEPT;
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-inline _LIBCPP_INLINE_VISIBILITY void *__allocate(size_t __size) {
-#ifdef _LIBCPP_HAS_NO_BUILTIN_OPERATOR_NEW_DELETE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void *__allocate(size_t __size) {
+#ifdef _MUSEUM_LIBCPP_HAS_NO_BUILTIN_OPERATOR_NEW_DELETE
   return ::operator new(__size);
 #else
   return __builtin_operator_new(__size);
 #endif
 }
 
-inline _LIBCPP_INLINE_VISIBILITY void __deallocate(void *__ptr) {
-#ifdef _LIBCPP_HAS_NO_BUILTIN_OPERATOR_NEW_DELETE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void __deallocate(void *__ptr) {
+#ifdef _MUSEUM_LIBCPP_HAS_NO_BUILTIN_OPERATOR_NEW_DELETE
   ::operator delete(__ptr);
 #else
   __builtin_operator_delete(__ptr);
 #endif
 }
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_NEW
+#endif  // _MUSEUM_LIBCPP_NEW

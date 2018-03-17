@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_EXPERIMENTAL_ALGORITHM
-#define _LIBCPP_EXPERIMENTAL_ALGORITHM
+#ifndef _MUSEUM_LIBCPP_EXPERIMENTAL_ALGORITHM
+#define _MUSEUM_LIBCPP_EXPERIMENTAL_ALGORITHM
 
 /*
    experimental/algorithm synopsis
@@ -43,22 +43,22 @@ SampleIterator sample(PopulationIterator first, PopulationIterator last,
 
 #include <museum/7.0.0/external/libcxx/__debug>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_LFTS
 
 
 template <class _ForwardIterator, class _Searcher>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 _ForwardIterator search(_ForwardIterator __f, _ForwardIterator __l, const _Searcher &__s)
 { return __s(__f, __l); }
 
 
 template <class _PopulationIterator, class _SampleIterator, class _Distance,
           class _UniformRandomNumberGenerator>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 _SampleIterator __sample(_PopulationIterator __first,
                          _PopulationIterator __last, _SampleIterator __out,
                          _Distance __n,
@@ -70,25 +70,25 @@ _SampleIterator __sample(_PopulationIterator __first,
     __out[__k] = *__first;
   _Distance __sz = __k;
   for (; __first != __last; ++__first, (void)++__k) {
-    _Distance __r = _VSTD::uniform_int_distribution<_Distance>(0, __k)(__g);
+    _Distance __r = _MUSEUM_VSTD::uniform_int_distribution<_Distance>(0, __k)(__g);
     if (__r < __sz)
       __out[__r] = *__first;
   }
-  return __out + _VSTD::min(__n, __k);
+  return __out + _MUSEUM_VSTD::min(__n, __k);
 }
 
 template <class _PopulationIterator, class _SampleIterator, class _Distance,
           class _UniformRandomNumberGenerator>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 _SampleIterator __sample(_PopulationIterator __first,
                          _PopulationIterator __last, _SampleIterator __out,
                          _Distance __n,
                          _UniformRandomNumberGenerator &&__g,
                          forward_iterator_tag) {
-  _Distance __unsampled_sz = _VSTD::distance(__first, __last);
-  for (__n = _VSTD::min(__n, __unsampled_sz); __n != 0; ++__first) {
+  _Distance __unsampled_sz = _MUSEUM_VSTD::distance(__first, __last);
+  for (__n = _MUSEUM_VSTD::min(__n, __unsampled_sz); __n != 0; ++__first) {
     _Distance __r =
-        _VSTD::uniform_int_distribution<_Distance>(0, --__unsampled_sz)(__g);
+        _MUSEUM_VSTD::uniform_int_distribution<_Distance>(0, --__unsampled_sz)(__g);
     if (__r < __n) {
       *__out++ = *__first;
       --__n;
@@ -99,7 +99,7 @@ _SampleIterator __sample(_PopulationIterator __first,
 
 template <class _PopulationIterator, class _SampleIterator, class _Distance,
           class _UniformRandomNumberGenerator>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 _SampleIterator sample(_PopulationIterator __first,
                          _PopulationIterator __last, _SampleIterator __out,
                          _Distance __n, _UniformRandomNumberGenerator &&__g) {
@@ -108,13 +108,13 @@ _SampleIterator sample(_PopulationIterator __first,
   typedef typename iterator_traits<_PopulationIterator>::difference_type
         _Difference;
   typedef typename common_type<_Distance, _Difference>::type _CommonType;
-  _LIBCPP_ASSERT(__n >= 0, "N must be a positive number.");
-  return _VSTD_LFTS::__sample(
+  _MUSEUM_LIBCPP_ASSERT(__n >= 0, "N must be a positive number.");
+  return _MUSEUM_VSTD_LFTS::__sample(
       __first, __last, __out, _CommonType(__n),
-      _VSTD::forward<_UniformRandomNumberGenerator>(__g),
+      _MUSEUM_VSTD::forward<_UniformRandomNumberGenerator>(__g),
       _PopCategory());
 }
 
-_LIBCPP_END_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_END_NAMESPACE_LFTS
 
-#endif /* _LIBCPP_EXPERIMENTAL_ALGORITHM */
+#endif /* _MUSEUM_LIBCPP_EXPERIMENTAL_ALGORITHM */

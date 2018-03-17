@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_WIN32_SUPPORT_H
-#define _LIBCPP_SUPPORT_WIN32_SUPPORT_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_WIN32_SUPPORT_H
+#define _MUSEUM_LIBCPP_SUPPORT_WIN32_SUPPORT_H
 
 // Functions and constants used in libc++ that
 // are missing from the Windows C library.
@@ -18,10 +18,10 @@
 #include <museum/5.1.1/external/libcxx/cstdarg> // va_ macros
 // "builtins" not implemented here for Clang or GCC as they provide
 // implementations. Assuming required for elsewhere else, certainly MSVC.
-#if defined(_LIBCPP_MSVC)
+#if defined(_MUSEUM_LIBCPP_MSVC)
 #include <intrin.h>
 #endif
-#if defined(_LIBCPP_MSVCRT)
+#if defined(_MUSEUM_LIBCPP_MSVCRT)
 #include <xlocinfo.h>
 #endif
 #define swprintf _snwprintf
@@ -41,22 +41,22 @@ size_t wcsnrtombs(char *__restrict dst, const wchar_t **__restrict src,
                   size_t nwc, size_t len, mbstate_t *__restrict ps);
 }
 
-#if defined(_LIBCPP_MSVCRT)
+#if defined(_MUSEUM_LIBCPP_MSVCRT)
 #define snprintf _snprintf
 #define atoll _atoi64
 #define strtoll _strtoi64
 #define strtoull _strtoui64
 #define wcstoll _wcstoi64
 #define wcstoull _wcstoui64
-_LIBCPP_ALWAYS_INLINE float strtof(const char *nptr, char **endptr)
+_MUSEUM_LIBCPP_ALWAYS_INLINE float strtof(const char *nptr, char **endptr)
 {
   return _Stof(nptr, endptr, 0);
 }
-_LIBCPP_ALWAYS_INLINE double strtod(const char *nptr, char **endptr)
+_MUSEUM_LIBCPP_ALWAYS_INLINE double strtod(const char *nptr, char **endptr)
 {
   return _Stod(nptr, endptr, 0);
 }
-_LIBCPP_ALWAYS_INLINE long double strtold(const char *nptr, char **endptr)
+_MUSEUM_LIBCPP_ALWAYS_INLINE long double strtold(const char *nptr, char **endptr)
 {
   return _Stold(nptr, endptr, 0);
 }
@@ -64,7 +64,7 @@ _LIBCPP_ALWAYS_INLINE long double strtold(const char *nptr, char **endptr)
 #define _Exit _exit
 #endif
 
-#if defined(_LIBCPP_MSVC)
+#if defined(_MUSEUM_LIBCPP_MSVC)
 
 // Bit builtin's make these assumptions when calling _BitScanForward/Reverse
 // etc. These assumptions are expected to be true for Win32/Win64 which this
@@ -73,7 +73,7 @@ static_assert(sizeof(unsigned long long) == 8, "");
 static_assert(sizeof(unsigned long) == 4, "");
 static_assert(sizeof(unsigned int) == 4, "");
 
-_LIBCPP_ALWAYS_INLINE int __builtin_popcount(unsigned int x)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_popcount(unsigned int x)
 {
   // Binary: 0101...
   static const unsigned int m1 = 0x55555555;
@@ -93,12 +93,12 @@ _LIBCPP_ALWAYS_INLINE int __builtin_popcount(unsigned int x)
   return (x * h01) >> 24;
 }
 
-_LIBCPP_ALWAYS_INLINE int __builtin_popcountl(unsigned long x)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_popcountl(unsigned long x)
 {
   return __builtin_popcount(static_cast<int>(x));
 }
 
-_LIBCPP_ALWAYS_INLINE int __builtin_popcountll(unsigned long long x)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_popcountll(unsigned long long x)
 {
   // Binary: 0101...
   static const unsigned long long m1 = 0x5555555555555555;
@@ -120,7 +120,7 @@ _LIBCPP_ALWAYS_INLINE int __builtin_popcountll(unsigned long long x)
 
 // Returns the number of trailing 0-bits in x, starting at the least significant
 // bit position. If x is 0, the result is undefined.
-_LIBCPP_ALWAYS_INLINE int __builtin_ctzll(unsigned long long mask)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_ctzll(unsigned long long mask)
 {
   unsigned long where;
 // Search from LSB to MSB for first set bit.
@@ -142,7 +142,7 @@ _LIBCPP_ALWAYS_INLINE int __builtin_ctzll(unsigned long long mask)
   return 64;
 }
 
-_LIBCPP_ALWAYS_INLINE int __builtin_ctzl(unsigned long mask)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_ctzl(unsigned long mask)
 {
   unsigned long where;
   // Search from LSB to MSB for first set bit.
@@ -152,7 +152,7 @@ _LIBCPP_ALWAYS_INLINE int __builtin_ctzl(unsigned long mask)
   return 32;
 }
 
-_LIBCPP_ALWAYS_INLINE int __builtin_ctz(unsigned int mask)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_ctz(unsigned int mask)
 {
   // Win32 and Win64 expectations.
   static_assert(sizeof(mask) == 4, "");
@@ -162,7 +162,7 @@ _LIBCPP_ALWAYS_INLINE int __builtin_ctz(unsigned int mask)
 
 // Returns the number of leading 0-bits in x, starting at the most significant
 // bit position. If x is 0, the result is undefined.
-_LIBCPP_ALWAYS_INLINE int __builtin_clzll(unsigned long long mask)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_clzll(unsigned long long mask)
 {
   unsigned long where;
 // BitScanReverse scans from MSB to LSB for first set bit.
@@ -184,7 +184,7 @@ _LIBCPP_ALWAYS_INLINE int __builtin_clzll(unsigned long long mask)
   return 64; // Undefined Behavior.
 }
 
-_LIBCPP_ALWAYS_INLINE int __builtin_clzl(unsigned long mask)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_clzl(unsigned long mask)
 {
   unsigned long where;
   // Search from LSB to MSB for first set bit.
@@ -194,10 +194,10 @@ _LIBCPP_ALWAYS_INLINE int __builtin_clzl(unsigned long mask)
   return 32; // Undefined Behavior.
 }
 
-_LIBCPP_ALWAYS_INLINE int __builtin_clz(unsigned int x)
+_MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_clz(unsigned int x)
 {
   return __builtin_clzl(x);
 }
-#endif // _LIBCPP_MSVC
+#endif // _MUSEUM_LIBCPP_MSVC
 
-#endif // _LIBCPP_SUPPORT_WIN32_SUPPORT_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_WIN32_SUPPORT_H

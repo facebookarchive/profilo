@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_IBM_SUPPORT_H
-#define _LIBCPP_SUPPORT_IBM_SUPPORT_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_IBM_SUPPORT_H
+#define _MUSEUM_LIBCPP_SUPPORT_IBM_SUPPORT_H
 
 extern "builtin" int __popcnt4(unsigned int);
 extern "builtin" int __popcnt8(unsigned long long);
@@ -51,4 +51,4 @@ extern "builtin" unsigned int __cntlz8(unsigned long long);
 #define __SIZE_WIDTH__ 32
 #endif
 
-#endif // _LIBCPP_SUPPORT_IBM_SUPPORT_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_IBM_SUPPORT_H

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CSETJMP
-#define _LIBCPP_CSETJMP
+#ifndef _MUSEUM_LIBCPP_CSETJMP
+#define _MUSEUM_LIBCPP_CSETJMP
 
 /*
     csetjmp synopsis
@@ -34,7 +34,7 @@ void longjmp(jmp_buf env, int val);
 #include <museum/5.0.0/external/libcxx/__config>
 #include <museum/5.0.0/bionic/libc/setjmp.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -42,11 +42,11 @@ void longjmp(jmp_buf env, int val);
 #define setjmp(env) setjmp(env)
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using ::jmp_buf;
 using ::longjmp;
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CSETJMP
+#endif  // _MUSEUM_LIBCPP_CSETJMP

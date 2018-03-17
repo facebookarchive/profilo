@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_ATOMIC
-#define _LIBCPP_ATOMIC
+#ifndef _MUSEUM_LIBCPP_ATOMIC
+#define _MUSEUM_LIBCPP_ATOMIC
 
 /*
     atomic synopsis
@@ -545,38 +545,38 @@ void atomic_signal_fence(memory_order m) noexcept;
 #include <museum/8.0.0/external/libcxx/cstdint>
 #include <museum/8.0.0/external/libcxx/type_traits>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#ifdef _LIBCPP_HAS_NO_THREADS
+#ifdef _MUSEUM_LIBCPP_HAS_NO_THREADS
 #error <atomic> is not supported on this single threaded system
 #endif
-#if !defined(_LIBCPP_HAS_C_ATOMIC_IMP) && !defined(_LIBCPP_HAS_GCC_ATOMIC_IMP)
+#if !defined(_MUSEUM_LIBCPP_HAS_C_ATOMIC_IMP) && !defined(_MUSEUM_LIBCPP_HAS_GCC_ATOMIC_IMP)
 #error <atomic> is not implemented
 #endif
 
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
 # define __cpp_lib_atomic_is_always_lock_free 201603L
 #endif
 
-#define _LIBCPP_CHECK_STORE_MEMORY_ORDER(__m) \
-  _LIBCPP_DIAGNOSE_WARNING(__m == memory_order_consume || \
+#define _MUSEUM_LIBCPP_CHECK_STORE_MEMORY_ORDER(__m) \
+  _MUSEUM_LIBCPP_DIAGNOSE_WARNING(__m == memory_order_consume || \
                            __m == memory_order_acquire || \
                            __m == memory_order_acq_rel,   \
                         "memory order argument to atomic operation is invalid")
 
-#define _LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m) \
-  _LIBCPP_DIAGNOSE_WARNING(__m == memory_order_release || \
+#define _MUSEUM_LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m) \
+  _MUSEUM_LIBCPP_DIAGNOSE_WARNING(__m == memory_order_release || \
                            __m == memory_order_acq_rel,   \
                         "memory order argument to atomic operation is invalid")
 
-#define _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__m, __f) \
-  _LIBCPP_DIAGNOSE_WARNING(__f == memory_order_release || \
+#define _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__m, __f) \
+  _MUSEUM_LIBCPP_DIAGNOSE_WARNING(__f == memory_order_release || \
                            __f == memory_order_acq_rel,   \
                         "memory order argument to atomic operation is invalid")
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 typedef enum memory_order
 {
@@ -584,7 +584,7 @@ typedef enum memory_order
     memory_order_release, memory_order_acq_rel, memory_order_seq_cst
 } memory_order;
 
-#if defined(_LIBCPP_HAS_GCC_ATOMIC_IMP)
+#if defined(_MUSEUM_LIBCPP_HAS_GCC_ATOMIC_IMP)
 namespace __gcc_atomic {
 template <typename _Tp>
 struct __gcc_atomic_t {
@@ -594,13 +594,13 @@ struct __gcc_atomic_t {
       "facebook::museum::MUSEUM_VERSION::std::atomic<Tp> requires that 'Tp' be a trivially copyable type");
 #endif
 
-  _LIBCPP_INLINE_VISIBILITY
-#ifndef _LIBCPP_CXX03_LANG
+  _MUSEUM_LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_CXX03_LANG
     __gcc_atomic_t() _NOEXCEPT = default;
 #else
     __gcc_atomic_t() _NOEXCEPT : __a_value() {}
-#endif // _LIBCPP_CXX03_LANG
-  _LIBCPP_CONSTEXPR explicit __gcc_atomic_t(_Tp value) _NOEXCEPT
+#endif // _MUSEUM_LIBCPP_CXX03_LANG
+  _MUSEUM_LIBCPP_CONSTEXPR explicit __gcc_atomic_t(_Tp value) _NOEXCEPT
     : __a_value(value) {}
   _Tp __a_value;
 };
@@ -620,7 +620,7 @@ struct __can_assign {
       sizeof(__test_atomic_assignable<_Tp, _Td>(1)) == sizeof(char);
 };
 
-static inline _LIBCPP_CONSTEXPR int __to_gcc_order(memory_order __order) {
+static inline _MUSEUM_LIBCPP_CONSTEXPR int __to_gcc_order(memory_order __order) {
   // Avoid switch statement to make this a constexpr.
   return __order == memory_order_relaxed ? __ATOMIC_RELAXED:
          (__order == memory_order_acquire ? __ATOMIC_ACQUIRE:
@@ -630,7 +630,7 @@ static inline _LIBCPP_CONSTEXPR int __to_gcc_order(memory_order __order) {
               __ATOMIC_CONSUME))));
 }
 
-static inline _LIBCPP_CONSTEXPR int __to_gcc_failure_order(memory_order __order) {
+static inline _MUSEUM_LIBCPP_CONSTEXPR int __to_gcc_failure_order(memory_order __order) {
   // Avoid switch statement to make this a constexpr.
   return __order == memory_order_relaxed ? __ATOMIC_RELAXED:
          (__order == memory_order_acquire ? __ATOMIC_ACQUIRE:
@@ -851,10 +851,10 @@ static inline _Tp __c11_atomic_fetch_xor(_Atomic(_Tp)* __a, _Tp __pattern,
   return __atomic_fetch_xor(&__a->__a_value, __pattern,
                             __gcc_atomic::__to_gcc_order(__order));
 }
-#endif // _LIBCPP_HAS_GCC_ATOMIC_IMP
+#endif // _MUSEUM_LIBCPP_HAS_GCC_ATOMIC_IMP
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 kill_dependency(_Tp __y) _NOEXCEPT
 {
@@ -880,94 +880,94 @@ struct __atomic_base  // false
     mutable _Atomic(_Tp) __a_;
 
 #if defined(__cpp_lib_atomic_is_always_lock_free)
-  static _LIBCPP_CONSTEXPR bool is_always_lock_free = __atomic_always_lock_free(sizeof(__a_), 0);
+  static _MUSEUM_LIBCPP_CONSTEXPR bool is_always_lock_free = __atomic_always_lock_free(sizeof(__a_), 0);
 #endif
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool is_lock_free() const volatile _NOEXCEPT
     {
-#if defined(_LIBCPP_HAS_C_ATOMIC_IMP)
+#if defined(_MUSEUM_LIBCPP_HAS_C_ATOMIC_IMP)
     return __c11_atomic_is_lock_free(sizeof(_Tp));
 #else
     return __atomic_is_lock_free(sizeof(_Tp), 0);
 #endif
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool is_lock_free() const _NOEXCEPT
         {return static_cast<__atomic_base const volatile*>(this)->is_lock_free();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void store(_Tp __d, memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
-      _LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
+      _MUSEUM_LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
         {__c11_atomic_store(&__a_, __d, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void store(_Tp __d, memory_order __m = memory_order_seq_cst) _NOEXCEPT
-      _LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
+      _MUSEUM_LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
         {__c11_atomic_store(&__a_, __d, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp load(memory_order __m = memory_order_seq_cst) const volatile _NOEXCEPT
-      _LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
+      _MUSEUM_LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
         {return __c11_atomic_load(&__a_, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp load(memory_order __m = memory_order_seq_cst) const _NOEXCEPT
-      _LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
+      _MUSEUM_LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
         {return __c11_atomic_load(&__a_, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     operator _Tp() const volatile _NOEXCEPT {return load();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     operator _Tp() const _NOEXCEPT          {return load();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp exchange(_Tp __d, memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_exchange(&__a_, __d, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp exchange(_Tp __d, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_exchange(&__a_, __d, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_weak(_Tp& __e, _Tp __d,
                                memory_order __s, memory_order __f) volatile _NOEXCEPT
-      _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+      _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
         {return __c11_atomic_compare_exchange_weak(&__a_, &__e, __d, __s, __f);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_weak(_Tp& __e, _Tp __d,
                                memory_order __s, memory_order __f) _NOEXCEPT
-      _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+      _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
         {return __c11_atomic_compare_exchange_weak(&__a_, &__e, __d, __s, __f);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_strong(_Tp& __e, _Tp __d,
                                  memory_order __s, memory_order __f) volatile _NOEXCEPT
-      _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+      _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
         {return __c11_atomic_compare_exchange_strong(&__a_, &__e, __d, __s, __f);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_strong(_Tp& __e, _Tp __d,
                                  memory_order __s, memory_order __f) _NOEXCEPT
-      _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+      _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
         {return __c11_atomic_compare_exchange_strong(&__a_, &__e, __d, __s, __f);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_weak(_Tp& __e, _Tp __d,
                               memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_compare_exchange_weak(&__a_, &__e, __d, __m, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_weak(_Tp& __e, _Tp __d,
                                memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_compare_exchange_weak(&__a_, &__e, __d, __m, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_strong(_Tp& __e, _Tp __d,
                               memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_compare_exchange_strong(&__a_, &__e, __d, __m, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool compare_exchange_strong(_Tp& __e, _Tp __d,
                                  memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_compare_exchange_strong(&__a_, &__e, __d, __m, __m);}
 
-    _LIBCPP_INLINE_VISIBILITY
-#ifndef _LIBCPP_CXX03_LANG
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_CXX03_LANG
     __atomic_base() _NOEXCEPT = default;
 #else
     __atomic_base() _NOEXCEPT : __a_() {}
-#endif // _LIBCPP_CXX03_LANG
+#endif // _MUSEUM_LIBCPP_CXX03_LANG
 
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR __atomic_base(_Tp __d) _NOEXCEPT : __a_(__d) {}
-#ifndef _LIBCPP_CXX03_LANG
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR __atomic_base(_Tp __d) _NOEXCEPT : __a_(__d) {}
+#ifndef _MUSEUM_LIBCPP_CXX03_LANG
     __atomic_base(const __atomic_base&) = delete;
     __atomic_base& operator=(const __atomic_base&) = delete;
     __atomic_base& operator=(const __atomic_base&) volatile = delete;
@@ -981,7 +981,7 @@ private:
 
 #if defined(__cpp_lib_atomic_is_always_lock_free)
 template <class _Tp, bool __b>
-_LIBCPP_CONSTEXPR bool __atomic_base<_Tp, __b>::is_always_lock_free;
+_MUSEUM_LIBCPP_CONSTEXPR bool __atomic_base<_Tp, __b>::is_always_lock_free;
 #endif
 
 // atomic<Integral>
@@ -991,77 +991,77 @@ struct __atomic_base<_Tp, true>
     : public __atomic_base<_Tp, false>
 {
     typedef __atomic_base<_Tp, false> __base;
-    _LIBCPP_INLINE_VISIBILITY
-    __atomic_base() _NOEXCEPT _LIBCPP_DEFAULT
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR __atomic_base(_Tp __d) _NOEXCEPT : __base(__d) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    __atomic_base() _NOEXCEPT _MUSEUM_LIBCPP_DEFAULT
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR __atomic_base(_Tp __d) _NOEXCEPT : __base(__d) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_add(_Tp __op, memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_fetch_add(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_add(_Tp __op, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_fetch_add(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_sub(_Tp __op, memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_fetch_sub(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_sub(_Tp __op, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_fetch_sub(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_and(_Tp __op, memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_fetch_and(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_and(_Tp __op, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_fetch_and(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_or(_Tp __op, memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_fetch_or(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_or(_Tp __op, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_fetch_or(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_xor(_Tp __op, memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_fetch_xor(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp fetch_xor(_Tp __op, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_fetch_xor(&this->__a_, __op, __m);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator++(int) volatile _NOEXCEPT      {return fetch_add(_Tp(1));}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator++(int) _NOEXCEPT               {return fetch_add(_Tp(1));}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator--(int) volatile _NOEXCEPT      {return fetch_sub(_Tp(1));}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator--(int) _NOEXCEPT               {return fetch_sub(_Tp(1));}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator++() volatile _NOEXCEPT         {return fetch_add(_Tp(1)) + _Tp(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator++() _NOEXCEPT                  {return fetch_add(_Tp(1)) + _Tp(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator--() volatile _NOEXCEPT         {return fetch_sub(_Tp(1)) - _Tp(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator--() _NOEXCEPT                  {return fetch_sub(_Tp(1)) - _Tp(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator+=(_Tp __op) volatile _NOEXCEPT {return fetch_add(__op) + __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator+=(_Tp __op) _NOEXCEPT          {return fetch_add(__op) + __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator-=(_Tp __op) volatile _NOEXCEPT {return fetch_sub(__op) - __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator-=(_Tp __op) _NOEXCEPT          {return fetch_sub(__op) - __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator&=(_Tp __op) volatile _NOEXCEPT {return fetch_and(__op) & __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator&=(_Tp __op) _NOEXCEPT          {return fetch_and(__op) & __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator|=(_Tp __op) volatile _NOEXCEPT {return fetch_or(__op) | __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator|=(_Tp __op) _NOEXCEPT          {return fetch_or(__op) | __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator^=(_Tp __op) volatile _NOEXCEPT {return fetch_xor(__op) ^ __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator^=(_Tp __op) _NOEXCEPT          {return fetch_xor(__op) ^ __op;}
 };
 
@@ -1072,15 +1072,15 @@ struct atomic
     : public __atomic_base<_Tp>
 {
     typedef __atomic_base<_Tp> __base;
-    _LIBCPP_INLINE_VISIBILITY
-    atomic() _NOEXCEPT _LIBCPP_DEFAULT
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR atomic(_Tp __d) _NOEXCEPT : __base(__d) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    atomic() _NOEXCEPT _MUSEUM_LIBCPP_DEFAULT
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR atomic(_Tp __d) _NOEXCEPT : __base(__d) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator=(_Tp __d) volatile _NOEXCEPT
         {__base::store(__d); return __d;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator=(_Tp __d) _NOEXCEPT
         {__base::store(__d); return __d;}
 };
@@ -1092,63 +1092,63 @@ struct atomic<_Tp*>
     : public __atomic_base<_Tp*>
 {
     typedef __atomic_base<_Tp*> __base;
-    _LIBCPP_INLINE_VISIBILITY
-    atomic() _NOEXCEPT _LIBCPP_DEFAULT
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR atomic(_Tp* __d) _NOEXCEPT : __base(__d) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    atomic() _NOEXCEPT _MUSEUM_LIBCPP_DEFAULT
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR atomic(_Tp* __d) _NOEXCEPT : __base(__d) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator=(_Tp* __d) volatile _NOEXCEPT
         {__base::store(__d); return __d;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator=(_Tp* __d) _NOEXCEPT
         {__base::store(__d); return __d;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* fetch_add(ptrdiff_t __op, memory_order __m = memory_order_seq_cst)
                                                                         volatile _NOEXCEPT
         {return __c11_atomic_fetch_add(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* fetch_add(ptrdiff_t __op, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_fetch_add(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* fetch_sub(ptrdiff_t __op, memory_order __m = memory_order_seq_cst)
                                                                         volatile _NOEXCEPT
         {return __c11_atomic_fetch_sub(&this->__a_, __op, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* fetch_sub(ptrdiff_t __op, memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_fetch_sub(&this->__a_, __op, __m);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator++(int) volatile _NOEXCEPT            {return fetch_add(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator++(int) _NOEXCEPT                     {return fetch_add(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator--(int) volatile _NOEXCEPT            {return fetch_sub(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator--(int) _NOEXCEPT                     {return fetch_sub(1);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator++() volatile _NOEXCEPT               {return fetch_add(1) + 1;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator++() _NOEXCEPT                        {return fetch_add(1) + 1;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator--() volatile _NOEXCEPT               {return fetch_sub(1) - 1;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator--() _NOEXCEPT                        {return fetch_sub(1) - 1;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator+=(ptrdiff_t __op) volatile _NOEXCEPT {return fetch_add(__op) + __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator+=(ptrdiff_t __op) _NOEXCEPT          {return fetch_add(__op) + __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator-=(ptrdiff_t __op) volatile _NOEXCEPT {return fetch_sub(__op) - __op;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp* operator-=(ptrdiff_t __op) _NOEXCEPT          {return fetch_sub(__op) - __op;}
 };
 
 // atomic_is_lock_free
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_is_lock_free(const volatile atomic<_Tp>* __o) _NOEXCEPT
 {
@@ -1156,7 +1156,7 @@ atomic_is_lock_free(const volatile atomic<_Tp>* __o) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_is_lock_free(const atomic<_Tp>* __o) _NOEXCEPT
 {
@@ -1166,7 +1166,7 @@ atomic_is_lock_free(const atomic<_Tp>* __o) _NOEXCEPT
 // atomic_init
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_init(volatile atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 {
@@ -1174,7 +1174,7 @@ atomic_init(volatile atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_init(atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 {
@@ -1184,7 +1184,7 @@ atomic_init(atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 // atomic_store
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_store(volatile atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 {
@@ -1192,7 +1192,7 @@ atomic_store(volatile atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_store(atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 {
@@ -1202,19 +1202,19 @@ atomic_store(atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 // atomic_store_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_store_explicit(volatile atomic<_Tp>* __o, _Tp __d, memory_order __m) _NOEXCEPT
-  _LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
+  _MUSEUM_LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
 {
     __o->store(__d, __m);
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_store_explicit(atomic<_Tp>* __o, _Tp __d, memory_order __m) _NOEXCEPT
-  _LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
+  _MUSEUM_LIBCPP_CHECK_STORE_MEMORY_ORDER(__m)
 {
     __o->store(__d, __m);
 }
@@ -1222,7 +1222,7 @@ atomic_store_explicit(atomic<_Tp>* __o, _Tp __d, memory_order __m) _NOEXCEPT
 // atomic_load
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_load(const volatile atomic<_Tp>* __o) _NOEXCEPT
 {
@@ -1230,7 +1230,7 @@ atomic_load(const volatile atomic<_Tp>* __o) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_load(const atomic<_Tp>* __o) _NOEXCEPT
 {
@@ -1240,19 +1240,19 @@ atomic_load(const atomic<_Tp>* __o) _NOEXCEPT
 // atomic_load_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_load_explicit(const volatile atomic<_Tp>* __o, memory_order __m) _NOEXCEPT
-  _LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
+  _MUSEUM_LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
 {
     return __o->load(__m);
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_load_explicit(const atomic<_Tp>* __o, memory_order __m) _NOEXCEPT
-  _LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
+  _MUSEUM_LIBCPP_CHECK_LOAD_MEMORY_ORDER(__m)
 {
     return __o->load(__m);
 }
@@ -1260,7 +1260,7 @@ atomic_load_explicit(const atomic<_Tp>* __o, memory_order __m) _NOEXCEPT
 // atomic_exchange
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_exchange(volatile atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 {
@@ -1268,7 +1268,7 @@ atomic_exchange(volatile atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_exchange(atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 {
@@ -1278,7 +1278,7 @@ atomic_exchange(atomic<_Tp>* __o, _Tp __d) _NOEXCEPT
 // atomic_exchange_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_exchange_explicit(volatile atomic<_Tp>* __o, _Tp __d, memory_order __m) _NOEXCEPT
 {
@@ -1286,7 +1286,7 @@ atomic_exchange_explicit(volatile atomic<_Tp>* __o, _Tp __d, memory_order __m) _
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 atomic_exchange_explicit(atomic<_Tp>* __o, _Tp __d, memory_order __m) _NOEXCEPT
 {
@@ -1296,7 +1296,7 @@ atomic_exchange_explicit(atomic<_Tp>* __o, _Tp __d, memory_order __m) _NOEXCEPT
 // atomic_compare_exchange_weak
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_weak(volatile atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NOEXCEPT
 {
@@ -1304,7 +1304,7 @@ atomic_compare_exchange_weak(volatile atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NOEX
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_weak(atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NOEXCEPT
 {
@@ -1314,7 +1314,7 @@ atomic_compare_exchange_weak(atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NOEXCEPT
 // atomic_compare_exchange_strong
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_strong(volatile atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NOEXCEPT
 {
@@ -1322,7 +1322,7 @@ atomic_compare_exchange_strong(volatile atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NO
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_strong(atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NOEXCEPT
 {
@@ -1332,22 +1332,22 @@ atomic_compare_exchange_strong(atomic<_Tp>* __o, _Tp* __e, _Tp __d) _NOEXCEPT
 // atomic_compare_exchange_weak_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_weak_explicit(volatile atomic<_Tp>* __o, _Tp* __e,
                                       _Tp __d,
                                       memory_order __s, memory_order __f) _NOEXCEPT
-  _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+  _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
 {
     return __o->compare_exchange_weak(*__e, __d, __s, __f);
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_weak_explicit(atomic<_Tp>* __o, _Tp* __e, _Tp __d,
                                       memory_order __s, memory_order __f) _NOEXCEPT
-  _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+  _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
 {
     return __o->compare_exchange_weak(*__e, __d, __s, __f);
 }
@@ -1355,23 +1355,23 @@ atomic_compare_exchange_weak_explicit(atomic<_Tp>* __o, _Tp* __e, _Tp __d,
 // atomic_compare_exchange_strong_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_strong_explicit(volatile atomic<_Tp>* __o,
                                         _Tp* __e, _Tp __d,
                                         memory_order __s, memory_order __f) _NOEXCEPT
-  _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+  _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
 {
     return __o->compare_exchange_strong(*__e, __d, __s, __f);
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_compare_exchange_strong_explicit(atomic<_Tp>* __o, _Tp* __e,
                                         _Tp __d,
                                         memory_order __s, memory_order __f) _NOEXCEPT
-  _LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
+  _MUSEUM_LIBCPP_CHECK_EXCHANGE_MEMORY_ORDER(__s, __f)
 {
     return __o->compare_exchange_strong(*__e, __d, __s, __f);
 }
@@ -1379,7 +1379,7 @@ atomic_compare_exchange_strong_explicit(atomic<_Tp>* __o, _Tp* __e,
 // atomic_fetch_add
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1391,7 +1391,7 @@ atomic_fetch_add(volatile atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1403,7 +1403,7 @@ atomic_fetch_add(atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_add(volatile atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 {
@@ -1411,7 +1411,7 @@ atomic_fetch_add(volatile atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_add(atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 {
@@ -1421,7 +1421,7 @@ atomic_fetch_add(atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 // atomic_fetch_add_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1433,7 +1433,7 @@ atomic_fetch_add_explicit(volatile atomic<_Tp>* __o, _Tp __op, memory_order __m)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1445,7 +1445,7 @@ atomic_fetch_add_explicit(atomic<_Tp>* __o, _Tp __op, memory_order __m) _NOEXCEP
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_add_explicit(volatile atomic<_Tp*>* __o, ptrdiff_t __op,
                           memory_order __m) _NOEXCEPT
@@ -1454,7 +1454,7 @@ atomic_fetch_add_explicit(volatile atomic<_Tp*>* __o, ptrdiff_t __op,
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_add_explicit(atomic<_Tp*>* __o, ptrdiff_t __op, memory_order __m) _NOEXCEPT
 {
@@ -1464,7 +1464,7 @@ atomic_fetch_add_explicit(atomic<_Tp*>* __o, ptrdiff_t __op, memory_order __m) _
 // atomic_fetch_sub
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1476,7 +1476,7 @@ atomic_fetch_sub(volatile atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1488,7 +1488,7 @@ atomic_fetch_sub(atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_sub(volatile atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 {
@@ -1496,7 +1496,7 @@ atomic_fetch_sub(volatile atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_sub(atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 {
@@ -1506,7 +1506,7 @@ atomic_fetch_sub(atomic<_Tp*>* __o, ptrdiff_t __op) _NOEXCEPT
 // atomic_fetch_sub_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1518,7 +1518,7 @@ atomic_fetch_sub_explicit(volatile atomic<_Tp>* __o, _Tp __op, memory_order __m)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1530,7 +1530,7 @@ atomic_fetch_sub_explicit(atomic<_Tp>* __o, _Tp __op, memory_order __m) _NOEXCEP
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_sub_explicit(volatile atomic<_Tp*>* __o, ptrdiff_t __op,
                           memory_order __m) _NOEXCEPT
@@ -1539,7 +1539,7 @@ atomic_fetch_sub_explicit(volatile atomic<_Tp*>* __o, ptrdiff_t __op,
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 atomic_fetch_sub_explicit(atomic<_Tp*>* __o, ptrdiff_t __op, memory_order __m) _NOEXCEPT
 {
@@ -1549,7 +1549,7 @@ atomic_fetch_sub_explicit(atomic<_Tp*>* __o, ptrdiff_t __op, memory_order __m) _
 // atomic_fetch_and
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1561,7 +1561,7 @@ atomic_fetch_and(volatile atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1575,7 +1575,7 @@ atomic_fetch_and(atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 // atomic_fetch_and_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1587,7 +1587,7 @@ atomic_fetch_and_explicit(volatile atomic<_Tp>* __o, _Tp __op, memory_order __m)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1601,7 +1601,7 @@ atomic_fetch_and_explicit(atomic<_Tp>* __o, _Tp __op, memory_order __m) _NOEXCEP
 // atomic_fetch_or
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1613,7 +1613,7 @@ atomic_fetch_or(volatile atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1627,7 +1627,7 @@ atomic_fetch_or(atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 // atomic_fetch_or_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1639,7 +1639,7 @@ atomic_fetch_or_explicit(volatile atomic<_Tp>* __o, _Tp __op, memory_order __m) 
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1653,7 +1653,7 @@ atomic_fetch_or_explicit(atomic<_Tp>* __o, _Tp __op, memory_order __m) _NOEXCEPT
 // atomic_fetch_xor
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1665,7 +1665,7 @@ atomic_fetch_xor(volatile atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1679,7 +1679,7 @@ atomic_fetch_xor(atomic<_Tp>* __o, _Tp __op) _NOEXCEPT
 // atomic_fetch_xor_explicit
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1691,7 +1691,7 @@ atomic_fetch_xor_explicit(volatile atomic<_Tp>* __o, _Tp __op, memory_order __m)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value && !is_same<_Tp, bool>::value,
@@ -1708,30 +1708,30 @@ typedef struct atomic_flag
 {
     _Atomic(bool) __a_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool test_and_set(memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {return __c11_atomic_exchange(&__a_, true, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool test_and_set(memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {return __c11_atomic_exchange(&__a_, true, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void clear(memory_order __m = memory_order_seq_cst) volatile _NOEXCEPT
         {__c11_atomic_store(&__a_, false, __m);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void clear(memory_order __m = memory_order_seq_cst) _NOEXCEPT
         {__c11_atomic_store(&__a_, false, __m);}
 
-    _LIBCPP_INLINE_VISIBILITY
-#ifndef _LIBCPP_CXX03_LANG
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_CXX03_LANG
     atomic_flag() _NOEXCEPT = default;
 #else
     atomic_flag() _NOEXCEPT : __a_() {}
-#endif // _LIBCPP_CXX03_LANG
+#endif // _MUSEUM_LIBCPP_CXX03_LANG
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     atomic_flag(bool __b) _NOEXCEPT : __a_(__b) {} // EXTENSION
 
-#ifndef _LIBCPP_CXX03_LANG
+#ifndef _MUSEUM_LIBCPP_CXX03_LANG
     atomic_flag(const atomic_flag&) = delete;
     atomic_flag& operator=(const atomic_flag&) = delete;
     atomic_flag& operator=(const atomic_flag&) volatile = delete;
@@ -1743,56 +1743,56 @@ private:
 #endif
 } atomic_flag;
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_flag_test_and_set(volatile atomic_flag* __o) _NOEXCEPT
 {
     return __o->test_and_set();
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_flag_test_and_set(atomic_flag* __o) _NOEXCEPT
 {
     return __o->test_and_set();
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_flag_test_and_set_explicit(volatile atomic_flag* __o, memory_order __m) _NOEXCEPT
 {
     return __o->test_and_set(__m);
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 atomic_flag_test_and_set_explicit(atomic_flag* __o, memory_order __m) _NOEXCEPT
 {
     return __o->test_and_set(__m);
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_flag_clear(volatile atomic_flag* __o) _NOEXCEPT
 {
     __o->clear();
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_flag_clear(atomic_flag* __o) _NOEXCEPT
 {
     __o->clear();
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_flag_clear_explicit(volatile atomic_flag* __o, memory_order __m) _NOEXCEPT
 {
     __o->clear(__m);
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_flag_clear_explicit(atomic_flag* __o, memory_order __m) _NOEXCEPT
 {
@@ -1801,14 +1801,14 @@ atomic_flag_clear_explicit(atomic_flag* __o, memory_order __m) _NOEXCEPT
 
 // fences
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_thread_fence(memory_order __m) _NOEXCEPT
 {
     __c11_atomic_thread_fence(__m);
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 atomic_signal_fence(memory_order __m) _NOEXCEPT
 {
@@ -1870,6 +1870,6 @@ typedef atomic<uintmax_t> atomic_uintmax_t;
 #define ATOMIC_FLAG_INIT {false}
 #define ATOMIC_VAR_INIT(__v) {__v}
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_ATOMIC
+#endif  // _MUSEUM_LIBCPP_ATOMIC

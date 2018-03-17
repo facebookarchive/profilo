@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_LIST
-#define _LIBCPP_LIST
+#ifndef _MUSEUM_LIBCPP_LIST
+#define _MUSEUM_LIBCPP_LIST
 
 /*
     list synopsis
@@ -181,11 +181,11 @@ template <class T, class Alloc>
 
 #include <museum/8.0.0/external/libcxx/__debug>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _Tp, class _VoidPtr> struct __list_node;
 template <class _Tp, class _VoidPtr> struct __list_node_base;
@@ -197,7 +197,7 @@ struct __list_node_pointer_traits {
   typedef typename __rebind_pointer<_VoidPtr, __list_node_base<_Tp, _VoidPtr> >::type
         __base_pointer;
 
-#if defined(_LIBCPP_ABI_LIST_REMOVE_NODE_POINTER_UB)
+#if defined(_MUSEUM_LIBCPP_ABI_LIST_REMOVE_NODE_POINTER_UB)
   typedef __base_pointer __link_pointer;
 #else
   typedef typename conditional<
@@ -213,12 +213,12 @@ struct __list_node_pointer_traits {
           __node_pointer
   >::type __non_link_pointer;
 
-  static _LIBCPP_INLINE_VISIBILITY
+  static _MUSEUM_LIBCPP_INLINE_VISIBILITY
   __link_pointer __unsafe_link_pointer_cast(__link_pointer __p) {
       return __p;
   }
 
-  static _LIBCPP_INLINE_VISIBILITY
+  static _MUSEUM_LIBCPP_INLINE_VISIBILITY
   __link_pointer __unsafe_link_pointer_cast(__non_link_pointer __p) {
       return static_cast<__link_pointer>(static_cast<_VoidPtr>(__p));
   }
@@ -236,16 +236,16 @@ struct __list_node_base
     __link_pointer __prev_;
     __link_pointer __next_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_node_base() : __prev_(_NodeTraits::__unsafe_link_pointer_cast(__self())),
                          __next_(_NodeTraits::__unsafe_link_pointer_cast(__self())) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __base_pointer __self() {
         return pointer_traits<__base_pointer>::pointer_to(*this);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __node_pointer __as_node() {
         return static_cast<__node_pointer>(__self());
     }
@@ -260,33 +260,33 @@ struct __list_node
     typedef __list_node_base<_Tp, _VoidPtr> __base;
     typedef typename __base::__link_pointer __link_pointer;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __link_pointer __as_link() {
         return static_cast<__link_pointer>(__base::__self());
     }
 };
 
-template <class _Tp, class _Alloc = allocator<_Tp> > class _LIBCPP_TEMPLATE_VIS list;
+template <class _Tp, class _Alloc = allocator<_Tp> > class _MUSEUM_LIBCPP_TEMPLATE_VIS list;
 template <class _Tp, class _Alloc> class __list_imp;
-template <class _Tp, class _VoidPtr> class _LIBCPP_TEMPLATE_VIS __list_const_iterator;
+template <class _Tp, class _VoidPtr> class _MUSEUM_LIBCPP_TEMPLATE_VIS __list_const_iterator;
 
 template <class _Tp, class _VoidPtr>
-class _LIBCPP_TEMPLATE_VIS __list_iterator
+class _MUSEUM_LIBCPP_TEMPLATE_VIS __list_iterator
 {
     typedef __list_node_pointer_traits<_Tp, _VoidPtr> _NodeTraits;
     typedef typename _NodeTraits::__link_pointer __link_pointer;
 
     __link_pointer __ptr_;
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_INLINE_VISIBILITY
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __list_iterator(__link_pointer __p, const void* __c) _NOEXCEPT
         : __ptr_(__p)
     {
         __get_db()->__insert_ic(this, __c);
     }
 #else
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __list_iterator(__link_pointer __p) _NOEXCEPT : __ptr_(__p) {}
 #endif
 
@@ -302,30 +302,30 @@ public:
     typedef typename __rebind_pointer<_VoidPtr, value_type>::type pointer;
     typedef typename pointer_traits<pointer>::difference_type difference_type;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_iterator() _NOEXCEPT : __ptr_(nullptr)
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __get_db()->__insert_i(this);
 #endif
     }
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_iterator(const __list_iterator& __p)
         : __ptr_(__p.__ptr_)
     {
         __get_db()->__iterator_copy(this, &__p);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     ~__list_iterator()
     {
         __get_db()->__erase_i(this);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_iterator& operator=(const __list_iterator& __p)
     {
         if (this != &__p)
@@ -336,80 +336,80 @@ public:
         return *this;
     }
 
-#endif  // _LIBCPP_DEBUG_LEVEL >= 2
+#endif  // _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     reference operator*() const
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
                        "Attempted to dereference a non-dereferenceable list::iterator");
 #endif
         return __ptr_->__as_node()->__value_;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     pointer operator->() const
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
                        "Attempted to dereference a non-dereferenceable list::iterator");
 #endif
         return pointer_traits<pointer>::pointer_to(__ptr_->__as_node()->__value_);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_iterator& operator++()
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
                        "Attempted to increment non-incrementable list::iterator");
 #endif
         __ptr_ = __ptr_->__next_;
         return *this;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_iterator operator++(int) {__list_iterator __t(*this); ++(*this); return __t;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_iterator& operator--()
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__decrementable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__decrementable(this),
                        "Attempted to decrement non-decrementable list::iterator");
 #endif
         __ptr_ = __ptr_->__prev_;
         return *this;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_iterator operator--(int) {__list_iterator __t(*this); --(*this); return __t;}
 
-    friend _LIBCPP_INLINE_VISIBILITY
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator==(const __list_iterator& __x, const __list_iterator& __y)
     {
         return __x.__ptr_ == __y.__ptr_;
     }
-    friend _LIBCPP_INLINE_VISIBILITY
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY
      bool operator!=(const __list_iterator& __x, const __list_iterator& __y)
         {return !(__x == __y);}
 };
 
 template <class _Tp, class _VoidPtr>
-class _LIBCPP_TEMPLATE_VIS __list_const_iterator
+class _MUSEUM_LIBCPP_TEMPLATE_VIS __list_const_iterator
 {
     typedef __list_node_pointer_traits<_Tp, _VoidPtr> _NodeTraits;
     typedef typename _NodeTraits::__link_pointer __link_pointer;
 
     __link_pointer __ptr_;
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_INLINE_VISIBILITY
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __list_const_iterator(__link_pointer __p, const void* __c) _NOEXCEPT
         : __ptr_(__p)
     {
         __get_db()->__insert_ic(this, __c);
     }
 #else
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __list_const_iterator(__link_pointer __p) _NOEXCEPT : __ptr_(__p) {}
 #endif
 
@@ -422,38 +422,38 @@ public:
     typedef typename __rebind_pointer<_VoidPtr, const value_type>::type pointer;
     typedef typename pointer_traits<pointer>::difference_type difference_type;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator() _NOEXCEPT : __ptr_(nullptr)
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __get_db()->__insert_i(this);
 #endif
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator(const __list_iterator<_Tp, _VoidPtr>& __p) _NOEXCEPT
         : __ptr_(__p.__ptr_)
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __get_db()->__iterator_copy(this, &__p);
 #endif
     }
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator(const __list_const_iterator& __p)
         : __ptr_(__p.__ptr_)
     {
         __get_db()->__iterator_copy(this, &__p);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     ~__list_const_iterator()
     {
         __get_db()->__erase_i(this);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator& operator=(const __list_const_iterator& __p)
     {
         if (this != &__p)
@@ -464,58 +464,58 @@ public:
         return *this;
     }
 
-#endif  // _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_INLINE_VISIBILITY
+#endif  // _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     reference operator*() const
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
                        "Attempted to dereference a non-dereferenceable list::const_iterator");
 #endif
         return __ptr_->__as_node()->__value_;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     pointer operator->() const
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
                        "Attempted to dereference a non-dereferenceable list::iterator");
 #endif
         return pointer_traits<pointer>::pointer_to(__ptr_->__as_node()->__value_);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator& operator++()
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
                        "Attempted to increment non-incrementable list::const_iterator");
 #endif
         __ptr_ = __ptr_->__next_;
         return *this;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator operator++(int) {__list_const_iterator __t(*this); ++(*this); return __t;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator& operator--()
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-        _LIBCPP_ASSERT(__get_const_db()->__decrementable(this),
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+        _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__decrementable(this),
                        "Attempted to decrement non-decrementable list::const_iterator");
 #endif
         __ptr_ = __ptr_->__prev_;
         return *this;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_const_iterator operator--(int) {__list_const_iterator __t(*this); --(*this); return __t;}
 
-    friend _LIBCPP_INLINE_VISIBILITY
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator==(const __list_const_iterator& __x, const __list_const_iterator& __y)
     {
         return __x.__ptr_ == __y.__ptr_;
     }
-    friend _LIBCPP_INLINE_VISIBILITY
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator!=(const __list_const_iterator& __x, const __list_const_iterator& __y)
         {return !(__x == __y);}
 };
@@ -552,72 +552,72 @@ protected:
     __node_base __end_;
     __compressed_pair<size_type, __node_allocator> __size_alloc_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __link_pointer __end_as_link() const _NOEXCEPT {
         return __node_pointer_traits::__unsafe_link_pointer_cast(
                 const_cast<__node_base&>(__end_).__self());
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           size_type& __sz() _NOEXCEPT {return __size_alloc_.first();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const size_type& __sz() const _NOEXCEPT
         {return __size_alloc_.first();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           __node_allocator& __node_alloc() _NOEXCEPT
           {return __size_alloc_.second();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const __node_allocator& __node_alloc() const _NOEXCEPT
         {return __size_alloc_.second();}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_type __node_alloc_max_size() const _NOEXCEPT {
         return __node_alloc_traits::max_size(__node_alloc());
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     static void __unlink_nodes(__link_pointer __f, __link_pointer __l) _NOEXCEPT;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_imp()
         _NOEXCEPT_(is_nothrow_default_constructible<__node_allocator>::value);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __list_imp(const allocator_type& __a);
     ~__list_imp();
     void clear() _NOEXCEPT;
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool empty() const _NOEXCEPT {return __sz() == 0;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     iterator begin() _NOEXCEPT
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         return iterator(__end_.__next_, this);
 #else
         return iterator(__end_.__next_);
 #endif
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator begin() const  _NOEXCEPT
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         return const_iterator(__end_.__next_, this);
 #else
         return const_iterator(__end_.__next_);
 #endif
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     iterator end() _NOEXCEPT
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         return iterator(__end_as_link(), this);
 #else
         return iterator(__end_as_link());
 #endif
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator end() const _NOEXCEPT
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         return const_iterator(__end_as_link(), this);
 #else
         return const_iterator(__end_as_link());
@@ -625,19 +625,19 @@ protected:
     }
 
     void swap(__list_imp& __c)
-#if _LIBCPP_STD_VER >= 14
+#if _MUSEUM_LIBCPP_STD_VER >= 14
         _NOEXCEPT_DEBUG;
 #else
         _NOEXCEPT_DEBUG_(!__alloc_traits::propagate_on_container_swap::value ||
                     __is_nothrow_swappable<allocator_type>::value);
 #endif
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __copy_assign_alloc(const __list_imp& __c)
         {__copy_assign_alloc(__c, integral_constant<bool,
                       __node_alloc_traits::propagate_on_container_copy_assignment::value>());}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __move_assign_alloc(__list_imp& __c)
         _NOEXCEPT_(
             !__node_alloc_traits::propagate_on_container_move_assignment::value ||
@@ -646,7 +646,7 @@ protected:
                       __node_alloc_traits::propagate_on_container_move_assignment::value>());}
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __copy_assign_alloc(const __list_imp& __c, true_type)
         {
             if (__node_alloc() != __c.__node_alloc())
@@ -654,25 +654,25 @@ private:
             __node_alloc() = __c.__node_alloc();
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __copy_assign_alloc(const __list_imp&, false_type)
         {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __move_assign_alloc(__list_imp& __c, true_type)
         _NOEXCEPT_(is_nothrow_move_assignable<__node_allocator>::value)
         {
-            __node_alloc() = _VSTD::move(__c.__node_alloc());
+            __node_alloc() = _MUSEUM_VSTD::move(__c.__node_alloc());
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __move_assign_alloc(__list_imp&, false_type)
         _NOEXCEPT
         {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __invalidate_all_iterators() {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
       __get_db()->__invalidate_all(this);
 #endif
     }
@@ -708,7 +708,7 @@ template <class _Tp, class _Alloc>
 __list_imp<_Tp, _Alloc>::~__list_imp()
 {
     clear();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__erase_c(this);
 #endif
 }
@@ -728,7 +728,7 @@ __list_imp<_Tp, _Alloc>::clear() _NOEXCEPT
         {
             __node_pointer __np = __f->__as_node();
             __f = __f->__next_;
-            __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
+            __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(__np->__value_));
             __node_alloc_traits::deallocate(__na, __np, 1);
         }
         __invalidate_all_iterators();
@@ -738,18 +738,18 @@ __list_imp<_Tp, _Alloc>::clear() _NOEXCEPT
 template <class _Tp, class _Alloc>
 void
 __list_imp<_Tp, _Alloc>::swap(__list_imp& __c)
-#if _LIBCPP_STD_VER >= 14
+#if _MUSEUM_LIBCPP_STD_VER >= 14
         _NOEXCEPT_DEBUG
 #else
         _NOEXCEPT_DEBUG_(!__alloc_traits::propagate_on_container_swap::value ||
                     __is_nothrow_swappable<allocator_type>::value)
 #endif
 {
-    _LIBCPP_ASSERT(__alloc_traits::propagate_on_container_swap::value ||
+    _MUSEUM_LIBCPP_ASSERT(__alloc_traits::propagate_on_container_swap::value ||
                    this->__node_alloc() == __c.__node_alloc(),
                    "list::swap: Either propagate_on_container_swap must be true"
                    " or the allocators must compare equal");
-    using _VSTD::swap;
+    using _MUSEUM_VSTD::swap;
     __swap_allocator(__node_alloc(), __c.__node_alloc());
     swap(__sz(), __c.__sz());
     swap(__end_, __c.__end_);
@@ -762,7 +762,7 @@ __list_imp<_Tp, _Alloc>::swap(__list_imp& __c)
     else
         __c.__end_.__prev_->__next_ = __c.__end_.__next_->__prev_ = __c.__end_as_link();
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __libcpp_db* __db = __get_db();
     __c_node* __cn1 = __db->__find_c_and_lock(this);
     __c_node* __cn2 = __db->__find_c(&__c);
@@ -800,7 +800,7 @@ __list_imp<_Tp, _Alloc>::swap(__list_imp& __c)
 }
 
 template <class _Tp, class _Alloc /*= allocator<_Tp>*/>
-class _LIBCPP_TEMPLATE_VIS list
+class _MUSEUM_LIBCPP_TEMPLATE_VIS list
     : private __list_imp<_Tp, _Alloc>
 {
     typedef __list_imp<_Tp, _Alloc> base;
@@ -825,26 +825,26 @@ public:
     typedef typename base::difference_type           difference_type;
     typedef typename base::iterator                  iterator;
     typedef typename base::const_iterator            const_iterator;
-    typedef _VSTD::reverse_iterator<iterator>         reverse_iterator;
-    typedef _VSTD::reverse_iterator<const_iterator>   const_reverse_iterator;
+    typedef _MUSEUM_VSTD::reverse_iterator<iterator>         reverse_iterator;
+    typedef _MUSEUM_VSTD::reverse_iterator<const_iterator>   const_reverse_iterator;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     list()
         _NOEXCEPT_(is_nothrow_default_constructible<__node_allocator>::value)
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __get_db()->__insert_c(this);
 #endif
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit list(const allocator_type& __a) : base(__a)
     {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __get_db()->__insert_c(this);
 #endif
     }
     explicit list(size_type __n);
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
     explicit list(size_type __n, const allocator_type& __a);
 #endif
     list(size_type __n, const value_type& __x);
@@ -858,48 +858,48 @@ public:
 
     list(const list& __c);
     list(const list& __c, const allocator_type& __a);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     list& operator=(const list& __c);
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
     list(initializer_list<value_type> __il);
     list(initializer_list<value_type> __il, const allocator_type& __a);
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     list(list&& __c)
         _NOEXCEPT_(is_nothrow_move_constructible<__node_allocator>::value);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     list(list&& __c, const allocator_type& __a);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     list& operator=(list&& __c)
         _NOEXCEPT_(
             __node_alloc_traits::propagate_on_container_move_assignment::value &&
             is_nothrow_move_assignable<__node_allocator>::value);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
-    _LIBCPP_INLINE_VISIBILITY
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     list& operator=(initializer_list<value_type> __il)
         {assign(__il.begin(), __il.end()); return *this;}
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
     template <class _InpIter>
         void assign(_InpIter __f, _InpIter __l,
              typename enable_if<__is_input_iterator<_InpIter>::value>::type* = 0);
     void assign(size_type __n, const value_type& __x);
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void assign(initializer_list<value_type> __il)
         {assign(__il.begin(), __il.end());}
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     allocator_type get_allocator() const _NOEXCEPT;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_type size() const _NOEXCEPT     {return base::__sz();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool empty() const _NOEXCEPT         {return base::empty();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_type max_size() const _NOEXCEPT
         {
             return facebook::museum::MUSEUM_VERSION::std::min<size_type>(
@@ -907,84 +907,84 @@ public:
                 numeric_limits<difference_type >::max());
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           iterator begin() _NOEXCEPT        {return base::begin();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator begin()  const _NOEXCEPT {return base::begin();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           iterator end() _NOEXCEPT          {return base::end();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator end()    const _NOEXCEPT {return base::end();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator cbegin() const _NOEXCEPT {return base::begin();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator cend()   const _NOEXCEPT {return base::end();}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           reverse_iterator rbegin() _NOEXCEPT
             {return       reverse_iterator(end());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_reverse_iterator rbegin()  const _NOEXCEPT
         {return const_reverse_iterator(end());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           reverse_iterator rend() _NOEXCEPT
             {return       reverse_iterator(begin());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_reverse_iterator rend()    const _NOEXCEPT
         {return const_reverse_iterator(begin());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_reverse_iterator crbegin() const _NOEXCEPT
         {return const_reverse_iterator(end());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_reverse_iterator crend()   const _NOEXCEPT
         {return const_reverse_iterator(begin());}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     reference front()
     {
-        _LIBCPP_ASSERT(!empty(), "list::front called on empty list");
+        _MUSEUM_LIBCPP_ASSERT(!empty(), "list::front called on empty list");
         return base::__end_.__next_->__as_node()->__value_;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_reference front() const
     {
-        _LIBCPP_ASSERT(!empty(), "list::front called on empty list");
+        _MUSEUM_LIBCPP_ASSERT(!empty(), "list::front called on empty list");
         return base::__end_.__next_->__as_node()->__value_;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     reference back()
     {
-        _LIBCPP_ASSERT(!empty(), "list::back called on empty list");
+        _MUSEUM_LIBCPP_ASSERT(!empty(), "list::back called on empty list");
         return base::__end_.__prev_->__as_node()->__value_;
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_reference back() const
     {
-        _LIBCPP_ASSERT(!empty(), "list::back called on empty list");
+        _MUSEUM_LIBCPP_ASSERT(!empty(), "list::back called on empty list");
         return base::__end_.__prev_->__as_node()->__value_;
     }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     void push_front(value_type&& __x);
     void push_back(value_type&& __x);
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
     template <class... _Args>
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
        reference emplace_front(_Args&&... __args);
 #else
        void      emplace_front(_Args&&... __args);
 #endif
     template <class... _Args>
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
         reference emplace_back(_Args&&... __args);
 #else
        void       emplace_back(_Args&&... __args);
 #endif
     template <class... _Args>
         iterator emplace(const_iterator __p, _Args&&... __args);
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
     iterator insert(const_iterator __p, value_type&& __x);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     void push_front(const value_type& __x);
     void push_back(const value_type& __x);
@@ -994,22 +994,22 @@ public:
     template <class _InpIter>
         iterator insert(const_iterator __p, _InpIter __f, _InpIter __l,
              typename enable_if<__is_input_iterator<_InpIter>::value>::type* = 0);
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     iterator insert(const_iterator __p, initializer_list<value_type> __il)
         {return insert(__p, __il.begin(), __il.end());}
-#endif   // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif   // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void swap(list& __c)
-#if _LIBCPP_STD_VER >= 14
+#if _MUSEUM_LIBCPP_STD_VER >= 14
         _NOEXCEPT_DEBUG
 #else
         _NOEXCEPT_DEBUG_(!__node_alloc_traits::propagate_on_container_swap::value ||
                    __is_nothrow_swappable<__node_allocator>::value)
 #endif
         {base::swap(__c);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void clear() _NOEXCEPT {base::clear();}
 
     void pop_front();
@@ -1022,67 +1022,67 @@ public:
     void resize(size_type __n, const value_type& __x);
 
     void splice(const_iterator __p, list& __c);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void splice(const_iterator __p, list&& __c) {splice(__p, __c);}
 #endif
     void splice(const_iterator __p, list& __c, const_iterator __i);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void splice(const_iterator __p, list&& __c, const_iterator __i)
         {splice(__p, __c, __i);}
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     void splice(const_iterator __p, list& __c, const_iterator __f, const_iterator __l);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void splice(const_iterator __p, list&& __c, const_iterator __f, const_iterator __l)
         {splice(__p, __c, __f, __l);}
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     void remove(const value_type& __x);
     template <class _Pred> void remove_if(_Pred __pred);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void unique();
     template <class _BinaryPred>
         void unique(_BinaryPred __binary_pred);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void merge(list& __c);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void merge(list&& __c) {merge(__c);}
 #endif
     template <class _Comp>
         void merge(list& __c, _Comp __comp);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     template <class _Comp>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
         void merge(list&& __c, _Comp __comp) {merge(__c, __comp);}
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void sort();
     template <class _Comp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         void sort(_Comp __comp);
 
     void reverse() _NOEXCEPT;
 
     bool __invariants() const;
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
 
     bool __dereferenceable(const const_iterator* __i) const;
     bool __decrementable(const const_iterator* __i) const;
     bool __addable(const const_iterator* __i, ptrdiff_t __n) const;
     bool __subscriptable(const const_iterator* __i, ptrdiff_t __n) const;
 
-#endif  // _LIBCPP_DEBUG_LEVEL >= 2
+#endif  // _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     static void __link_nodes  (__link_pointer __p, __link_pointer __f, __link_pointer __l);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __link_nodes_at_front(__link_pointer __f, __link_pointer __l);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __link_nodes_at_back (__link_pointer __f, __link_pointer __l);
     iterator __iterator(size_type __n);
     template <class _Comp>
@@ -1135,33 +1135,33 @@ inline
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::__iterator(size_type __n)
 {
-    return __n <= base::__sz() / 2 ? _VSTD::next(begin(), __n)
-                                   : _VSTD::prev(end(), base::__sz() - __n);
+    return __n <= base::__sz() / 2 ? _MUSEUM_VSTD::next(begin(), __n)
+                                   : _MUSEUM_VSTD::prev(end(), base::__sz() - __n);
 }
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(size_type __n)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (; __n > 0; --__n)
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
         emplace_back();
 #else
         push_back(value_type());
 #endif
 }
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(size_type __n, const allocator_type& __a) : base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (; __n > 0; --__n)
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
         emplace_back();
 #else
         push_back(value_type());
@@ -1172,7 +1172,7 @@ list<_Tp, _Alloc>::list(size_type __n, const allocator_type& __a) : base(__a)
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(size_type __n, const value_type& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (; __n > 0; --__n)
@@ -1183,7 +1183,7 @@ template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(size_type __n, const value_type& __x, const allocator_type& __a)
     : base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (; __n > 0; --__n)
@@ -1195,7 +1195,7 @@ template <class _InpIter>
 list<_Tp, _Alloc>::list(_InpIter __f, _InpIter __l,
                         typename enable_if<__is_input_iterator<_InpIter>::value>::type*)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (; __f != __l; ++__f)
@@ -1208,7 +1208,7 @@ list<_Tp, _Alloc>::list(_InpIter __f, _InpIter __l, const allocator_type& __a,
                         typename enable_if<__is_input_iterator<_InpIter>::value>::type*)
     : base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (; __f != __l; ++__f)
@@ -1221,7 +1221,7 @@ list<_Tp, _Alloc>::list(const list& __c)
            __node_alloc_traits::select_on_container_copy_construction(
                 __c.__node_alloc())))
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (const_iterator __i = __c.begin(), __e = __c.end(); __i != __e; ++__i)
@@ -1232,20 +1232,20 @@ template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(const list& __c, const allocator_type& __a)
     : base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (const_iterator __i = __c.begin(), __e = __c.end(); __i != __e; ++__i)
         push_back(*__i);
 }
 
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(initializer_list<value_type> __il, const allocator_type& __a)
     : base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (typename initializer_list<value_type>::const_iterator __i = __il.begin(),
@@ -1256,7 +1256,7 @@ list<_Tp, _Alloc>::list(initializer_list<value_type> __il, const allocator_type&
 template <class _Tp, class _Alloc>
 list<_Tp, _Alloc>::list(initializer_list<value_type> __il)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     for (typename initializer_list<value_type>::const_iterator __i = __il.begin(),
@@ -1264,7 +1264,7 @@ list<_Tp, _Alloc>::list(initializer_list<value_type> __il)
         push_back(*__i);
 }
 
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
 template <class _Tp, class _Alloc>
 inline
@@ -1279,15 +1279,15 @@ list<_Tp, _Alloc>::operator=(const list& __c)
     return *this;
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Alloc>
 inline
 list<_Tp, _Alloc>::list(list&& __c)
     _NOEXCEPT_(is_nothrow_move_constructible<__node_allocator>::value)
-    : base(allocator_type(_VSTD::move(__c.__node_alloc())))
+    : base(allocator_type(_MUSEUM_VSTD::move(__c.__node_alloc())))
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     splice(end(), __c);
@@ -1298,7 +1298,7 @@ inline
 list<_Tp, _Alloc>::list(list&& __c, const allocator_type& __a)
     : base(__a)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __get_db()->__insert_c(this);
 #endif
     if (__a == __c.get_allocator())
@@ -1346,7 +1346,7 @@ list<_Tp, _Alloc>::__move_assign(list& __c, true_type)
     splice(end(), __c);
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Alloc>
 template <class _InpIter>
@@ -1362,7 +1362,7 @@ list<_Tp, _Alloc>::assign(_InpIter __f, _InpIter __l,
         insert(__e, __f, __l);
     else
         erase(__i, __e);
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
       __get_db()->__invalidate_all(this);
 #endif
 }
@@ -1379,7 +1379,7 @@ list<_Tp, _Alloc>::assign(size_type __n, const value_type& __x)
         insert(__e, __n, __x);
     else
         erase(__i, __e);
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
       __get_db()->__invalidate_all(this);
 #endif
 }
@@ -1396,8 +1396,8 @@ template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::insert(const_iterator __p, const value_type& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::insert(iterator, x) called with an iterator not"
         " referring to this list");
 #endif
@@ -1405,10 +1405,10 @@ list<_Tp, _Alloc>::insert(const_iterator __p, const value_type& __x)
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
     __hold->__prev_ = 0;
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), __x);
     __link_nodes(__p.__ptr_, __hold->__as_link(), __hold->__as_link());
     ++base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     return iterator(__hold.release()->__as_link(), this);
 #else
     return iterator(__hold.release()->__as_link());
@@ -1419,8 +1419,8 @@ template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::insert(iterator, n, x) called with an iterator not"
         " referring to this list");
     iterator __r(__p.__ptr_, this);
@@ -1434,39 +1434,39 @@ list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& _
         typedef __allocator_destructor<__node_allocator> _Dp;
         unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
         __hold->__prev_ = 0;
-        __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
+        __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), __x);
         ++__ds;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __r = iterator(__hold->__as_link(), this);
 #else
         __r = iterator(__hold->__as_link());
 #endif
         __hold.release();
         iterator __e = __r;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (--__n; __n != 0; --__n, ++__e, ++__ds)
             {
                 __hold.reset(__node_alloc_traits::allocate(__na, 1));
-                __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
+                __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), __x);
                 __e.__ptr_->__next_ = __hold->__as_link();
                 __hold->__prev_ = __e.__ptr_;
                 __hold.release();
             }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             while (true)
             {
-                __node_alloc_traits::destroy(__na, _VSTD::addressof(*__e));
+                __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(*__e));
                 __link_pointer __prev = __e.__ptr_->__prev_;
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
                 __e = iterator(__prev, this);
 #else
                 __e = iterator(__prev);
@@ -1474,7 +1474,7 @@ list<_Tp, _Alloc>::insert(const_iterator __p, size_type __n, const value_type& _
             }
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         __link_nodes(__p.__ptr_, __r.__ptr_, __e.__ptr_);
         base::__sz() += __ds;
     }
@@ -1487,8 +1487,8 @@ typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::insert(const_iterator __p, _InpIter __f, _InpIter __l,
              typename enable_if<__is_input_iterator<_InpIter>::value>::type*)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::insert(iterator, range) called with an iterator not"
         " referring to this list");
     iterator __r(__p.__ptr_, this);
@@ -1502,39 +1502,39 @@ list<_Tp, _Alloc>::insert(const_iterator __p, _InpIter __f, _InpIter __l,
         typedef __allocator_destructor<__node_allocator> _Dp;
         unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
         __hold->__prev_ = 0;
-        __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), *__f);
+        __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), *__f);
         ++__ds;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __r = iterator(__hold.get()->__as_link(), this);
 #else
         __r = iterator(__hold.get()->__as_link());
 #endif
         __hold.release();
         iterator __e = __r;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (++__f; __f != __l; ++__f, (void) ++__e, (void) ++__ds)
             {
                 __hold.reset(__node_alloc_traits::allocate(__na, 1));
-                __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), *__f);
+                __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), *__f);
                 __e.__ptr_->__next_ = __hold.get()->__as_link();
                 __hold->__prev_ = __e.__ptr_;
                 __hold.release();
             }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             while (true)
             {
-                __node_alloc_traits::destroy(__na, _VSTD::addressof(*__e));
+                __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(*__e));
                 __link_pointer __prev = __e.__ptr_->__prev_;
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
                 __e = iterator(__prev, this);
 #else
                 __e = iterator(__prev);
@@ -1542,7 +1542,7 @@ list<_Tp, _Alloc>::insert(const_iterator __p, _InpIter __f, _InpIter __l,
             }
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         __link_nodes(__p.__ptr_, __r.__ptr_, __e.__ptr_);
         base::__sz() += __ds;
     }
@@ -1556,7 +1556,7 @@ list<_Tp, _Alloc>::push_front(const value_type& __x)
     __node_allocator& __na = base::__node_alloc();
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), __x);
     __link_pointer __nl = __hold->__as_link();
     __link_nodes_at_front(__nl, __nl);
     ++base::__sz();
@@ -1570,13 +1570,13 @@ list<_Tp, _Alloc>::push_back(const value_type& __x)
     __node_allocator& __na = base::__node_alloc();
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), __x);
     __link_nodes_at_back(__hold.get()->__as_link(), __hold.get()->__as_link());
     ++base::__sz();
     __hold.release();
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Alloc>
 void
@@ -1585,7 +1585,7 @@ list<_Tp, _Alloc>::push_front(value_type&& __x)
     __node_allocator& __na = base::__node_alloc();
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::move(__x));
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), _MUSEUM_VSTD::move(__x));
     __link_nodes_at_front(__hold.get()->__as_link(), __hold.get()->__as_link());
     ++base::__sz();
     __hold.release();
@@ -1598,17 +1598,17 @@ list<_Tp, _Alloc>::push_back(value_type&& __x)
     __node_allocator& __na = base::__node_alloc();
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::move(__x));
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), _MUSEUM_VSTD::move(__x));
     __link_nodes_at_back(__hold.get()->__as_link(), __hold.get()->__as_link());
     ++base::__sz();
     __hold.release();
 }
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _Alloc>
 template <class... _Args>
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
 typename list<_Tp, _Alloc>::reference
 #else
 void
@@ -1618,10 +1618,10 @@ list<_Tp, _Alloc>::emplace_front(_Args&&... __args)
     __node_allocator& __na = base::__node_alloc();
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::forward<_Args>(__args)...);
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), _MUSEUM_VSTD::forward<_Args>(__args)...);
     __link_nodes_at_front(__hold.get()->__as_link(), __hold.get()->__as_link());
     ++base::__sz();
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
     return __hold.release()->__value_;
 #else
     __hold.release();
@@ -1630,7 +1630,7 @@ list<_Tp, _Alloc>::emplace_front(_Args&&... __args)
 
 template <class _Tp, class _Alloc>
 template <class... _Args>
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
 typename list<_Tp, _Alloc>::reference
 #else
 void
@@ -1640,11 +1640,11 @@ list<_Tp, _Alloc>::emplace_back(_Args&&... __args)
     __node_allocator& __na = base::__node_alloc();
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::forward<_Args>(__args)...);
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), _MUSEUM_VSTD::forward<_Args>(__args)...);
     __link_pointer __nl = __hold->__as_link();
     __link_nodes_at_back(__nl, __nl);
     ++base::__sz();
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
     return __hold.release()->__value_;
 #else
     __hold.release();
@@ -1656,8 +1656,8 @@ template <class... _Args>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::emplace(const_iterator __p, _Args&&... __args)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::emplace(iterator, args...) called with an iterator not"
         " referring to this list");
 #endif
@@ -1665,26 +1665,26 @@ list<_Tp, _Alloc>::emplace(const_iterator __p, _Args&&... __args)
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
     __hold->__prev_ = 0;
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::forward<_Args>(__args)...);
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), _MUSEUM_VSTD::forward<_Args>(__args)...);
     __link_pointer __nl = __hold.get()->__as_link();
     __link_nodes(__p.__ptr_, __nl, __nl);
     ++base::__sz();
     __hold.release();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     return iterator(__nl, this);
 #else
     return iterator(__nl);
 #endif
 }
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::insert(const_iterator __p, value_type&& __x)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::insert(iterator, x) called with an iterator not"
         " referring to this list");
 #endif
@@ -1692,30 +1692,30 @@ list<_Tp, _Alloc>::insert(const_iterator __p, value_type&& __x)
     typedef __allocator_destructor<__node_allocator> _Dp;
     unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
     __hold->__prev_ = 0;
-    __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), _VSTD::move(__x));
+    __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), _MUSEUM_VSTD::move(__x));
     __link_pointer __nl = __hold->__as_link();
     __link_nodes(__p.__ptr_, __nl, __nl);
     ++base::__sz();
     __hold.release();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     return iterator(__nl, this);
 #else
     return iterator(__nl);
 #endif
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Alloc>
 void
 list<_Tp, _Alloc>::pop_front()
 {
-    _LIBCPP_ASSERT(!empty(), "list::pop_front() called with empty list");
+    _MUSEUM_LIBCPP_ASSERT(!empty(), "list::pop_front() called with empty list");
     __node_allocator& __na = base::__node_alloc();
     __link_pointer __n = base::__end_.__next_;
     base::__unlink_nodes(__n, __n);
     --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __c_node* __c = __get_db()->__find_c_and_lock(this);
     for (__i_node** __p = __c->end_; __p != __c->beg_; )
     {
@@ -1731,7 +1731,7 @@ list<_Tp, _Alloc>::pop_front()
     __get_db()->unlock();
 #endif
     __node_pointer __np = __n->__as_node();
-    __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
+    __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(__np->__value_));
     __node_alloc_traits::deallocate(__na, __np, 1);
 }
 
@@ -1739,12 +1739,12 @@ template <class _Tp, class _Alloc>
 void
 list<_Tp, _Alloc>::pop_back()
 {
-    _LIBCPP_ASSERT(!empty(), "list::pop_back() called with empty list");
+    _MUSEUM_LIBCPP_ASSERT(!empty(), "list::pop_back() called with empty list");
     __node_allocator& __na = base::__node_alloc();
     __link_pointer __n = base::__end_.__prev_;
     base::__unlink_nodes(__n, __n);
     --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __c_node* __c = __get_db()->__find_c_and_lock(this);
     for (__i_node** __p = __c->end_; __p != __c->beg_; )
     {
@@ -1760,7 +1760,7 @@ list<_Tp, _Alloc>::pop_back()
     __get_db()->unlock();
 #endif
     __node_pointer __np = __n->__as_node();
-    __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
+    __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(__np->__value_));
     __node_alloc_traits::deallocate(__na, __np, 1);
 }
 
@@ -1768,19 +1768,19 @@ template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::erase(const_iterator __p)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::erase(iterator) called with an iterator not"
         " referring to this list");
 #endif
-    _LIBCPP_ASSERT(__p != end(),
+    _MUSEUM_LIBCPP_ASSERT(__p != end(),
         "list::erase(iterator) called with a non-dereferenceable iterator");
     __node_allocator& __na = base::__node_alloc();
     __link_pointer __n = __p.__ptr_;
     __link_pointer __r = __n->__next_;
     base::__unlink_nodes(__n, __n);
     --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     __c_node* __c = __get_db()->__find_c_and_lock(this);
     for (__i_node** __ip = __c->end_; __ip != __c->beg_; )
     {
@@ -1796,9 +1796,9 @@ list<_Tp, _Alloc>::erase(const_iterator __p)
     __get_db()->unlock();
 #endif
     __node_pointer __np = __n->__as_node();
-    __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
+    __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(__np->__value_));
     __node_alloc_traits::deallocate(__na, __np, 1);
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     return iterator(__r, this);
 #else
     return iterator(__r);
@@ -1809,11 +1809,11 @@ template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator
 list<_Tp, _Alloc>::erase(const_iterator __f, const_iterator __l)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__f) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__f) == this,
         "list::erase(iterator, iterator) called with an iterator not"
         " referring to this list");
-   _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__l) == this,
+   _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__l) == this,
         "list::erase(iterator, iterator) called with an iterator not"
         " referring to this list");
 #endif
@@ -1826,7 +1826,7 @@ list<_Tp, _Alloc>::erase(const_iterator __f, const_iterator __l)
             __link_pointer __n = __f.__ptr_;
             ++__f;
             --base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
             __c_node* __c = __get_db()->__find_c_and_lock(this);
             for (__i_node** __p = __c->end_; __p != __c->beg_; )
             {
@@ -1842,11 +1842,11 @@ list<_Tp, _Alloc>::erase(const_iterator __f, const_iterator __l)
             __get_db()->unlock();
 #endif
             __node_pointer __np = __n->__as_node();
-            __node_alloc_traits::destroy(__na, _VSTD::addressof(__np->__value_));
+            __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(__np->__value_));
             __node_alloc_traits::deallocate(__na, __np, 1);
         }
     }
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
     return iterator(__l.__ptr_, this);
 #else
     return iterator(__l.__ptr_);
@@ -1867,38 +1867,38 @@ list<_Tp, _Alloc>::resize(size_type __n)
         typedef __allocator_destructor<__node_allocator> _Dp;
         unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
         __hold->__prev_ = 0;
-        __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_));
+        __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_));
         ++__ds;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         iterator __r = iterator(__hold.release()->__as_link(), this);
 #else
         iterator __r = iterator(__hold.release()->__as_link());
 #endif
         iterator __e = __r;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (--__n; __n != 0; --__n, ++__e, ++__ds)
             {
                 __hold.reset(__node_alloc_traits::allocate(__na, 1));
-                __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_));
+                __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_));
                 __e.__ptr_->__next_ = __hold.get()->__as_link();
                 __hold->__prev_ = __e.__ptr_;
                 __hold.release();
             }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             while (true)
             {
-                __node_alloc_traits::destroy(__na, _VSTD::addressof(*__e));
+                __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(*__e));
                 __link_pointer __prev = __e.__ptr_->__prev_;
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
                 __e = iterator(__prev, this);
 #else
                 __e = iterator(__prev);
@@ -1906,7 +1906,7 @@ list<_Tp, _Alloc>::resize(size_type __n)
             }
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         __link_nodes_at_back(__r.__ptr_, __e.__ptr_);
         base::__sz() += __ds;
     }
@@ -1926,39 +1926,39 @@ list<_Tp, _Alloc>::resize(size_type __n, const value_type& __x)
         typedef __allocator_destructor<__node_allocator> _Dp;
         unique_ptr<__node, _Dp> __hold(__node_alloc_traits::allocate(__na, 1), _Dp(__na, 1));
         __hold->__prev_ = 0;
-        __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
+        __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), __x);
         ++__ds;
         __link_pointer __nl = __hold.release()->__as_link();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         iterator __r = iterator(__nl, this);
 #else
         iterator __r = iterator(__nl);
 #endif
         iterator __e = __r;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (--__n; __n != 0; --__n, ++__e, ++__ds)
             {
                 __hold.reset(__node_alloc_traits::allocate(__na, 1));
-                __node_alloc_traits::construct(__na, _VSTD::addressof(__hold->__value_), __x);
+                __node_alloc_traits::construct(__na, _MUSEUM_VSTD::addressof(__hold->__value_), __x);
                 __e.__ptr_->__next_ = __hold.get()->__as_link();
                 __hold->__prev_ = __e.__ptr_;
                 __hold.release();
             }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             while (true)
             {
-                __node_alloc_traits::destroy(__na, _VSTD::addressof(*__e));
+                __node_alloc_traits::destroy(__na, _MUSEUM_VSTD::addressof(*__e));
                 __link_pointer __prev = __e.__ptr_->__prev_;
                 __node_alloc_traits::deallocate(__na, __e.__ptr_->__as_node(), 1);
                 if (__prev == 0)
                     break;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
                 __e = iterator(__prev, this);
 #else
                 __e = iterator(__prev);
@@ -1966,7 +1966,7 @@ list<_Tp, _Alloc>::resize(size_type __n, const value_type& __x)
             }
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         __link_nodes(base::__end_as_link(), __r.__ptr_, __e.__ptr_);
         base::__sz() += __ds;
     }
@@ -1976,10 +1976,10 @@ template <class _Tp, class _Alloc>
 void
 list<_Tp, _Alloc>::splice(const_iterator __p, list& __c)
 {
-    _LIBCPP_ASSERT(this != &__c,
+    _MUSEUM_LIBCPP_ASSERT(this != &__c,
                    "list::splice(iterator, list) called with this == &list");
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::splice(iterator, list) called with an iterator not"
         " referring to this list");
 #endif
@@ -1991,7 +1991,7 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c)
         __link_nodes(__p.__ptr_, __f, __l);
         base::__sz() += __c.__sz();
         __c.__sz() = 0;
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __libcpp_db* __db = __get_db();
         __c_node* __cn1 = __db->__find_c_and_lock(this);
         __c_node* __cn2 = __db->__find_c(&__c);
@@ -2016,14 +2016,14 @@ template <class _Tp, class _Alloc>
 void
 list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __i)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::splice(iterator, list, iterator) called with first iterator not"
         " referring to this list");
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__i) == &__c,
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__i) == &__c,
         "list::splice(iterator, list, iterator) called with second iterator not"
         " referring to list argument");
-    _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(&__i),
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__dereferenceable(&__i),
         "list::splice(iterator, list, iterator) called with second iterator not"
         " derefereceable");
 #endif
@@ -2034,7 +2034,7 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __i)
         __link_nodes(__p.__ptr_, __f, __f);
         --__c.__sz();
         ++base::__sz();
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __libcpp_db* __db = __get_db();
         __c_node* __cn1 = __db->__find_c_and_lock(this);
         __c_node* __cn2 = __db->__find_c(&__c);
@@ -2059,17 +2059,17 @@ template <class _Tp, class _Alloc>
 void
 list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __f, const_iterator __l)
 {
-#if _LIBCPP_DEBUG_LEVEL >= 2
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__p) == this,
         "list::splice(iterator, list, iterator, iterator) called with first iterator not"
         " referring to this list");
-    _LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__f) == &__c,
+    _MUSEUM_LIBCPP_ASSERT(__get_const_db()->__find_c_from_i(&__f) == &__c,
         "list::splice(iterator, list, iterator, iterator) called with second iterator not"
         " referring to list argument");
     if (this == &__c)
     {
         for (const_iterator __i = __f; __i != __l; ++__i)
-            _LIBCPP_ASSERT(__i != __p,
+            _MUSEUM_LIBCPP_ASSERT(__i != __p,
                            "list::splice(iterator, list, iterator, iterator)"
                            " called with the first iterator within the range"
                            " of the second and third iterators");
@@ -2079,7 +2079,7 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __f, con
     {
         if (this != &__c)
         {
-            size_type __s = _VSTD::distance(__f, __l);
+            size_type __s = _MUSEUM_VSTD::distance(__f, __l);
             __c.__sz() -= __s;
             base::__sz() += __s;
         }
@@ -2088,7 +2088,7 @@ list<_Tp, _Alloc>::splice(const_iterator __p, list& __c, const_iterator __f, con
         __link_pointer __last = __l.__ptr_;
         base::__unlink_nodes(__first, __last);
         __link_nodes(__p.__ptr_, __first, __last);
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __libcpp_db* __db = __get_db();
         __c_node* __cn1 = __db->__find_c_and_lock(this);
         __c_node* __cn2 = __db->__find_c(&__c);
@@ -2122,7 +2122,7 @@ list<_Tp, _Alloc>::remove(const value_type& __x)
     {
         if (*__i == __x)
         {
-            const_iterator __j = _VSTD::next(__i);
+            const_iterator __j = _MUSEUM_VSTD::next(__i);
             for (; __j != __e && *__j == __x; ++__j)
                 ;
             __deleted_nodes.splice(__deleted_nodes.end(), *this, __i, __j);
@@ -2144,7 +2144,7 @@ list<_Tp, _Alloc>::remove_if(_Pred __pred)
     {
         if (__pred(*__i))
         {
-            iterator __j = _VSTD::next(__i);
+            iterator __j = _MUSEUM_VSTD::next(__i);
             for (; __j != __e && __pred(*__j); ++__j)
                 ;
             __i = erase(__i, __j);
@@ -2171,7 +2171,7 @@ list<_Tp, _Alloc>::unique(_BinaryPred __binary_pred)
 {
     for (iterator __i = begin(), __e = end(); __i != __e;)
     {
-        iterator __j = _VSTD::next(__i);
+        iterator __j = _MUSEUM_VSTD::next(__i);
         for (; __j != __e && __binary_pred(*__i, *__j); ++__j)
             ;
         if (++__i != __j)
@@ -2203,7 +2203,7 @@ list<_Tp, _Alloc>::merge(list& __c, _Comp __comp)
             if (__comp(*__f2, *__f1))
             {
                 size_type __ds = 1;
-                iterator __m2 = _VSTD::next(__f2);
+                iterator __m2 = _MUSEUM_VSTD::next(__f2);
                 for (; __m2 != __e2 && __comp(*__m2, *__f1); ++__m2, ++__ds)
                     ;
                 base::__sz() += __ds;
@@ -2212,7 +2212,7 @@ list<_Tp, _Alloc>::merge(list& __c, _Comp __comp)
                 __link_pointer __l = __m2.__ptr_->__prev_;
                 __f2 = __m2;
                 base::__unlink_nodes(__f, __l);
-                __m2 = _VSTD::next(__f1);
+                __m2 = _MUSEUM_VSTD::next(__f1);
                 __link_nodes(__f1.__ptr_, __f, __l);
                 __f1 = __m2;
             }
@@ -2220,7 +2220,7 @@ list<_Tp, _Alloc>::merge(list& __c, _Comp __comp)
                 ++__f1;
         }
         splice(__e1, __c);
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
         __libcpp_db* __db = __get_db();
         __c_node* __cn1 = __db->__find_c_and_lock(this);
         __c_node* __cn2 = __db->__find_c(&__c);
@@ -2279,12 +2279,12 @@ list<_Tp, _Alloc>::__sort(iterator __f1, iterator __e2, size_type __n, _Comp& __
         return __f1;
     }
     size_type __n2 = __n / 2;
-    iterator __e1 = _VSTD::next(__f1, __n2);
+    iterator __e1 = _MUSEUM_VSTD::next(__f1, __n2);
     iterator  __r = __f1 = __sort(__f1, __e1, __n2, __comp);
     iterator __f2 = __e1 = __sort(__e1, __e2, __n - __n2, __comp);
     if (__comp(*__f2, *__f1))
     {
-        iterator __m2 = _VSTD::next(__f2);
+        iterator __m2 = _MUSEUM_VSTD::next(__f2);
         for (; __m2 != __e2 && __comp(*__m2, *__f1); ++__m2)
             ;
         __link_pointer __f = __f2.__ptr_;
@@ -2292,7 +2292,7 @@ list<_Tp, _Alloc>::__sort(iterator __f1, iterator __e2, size_type __n, _Comp& __
         __r = __f2;
         __e1 = __f2 = __m2;
         base::__unlink_nodes(__f, __l);
-        __m2 = _VSTD::next(__f1);
+        __m2 = _MUSEUM_VSTD::next(__f1);
         __link_nodes(__f1.__ptr_, __f, __l);
         __f1 = __m2;
     }
@@ -2302,7 +2302,7 @@ list<_Tp, _Alloc>::__sort(iterator __f1, iterator __e2, size_type __n, _Comp& __
     {
         if (__comp(*__f2, *__f1))
         {
-            iterator __m2 = _VSTD::next(__f2);
+            iterator __m2 = _MUSEUM_VSTD::next(__f2);
             for (; __m2 != __e2 && __comp(*__m2, *__f1); ++__m2)
                 ;
             __link_pointer __f = __f2.__ptr_;
@@ -2311,7 +2311,7 @@ list<_Tp, _Alloc>::__sort(iterator __f1, iterator __e2, size_type __n, _Comp& __
                 __e1 = __m2;
             __f2 = __m2;
             base::__unlink_nodes(__f, __l);
-            __m2 = _VSTD::next(__f1);
+            __m2 = _MUSEUM_VSTD::next(__f1);
             __link_nodes(__f1.__ptr_, __f, __l);
             __f1 = __m2;
         }
@@ -2330,10 +2330,10 @@ list<_Tp, _Alloc>::reverse() _NOEXCEPT
         iterator __e = end();
         for (iterator __i = begin(); __i.__ptr_ != __e.__ptr_;)
         {
-            _VSTD::swap(__i.__ptr_->__prev_, __i.__ptr_->__next_);
+            _MUSEUM_VSTD::swap(__i.__ptr_->__prev_, __i.__ptr_->__next_);
             __i.__ptr_ = __i.__ptr_->__prev_;
         }
-        _VSTD::swap(__e.__ptr_->__prev_, __e.__ptr_->__next_);
+        _MUSEUM_VSTD::swap(__e.__ptr_->__prev_, __e.__ptr_->__next_);
     }
 }
 
@@ -2341,10 +2341,10 @@ template <class _Tp, class _Alloc>
 bool
 list<_Tp, _Alloc>::__invariants() const
 {
-    return size() == _VSTD::distance(begin(), end());
+    return size() == _MUSEUM_VSTD::distance(begin(), end());
 }
 
-#if _LIBCPP_DEBUG_LEVEL >= 2
+#if _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
 
 template <class _Tp, class _Alloc>
 bool
@@ -2374,26 +2374,26 @@ list<_Tp, _Alloc>::__subscriptable(const const_iterator*, ptrdiff_t) const
     return false;
 }
 
-#endif  // _LIBCPP_DEBUG_LEVEL >= 2
+#endif  // _MUSEUM_LIBCPP_DEBUG_LEVEL >= 2
 
 template <class _Tp, class _Alloc>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator==(const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 {
-    return __x.size() == __y.size() && _VSTD::equal(__x.begin(), __x.end(), __y.begin());
+    return __x.size() == __y.size() && _MUSEUM_VSTD::equal(__x.begin(), __x.end(), __y.begin());
 }
 
 template <class _Tp, class _Alloc>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator< (const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 {
-    return _VSTD::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end());
+    return _MUSEUM_VSTD::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end());
 }
 
 template <class _Tp, class _Alloc>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator!=(const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 {
@@ -2401,7 +2401,7 @@ operator!=(const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 }
 
 template <class _Tp, class _Alloc>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator> (const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 {
@@ -2409,7 +2409,7 @@ operator> (const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 }
 
 template <class _Tp, class _Alloc>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator>=(const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 {
@@ -2417,7 +2417,7 @@ operator>=(const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 }
 
 template <class _Tp, class _Alloc>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator<=(const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 {
@@ -2425,7 +2425,7 @@ operator<=(const list<_Tp, _Alloc>& __x, const list<_Tp, _Alloc>& __y)
 }
 
 template <class _Tp, class _Alloc>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(list<_Tp, _Alloc>& __x, list<_Tp, _Alloc>& __y)
     _NOEXCEPT_(_NOEXCEPT_(__x.swap(__y)))
@@ -2433,6 +2433,6 @@ swap(list<_Tp, _Alloc>& __x, list<_Tp, _Alloc>& __y)
     __x.swap(__y);
 }
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_LIST
+#endif  // _MUSEUM_LIBCPP_LIST

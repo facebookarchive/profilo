@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CSIGNAL
-#define _LIBCPP_CSIGNAL
+#ifndef _MUSEUM_LIBCPP_CSIGNAL
+#define _MUSEUM_LIBCPP_CSIGNAL
 
 /*
     csignal synopsis
@@ -43,16 +43,16 @@ int raise(int sig);
 #include <museum/6.0.1/external/libcxx/__config>
 #include <museum/6.0.1/bionic/libc/signal.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using ::sig_atomic_t;
 using ::signal;
 using ::raise;
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CSIGNAL
+#endif  // _MUSEUM_LIBCPP_CSIGNAL

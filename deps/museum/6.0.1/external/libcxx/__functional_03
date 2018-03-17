@@ -8,12 +8,12 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_FUNCTIONAL_03
-#define _LIBCPP_FUNCTIONAL_03
+#ifndef _MUSEUM_LIBCPP_FUNCTIONAL_03
+#define _MUSEUM_LIBCPP_FUNCTIONAL_03
 
 // manual variadic expansion for <functional>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -28,7 +28,7 @@ private:
     type __f_;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY __mem_fn(type __f) : __f_(__f) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY __mem_fn(type __f) : __f_(__f) {}
 
     // invoke
 
@@ -61,7 +61,7 @@ public:
 };
 
 template<class _Rp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp _Tp::*>
 mem_fn(_Rp _Tp::* __pm)
 {
@@ -69,7 +69,7 @@ mem_fn(_Rp _Tp::* __pm)
 }
 
 template<class _Rp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)()>
 mem_fn(_Rp (_Tp::* __pm)())
 {
@@ -77,7 +77,7 @@ mem_fn(_Rp (_Tp::* __pm)())
 }
 
 template<class _Rp, class _Tp, class _A0>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0)>
 mem_fn(_Rp (_Tp::* __pm)(_A0))
 {
@@ -85,7 +85,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0))
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1)>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1))
 {
@@ -93,7 +93,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1))
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1, class _A2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1, _A2)>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2))
 {
@@ -101,7 +101,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2))
 }
 
 template<class _Rp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)() const>
 mem_fn(_Rp (_Tp::* __pm)() const)
 {
@@ -109,7 +109,7 @@ mem_fn(_Rp (_Tp::* __pm)() const)
 }
 
 template<class _Rp, class _Tp, class _A0>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0) const>
 mem_fn(_Rp (_Tp::* __pm)(_A0) const)
 {
@@ -117,7 +117,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0) const)
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1) const>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1) const)
 {
@@ -125,7 +125,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1) const)
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1, class _A2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1, _A2) const>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2) const)
 {
@@ -133,7 +133,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2) const)
 }
 
 template<class _Rp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)() volatile>
 mem_fn(_Rp (_Tp::* __pm)() volatile)
 {
@@ -141,7 +141,7 @@ mem_fn(_Rp (_Tp::* __pm)() volatile)
 }
 
 template<class _Rp, class _Tp, class _A0>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0) volatile>
 mem_fn(_Rp (_Tp::* __pm)(_A0) volatile)
 {
@@ -149,7 +149,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0) volatile)
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1) volatile>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1) volatile)
 {
@@ -157,7 +157,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1) volatile)
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1, class _A2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1, _A2) volatile>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2) volatile)
 {
@@ -165,7 +165,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2) volatile)
 }
 
 template<class _Rp, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)() const volatile>
 mem_fn(_Rp (_Tp::* __pm)() const volatile)
 {
@@ -173,7 +173,7 @@ mem_fn(_Rp (_Tp::* __pm)() const volatile)
 }
 
 template<class _Rp, class _Tp, class _A0>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0) const volatile>
 mem_fn(_Rp (_Tp::* __pm)(_A0) const volatile)
 {
@@ -181,7 +181,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0) const volatile)
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1) const volatile>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1) const volatile)
 {
@@ -189,7 +189,7 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1) const volatile)
 }
 
 template<class _Rp, class _Tp, class _A0, class _A1, class _A2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __mem_fn<_Rp (_Tp::*)(_A0, _A1, _A2) const volatile>
 mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2) const volatile)
 {
@@ -198,12 +198,12 @@ mem_fn(_Rp (_Tp::* __pm)(_A0, _A1, _A2) const volatile)
 
 // bad_function_call
 
-class _LIBCPP_EXCEPTION_ABI bad_function_call
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_function_call
     : public exception
 {
 };
 
-template<class _Fp> class _LIBCPP_TYPE_VIS_ONLY function; // undefined
+template<class _Fp> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY function; // undefined
 
 namespace __function
 {
@@ -245,10 +245,10 @@ public:
     virtual void destroy() = 0;
     virtual void destroy_deallocate() = 0;
     virtual _Rp operator()() = 0;
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp, class _A0>
@@ -264,10 +264,10 @@ public:
     virtual void destroy() = 0;
     virtual void destroy_deallocate() = 0;
     virtual _Rp operator()(_A0) = 0;
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp, class _A0, class _A1>
@@ -283,10 +283,10 @@ public:
     virtual void destroy() = 0;
     virtual void destroy_deallocate() = 0;
     virtual _Rp operator()(_A0, _A1) = 0;
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp, class _A0, class _A1, class _A2>
@@ -302,10 +302,10 @@ public:
     virtual void destroy() = 0;
     virtual void destroy_deallocate() = 0;
     virtual _Rp operator()(_A0, _A1, _A2) = 0;
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const = 0;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const = 0;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _FD, class _Alloc, class _FB> class __func;
@@ -316,17 +316,17 @@ class __func<_Fp, _Alloc, _Rp()>
 {
     __compressed_pair<_Fp, _Alloc> __f_;
 public:
-    explicit __func(_Fp __f) : __f_(_VSTD::move(__f)) {}
-    explicit __func(_Fp __f, _Alloc __a) : __f_(_VSTD::move(__f), _VSTD::move(__a)) {}
+    explicit __func(_Fp __f) : __f_(_MUSEUM_VSTD::move(__f)) {}
+    explicit __func(_Fp __f, _Alloc __a) : __f_(_MUSEUM_VSTD::move(__f), _MUSEUM_VSTD::move(__a)) {}
     virtual __base<_Rp()>* __clone() const;
     virtual void __clone(__base<_Rp()>*) const;
     virtual void destroy();
     virtual void destroy_deallocate();
     virtual _Rp operator()();
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Fp, class _Alloc, class _Rp>
@@ -373,7 +373,7 @@ __func<_Fp, _Alloc, _Rp()>::operator()()
     return _Invoker::__call(__f_.first());
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp>
 const void*
@@ -391,7 +391,7 @@ __func<_Fp, _Alloc, _Rp()>::target_type() const
     return typeid(_Fp);
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp, class _A0>
 class __func<_Fp, _Alloc, _Rp(_A0)>
@@ -399,18 +399,18 @@ class __func<_Fp, _Alloc, _Rp(_A0)>
 {
     __compressed_pair<_Fp, _Alloc> __f_;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f) : __f_(_VSTD::move(__f)) {}
-    _LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f, _Alloc __a)
-        : __f_(_VSTD::move(__f), _VSTD::move(__a)) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f) : __f_(_MUSEUM_VSTD::move(__f)) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f, _Alloc __a)
+        : __f_(_MUSEUM_VSTD::move(__f), _MUSEUM_VSTD::move(__a)) {}
     virtual __base<_Rp(_A0)>* __clone() const;
     virtual void __clone(__base<_Rp(_A0)>*) const;
     virtual void destroy();
     virtual void destroy_deallocate();
     virtual _Rp operator()(_A0);
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Fp, class _Alloc, class _Rp, class _A0>
@@ -457,7 +457,7 @@ __func<_Fp, _Alloc, _Rp(_A0)>::operator()(_A0 __a0)
     return _Invoker::__call(__f_.first(), __a0);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp, class _A0>
 const void*
@@ -475,7 +475,7 @@ __func<_Fp, _Alloc, _Rp(_A0)>::target_type() const
     return typeid(_Fp);
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1>
 class __func<_Fp, _Alloc, _Rp(_A0, _A1)>
@@ -483,18 +483,18 @@ class __func<_Fp, _Alloc, _Rp(_A0, _A1)>
 {
     __compressed_pair<_Fp, _Alloc> __f_;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f) : __f_(_VSTD::move(__f)) {}
-    _LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f, _Alloc __a)
-        : __f_(_VSTD::move(__f), _VSTD::move(__a)) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f) : __f_(_MUSEUM_VSTD::move(__f)) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f, _Alloc __a)
+        : __f_(_MUSEUM_VSTD::move(__f), _MUSEUM_VSTD::move(__a)) {}
     virtual __base<_Rp(_A0, _A1)>* __clone() const;
     virtual void __clone(__base<_Rp(_A0, _A1)>*) const;
     virtual void destroy();
     virtual void destroy_deallocate();
     virtual _Rp operator()(_A0, _A1);
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1>
@@ -541,7 +541,7 @@ __func<_Fp, _Alloc, _Rp(_A0, _A1)>::operator()(_A0 __a0, _A1 __a1)
     return _Invoker::__call(__f_.first(), __a0, __a1);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1>
 const void*
@@ -559,7 +559,7 @@ __func<_Fp, _Alloc, _Rp(_A0, _A1)>::target_type() const
     return typeid(_Fp);
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1, class _A2>
 class __func<_Fp, _Alloc, _Rp(_A0, _A1, _A2)>
@@ -567,18 +567,18 @@ class __func<_Fp, _Alloc, _Rp(_A0, _A1, _A2)>
 {
     __compressed_pair<_Fp, _Alloc> __f_;
 public:
-    _LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f) : __f_(_VSTD::move(__f)) {}
-    _LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f, _Alloc __a)
-        : __f_(_VSTD::move(__f), _VSTD::move(__a)) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f) : __f_(_MUSEUM_VSTD::move(__f)) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit __func(_Fp __f, _Alloc __a)
+        : __f_(_MUSEUM_VSTD::move(__f), _MUSEUM_VSTD::move(__a)) {}
     virtual __base<_Rp(_A0, _A1, _A2)>* __clone() const;
     virtual void __clone(__base<_Rp(_A0, _A1, _A2)>*) const;
     virtual void destroy();
     virtual void destroy_deallocate();
     virtual _Rp operator()(_A0, _A1, _A2);
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     virtual const void* target(const type_info&) const;
     virtual const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1, class _A2>
@@ -625,7 +625,7 @@ __func<_Fp, _Alloc, _Rp(_A0, _A1, _A2)>::operator()(_A0 __a0, _A1 __a1, _A2 __a2
     return _Invoker::__call(__f_.first(), __a0, __a1, __a2);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Fp, class _Alloc, class _Rp, class _A0, class _A1, class _A2>
 const void*
@@ -643,42 +643,42 @@ __func<_Fp, _Alloc, _Rp(_A0, _A1, _A2)>::target_type() const
     return typeid(_Fp);
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 }  // __function
 
 template<class _Rp>
-class _LIBCPP_TYPE_VIS_ONLY function<_Rp()>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY function<_Rp()>
 {
     typedef __function::__base<_Rp()> __base;
     aligned_storage<3*sizeof(void*)>::type __buf_;
     __base* __f_;
 
     template <class _Fp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const _Fp&) {return true;}
     template <class _R2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (*__p)()) {return __p;}
     template <class _R2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const function<_R2()>& __p) {return __p;}
 public:
     typedef _Rp result_type;
 
     // 20.7.16.2.1, construct/copy/destroy:
-    _LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
-    _LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
     function(const function&);
     template<class _Fp>
       function(_Fp,
                typename enable_if<!is_integral<_Fp>::value>::type* = 0);
 
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&) : __f_(0) {}
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&, nullptr_t) : __f_(0) {}
     template<class _Alloc>
       function(allocator_arg_t, const _Alloc&, const function&);
@@ -701,12 +701,12 @@ public:
     // 20.7.16.2.2, function modifiers:
     void swap(function&);
     template<class _Fp, class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       void assign(_Fp __f, const _Alloc& __a)
         {function(allocator_arg, __a, __f).swap(*this);}
 
     // 20.7.16.2.3, function capacity:
-    _LIBCPP_INLINE_VISIBILITY operator bool() const {return __f_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY operator bool() const {return __f_;}
 
 private:
     // deleted overloads close possible hole in the type system
@@ -718,12 +718,12 @@ public:
     // 20.7.16.2.4, function invocation:
     _Rp operator()() const;
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
     const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp>
@@ -799,7 +799,7 @@ function<_Rp()>::function(allocator_arg_t, const _Alloc& __a0, _Fp __f,
         else
         {
             typedef typename __alloc_traits::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
                 rebind_alloc<_FF>
 #else
                 rebind_alloc<_FF>::other
@@ -842,7 +842,7 @@ typename enable_if
 >::type
 function<_Rp()>::operator=(_Fp __f)
 {
-    function(_VSTD::move(__f)).swap(*this);
+    function(_MUSEUM_VSTD::move(__f)).swap(*this);
     return *this;
 }
 
@@ -889,21 +889,21 @@ function<_Rp()>::swap(function& __f)
         __f_ = (__base*)&__buf_;
     }
     else
-        _VSTD::swap(__f_, __f.__f_);
+        _MUSEUM_VSTD::swap(__f_, __f.__f_);
 }
 
 template<class _Rp>
 _Rp
 function<_Rp()>::operator()() const
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     if (__f_ == 0)
         throw bad_function_call();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return (*__f_)();
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp>
 const facebook::museum::MUSEUM_VERSION::std::type_info&
@@ -934,10 +934,10 @@ function<_Rp()>::target() const
     return (const _Tp*)__f_->target(typeid(_Tp));
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0>
-class _LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0)>
     : public unary_function<_A0, _Rp>
 {
     typedef __function::__base<_Rp(_A0)> __base;
@@ -945,42 +945,42 @@ class _LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0)>
     __base* __f_;
 
     template <class _Fp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const _Fp&) {return true;}
     template <class _R2, class _B0>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (*__p)(_B0)) {return __p;}
     template <class _R2, class _Cp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)()) {return __p;}
     template <class _R2, class _Cp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)() const) {return __p;}
     template <class _R2, class _Cp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)() volatile) {return __p;}
     template <class _R2, class _Cp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)() const volatile) {return __p;}
     template <class _R2, class _B0>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const function<_R2(_B0)>& __p) {return __p;}
 public:
     typedef _Rp result_type;
 
     // 20.7.16.2.1, construct/copy/destroy:
-    _LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
-    _LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
     function(const function&);
     template<class _Fp>
       function(_Fp,
                typename enable_if<!is_integral<_Fp>::value>::type* = 0);
 
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&) : __f_(0) {}
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&, nullptr_t) : __f_(0) {}
     template<class _Alloc>
       function(allocator_arg_t, const _Alloc&, const function&);
@@ -1003,12 +1003,12 @@ public:
     // 20.7.16.2.2, function modifiers:
     void swap(function&);
     template<class _Fp, class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       void assign(_Fp __f, const _Alloc& __a)
         {function(allocator_arg, __a, __f).swap(*this);}
 
     // 20.7.16.2.3, function capacity:
-    _LIBCPP_INLINE_VISIBILITY operator bool() const {return __f_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY operator bool() const {return __f_;}
 
 private:
     // deleted overloads close possible hole in the type system
@@ -1020,12 +1020,12 @@ public:
     // 20.7.16.2.4, function invocation:
     _Rp operator()(_A0) const;
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
     const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp, class _A0>
@@ -1101,7 +1101,7 @@ function<_Rp(_A0)>::function(allocator_arg_t, const _Alloc& __a0, _Fp __f,
         else
         {
             typedef typename __alloc_traits::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
                 rebind_alloc<_FF>
 #else
                 rebind_alloc<_FF>::other
@@ -1144,7 +1144,7 @@ typename enable_if
 >::type
 function<_Rp(_A0)>::operator=(_Fp __f)
 {
-    function(_VSTD::move(__f)).swap(*this);
+    function(_MUSEUM_VSTD::move(__f)).swap(*this);
     return *this;
 }
 
@@ -1191,21 +1191,21 @@ function<_Rp(_A0)>::swap(function& __f)
         __f_ = (__base*)&__buf_;
     }
     else
-        _VSTD::swap(__f_, __f.__f_);
+        _MUSEUM_VSTD::swap(__f_, __f.__f_);
 }
 
 template<class _Rp, class _A0>
 _Rp
 function<_Rp(_A0)>::operator()(_A0 __a0) const
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     if (__f_ == 0)
         throw bad_function_call();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return (*__f_)(__a0);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0>
 const facebook::museum::MUSEUM_VERSION::std::type_info&
@@ -1236,10 +1236,10 @@ function<_Rp(_A0)>::target() const
     return (const _Tp*)__f_->target(typeid(_Tp));
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0, class _A1>
-class _LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0, _A1)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0, _A1)>
     : public binary_function<_A0, _A1, _Rp>
 {
     typedef __function::__base<_Rp(_A0, _A1)> __base;
@@ -1247,42 +1247,42 @@ class _LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0, _A1)>
     __base* __f_;
 
     template <class _Fp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const _Fp&) {return true;}
     template <class _R2, class _B0, class _B1>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (*__p)(_B0, _B1)) {return __p;}
     template <class _R2, class _Cp, class _B1>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1)) {return __p;}
     template <class _R2, class _Cp, class _B1>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1) const) {return __p;}
     template <class _R2, class _Cp, class _B1>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1) volatile) {return __p;}
     template <class _R2, class _Cp, class _B1>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1) const volatile) {return __p;}
     template <class _R2, class _B0, class _B1>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const function<_R2(_B0, _B1)>& __p) {return __p;}
 public:
     typedef _Rp result_type;
 
     // 20.7.16.2.1, construct/copy/destroy:
-    _LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
-    _LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
     function(const function&);
     template<class _Fp>
       function(_Fp,
                typename enable_if<!is_integral<_Fp>::value>::type* = 0);
 
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&) : __f_(0) {}
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&, nullptr_t) : __f_(0) {}
     template<class _Alloc>
       function(allocator_arg_t, const _Alloc&, const function&);
@@ -1305,7 +1305,7 @@ public:
     // 20.7.16.2.2, function modifiers:
     void swap(function&);
     template<class _Fp, class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       void assign(_Fp __f, const _Alloc& __a)
         {function(allocator_arg, __a, __f).swap(*this);}
 
@@ -1322,12 +1322,12 @@ public:
     // 20.7.16.2.4, function invocation:
     _Rp operator()(_A0, _A1) const;
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
     const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp, class _A0, class _A1>
@@ -1403,7 +1403,7 @@ function<_Rp(_A0, _A1)>::function(allocator_arg_t, const _Alloc& __a0, _Fp __f,
         else
         {
             typedef typename __alloc_traits::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
                 rebind_alloc<_FF>
 #else
                 rebind_alloc<_FF>::other
@@ -1446,7 +1446,7 @@ typename enable_if
 >::type
 function<_Rp(_A0, _A1)>::operator=(_Fp __f)
 {
-    function(_VSTD::move(__f)).swap(*this);
+    function(_MUSEUM_VSTD::move(__f)).swap(*this);
     return *this;
 }
 
@@ -1493,21 +1493,21 @@ function<_Rp(_A0, _A1)>::swap(function& __f)
         __f_ = (__base*)&__buf_;
     }
     else
-        _VSTD::swap(__f_, __f.__f_);
+        _MUSEUM_VSTD::swap(__f_, __f.__f_);
 }
 
 template<class _Rp, class _A0, class _A1>
 _Rp
 function<_Rp(_A0, _A1)>::operator()(_A0 __a0, _A1 __a1) const
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     if (__f_ == 0)
         throw bad_function_call();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return (*__f_)(__a0, __a1);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0, class _A1>
 const facebook::museum::MUSEUM_VERSION::std::type_info&
@@ -1538,52 +1538,52 @@ function<_Rp(_A0, _A1)>::target() const
     return (const _Tp*)__f_->target(typeid(_Tp));
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0, class _A1, class _A2>
-class _LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0, _A1, _A2)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY function<_Rp(_A0, _A1, _A2)>
 {
     typedef __function::__base<_Rp(_A0, _A1, _A2)> __base;
     aligned_storage<3*sizeof(void*)>::type __buf_;
     __base* __f_;
 
     template <class _Fp>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const _Fp&) {return true;}
     template <class _R2, class _B0, class _B1, class _B2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (*__p)(_B0, _B1, _B2)) {return __p;}
     template <class _R2, class _Cp, class _B1, class _B2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1, _B2)) {return __p;}
     template <class _R2, class _Cp, class _B1, class _B2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1, _B2) const) {return __p;}
     template <class _R2, class _Cp, class _B1, class _B2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1, _B2) volatile) {return __p;}
     template <class _R2, class _Cp, class _B1, class _B2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(_R2 (_Cp::*__p)(_B1, _B2) const volatile) {return __p;}
     template <class _R2, class _B0, class _B1, class _B2>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         static bool __not_null(const function<_R2(_B0, _B1, _B2)>& __p) {return __p;}
 public:
     typedef _Rp result_type;
 
     // 20.7.16.2.1, construct/copy/destroy:
-    _LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
-    _LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit function() : __f_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY function(nullptr_t) : __f_(0) {}
     function(const function&);
     template<class _Fp>
       function(_Fp,
                typename enable_if<!is_integral<_Fp>::value>::type* = 0);
 
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&) : __f_(0) {}
     template<class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       function(allocator_arg_t, const _Alloc&, nullptr_t) : __f_(0) {}
     template<class _Alloc>
       function(allocator_arg_t, const _Alloc&, const function&);
@@ -1606,12 +1606,12 @@ public:
     // 20.7.16.2.2, function modifiers:
     void swap(function&);
     template<class _Fp, class _Alloc>
-      _LIBCPP_INLINE_VISIBILITY
+      _MUSEUM_LIBCPP_INLINE_VISIBILITY
       void assign(_Fp __f, const _Alloc& __a)
         {function(allocator_arg, __a, __f).swap(*this);}
 
     // 20.7.16.2.3, function capacity:
-    _LIBCPP_INLINE_VISIBILITY operator bool() const {return __f_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY operator bool() const {return __f_;}
 
 private:
     // deleted overloads close possible hole in the type system
@@ -1623,12 +1623,12 @@ public:
     // 20.7.16.2.4, function invocation:
     _Rp operator()(_A0, _A1, _A2) const;
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
     // 20.7.16.2.5, function target access:
     const facebook::museum::MUSEUM_VERSION::std::type_info& target_type() const;
     template <typename _Tp> _Tp* target();
     template <typename _Tp> const _Tp* target() const;
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 };
 
 template<class _Rp, class _A0, class _A1, class _A2>
@@ -1705,7 +1705,7 @@ function<_Rp(_A0, _A1, _A2)>::function(allocator_arg_t, const _Alloc& __a0, _Fp 
         else
         {
             typedef typename __alloc_traits::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
                 rebind_alloc<_FF>
 #else
                 rebind_alloc<_FF>::other
@@ -1748,7 +1748,7 @@ typename enable_if
 >::type
 function<_Rp(_A0, _A1, _A2)>::operator=(_Fp __f)
 {
-    function(_VSTD::move(__f)).swap(*this);
+    function(_MUSEUM_VSTD::move(__f)).swap(*this);
     return *this;
 }
 
@@ -1795,21 +1795,21 @@ function<_Rp(_A0, _A1, _A2)>::swap(function& __f)
         __f_ = (__base*)&__buf_;
     }
     else
-        _VSTD::swap(__f_, __f.__f_);
+        _MUSEUM_VSTD::swap(__f_, __f.__f_);
 }
 
 template<class _Rp, class _A0, class _A1, class _A2>
 _Rp
 function<_Rp(_A0, _A1, _A2)>::operator()(_A0 __a0, _A1 __a1, _A2 __a2) const
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     if (__f_ == 0)
         throw bad_function_call();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return (*__f_)(__a0, __a1, __a2);
 }
 
-#ifndef _LIBCPP_NO_RTTI
+#ifndef _MUSEUM_LIBCPP_NO_RTTI
 
 template<class _Rp, class _A0, class _A1, class _A2>
 const facebook::museum::MUSEUM_VERSION::std::type_info&
@@ -1840,40 +1840,40 @@ function<_Rp(_A0, _A1, _A2)>::target() const
     return (const _Tp*)__f_->target(typeid(_Tp));
 }
 
-#endif  // _LIBCPP_NO_RTTI
+#endif  // _MUSEUM_LIBCPP_NO_RTTI
 
 template <class _Fp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator==(const function<_Fp>& __f, nullptr_t) {return !__f;}
 
 template <class _Fp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator==(nullptr_t, const function<_Fp>& __f) {return !__f;}
 
 template <class _Fp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator!=(const function<_Fp>& __f, nullptr_t) {return (bool)__f;}
 
 template <class _Fp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator!=(nullptr_t, const function<_Fp>& __f) {return (bool)__f;}
 
 template <class _Fp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(function<_Fp>& __x, function<_Fp>& __y)
 {return __x.swap(__y);}
 
 template<class _Tp> struct __is_bind_expression : public false_type {};
-template<class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_bind_expression
+template<class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_bind_expression
     : public __is_bind_expression<typename remove_cv<_Tp>::type> {};
 
 template<class _Tp> struct __is_placeholder : public integral_constant<int, 0> {};
-template<class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_placeholder
+template<class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_placeholder
     : public __is_placeholder<typename remove_cv<_Tp>::type> {};
 
 namespace placeholders
@@ -1899,7 +1899,7 @@ struct __is_placeholder<placeholders::__ph<_Np> >
     : public integral_constant<int, _Np> {};
 
 template <class _Tp, class _Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp&
 __mu(reference_wrapper<_Tp> __t, _Uj&)
 {
@@ -1916,15 +1916,15 @@ struct __mu_return1<true, _Ti, _Uj...>
 };
 
 template <class _Ti, class ..._Uj, size_t ..._Indx>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename __mu_return1<true, _Ti, _Uj...>::type
 __mu_expand(_Ti& __ti, tuple<_Uj...>&& __uj, __tuple_indices<_Indx...>)
 {
-    __ti(_VSTD::forward<typename tuple_element<_Indx, _Uj>::type>(_VSTD::get<_Indx>(__uj))...);
+    __ti(_MUSEUM_VSTD::forward<typename tuple_element<_Indx, _Uj>::type>(_MUSEUM_VSTD::get<_Indx>(__uj))...);
 }
 
 template <class _Ti, class ..._Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_bind_expression<_Ti>::value,
@@ -1946,7 +1946,7 @@ struct __mu_return2<true, _Ti, _Uj>
 };
 
 template <class _Ti, class _Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     0 < is_placeholder<_Ti>::value,
@@ -1956,13 +1956,13 @@ __mu(_Ti&, _Uj& __uj)
 {
     const size_t _Indx = is_placeholder<_Ti>::value - 1;
     // compiler bug workaround
-    typename tuple_element<_Indx, _Uj>::type __t = _VSTD::get<_Indx>(__uj);
+    typename tuple_element<_Indx, _Uj>::type __t = _MUSEUM_VSTD::get<_Indx>(__uj);
     return __t;
-//    return _VSTD::forward<typename tuple_element<_Indx, _Uj>::type>(_VSTD::get<_Indx>(__uj));
+//    return _MUSEUM_VSTD::forward<typename tuple_element<_Indx, _Uj>::type>(_MUSEUM_VSTD::get<_Indx>(__uj));
 }
 
 template <class _Ti, class _Uj>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     !is_bind_expression<_Ti>::value &&
@@ -2044,12 +2044,12 @@ struct __bind_return<_Fp, const tuple<_BoundArgs...>, _TupleUj>
 };
 
 template <class _Fp, class _BoundArgs, size_t ..._Indx, class _Args>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename __bind_return<_Fp, _BoundArgs, _Args>::type
 __apply_functor(_Fp& __f, _BoundArgs& __bound_args, __tuple_indices<_Indx...>,
                 _Args&& __args)
 {
-    return __invoke(__f, __mu(_VSTD::get<_Indx>(__bound_args), __args)...);
+    return __invoke(__f, __mu(_MUSEUM_VSTD::get<_Indx>(__bound_args), __args)...);
 }
 
 template<class _Fp, class ..._BoundArgs>
@@ -2062,8 +2062,8 @@ class __bind
 public:
     template <class _Gp, class ..._BA>
       explicit __bind(_Gp&& __f, _BA&& ...__bound_args)
-        : __f_(_VSTD::forward<_Gp>(__f)),
-          __bound_args_(_VSTD::forward<_BA>(__bound_args)...) {}
+        : __f_(_MUSEUM_VSTD::forward<_Gp>(__f)),
+          __bound_args_(_MUSEUM_VSTD::forward<_BA>(__bound_args)...) {}
 
     template <class ..._Args>
         typename __bind_return<_Fp, tuple<_BoundArgs...>, tuple<_Args&&...> >::type
@@ -2096,21 +2096,21 @@ public:
 
     template <class _Gp, class ..._BA>
       explicit __bind_r(_Gp&& __f, _BA&& ...__bound_args)
-        : base(_VSTD::forward<_Gp>(__f),
-               _VSTD::forward<_BA>(__bound_args)...) {}
+        : base(_MUSEUM_VSTD::forward<_Gp>(__f),
+               _MUSEUM_VSTD::forward<_BA>(__bound_args)...) {}
 
     template <class ..._Args>
         result_type
         operator()(_Args&& ...__args)
         {
-            return base::operator()(_VSTD::forward<_Args>(__args)...);
+            return base::operator()(_MUSEUM_VSTD::forward<_Args>(__args)...);
         }
 
     template <class ..._Args>
         result_type
         operator()(_Args&& ...__args) const
         {
-            return base::operator()(_VSTD::forward<_Args>(__args)...);
+            return base::operator()(_MUSEUM_VSTD::forward<_Args>(__args)...);
         }
 };
 
@@ -2118,22 +2118,22 @@ template<class _Rp, class _Fp, class ..._BoundArgs>
 struct __is_bind_expression<__bind_r<_Rp, _Fp, _BoundArgs...> > : public true_type {};
 
 template<class _Fp, class ..._BoundArgs>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __bind<typename decay<_Fp>::type, typename decay<_BoundArgs>::type...>
 bind(_Fp&& __f, _BoundArgs&&... __bound_args)
 {
     typedef __bind<typename decay<_Fp>::type, typename decay<_BoundArgs>::type...> type;
-    return type(_VSTD::forward<_Fp>(__f), _VSTD::forward<_BoundArgs>(__bound_args)...);
+    return type(_MUSEUM_VSTD::forward<_Fp>(__f), _MUSEUM_VSTD::forward<_BoundArgs>(__bound_args)...);
 }
 
 template<class _Rp, class _Fp, class ..._BoundArgs>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __bind_r<_Rp, typename decay<_Fp>::type, typename decay<_BoundArgs>::type...>
 bind(_Fp&& __f, _BoundArgs&&... __bound_args)
 {
     typedef __bind_r<_Rp, typename decay<_Fp>::type, typename decay<_BoundArgs>::type...> type;
-    return type(_VSTD::forward<_Fp>(__f), _VSTD::forward<_BoundArgs>(__bound_args)...);
+    return type(_MUSEUM_VSTD::forward<_Fp>(__f), _MUSEUM_VSTD::forward<_BoundArgs>(__bound_args)...);
 }
 */
 
-#endif  // _LIBCPP_FUNCTIONAL_03
+#endif  // _MUSEUM_LIBCPP_FUNCTIONAL_03

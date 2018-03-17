@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP___TREE
-#define _LIBCPP___TREE
+#ifndef _MUSEUM_LIBCPP___TREE
+#define _MUSEUM_LIBCPP___TREE
 
 #include <museum/5.1.1/external/libcxx/__config>
 #include <museum/5.1.1/external/libcxx/iterator>
@@ -17,25 +17,25 @@
 #include <museum/5.1.1/external/libcxx/stdexcept>
 #include <museum/5.1.1/external/libcxx/algorithm>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _Tp, class _Compare, class _Allocator> class __tree;
 template <class _Tp, class _NodePtr, class _DiffType>
-    class _LIBCPP_TYPE_VIS_ONLY __tree_iterator;
+    class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __tree_iterator;
 template <class _Tp, class _ConstNodePtr, class _DiffType>
-    class _LIBCPP_TYPE_VIS_ONLY __tree_const_iterator;
+    class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __tree_const_iterator;
 template <class _Key, class _Tp, class _Compare, class _Allocator>
-    class _LIBCPP_TYPE_VIS_ONLY map;
+    class _MUSEUM_LIBCPP_TYPE_VIS_ONLY map;
 template <class _Key, class _Tp, class _Compare, class _Allocator>
-    class _LIBCPP_TYPE_VIS_ONLY multimap;
+    class _MUSEUM_LIBCPP_TYPE_VIS_ONLY multimap;
 template <class _Key, class _Compare, class _Allocator>
-    class _LIBCPP_TYPE_VIS_ONLY set;
+    class _MUSEUM_LIBCPP_TYPE_VIS_ONLY set;
 template <class _Key, class _Compare, class _Allocator>
-    class _LIBCPP_TYPE_VIS_ONLY multiset;
+    class _MUSEUM_LIBCPP_TYPE_VIS_ONLY multiset;
 
 /*
 
@@ -61,7 +61,7 @@ __root, have a non-null __parent_ field.
 // Returns:  true if __x is a left child of its parent, else false
 // Precondition:  __x != nullptr.
 template <class _NodePtr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 __tree_is_left_child(_NodePtr __x) _NOEXCEPT
 {
@@ -127,7 +127,7 @@ __tree_invariant(_NodePtr __root)
 // Returns:  pointer to the left-most node under __x.
 // Precondition:  __x != nullptr.
 template <class _NodePtr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _NodePtr
 __tree_min(_NodePtr __x) _NOEXCEPT
 {
@@ -139,7 +139,7 @@ __tree_min(_NodePtr __x) _NOEXCEPT
 // Returns:  pointer to the right-most node under __x.
 // Precondition:  __x != nullptr.
 template <class _NodePtr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _NodePtr
 __tree_max(_NodePtr __x) _NOEXCEPT
 {
@@ -521,17 +521,17 @@ private:
 public:
     bool __value_constructed;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __tree_node_destructor(allocator_type& __na) _NOEXCEPT
         : __na_(__na),
           __value_constructed(false)
         {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void operator()(pointer __p) _NOEXCEPT
     {
         if (__value_constructed)
-            __alloc_traits::destroy(__na_, _VSTD::addressof(__p->__value_));
+            __alloc_traits::destroy(__na_, _MUSEUM_VSTD::addressof(__p->__value_));
         if (__p)
             __alloc_traits::deallocate(__na_, __p, 1);
     }
@@ -548,7 +548,7 @@ public:
     typedef _Pointer pointer;
     pointer __left_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_end_node() _NOEXCEPT : __left_() {}
 };
 
@@ -557,7 +557,7 @@ class __tree_node_base
     : public __tree_end_node
              <
                 typename pointer_traits<_VoidPtr>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
                      rebind<__tree_node_base<_VoidPtr> >
 #else
                      rebind<__tree_node_base<_VoidPtr> >::other
@@ -568,14 +568,14 @@ class __tree_node_base
     __tree_node_base& operator=(const __tree_node_base&);
 public:
     typedef typename pointer_traits<_VoidPtr>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<__tree_node_base>
 #else
             rebind<__tree_node_base>::other
 #endif
                                                 pointer;
     typedef typename pointer_traits<_VoidPtr>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<const __tree_node_base>
 #else
             rebind<const __tree_node_base>::other
@@ -587,7 +587,7 @@ public:
     pointer __parent_;
     bool __is_black_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_node_base() _NOEXCEPT
         : __right_(), __parent_(), __is_black_(false) {}
 };
@@ -602,23 +602,23 @@ public:
 
     value_type __value_;
 
-#if !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_VARIADICS)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_MUSEUM_LIBCPP_HAS_NO_VARIADICS)
     template <class ..._Args>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         explicit __tree_node(_Args&& ...__args)
-            : __value_(_VSTD::forward<_Args>(__args)...) {}
-#else  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_VARIADICS)
-    _LIBCPP_INLINE_VISIBILITY
+            : __value_(_MUSEUM_VSTD::forward<_Args>(__args)...) {}
+#else  // !defined(_MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_MUSEUM_LIBCPP_HAS_NO_VARIADICS)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __tree_node(const value_type& __v)
             : __value_(__v) {}
-#endif  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_VARIADICS)
+#endif  // !defined(_MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_MUSEUM_LIBCPP_HAS_NO_VARIADICS)
 };
 
-template <class _TreeIterator> class _LIBCPP_TYPE_VIS_ONLY __map_iterator;
-template <class _TreeIterator> class _LIBCPP_TYPE_VIS_ONLY __map_const_iterator;
+template <class _TreeIterator> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __map_iterator;
+template <class _TreeIterator> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __map_const_iterator;
 
 template <class _Tp, class _NodePtr, class _DiffType>
-class _LIBCPP_TYPE_VIS_ONLY __tree_iterator
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __tree_iterator
 {
     typedef _NodePtr                                              __node_pointer;
     typedef typename pointer_traits<__node_pointer>::element_type __node;
@@ -634,66 +634,66 @@ public:
     typedef _DiffType                  difference_type;
     typedef value_type&                reference;
     typedef typename pointer_traits<__node_pointer>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<value_type>
 #else
             rebind<value_type>::other
 #endif
                                        pointer;
 
-    _LIBCPP_INLINE_VISIBILITY __tree_iterator() _NOEXCEPT
-#if _LIBCPP_STD_VER > 11
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY __tree_iterator() _NOEXCEPT
+#if _MUSEUM_LIBCPP_STD_VER > 11
     : __ptr_(nullptr)
 #endif
     {}
 
-    _LIBCPP_INLINE_VISIBILITY reference operator*() const {return __ptr_->__value_;}
-    _LIBCPP_INLINE_VISIBILITY pointer operator->() const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY reference operator*() const {return __ptr_->__value_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY pointer operator->() const
         {return pointer_traits<pointer>::pointer_to(__ptr_->__value_);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_iterator& operator++()
         {__ptr_ = static_cast<__node_pointer>(__tree_next(static_cast<__node_base_pointer>(__ptr_)));
          return *this;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_iterator operator++(int)
         {__tree_iterator __t(*this); ++(*this); return __t;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_iterator& operator--()
         {__ptr_ = static_cast<__node_pointer>(__tree_prev(static_cast<__node_base_pointer>(__ptr_)));
          return *this;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_iterator operator--(int)
         {__tree_iterator __t(*this); --(*this); return __t;}
 
-    friend _LIBCPP_INLINE_VISIBILITY 
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY 
         bool operator==(const __tree_iterator& __x, const __tree_iterator& __y)
         {return __x.__ptr_ == __y.__ptr_;}
-    friend _LIBCPP_INLINE_VISIBILITY
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY
         bool operator!=(const __tree_iterator& __x, const __tree_iterator& __y)
         {return !(__x == __y);}
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __tree_iterator(__node_pointer __p) _NOEXCEPT : __ptr_(__p) {}
     template <class, class, class> friend class __tree;
-    template <class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY __tree_const_iterator;
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY __map_iterator;
-    template <class, class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY map;
-    template <class, class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY multimap;
-    template <class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY set;
-    template <class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY multiset;
+    template <class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __tree_const_iterator;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __map_iterator;
+    template <class, class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY map;
+    template <class, class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY multimap;
+    template <class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY set;
+    template <class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY multiset;
 };
 
 template <class _Tp, class _ConstNodePtr, class _DiffType>
-class _LIBCPP_TYPE_VIS_ONLY __tree_const_iterator
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __tree_const_iterator
 {
     typedef _ConstNodePtr                                         __node_pointer;
     typedef typename pointer_traits<__node_pointer>::element_type __node;
     typedef typename __node::base                                 __node_base;
     typedef typename pointer_traits<__node_pointer>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<__node_base>
 #else
             rebind<__node_base>::other
@@ -709,15 +709,15 @@ public:
     typedef _DiffType                        difference_type;
     typedef const value_type&                reference;
     typedef typename pointer_traits<__node_pointer>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<const value_type>
 #else
             rebind<const value_type>::other
 #endif
                                        pointer;
 
-    _LIBCPP_INLINE_VISIBILITY __tree_const_iterator() _NOEXCEPT
-#if _LIBCPP_STD_VER > 11
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY __tree_const_iterator() _NOEXCEPT
+#if _MUSEUM_LIBCPP_STD_VER > 11
     : __ptr_(nullptr)
 #endif
     {}
@@ -725,7 +725,7 @@ public:
 private:
     typedef typename remove_const<__node>::type  __non_const_node;
     typedef typename pointer_traits<__node_pointer>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<__non_const_node>
 #else
             rebind<__non_const_node>::other
@@ -734,47 +734,47 @@ private:
     typedef __tree_iterator<value_type, __non_const_node_pointer, difference_type>
                                                  __non_const_iterator;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_const_iterator(__non_const_iterator __p) _NOEXCEPT
         : __ptr_(__p.__ptr_) {}
 
-    _LIBCPP_INLINE_VISIBILITY reference operator*() const {return __ptr_->__value_;}
-    _LIBCPP_INLINE_VISIBILITY pointer operator->() const
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY reference operator*() const {return __ptr_->__value_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY pointer operator->() const
         {return pointer_traits<pointer>::pointer_to(__ptr_->__value_);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_const_iterator& operator++()
         {__ptr_ = static_cast<__node_pointer>(__tree_next(static_cast<__node_base_pointer>(__ptr_)));
          return *this;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_const_iterator operator++(int)
         {__tree_const_iterator __t(*this); ++(*this); return __t;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_const_iterator& operator--()
         {__ptr_ = static_cast<__node_pointer>(__tree_prev(static_cast<__node_base_pointer>(__ptr_)));
          return *this;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __tree_const_iterator operator--(int)
         {__tree_const_iterator __t(*this); --(*this); return __t;}
 
-    friend _LIBCPP_INLINE_VISIBILITY
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY
         bool operator==(const __tree_const_iterator& __x, const __tree_const_iterator& __y)
         {return __x.__ptr_ == __y.__ptr_;}
-    friend _LIBCPP_INLINE_VISIBILITY
+    friend _MUSEUM_LIBCPP_INLINE_VISIBILITY
         bool operator!=(const __tree_const_iterator& __x, const __tree_const_iterator& __y)
         {return !(__x == __y);}
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __tree_const_iterator(__node_pointer __p) _NOEXCEPT
         : __ptr_(__p) {}
     template <class, class, class> friend class __tree;
-    template <class, class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY map;
-    template <class, class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY multimap;
-    template <class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY set;
-    template <class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY multiset;
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY __map_const_iterator;
+    template <class, class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY map;
+    template <class, class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY multimap;
+    template <class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY set;
+    template <class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY multiset;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY __map_const_iterator;
 };
 
 template <class _Tp, class _Compare, class _Allocator>
@@ -795,7 +795,7 @@ public:
     typedef __tree_node<value_type, __void_pointer> __node;
     typedef __tree_node_base<__void_pointer>        __node_base;
     typedef typename __alloc_traits::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind_alloc<__node>
 #else
             rebind_alloc<__node>::other
@@ -809,14 +809,14 @@ public:
 private:
     typedef typename __node_base::base __end_node_t;
     typedef typename pointer_traits<__node_pointer>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<__end_node_t>
 #else
             rebind<__end_node_t>::other
 #endif
                                                      __end_node_ptr;
     typedef typename pointer_traits<__node_pointer>::template
-#ifndef _LIBCPP_HAS_NO_TEMPLATE_ALIASES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_TEMPLATE_ALIASES
             rebind<__end_node_t>
 #else
             rebind<__end_node_t>::other
@@ -828,7 +828,7 @@ private:
     __compressed_pair<size_type, value_compare>        __pair3_;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __node_pointer __end_node() _NOEXCEPT
     {
         return static_cast<__node_pointer>
@@ -836,7 +836,7 @@ public:
                    pointer_traits<__end_node_ptr>::pointer_to(__pair1_.first())
                );
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __node_const_pointer __end_node() const _NOEXCEPT
     {
         return static_cast<__node_const_pointer>
@@ -844,36 +844,36 @@ public:
                    pointer_traits<__end_node_const_ptr>::pointer_to(const_cast<__end_node_t&>(__pair1_.first()))
                );
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           __node_allocator& __node_alloc() _NOEXCEPT {return __pair1_.second();}
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const __node_allocator& __node_alloc() const _NOEXCEPT
         {return __pair1_.second();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           __node_pointer& __begin_node() _NOEXCEPT {return __begin_node_;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const __node_pointer& __begin_node() const _NOEXCEPT {return __begin_node_;}
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     allocator_type __alloc() const _NOEXCEPT
         {return allocator_type(__node_alloc());}
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           size_type& size() _NOEXCEPT {return __pair3_.first();}
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const size_type& size() const _NOEXCEPT {return __pair3_.first();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           value_compare& value_comp() _NOEXCEPT {return __pair3_.second();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const value_compare& value_comp() const _NOEXCEPT
         {return __pair3_.second();}
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __node_pointer __root() _NOEXCEPT
         {return static_cast<__node_pointer>      (__end_node()->__left_);}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __node_const_pointer __root() const _NOEXCEPT
         {return static_cast<__node_const_pointer>(__end_node()->__left_);}
 
@@ -892,7 +892,7 @@ public:
         void __assign_unique(_InputIterator __first, _InputIterator __last);
     template <class _InputIterator>
         void __assign_multi(_InputIterator __first, _InputIterator __last);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     __tree(__tree&& __t)
         _NOEXCEPT_(
             is_nothrow_move_constructible<__node_allocator>::value &&
@@ -903,20 +903,20 @@ public:
             __node_traits::propagate_on_container_move_assignment::value &&
             is_nothrow_move_assignable<value_compare>::value &&
             is_nothrow_move_assignable<__node_allocator>::value);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     ~__tree();
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           iterator begin()  _NOEXCEPT {return       iterator(__begin_node());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator begin() const _NOEXCEPT {return const_iterator(__begin_node());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
           iterator end() _NOEXCEPT {return       iterator(__end_node());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_iterator end() const _NOEXCEPT {return const_iterator(__end_node());}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_type max_size() const _NOEXCEPT
         {return __node_traits::max_size(__node_alloc());}
 
@@ -928,8 +928,8 @@ public:
             (!__node_traits::propagate_on_container_swap::value ||
              __is_nothrow_swappable<__node_allocator>::value));
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
     template <class... _Args>
         pair<iterator, bool>
         __emplace_unique(_Args&&... __args);
@@ -943,7 +943,7 @@ public:
     template <class... _Args>
         iterator
         __emplace_hint_multi(const_iterator __p, _Args&&... __args);
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
     template <class _Vp>
         pair<iterator, bool> __insert_unique(_Vp&& __v);
@@ -953,7 +953,7 @@ public:
         iterator __insert_multi(_Vp&& __v);
     template <class _Vp>
         iterator __insert_multi(const_iterator __p, _Vp&& __v);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     pair<iterator, bool> __insert_unique(const value_type& __v);
     iterator __insert_unique(const_iterator __p, const value_type& __v);
@@ -989,7 +989,7 @@ public:
         size_type __count_multi(const _Key& __k) const;
 
     template <class _Key>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         iterator lower_bound(const _Key& __v)
             {return __lower_bound(__v, __root(), __end_node());}
     template <class _Key>
@@ -997,7 +997,7 @@ public:
                                __node_pointer __root,
                                __node_pointer __result);
     template <class _Key>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         const_iterator lower_bound(const _Key& __v) const
             {return __lower_bound(__v, __root(), __end_node());}
     template <class _Key>
@@ -1005,7 +1005,7 @@ public:
                                      __node_const_pointer __root,
                                      __node_const_pointer __result) const;
     template <class _Key>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         iterator upper_bound(const _Key& __v)
             {return __upper_bound(__v, __root(), __end_node());}
     template <class _Key>
@@ -1013,7 +1013,7 @@ public:
                                __node_pointer __root,
                                __node_pointer __result);
     template <class _Key>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         const_iterator upper_bound(const _Key& __v) const
             {return __upper_bound(__v, __root(), __end_node());}
     template <class _Key>
@@ -1054,24 +1054,24 @@ private:
         __find_equal(const_iterator __hint, typename __node_base::pointer& __parent,
                      const _Key& __v);
 
-#if !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_VARIADICS)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_MUSEUM_LIBCPP_HAS_NO_VARIADICS)
     template <class ..._Args>
         __node_holder __construct_node(_Args&& ...__args);
-#else  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_VARIADICS)
+#else  // !defined(_MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_MUSEUM_LIBCPP_HAS_NO_VARIADICS)
         __node_holder __construct_node(const value_type& __v);
 #endif
 
     void destroy(__node_pointer __nd) _NOEXCEPT;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __copy_assign_alloc(const __tree& __t)
         {__copy_assign_alloc(__t, integral_constant<bool,
              __node_traits::propagate_on_container_copy_assignment::value>());}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __copy_assign_alloc(const __tree& __t, true_type)
         {__node_alloc() = __t.__node_alloc();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __copy_assign_alloc(const __tree& __t, false_type) {}
 
     void __move_assign(__tree& __t, false_type);
@@ -1079,7 +1079,7 @@ private:
         _NOEXCEPT_(is_nothrow_move_assignable<value_compare>::value &&
                    is_nothrow_move_assignable<__node_allocator>::value);
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __move_assign_alloc(__tree& __t)
         _NOEXCEPT_(
             !__node_traits::propagate_on_container_move_assignment::value ||
@@ -1087,28 +1087,28 @@ private:
         {__move_assign_alloc(__t, integral_constant<bool,
              __node_traits::propagate_on_container_move_assignment::value>());}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __move_assign_alloc(__tree& __t, true_type)
         _NOEXCEPT_(is_nothrow_move_assignable<__node_allocator>::value)
-        {__node_alloc() = _VSTD::move(__t.__node_alloc());}
-    _LIBCPP_INLINE_VISIBILITY
+        {__node_alloc() = _MUSEUM_VSTD::move(__t.__node_alloc());}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __move_assign_alloc(__tree& __t, false_type) _NOEXCEPT {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     static void __swap_alloc(__node_allocator& __x, __node_allocator& __y)
         _NOEXCEPT_(
             !__node_traits::propagate_on_container_swap::value ||
             __is_nothrow_swappable<__node_allocator>::value)
         {__swap_alloc(__x, __y, integral_constant<bool,
                       __node_traits::propagate_on_container_swap::value>());}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     static void __swap_alloc(__node_allocator& __x, __node_allocator& __y, true_type)
         _NOEXCEPT_(__is_nothrow_swappable<__node_allocator>::value)
         {
-            using _VSTD::swap;
+            using _MUSEUM_VSTD::swap;
             swap(__x, __y);
         }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     static void __swap_alloc(__node_allocator& __x, __node_allocator& __y, false_type)
         _NOEXCEPT
         {}
@@ -1116,8 +1116,8 @@ private:
     __node_pointer __detach();
     static __node_pointer __detach(__node_pointer);
 
-    template <class, class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY map;
-    template <class, class, class, class> friend class _LIBCPP_TYPE_VIS_ONLY multimap;
+    template <class, class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY map;
+    template <class, class, class, class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY multimap;
 };
 
 template <class _Tp, class _Compare, class _Allocator>
@@ -1214,10 +1214,10 @@ __tree<_Tp, _Compare, _Allocator>::__assign_unique(_InputIterator __first, _Inpu
     if (size() != 0)
     {
         __node_pointer __cache = __detach();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (; __cache != nullptr && __first != __last; ++__first)
             {
                 __cache->__value_ = *__first;
@@ -1225,7 +1225,7 @@ __tree<_Tp, _Compare, _Allocator>::__assign_unique(_InputIterator __first, _Inpu
                 __node_insert_unique(__cache);
                 __cache = __next;
             }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
@@ -1234,7 +1234,7 @@ __tree<_Tp, _Compare, _Allocator>::__assign_unique(_InputIterator __first, _Inpu
             destroy(__cache);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         if (__cache != nullptr)
         {
             while (__cache->__parent_ != nullptr)
@@ -1254,10 +1254,10 @@ __tree<_Tp, _Compare, _Allocator>::__assign_multi(_InputIterator __first, _Input
     if (size() != 0)
     {
         __node_pointer __cache = __detach();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (; __cache != nullptr && __first != __last; ++__first)
             {
                 __cache->__value_ = *__first;
@@ -1265,7 +1265,7 @@ __tree<_Tp, _Compare, _Allocator>::__assign_multi(_InputIterator __first, _Input
                 __node_insert_multi(__cache);
                 __cache = __next;
             }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
@@ -1274,7 +1274,7 @@ __tree<_Tp, _Compare, _Allocator>::__assign_multi(_InputIterator __first, _Input
             destroy(__cache);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         if (__cache != nullptr)
         {
             while (__cache->__parent_ != nullptr)
@@ -1295,16 +1295,16 @@ __tree<_Tp, _Compare, _Allocator>::__tree(const __tree& __t)
     __begin_node() = __end_node();
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Compare, class _Allocator>
 __tree<_Tp, _Compare, _Allocator>::__tree(__tree&& __t)
     _NOEXCEPT_(
         is_nothrow_move_constructible<__node_allocator>::value &&
         is_nothrow_move_constructible<value_compare>::value)
-    : __begin_node_(_VSTD::move(__t.__begin_node_)),
-      __pair1_(_VSTD::move(__t.__pair1_)),
-      __pair3_(_VSTD::move(__t.__pair3_))
+    : __begin_node_(_MUSEUM_VSTD::move(__t.__begin_node_)),
+      __pair1_(_MUSEUM_VSTD::move(__t.__pair1_)),
+      __pair3_(_MUSEUM_VSTD::move(__t.__pair3_))
 {
     if (size() == 0)
         __begin_node() = __end_node();
@@ -1320,7 +1320,7 @@ __tree<_Tp, _Compare, _Allocator>::__tree(__tree&& __t)
 template <class _Tp, class _Compare, class _Allocator>
 __tree<_Tp, _Compare, _Allocator>::__tree(__tree&& __t, const allocator_type& __a)
     : __pair1_(__node_allocator(__a)),
-      __pair3_(0, _VSTD::move(__t.value_comp()))
+      __pair3_(0, _MUSEUM_VSTD::move(__t.value_comp()))
 {
     if (__a == __t.__alloc())
     {
@@ -1353,7 +1353,7 @@ __tree<_Tp, _Compare, _Allocator>::__move_assign(__tree& __t, true_type)
     __begin_node_ = __t.__begin_node_;
     __pair1_.first() = __t.__pair1_.first();
     __move_assign_alloc(__t);
-    __pair3_ = _VSTD::move(__t.__pair3_);
+    __pair3_ = _MUSEUM_VSTD::move(__t.__pair3_);
     if (size() == 0)
         __begin_node() = __end_node();
     else
@@ -1373,23 +1373,23 @@ __tree<_Tp, _Compare, _Allocator>::__move_assign(__tree& __t, false_type)
         __move_assign(__t, true_type());
     else
     {
-        value_comp() = _VSTD::move(__t.value_comp());
+        value_comp() = _MUSEUM_VSTD::move(__t.value_comp());
         const_iterator __e = end();
         if (size() != 0)
         {
             __node_pointer __cache = __detach();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
             try
             {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
                 while (__cache != nullptr && __t.size() != 0)
                 {
-                    __cache->__value_ = _VSTD::move(__t.remove(__t.begin())->__value_);
+                    __cache->__value_ = _MUSEUM_VSTD::move(__t.remove(__t.begin())->__value_);
                     __node_pointer __next = __detach(__cache);
                     __node_insert_multi(__cache);
                     __cache = __next;
                 }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
             }
             catch (...)
             {
@@ -1398,7 +1398,7 @@ __tree<_Tp, _Compare, _Allocator>::__move_assign(__tree& __t, false_type)
                 destroy(__cache);
                 throw;
             }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             if (__cache != nullptr)
             {
                 while (__cache->__parent_ != nullptr)
@@ -1407,7 +1407,7 @@ __tree<_Tp, _Compare, _Allocator>::__move_assign(__tree& __t, false_type)
             }
         }
         while (__t.size() != 0)
-            __insert_multi(__e, _VSTD::move(__t.remove(__t.begin())->__value_));
+            __insert_multi(__e, _MUSEUM_VSTD::move(__t.remove(__t.begin())->__value_));
     }
 }
 
@@ -1425,7 +1425,7 @@ __tree<_Tp, _Compare, _Allocator>::operator=(__tree&& __t)
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Compare, class _Allocator>
 __tree<_Tp, _Compare, _Allocator>::~__tree()
@@ -1442,7 +1442,7 @@ __tree<_Tp, _Compare, _Allocator>::destroy(__node_pointer __nd) _NOEXCEPT
         destroy(static_cast<__node_pointer>(__nd->__left_));
         destroy(static_cast<__node_pointer>(__nd->__right_));
         __node_allocator& __na = __node_alloc();
-        __node_traits::destroy(__na, _VSTD::addressof(__nd->__value_));
+        __node_traits::destroy(__na, _MUSEUM_VSTD::addressof(__nd->__value_));
         __node_traits::deallocate(__na, __nd, 1);
     }
 }
@@ -1455,7 +1455,7 @@ __tree<_Tp, _Compare, _Allocator>::swap(__tree& __t)
         (!__node_traits::propagate_on_container_swap::value ||
          __is_nothrow_swappable<__node_allocator>::value))
 {
-    using _VSTD::swap;
+    using _MUSEUM_VSTD::swap;
     swap(__begin_node_, __t.__begin_node_);
     swap(__pair1_.first(), __t.__pair1_.first());
     __swap_alloc(__node_alloc(), __t.__node_alloc());
@@ -1679,10 +1679,10 @@ __tree<_Tp, _Compare, _Allocator>::__find_equal(const_iterator __hint,
     else if (value_comp()(*__hint, __v))  // check after
     {
         // *__hint < __v
-        const_iterator __next = _VSTD::next(__hint);
+        const_iterator __next = _MUSEUM_VSTD::next(__hint);
         if (__next == end() || value_comp()(__v, *__next))
         {
-            // *__hint < __v < *_VSTD::next(__hint)
+            // *__hint < __v < *_MUSEUM_VSTD::next(__hint)
             if (__hint.__ptr_->__right_ == nullptr)
             {
                 __parent = static_cast<__node_base_pointer>(__hint.__ptr_);
@@ -1718,8 +1718,8 @@ __tree<_Tp, _Compare, _Allocator>::__insert_node_at(__node_base_pointer __parent
     ++size();
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _Compare, class _Allocator>
 template <class ..._Args>
@@ -1728,7 +1728,7 @@ __tree<_Tp, _Compare, _Allocator>::__construct_node(_Args&& ...__args)
 {
     __node_allocator& __na = __node_alloc();
     __node_holder __h(__node_traits::allocate(__na, 1), _Dp(__na));
-    __node_traits::construct(__na, _VSTD::addressof(__h->__value_), _VSTD::forward<_Args>(__args)...);
+    __node_traits::construct(__na, _MUSEUM_VSTD::addressof(__h->__value_), _MUSEUM_VSTD::forward<_Args>(__args)...);
     __h.get_deleter().__value_constructed = true;
     return __h;
 }
@@ -1738,7 +1738,7 @@ template <class... _Args>
 pair<typename __tree<_Tp, _Compare, _Allocator>::iterator, bool>
 __tree<_Tp, _Compare, _Allocator>::__emplace_unique(_Args&&... __args)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Args>(__args)...);
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Args>(__args)...);
     __node_base_pointer __parent;
     __node_base_pointer& __child = __find_equal(__parent, __h->__value_);
     __node_pointer __r = static_cast<__node_pointer>(__child);
@@ -1757,7 +1757,7 @@ template <class... _Args>
 typename __tree<_Tp, _Compare, _Allocator>::iterator
 __tree<_Tp, _Compare, _Allocator>::__emplace_hint_unique(const_iterator __p, _Args&&... __args)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Args>(__args)...);
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Args>(__args)...);
     __node_base_pointer __parent;
     __node_base_pointer& __child = __find_equal(__p, __parent, __h->__value_);
     __node_pointer __r = static_cast<__node_pointer>(__child);
@@ -1774,7 +1774,7 @@ template <class... _Args>
 typename __tree<_Tp, _Compare, _Allocator>::iterator
 __tree<_Tp, _Compare, _Allocator>::__emplace_multi(_Args&&... __args)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Args>(__args)...);
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Args>(__args)...);
     __node_base_pointer __parent;
     __node_base_pointer& __child = __find_leaf_high(__parent, __h->__value_);
     __insert_node_at(__parent, __child, static_cast<__node_base_pointer>(__h.get()));
@@ -1787,21 +1787,21 @@ typename __tree<_Tp, _Compare, _Allocator>::iterator
 __tree<_Tp, _Compare, _Allocator>::__emplace_hint_multi(const_iterator __p,
                                                         _Args&&... __args)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Args>(__args)...);
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Args>(__args)...);
     __node_base_pointer __parent;
     __node_base_pointer& __child = __find_leaf(__p, __parent, __h->__value_);
     __insert_node_at(__parent, __child, static_cast<__node_base_pointer>(__h.get()));
     return iterator(static_cast<__node_pointer>(__h.release()));
 }
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _Compare, class _Allocator>
 template <class _Vp>
 pair<typename __tree<_Tp, _Compare, _Allocator>::iterator, bool>
 __tree<_Tp, _Compare, _Allocator>::__insert_unique(_Vp&& __v)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Vp>(__v));
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Vp>(__v));
     pair<iterator, bool> __r = __node_insert_unique(__h.get());
     if (__r.second)
         __h.release();
@@ -1813,7 +1813,7 @@ template <class _Vp>
 typename __tree<_Tp, _Compare, _Allocator>::iterator
 __tree<_Tp, _Compare, _Allocator>::__insert_unique(const_iterator __p, _Vp&& __v)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Vp>(__v));
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Vp>(__v));
     iterator __r = __node_insert_unique(__p, __h.get());
     if (__r.__ptr_ == __h.get())
         __h.release();
@@ -1825,7 +1825,7 @@ template <class _Vp>
 typename __tree<_Tp, _Compare, _Allocator>::iterator
 __tree<_Tp, _Compare, _Allocator>::__insert_multi(_Vp&& __v)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Vp>(__v));
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Vp>(__v));
     __node_base_pointer __parent;
     __node_base_pointer& __child = __find_leaf_high(__parent, __h->__value_);
     __insert_node_at(__parent, __child, static_cast<__node_base_pointer>(__h.get()));
@@ -1837,14 +1837,14 @@ template <class _Vp>
 typename __tree<_Tp, _Compare, _Allocator>::iterator
 __tree<_Tp, _Compare, _Allocator>::__insert_multi(const_iterator __p, _Vp&& __v)
 {
-    __node_holder __h = __construct_node(_VSTD::forward<_Vp>(__v));
+    __node_holder __h = __construct_node(_MUSEUM_VSTD::forward<_Vp>(__v));
     __node_base_pointer __parent;
     __node_base_pointer& __child = __find_leaf(__p, __parent, __h->__value_);
     __insert_node_at(__parent, __child, static_cast<__node_base_pointer>(__h.get()));
     return iterator(__h.release());
 }
 
-#else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#else  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Compare, class _Allocator>
 typename __tree<_Tp, _Compare, _Allocator>::__node_holder
@@ -1852,12 +1852,12 @@ __tree<_Tp, _Compare, _Allocator>::__construct_node(const value_type& __v)
 {
     __node_allocator& __na = __node_alloc();
     __node_holder __h(__node_traits::allocate(__na, 1), _Dp(__na));
-    __node_traits::construct(__na, _VSTD::addressof(__h->__value_), __v);
+    __node_traits::construct(__na, _MUSEUM_VSTD::addressof(__h->__value_), __v);
     __h.get_deleter().__value_constructed = true;
-    return _VSTD::move(__h);  // explicitly moved for C++03
+    return _MUSEUM_VSTD::move(__h);  // explicitly moved for C++03
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp, class _Compare, class _Allocator>
 pair<typename __tree<_Tp, _Compare, _Allocator>::iterator, bool>
@@ -1980,7 +1980,7 @@ __tree<_Tp, _Compare, _Allocator>::erase(const_iterator __p)
         __begin_node() = __r.__ptr_;
     --size();
     __node_allocator& __na = __node_alloc();
-    __node_traits::destroy(__na, const_cast<value_type*>(_VSTD::addressof(*__p)));
+    __node_traits::destroy(__na, const_cast<value_type*>(_MUSEUM_VSTD::addressof(*__p)));
     __tree_remove(__end_node()->__left_,
                   static_cast<__node_base_pointer>(__np));
     __node_traits::deallocate(__na, __np, 1);
@@ -2082,7 +2082,7 @@ __tree<_Tp, _Compare, _Allocator>::__count_multi(const _Key& __k) const
         else if (value_comp()(__rt->__value_, __k))
             __rt = static_cast<__node_const_pointer>(__rt->__right_);
         else
-            return _VSTD::distance(
+            return _MUSEUM_VSTD::distance(
                 __lower_bound(__k, static_cast<__node_const_pointer>(__rt->__left_), __rt),
                 __upper_bound(__k, static_cast<__node_const_pointer>(__rt->__right_), __result)
             );
@@ -2295,7 +2295,7 @@ __tree<_Tp, _Compare, _Allocator>::remove(const_iterator __p) _NOEXCEPT
 }
 
 template <class _Tp, class _Compare, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(__tree<_Tp, _Compare, _Allocator>& __x,
      __tree<_Tp, _Compare, _Allocator>& __y)
@@ -2304,6 +2304,6 @@ swap(__tree<_Tp, _Compare, _Allocator>& __x,
     __x.swap(__y);
 }
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP___TREE
+#endif  // _MUSEUM_LIBCPP___TREE

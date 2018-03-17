@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_STACK
-#define _LIBCPP_STACK
+#ifndef _MUSEUM_LIBCPP_STACK
+#define _MUSEUM_LIBCPP_STACK
 
 /*
     stack synopsis
@@ -85,26 +85,26 @@ template <class T, class Container>
 #include <museum/5.1.1/external/libcxx/__config>
 #include <museum/5.1.1/external/libcxx/deque>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-template <class _Tp, class _Container> class _LIBCPP_TYPE_VIS_ONLY stack;
+template <class _Tp, class _Container> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY stack;
 
 template <class _Tp, class _Container>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator==(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y);
 
 template <class _Tp, class _Container>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator< (const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y);
 
 template <class _Tp, class _Container = deque<_Tp> >
-class _LIBCPP_TYPE_VIS_ONLY stack
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY stack
 {
 public:
     typedef _Container                               container_type;
@@ -117,99 +117,99 @@ protected:
     container_type c;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     stack()
         _NOEXCEPT_(is_nothrow_default_constructible<container_type>::value)
         : c() {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     stack(const stack& __q) : c(__q.c) {}
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     stack(stack&& __q)
         _NOEXCEPT_(is_nothrow_move_constructible<container_type>::value)
-        : c(_VSTD::move(__q.c)) {}
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+        : c(_MUSEUM_VSTD::move(__q.c)) {}
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     stack& operator=(const stack& __q) {c = __q.c; return *this;}
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     stack& operator=(stack&& __q)
         _NOEXCEPT_(is_nothrow_move_assignable<container_type>::value)
-        {c = _VSTD::move(__q.c); return *this;}
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+        {c = _MUSEUM_VSTD::move(__q.c); return *this;}
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit stack(const container_type& __c) : c(__c) {}
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
-    explicit stack(container_type&& __c) : c(_VSTD::move(__c)) {}
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    explicit stack(container_type&& __c) : c(_MUSEUM_VSTD::move(__c)) {}
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     template <class _Alloc>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         explicit stack(const _Alloc& __a,
                        typename enable_if<uses_allocator<container_type,
                                                          _Alloc>::value>::type* = 0)
             : c(__a) {}
     template <class _Alloc>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         stack(const container_type& __c, const _Alloc& __a,
               typename enable_if<uses_allocator<container_type,
                                                 _Alloc>::value>::type* = 0)
             : c(__c, __a) {}
     template <class _Alloc>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         stack(const stack& __s, const _Alloc& __a,
               typename enable_if<uses_allocator<container_type,
                                                 _Alloc>::value>::type* = 0)
             : c(__s.c, __a) {}
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     template <class _Alloc>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         stack(container_type&& __c, const _Alloc& __a,
               typename enable_if<uses_allocator<container_type,
                                                 _Alloc>::value>::type* = 0)
-            : c(_VSTD::move(__c), __a) {}
+            : c(_MUSEUM_VSTD::move(__c), __a) {}
     template <class _Alloc>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         stack(stack&& __s, const _Alloc& __a,
               typename enable_if<uses_allocator<container_type,
                                                 _Alloc>::value>::type* = 0)
-            : c(_VSTD::move(__s.c), __a) {}
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+            : c(_MUSEUM_VSTD::move(__s.c), __a) {}
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool empty()     const      {return c.empty();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_type size() const      {return c.size();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     reference top()             {return c.back();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const_reference top() const {return c.back();}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void push(const value_type& __v) {c.push_back(__v);}
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
-    void push(value_type&& __v) {c.push_back(_VSTD::move(__v));}
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    void push(value_type&& __v) {c.push_back(_MUSEUM_VSTD::move(__v));}
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
     template <class... _Args>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         void emplace(_Args&&... __args)
-        {c.emplace_back(_VSTD::forward<_Args>(__args)...);}
-#endif  // _LIBCPP_HAS_NO_VARIADICS
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+        {c.emplace_back(_MUSEUM_VSTD::forward<_Args>(__args)...);}
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void pop() {c.pop_back();}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void swap(stack& __s)
         _NOEXCEPT_(__is_nothrow_swappable<container_type>::value)
     {
-        using _VSTD::swap;
+        using _MUSEUM_VSTD::swap;
         swap(c, __s.c);
     }
 
@@ -225,7 +225,7 @@ public:
 };
 
 template <class _Tp, class _Container>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator==(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 {
@@ -233,7 +233,7 @@ operator==(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 }
 
 template <class _Tp, class _Container>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator< (const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 {
@@ -241,7 +241,7 @@ operator< (const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 }
 
 template <class _Tp, class _Container>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator!=(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 {
@@ -249,7 +249,7 @@ operator!=(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 }
 
 template <class _Tp, class _Container>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator> (const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 {
@@ -257,7 +257,7 @@ operator> (const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 }
 
 template <class _Tp, class _Container>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator>=(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 {
@@ -265,7 +265,7 @@ operator>=(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 }
 
 template <class _Tp, class _Container>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 operator<=(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 {
@@ -273,7 +273,7 @@ operator<=(const stack<_Tp, _Container>& __x, const stack<_Tp, _Container>& __y)
 }
 
 template <class _Tp, class _Container>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(stack<_Tp, _Container>& __x, stack<_Tp, _Container>& __y)
     _NOEXCEPT_(_NOEXCEPT_(__x.swap(__y)))
@@ -282,11 +282,11 @@ swap(stack<_Tp, _Container>& __x, stack<_Tp, _Container>& __y)
 }
 
 template <class _Tp, class _Container, class _Alloc>
-struct _LIBCPP_TYPE_VIS_ONLY uses_allocator<stack<_Tp, _Container>, _Alloc>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY uses_allocator<stack<_Tp, _Container>, _Alloc>
     : public uses_allocator<_Container, _Alloc>
 {
 };
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_STACK
+#endif  // _MUSEUM_LIBCPP_STACK

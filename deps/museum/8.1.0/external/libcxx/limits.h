@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_LIMITS_H
-#define _LIBCPP_LIMITS_H
+#ifndef _MUSEUM_LIBCPP_LIMITS_H
+#define _MUSEUM_LIBCPP_LIMITS_H
 
 /*
     limits.h synopsis
@@ -40,7 +40,7 @@ Macros:
 
 #include <museum/8.1.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -62,4 +62,4 @@ Macros:
 #include <museum/8.1.0/bionic/libc/limits.h>
 #endif // __GNUC__
 
-#endif  // _LIBCPP_LIMITS_H
+#endif  // _MUSEUM_LIBCPP_LIMITS_H

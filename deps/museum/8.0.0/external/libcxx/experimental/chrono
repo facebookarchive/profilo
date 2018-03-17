@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_EXPERIMENTAL_CHRONO
-#define _LIBCPP_EXPERIMENTAL_CHRONO
+#ifndef _MUSEUM_LIBCPP_EXPERIMENTAL_CHRONO
+#define _MUSEUM_LIBCPP_EXPERIMENTAL_CHRONO
 
 /**
     experimental/chrono synopsis
@@ -37,23 +37,23 @@ inline namespace fundamentals_v1 {
 #include <museum/8.0.0/external/libcxx/experimental/__config>
 #include <museum/8.0.0/external/libcxx/experimental/chrono>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 
-_LIBCPP_BEGIN_NAMESPACE_CHRONO_LFTS
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_CHRONO_LFTS
 
-#ifndef _LIBCPP_HAS_NO_VARIABLE_TEMPLATES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIABLE_TEMPLATES
 
-template <class _Rep> _LIBCPP_CONSTEXPR bool treat_as_floating_point_v
+template <class _Rep> _MUSEUM_LIBCPP_CONSTEXPR bool treat_as_floating_point_v
     = treat_as_floating_point<_Rep>::value;
 
-#endif /* _LIBCPP_HAS_NO_VARIABLE_TEMPLATES */
+#endif /* _MUSEUM_LIBCPP_HAS_NO_VARIABLE_TEMPLATES */
 
-_LIBCPP_END_NAMESPACE_CHRONO_LFTS
+_MUSEUM_LIBCPP_END_NAMESPACE_CHRONO_LFTS
 
-#endif /* _LIBCPP_STD_VER > 11 */
+#endif /* _MUSEUM_LIBCPP_STD_VER > 11 */
 
-#endif /* _LIBCPP_EXPERIMENTAL_CHRONO */
+#endif /* _MUSEUM_LIBCPP_EXPERIMENTAL_CHRONO */

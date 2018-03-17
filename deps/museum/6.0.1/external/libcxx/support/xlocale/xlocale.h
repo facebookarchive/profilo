@@ -15,8 +15,8 @@
 // in the underlying libc.
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_XLOCALE_XLOCALE_H
-#define _LIBCPP_SUPPORT_XLOCALE_XLOCALE_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_XLOCALE_XLOCALE_H
+#define _MUSEUM_LIBCPP_SUPPORT_XLOCALE_XLOCALE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -191,4 +191,4 @@ static inline long double wcstold_l(const wchar_t *nptr, wchar_t **endptr,
 }
 #endif
 
-#endif // _LIBCPP_SUPPORT_XLOCALE_XLOCALE_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_XLOCALE_XLOCALE_H

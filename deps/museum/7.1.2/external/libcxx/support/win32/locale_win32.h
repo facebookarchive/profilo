@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
-#define _LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
+#define _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
 
 // ctype mask table defined in msvcrt.dll
 extern "C" unsigned short  __declspec(dllimport) _ctype[];
@@ -50,9 +50,9 @@ size_t wcsnrtombs_l( char *__restrict dst, const wchar_t **__restrict src,
                      size_t nwc, size_t len, mbstate_t *__restrict ps, locale_t loc);
 wint_t btowc_l( int c, locale_t loc );
 int wctob_l( wint_t c, locale_t loc );
-typedef _VSTD::remove_pointer<locale_t>::type __locale_struct;
-typedef _VSTD::unique_ptr<__locale_struct, decltype(&uselocale)> __locale_raii;
-inline _LIBCPP_ALWAYS_INLINE
+typedef _MUSEUM_VSTD::remove_pointer<locale_t>::type __locale_struct;
+typedef _MUSEUM_VSTD::unique_ptr<__locale_struct, decltype(&uselocale)> __locale_raii;
+inline _MUSEUM_LIBCPP_ALWAYS_INLINE
 decltype(MB_CUR_MAX) MB_CUR_MAX_L( locale_t __l )
 {
   __locale_raii __current( uselocale(__l), uselocale );
@@ -66,14 +66,14 @@ decltype(MB_CUR_MAX) MB_CUR_MAX_L( locale_t __l )
 // FIXME: current msvcrt does not know about long double
 #define strtold_l _strtod_l
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 int
 islower_l(int c, _locale_t loc)
 {
  return _islower_l((int)c, loc);
 }
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 int
 isupper_l(int c, _locale_t loc)
 {
@@ -120,10 +120,10 @@ inline int iswblank_l( wint_t c, locale_t /*loc*/ )
     return ( c == L' ' || c == L'\t' );
 }
 
-#if defined(_LIBCPP_MSVCRT)
+#if defined(_MUSEUM_LIBCPP_MSVCRT)
 inline int isblank( int c, locale_t /*loc*/ )
 { return ( c == ' ' || c == '\t' ); }
 inline int iswblank( wint_t c, locale_t /*loc*/ )
 { return ( c == L' ' || c == L'\t' ); }
-#endif // _LIBCPP_MSVCRT
-#endif // _LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
+#endif // _MUSEUM_LIBCPP_MSVCRT
+#endif // _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H

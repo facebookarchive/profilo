@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CFENV
-#define _LIBCPP_CFENV
+#ifndef _MUSEUM_LIBCPP_CFENV
+#define _MUSEUM_LIBCPP_CFENV
 
 /*
     cfenv synopsis
@@ -56,11 +56,11 @@ int feupdateenv(const fenv_t* envp);
 #include <museum/7.1.2/external/libcxx/__config>
 #include <museum/7.1.2/bionic/libm/fenv.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using ::fenv_t;
 using ::fexcept_t;
@@ -77,6 +77,6 @@ using ::feholdexcept;
 using ::fesetenv;
 using ::feupdateenv;
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CFENV
+#endif  // _MUSEUM_LIBCPP_CFENV

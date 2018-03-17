@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SHARED_MUTEX
-#define _LIBCPP_SHARED_MUTEX
+#ifndef _MUSEUM_LIBCPP_SHARED_MUTEX
+#define _MUSEUM_LIBCPP_SHARED_MUTEX
 
 /*
     shared_mutex synopsis
@@ -102,19 +102,19 @@ template <class Mutex>
 
 #include <museum/5.0.0/external/libcxx/__config>
 
-#if _LIBCPP_STD_VER > 11 || defined(_LIBCPP_BUILDING_SHARED_MUTEX)
+#if _MUSEUM_LIBCPP_STD_VER > 11 || defined(_MUSEUM_LIBCPP_BUILDING_SHARED_MUTEX)
 
 #include <museum/5.0.0/external/libcxx/__mutex_base>
 
 #include <museum/5.0.0/external/libcxx/__undef_min_max>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-class _LIBCPP_TYPE_VIS shared_timed_mutex
+class _MUSEUM_LIBCPP_TYPE_VIS shared_timed_mutex
 {
     mutex               __mut_;
     condition_variable  __gate1_;
@@ -125,7 +125,7 @@ class _LIBCPP_TYPE_VIS shared_timed_mutex
     static const unsigned __n_readers_ = ~__write_entered_;
 public:
     shared_timed_mutex();
-    _LIBCPP_INLINE_VISIBILITY ~shared_timed_mutex() = default;
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY ~shared_timed_mutex() = default;
 
     shared_timed_mutex(const shared_timed_mutex&) = delete;
     shared_timed_mutex& operator=(const shared_timed_mutex&) = delete;
@@ -134,7 +134,7 @@ public:
     void lock();
     bool try_lock();
     template <class _Rep, class _Period>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         bool
         try_lock_for(const chrono::duration<_Rep, _Period>& __rel_time)
         {
@@ -149,7 +149,7 @@ public:
     void lock_shared();
     bool try_lock_shared();
     template <class _Rep, class _Period>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         bool
         try_lock_shared_for(const chrono::duration<_Rep, _Period>& __rel_time)
         {
@@ -231,38 +231,38 @@ private:
     bool __owns_;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     shared_lock() noexcept
         : __m_(nullptr),
           __owns_(false)
         {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit shared_lock(mutex_type& __m)
         : __m_(&__m),
           __owns_(true)
         {__m_->lock_shared();}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     shared_lock(mutex_type& __m, defer_lock_t) noexcept
         : __m_(&__m),
           __owns_(false)
         {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     shared_lock(mutex_type& __m, try_to_lock_t)
         : __m_(&__m),
           __owns_(__m.try_lock_shared())
         {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     shared_lock(mutex_type& __m, adopt_lock_t)
         : __m_(&__m),
           __owns_(true)
         {}
 
     template <class _Clock, class _Duration>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         shared_lock(mutex_type& __m,
                     const chrono::time_point<_Clock, _Duration>& __abs_time)
             : __m_(&__m),
@@ -270,14 +270,14 @@ public:
             {}
 
     template <class _Rep, class _Period>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         shared_lock(mutex_type& __m,
                     const chrono::duration<_Rep, _Period>& __rel_time)
             : __m_(&__m),
               __owns_(__m.try_lock_shared_for(__rel_time))
             {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     ~shared_lock()
     {
         if (__owns_)
@@ -287,7 +287,7 @@ public:
     shared_lock(shared_lock const&) = delete;
     shared_lock& operator=(shared_lock const&) = delete;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     shared_lock(shared_lock&& __u) noexcept
         : __m_(__u.__m_),
           __owns_(__u.__owns_)
@@ -296,7 +296,7 @@ public:
             __u.__owns_ = false;
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     shared_lock& operator=(shared_lock&& __u) noexcept
     {
         if (__owns_)
@@ -319,14 +319,14 @@ public:
     void unlock();
 
     // Setters
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void swap(shared_lock& __u) noexcept
     {
-        _VSTD::swap(__m_, __u.__m_);
-        _VSTD::swap(__owns_, __u.__owns_);
+        _MUSEUM_VSTD::swap(__m_, __u.__m_);
+        _MUSEUM_VSTD::swap(__owns_, __u.__owns_);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     mutex_type* release() noexcept
     {
         mutex_type* __m = __m_;
@@ -336,13 +336,13 @@ public:
     }
 
     // Getters
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool owns_lock() const noexcept {return __owns_;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit operator bool () const noexcept {return __owns_;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     mutex_type* mutex() const noexcept {return __m_;}
 };
 
@@ -407,13 +407,13 @@ shared_lock<_Mutex>::unlock()
 }
 
 template <class _Mutex>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(shared_lock<_Mutex>& __x, shared_lock<_Mutex>& __y) noexcept
     {__x.swap(__y);}
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_STD_VER > 11
+#endif  // _MUSEUM_LIBCPP_STD_VER > 11
 
-#endif  // _LIBCPP_SHARED_MUTEX
+#endif  // _MUSEUM_LIBCPP_SHARED_MUTEX

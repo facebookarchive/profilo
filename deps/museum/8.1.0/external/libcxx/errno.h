@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_ERRNO_H
-#define _LIBCPP_ERRNO_H
+#ifndef _MUSEUM_LIBCPP_ERRNO_H
+#define _MUSEUM_LIBCPP_ERRNO_H
 
 /*
     errno.h synopsis
@@ -25,7 +25,7 @@ Macros:
 
 #include <museum/8.1.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -395,4 +395,4 @@ static const int __elast2 = 105;
 
 #endif // __cplusplus
 
-#endif  // _LIBCPP_ERRNO_H
+#endif  // _MUSEUM_LIBCPP_ERRNO_H

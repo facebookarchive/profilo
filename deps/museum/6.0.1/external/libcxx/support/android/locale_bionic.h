@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
-#define _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#define _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
 
 #if defined(__ANDROID__)
 
@@ -28,4 +28,4 @@ extern "C" {
 #include <museum/6.0.1/external/libcxx/support/xlocale/xlocale.h>
 
 #endif // defined(__ANDROID__)
-#endif // _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H

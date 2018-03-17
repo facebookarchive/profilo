@@ -8,10 +8,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_WIN32_LIMITS_WIN32_H
-#define _LIBCPP_SUPPORT_WIN32_LIMITS_WIN32_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_WIN32_LIMITS_WIN32_H
+#define _MUSEUM_LIBCPP_SUPPORT_WIN32_LIMITS_WIN32_H
 
-#if !defined(_LIBCPP_MSVCRT)
+#if !defined(_MUSEUM_LIBCPP_MSVCRT)
 #error "This header complements the Microsoft C Runtime library, and should not be included otherwise."
 #else
 
@@ -74,6 +74,6 @@
 #define __builtin_nansl(__dummy) _LSnan._Long_double
 #endif // ! defined(__clang__)
 
-#endif // _LIBCPP_MSVCRT
+#endif // _MUSEUM_LIBCPP_MSVCRT
 
-#endif // _LIBCPP_SUPPORT_WIN32_LIMITS_WIN32_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_WIN32_LIMITS_WIN32_H

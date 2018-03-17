@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_TYPE_TRAITS
-#define _LIBCPP_TYPE_TRAITS
+#ifndef _MUSEUM_LIBCPP_TYPE_TRAITS
+#define _MUSEUM_LIBCPP_TYPE_TRAITS
 
 /*
     type_traits synopsis
@@ -210,11 +210,11 @@ namespace std
 #include <museum/7.1.2/external/libcxx/__config>
 #include <museum/7.1.2/external/libcxx/cstddef>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class>
 struct __void_t { typedef void type; };
@@ -223,24 +223,24 @@ template <class _Tp>
 struct __identity { typedef _Tp type; };
 
 template <class _Tp, bool>
-struct _LIBCPP_TYPE_VIS_ONLY __dependent_type : public _Tp {};
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY __dependent_type : public _Tp {};
 
 template <bool _Bp, class _If, class _Then>
-    struct _LIBCPP_TYPE_VIS_ONLY conditional {typedef _If type;};
+    struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY conditional {typedef _If type;};
 template <class _If, class _Then>
-    struct _LIBCPP_TYPE_VIS_ONLY conditional<false, _If, _Then> {typedef _Then type;};
+    struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY conditional<false, _If, _Then> {typedef _Then type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <bool _Bp, class _If, class _Then> using conditional_t = typename conditional<_Bp, _If, _Then>::type;
 #endif
 
-template <bool, class _Tp> struct _LIBCPP_TYPE_VIS_ONLY __lazy_enable_if {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY __lazy_enable_if<true, _Tp> {typedef typename _Tp::type type;};
+template <bool, class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY __lazy_enable_if {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY __lazy_enable_if<true, _Tp> {typedef typename _Tp::type type;};
 
-template <bool, class _Tp = void> struct _LIBCPP_TYPE_VIS_ONLY enable_if {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY enable_if<true, _Tp> {typedef _Tp type;};
+template <bool, class _Tp = void> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY enable_if {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY enable_if<true, _Tp> {typedef _Tp type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <bool _Bp, class _Tp = void> using enable_if_t = typename enable_if<_Bp, _Tp>::type;
 #endif
 
@@ -250,64 +250,64 @@ struct __two {char __lx[2];};
 // helper class:
 
 template <class _Tp, _Tp __v>
-struct _LIBCPP_TYPE_VIS_ONLY integral_constant
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY integral_constant
 {
-    static _LIBCPP_CONSTEXPR const _Tp      value = __v;
+    static _MUSEUM_LIBCPP_CONSTEXPR const _Tp      value = __v;
     typedef _Tp               value_type;
     typedef integral_constant type;
-    _LIBCPP_INLINE_VISIBILITY
-        _LIBCPP_CONSTEXPR operator value_type() const _NOEXCEPT {return value;}
-#if _LIBCPP_STD_VER > 11
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_CONSTEXPR operator value_type() const _NOEXCEPT {return value;}
+#if _MUSEUM_LIBCPP_STD_VER > 11
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
          constexpr value_type operator ()() const _NOEXCEPT {return value;}
 #endif
 };
 
 template <class _Tp, _Tp __v>
-_LIBCPP_CONSTEXPR const _Tp integral_constant<_Tp, __v>::value;
+_MUSEUM_LIBCPP_CONSTEXPR const _Tp integral_constant<_Tp, __v>::value;
 
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
 template <bool __b>
 using bool_constant = integral_constant<bool, __b>;
-#define	_LIBCPP_BOOL_CONSTANT(__b) bool_constant<(__b)>
+#define	_MUSEUM_LIBCPP_BOOL_CONSTANT(__b) bool_constant<(__b)>
 #else
-#define	_LIBCPP_BOOL_CONSTANT(__b) integral_constant<bool,(__b)>
+#define	_MUSEUM_LIBCPP_BOOL_CONSTANT(__b) integral_constant<bool,(__b)>
 #endif
 
-typedef _LIBCPP_BOOL_CONSTANT(true)  true_type;
-typedef _LIBCPP_BOOL_CONSTANT(false) false_type;
+typedef _MUSEUM_LIBCPP_BOOL_CONSTANT(true)  true_type;
+typedef _MUSEUM_LIBCPP_BOOL_CONSTANT(false) false_type;
 
 // is_const
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_const            : public false_type {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_const<_Tp const> : public true_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_const            : public false_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_const<_Tp const> : public true_type {};
 
 // is_volatile
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_volatile               : public false_type {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_volatile<_Tp volatile> : public true_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_volatile               : public false_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_volatile<_Tp volatile> : public true_type {};
 
 // remove_const
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_const            {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_const<const _Tp> {typedef _Tp type;};
-#if _LIBCPP_STD_VER > 11
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_const            {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_const<const _Tp> {typedef _Tp type;};
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using remove_const_t = typename remove_const<_Tp>::type;
 #endif
 
 // remove_volatile
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_volatile               {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_volatile<volatile _Tp> {typedef _Tp type;};
-#if _LIBCPP_STD_VER > 11
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_volatile               {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_volatile<volatile _Tp> {typedef _Tp type;};
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using remove_volatile_t = typename remove_volatile<_Tp>::type;
 #endif
 
 // remove_cv
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_cv
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_cv
 {typedef typename remove_volatile<typename remove_const<_Tp>::type>::type type;};
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using remove_cv_t = typename remove_cv<_Tp>::type;
 #endif
 
@@ -316,7 +316,7 @@ template <class _Tp> using remove_cv_t = typename remove_cv<_Tp>::type;
 template <class _Tp> struct __libcpp_is_void       : public false_type {};
 template <>          struct __libcpp_is_void<void> : public true_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_void
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_void
     : public __libcpp_is_void<typename remove_cv<_Tp>::type> {};
 
 // __is_nullptr_t
@@ -324,11 +324,11 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_void
 template <class _Tp> struct __is_nullptr_t_impl       : public false_type {};
 template <>          struct __is_nullptr_t_impl<nullptr_t> : public true_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY __is_nullptr_t
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY __is_nullptr_t
     : public __is_nullptr_t_impl<typename remove_cv<_Tp>::type> {};
 
-#if _LIBCPP_STD_VER > 11
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_null_pointer
+#if _MUSEUM_LIBCPP_STD_VER > 11
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_null_pointer
     : public __is_nullptr_t_impl<typename remove_cv<_Tp>::type> {};
 #endif
 
@@ -340,10 +340,10 @@ template <>          struct __libcpp_is_integral<char>               : public tr
 template <>          struct __libcpp_is_integral<signed char>        : public true_type {};
 template <>          struct __libcpp_is_integral<unsigned char>      : public true_type {};
 template <>          struct __libcpp_is_integral<wchar_t>            : public true_type {};
-#ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_UNICODE_CHARS
 template <>          struct __libcpp_is_integral<char16_t>           : public true_type {};
 template <>          struct __libcpp_is_integral<char32_t>           : public true_type {};
-#endif  // _LIBCPP_HAS_NO_UNICODE_CHARS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_UNICODE_CHARS
 template <>          struct __libcpp_is_integral<short>              : public true_type {};
 template <>          struct __libcpp_is_integral<unsigned short>     : public true_type {};
 template <>          struct __libcpp_is_integral<int>                : public true_type {};
@@ -352,12 +352,12 @@ template <>          struct __libcpp_is_integral<long>               : public tr
 template <>          struct __libcpp_is_integral<unsigned long>      : public true_type {};
 template <>          struct __libcpp_is_integral<long long>          : public true_type {};
 template <>          struct __libcpp_is_integral<unsigned long long> : public true_type {};
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
 template <>          struct __libcpp_is_integral<__int128_t>         : public true_type {};
 template <>          struct __libcpp_is_integral<__uint128_t>        : public true_type {};
 #endif
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_integral
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_integral
     : public __libcpp_is_integral<typename remove_cv<_Tp>::type> {};
 
 // is_floating_point
@@ -367,16 +367,16 @@ template <>          struct __libcpp_is_floating_point<float>       : public tru
 template <>          struct __libcpp_is_floating_point<double>      : public true_type {};
 template <>          struct __libcpp_is_floating_point<long double> : public true_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_floating_point
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_floating_point
     : public __libcpp_is_floating_point<typename remove_cv<_Tp>::type> {};
 
 // is_array
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_array
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_array
     : public false_type {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_array<_Tp[]>
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_array<_Tp[]>
     : public true_type {};
-template <class _Tp, size_t _Np> struct _LIBCPP_TYPE_VIS_ONLY is_array<_Tp[_Np]>
+template <class _Tp, size_t _Np> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_array<_Tp[_Np]>
     : public true_type {};
 
 // is_pointer
@@ -384,36 +384,36 @@ template <class _Tp, size_t _Np> struct _LIBCPP_TYPE_VIS_ONLY is_array<_Tp[_Np]>
 template <class _Tp> struct __libcpp_is_pointer       : public false_type {};
 template <class _Tp> struct __libcpp_is_pointer<_Tp*> : public true_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_pointer
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_pointer
     : public __libcpp_is_pointer<typename remove_cv<_Tp>::type> {};
 
 // is_reference
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_lvalue_reference       : public false_type {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_lvalue_reference<_Tp&> : public true_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_lvalue_reference       : public false_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_lvalue_reference<_Tp&> : public true_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_rvalue_reference        : public false_type {};
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_rvalue_reference<_Tp&&> : public true_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_rvalue_reference        : public false_type {};
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_rvalue_reference<_Tp&&> : public true_type {};
 #endif
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_reference        : public false_type {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_reference<_Tp&>  : public true_type {};
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_reference<_Tp&&> : public true_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_reference        : public false_type {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_reference<_Tp&>  : public true_type {};
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_reference<_Tp&&> : public true_type {};
 #endif
 
 // is_union
 
 #if __has_feature(is_union) || (_GNUC_VER >= 403)
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_union
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_union
     : public integral_constant<bool, __is_union(_Tp)> {};
 
 #else
 
 template <class _Tp> struct __libcpp_union : public false_type {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_union
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_union
     : public __libcpp_union<typename remove_cv<_Tp>::type> {};
 
 #endif
@@ -422,7 +422,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_union
 
 #if __has_feature(is_class) || (_GNUC_VER >= 403)
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_class
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_class
     : public integral_constant<bool, __is_class(_Tp)> {};
 
 #else
@@ -433,15 +433,15 @@ template <class _Tp> char  __test(int _Tp::*);
 template <class _Tp> __two __test(...);
 }
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_class
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_class
     : public integral_constant<bool, sizeof(__is_class_imp::__test<_Tp>(0)) == 1 && !is_union<_Tp>::value> {};
 
 #endif
 
 // is_same
 
-template <class _Tp, class _Up> struct _LIBCPP_TYPE_VIS_ONLY is_same           : public false_type {};
-template <class _Tp>            struct _LIBCPP_TYPE_VIS_ONLY is_same<_Tp, _Tp> : public true_type {};
+template <class _Tp, class _Up> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_same           : public false_type {};
+template <class _Tp>            struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_same<_Tp, _Tp> : public true_type {};
 
 // is_function
 
@@ -465,7 +465,7 @@ struct __libcpp_is_function
     {};
 template <class _Tp> struct __libcpp_is_function<_Tp, true> : public false_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_function
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_function
     : public __libcpp_is_function<_Tp> {};
 
 // is_member_function_pointer
@@ -487,7 +487,7 @@ template <class _Ret, class _Class>
 struct __libcpp_is_member_function_pointer<_Ret _Class::*>
     : public is_function<_Ret> {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_member_function_pointer
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_member_function_pointer
     : public __libcpp_is_member_function_pointer<typename remove_cv<_Tp>::type>::type {};
 
 // is_member_pointer
@@ -495,12 +495,12 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_member_function_pointer
 template <class _Tp>            struct __libcpp_is_member_pointer             : public false_type {};
 template <class _Tp, class _Up> struct __libcpp_is_member_pointer<_Tp _Up::*> : public true_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_member_pointer
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_member_pointer
     : public __libcpp_is_member_pointer<typename remove_cv<_Tp>::type> {};
 
 // is_member_object_pointer
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_member_object_pointer
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_member_object_pointer
     : public integral_constant<bool, is_member_pointer<_Tp>::value &&
                                     !is_member_function_pointer<_Tp>::value> {};
 
@@ -508,12 +508,12 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_member_object_pointer
 
 #if __has_feature(is_enum) || (_GNUC_VER >= 403)
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_enum
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_enum
     : public integral_constant<bool, __is_enum(_Tp)> {};
 
 #else
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_enum
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_enum
     : public integral_constant<bool, !is_void<_Tp>::value             &&
                                      !is_integral<_Tp>::value         &&
                                      !is_floating_point<_Tp>::value   &&
@@ -529,31 +529,31 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_enum
 
 // is_arithmetic
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_arithmetic
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_arithmetic
     : public integral_constant<bool, is_integral<_Tp>::value      ||
                                      is_floating_point<_Tp>::value> {};
 
 // is_fundamental
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_fundamental
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_fundamental
     : public integral_constant<bool, is_void<_Tp>::value        ||
                                      __is_nullptr_t<_Tp>::value ||
                                      is_arithmetic<_Tp>::value> {};
 
 // is_scalar
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_scalar
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_scalar
     : public integral_constant<bool, is_arithmetic<_Tp>::value     ||
                                      is_member_pointer<_Tp>::value ||
                                      is_pointer<_Tp>::value        ||
                                      __is_nullptr_t<_Tp>::value    ||
                                      is_enum<_Tp>::value           > {};
 
-template <> struct _LIBCPP_TYPE_VIS_ONLY is_scalar<nullptr_t> : public true_type {};
+template <> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_scalar<nullptr_t> : public true_type {};
 
 // is_object
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_object
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_object
     : public integral_constant<bool, is_scalar<_Tp>::value ||
                                      is_array<_Tp>::value  ||
                                      is_union<_Tp>::value  ||
@@ -561,7 +561,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_object
 
 // is_compound
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_compound
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_compound
     : public integral_constant<bool, !is_fundamental<_Tp>::value> {};
 
 // add_const
@@ -574,10 +574,10 @@ struct __add_const             {typedef _Tp type;};
 template <class _Tp>
 struct __add_const<_Tp, false> {typedef const _Tp type;};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY add_const
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_const
     {typedef typename __add_const<_Tp>::type type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using add_const_t = typename add_const<_Tp>::type;
 #endif
 
@@ -591,74 +591,74 @@ struct __add_volatile             {typedef _Tp type;};
 template <class _Tp>
 struct __add_volatile<_Tp, false> {typedef volatile _Tp type;};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY add_volatile
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_volatile
     {typedef typename __add_volatile<_Tp>::type type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using add_volatile_t = typename add_volatile<_Tp>::type;
 #endif
 
 // add_cv
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY add_cv
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_cv
     {typedef typename add_const<typename add_volatile<_Tp>::type>::type type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using add_cv_t = typename add_cv<_Tp>::type;
 #endif
 
 // remove_reference
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_reference        {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_reference<_Tp&>  {typedef _Tp type;};
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_reference<_Tp&&> {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_reference        {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_reference<_Tp&>  {typedef _Tp type;};
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_reference<_Tp&&> {typedef _Tp type;};
 #endif
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using remove_reference_t = typename remove_reference<_Tp>::type;
 #endif
 
 // add_lvalue_reference
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY add_lvalue_reference                      {typedef _Tp& type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<_Tp&>                {typedef _Tp& type;};  // for older compiler
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<void>                {typedef void type;};
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<const void>          {typedef const void type;};
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<volatile void>       {typedef volatile void type;};
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<const volatile void> {typedef const volatile void type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_lvalue_reference                      {typedef _Tp& type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<_Tp&>                {typedef _Tp& type;};  // for older compiler
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<void>                {typedef void type;};
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<const void>          {typedef const void type;};
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<volatile void>       {typedef volatile void type;};
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_lvalue_reference<const volatile void> {typedef const volatile void type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using add_lvalue_reference_t = typename add_lvalue_reference<_Tp>::type;
 #endif
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY  add_rvalue_reference                     {typedef _Tp&& type;};
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<void>                {typedef void type;};
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<const void>          {typedef const void type;};
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<volatile void>       {typedef volatile void type;};
-template <>          struct _LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<const volatile void> {typedef const volatile void type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY  add_rvalue_reference                     {typedef _Tp&& type;};
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<void>                {typedef void type;};
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<const void>          {typedef const void type;};
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<volatile void>       {typedef volatile void type;};
+template <>          struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_rvalue_reference<const volatile void> {typedef const volatile void type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using add_rvalue_reference_t = typename add_rvalue_reference<_Tp>::type;
 #endif
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
 typename add_rvalue_reference<_Tp>::type
 declval() _NOEXCEPT;
 
-#else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#else  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
 typename add_lvalue_reference<_Tp>::type
 declval();
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 struct __any
 {
@@ -667,29 +667,29 @@ struct __any
 
 // remove_pointer
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_pointer                      {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp*>                {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp* const>          {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp* volatile>       {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp* const volatile> {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_pointer                      {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp*>                {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp* const>          {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp* volatile>       {typedef _Tp type;};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_pointer<_Tp* const volatile> {typedef _Tp type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using remove_pointer_t = typename remove_pointer<_Tp>::type;
 #endif
 
 // add_pointer
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY add_pointer
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY add_pointer
     {typedef typename remove_reference<_Tp>::type* type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using add_pointer_t = typename add_pointer<_Tp>::type;
 #endif
 
 // is_signed
 
 template <class _Tp, bool = is_integral<_Tp>::value>
-struct __libcpp_is_signed_impl : public _LIBCPP_BOOL_CONSTANT(_Tp(-1) < _Tp(0)) {};
+struct __libcpp_is_signed_impl : public _MUSEUM_LIBCPP_BOOL_CONSTANT(_Tp(-1) < _Tp(0)) {};
 
 template <class _Tp>
 struct __libcpp_is_signed_impl<_Tp, false> : public true_type {};  // floating point
@@ -699,12 +699,12 @@ struct __libcpp_is_signed : public __libcpp_is_signed_impl<_Tp> {};
 
 template <class _Tp> struct __libcpp_is_signed<_Tp, false> : public false_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_signed : public __libcpp_is_signed<_Tp> {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_signed : public __libcpp_is_signed<_Tp> {};
 
 // is_unsigned
 
 template <class _Tp, bool = is_integral<_Tp>::value>
-struct __libcpp_is_unsigned_impl : public _LIBCPP_BOOL_CONSTANT(_Tp(0) < _Tp(-1)) {};
+struct __libcpp_is_unsigned_impl : public _MUSEUM_LIBCPP_BOOL_CONSTANT(_Tp(0) < _Tp(-1)) {};
 
 template <class _Tp>
 struct __libcpp_is_unsigned_impl<_Tp, false> : public false_type {};  // floating point
@@ -714,60 +714,60 @@ struct __libcpp_is_unsigned : public __libcpp_is_unsigned_impl<_Tp> {};
 
 template <class _Tp> struct __libcpp_is_unsigned<_Tp, false> : public false_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_unsigned : public __libcpp_is_unsigned<_Tp> {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_unsigned : public __libcpp_is_unsigned<_Tp> {};
 
 // rank
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY rank
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY rank
     : public integral_constant<size_t, 0> {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY rank<_Tp[]>
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY rank<_Tp[]>
     : public integral_constant<size_t, rank<_Tp>::value + 1> {};
-template <class _Tp, size_t _Np> struct _LIBCPP_TYPE_VIS_ONLY rank<_Tp[_Np]>
+template <class _Tp, size_t _Np> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY rank<_Tp[_Np]>
     : public integral_constant<size_t, rank<_Tp>::value + 1> {};
 
 // extent
 
-template <class _Tp, unsigned _Ip = 0> struct _LIBCPP_TYPE_VIS_ONLY extent
+template <class _Tp, unsigned _Ip = 0> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY extent
     : public integral_constant<size_t, 0> {};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY extent<_Tp[], 0>
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY extent<_Tp[], 0>
     : public integral_constant<size_t, 0> {};
-template <class _Tp, unsigned _Ip> struct _LIBCPP_TYPE_VIS_ONLY extent<_Tp[], _Ip>
+template <class _Tp, unsigned _Ip> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY extent<_Tp[], _Ip>
     : public integral_constant<size_t, extent<_Tp, _Ip-1>::value> {};
-template <class _Tp, size_t _Np> struct _LIBCPP_TYPE_VIS_ONLY extent<_Tp[_Np], 0>
+template <class _Tp, size_t _Np> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY extent<_Tp[_Np], 0>
     : public integral_constant<size_t, _Np> {};
-template <class _Tp, size_t _Np, unsigned _Ip> struct _LIBCPP_TYPE_VIS_ONLY extent<_Tp[_Np], _Ip>
+template <class _Tp, size_t _Np, unsigned _Ip> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY extent<_Tp[_Np], _Ip>
     : public integral_constant<size_t, extent<_Tp, _Ip-1>::value> {};
 
 // remove_extent
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_extent
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_extent
     {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_extent<_Tp[]>
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_extent<_Tp[]>
     {typedef _Tp type;};
-template <class _Tp, size_t _Np> struct _LIBCPP_TYPE_VIS_ONLY remove_extent<_Tp[_Np]>
+template <class _Tp, size_t _Np> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_extent<_Tp[_Np]>
     {typedef _Tp type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using remove_extent_t = typename remove_extent<_Tp>::type;
 #endif
 
 // remove_all_extents
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_all_extents
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_all_extents
     {typedef _Tp type;};
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY remove_all_extents<_Tp[]>
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_all_extents<_Tp[]>
     {typedef typename remove_all_extents<_Tp>::type type;};
-template <class _Tp, size_t _Np> struct _LIBCPP_TYPE_VIS_ONLY remove_all_extents<_Tp[_Np]>
+template <class _Tp, size_t _Np> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY remove_all_extents<_Tp[_Np]>
     {typedef typename remove_all_extents<_Tp>::type type;};
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using remove_all_extents_t = typename remove_all_extents<_Tp>::type;
 #endif
 
 // decay
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY decay
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY decay
 {
 private:
     typedef typename remove_reference<_Tp>::type _Up;
@@ -785,7 +785,7 @@ public:
                      >::type type;
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using decay_t = typename decay<_Tp>::type;
 #endif
 
@@ -802,32 +802,32 @@ struct __libcpp_abstract : public integral_constant<bool, sizeof(__is_abstract_i
 
 template <class _Tp> struct __libcpp_abstract<_Tp, false> : public false_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_abstract : public __libcpp_abstract<_Tp> {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_abstract : public __libcpp_abstract<_Tp> {};
 
 // is_final
 
-#if defined(_LIBCPP_HAS_IS_FINAL)
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY
+#if defined(_MUSEUM_LIBCPP_HAS_IS_FINAL)
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY
 __libcpp_is_final : public integral_constant<bool, __is_final(_Tp)> {};
 #else
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY
 __libcpp_is_final : public false_type {};
 #endif
 
-#if defined(_LIBCPP_HAS_IS_FINAL) && _LIBCPP_STD_VER > 11
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY
+#if defined(_MUSEUM_LIBCPP_HAS_IS_FINAL) && _MUSEUM_LIBCPP_STD_VER > 11
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY
 is_final : public integral_constant<bool, __is_final(_Tp)> {};
 #endif
 
 // is_base_of
 
-#ifdef _LIBCPP_HAS_IS_BASE_OF
+#ifdef _MUSEUM_LIBCPP_HAS_IS_BASE_OF
 
 template <class _Bp, class _Dp>
-struct _LIBCPP_TYPE_VIS_ONLY is_base_of
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_base_of
     : public integral_constant<bool, __is_base_of(_Bp, _Dp)> {};
 
-#else  // _LIBCPP_HAS_IS_BASE_OF
+#else  // _MUSEUM_LIBCPP_HAS_IS_BASE_OF
 
 namespace __is_base_of_imp
 {
@@ -848,17 +848,17 @@ template <class _Bp, class _Dp> __two __test(...);
 }
 
 template <class _Bp, class _Dp>
-struct _LIBCPP_TYPE_VIS_ONLY is_base_of
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_base_of
     : public integral_constant<bool, is_class<_Bp>::value &&
                                      sizeof(__is_base_of_imp::__test<_Bp, _Dp>(0)) == 2> {};
 
-#endif  // _LIBCPP_HAS_IS_BASE_OF
+#endif  // _MUSEUM_LIBCPP_HAS_IS_BASE_OF
 
 // is_convertible
 
-#if __has_feature(is_convertible_to) && !defined(_LIBCPP_USE_IS_CONVERTIBLE_FALLBACK)
+#if __has_feature(is_convertible_to) && !defined(_MUSEUM_LIBCPP_USE_IS_CONVERTIBLE_FALLBACK)
 
-template <class _T1, class _T2> struct _LIBCPP_TYPE_VIS_ONLY is_convertible
+template <class _T1, class _T2> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_convertible
     : public integral_constant<bool, __is_convertible_to(_T1, _T2) &&
                                      !is_abstract<_T2>::value> {};
 
@@ -873,11 +873,11 @@ struct __is_convertible_test : public false_type {};
 
 template <class _From, class _To>
 struct __is_convertible_test<_From, _To,
-    decltype(__test_convert<_To>(_VSTD::declval<_From>()))> : public true_type
+    decltype(__test_convert<_To>(_MUSEUM_VSTD::declval<_From>()))> : public true_type
 {};
 
 template <class _Tp> __two __test(...);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 template <class _Tp> _Tp&& __source();
 #else
 template <class _Tp> typename remove_reference<_Tp>::type& __source();
@@ -911,7 +911,7 @@ template <class _T1, class _T2,
 struct __is_convertible
     : public integral_constant<bool,
         __is_convertible_imp::__is_convertible_test<_T1, _T2>::value
-#if defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES)
+#if defined(_MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES)
          && !(!is_function<_T1>::value && !is_reference<_T1>::value && is_reference<_T2>::value
               && (!is_const<typename remove_reference<_T2>::type>::value
                   || is_volatile<typename remove_reference<_T2>::type>::value)
@@ -926,12 +926,12 @@ template <class _T1, class _T2> struct __is_convertible<_T1, _T2, 1, 0> : false_
 
 template <class _T1> struct __is_convertible<_T1, const _T1&, 1, 0> : true_type {};
 template <class _T1> struct __is_convertible<const _T1, const _T1&, 1, 0> : true_type {};
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 template <class _T1> struct __is_convertible<_T1, _T1&&, 1, 0> : true_type {};
 template <class _T1> struct __is_convertible<_T1, const _T1&&, 1, 0> : true_type {};
 template <class _T1> struct __is_convertible<_T1, volatile _T1&&, 1, 0> : true_type {};
 template <class _T1> struct __is_convertible<_T1, const volatile _T1&&, 1, 0> : true_type {};
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _T1, class _T2> struct __is_convertible<_T1, _T2*, 1, 0>
     : public integral_constant<bool, __is_convertible<typename remove_all_extents<_T1>::type*, _T2*>::value> {};
@@ -946,7 +946,7 @@ template <class _T1, class _T2> struct __is_convertible<_T1, _T2* const volatile
     : public integral_constant<bool, __is_convertible<typename remove_all_extents<_T1>::type*, _T2*const volatile>::value> {};
 
 template <class _T1, class _T2> struct __is_convertible<_T1, _T2, 2, 0>                : public false_type {};
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 template <class _T1>            struct __is_convertible<_T1, _T1&&, 2, 0>               : public true_type {};
 #endif
 template <class _T1>            struct __is_convertible<_T1, _T1&, 2, 0>               : public true_type {};
@@ -972,7 +972,7 @@ template <class _T1, class _T2> struct __is_convertible<_T1, _T2, 1, 3> : public
 template <class _T1, class _T2> struct __is_convertible<_T1, _T2, 2, 3> : public false_type {};
 template <class _T1, class _T2> struct __is_convertible<_T1, _T2, 3, 3> : public true_type {};
 
-template <class _T1, class _T2> struct _LIBCPP_TYPE_VIS_ONLY is_convertible
+template <class _T1, class _T2> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_convertible
     : public __is_convertible<_T1, _T2>
 {
     static const size_t __complete_check1 = __is_convertible_check<_T1>::__v;
@@ -986,7 +986,7 @@ template <class _T1, class _T2> struct _LIBCPP_TYPE_VIS_ONLY is_convertible
 #if __has_feature(is_empty) || (_GNUC_VER >= 407)
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_empty
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_empty
     : public integral_constant<bool, __is_empty(_Tp)> {};
 
 #else  // __has_feature(is_empty)
@@ -1008,16 +1008,16 @@ struct __libcpp_empty : public integral_constant<bool, sizeof(__is_empty1<_Tp>) 
 
 template <class _Tp> struct __libcpp_empty<_Tp, false> : public false_type {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_empty : public __libcpp_empty<_Tp> {};
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_empty : public __libcpp_empty<_Tp> {};
 
 #endif  // __has_feature(is_empty)
 
 // is_polymorphic
 
-#if __has_feature(is_polymorphic) || defined(_LIBCPP_MSVC)
+#if __has_feature(is_polymorphic) || defined(_MUSEUM_LIBCPP_MSVC)
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_polymorphic
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_polymorphic
     : public integral_constant<bool, __is_polymorphic(_Tp)> {};
 
 #else
@@ -1027,7 +1027,7 @@ template<typename _Tp> char &__is_polymorphic_impl(
                        int>::type);
 template<typename _Tp> __two &__is_polymorphic_impl(...);
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_polymorphic
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_polymorphic
     : public integral_constant<bool, sizeof(__is_polymorphic_impl<_Tp>(0)) == 1> {};
 
 #endif // __has_feature(is_polymorphic)
@@ -1036,19 +1036,19 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_polymorphic
 
 #if __has_feature(has_virtual_destructor) || (_GNUC_VER >= 403)
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY has_virtual_destructor
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY has_virtual_destructor
     : public integral_constant<bool, __has_virtual_destructor(_Tp)> {};
 
 #else
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY has_virtual_destructor
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY has_virtual_destructor
     : public false_type {};
 
 #endif
 
 // alignment_of
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY alignment_of
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY alignment_of
     : public integral_constant<size_t, __alignof__(_Tp)> {};
 
 // aligned_storage
@@ -1062,7 +1062,7 @@ struct __type_list
 
 struct __nat
 {
-#ifndef _LIBCPP_HAS_NO_DELETED_FUNCTIONS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_DELETED_FUNCTIONS
     __nat() = delete;
     __nat(const __nat&) = delete;
     __nat& operator=(const __nat&) = delete;
@@ -1136,7 +1136,7 @@ struct __find_max_align<__type_list<_Hp, _Tp>, _Len>
     : public integral_constant<size_t, __select_align<_Len, _Hp::value, __find_max_align<_Tp, _Len>::value>::value> {};
 
 template <size_t _Len, size_t _Align = __find_max_align<__all_types, _Len>::value>
-struct _LIBCPP_TYPE_VIS_ONLY aligned_storage
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY aligned_storage
 {
     typedef typename __find_pod<__all_types, _Align>::type _Aligner;
     static_assert(!is_void<_Aligner>::value, "");
@@ -1147,14 +1147,14 @@ struct _LIBCPP_TYPE_VIS_ONLY aligned_storage
     };
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <size_t _Len, size_t _Align = __find_max_align<__all_types, _Len>::value>
     using aligned_storage_t = typename aligned_storage<_Len, _Align>::type;
 #endif
 
 #define _CREATE_ALIGNED_STORAGE_SPECIALIZATION(n) \
 template <size_t _Len>\
-struct _LIBCPP_TYPE_VIS_ONLY aligned_storage<_Len, n>\
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY aligned_storage<_Len, n>\
 {\
     struct _ALIGNAS(n) type\
     {\
@@ -1177,13 +1177,13 @@ _CREATE_ALIGNED_STORAGE_SPECIALIZATION(0x800);
 _CREATE_ALIGNED_STORAGE_SPECIALIZATION(0x1000);
 _CREATE_ALIGNED_STORAGE_SPECIALIZATION(0x2000);
 // MSDN says that MSVC does not support alignment beyond 8192 (=0x2000)
-#if !defined(_LIBCPP_MSVC)
+#if !defined(_MUSEUM_LIBCPP_MSVC)
 _CREATE_ALIGNED_STORAGE_SPECIALIZATION(0x4000);
-#endif // !_LIBCPP_MSVC
+#endif // !_MUSEUM_LIBCPP_MSVC
 
 #undef _CREATE_ALIGNED_STORAGE_SPECIALIZATION
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 // aligned_union
 
@@ -1213,11 +1213,11 @@ struct aligned_union
     typedef typename aligned_storage<__len, alignment_value>::type type;
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <size_t _Len, class ..._Types> using aligned_union_t = typename aligned_union<_Len, _Types...>::type;
 #endif
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp>
 struct __numeric_type
@@ -1290,7 +1290,7 @@ public:
 template <class _A1, class _A2 = void, class _A3 = void>
 class __promote : public __promote_imp<_A1, _A2, _A3> {};
 
-#ifdef _LIBCPP_STORE_AS_OPTIMIZATION
+#ifdef _MUSEUM_LIBCPP_STORE_AS_OPTIMIZATION
 
 // __transform
 
@@ -1300,7 +1300,7 @@ template <class _Tp> struct __transform<_Tp, 2, true> {typedef unsigned short   
 template <class _Tp> struct __transform<_Tp, 4, true> {typedef unsigned int       type;};
 template <class _Tp> struct __transform<_Tp, 8, true> {typedef unsigned long long type;};
 
-#endif  // _LIBCPP_STORE_AS_OPTIMIZATION
+#endif  // _MUSEUM_LIBCPP_STORE_AS_OPTIMIZATION
 
 // make_signed / make_unsigned
 
@@ -1310,11 +1310,11 @@ typedef
     __type_list<signed int,
     __type_list<signed long,
     __type_list<signed long long,
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
     __type_list<__int128_t,
 #endif
     __nat
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
     >
 #endif
     > > > > > __signed_types;
@@ -1325,11 +1325,11 @@ typedef
     __type_list<unsigned int,
     __type_list<unsigned long,
     __type_list<unsigned long long,
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
     __type_list<__uint128_t,
 #endif
     __nat
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
     >
 #endif
     > > > > > __unsigned_types;
@@ -1415,18 +1415,18 @@ template <> struct __make_signed<  signed long,      true> {typedef long      ty
 template <> struct __make_signed<unsigned long,      true> {typedef long      type;};
 template <> struct __make_signed<  signed long long, true> {typedef long long type;};
 template <> struct __make_signed<unsigned long long, true> {typedef long long type;};
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
 template <> struct __make_signed<__int128_t,         true> {typedef __int128_t type;};
 template <> struct __make_signed<__uint128_t,        true> {typedef __int128_t type;};
 #endif
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY make_signed
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY make_signed
 {
     typedef typename __apply_cv<_Tp, typename __make_signed<typename remove_cv<_Tp>::type>::type>::type type;
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using make_signed_t = typename make_signed<_Tp>::type;
 #endif
 
@@ -1448,64 +1448,64 @@ template <> struct __make_unsigned<  signed long,      true> {typedef unsigned l
 template <> struct __make_unsigned<unsigned long,      true> {typedef unsigned long      type;};
 template <> struct __make_unsigned<  signed long long, true> {typedef unsigned long long type;};
 template <> struct __make_unsigned<unsigned long long, true> {typedef unsigned long long type;};
-#ifndef _LIBCPP_HAS_NO_INT128
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
 template <> struct __make_unsigned<__int128_t,         true> {typedef __uint128_t        type;};
 template <> struct __make_unsigned<__uint128_t,        true> {typedef __uint128_t        type;};
 #endif
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY make_unsigned
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY make_unsigned
 {
     typedef typename __apply_cv<_Tp, typename __make_unsigned<typename remove_cv<_Tp>::type>::type>::type type;
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using make_unsigned_t = typename make_unsigned<_Tp>::type;
 #endif
 
-#ifdef _LIBCPP_HAS_NO_VARIADICS
+#ifdef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _Up = void, class _Vp = void>
-struct _LIBCPP_TYPE_VIS_ONLY common_type
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY common_type
 {
 public:
     typedef typename common_type<typename common_type<_Tp, _Up>::type, _Vp>::type type;
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY common_type<_Tp, void, void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY common_type<_Tp, void, void>
 {
 public:
     typedef typename decay<_Tp>::type type;
 };
 
 template <class _Tp, class _Up>
-struct _LIBCPP_TYPE_VIS_ONLY common_type<_Tp, _Up, void>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY common_type<_Tp, _Up, void>
 {
 private:
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     static _Tp&& __t();
     static _Up&& __u();
-#else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#else  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     static _Tp __t();
     static _Up __u();
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 public:
     typedef typename remove_reference<decltype(true ? __t() : __u())>::type type;
 };
 
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class ..._Tp> struct common_type;
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY common_type<_Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY common_type<_Tp>
 {
     typedef typename decay<_Tp>::type type;
 };
 
 template <class _Tp, class _Up>
-struct _LIBCPP_TYPE_VIS_ONLY common_type<_Tp, _Up>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY common_type<_Tp, _Up>
 {
 private:
     static _Tp&& __t();
@@ -1516,24 +1516,24 @@ public:
 };
 
 template <class _Tp, class _Up, class ..._Vp>
-struct _LIBCPP_TYPE_VIS_ONLY common_type<_Tp, _Up, _Vp...>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY common_type<_Tp, _Up, _Vp...>
 {
     typedef typename common_type<typename common_type<_Tp, _Up>::type, _Vp...>::type type;
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class ..._Tp> using common_type_t = typename common_type<_Tp...>::type;
 #endif
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 // is_assignable
 
 template<typename, typename _Tp> struct __select_2nd { typedef _Tp type; };
 
 template <class _Tp, class _Arg>
-typename __select_2nd<decltype((_VSTD::declval<_Tp>() = _VSTD::declval<_Arg>())), true_type>::type
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+typename __select_2nd<decltype((_MUSEUM_VSTD::declval<_Tp>() = _MUSEUM_VSTD::declval<_Arg>())), true_type>::type
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 __is_assignable_test(_Tp&&, _Arg&&);
 #else
 __is_assignable_test(_Tp, _Arg&);
@@ -1541,7 +1541,7 @@ __is_assignable_test(_Tp, _Arg&);
 
 template <class _Arg>
 false_type
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 __is_assignable_test(__any, _Arg&&);
 #else
 __is_assignable_test(__any, _Arg&);
@@ -1551,7 +1551,7 @@ template <class _Tp, class _Arg, bool = is_void<_Tp>::value || is_void<_Arg>::va
 struct __is_assignable_imp
     : public common_type
         <
-            decltype(_VSTD::__is_assignable_test(declval<_Tp>(), declval<_Arg>()))
+            decltype(_MUSEUM_VSTD::__is_assignable_test(declval<_Tp>(), declval<_Arg>()))
         >::type {};
 
 template <class _Tp, class _Arg>
@@ -1566,14 +1566,14 @@ struct is_assignable
 
 // is_copy_assignable
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_copy_assignable
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_copy_assignable
     : public is_assignable<typename add_lvalue_reference<_Tp>::type,
                   typename add_lvalue_reference<typename add_const<_Tp>::type>::type> {};
 
 // is_move_assignable
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_move_assignable
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_move_assignable
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     : public is_assignable<typename add_lvalue_reference<_Tp>::type,
                      const typename add_rvalue_reference<_Tp>::type> {};
 #else
@@ -1596,7 +1596,7 @@ template <typename _Tp>
 struct __is_destructor_wellformed {
     template <typename _Tp1>
     static char  __test (
-        typename __is_destructible_apply<decltype(_VSTD::declval<_Tp1&>().~_Tp1())>::type
+        typename __is_destructible_apply<decltype(_MUSEUM_VSTD::declval<_Tp1&>().~_Tp1())>::type
     );
 
     template <typename _Tp1>
@@ -1610,40 +1610,40 @@ struct __destructible_imp;
 
 template <class _Tp>
 struct __destructible_imp<_Tp, false> 
-   : public _VSTD::integral_constant<bool, 
-        __is_destructor_wellformed<typename _VSTD::remove_all_extents<_Tp>::type>::value> {};
+   : public _MUSEUM_VSTD::integral_constant<bool, 
+        __is_destructor_wellformed<typename _MUSEUM_VSTD::remove_all_extents<_Tp>::type>::value> {};
 
 template <class _Tp>
 struct __destructible_imp<_Tp, true>
-    : public _VSTD::true_type {};
+    : public _MUSEUM_VSTD::true_type {};
 
 template <class _Tp, bool>
 struct __destructible_false;
 
 template <class _Tp>
-struct __destructible_false<_Tp, false> : public __destructible_imp<_Tp, _VSTD::is_reference<_Tp>::value> {};
+struct __destructible_false<_Tp, false> : public __destructible_imp<_Tp, _MUSEUM_VSTD::is_reference<_Tp>::value> {};
 
 template <class _Tp>
-struct __destructible_false<_Tp, true> : public _VSTD::false_type {};
+struct __destructible_false<_Tp, true> : public _MUSEUM_VSTD::false_type {};
 
 template <class _Tp>
 struct is_destructible
-    : public __destructible_false<_Tp, _VSTD::is_function<_Tp>::value> {};
+    : public __destructible_false<_Tp, _MUSEUM_VSTD::is_function<_Tp>::value> {};
 
 template <class _Tp>
 struct is_destructible<_Tp[]>
-    : public _VSTD::false_type {};
+    : public _MUSEUM_VSTD::false_type {};
 
 template <>
 struct is_destructible<void>
-    : public _VSTD::false_type {};
+    : public _MUSEUM_VSTD::false_type {};
 
 // move
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 typename remove_reference<_Tp>::type&&
 move(_Tp&& __t) _NOEXCEPT
 {
@@ -1652,7 +1652,7 @@ move(_Tp&& __t) _NOEXCEPT
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&&
 forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 {
@@ -1660,7 +1660,7 @@ forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::t
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp&&
 forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type&& __t) _NOEXCEPT
 {
@@ -1669,10 +1669,10 @@ forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::t
     return static_cast<_Tp&&>(__t);
 }
 
-#else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#else  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp&
 move(_Tp& __t)
 {
@@ -1680,7 +1680,7 @@ move(_Tp& __t)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const _Tp&
 move(const _Tp& __t)
 {
@@ -1688,7 +1688,7 @@ move(const _Tp& __t)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp&
 forward(typename facebook::museum::MUSEUM_VERSION::std::remove_reference<_Tp>::type& __t) _NOEXCEPT
 {
@@ -1702,37 +1702,37 @@ class __rv
     typedef typename remove_reference<_Tp>::type _Trr;
     _Trr& t_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Trr* operator->() {return &t_;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __rv(_Trr& __t) : t_(__t) {}
 };
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename decay<_Tp>::type
 __decay_copy(_Tp&& __t)
 {
-    return _VSTD::forward<_Tp>(__t);
+    return _MUSEUM_VSTD::forward<_Tp>(__t);
 }
 
 #else
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename decay<_Tp>::type
 __decay_copy(const _Tp& __t)
 {
-    return _VSTD::forward<_Tp>(__t);
+    return _MUSEUM_VSTD::forward<_Tp>(__t);
 }
 
 #endif
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Rp, class _Class, class ..._Param>
 struct __member_pointer_traits_imp<_Rp (_Class::*)(_Param...), true, false>
@@ -1931,7 +1931,7 @@ struct __member_pointer_traits_imp<_Rp (_Class::*)(_Param..., ...) const volatil
 
 #endif  // __has_feature(cxx_reference_qualified_functions) || _GNUC_VER >= 409
 
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Rp, class _Class>
 struct __member_pointer_traits_imp<_Rp (_Class::*)(), true, false>
@@ -2189,7 +2189,7 @@ struct __member_pointer_traits_imp<_Rp (_Class::*)(_P0, _P1, _P2, ...) const vol
     typedef _Rp (_FnType) (_P0, _P1, _P2, ...);
 };
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Rp, class _Class>
 struct __member_pointer_traits_imp<_Rp _Class::*, false, true>
@@ -2213,7 +2213,7 @@ struct __member_pointer_traits
 
 template <class _Callable> class result_of;
 
-#ifdef _LIBCPP_HAS_NO_VARIADICS
+#ifdef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Fn, bool, bool>
 class __result_of
@@ -2267,7 +2267,7 @@ struct __result_of_mdp;
 template <class _Rp, class _Class, class _Tp>
 struct __result_of_mdp<_Rp _Class::*, _Tp, false>
 {
-    typedef typename __apply_cv<decltype(*_VSTD::declval<_Tp>()), _Rp>::type& type;
+    typedef typename __apply_cv<decltype(*_MUSEUM_VSTD::declval<_Tp>()), _Rp>::type& type;
 };
 
 template <class _Rp, class _Class, class _Tp>
@@ -2320,7 +2320,7 @@ class __result_of<_Fn(_Tp, _A0, _A1, _A2), false, true>  // _Fn must be member p
 // result_of
 
 template <class _Fn>
-class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn()>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY result_of<_Fn()>
     : public __result_of<_Fn(),
                          is_class<typename remove_reference<_Fn>::type>::value ||
                          is_function<typename remove_pointer<typename remove_reference<_Fn>::type>::type>::value,
@@ -2330,7 +2330,7 @@ class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn()>
 };
 
 template <class _Fn, class _A0>
-class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0)>
     : public __result_of<_Fn(_A0),
                          is_class<typename remove_reference<_Fn>::type>::value ||
                          is_function<typename remove_pointer<typename remove_reference<_Fn>::type>::type>::value,
@@ -2340,7 +2340,7 @@ class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0)>
 };
 
 template <class _Fn, class _A0, class _A1>
-class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0, _A1)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0, _A1)>
     : public __result_of<_Fn(_A0, _A1),
                          is_class<typename remove_reference<_Fn>::type>::value ||
                          is_function<typename remove_pointer<typename remove_reference<_Fn>::type>::type>::value,
@@ -2350,7 +2350,7 @@ class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0, _A1)>
 };
 
 template <class _Fn, class _A0, class _A1, class _A2>
-class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0, _A1, _A2)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0, _A1, _A2)>
     : public __result_of<_Fn(_A0, _A1, _A2),
                          is_class<typename remove_reference<_Fn>::type>::value ||
                          is_function<typename remove_pointer<typename remove_reference<_Fn>::type>::type>::value,
@@ -2359,7 +2359,7 @@ class _LIBCPP_TYPE_VIS_ONLY result_of<_Fn(_A0, _A1, _A2)>
 {
 };
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 // template <class T, class... Args> struct is_constructible;
 
@@ -2371,18 +2371,18 @@ struct __nat {};
 #if __has_feature(is_constructible)
 
 template <class _Tp, class ..._Args>
-struct _LIBCPP_TYPE_VIS_ONLY is_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_constructible
     : public integral_constant<bool, __is_constructible(_Tp, _Args...)>
     {};
 
 #else
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 //      main is_constructible test
 
 template <class _Tp, class ..._Args>
-typename __select_2nd<decltype(_VSTD::move(_Tp(_VSTD::declval<_Args>()...))), true_type>::type
+typename __select_2nd<decltype(_MUSEUM_VSTD::move(_Tp(_MUSEUM_VSTD::declval<_Args>()...))), true_type>::type
 __is_constructible_test(_Tp&&, _Args&& ...);
 
 template <class ..._Args>
@@ -2467,7 +2467,7 @@ struct __contains_void<_A0, _Args...>
 //      is_constructible entry point
 
 template <class _Tp, class... _Args>
-struct _LIBCPP_TYPE_VIS_ONLY is_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_constructible
     : public __is_constructible_void_check<__contains_void<_Tp, _Args...>::value
                                         || is_abstract<_Tp>::value,
                                            _Tp, _Args...>
@@ -2495,7 +2495,7 @@ struct __libcpp_is_constructible<false, _Ap[], _Args...>
     : public false_type
     {};
 
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 // template <class T> struct is_constructible0;
 
@@ -2509,7 +2509,7 @@ false_type
 __is_constructible0_test(__any);
 
 template <class _Tp, class _A0>
-decltype((_Tp(_VSTD::declval<_A0>()), true_type()))
+decltype((_Tp(_MUSEUM_VSTD::declval<_A0>()), true_type()))
 __is_constructible1_test(_Tp&, _A0&);
 
 template <class _A0>
@@ -2517,7 +2517,7 @@ false_type
 __is_constructible1_test(__any, _A0&);
 
 template <class _Tp, class _A0, class _A1>
-decltype((_Tp(_VSTD::declval<_A0>(), _VSTD::declval<_A1>()), true_type()))
+decltype((_Tp(_MUSEUM_VSTD::declval<_A0>(), _MUSEUM_VSTD::declval<_A1>()), true_type()))
 __is_constructible2_test(_Tp&, _A0&, _A1&);
 
 template <class _A0, class _A1>
@@ -2608,7 +2608,7 @@ struct __is_constructible2_void_check<true, _Tp, _A0, _A1>
 
 template <class _Tp, class _A0 = __is_construct::__nat,
                      class _A1 = __is_construct::__nat>
-struct _LIBCPP_TYPE_VIS_ONLY is_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_constructible
     : public __is_constructible2_void_check<is_void<_Tp>::value
                                         || is_abstract<_Tp>::value
                                         || is_function<_Tp>::value
@@ -2618,7 +2618,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_constructible
     {};
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_constructible<_Tp, __is_construct::__nat, __is_construct::__nat>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_constructible<_Tp, __is_construct::__nat, __is_construct::__nat>
     : public __is_constructible0_void_check<is_void<_Tp>::value
                                         || is_abstract<_Tp>::value
                                         || is_function<_Tp>::value,
@@ -2626,7 +2626,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_constructible<_Tp, __is_construct::__nat, __is_c
     {};
 
 template <class _Tp, class _A0>
-struct _LIBCPP_TYPE_VIS_ONLY is_constructible<_Tp, _A0, __is_construct::__nat>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_constructible<_Tp, _A0, __is_construct::__nat>
     : public __is_constructible1_void_check<is_void<_Tp>::value
                                         || is_abstract<_Tp>::value
                                         || is_function<_Tp>::value
@@ -2669,28 +2669,28 @@ struct __is_constructible2_imp<false, _Ap[], _A0, _A1>
     : public false_type
     {};
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 #endif  // __has_feature(is_constructible)
 
 // is_default_constructible
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_default_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_default_constructible
     : public is_constructible<_Tp>
     {};
 
 // is_copy_constructible
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_copy_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_copy_constructible
     : public is_constructible<_Tp, 
                   typename add_lvalue_reference<typename add_const<_Tp>::type>::type> {};
 
 // is_move_constructible
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_move_constructible
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_move_constructible
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     : public is_constructible<_Tp, typename add_rvalue_reference<_Tp>::type>
 #else
     : public is_copy_constructible<_Tp>
@@ -2699,12 +2699,12 @@ struct _LIBCPP_TYPE_VIS_ONLY is_move_constructible
 
 // is_trivially_constructible
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 #if __has_feature(is_trivially_constructible) || _GNUC_VER >= 501
 
 template <class _Tp, class... _Args>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
     : integral_constant<bool, __is_trivially_constructible(_Tp, _Args...)>
 {
 };
@@ -2712,13 +2712,13 @@ struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
 #else  // !__has_feature(is_trivially_constructible)
 
 template <class _Tp, class... _Args>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
     : false_type
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp>
 #if __has_feature(has_trivial_constructor) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_trivial_constructor(_Tp)>
 #else
@@ -2728,34 +2728,34 @@ struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp>
 };
 
 template <class _Tp>
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&&>
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&&>
 #else
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp>
 #endif
     : integral_constant<bool, is_scalar<_Tp>::value>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, const _Tp&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, const _Tp&>
     : integral_constant<bool, is_scalar<_Tp>::value>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&>
     : integral_constant<bool, is_scalar<_Tp>::value>
 {
 };
 
 #endif  // !__has_feature(is_trivially_constructible)
 
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _A0 = __is_construct::__nat,
                      class _A1 = __is_construct::__nat>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
     : false_type
 {
 };
@@ -2763,28 +2763,28 @@ struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible
 #if __has_feature(is_trivially_constructible) || _GNUC_VER >= 501
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, __is_construct::__nat,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, __is_construct::__nat,
                                                        __is_construct::__nat>
     : integral_constant<bool, __is_trivially_constructible(_Tp)>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp,
                                                        __is_construct::__nat>
     : integral_constant<bool, __is_trivially_constructible(_Tp, _Tp)>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, const _Tp&,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, const _Tp&,
                                                        __is_construct::__nat>
     : integral_constant<bool, __is_trivially_constructible(_Tp, const _Tp&)>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&,
                                                        __is_construct::__nat>
     : integral_constant<bool, __is_trivially_constructible(_Tp, _Tp&)>
 {
@@ -2793,28 +2793,28 @@ struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&,
 #else  // !__has_feature(is_trivially_constructible)
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, __is_construct::__nat,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, __is_construct::__nat,
                                                        __is_construct::__nat>
     : integral_constant<bool, is_scalar<_Tp>::value>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp,
                                                        __is_construct::__nat>
     : integral_constant<bool, is_scalar<_Tp>::value>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, const _Tp&,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, const _Tp&,
                                                        __is_construct::__nat>
     : integral_constant<bool, is_scalar<_Tp>::value>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&,
                                                        __is_construct::__nat>
     : integral_constant<bool, is_scalar<_Tp>::value>
 {
@@ -2822,24 +2822,24 @@ struct _LIBCPP_TYPE_VIS_ONLY is_trivially_constructible<_Tp, _Tp&,
 
 #endif  // !__has_feature(is_trivially_constructible)
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 // is_trivially_default_constructible
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_default_constructible
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_default_constructible
     : public is_trivially_constructible<_Tp>
     {};
 
 // is_trivially_copy_constructible
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_copy_constructible
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_copy_constructible
     : public is_trivially_constructible<_Tp, typename add_lvalue_reference<const _Tp>::type>
     {};
 
 // is_trivially_move_constructible
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_move_constructible
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_move_constructible
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     : public is_trivially_constructible<_Tp, typename add_rvalue_reference<_Tp>::type>
 #else
     : public is_trivially_copy_constructible<_Tp>
@@ -2874,27 +2874,27 @@ template <class _Tp>
 struct is_trivially_assignable<_Tp&, const _Tp&>
     : integral_constant<bool, is_scalar<_Tp>::value> {};
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
 struct is_trivially_assignable<_Tp&, _Tp&&>
     : integral_constant<bool, is_scalar<_Tp>::value> {};
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 #endif  // !__has_feature(is_trivially_assignable)
 
 // is_trivially_copy_assignable
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_copy_assignable
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_copy_assignable
     : public is_trivially_assignable<typename add_lvalue_reference<_Tp>::type,
                   typename add_lvalue_reference<typename add_const<_Tp>::type>::type> {};
 
 // is_trivially_move_assignable
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_move_assignable
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_move_assignable
     : public is_trivially_assignable<typename add_lvalue_reference<_Tp>::type,
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
                                      typename add_rvalue_reference<_Tp>::type>
 #else
                                      typename add_lvalue_reference<_Tp>::type>
@@ -2905,7 +2905,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_move_assignable
 
 #if __has_feature(has_trivial_destructor) || (_GNUC_VER >= 403)
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_destructible
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_destructible
     : public integral_constant<bool, is_destructible<_Tp>::value && __has_trivial_destructor(_Tp)> {};
 
 #else
@@ -2914,10 +2914,10 @@ template <class _Tp> struct __libcpp_trivial_destructor
     : public integral_constant<bool, is_scalar<_Tp>::value ||
                                      is_reference<_Tp>::value> {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_destructible
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_destructible
     : public __libcpp_trivial_destructor<typename remove_all_extents<_Tp>::type> {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_destructible<_Tp[]>
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_destructible<_Tp[]>
     : public false_type {};
 
 #endif
@@ -2926,14 +2926,14 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_destructible<_Tp[
 
 #if 0
 template <class _Tp, class... _Args>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
     : public integral_constant<bool, __is_nothrow_constructible(_Tp(_Args...))>
 {
 };
 
 #else
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 #if __has_feature(cxx_noexcept) || (_GNUC_VER >= 407 && __cplusplus >= 201103L)
 
@@ -2961,13 +2961,13 @@ struct __libcpp_is_nothrow_constructible</*is constructible*/false, _IsReference
 };
 
 template <class _Tp, class... _Args>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
     : __libcpp_is_nothrow_constructible<is_constructible<_Tp, _Args...>::value, is_reference<_Tp>::value, _Tp, _Args...>
 {
 };
 
 template <class _Tp, size_t _Ns>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp[_Ns]>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp[_Ns]>
     : __libcpp_is_nothrow_constructible<is_constructible<_Tp>::value, is_reference<_Tp>::value, _Tp>
 {
 };
@@ -2975,13 +2975,13 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp[_Ns]>
 #else  // __has_feature(cxx_noexcept)
 
 template <class _Tp, class... _Args>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
     : false_type
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp>
 #if __has_feature(has_nothrow_constructor) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_constructor(_Tp)>
 #else
@@ -2991,10 +2991,10 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp>
 };
 
 template <class _Tp>
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&&>
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&&>
 #else
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp>
 #endif
 #if __has_feature(has_nothrow_copy) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_copy(_Tp)>
@@ -3005,7 +3005,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp>
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, const _Tp&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, const _Tp&>
 #if __has_feature(has_nothrow_copy) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_copy(_Tp)>
 #else
@@ -3015,7 +3015,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, const _Tp&>
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&>
 #if __has_feature(has_nothrow_copy) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_copy(_Tp)>
 #else
@@ -3026,17 +3026,17 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&>
 
 #endif  // __has_feature(cxx_noexcept)
 
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp, class _A0 = __is_construct::__nat,
                      class _A1 = __is_construct::__nat>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible
     : false_type
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, __is_construct::__nat,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, __is_construct::__nat,
                                                        __is_construct::__nat>
 #if __has_feature(has_nothrow_constructor) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_constructor(_Tp)>
@@ -3047,7 +3047,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, __is_construct::__nat
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp,
                                                        __is_construct::__nat>
 #if __has_feature(has_nothrow_copy) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_copy(_Tp)>
@@ -3058,7 +3058,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp,
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, const _Tp&,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, const _Tp&,
                                                        __is_construct::__nat>
 #if __has_feature(has_nothrow_copy) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_copy(_Tp)>
@@ -3069,7 +3069,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, const _Tp&,
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&,
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&,
                                                        __is_construct::__nat>
 #if __has_feature(has_nothrow_copy) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_copy(_Tp)>
@@ -3079,25 +3079,25 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_constructible<_Tp, _Tp&,
 {
 };
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 #endif  // __has_feature(is_nothrow_constructible)
 
 // is_nothrow_default_constructible
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_default_constructible
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_default_constructible
     : public is_nothrow_constructible<_Tp>
     {};
 
 // is_nothrow_copy_constructible
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_copy_constructible
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_copy_constructible
     : public is_nothrow_constructible<_Tp,
                   typename add_lvalue_reference<typename add_const<_Tp>::type>::type> {};
 
 // is_nothrow_move_constructible
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_move_constructible
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_move_constructible
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     : public is_nothrow_constructible<_Tp, typename add_rvalue_reference<_Tp>::type>
 #else
     : public is_nothrow_copy_constructible<_Tp>
@@ -3118,12 +3118,12 @@ struct __libcpp_is_nothrow_assignable<false, _Tp, _Arg>
 
 template <class _Tp, class _Arg>
 struct __libcpp_is_nothrow_assignable<true, _Tp, _Arg>
-    : public integral_constant<bool, noexcept(_VSTD::declval<_Tp>() = _VSTD::declval<_Arg>()) >
+    : public integral_constant<bool, noexcept(_MUSEUM_VSTD::declval<_Tp>() = _MUSEUM_VSTD::declval<_Arg>()) >
 {
 };
 
 template <class _Tp, class _Arg>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable
     : public __libcpp_is_nothrow_assignable<is_assignable<_Tp, _Arg>::value, _Tp, _Arg>
 {
 };
@@ -3131,11 +3131,11 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable
 #else  // __has_feature(cxx_noexcept)
 
 template <class _Tp, class _Arg>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable
     : public false_type {};
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, _Tp>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, _Tp>
 #if __has_feature(has_nothrow_assign) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_assign(_Tp)> {};
 #else
@@ -3143,7 +3143,7 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, _Tp>
 #endif
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, _Tp&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, _Tp&>
 #if __has_feature(has_nothrow_assign) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_assign(_Tp)> {};
 #else
@@ -3151,14 +3151,14 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, _Tp&>
 #endif
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, const _Tp&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_assignable<_Tp&, const _Tp&>
 #if __has_feature(has_nothrow_assign) || (_GNUC_VER >= 403)
     : integral_constant<bool, __has_nothrow_assign(_Tp)> {};
 #else
     : integral_constant<bool, is_scalar<_Tp>::value> {};
 #endif
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
 struct is_nothrow_assignable<_Tp&, _Tp&&>
@@ -3168,21 +3168,21 @@ struct is_nothrow_assignable<_Tp&, _Tp&&>
     : integral_constant<bool, is_scalar<_Tp>::value> {};
 #endif
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 #endif  // __has_feature(cxx_noexcept)
 
 // is_nothrow_copy_assignable
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_copy_assignable
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_copy_assignable
     : public is_nothrow_assignable<typename add_lvalue_reference<_Tp>::type,
                   typename add_lvalue_reference<typename add_const<_Tp>::type>::type> {};
 
 // is_nothrow_move_assignable
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_move_assignable
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_move_assignable
     : public is_nothrow_assignable<typename add_lvalue_reference<_Tp>::type,
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
                                      typename add_rvalue_reference<_Tp>::type>
 #else
                                      typename add_lvalue_reference<_Tp>::type>
@@ -3203,32 +3203,32 @@ struct __libcpp_is_nothrow_destructible<false, _Tp>
 
 template <class _Tp>
 struct __libcpp_is_nothrow_destructible<true, _Tp>
-    : public integral_constant<bool, noexcept(_VSTD::declval<_Tp>().~_Tp()) >
+    : public integral_constant<bool, noexcept(_MUSEUM_VSTD::declval<_Tp>().~_Tp()) >
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible
     : public __libcpp_is_nothrow_destructible<is_destructible<_Tp>::value, _Tp>
 {
 };
 
 template <class _Tp, size_t _Ns>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp[_Ns]>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp[_Ns]>
     : public is_nothrow_destructible<_Tp>
 {
 };
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp&>
     : public true_type
 {
 };
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp&&>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp&&>
     : public true_type
 {
 };
@@ -3241,11 +3241,11 @@ template <class _Tp> struct __libcpp_nothrow_destructor
     : public integral_constant<bool, is_scalar<_Tp>::value ||
                                      is_reference<_Tp>::value> {};
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible
     : public __libcpp_nothrow_destructor<typename remove_all_extents<_Tp>::type> {};
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp[]>
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp[]>
     : public false_type {};
 
 #endif
@@ -3254,12 +3254,12 @@ struct _LIBCPP_TYPE_VIS_ONLY is_nothrow_destructible<_Tp[]>
 
 #if __has_feature(is_pod) || (_GNUC_VER >= 403)
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_pod
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_pod
     : public integral_constant<bool, __is_pod(_Tp)> {};
 
 #else
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_pod
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_pod
     : public integral_constant<bool, is_trivially_default_constructible<_Tp>::value   &&
                                      is_trivially_copy_constructible<_Tp>::value      &&
                                      is_trivially_copy_assignable<_Tp>::value    &&
@@ -3269,9 +3269,9 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_pod
 
 // is_literal_type;
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_literal_type
-#ifdef _LIBCPP_IS_LITERAL
-    : public integral_constant<bool, _LIBCPP_IS_LITERAL(_Tp)>
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_literal_type
+#ifdef _MUSEUM_LIBCPP_IS_LITERAL
+    : public integral_constant<bool, _MUSEUM_LIBCPP_IS_LITERAL(_Tp)>
 #else
     : integral_constant<bool, is_scalar<typename remove_all_extents<_Tp>::type>::value ||
                               is_reference<typename remove_all_extents<_Tp>::type>::value>
@@ -3280,7 +3280,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_literal_type
     
 // is_standard_layout;
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_standard_layout
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_standard_layout
 #if __has_feature(is_standard_layout) || (_GNUC_VER >= 407)
     : public integral_constant<bool, __is_standard_layout(_Tp)>
 #else
@@ -3290,7 +3290,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_standard_layout
     
 // is_trivially_copyable;
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_copyable
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivially_copyable
 #if __has_feature(is_trivially_copyable)
     : public integral_constant<bool, __is_trivially_copyable(_Tp)>
 #elif _GNUC_VER >= 501
@@ -3302,7 +3302,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivially_copyable
     
 // is_trivial;
 
-template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivial
+template <class _Tp> struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY is_trivial
 #if __has_feature(is_trivial) || _GNUC_VER >= 407
     : public integral_constant<bool, __is_trivial(_Tp)>
 #else
@@ -3311,7 +3311,7 @@ template <class _Tp> struct _LIBCPP_TYPE_VIS_ONLY is_trivial
 #endif
     {};
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 // Check for complete types
 
@@ -3476,10 +3476,10 @@ template <class _Fp, class _A0, class ..._Args,
                            typename remove_reference<_A0>::type>::value
             >::type
          >
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 auto
 __invoke(_Fp&& __f, _A0&& __a0, _Args&& ...__args)
-    -> decltype((_VSTD::forward<_A0>(__a0).*__f)(_VSTD::forward<_Args>(__args)...));
+    -> decltype((_MUSEUM_VSTD::forward<_A0>(__a0).*__f)(_MUSEUM_VSTD::forward<_Args>(__args)...));
 
 template <class _Fp, class _A0, class ..._Args,
             class = typename enable_if
@@ -3489,10 +3489,10 @@ template <class _Fp, class _A0, class ..._Args,
                            typename remove_reference<_A0>::type>::value
             >::type
          >
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 auto
 __invoke(_Fp&& __f, _A0&& __a0, _Args&& ...__args)
-    -> decltype(((*_VSTD::forward<_A0>(__a0)).*__f)(_VSTD::forward<_Args>(__args)...));
+    -> decltype(((*_MUSEUM_VSTD::forward<_A0>(__a0)).*__f)(_MUSEUM_VSTD::forward<_Args>(__args)...));
 
 // bullets 3 and 4
 
@@ -3504,10 +3504,10 @@ template <class _Fp, class _A0,
                            typename remove_reference<_A0>::type>::value
             >::type
          >
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 auto
 __invoke(_Fp&& __f, _A0&& __a0)
-    -> decltype(_VSTD::forward<_A0>(__a0).*__f);
+    -> decltype(_MUSEUM_VSTD::forward<_A0>(__a0).*__f);
 
 template <class _Fp, class _A0,
             class = typename enable_if
@@ -3517,18 +3517,18 @@ template <class _Fp, class _A0,
                            typename remove_reference<_A0>::type>::value
             >::type
          >
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 auto
 __invoke(_Fp&& __f, _A0&& __a0)
-    -> decltype((*_VSTD::forward<_A0>(__a0)).*__f);
+    -> decltype((*_MUSEUM_VSTD::forward<_A0>(__a0)).*__f);
 
 // bullet 5
 
 template <class _Fp, class ..._Args>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 auto
 __invoke(_Fp&& __f, _Args&& ...__args)
-    -> decltype(_VSTD::forward<_Fp>(__f)(_VSTD::forward<_Args>(__args)...));
+    -> decltype(_MUSEUM_VSTD::forward<_Fp>(__f)(_MUSEUM_VSTD::forward<_Args>(__args)...));
 
 // __invokable
 
@@ -3537,7 +3537,7 @@ struct __invokable_imp
     : private __check_complete<_Fp>
 {
     typedef decltype(
-            __invoke(_VSTD::declval<_Fp>(), _VSTD::declval<_Args>()...)
+            __invoke(_MUSEUM_VSTD::declval<_Fp>(), _MUSEUM_VSTD::declval<_Args>()...)
                     ) type;
     static const bool value = !is_same<type, __nat>::value;
 };
@@ -3569,20 +3569,20 @@ struct __invoke_of
 };
 
 template <class _Fp, class ..._Args>
-class _LIBCPP_TYPE_VIS_ONLY result_of<_Fp(_Args...)>
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY result_of<_Fp(_Args...)>
     : public __invoke_of<_Fp, _Args...>
 {
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using result_of_t = typename result_of<_Tp>::type;
 #endif
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
-#ifndef _LIBCPP_HAS_NO_ADVANCED_SFINAE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_ADVANCED_SFINAE
 typename enable_if
 <
     is_move_constructible<_Tp>::value &&
@@ -3594,18 +3594,18 @@ void
 swap(_Tp& __x, _Tp& __y) _NOEXCEPT_(is_nothrow_move_constructible<_Tp>::value &&
                                     is_nothrow_move_assignable<_Tp>::value)
 {
-    _Tp __t(_VSTD::move(__x));
-    __x = _VSTD::move(__y);
-    __y = _VSTD::move(__t);
+    _Tp __t(_MUSEUM_VSTD::move(__x));
+    __x = _MUSEUM_VSTD::move(__y);
+    __y = _MUSEUM_VSTD::move(__t);
 }
 
 template <class _ForwardIterator1, class _ForwardIterator2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 iter_swap(_ForwardIterator1 __a, _ForwardIterator2 __b)
     //                                  _NOEXCEPT_(_NOEXCEPT_(swap(*__a, *__b)))
-               _NOEXCEPT_(_NOEXCEPT_(swap(*_VSTD::declval<_ForwardIterator1>(),
-                                          *_VSTD::declval<_ForwardIterator2>())))
+               _NOEXCEPT_(_NOEXCEPT_(swap(*_MUSEUM_VSTD::declval<_ForwardIterator1>(),
+                                          *_MUSEUM_VSTD::declval<_ForwardIterator2>())))
 {
     swap(*__a, *__b);
 }
@@ -3615,13 +3615,13 @@ iter_swap(_ForwardIterator1 __a, _ForwardIterator2 __b)
 namespace __detail
 {
 
-using _VSTD::swap;
+using _MUSEUM_VSTD::swap;
 __nat swap(__any, __any);
 
 template <class _Tp>
 struct __swappable
 {
-    typedef decltype(swap(_VSTD::declval<_Tp&>(), _VSTD::declval<_Tp&>())) type;
+    typedef decltype(swap(_MUSEUM_VSTD::declval<_Tp&>(), _MUSEUM_VSTD::declval<_Tp&>())) type;
     static const bool value = !is_same<type, __nat>::value;
 };
 
@@ -3637,8 +3637,8 @@ struct __is_swappable
 
 template <bool, class _Tp>
 struct __is_nothrow_swappable_imp
-    : public integral_constant<bool, noexcept(swap(_VSTD::declval<_Tp&>(),
-                                                   _VSTD::declval<_Tp&>()))>
+    : public integral_constant<bool, noexcept(swap(_MUSEUM_VSTD::declval<_Tp&>(),
+                                                   _MUSEUM_VSTD::declval<_Tp&>()))>
 {
 };
 
@@ -3664,19 +3664,19 @@ struct __is_nothrow_swappable
 
 #endif  // __has_feature(cxx_noexcept)
 
-#ifdef _LIBCPP_UNDERLYING_TYPE
+#ifdef _MUSEUM_LIBCPP_UNDERLYING_TYPE
 
 template <class _Tp>
 struct underlying_type
 {
-    typedef _LIBCPP_UNDERLYING_TYPE(_Tp) type;
+    typedef _MUSEUM_LIBCPP_UNDERLYING_TYPE(_Tp) type;
 };
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 template <class _Tp> using underlying_type_t = typename underlying_type<_Tp>::type;
 #endif
 
-#else  // _LIBCPP_UNDERLYING_TYPE
+#else  // _MUSEUM_LIBCPP_UNDERLYING_TYPE
 
 template <class _Tp, bool _Support = false>
 struct underlying_type
@@ -3686,7 +3686,7 @@ struct underlying_type
                             "libc++ does not know how to use it.");
 };
 
-#endif // _LIBCPP_UNDERLYING_TYPE
+#endif // _MUSEUM_LIBCPP_UNDERLYING_TYPE
 
 
 template <class _Tp, bool = facebook::museum::MUSEUM_VERSION::std::is_enum<_Tp>::value>
@@ -3699,45 +3699,45 @@ struct __sfinae_underlying_type
 template <class _Tp>
 struct __sfinae_underlying_type<_Tp, false> {};
 
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 int __convert_to_integral(int __val) { return __val; }
 
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 unsigned __convert_to_integral(unsigned __val) { return __val; }
 
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 long __convert_to_integral(long __val) { return __val; }
 
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 unsigned long __convert_to_integral(unsigned long __val) { return __val; }
 
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 long long __convert_to_integral(long long __val) { return __val; }
 
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 unsigned long long __convert_to_integral(unsigned long long __val) {return __val; }
 
-#ifndef _LIBCPP_HAS_NO_INT128
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+#ifndef _MUSEUM_LIBCPP_HAS_NO_INT128
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 __int128_t __convert_to_integral(__int128_t __val) { return __val; }
 
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 __uint128_t __convert_to_integral(__uint128_t __val) { return __val; }
 #endif
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_ALWAYS_INLINE
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_ALWAYS_INLINE
 typename __sfinae_underlying_type<_Tp>::__promoted_type
 __convert_to_integral(_Tp __val) { return __val; }
 
-#ifndef _LIBCPP_HAS_NO_ADVANCED_SFINAE
+#ifndef _MUSEUM_LIBCPP_HAS_NO_ADVANCED_SFINAE
 
 template <class _Tp>
 struct __has_operator_addressof_member_imp
 {
     template <class _Up>
         static auto __test(int)
-            -> typename __select_2nd<decltype(_VSTD::declval<_Up>().operator&()), true_type>::type;
+            -> typename __select_2nd<decltype(_MUSEUM_VSTD::declval<_Up>().operator&()), true_type>::type;
     template <class>
         static auto __test(long) -> false_type;
 
@@ -3749,7 +3749,7 @@ struct __has_operator_addressof_free_imp
 {
     template <class _Up>
         static auto __test(int)
-            -> typename __select_2nd<decltype(operator&(_VSTD::declval<_Up>())), true_type>::type;
+            -> typename __select_2nd<decltype(operator&(_MUSEUM_VSTD::declval<_Up>())), true_type>::type;
     template <class>
         static auto __test(long) -> false_type;
 
@@ -3762,12 +3762,12 @@ struct __has_operator_addressof
                                   || __has_operator_addressof_free_imp<_Tp>::value>
 {};
 
-#endif  // _LIBCPP_HAS_NO_ADVANCED_SFINAE
+#endif  // _MUSEUM_LIBCPP_HAS_NO_ADVANCED_SFINAE
 
-#if _LIBCPP_STD_VER > 14
+#if _MUSEUM_LIBCPP_STD_VER > 14
 template <class...> using void_t = void;
 #endif
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_TYPE_TRAITS
+#endif  // _MUSEUM_LIBCPP_TYPE_TRAITS

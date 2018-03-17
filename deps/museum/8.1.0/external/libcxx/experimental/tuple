@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_EXPERIMENTAL_TUPLE
-#define _LIBCPP_EXPERIMENTAL_TUPLE
+#ifndef _MUSEUM_LIBCPP_EXPERIMENTAL_TUPLE
+#define _MUSEUM_LIBCPP_EXPERIMENTAL_TUPLE
 
 /*
     experimental/tuple synopsis
@@ -38,45 +38,45 @@ inline namespace fundamentals_v1 {
 
 # include <museum/8.1.0/external/libcxx/experimental/__config>
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 
 # include <museum/8.1.0/external/libcxx/experimental/tuple>
 # include <museum/8.1.0/external/libcxx/experimental/utility>
 # include <museum/8.1.0/external/libcxx/__functional_base>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_LFTS
 
-#ifndef _LIBCPP_HAS_NO_VARIABLE_TEMPLATES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIABLE_TEMPLATES
 template <class _Tp>
-_LIBCPP_CONSTEXPR size_t tuple_size_v = tuple_size<_Tp>::value;
+_MUSEUM_LIBCPP_CONSTEXPR size_t tuple_size_v = tuple_size<_Tp>::value;
 #endif
 
 template <class _Fn, class _Tuple, size_t ..._Id>
-inline _LIBCPP_INLINE_VISIBILITY
-_LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 decltype(auto) __apply_tuple_impl(_Fn && __f, _Tuple && __t,
                                   integer_sequence<size_t, _Id...>) {
-    return _VSTD::__invoke_constexpr(
-        _VSTD::forward<_Fn>(__f),
-        _VSTD::get<_Id>(_VSTD::forward<_Tuple>(__t))...
+    return _MUSEUM_VSTD::__invoke_constexpr(
+        _MUSEUM_VSTD::forward<_Fn>(__f),
+        _MUSEUM_VSTD::get<_Id>(_MUSEUM_VSTD::forward<_Tuple>(__t))...
     );
 }
 
 template <class _Fn, class _Tuple>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 decltype(auto) apply(_Fn && __f, _Tuple && __t) {
-    return _VSTD_LFTS::__apply_tuple_impl(
-        _VSTD::forward<_Fn>(__f), _VSTD::forward<_Tuple>(__t),
+    return _MUSEUM_VSTD_LFTS::__apply_tuple_impl(
+        _MUSEUM_VSTD::forward<_Fn>(__f), _MUSEUM_VSTD::forward<_Tuple>(__t),
         make_index_sequence<tuple_size<typename decay<_Tuple>::type>::value>()
     );
 }
 
-_LIBCPP_END_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_END_NAMESPACE_LFTS
 
-#endif /* _LIBCPP_STD_VER > 11 */
+#endif /* _MUSEUM_LIBCPP_STD_VER > 11 */
 
-#endif /* _LIBCPP_EXPERIMENTAL_TUPLE */
+#endif /* _MUSEUM_LIBCPP_EXPERIMENTAL_TUPLE */

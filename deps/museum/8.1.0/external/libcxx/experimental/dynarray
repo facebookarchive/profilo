@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_DYNARRAY
-#define _LIBCPP_DYNARRAY
+#ifndef _MUSEUM_LIBCPP_DYNARRAY
+#define _MUSEUM_LIBCPP_DYNARRAY
 
 /*
     dynarray synopsis
@@ -94,7 +94,7 @@ public:
 
 */
 #include <museum/8.1.0/external/libcxx/experimental/__config>
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 
 #include <museum/8.1.0/external/libcxx/__functional_base>
 #include <museum/8.1.0/external/libcxx/experimental/iterator>
@@ -103,14 +103,14 @@ public:
 #include <museum/8.1.0/external/libcxx/new>
 #include <museum/8.1.0/external/libcxx/experimental/algorithm>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 namespace std { namespace experimental { inline namespace __array_extensions_v1 {
 
 template <class _Tp>
-struct _LIBCPP_TEMPLATE_VIS dynarray
+struct _MUSEUM_LIBCPP_TEMPLATE_VIS dynarray
 {
 public:
     // types:
@@ -130,30 +130,30 @@ public:
 private:
     size_t                  __size_;
     value_type *            __base_;
-    _LIBCPP_ALWAYS_INLINE dynarray () noexcept :  __size_(0), __base_(nullptr) {}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE dynarray () noexcept :  __size_(0), __base_(nullptr) {}
     
-    static inline _LIBCPP_INLINE_VISIBILITY value_type* __allocate ( size_t count )
+    static inline _MUSEUM_LIBCPP_INLINE_VISIBILITY value_type* __allocate ( size_t count )
     {
         if ( numeric_limits<size_t>::max() / sizeof (value_type) <= count )
             __throw_bad_array_length();
 
-        return static_cast<value_type *> (_VSTD::__allocate (sizeof(value_type) * count));
+        return static_cast<value_type *> (_MUSEUM_VSTD::__allocate (sizeof(value_type) * count));
     }
 
-    static inline _LIBCPP_INLINE_VISIBILITY void __deallocate_value( value_type* __ptr ) noexcept
+    static inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void __deallocate_value( value_type* __ptr ) noexcept
     {
-        _VSTD::__libcpp_deallocate (static_cast<void *> (__ptr));
+        _MUSEUM_VSTD::__libcpp_deallocate (static_cast<void *> (__ptr));
     }
 
 public:
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit dynarray(size_type __c);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     dynarray(size_type __c, const value_type& __v);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     dynarray(const dynarray& __d);
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     dynarray(initializer_list<value_type>);
 
 //  We're not implementing these right now.
@@ -168,47 +168,47 @@ public:
 //       dynarray(allocator_arg_t, const _Alloc& __alloc, initializer_list<value_type>);
 
     dynarray& operator=(const dynarray&) = delete;
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     ~dynarray();
 
     // iterators:
-    inline _LIBCPP_INLINE_VISIBILITY iterator       begin()        noexcept { return iterator(data()); }
-    inline _LIBCPP_INLINE_VISIBILITY const_iterator begin()  const noexcept { return const_iterator(data()); }
-    inline _LIBCPP_INLINE_VISIBILITY const_iterator cbegin() const noexcept { return const_iterator(data()); }
-    inline _LIBCPP_INLINE_VISIBILITY iterator       end()          noexcept { return iterator(data() + __size_); }
-    inline _LIBCPP_INLINE_VISIBILITY const_iterator end()    const noexcept { return const_iterator(data() + __size_); }
-    inline _LIBCPP_INLINE_VISIBILITY const_iterator cend()   const noexcept { return const_iterator(data() + __size_); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY iterator       begin()        noexcept { return iterator(data()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_iterator begin()  const noexcept { return const_iterator(data()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_iterator cbegin() const noexcept { return const_iterator(data()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY iterator       end()          noexcept { return iterator(data() + __size_); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_iterator end()    const noexcept { return const_iterator(data() + __size_); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_iterator cend()   const noexcept { return const_iterator(data() + __size_); }
 
-    inline _LIBCPP_INLINE_VISIBILITY reverse_iterator       rbegin()        noexcept { return reverse_iterator(end()); }
-    inline _LIBCPP_INLINE_VISIBILITY const_reverse_iterator rbegin()  const noexcept { return const_reverse_iterator(end()); }
-    inline _LIBCPP_INLINE_VISIBILITY const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator(end()); }
-    inline _LIBCPP_INLINE_VISIBILITY reverse_iterator       rend()          noexcept { return reverse_iterator(begin()); }
-    inline _LIBCPP_INLINE_VISIBILITY const_reverse_iterator rend()    const noexcept { return const_reverse_iterator(begin()); }
-    inline _LIBCPP_INLINE_VISIBILITY const_reverse_iterator crend()   const noexcept { return const_reverse_iterator(begin()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY reverse_iterator       rbegin()        noexcept { return reverse_iterator(end()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reverse_iterator rbegin()  const noexcept { return const_reverse_iterator(end()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator(end()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY reverse_iterator       rend()          noexcept { return reverse_iterator(begin()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reverse_iterator rend()    const noexcept { return const_reverse_iterator(begin()); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reverse_iterator crend()   const noexcept { return const_reverse_iterator(begin()); }
 
     // capacity:
-    inline _LIBCPP_INLINE_VISIBILITY size_type size()     const noexcept { return __size_; }
-    inline _LIBCPP_INLINE_VISIBILITY size_type max_size() const noexcept { return __size_; }
-    inline _LIBCPP_INLINE_VISIBILITY bool      empty()    const noexcept { return __size_ == 0; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY size_type size()     const noexcept { return __size_; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY size_type max_size() const noexcept { return __size_; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY bool      empty()    const noexcept { return __size_ == 0; }
 
     // element access:
-    inline _LIBCPP_INLINE_VISIBILITY reference       operator[](size_type __n)       { return data()[__n]; }
-    inline _LIBCPP_INLINE_VISIBILITY const_reference operator[](size_type __n) const { return data()[__n]; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY reference       operator[](size_type __n)       { return data()[__n]; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reference operator[](size_type __n) const { return data()[__n]; }
 
-    inline _LIBCPP_INLINE_VISIBILITY reference       front()       { return data()[0]; }
-    inline _LIBCPP_INLINE_VISIBILITY const_reference front() const { return data()[0]; }
-    inline _LIBCPP_INLINE_VISIBILITY reference       back()        { return data()[__size_-1]; }
-    inline _LIBCPP_INLINE_VISIBILITY const_reference back()  const { return data()[__size_-1]; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY reference       front()       { return data()[0]; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reference front() const { return data()[0]; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY reference       back()        { return data()[__size_-1]; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reference back()  const { return data()[__size_-1]; }
 
-    inline _LIBCPP_INLINE_VISIBILITY const_reference at(size_type __n) const;
-    inline _LIBCPP_INLINE_VISIBILITY reference       at(size_type __n);
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const_reference at(size_type __n) const;
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY reference       at(size_type __n);
 
     // data access:
-    inline _LIBCPP_INLINE_VISIBILITY _Tp*       data()       noexcept { return __base_; }
-    inline _LIBCPP_INLINE_VISIBILITY const _Tp* data() const noexcept { return __base_; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _Tp*       data()       noexcept { return __base_; }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY const _Tp* data() const noexcept { return __base_; }
 
     // mutating member functions:
-    inline _LIBCPP_INLINE_VISIBILITY void fill(const value_type& __v) { fill_n(begin(), __size_, __v); }
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY void fill(const value_type& __v) { fill_n(begin(), __size_, __v); }
 };
 
 template <class _Tp>
@@ -266,7 +266,7 @@ dynarray<_Tp>::~dynarray()
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename dynarray<_Tp>::reference
 dynarray<_Tp>::at(size_type __n)
 {
@@ -277,7 +277,7 @@ dynarray<_Tp>::at(size_type __n)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename dynarray<_Tp>::const_reference
 dynarray<_Tp>::at(size_type __n) const
 {
@@ -290,10 +290,10 @@ dynarray<_Tp>::at(size_type __n) const
 }}}
 
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 template <class _Tp, class _Alloc>
-struct _LIBCPP_TEMPLATE_VIS uses_allocator<facebook::museum::MUSEUM_VERSION::std::experimental::dynarray<_Tp>, _Alloc> : true_type {};
-_LIBCPP_END_NAMESPACE_STD
+struct _MUSEUM_LIBCPP_TEMPLATE_VIS uses_allocator<facebook::museum::MUSEUM_VERSION::std::experimental::dynarray<_Tp>, _Alloc> : true_type {};
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // if _LIBCPP_STD_VER > 11 
-#endif  // _LIBCPP_DYNARRAY
+#endif  // if _MUSEUM_LIBCPP_STD_VER > 11 
+#endif  // _MUSEUM_LIBCPP_DYNARRAY

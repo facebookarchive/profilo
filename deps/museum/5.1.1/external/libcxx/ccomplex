@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CCOMPLEX
-#define _LIBCPP_CCOMPLEX
+#ifndef _MUSEUM_LIBCPP_CCOMPLEX
+#define _MUSEUM_LIBCPP_CCOMPLEX
 
 /*
     ccomplex synopsis
@@ -20,10 +20,10 @@
 
 #include <museum/5.1.1/external/libcxx/complex>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 // hh 080623 Created
 
-#endif  // _LIBCPP_CCOMPLEX
+#endif  // _MUSEUM_LIBCPP_CCOMPLEX

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_COMPLEX
-#define _LIBCPP_COMPLEX
+#ifndef _MUSEUM_LIBCPP_COMPLEX
+#define _MUSEUM_LIBCPP_COMPLEX
 
 /*
     complex synopsis
@@ -246,19 +246,19 @@ template<class T, class charT, class traits>
 #include <museum/8.0.0/external/libcxx/cmath>
 #include <museum/8.0.0/external/libcxx/sstream>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-template<class _Tp> class _LIBCPP_TEMPLATE_VIS complex;
+template<class _Tp> class _MUSEUM_LIBCPP_TEMPLATE_VIS complex;
 
 template<class _Tp> complex<_Tp> operator*(const complex<_Tp>& __z, const complex<_Tp>& __w);
 template<class _Tp> complex<_Tp> operator/(const complex<_Tp>& __x, const complex<_Tp>& __y);
 
 template<class _Tp>
-class _LIBCPP_TEMPLATE_VIS complex
+class _MUSEUM_LIBCPP_TEMPLATE_VIS complex
 {
 public:
     typedef _Tp value_type;
@@ -266,111 +266,111 @@ private:
     value_type __re_;
     value_type __im_;
 public:
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
     complex(const value_type& __re = value_type(), const value_type& __im = value_type())
         : __re_(__re), __im_(__im) {}
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
     complex(const complex<_Xp>& __c)
         : __re_(__c.real()), __im_(__c.imag()) {}
 
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11 value_type real() const {return __re_;}
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11 value_type imag() const {return __im_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 value_type real() const {return __re_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11 value_type imag() const {return __im_;}
 
-    _LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
-    _LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
 
-    _LIBCPP_INLINE_VISIBILITY complex& operator= (const value_type& __re)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (const value_type& __re)
         {__re_ = __re; __im_ = value_type(); return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator+=(const value_type& __re) {__re_ += __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator-=(const value_type& __re) {__re_ -= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator*=(const value_type& __re) {__re_ *= __re; __im_ *= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator/=(const value_type& __re) {__re_ /= __re; __im_ /= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(const value_type& __re) {__re_ += __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(const value_type& __re) {__re_ -= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(const value_type& __re) {__re_ *= __re; __im_ *= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(const value_type& __re) {__re_ /= __re; __im_ /= __re; return *this;}
 
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
         {
             __re_ = __c.real();
             __im_ = __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
         {
             __re_ += __c.real();
             __im_ += __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
         {
             __re_ -= __c.real();
             __im_ -= __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
         {
             *this = *this * complex(__c.real(), __c.imag());
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
         {
             *this = *this / complex(__c.real(), __c.imag());
             return *this;
         }
 };
 
-template<> class _LIBCPP_TEMPLATE_VIS complex<double>;
-template<> class _LIBCPP_TEMPLATE_VIS complex<long double>;
+template<> class _MUSEUM_LIBCPP_TEMPLATE_VIS complex<double>;
+template<> class _MUSEUM_LIBCPP_TEMPLATE_VIS complex<long double>;
 
 template<>
-class _LIBCPP_TEMPLATE_VIS complex<float>
+class _MUSEUM_LIBCPP_TEMPLATE_VIS complex<float>
 {
     float __re_;
     float __im_;
 public:
     typedef float value_type;
 
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR complex(float __re = 0.0f, float __im = 0.0f)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR complex(float __re = 0.0f, float __im = 0.0f)
         : __re_(__re), __im_(__im) {}
-    _LIBCPP_INLINE_VISIBILITY
-    explicit _LIBCPP_CONSTEXPR complex(const complex<double>& __c);
-    _LIBCPP_INLINE_VISIBILITY
-    explicit _LIBCPP_CONSTEXPR complex(const complex<long double>& __c);
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    explicit _MUSEUM_LIBCPP_CONSTEXPR complex(const complex<double>& __c);
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    explicit _MUSEUM_LIBCPP_CONSTEXPR complex(const complex<long double>& __c);
 
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR float real() const {return __re_;}
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR float imag() const {return __im_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR float real() const {return __re_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR float imag() const {return __im_;}
 
-    _LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
-    _LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
 
-    _LIBCPP_INLINE_VISIBILITY complex& operator= (float __re)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (float __re)
         {__re_ = __re; __im_ = value_type(); return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator+=(float __re) {__re_ += __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator-=(float __re) {__re_ -= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator*=(float __re) {__re_ *= __re; __im_ *= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator/=(float __re) {__re_ /= __re; __im_ /= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(float __re) {__re_ += __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(float __re) {__re_ -= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(float __re) {__re_ *= __re; __im_ *= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(float __re) {__re_ /= __re; __im_ /= __re; return *this;}
 
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
         {
             __re_ = __c.real();
             __im_ = __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
         {
             __re_ += __c.real();
             __im_ += __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
         {
             __re_ -= __c.real();
             __im_ -= __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
         {
             *this = *this * complex(__c.real(), __c.imag());
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
         {
             *this = *this / complex(__c.real(), __c.imag());
             return *this;
@@ -378,57 +378,57 @@ public:
 };
 
 template<>
-class _LIBCPP_TEMPLATE_VIS complex<double>
+class _MUSEUM_LIBCPP_TEMPLATE_VIS complex<double>
 {
     double __re_;
     double __im_;
 public:
     typedef double value_type;
 
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR complex(double __re = 0.0, double __im = 0.0)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR complex(double __re = 0.0, double __im = 0.0)
         : __re_(__re), __im_(__im) {}
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR complex(const complex<float>& __c);
-    _LIBCPP_INLINE_VISIBILITY
-    explicit _LIBCPP_CONSTEXPR complex(const complex<long double>& __c);
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR complex(const complex<float>& __c);
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    explicit _MUSEUM_LIBCPP_CONSTEXPR complex(const complex<long double>& __c);
 
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR double real() const {return __re_;}
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR double imag() const {return __im_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR double real() const {return __re_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR double imag() const {return __im_;}
 
-    _LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
-    _LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
 
-    _LIBCPP_INLINE_VISIBILITY complex& operator= (double __re)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (double __re)
         {__re_ = __re; __im_ = value_type(); return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator+=(double __re) {__re_ += __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator-=(double __re) {__re_ -= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator*=(double __re) {__re_ *= __re; __im_ *= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator/=(double __re) {__re_ /= __re; __im_ /= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(double __re) {__re_ += __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(double __re) {__re_ -= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(double __re) {__re_ *= __re; __im_ *= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(double __re) {__re_ /= __re; __im_ /= __re; return *this;}
 
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
         {
             __re_ = __c.real();
             __im_ = __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
         {
             __re_ += __c.real();
             __im_ += __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
         {
             __re_ -= __c.real();
             __im_ -= __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
         {
             *this = *this * complex(__c.real(), __c.imag());
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
         {
             *this = *this / complex(__c.real(), __c.imag());
             return *this;
@@ -436,57 +436,57 @@ public:
 };
 
 template<>
-class _LIBCPP_TEMPLATE_VIS complex<long double>
+class _MUSEUM_LIBCPP_TEMPLATE_VIS complex<long double>
 {
     long double __re_;
     long double __im_;
 public:
     typedef long double value_type;
 
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR complex(long double __re = 0.0L, long double __im = 0.0L)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR complex(long double __re = 0.0L, long double __im = 0.0L)
         : __re_(__re), __im_(__im) {}
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR complex(const complex<float>& __c);
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR complex(const complex<double>& __c);
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR complex(const complex<float>& __c);
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR complex(const complex<double>& __c);
 
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR long double real() const {return __re_;}
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR long double imag() const {return __im_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR long double real() const {return __re_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR long double imag() const {return __im_;}
 
-    _LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
-    _LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void real(value_type __re) {__re_ = __re;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY void imag(value_type __im) {__im_ = __im;}
 
-    _LIBCPP_INLINE_VISIBILITY complex& operator= (long double __re)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (long double __re)
         {__re_ = __re; __im_ = value_type(); return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator+=(long double __re) {__re_ += __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator-=(long double __re) {__re_ -= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator*=(long double __re) {__re_ *= __re; __im_ *= __re; return *this;}
-    _LIBCPP_INLINE_VISIBILITY complex& operator/=(long double __re) {__re_ /= __re; __im_ /= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(long double __re) {__re_ += __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(long double __re) {__re_ -= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(long double __re) {__re_ *= __re; __im_ *= __re; return *this;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(long double __re) {__re_ /= __re; __im_ /= __re; return *this;}
 
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator= (const complex<_Xp>& __c)
         {
             __re_ = __c.real();
             __im_ = __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator+=(const complex<_Xp>& __c)
         {
             __re_ += __c.real();
             __im_ += __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator-=(const complex<_Xp>& __c)
         {
             __re_ -= __c.real();
             __im_ -= __c.imag();
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator*=(const complex<_Xp>& __c)
         {
             *this = *this * complex(__c.real(), __c.imag());
             return *this;
         }
-    template<class _Xp> _LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
+    template<class _Xp> _MUSEUM_LIBCPP_INLINE_VISIBILITY complex& operator/=(const complex<_Xp>& __c)
         {
             *this = *this / complex(__c.real(), __c.imag());
             return *this;
@@ -494,39 +494,39 @@ public:
 };
 
 inline
-_LIBCPP_CONSTEXPR
+_MUSEUM_LIBCPP_CONSTEXPR
 complex<float>::complex(const complex<double>& __c)
     : __re_(__c.real()), __im_(__c.imag()) {}
 
 inline
-_LIBCPP_CONSTEXPR
+_MUSEUM_LIBCPP_CONSTEXPR
 complex<float>::complex(const complex<long double>& __c)
     : __re_(__c.real()), __im_(__c.imag()) {}
 
 inline
-_LIBCPP_CONSTEXPR
+_MUSEUM_LIBCPP_CONSTEXPR
 complex<double>::complex(const complex<float>& __c)
     : __re_(__c.real()), __im_(__c.imag()) {}
 
 inline
-_LIBCPP_CONSTEXPR
+_MUSEUM_LIBCPP_CONSTEXPR
 complex<double>::complex(const complex<long double>& __c)
     : __re_(__c.real()), __im_(__c.imag()) {}
 
 inline
-_LIBCPP_CONSTEXPR
+_MUSEUM_LIBCPP_CONSTEXPR
 complex<long double>::complex(const complex<float>& __c)
     : __re_(__c.real()), __im_(__c.imag()) {}
 
 inline
-_LIBCPP_CONSTEXPR
+_MUSEUM_LIBCPP_CONSTEXPR
 complex<long double>::complex(const complex<double>& __c)
     : __re_(__c.real()), __im_(__c.imag()) {}
 
 // 26.3.6 operators:
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator+(const complex<_Tp>& __x, const complex<_Tp>& __y)
 {
@@ -536,7 +536,7 @@ operator+(const complex<_Tp>& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator+(const complex<_Tp>& __x, const _Tp& __y)
 {
@@ -546,7 +546,7 @@ operator+(const complex<_Tp>& __x, const _Tp& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator+(const _Tp& __x, const complex<_Tp>& __y)
 {
@@ -556,7 +556,7 @@ operator+(const _Tp& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator-(const complex<_Tp>& __x, const complex<_Tp>& __y)
 {
@@ -566,7 +566,7 @@ operator-(const complex<_Tp>& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator-(const complex<_Tp>& __x, const _Tp& __y)
 {
@@ -576,7 +576,7 @@ operator-(const complex<_Tp>& __x, const _Tp& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator-(const _Tp& __x, const complex<_Tp>& __y)
 {
@@ -645,7 +645,7 @@ operator*(const complex<_Tp>& __z, const complex<_Tp>& __w)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator*(const complex<_Tp>& __x, const _Tp& __y)
 {
@@ -655,7 +655,7 @@ operator*(const complex<_Tp>& __x, const _Tp& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator*(const _Tp& __x, const complex<_Tp>& __y)
 {
@@ -709,7 +709,7 @@ operator/(const complex<_Tp>& __z, const complex<_Tp>& __w)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator/(const complex<_Tp>& __x, const _Tp& __y)
 {
@@ -717,7 +717,7 @@ operator/(const complex<_Tp>& __x, const _Tp& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator/(const _Tp& __x, const complex<_Tp>& __y)
 {
@@ -727,7 +727,7 @@ operator/(const _Tp& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator+(const complex<_Tp>& __x)
 {
@@ -735,7 +735,7 @@ operator+(const complex<_Tp>& __x)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 operator-(const complex<_Tp>& __x)
 {
@@ -743,7 +743,7 @@ operator-(const complex<_Tp>& __x)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 bool
 operator==(const complex<_Tp>& __x, const complex<_Tp>& __y)
 {
@@ -751,7 +751,7 @@ operator==(const complex<_Tp>& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 bool
 operator==(const complex<_Tp>& __x, const _Tp& __y)
 {
@@ -759,7 +759,7 @@ operator==(const complex<_Tp>& __x, const _Tp& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 bool
 operator==(const _Tp& __x, const complex<_Tp>& __y)
 {
@@ -767,7 +767,7 @@ operator==(const _Tp& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 bool
 operator!=(const complex<_Tp>& __x, const complex<_Tp>& __y)
 {
@@ -775,7 +775,7 @@ operator!=(const complex<_Tp>& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 bool
 operator!=(const complex<_Tp>& __x, const _Tp& __y)
 {
@@ -783,7 +783,7 @@ operator!=(const complex<_Tp>& __x, const _Tp& __y)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 bool
 operator!=(const _Tp& __x, const complex<_Tp>& __y)
 {
@@ -816,7 +816,7 @@ struct __libcpp_complex_overload_traits<_Tp, false, true>
 // real
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp
 real(const complex<_Tp>& __c)
 {
@@ -824,7 +824,7 @@ real(const complex<_Tp>& __c)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 typename __libcpp_complex_overload_traits<_Tp>::_ValueType
 real(_Tp __re)
 {
@@ -834,7 +834,7 @@ real(_Tp __re)
 // imag
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 _Tp
 imag(const complex<_Tp>& __c)
 {
@@ -842,7 +842,7 @@ imag(const complex<_Tp>& __c)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_AFTER_CXX11
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR_AFTER_CXX11
 typename __libcpp_complex_overload_traits<_Tp>::_ValueType
 imag(_Tp)
 {
@@ -852,7 +852,7 @@ imag(_Tp)
 // abs
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 abs(const complex<_Tp>& __c)
 {
@@ -862,7 +862,7 @@ abs(const complex<_Tp>& __c)
 // arg
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 arg(const complex<_Tp>& __c)
 {
@@ -870,7 +870,7 @@ arg(const complex<_Tp>& __c)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if<
     is_same<_Tp, long double>::value,
     long double
@@ -881,7 +881,7 @@ arg(_Tp __re)
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value || is_same<_Tp, double>::value,
@@ -893,7 +893,7 @@ arg(_Tp __re)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if<
     is_same<_Tp, float>::value,
     float
@@ -906,7 +906,7 @@ arg(_Tp __re)
 // norm
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 norm(const complex<_Tp>& __c)
 {
@@ -918,7 +918,7 @@ norm(const complex<_Tp>& __c)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename __libcpp_complex_overload_traits<_Tp>::_ValueType
 norm(_Tp __re)
 {
@@ -929,7 +929,7 @@ norm(_Tp __re)
 // conj
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 conj(const complex<_Tp>& __c)
 {
@@ -937,7 +937,7 @@ conj(const complex<_Tp>& __c)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename __libcpp_complex_overload_traits<_Tp>::_ComplexType
 conj(_Tp __re)
 {
@@ -950,7 +950,7 @@ conj(_Tp __re)
 // proj
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 proj(const complex<_Tp>& __c)
 {
@@ -961,7 +961,7 @@ proj(const complex<_Tp>& __c)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_floating_point<_Tp>::value,
@@ -975,7 +975,7 @@ proj(_Tp __re)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_integral<_Tp>::value,
@@ -1019,7 +1019,7 @@ polar(const _Tp& __rho, const _Tp& __theta = _Tp(0))
 // log
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 log(const complex<_Tp>& __x)
 {
@@ -1029,7 +1029,7 @@ log(const complex<_Tp>& __x)
 // log10
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 log10(const complex<_Tp>& __x)
 {
@@ -1083,7 +1083,7 @@ exp(const complex<_Tp>& __x)
 // pow
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 pow(const complex<_Tp>& __x, const complex<_Tp>& __y)
 {
@@ -1091,16 +1091,16 @@ pow(const complex<_Tp>& __x, const complex<_Tp>& __y)
 }
 
 template<class _Tp, class _Up>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<typename __promote<_Tp, _Up>::type>
 pow(const complex<_Tp>& __x, const complex<_Up>& __y)
 {
     typedef complex<typename __promote<_Tp, _Up>::type> result_type;
-    return _VSTD::pow(result_type(__x), result_type(__y));
+    return _MUSEUM_VSTD::pow(result_type(__x), result_type(__y));
 }
 
 template<class _Tp, class _Up>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_arithmetic<_Up>::value,
@@ -1109,11 +1109,11 @@ typename enable_if
 pow(const complex<_Tp>& __x, const _Up& __y)
 {
     typedef complex<typename __promote<_Tp, _Up>::type> result_type;
-    return _VSTD::pow(result_type(__x), result_type(__y));
+    return _MUSEUM_VSTD::pow(result_type(__x), result_type(__y));
 }
 
 template<class _Tp, class _Up>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     is_arithmetic<_Tp>::value,
@@ -1122,7 +1122,7 @@ typename enable_if
 pow(const _Tp& __x, const complex<_Up>& __y)
 {
     typedef complex<typename __promote<_Tp, _Up>::type> result_type;
-    return _VSTD::pow(result_type(__x), result_type(__y));
+    return _MUSEUM_VSTD::pow(result_type(__x), result_type(__y));
 }
 
 // asinh
@@ -1347,7 +1347,7 @@ sin(const complex<_Tp>& __x)
 // cos
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 complex<_Tp>
 cos(const complex<_Tp>& __x)
 {
@@ -1438,7 +1438,7 @@ operator<<(basic_ostream<_CharT, _Traits>& __os, const complex<_Tp>& __x)
     return __os << __s.str();
 }
 
-#if _LIBCPP_STD_VER > 11 
+#if _MUSEUM_LIBCPP_STD_VER > 11 
 // Literal suffix for complex number literals [complex.literals]
 inline namespace literals
 { 
@@ -1479,6 +1479,6 @@ inline namespace literals
 }
 #endif
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_COMPLEX
+#endif  // _MUSEUM_LIBCPP_COMPLEX

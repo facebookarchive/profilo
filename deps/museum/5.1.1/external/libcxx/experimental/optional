@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_OPTIONAL
-#define _LIBCPP_OPTIONAL
+#ifndef _MUSEUM_LIBCPP_OPTIONAL
+#define _MUSEUM_LIBCPP_OPTIONAL
 
 /*
     optional synopsis
@@ -119,30 +119,30 @@ template <class T> struct hash<optional<T>>;
 
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std { namespace experimental {
 
-class _LIBCPP_EXCEPTION_ABI bad_optional_access
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_optional_access
     : public logic_error
 {
 public:
-#if _LIBCPP_STD_VER > 11
-    _LIBCPP_INLINE_VISIBILITY explicit bad_optional_access(const string& __arg)
+#if _MUSEUM_LIBCPP_STD_VER > 11
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit bad_optional_access(const string& __arg)
         : logic_error(__arg) {}
-    _LIBCPP_INLINE_VISIBILITY explicit bad_optional_access(const char* __arg)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY explicit bad_optional_access(const char* __arg)
         : logic_error(__arg) {}
-    _LIBCPP_INLINE_VISIBILITY bad_optional_access(const bad_optional_access&) noexcept = default;
-    _LIBCPP_INLINE_VISIBILITY bad_optional_access& operator=(const bad_optional_access&) noexcept = default;
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY bad_optional_access(const bad_optional_access&) noexcept = default;
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY bad_optional_access& operator=(const bad_optional_access&) noexcept = default;
 #else
 private:
     bad_optional_access(const bad_optional_access&);
     bad_optional_access& operator=(const bad_optional_access&);
 public:
-#endif  // _LIBCPP_STD_VER > 11
+#endif  // _MUSEUM_LIBCPP_STD_VER > 11
     // Get the key function ~bad_optional_access() into the dylib even if not compiling for C++1y
     virtual ~bad_optional_access() _NOEXCEPT;
 };
 
 }}}}}  // facebook::museum::MUSEUM_VERSION::std::experimental
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 
 #include <museum/5.1.1/external/libcxx/initializer_list>
 #include <museum/5.1.1/external/libcxx/type_traits>
@@ -151,13 +151,13 @@ public:
 
 #include <museum/5.1.1/external/libcxx/__undef_min_max>
 
-#ifdef _LIBCPP_DEBUG
+#ifdef _MUSEUM_LIBCPP_DEBUG
 #   include <museum/5.1.1/external/libcxx/__debug>
 #else
-#   define _LIBCPP_ASSERT(x, m) ((void)0)
+#   define _MUSEUM_LIBCPP_ASSERT(x, m) ((void)0)
 #endif
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -185,49 +185,49 @@ protected:
     };
     bool __engaged_ = false;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     ~__optional_storage()
     {
         if (__engaged_)
             __val_.~value_type();
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr __optional_storage() noexcept
         :  __null_state_('\0') {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __optional_storage(const __optional_storage& __x)
         :  __engaged_(__x.__engaged_)
         {
             if (__engaged_)
-                ::new(_VSTD::addressof(__val_)) value_type(__x.__val_);
+                ::new(_MUSEUM_VSTD::addressof(__val_)) value_type(__x.__val_);
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __optional_storage(__optional_storage&& __x)
                       noexcept(is_nothrow_move_constructible<value_type>::value)
         :  __engaged_(__x.__engaged_)
         {
             if (__engaged_)
-                ::new(_VSTD::addressof(__val_)) value_type(_VSTD::move(__x.__val_));
+                ::new(_MUSEUM_VSTD::addressof(__val_)) value_type(_MUSEUM_VSTD::move(__x.__val_));
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr __optional_storage(const value_type& __v)
         :  __val_(__v),
            __engaged_(true) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr __optional_storage(value_type&& __v)
-        :  __val_(_VSTD::move(__v)),
+        :  __val_(_MUSEUM_VSTD::move(__v)),
            __engaged_(true) {}
 
     template <class... _Args>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr
     explicit __optional_storage(in_place_t, _Args&&... __args)
-       :  __val_(_VSTD::forward<_Args>(__args)...),
+       :  __val_(_MUSEUM_VSTD::forward<_Args>(__args)...),
            __engaged_(true) {}
 };
 
@@ -243,42 +243,42 @@ protected:
     };
     bool __engaged_ = false;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr __optional_storage() noexcept
         :  __null_state_('\0') {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __optional_storage(const __optional_storage& __x)
         :  __engaged_(__x.__engaged_)
         {
             if (__engaged_)
-                ::new(_VSTD::addressof(__val_)) value_type(__x.__val_);
+                ::new(_MUSEUM_VSTD::addressof(__val_)) value_type(__x.__val_);
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __optional_storage(__optional_storage&& __x)
                       noexcept(is_nothrow_move_constructible<value_type>::value)
         :  __engaged_(__x.__engaged_)
         {
             if (__engaged_)
-                ::new(_VSTD::addressof(__val_)) value_type(_VSTD::move(__x.__val_));
+                ::new(_MUSEUM_VSTD::addressof(__val_)) value_type(_MUSEUM_VSTD::move(__x.__val_));
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr __optional_storage(const value_type& __v)
         :  __val_(__v),
            __engaged_(true) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr __optional_storage(value_type&& __v)
-        :  __val_(_VSTD::move(__v)),
+        :  __val_(_MUSEUM_VSTD::move(__v)),
            __engaged_(true) {}
 
     template <class... _Args>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr
     explicit __optional_storage(in_place_t, _Args&&... __args)
-       :  __val_(_VSTD::forward<_Args>(__args)...),
+       :  __val_(_MUSEUM_VSTD::forward<_Args>(__args)...),
            __engaged_(true) {}
 };
 
@@ -301,15 +301,15 @@ public:
     static_assert(is_nothrow_destructible<value_type>::value,
         "Instantiation of optional with an object type that is not noexcept destructible is undefined behavior.");
 
-    _LIBCPP_INLINE_VISIBILITY constexpr optional() noexcept {}
-    _LIBCPP_INLINE_VISIBILITY optional(const optional&) = default;
-    _LIBCPP_INLINE_VISIBILITY optional(optional&&) = default;
-    _LIBCPP_INLINE_VISIBILITY ~optional() = default;
-    _LIBCPP_INLINE_VISIBILITY constexpr optional(nullopt_t) noexcept {}
-    _LIBCPP_INLINE_VISIBILITY constexpr optional(const value_type& __v)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY constexpr optional() noexcept {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY optional(const optional&) = default;
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY optional(optional&&) = default;
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY ~optional() = default;
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY constexpr optional(nullopt_t) noexcept {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY constexpr optional(const value_type& __v)
         : __base(__v) {}
-    _LIBCPP_INLINE_VISIBILITY constexpr optional(value_type&& __v)
-        : __base(_VSTD::move(__v)) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY constexpr optional(value_type&& __v)
+        : __base(_MUSEUM_VSTD::move(__v)) {}
 
     template <class... _Args,
               class = typename enable_if
@@ -317,10 +317,10 @@ public:
                            is_constructible<value_type, _Args...>::value
                       >::type
              >
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr
     explicit optional(in_place_t, _Args&&... __args)
-        : __base(in_place, _VSTD::forward<_Args>(__args)...) {}
+        : __base(in_place, _MUSEUM_VSTD::forward<_Args>(__args)...) {}
 
     template <class _Up, class... _Args,
               class = typename enable_if
@@ -328,12 +328,12 @@ public:
                            is_constructible<value_type, initializer_list<_Up>&, _Args...>::value
                       >::type
              >
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr
     explicit optional(in_place_t, initializer_list<_Up> __il, _Args&&... __args)
-        : __base(in_place, __il, _VSTD::forward<_Args>(__args)...) {}
+        : __base(in_place, __il, _MUSEUM_VSTD::forward<_Args>(__args)...) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     optional& operator=(nullopt_t) noexcept
     {
         if (this->__engaged_)
@@ -344,7 +344,7 @@ public:
         return *this;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     optional&
     operator=(const optional& __opt)
     {
@@ -358,13 +358,13 @@ public:
             if (this->__engaged_)
                 this->__val_.~value_type();
             else
-                ::new(_VSTD::addressof(this->__val_)) value_type(__opt.__val_);
+                ::new(_MUSEUM_VSTD::addressof(this->__val_)) value_type(__opt.__val_);
             this->__engaged_ = __opt.__engaged_;
         }
         return *this;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     optional&
     operator=(optional&& __opt)
         noexcept(is_nothrow_move_assignable<value_type>::value &&
@@ -373,14 +373,14 @@ public:
         if (this->__engaged_ == __opt.__engaged_)
         {
             if (this->__engaged_)
-                this->__val_ = _VSTD::move(__opt.__val_);
+                this->__val_ = _MUSEUM_VSTD::move(__opt.__val_);
         }
         else
         {
             if (this->__engaged_)
                 this->__val_.~value_type();
             else
-                ::new(_VSTD::addressof(this->__val_)) value_type(_VSTD::move(__opt.__val_));
+                ::new(_MUSEUM_VSTD::addressof(this->__val_)) value_type(_MUSEUM_VSTD::move(__opt.__val_));
             this->__engaged_ = __opt.__engaged_;
         }
         return *this;
@@ -394,15 +394,15 @@ public:
                           is_assignable<value_type&, _Up>::value
                       >::type
              >
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     optional&
     operator=(_Up&& __v)
     {
         if (this->__engaged_)
-            this->__val_ = _VSTD::forward<_Up>(__v);
+            this->__val_ = _MUSEUM_VSTD::forward<_Up>(__v);
         else
         {
-            ::new(_VSTD::addressof(this->__val_)) value_type(_VSTD::forward<_Up>(__v));
+            ::new(_MUSEUM_VSTD::addressof(this->__val_)) value_type(_MUSEUM_VSTD::forward<_Up>(__v));
             this->__engaged_ = true;
         }
         return *this;
@@ -414,12 +414,12 @@ public:
                           is_constructible<value_type, _Args...>::value
                       >::type
              >
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void
     emplace(_Args&&... __args)
     {
         *this = nullopt;
-        ::new(_VSTD::addressof(this->__val_)) value_type(_VSTD::forward<_Args>(__args)...);
+        ::new(_MUSEUM_VSTD::addressof(this->__val_)) value_type(_MUSEUM_VSTD::forward<_Args>(__args)...);
         this->__engaged_ = true;
     }
 
@@ -429,22 +429,22 @@ public:
                           is_constructible<value_type, initializer_list<_Up>&, _Args...>::value
                       >::type
              >
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void
     emplace(initializer_list<_Up> __il, _Args&&... __args)
     {
         *this = nullopt;
-        ::new(_VSTD::addressof(this->__val_)) value_type(__il, _VSTD::forward<_Args>(__args)...);
+        ::new(_MUSEUM_VSTD::addressof(this->__val_)) value_type(__il, _MUSEUM_VSTD::forward<_Args>(__args)...);
         this->__engaged_ = true;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void
     swap(optional& __opt)
         noexcept(is_nothrow_move_constructible<value_type>::value &&
                  __is_nothrow_swappable<value_type>::value)
     {
-        using _VSTD::swap;
+        using _MUSEUM_VSTD::swap;
         if (this->__engaged_ == __opt.__engaged_)
         {
             if (this->__engaged_)
@@ -454,56 +454,56 @@ public:
         {
             if (this->__engaged_)
             {
-                ::new(_VSTD::addressof(__opt.__val_)) value_type(_VSTD::move(this->__val_));
+                ::new(_MUSEUM_VSTD::addressof(__opt.__val_)) value_type(_MUSEUM_VSTD::move(this->__val_));
                 this->__val_.~value_type();
             }
             else
             {
-                ::new(_VSTD::addressof(this->__val_)) value_type(_VSTD::move(__opt.__val_));
+                ::new(_MUSEUM_VSTD::addressof(this->__val_)) value_type(_MUSEUM_VSTD::move(__opt.__val_));
                 __opt.__val_.~value_type();
             }
             swap(this->__engaged_, __opt.__engaged_);
         }
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr
     value_type const*
     operator->() const
     {
-        _LIBCPP_ASSERT(this->__engaged_, "optional operator-> called for disengaged value");
+        _MUSEUM_LIBCPP_ASSERT(this->__engaged_, "optional operator-> called for disengaged value");
         return __operator_arrow(__has_operator_addressof<value_type>{});
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type*
     operator->()
     {
-        _LIBCPP_ASSERT(this->__engaged_, "optional operator-> called for disengaged value");
-        return _VSTD::addressof(this->__val_);
+        _MUSEUM_LIBCPP_ASSERT(this->__engaged_, "optional operator-> called for disengaged value");
+        return _MUSEUM_VSTD::addressof(this->__val_);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr
     const value_type&
     operator*() const
     {
-        _LIBCPP_ASSERT(this->__engaged_, "optional operator* called for disengaged value");
+        _MUSEUM_LIBCPP_ASSERT(this->__engaged_, "optional operator* called for disengaged value");
         return this->__val_;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type&
     operator*()
     {
-        _LIBCPP_ASSERT(this->__engaged_, "optional operator* called for disengaged value");
+        _MUSEUM_LIBCPP_ASSERT(this->__engaged_, "optional operator* called for disengaged value");
         return this->__val_;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr explicit operator bool() const noexcept {return this->__engaged_;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr value_type const& value() const
     {
         if (!this->__engaged_)
@@ -511,7 +511,7 @@ public:
         return this->__val_;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type& value()
     {
         if (!this->__engaged_)
@@ -520,7 +520,7 @@ public:
     }
 
     template <class _Up>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr value_type value_or(_Up&& __v) const&
     {
         static_assert(is_copy_constructible<value_type>::value,
@@ -528,30 +528,30 @@ public:
         static_assert(is_convertible<_Up, value_type>::value,
                       "optional<T>::value_or: U must be convertible to T");
         return this->__engaged_ ? this->__val_ :
-                                  static_cast<value_type>(_VSTD::forward<_Up>(__v));
+                                  static_cast<value_type>(_MUSEUM_VSTD::forward<_Up>(__v));
     }
 
     template <class _Up>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type value_or(_Up&& __v) &&
     {
         static_assert(is_move_constructible<value_type>::value,
                       "optional<T>::value_or: T must be move constructible");
         static_assert(is_convertible<_Up, value_type>::value,
                       "optional<T>::value_or: U must be convertible to T");
-        return this->__engaged_ ? _VSTD::move(this->__val_) :
-                                  static_cast<value_type>(_VSTD::forward<_Up>(__v));
+        return this->__engaged_ ? _MUSEUM_VSTD::move(this->__val_) :
+                                  static_cast<value_type>(_MUSEUM_VSTD::forward<_Up>(__v));
     }
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type const*
     __operator_arrow(true_type) const
     {
-        return _VSTD::addressof(this->__val_);
+        return _MUSEUM_VSTD::addressof(this->__val_);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     constexpr
     value_type const*
     __operator_arrow(false_type) const
@@ -561,7 +561,7 @@ private:
 };
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator==(const optional<_Tp>& __x, const optional<_Tp>& __y)
@@ -574,7 +574,7 @@ operator==(const optional<_Tp>& __x, const optional<_Tp>& __y)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator<(const optional<_Tp>& __x, const optional<_Tp>& __y)
@@ -587,7 +587,7 @@ operator<(const optional<_Tp>& __x, const optional<_Tp>& __y)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator==(const optional<_Tp>& __x, nullopt_t) noexcept
@@ -596,7 +596,7 @@ operator==(const optional<_Tp>& __x, nullopt_t) noexcept
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator==(nullopt_t, const optional<_Tp>& __x) noexcept
@@ -605,7 +605,7 @@ operator==(nullopt_t, const optional<_Tp>& __x) noexcept
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator<(const optional<_Tp>&, nullopt_t) noexcept
@@ -614,7 +614,7 @@ operator<(const optional<_Tp>&, nullopt_t) noexcept
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator<(nullopt_t, const optional<_Tp>& __x) noexcept
@@ -623,7 +623,7 @@ operator<(nullopt_t, const optional<_Tp>& __x) noexcept
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator==(const optional<_Tp>& __x, const _Tp& __v)
@@ -632,7 +632,7 @@ operator==(const optional<_Tp>& __x, const _Tp& __v)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator==(const _Tp& __v, const optional<_Tp>& __x)
@@ -641,7 +641,7 @@ operator==(const _Tp& __v, const optional<_Tp>& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator<(const optional<_Tp>& __x, const _Tp& __v)
@@ -650,7 +650,7 @@ operator<(const optional<_Tp>& __x, const _Tp& __v)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 bool
 operator<(const _Tp& __v, const optional<_Tp>& __x)
@@ -659,7 +659,7 @@ operator<(const _Tp& __v, const optional<_Tp>& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(optional<_Tp>& __x, optional<_Tp>& __y) noexcept(noexcept(__x.swap(__y)))
 {
@@ -667,33 +667,33 @@ swap(optional<_Tp>& __x, optional<_Tp>& __y) noexcept(noexcept(__x.swap(__y)))
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 constexpr
 optional<typename decay<_Tp>::type>
 make_optional(_Tp&& __v)
 {
-    return optional<typename decay<_Tp>::type>(_VSTD::forward<_Tp>(__v));
+    return optional<typename decay<_Tp>::type>(_MUSEUM_VSTD::forward<_Tp>(__v));
 }
 
 }}}}}}  // namespace facebook::museum::MUSEUM_VERSION::std::experimental::__library_fundamentals_v1
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _Tp>
-struct _LIBCPP_TYPE_VIS_ONLY hash<facebook::museum::MUSEUM_VERSION::std::experimental::optional<_Tp> >
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY hash<facebook::museum::MUSEUM_VERSION::std::experimental::optional<_Tp> >
 {
     typedef facebook::museum::MUSEUM_VERSION::std::experimental::optional<_Tp> argument_type;
     typedef size_t        result_type;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator()(const argument_type& __opt) const _NOEXCEPT
     {
         return static_cast<bool>(__opt) ? hash<_Tp>()(*__opt) : 0;
     }
 };
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_STD_VER > 11
+#endif  // _MUSEUM_LIBCPP_STD_VER > 11
 
-#endif  // _LIBCPP_ARRAY
+#endif  // _MUSEUM_LIBCPP_ARRAY

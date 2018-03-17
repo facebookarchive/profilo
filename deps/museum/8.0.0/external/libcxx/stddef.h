@@ -11,14 +11,14 @@
 #if defined(__need_ptrdiff_t) || defined(__need_size_t) || \
     defined(__need_wchar_t) || defined(__need_NULL) || defined(__need_wint_t)
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #include_next <stddef.h>
 
-#elif !defined(_LIBCPP_STDDEF_H)
-#define _LIBCPP_STDDEF_H
+#elif !defined(_MUSEUM_LIBCPP_STDDEF_H)
+#define _MUSEUM_LIBCPP_STDDEF_H
 
 /*
     stddef.h synopsis
@@ -39,7 +39,7 @@ Types:
 
 #include <museum/8.0.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -60,4 +60,4 @@ typedef long double max_align_t;
 
 #endif
 
-#endif  // _LIBCPP_STDDEF_H
+#endif  // _MUSEUM_LIBCPP_STDDEF_H

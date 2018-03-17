@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_VALARRAY
-#define _LIBCPP_VALARRAY
+#ifndef _MUSEUM_LIBCPP_VALARRAY
+#define _MUSEUM_LIBCPP_VALARRAY
 
 /*
     valarray synopsis
@@ -348,62 +348,62 @@ template <class T> unspecified2 end(const valarray<T>& v);
 
 #include <museum/5.1.1/external/libcxx/__undef_min_max>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-template<class _Tp> class _LIBCPP_TYPE_VIS_ONLY valarray;
+template<class _Tp> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY valarray;
 
-class _LIBCPP_TYPE_VIS_ONLY slice
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY slice
 {
     size_t __start_;
     size_t __size_;
     size_t __stride_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     slice()
         : __start_(0),
           __size_(0),
           __stride_(0)
           {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     slice(size_t __start, size_t __size, size_t __stride)
         : __start_(__start),
           __size_(__size),
           __stride_(__stride)
           {}
 
-    _LIBCPP_INLINE_VISIBILITY size_t start()  const {return __start_;}
-    _LIBCPP_INLINE_VISIBILITY size_t size()   const {return __size_;}
-    _LIBCPP_INLINE_VISIBILITY size_t stride() const {return __stride_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY size_t start()  const {return __start_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY size_t size()   const {return __size_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY size_t stride() const {return __stride_;}
 };
 
-template <class _Tp> class _LIBCPP_TYPE_VIS_ONLY slice_array;
-class _LIBCPP_TYPE_VIS gslice;
-template <class _Tp> class _LIBCPP_TYPE_VIS_ONLY gslice_array;
-template <class _Tp> class _LIBCPP_TYPE_VIS_ONLY mask_array;
-template <class _Tp> class _LIBCPP_TYPE_VIS_ONLY indirect_array;
+template <class _Tp> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY slice_array;
+class _MUSEUM_LIBCPP_TYPE_VIS gslice;
+template <class _Tp> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY gslice_array;
+template <class _Tp> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY mask_array;
+template <class _Tp> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY indirect_array;
 
 template <class _Tp>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 begin(valarray<_Tp>& __v);
 
 template <class _Tp>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 const _Tp*
 begin(const valarray<_Tp>& __v);
 
 template <class _Tp>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 end(valarray<_Tp>& __v);
 
 template <class _Tp>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 const _Tp*
 end(const valarray<_Tp>& __v);
 
@@ -416,13 +416,13 @@ struct _UnaryOp
     _Op __op_;
     _A0 __a0_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _UnaryOp(const _Op& __op, const _A0& __a0) : __op_(__op), __a0_(__a0) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __i) const {return __op_(__a0_[__i]);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __a0_.size();}
 };
 
@@ -436,14 +436,14 @@ struct _BinaryOp
     _A0 __a0_;
     _A1 __a1_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _BinaryOp(const _Op& __op, const _A0& __a0, const _A1& __a1)
         : __op_(__op), __a0_(__a0), __a1_(__a1) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type operator[](size_t __i) const {return __op_(__a0_[__i], __a1_[__i]);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __a0_.size();}
 };
 
@@ -457,20 +457,20 @@ private:
     const value_type& __t_;
     size_t __s_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __scalar_expr(const value_type& __t, size_t __s) : __t_(__t), __s_(__s) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t) const {return __t_;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __s_;}
 };
 
 template <class _Tp>
 struct __unary_plus : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return +__x;}
 };
@@ -478,7 +478,7 @@ struct __unary_plus : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __bit_not  : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return ~__x;}
 };
@@ -486,7 +486,7 @@ struct __bit_not  : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __bit_shift_left : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x << __y;}
 };
@@ -494,7 +494,7 @@ struct __bit_shift_left : binary_function<_Tp, _Tp, _Tp>
 template <class _Tp>
 struct __bit_shift_right : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return __x >> __y;}
 };
@@ -505,10 +505,10 @@ struct __apply_expr   : unary_function<_Tp, _Tp>
 private:
     _Fp __f_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __apply_expr(_Fp __f) : __f_(__f) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return __f_(__x);}
 };
@@ -516,7 +516,7 @@ public:
 template <class _Tp>
 struct __abs_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return abs(__x);}
 };
@@ -524,7 +524,7 @@ struct __abs_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __acos_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return acos(__x);}
 };
@@ -532,7 +532,7 @@ struct __acos_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __asin_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return asin(__x);}
 };
@@ -540,7 +540,7 @@ struct __asin_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __atan_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return atan(__x);}
 };
@@ -548,7 +548,7 @@ struct __atan_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __atan2_expr : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return atan2(__x, __y);}
 };
@@ -556,7 +556,7 @@ struct __atan2_expr : binary_function<_Tp, _Tp, _Tp>
 template <class _Tp>
 struct __cos_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return cos(__x);}
 };
@@ -564,7 +564,7 @@ struct __cos_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __cosh_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return cosh(__x);}
 };
@@ -572,7 +572,7 @@ struct __cosh_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __exp_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return exp(__x);}
 };
@@ -580,7 +580,7 @@ struct __exp_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __log_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return log(__x);}
 };
@@ -588,7 +588,7 @@ struct __log_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __log10_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return log10(__x);}
 };
@@ -596,7 +596,7 @@ struct __log10_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __pow_expr : binary_function<_Tp, _Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x, const _Tp& __y) const
         {return pow(__x, __y);}
 };
@@ -604,7 +604,7 @@ struct __pow_expr : binary_function<_Tp, _Tp, _Tp>
 template <class _Tp>
 struct __sin_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return sin(__x);}
 };
@@ -612,7 +612,7 @@ struct __sin_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __sinh_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return sinh(__x);}
 };
@@ -620,7 +620,7 @@ struct __sinh_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __sqrt_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return sqrt(__x);}
 };
@@ -628,7 +628,7 @@ struct __sqrt_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __tan_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return tan(__x);}
 };
@@ -636,7 +636,7 @@ struct __tan_expr : unary_function<_Tp, _Tp>
 template <class _Tp>
 struct __tanh_expr : unary_function<_Tp, _Tp>
 {
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _Tp operator()(const _Tp& __x) const
         {return tanh(__x);}
 };
@@ -655,7 +655,7 @@ private:
     size_t __size_;
     size_t __stride_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __slice_expr(const slice& __sl, const _RmExpr& __e)
         : __expr_(__e),
           __start_(__sl.start()),
@@ -664,14 +664,14 @@ private:
         {}
 public:
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __i) const
         {return __expr_[__start_ + __i * __stride_];}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __size_;}
 
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY valarray;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY valarray;
 };
 
 template <class _ValExpr>
@@ -697,7 +697,7 @@ private:
     static const ptrdiff_t _Np = static_cast<ptrdiff_t>(
                                     sizeof(ptrdiff_t) * __CHAR_BIT__ - 1);
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __shift_expr(int __n, const _RmExpr& __e)
         : __expr_(__e),
           __size_(__e.size()),
@@ -709,7 +709,7 @@ private:
         }
 public:
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __j) const
         {
             ptrdiff_t __i = static_cast<ptrdiff_t>(__j);
@@ -717,7 +717,7 @@ public:
             return (__expr_[(__i + __n_) & __m] & __m) | (value_type() & ~__m);
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __size_;}
 
     template <class> friend class __val_expr;
@@ -738,7 +738,7 @@ private:
     size_t __o1_;
     size_t __o2_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __cshift_expr(int __n, const _RmExpr& __e)
         : __expr_(__e),
           __size_(__e.size())
@@ -759,7 +759,7 @@ private:
         }
 public:
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __i) const
         {
             if (__i < __m_)
@@ -767,7 +767,7 @@ public:
             return __expr_[__i + __o2_];
         }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __size_;}
 
     template <class> friend class __val_expr;
@@ -786,7 +786,7 @@ template<class _Tp>
 struct __is_val_expr<valarray<_Tp> > : true_type {};
 
 template<class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY valarray
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY valarray
 {
 public:
     typedef _Tp value_type;
@@ -798,18 +798,18 @@ private:
 
 public:
     // construct/destroy:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     valarray() : __begin_(0), __end_(0) {}
     explicit valarray(size_t __n);
     valarray(const value_type& __x, size_t __n);
     valarray(const value_type* __p, size_t __n);
     valarray(const valarray& __v);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     valarray(valarray&& __v) _NOEXCEPT;
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
     valarray(initializer_list<value_type> __il);
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
     valarray(const slice_array<value_type>& __sa);
     valarray(const gslice_array<value_type>& __ga);
     valarray(const mask_array<value_type>& __ma);
@@ -818,12 +818,12 @@ public:
 
     // assignment:
     valarray& operator=(const valarray& __v);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     valarray& operator=(valarray&& __v) _NOEXCEPT;
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
     valarray& operator=(initializer_list<value_type>);
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
     valarray& operator=(const value_type& __x);
     valarray& operator=(const slice_array<value_type>& __sa);
     valarray& operator=(const gslice_array<value_type>& __ga);
@@ -833,10 +833,10 @@ public:
         valarray& operator=(const __val_expr<_ValExpr>& __v);
 
     // element access:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const value_type& operator[](size_t __i) const {return __begin_[__i];}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type&       operator[](size_t __i)       {return __begin_[__i];}
 
     // subset operations:
@@ -844,22 +844,22 @@ public:
     slice_array<value_type>                       operator[](slice __s);
     __val_expr<__indirect_expr<const valarray&> > operator[](const gslice& __gs) const;
     gslice_array<value_type>   operator[](const gslice& __gs);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     __val_expr<__indirect_expr<const valarray&> > operator[](gslice&& __gs) const;
     gslice_array<value_type>                      operator[](gslice&& __gs);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     __val_expr<__mask_expr<const valarray&> >     operator[](const valarray<bool>& __vb) const;
     mask_array<value_type>                        operator[](const valarray<bool>& __vb);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     __val_expr<__mask_expr<const valarray&> >     operator[](valarray<bool>&& __vb) const;
     mask_array<value_type>                        operator[](valarray<bool>&& __vb);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     __val_expr<__indirect_expr<const valarray&> > operator[](const valarray<size_t>& __vs) const;
     indirect_array<value_type>                    operator[](const valarray<size_t>& __vs);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     __val_expr<__indirect_expr<const valarray&> > operator[](valarray<size_t>&& __vs) const;
     indirect_array<value_type>                    operator[](valarray<size_t>&& __vs);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     // unary operators:
     valarray       operator+() const;
@@ -962,7 +962,7 @@ public:
     // member functions:
     void swap(valarray& __v) _NOEXCEPT;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return static_cast<size_t>(__end_ - __begin_);}
 
     value_type sum() const;
@@ -976,12 +976,12 @@ public:
     void     resize(size_t __n, value_type __x = value_type());
 
 private:
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY valarray;
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY slice_array;
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY gslice_array;
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY mask_array;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY valarray;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY slice_array;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY gslice_array;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY mask_array;
     template <class> friend class __mask_expr;
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY indirect_array;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY indirect_array;
     template <class> friend class __indirect_expr;
     template <class> friend class __val_expr;
 
@@ -1006,9 +1006,9 @@ private:
     end(const valarray<_Up>& __v);
 };
 
-_LIBCPP_EXTERN_TEMPLATE(_LIBCPP_FUNC_VIS valarray<size_t>::valarray(size_t))
-_LIBCPP_EXTERN_TEMPLATE(_LIBCPP_FUNC_VIS valarray<size_t>::~valarray())
-_LIBCPP_EXTERN_TEMPLATE(_LIBCPP_FUNC_VIS void valarray<size_t>::resize(size_t, size_t))
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(_MUSEUM_LIBCPP_FUNC_VIS valarray<size_t>::valarray(size_t))
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(_MUSEUM_LIBCPP_FUNC_VIS valarray<size_t>::~valarray())
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(_MUSEUM_LIBCPP_FUNC_VIS void valarray<size_t>::resize(size_t, size_t))
 
 template <class _Op, class _Tp>
 struct _UnaryOp<_Op, valarray<_Tp> >
@@ -1019,13 +1019,13 @@ struct _UnaryOp<_Op, valarray<_Tp> >
     _Op __op_;
     const valarray<_Tp>& __a0_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _UnaryOp(const _Op& __op, const valarray<_Tp>& __a0) : __op_(__op), __a0_(__a0) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __i) const {return __op_(__a0_[__i]);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __a0_.size();}
 };
 
@@ -1039,14 +1039,14 @@ struct _BinaryOp<_Op, valarray<_Tp>, _A1>
     const valarray<_Tp>& __a0_;
     _A1 __a1_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _BinaryOp(const _Op& __op, const valarray<_Tp>& __a0, const _A1& __a1)
         : __op_(__op), __a0_(__a0), __a1_(__a1) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type operator[](size_t __i) const {return __op_(__a0_[__i], __a1_[__i]);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __a0_.size();}
 };
 
@@ -1060,14 +1060,14 @@ struct _BinaryOp<_Op, _A0, valarray<_Tp> >
     _A0 __a0_;
     const valarray<_Tp>& __a1_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _BinaryOp(const _Op& __op, const _A0& __a0, const valarray<_Tp>& __a1)
         : __op_(__op), __a0_(__a0), __a1_(__a1) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type operator[](size_t __i) const {return __op_(__a0_[__i], __a1_[__i]);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __a0_.size();}
 };
 
@@ -1081,21 +1081,21 @@ struct _BinaryOp<_Op, valarray<_Tp>, valarray<_Tp> >
     const valarray<_Tp>& __a0_;
     const valarray<_Tp>& __a1_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     _BinaryOp(const _Op& __op, const valarray<_Tp>& __a0, const valarray<_Tp>& __a1)
         : __op_(__op), __a0_(__a0), __a1_(__a1) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     value_type operator[](size_t __i) const {return __op_(__a0_[__i], __a1_[__i]);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __a0_.size();}
 };
 
 // slice_array
 
 template <class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY slice_array
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY slice_array
 {
 public:
     typedef _Tp value_type;
@@ -1199,7 +1199,7 @@ public:
     void operator=(const value_type& __x) const;
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     slice_array(const slice& __sl, const valarray<value_type>& __v)
         : __vp_(const_cast<value_type*>(__v.__begin_ + __sl.start())),
           __size_(__sl.size()),
@@ -1211,7 +1211,7 @@ private:
 };
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const slice_array<_Tp>&
 slice_array<_Tp>::operator=(const slice_array& __sa) const
 {
@@ -1223,7 +1223,7 @@ slice_array<_Tp>::operator=(const slice_array& __sa) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1238,7 +1238,7 @@ slice_array<_Tp>::operator=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1253,7 +1253,7 @@ slice_array<_Tp>::operator*=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1268,7 +1268,7 @@ slice_array<_Tp>::operator/=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1283,7 +1283,7 @@ slice_array<_Tp>::operator%=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1298,7 +1298,7 @@ slice_array<_Tp>::operator+=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1313,7 +1313,7 @@ slice_array<_Tp>::operator-=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1328,7 +1328,7 @@ slice_array<_Tp>::operator^=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1343,7 +1343,7 @@ slice_array<_Tp>::operator&=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1358,7 +1358,7 @@ slice_array<_Tp>::operator|=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1373,7 +1373,7 @@ slice_array<_Tp>::operator<<=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1387,7 +1387,7 @@ slice_array<_Tp>::operator>>=(const _Expr& __v) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 slice_array<_Tp>::operator=(const value_type& __x) const
 {
@@ -1398,60 +1398,60 @@ slice_array<_Tp>::operator=(const value_type& __x) const
 
 // gslice
 
-class _LIBCPP_TYPE_VIS gslice
+class _MUSEUM_LIBCPP_TYPE_VIS gslice
 {
     valarray<size_t> __size_;
     valarray<size_t> __stride_;
     valarray<size_t> __1d_;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     gslice() {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     gslice(size_t __start, const valarray<size_t>& __size,
                            const valarray<size_t>& __stride)
         : __size_(__size),
           __stride_(__stride)
         {__init(__start);}
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     gslice(size_t __start, const valarray<size_t>&  __size,
                                  valarray<size_t>&& __stride)
         : __size_(__size),
           __stride_(move(__stride))
         {__init(__start);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     gslice(size_t __start,       valarray<size_t>&& __size,
                            const valarray<size_t>&  __stride)
         : __size_(move(__size)),
           __stride_(__stride)
         {__init(__start);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     gslice(size_t __start,       valarray<size_t>&& __size,
                                  valarray<size_t>&& __stride)
         : __size_(move(__size)),
           __stride_(move(__stride))
         {__init(__start);}
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 //  gslice(const gslice&)            = default;
 //  gslice(gslice&&)                 = default;
 //  gslice& operator=(const gslice&) = default;
 //  gslice& operator=(gslice&&)      = default;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t           start()  const {return __1d_.size() ? __1d_[0] : 0;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     valarray<size_t> size()   const {return __size_;}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     valarray<size_t> stride() const {return __stride_;}
 
 private:
@@ -1465,7 +1465,7 @@ private:
 // gslice_array
 
 template <class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY gslice_array
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY gslice_array
 {
 public:
     typedef _Tp value_type;
@@ -1573,28 +1573,28 @@ public:
 //  gslice_array& operator=(gslice_array&&)      = default;
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     gslice_array(const gslice& __gs, const valarray<value_type>& __v)
         : __vp_(const_cast<value_type*>(__v.__begin_)),
           __1d_(__gs.__1d_)
         {}
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     gslice_array(gslice&& __gs, const valarray<value_type>& __v)
         : __vp_(const_cast<value_type*>(__v.__begin_)),
           __1d_(move(__gs.__1d_))
         {}
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     template <class> friend class valarray;
 };
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1610,7 +1610,7 @@ gslice_array<_Tp>::operator=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1626,7 +1626,7 @@ gslice_array<_Tp>::operator*=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1642,7 +1642,7 @@ gslice_array<_Tp>::operator/=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1658,7 +1658,7 @@ gslice_array<_Tp>::operator%=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1674,7 +1674,7 @@ gslice_array<_Tp>::operator+=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1690,7 +1690,7 @@ gslice_array<_Tp>::operator-=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1706,7 +1706,7 @@ gslice_array<_Tp>::operator^=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1722,7 +1722,7 @@ gslice_array<_Tp>::operator&=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1738,7 +1738,7 @@ gslice_array<_Tp>::operator|=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1754,7 +1754,7 @@ gslice_array<_Tp>::operator<<=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1769,7 +1769,7 @@ gslice_array<_Tp>::operator>>=(const _Expr& __v) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const gslice_array<_Tp>&
 gslice_array<_Tp>::operator=(const gslice_array& __ga) const
 {
@@ -1782,7 +1782,7 @@ gslice_array<_Tp>::operator=(const gslice_array& __ga) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 gslice_array<_Tp>::operator=(const value_type& __x) const
 {
@@ -1794,7 +1794,7 @@ gslice_array<_Tp>::operator=(const value_type& __x) const
 // mask_array
 
 template <class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY mask_array
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY mask_array
 {
 public:
     typedef _Tp value_type;
@@ -1902,7 +1902,7 @@ public:
 //  mask_array& operator=(mask_array&&)      = default;
 
 private:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     mask_array(const valarray<bool>& __vb, const valarray<value_type>& __v)
         : __vp_(const_cast<value_type*>(__v.__begin_)),
           __1d_(static_cast<size_t>(count(__vb.__begin_, __vb.__end_, true)))
@@ -1918,7 +1918,7 @@ private:
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1933,7 +1933,7 @@ mask_array<_Tp>::operator=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1948,7 +1948,7 @@ mask_array<_Tp>::operator*=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1963,7 +1963,7 @@ mask_array<_Tp>::operator/=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1978,7 +1978,7 @@ mask_array<_Tp>::operator%=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -1993,7 +1993,7 @@ mask_array<_Tp>::operator+=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2008,7 +2008,7 @@ mask_array<_Tp>::operator-=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2023,7 +2023,7 @@ mask_array<_Tp>::operator^=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2038,7 +2038,7 @@ mask_array<_Tp>::operator&=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2053,7 +2053,7 @@ mask_array<_Tp>::operator|=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2068,7 +2068,7 @@ mask_array<_Tp>::operator<<=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2082,7 +2082,7 @@ mask_array<_Tp>::operator>>=(const _Expr& __v) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const mask_array<_Tp>&
 mask_array<_Tp>::operator=(const mask_array& __ma) const
 {
@@ -2092,7 +2092,7 @@ mask_array<_Tp>::operator=(const mask_array& __ma) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 mask_array<_Tp>::operator=(const value_type& __x) const
 {
@@ -2113,7 +2113,7 @@ private:
     _ValExpr __expr_;
     valarray<size_t> __1d_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __mask_expr(const valarray<bool>& __vb, const _RmExpr& __e)
         : __expr_(__e),
           __1d_(static_cast<size_t>(count(__vb.__begin_, __vb.__end_, true)))
@@ -2125,11 +2125,11 @@ private:
           }
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __i) const
         {return __expr_[__1d_[__i]];}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __1d_.size();}
 
     template <class> friend class valarray;
@@ -2138,7 +2138,7 @@ public:
 // indirect_array
 
 template <class _Tp>
-class _LIBCPP_TYPE_VIS_ONLY indirect_array
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY indirect_array
 {
 public:
     typedef _Tp value_type;
@@ -2246,28 +2246,28 @@ public:
 //  indirect_array& operator=(indirect_array&&)      = default;
 
 private:
-     _LIBCPP_INLINE_VISIBILITY
+     _MUSEUM_LIBCPP_INLINE_VISIBILITY
    indirect_array(const valarray<size_t>& __ia, const valarray<value_type>& __v)
         : __vp_(const_cast<value_type*>(__v.__begin_)),
           __1d_(__ia)
         {}
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     indirect_array(valarray<size_t>&& __ia, const valarray<value_type>& __v)
         : __vp_(const_cast<value_type*>(__v.__begin_)),
           __1d_(move(__ia))
         {}
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     template <class> friend class valarray;
 };
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2282,7 +2282,7 @@ indirect_array<_Tp>::operator=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2297,7 +2297,7 @@ indirect_array<_Tp>::operator*=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2312,7 +2312,7 @@ indirect_array<_Tp>::operator/=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2327,7 +2327,7 @@ indirect_array<_Tp>::operator%=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2342,7 +2342,7 @@ indirect_array<_Tp>::operator+=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2357,7 +2357,7 @@ indirect_array<_Tp>::operator-=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2372,7 +2372,7 @@ indirect_array<_Tp>::operator^=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2387,7 +2387,7 @@ indirect_array<_Tp>::operator&=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2402,7 +2402,7 @@ indirect_array<_Tp>::operator|=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2417,7 +2417,7 @@ indirect_array<_Tp>::operator<<=(const _Expr& __v) const
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -2431,7 +2431,7 @@ indirect_array<_Tp>::operator>>=(const _Expr& __v) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const indirect_array<_Tp>&
 indirect_array<_Tp>::operator=(const indirect_array& __ia) const
 {
@@ -2444,7 +2444,7 @@ indirect_array<_Tp>::operator=(const indirect_array& __ia) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 indirect_array<_Tp>::operator=(const value_type& __x) const
 {
@@ -2465,31 +2465,31 @@ private:
     _ValExpr __expr_;
     valarray<size_t> __1d_;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __indirect_expr(const valarray<size_t>& __ia, const _RmExpr& __e)
         : __expr_(__e),
           __1d_(__ia)
           {}
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __indirect_expr(valarray<size_t>&& __ia, const _RmExpr& __e)
         : __expr_(__e),
           __1d_(move(__ia))
           {}
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __i) const
         {return __expr_[__1d_[__i]];}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __1d_.size();}
 
-    template <class> friend class _LIBCPP_TYPE_VIS_ONLY valarray;
+    template <class> friend class _MUSEUM_LIBCPP_TYPE_VIS_ONLY valarray;
 };
 
 template<class _ValExpr>
@@ -2502,30 +2502,30 @@ public:
     typedef typename _RmExpr::value_type value_type;
     typedef typename _RmExpr::result_type result_type;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __val_expr(const _RmExpr& __e) : __expr_(__e) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type operator[](size_t __i) const
         {return __expr_[__i];}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<__slice_expr<_ValExpr> > operator[](slice __s) const
         {return __val_expr<__slice_expr<_ValExpr> >(__expr_, __s);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<__indirect_expr<_ValExpr> > operator[](const gslice& __gs) const
         {return __val_expr<__indirect_expr<_ValExpr> >(__expr_, __gs.__1d_);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<__mask_expr<_ValExpr> > operator[](const valarray<bool>& __vb) const
         {return __val_expr<__mask_expr<_ValExpr> >(__expr_, __vb);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<__indirect_expr<_ValExpr> > operator[](const valarray<size_t>& __vs) const
         {return __val_expr<__indirect_expr<_ValExpr> >(__expr_, __vs);}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<_UnaryOp<__unary_plus<value_type>, _ValExpr> >
     operator+() const
     {
@@ -2533,7 +2533,7 @@ public:
         return __val_expr<_NewExpr>(_NewExpr(__unary_plus<value_type>(), __expr_));
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<_UnaryOp<negate<value_type>, _ValExpr> >
     operator-() const
     {
@@ -2541,7 +2541,7 @@ public:
         return __val_expr<_NewExpr>(_NewExpr(negate<value_type>(), __expr_));
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<_UnaryOp<__bit_not<value_type>, _ValExpr> >
     operator~() const
     {
@@ -2549,7 +2549,7 @@ public:
         return __val_expr<_NewExpr>(_NewExpr(__bit_not<value_type>(), __expr_));
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<_UnaryOp<logical_not<value_type>, _ValExpr> >
     operator!() const
     {
@@ -2559,10 +2559,10 @@ public:
 
     operator valarray<result_type>() const;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t size() const {return __expr_.size();}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type sum() const
     {
         size_t __n = __expr_.size();
@@ -2572,7 +2572,7 @@ public:
         return __r;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type min() const
     {
         size_t __n = size();
@@ -2586,7 +2586,7 @@ public:
         return __r;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     result_type max() const
     {
         size_t __n = size();
@@ -2600,15 +2600,15 @@ public:
         return __r;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<__shift_expr<_ValExpr> > shift (int __i) const
         {return __val_expr<__shift_expr<_ValExpr> >(__shift_expr<_ValExpr>(__i, __expr_));}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<__cshift_expr<_ValExpr> > cshift(int __i) const
         {return __val_expr<__cshift_expr<_ValExpr> >(__cshift_expr<_ValExpr>(__i, __expr_));}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<_UnaryOp<__apply_expr<value_type, value_type(*)(value_type)>, _ValExpr> >
     apply(value_type __f(value_type)) const
     {
@@ -2617,7 +2617,7 @@ public:
         return __val_expr<_NewExpr>(_NewExpr(_Op(__f), __expr_));
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __val_expr<_UnaryOp<__apply_expr<value_type, value_type(*)(const value_type&)>, _ValExpr> >
     apply(value_type __f(const value_type&)) const
     {
@@ -2646,7 +2646,7 @@ __val_expr<_ValExpr>::operator valarray<__val_expr::result_type>() const
 // valarray
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>::valarray(size_t __n)
     : __begin_(0),
       __end_(0)
@@ -2655,7 +2655,7 @@ valarray<_Tp>::valarray(size_t __n)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>::valarray(const value_type& __x, size_t __n)
     : __begin_(0),
       __end_(0)
@@ -2671,20 +2671,20 @@ valarray<_Tp>::valarray(const value_type* __p, size_t __n)
     if (__n)
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__n * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (; __n; ++__end_, ++__p, --__n)
                 ::new (__end_) value_type(*__p);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
@@ -2696,27 +2696,27 @@ valarray<_Tp>::valarray(const valarray& __v)
     if (__v.size())
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__v.size() * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (value_type* __p = __v.__begin_; __p != __v.__end_; ++__end_, ++__p)
                 ::new (__end_) value_type(*__p);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>::valarray(valarray&& __v) _NOEXCEPT
     : __begin_(__v.__begin_),
       __end_(__v.__end_)
@@ -2724,9 +2724,9 @@ valarray<_Tp>::valarray(valarray&& __v) _NOEXCEPT
     __v.__begin_ = __v.__end_ = nullptr;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
 template <class _Tp>
 valarray<_Tp>::valarray(initializer_list<value_type> __il)
@@ -2737,24 +2737,24 @@ valarray<_Tp>::valarray(initializer_list<value_type> __il)
     if (__n)
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__n * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (const value_type* __p = __il.begin(); __n; ++__end_, ++__p, --__n)
                 ::new (__end_) value_type(*__p);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
 template <class _Tp>
 valarray<_Tp>::valarray(const slice_array<value_type>& __sa)
@@ -2765,20 +2765,20 @@ valarray<_Tp>::valarray(const slice_array<value_type>& __sa)
     if (__n)
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__n * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (const value_type* __p = __sa.__vp_; __n; ++__end_, __p += __sa.__stride_, --__n)
                 ::new (__end_) value_type(*__p);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
@@ -2791,23 +2791,23 @@ valarray<_Tp>::valarray(const gslice_array<value_type>& __ga)
     if (__n)
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__n * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             typedef const size_t* _Ip;
             const value_type* __s = __ga.__vp_;
             for (_Ip __i = __ga.__1d_.__begin_, __e = __ga.__1d_.__end_;
                     __i != __e; ++__i, ++__end_)
                 ::new (__end_) value_type(__s[*__i]);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
@@ -2820,23 +2820,23 @@ valarray<_Tp>::valarray(const mask_array<value_type>& __ma)
     if (__n)
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__n * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             typedef const size_t* _Ip;
             const value_type* __s = __ma.__vp_;
             for (_Ip __i = __ma.__1d_.__begin_, __e = __ma.__1d_.__end_;
                     __i != __e; ++__i, ++__end_)
                 ::new (__end_) value_type(__s[*__i]);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
@@ -2849,28 +2849,28 @@ valarray<_Tp>::valarray(const indirect_array<value_type>& __ia)
     if (__n)
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__n * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             typedef const size_t* _Ip;
             const value_type* __s = __ia.__vp_;
             for (_Ip __i = __ia.__1d_.__begin_, __e = __ia.__1d_.__end_;
                     __i != __e; ++__i, ++__end_)
                 ::new (__end_) value_type(__s[*__i]);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>::~valarray()
 {
     resize(0);
@@ -2884,15 +2884,15 @@ valarray<_Tp>::operator=(const valarray& __v)
     {
         if (size() != __v.size())
             resize(__v.size());
-        _VSTD::copy(__v.__begin_, __v.__end_, __begin_);
+        _MUSEUM_VSTD::copy(__v.__begin_, __v.__end_, __begin_);
     }
     return *this;
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(valarray&& __v) _NOEXCEPT
 {
@@ -2904,34 +2904,34 @@ valarray<_Tp>::operator=(valarray&& __v) _NOEXCEPT
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(initializer_list<value_type> __il)
 {
     if (size() != __il.size())
         resize(__il.size());
-    _VSTD::copy(__il.begin(), __il.end(), __begin_);
+    _MUSEUM_VSTD::copy(__il.begin(), __il.end(), __begin_);
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(const value_type& __x)
 {
-    _VSTD::fill(__begin_, __end_, __x);
+    _MUSEUM_VSTD::fill(__begin_, __end_, __x);
     return *this;
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(const slice_array<value_type>& __sa)
 {
@@ -2943,7 +2943,7 @@ valarray<_Tp>::operator=(const slice_array<value_type>& __sa)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(const gslice_array<value_type>& __ga)
 {
@@ -2957,7 +2957,7 @@ valarray<_Tp>::operator=(const gslice_array<value_type>& __ga)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(const mask_array<value_type>& __ma)
 {
@@ -2971,7 +2971,7 @@ valarray<_Tp>::operator=(const mask_array<value_type>& __ma)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(const indirect_array<value_type>& __ia)
 {
@@ -2986,7 +2986,7 @@ valarray<_Tp>::operator=(const indirect_array<value_type>& __ia)
 
 template <class _Tp>
 template <class _ValExpr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator=(const __val_expr<_ValExpr>& __v)
 {
@@ -3000,7 +3000,7 @@ valarray<_Tp>::operator=(const __val_expr<_ValExpr>& __v)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __val_expr<__slice_expr<const valarray<_Tp>&> >
 valarray<_Tp>::operator[](slice __s) const
 {
@@ -3008,7 +3008,7 @@ valarray<_Tp>::operator[](slice __s) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 slice_array<_Tp>
 valarray<_Tp>::operator[](slice __s)
 {
@@ -3016,7 +3016,7 @@ valarray<_Tp>::operator[](slice __s)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __val_expr<__indirect_expr<const valarray<_Tp>&> >
 valarray<_Tp>::operator[](const gslice& __gs) const
 {
@@ -3024,17 +3024,17 @@ valarray<_Tp>::operator[](const gslice& __gs) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 gslice_array<_Tp>
 valarray<_Tp>::operator[](const gslice& __gs)
 {
     return gslice_array<value_type>(__gs, *this);
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __val_expr<__indirect_expr<const valarray<_Tp>&> >
 valarray<_Tp>::operator[](gslice&& __gs) const
 {
@@ -3042,17 +3042,17 @@ valarray<_Tp>::operator[](gslice&& __gs) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 gslice_array<_Tp>
 valarray<_Tp>::operator[](gslice&& __gs)
 {
     return gslice_array<value_type>(move(__gs), *this);
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __val_expr<__mask_expr<const valarray<_Tp>&> >
 valarray<_Tp>::operator[](const valarray<bool>& __vb) const
 {
@@ -3060,17 +3060,17 @@ valarray<_Tp>::operator[](const valarray<bool>& __vb) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 mask_array<_Tp>
 valarray<_Tp>::operator[](const valarray<bool>& __vb)
 {
     return mask_array<value_type>(__vb, *this);
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __val_expr<__mask_expr<const valarray<_Tp>&> >
 valarray<_Tp>::operator[](valarray<bool>&& __vb) const
 {
@@ -3078,17 +3078,17 @@ valarray<_Tp>::operator[](valarray<bool>&& __vb) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 mask_array<_Tp>
 valarray<_Tp>::operator[](valarray<bool>&& __vb)
 {
     return mask_array<value_type>(move(__vb), *this);
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __val_expr<__indirect_expr<const valarray<_Tp>&> >
 valarray<_Tp>::operator[](const valarray<size_t>& __vs) const
 {
@@ -3096,17 +3096,17 @@ valarray<_Tp>::operator[](const valarray<size_t>& __vs) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 indirect_array<_Tp>
 valarray<_Tp>::operator[](const valarray<size_t>& __vs)
 {
     return indirect_array<value_type>(__vs, *this);
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __val_expr<__indirect_expr<const valarray<_Tp>&> >
 valarray<_Tp>::operator[](valarray<size_t>&& __vs) const
 {
@@ -3114,14 +3114,14 @@ valarray<_Tp>::operator[](valarray<size_t>&& __vs) const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 indirect_array<_Tp>
 valarray<_Tp>::operator[](valarray<size_t>&& __vs)
 {
     return indirect_array<value_type>(move(__vs), *this);
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _Tp>
 valarray<_Tp>
@@ -3192,7 +3192,7 @@ valarray<_Tp>::operator!() const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator*=(const value_type& __x)
 {
@@ -3202,7 +3202,7 @@ valarray<_Tp>::operator*=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator/=(const value_type& __x)
 {
@@ -3212,7 +3212,7 @@ valarray<_Tp>::operator/=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator%=(const value_type& __x)
 {
@@ -3222,7 +3222,7 @@ valarray<_Tp>::operator%=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator+=(const value_type& __x)
 {
@@ -3232,7 +3232,7 @@ valarray<_Tp>::operator+=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator-=(const value_type& __x)
 {
@@ -3242,7 +3242,7 @@ valarray<_Tp>::operator-=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator^=(const value_type& __x)
 {
@@ -3252,7 +3252,7 @@ valarray<_Tp>::operator^=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator&=(const value_type& __x)
 {
@@ -3262,7 +3262,7 @@ valarray<_Tp>::operator&=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator|=(const value_type& __x)
 {
@@ -3272,7 +3272,7 @@ valarray<_Tp>::operator|=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator<<=(const value_type& __x)
 {
@@ -3282,7 +3282,7 @@ valarray<_Tp>::operator<<=(const value_type& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 valarray<_Tp>&
 valarray<_Tp>::operator>>=(const value_type& __x)
 {
@@ -3293,7 +3293,7 @@ valarray<_Tp>::operator>>=(const value_type& __x)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3309,7 +3309,7 @@ valarray<_Tp>::operator*=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3325,7 +3325,7 @@ valarray<_Tp>::operator/=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3341,7 +3341,7 @@ valarray<_Tp>::operator%=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3357,7 +3357,7 @@ valarray<_Tp>::operator+=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3373,7 +3373,7 @@ valarray<_Tp>::operator-=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3389,7 +3389,7 @@ valarray<_Tp>::operator^=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3405,7 +3405,7 @@ valarray<_Tp>::operator|=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3421,7 +3421,7 @@ valarray<_Tp>::operator&=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3437,7 +3437,7 @@ valarray<_Tp>::operator<<=(const _Expr& __v)
 
 template <class _Tp>
 template <class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3452,16 +3452,16 @@ valarray<_Tp>::operator>>=(const _Expr& __v)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 valarray<_Tp>::swap(valarray& __v) _NOEXCEPT
 {
-    _VSTD::swap(__begin_, __v.__begin_);
-    _VSTD::swap(__end_, __v.__end_);
+    _MUSEUM_VSTD::swap(__begin_, __v.__begin_);
+    _MUSEUM_VSTD::swap(__end_, __v.__end_);
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 valarray<_Tp>::sum() const
 {
@@ -3475,23 +3475,23 @@ valarray<_Tp>::sum() const
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 valarray<_Tp>::min() const
 {
     if (__begin_ == __end_)
         return value_type();
-    return *_VSTD::min_element(__begin_, __end_);
+    return *_MUSEUM_VSTD::min_element(__begin_, __end_);
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp
 valarray<_Tp>::max() const
 {
     if (__begin_ == __end_)
         return value_type();
-    return *_VSTD::max_element(__begin_, __end_);
+    return *_MUSEUM_VSTD::max_element(__begin_, __end_);
 }
 
 template <class _Tp>
@@ -3510,14 +3510,14 @@ valarray<_Tp>::shift(int __i) const
         value_type* __te;
         if (__i >= 0)
         {
-            __i = _VSTD::min(__i, static_cast<int>(__n));
+            __i = _MUSEUM_VSTD::min(__i, static_cast<int>(__n));
             __sb = __begin_ + __i;
             __tb = __r.__begin_;
             __te = __r.__begin_ + (__n - __i);
         }
         else
         {
-            __i = _VSTD::min(-__i, static_cast<int>(__n));
+            __i = _MUSEUM_VSTD::min(-__i, static_cast<int>(__n));
             __sb = __begin_;
             __tb = __r.__begin_ + __i;
             __te = __r.__begin_ + __n;
@@ -3601,25 +3601,25 @@ valarray<_Tp>::resize(size_t __n, value_type __x)
     if (__n)
     {
         __begin_ = __end_ = static_cast<value_type*>(::operator new(__n * sizeof(value_type)));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             for (; __n; --__n, ++__end_)
                 ::new (__end_) value_type(__x);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
         catch (...)
         {
             resize(0);
             throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
 }
 
 template<class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(valarray<_Tp>& __x, valarray<_Tp>& __y) _NOEXCEPT
 {
@@ -3627,7 +3627,7 @@ swap(valarray<_Tp>& __x, valarray<_Tp>& __y) _NOEXCEPT
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3641,7 +3641,7 @@ operator*(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3657,7 +3657,7 @@ operator*(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3673,7 +3673,7 @@ operator*(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3687,7 +3687,7 @@ operator/(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3703,7 +3703,7 @@ operator/(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3719,7 +3719,7 @@ operator/(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3733,7 +3733,7 @@ operator%(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3749,7 +3749,7 @@ operator%(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3765,7 +3765,7 @@ operator%(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3779,7 +3779,7 @@ operator+(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3795,7 +3795,7 @@ operator+(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3811,7 +3811,7 @@ operator+(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3825,7 +3825,7 @@ operator-(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3841,7 +3841,7 @@ operator-(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3857,7 +3857,7 @@ operator-(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3871,7 +3871,7 @@ operator^(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3887,7 +3887,7 @@ operator^(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3903,7 +3903,7 @@ operator^(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3917,7 +3917,7 @@ operator&(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3933,7 +3933,7 @@ operator&(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3949,7 +3949,7 @@ operator&(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -3963,7 +3963,7 @@ operator|(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3979,7 +3979,7 @@ operator|(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -3995,7 +3995,7 @@ operator|(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4009,7 +4009,7 @@ operator<<(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4025,7 +4025,7 @@ operator<<(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4041,7 +4041,7 @@ operator<<(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4055,7 +4055,7 @@ operator>>(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4071,7 +4071,7 @@ operator>>(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4087,7 +4087,7 @@ operator>>(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4101,7 +4101,7 @@ operator&&(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4117,7 +4117,7 @@ operator&&(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4133,7 +4133,7 @@ operator&&(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4147,7 +4147,7 @@ operator||(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4163,7 +4163,7 @@ operator||(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4179,7 +4179,7 @@ operator||(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4193,7 +4193,7 @@ operator==(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4209,7 +4209,7 @@ operator==(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4225,7 +4225,7 @@ operator==(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4239,7 +4239,7 @@ operator!=(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4255,7 +4255,7 @@ operator!=(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4271,7 +4271,7 @@ operator!=(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4285,7 +4285,7 @@ operator<(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4301,7 +4301,7 @@ operator<(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4317,7 +4317,7 @@ operator<(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4331,7 +4331,7 @@ operator>(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4347,7 +4347,7 @@ operator>(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4363,7 +4363,7 @@ operator>(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4377,7 +4377,7 @@ operator<=(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4393,7 +4393,7 @@ operator<=(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4409,7 +4409,7 @@ operator<=(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4423,7 +4423,7 @@ operator>=(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4439,7 +4439,7 @@ operator>=(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4455,7 +4455,7 @@ operator>=(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4469,7 +4469,7 @@ abs(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4483,7 +4483,7 @@ acos(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4497,7 +4497,7 @@ asin(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4511,7 +4511,7 @@ atan(const _Expr& __x)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4525,7 +4525,7 @@ atan2(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4541,7 +4541,7 @@ atan2(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4557,7 +4557,7 @@ atan2(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4571,7 +4571,7 @@ cos(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4585,7 +4585,7 @@ cosh(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4599,7 +4599,7 @@ exp(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4613,7 +4613,7 @@ log(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4627,7 +4627,7 @@ log10(const _Expr& __x)
 }
 
 template<class _Expr1, class _Expr2>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr1>::value && __is_val_expr<_Expr2>::value,
@@ -4641,7 +4641,7 @@ pow(const _Expr1& __x, const _Expr2& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4657,7 +4657,7 @@ pow(const _Expr& __x, const typename _Expr::value_type& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4673,7 +4673,7 @@ pow(const typename _Expr::value_type& __x, const _Expr& __y)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4687,7 +4687,7 @@ sin(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4701,7 +4701,7 @@ sinh(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4715,7 +4715,7 @@ sqrt(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4729,7 +4729,7 @@ tan(const _Expr& __x)
 }
 
 template<class _Expr>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     __is_val_expr<_Expr>::value,
@@ -4743,7 +4743,7 @@ tanh(const _Expr& __x)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 begin(valarray<_Tp>& __v)
 {
@@ -4751,7 +4751,7 @@ begin(valarray<_Tp>& __v)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const _Tp*
 begin(const valarray<_Tp>& __v)
 {
@@ -4759,7 +4759,7 @@ begin(const valarray<_Tp>& __v)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _Tp*
 end(valarray<_Tp>& __v)
 {
@@ -4767,13 +4767,13 @@ end(valarray<_Tp>& __v)
 }
 
 template <class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const _Tp*
 end(const valarray<_Tp>& __v)
 {
     return __v.__end_;
 }
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_VALARRAY
+#endif  // _MUSEUM_LIBCPP_VALARRAY

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CSTDBOOL
-#define _LIBCPP_CSTDBOOL
+#ifndef _MUSEUM_LIBCPP_CSTDBOOL
+#define _MUSEUM_LIBCPP_CSTDBOOL
 
 /*
     cstdbool synopsis
@@ -22,11 +22,11 @@ Macros:
 
 #include <museum/7.0.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #undef __bool_true_false_are_defined
 #define __bool_true_false_are_defined 1
 
-#endif  // _LIBCPP_CSTDBOOL
+#endif  // _MUSEUM_LIBCPP_CSTDBOOL

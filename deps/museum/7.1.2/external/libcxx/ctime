@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CTIME
-#define _LIBCPP_CTIME
+#ifndef _MUSEUM_LIBCPP_CTIME
+#define _MUSEUM_LIBCPP_CTIME
 
 /*
     ctime synopsis
@@ -47,11 +47,11 @@ size_t strftime(char* restrict s, size_t maxsize, const char* restrict format,
 #include <museum/7.1.2/external/libcxx/__config>
 #include <museum/7.1.2/bionic/libc/time.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using ::clock_t;
 using ::size_t;
@@ -61,7 +61,7 @@ using ::clock;
 using ::difftime;
 using ::mktime;
 using ::time;
-#ifndef _LIBCPP_HAS_NO_THREAD_UNSAFE_C_FUNCTIONS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_THREAD_UNSAFE_C_FUNCTIONS
 using ::asctime;
 using ::ctime;
 using ::gmtime;
@@ -69,6 +69,6 @@ using ::localtime;
 #endif
 using ::strftime;
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CTIME
+#endif  // _MUSEUM_LIBCPP_CTIME

@@ -10,14 +10,14 @@
 
 #if defined(__need_FILE) || defined(__need___FILE)
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #include <museum/8.0.0/bionic/libc/stdio.h>
 
-#elif !defined(_LIBCPP_STDIO_H)
-#define _LIBCPP_STDIO_H
+#elif !defined(_MUSEUM_LIBCPP_STDIO_H)
+#define _MUSEUM_LIBCPP_STDIO_H
 
 /*
     stdio.h synopsis
@@ -101,7 +101,7 @@ void perror(const char* s);
 
 #include <museum/8.0.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -110,7 +110,7 @@ void perror(const char* s);
 #ifdef __cplusplus
 
 // snprintf
-#if defined(_LIBCPP_MSVCRT)
+#if defined(_MUSEUM_LIBCPP_MSVCRT)
 extern "C++" {
 #include <museum/8.0.0/external/libcxx/support/win32/support.h>
 }
@@ -124,4 +124,4 @@ extern "C++" {
 
 #endif
 
-#endif  // _LIBCPP_STDIO_H
+#endif  // _MUSEUM_LIBCPP_STDIO_H

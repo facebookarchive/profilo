@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_IBM_XLOCALE_H
-#define _LIBCPP_SUPPORT_IBM_XLOCALE_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_IBM_XLOCALE_H
+#define _MUSEUM_LIBCPP_SUPPORT_IBM_XLOCALE_H
 #include <museum/8.1.0/external/libcxx/support/ibm/locale_mgmt_aix.h>
 
 #if defined(_AIX)
@@ -268,4 +268,4 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 }
 #endif
 #endif // defined(_AIX)
-#endif // _LIBCPP_SUPPORT_IBM_XLOCALE_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_IBM_XLOCALE_H

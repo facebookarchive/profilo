@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_EXPERIMENTAL_SYSTEM_ERROR
-#define _LIBCPP_EXPERIMENTAL_SYSTEM_ERROR
+#ifndef _MUSEUM_LIBCPP_EXPERIMENTAL_SYSTEM_ERROR
+#define _MUSEUM_LIBCPP_EXPERIMENTAL_SYSTEM_ERROR
 
 /**
     experimental/system_error synopsis
@@ -36,28 +36,28 @@ inline namespace fundamentals_v1 {
 
 #include <museum/8.0.0/external/libcxx/experimental/__config>
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 
 #include <museum/8.0.0/external/libcxx/experimental/system_error>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_LFTS
 
-#ifndef _LIBCPP_HAS_NO_VARIABLE_TEMPLATES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIABLE_TEMPLATES
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_error_code_enum_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_error_code_enum_v
     = is_error_code_enum<_Tp>::value;
 
-template <class _Tp> _LIBCPP_CONSTEXPR bool is_error_condition_enum_v
+template <class _Tp> _MUSEUM_LIBCPP_CONSTEXPR bool is_error_condition_enum_v
     = is_error_condition_enum<_Tp>::value;
 
-#endif /* _LIBCPP_HAS_NO_VARIABLE_TEMPLATES */
+#endif /* _MUSEUM_LIBCPP_HAS_NO_VARIABLE_TEMPLATES */
 
-_LIBCPP_END_NAMESPACE_LFTS
+_MUSEUM_LIBCPP_END_NAMESPACE_LFTS
 
-#endif /* _LIBCPP_STD_VER > 11 */
+#endif /* _MUSEUM_LIBCPP_STD_VER > 11 */
 
-#endif /* _LIBCPP_EXPERIMENTAL_SYSTEM_ERROR */
+#endif /* _MUSEUM_LIBCPP_EXPERIMENTAL_SYSTEM_ERROR */

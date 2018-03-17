@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_MUTEX
-#define _LIBCPP_MUTEX
+#ifndef _MUSEUM_LIBCPP_MUTEX
+#define _MUSEUM_LIBCPP_MUTEX
 
 /*
     mutex synopsis
@@ -176,22 +176,22 @@ template<class Callable, class ...Args>
 #include <museum/7.0.0/external/libcxx/__mutex_base>
 #include <museum/7.0.0/external/libcxx/functional>
 #include <museum/7.0.0/external/libcxx/memory>
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 #include <museum/7.0.0/external/libcxx/tuple>
 #endif
 #include <museum/7.0.0/bionic/libc/sched.h>
 
 #include <museum/7.0.0/external/libcxx/__undef_min_max>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-#ifndef _LIBCPP_HAS_NO_THREADS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_THREADS
 
-class _LIBCPP_TYPE_VIS recursive_mutex
+class _MUSEUM_LIBCPP_TYPE_VIS recursive_mutex
 {
     pthread_mutex_t __m_;
 
@@ -209,11 +209,11 @@ public:
     void unlock()  _NOEXCEPT;
 
     typedef pthread_mutex_t* native_handle_type;
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     native_handle_type native_handle() {return &__m_;}
 };
 
-class _LIBCPP_TYPE_VIS timed_mutex
+class _MUSEUM_LIBCPP_TYPE_VIS timed_mutex
 {
     mutex              __m_;
     condition_variable __cv_;
@@ -230,7 +230,7 @@ public:
     void lock();
     bool try_lock() _NOEXCEPT;
     template <class _Rep, class _Period>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         bool try_lock_for(const chrono::duration<_Rep, _Period>& __d)
             {return try_lock_until(chrono::steady_clock::now() + __d);}
     template <class _Clock, class _Duration>
@@ -255,7 +255,7 @@ timed_mutex::try_lock_until(const chrono::time_point<_Clock, _Duration>& __t)
     return false;
 }
 
-class _LIBCPP_TYPE_VIS recursive_timed_mutex
+class _MUSEUM_LIBCPP_TYPE_VIS recursive_timed_mutex
 {
     mutex              __m_;
     condition_variable __cv_;
@@ -273,7 +273,7 @@ public:
     void lock();
     bool try_lock() _NOEXCEPT;
     template <class _Rep, class _Period>
-        _LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY
         bool try_lock_for(const chrono::duration<_Rep, _Period>& __d)
             {return try_lock_until(chrono::steady_clock::now() + __d);}
     template <class _Clock, class _Duration>
@@ -325,7 +325,7 @@ try_lock(_L0& __l0, _L1& __l1)
     return 0;
 }
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _L0, class _L1, class _L2, class... _L3>
 int
@@ -344,7 +344,7 @@ try_lock(_L0& __l0, _L1& __l1, _L2& __l2, _L3&... __l3)
     return __r;
 }
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _L0, class _L1>
 void
@@ -373,7 +373,7 @@ lock(_L0& __l0, _L1& __l1)
     }
 }
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _L0, class _L1, class _L2, class ..._L3>
 void
@@ -420,41 +420,41 @@ __lock_first(int __i, _L0& __l0, _L1& __l1, _L2& __l2, _L3& ...__l3)
 }
 
 template <class _L0, class _L1, class _L2, class ..._L3>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 lock(_L0& __l0, _L1& __l1, _L2& __l2, _L3& ...__l3)
 {
     __lock_first(0, __l0, __l1, __l2, __l3...);
 }
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
-#endif // !_LIBCPP_HAS_NO_THREADS
+#endif // !_MUSEUM_LIBCPP_HAS_NO_THREADS
 
-struct _LIBCPP_TYPE_VIS_ONLY once_flag;
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY once_flag;
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template<class _Callable, class... _Args>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 void call_once(once_flag&, _Callable&&, _Args&&...);
 
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template<class _Callable>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 void call_once(once_flag&, _Callable&);
 
 template<class _Callable>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 void call_once(once_flag&, const _Callable&);
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
-struct _LIBCPP_TYPE_VIS_ONLY once_flag
+struct _MUSEUM_LIBCPP_TYPE_VIS_ONLY once_flag
 {
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_CONSTEXPR
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_CONSTEXPR
         once_flag() _NOEXCEPT : __state_(0) {}
 
 private:
@@ -463,11 +463,11 @@ private:
 
     unsigned long __state_;
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
     template<class _Callable, class... _Args>
     friend
     void call_once(once_flag&, _Callable&&, _Args&&...);
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
     template<class _Callable>
     friend
     void call_once(once_flag&, _Callable&);
@@ -475,20 +475,20 @@ private:
     template<class _Callable>
     friend
     void call_once(once_flag&, const _Callable&);
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 };
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template <class _Fp>
 class __call_once_param
 {
     _Fp& __f_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __call_once_param(_Fp& __f) : __f_(__f) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void operator()()
     {
         typedef typename __make_tuple_indices<tuple_size<_Fp>::value, 1>::type _Index;
@@ -497,10 +497,10 @@ public:
 
 private:
     template <size_t ..._Indices>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void __execute(__tuple_indices<_Indices...>)
     {
-        __invoke(_VSTD::get<0>(_VSTD::move(__f_)), _VSTD::get<_Indices>(_VSTD::move(__f_))...);
+        __invoke(_MUSEUM_VSTD::get<0>(_MUSEUM_VSTD::move(__f_)), _MUSEUM_VSTD::get<_Indices>(_MUSEUM_VSTD::move(__f_))...);
     }
 };
 
@@ -511,10 +511,10 @@ class __call_once_param
 {
     _Fp& __f_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __call_once_param(_Fp& __f) : __f_(__f) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void operator()()
     {
         __f_();
@@ -531,28 +531,28 @@ __call_once_proxy(void* __vp)
     (*__p)();
 }
 
-_LIBCPP_FUNC_VIS void __call_once(volatile unsigned long&, void*, void(*)(void*));
+_MUSEUM_LIBCPP_FUNC_VIS void __call_once(volatile unsigned long&, void*, void(*)(void*));
 
-#ifndef _LIBCPP_HAS_NO_VARIADICS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template<class _Callable, class... _Args>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 call_once(once_flag& __flag, _Callable&& __func, _Args&&... __args)
 {
     if (__libcpp_relaxed_load(&__flag.__state_) != ~0ul)
     {
         typedef tuple<_Callable&&, _Args&&...> _Gp;
-        _Gp __f(_VSTD::forward<_Callable>(__func), _VSTD::forward<_Args>(__args)...);
+        _Gp __f(_MUSEUM_VSTD::forward<_Callable>(__func), _MUSEUM_VSTD::forward<_Args>(__args)...);
         __call_once_param<_Gp> __p(__f);
         __call_once(__flag.__state_, &__p, &__call_once_proxy<_Gp>);
     }
 }
 
-#else  // _LIBCPP_HAS_NO_VARIADICS
+#else  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
 template<class _Callable>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 call_once(once_flag& __flag, _Callable& __func)
 {
@@ -564,7 +564,7 @@ call_once(once_flag& __flag, _Callable& __func)
 }
 
 template<class _Callable>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 call_once(once_flag& __flag, const _Callable& __func)
 {
@@ -575,8 +575,8 @@ call_once(once_flag& __flag, const _Callable& __func)
     }
 }
 
-#endif  // _LIBCPP_HAS_NO_VARIADICS
+#endif  // _MUSEUM_LIBCPP_HAS_NO_VARIADICS
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_MUTEX
+#endif  // _MUSEUM_LIBCPP_MUTEX

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_FLOAT_H
-#define _LIBCPP_FLOAT_H
+#ifndef _MUSEUM_LIBCPP_FLOAT_H
+#define _MUSEUM_LIBCPP_FLOAT_H
 
 /*
     float.h synopsis
@@ -62,7 +62,7 @@ Macros:
 
 #include <museum/8.0.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -80,4 +80,4 @@ Macros:
 
 #endif // __cplusplus
 
-#endif  // _LIBCPP_FLOAT_H
+#endif  // _MUSEUM_LIBCPP_FLOAT_H

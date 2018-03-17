@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_COMPLEX_H
-#define _LIBCPP_COMPLEX_H
+#ifndef _MUSEUM_LIBCPP_COMPLEX_H
+#define _MUSEUM_LIBCPP_COMPLEX_H
 
 /*
     complex.h synopsis
@@ -20,7 +20,7 @@
 
 #include <museum/8.1.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -34,4 +34,4 @@
 
 #endif  // __cplusplus
 
-#endif  // _LIBCPP_COMPLEX_H
+#endif  // _MUSEUM_LIBCPP_COMPLEX_H

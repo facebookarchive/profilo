@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CSTDLIB
-#define _LIBCPP_CSTDLIB
+#ifndef _MUSEUM_LIBCPP_CSTDLIB
+#define _MUSEUM_LIBCPP_CSTDLIB
 
 /*
     cstdlib synopsis
@@ -85,41 +85,41 @@ void *aligned_alloc(size_t alignment, size_t size);                       // C11
 #include <museum/8.1.0/external/libcxx/__config>
 #include <museum/8.1.0/external/libcxx/stdlib.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #ifdef __GNUC__
-#define _LIBCPP_UNREACHABLE() __builtin_unreachable()
+#define _MUSEUM_LIBCPP_UNREACHABLE() __builtin_unreachable()
 #else
-#define _LIBCPP_UNREACHABLE() _VSTD::abort()
+#define _MUSEUM_LIBCPP_UNREACHABLE() _MUSEUM_VSTD::abort()
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 using ::size_t;
 using ::div_t;
 using ::ldiv_t;
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
+#ifndef _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::lldiv_t;
-#endif // _LIBCPP_HAS_NO_LONG_LONG
+#endif // _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::atof;
 using ::atoi;
 using ::atol;
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
+#ifndef _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::atoll;
-#endif // _LIBCPP_HAS_NO_LONG_LONG
+#endif // _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::strtod;
 using ::strtof;
 using ::strtold;
 using ::strtol;
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
+#ifndef _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::strtoll;
-#endif // _LIBCPP_HAS_NO_LONG_LONG
+#endif // _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::strtoul;
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
+#ifndef _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::strtoull;
-#endif // _LIBCPP_HAS_NO_LONG_LONG
+#endif // _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::rand;
 using ::srand;
 using ::calloc;
@@ -136,27 +136,27 @@ using ::bsearch;
 using ::qsort;
 using ::abs;
 using ::labs;
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
+#ifndef _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::llabs;
-#endif // _LIBCPP_HAS_NO_LONG_LONG
+#endif // _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::div;
 using ::ldiv;
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
+#ifndef _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::lldiv;
-#endif // _LIBCPP_HAS_NO_LONG_LONG
+#endif // _MUSEUM_LIBCPP_HAS_NO_LONG_LONG
 using ::mblen;
 using ::mbtowc;
 using ::wctomb;
 using ::mbstowcs;
 using ::wcstombs;
-#ifdef _LIBCPP_HAS_QUICK_EXIT
+#ifdef _MUSEUM_LIBCPP_HAS_QUICK_EXIT
 using ::at_quick_exit;
 using ::quick_exit;
 #endif
-#ifdef _LIBCPP_HAS_C11_FEATURES
+#ifdef _MUSEUM_LIBCPP_HAS_C11_FEATURES
 using ::aligned_alloc;
 #endif
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_CSTDLIB
+#endif  // _MUSEUM_LIBCPP_CSTDLIB

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef __LIBCPP_TYPEINFO
-#define __LIBCPP_TYPEINFO
+#ifndef __MUSEUM_LIBCPP_TYPEINFO
+#define __MUSEUM_LIBCPP_TYPEINFO
 
 /*
 
@@ -61,75 +61,75 @@ public:
 #include <museum/8.1.0/external/libcxx/exception>
 #include <museum/8.1.0/external/libcxx/cstddef>
 #include <museum/8.1.0/external/libcxx/cstdint>
-#ifdef _LIBCPP_NO_EXCEPTIONS
+#ifdef _MUSEUM_LIBCPP_NO_EXCEPTIONS
 #include <museum/8.1.0/external/libcxx/cstdlib>
 #endif
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#if defined(_LIBCPP_ABI_MICROSOFT)
+#if defined(_MUSEUM_LIBCPP_ABI_MICROSOFT)
 #include <vcruntime_typeinfo.h>
-#elif defined(_LIBCPP_NONUNIQUE_RTTI_BIT)
-#define _LIBCPP_HAS_NONUNIQUE_TYPEINFO
+#elif defined(_MUSEUM_LIBCPP_NONUNIQUE_RTTI_BIT)
+#define _MUSEUM_LIBCPP_HAS_NONUNIQUE_TYPEINFO
 #else
-#define _LIBCPP_HAS_UNIQUE_TYPEINFO
+#define _MUSEUM_LIBCPP_HAS_UNIQUE_TYPEINFO
 #endif
 
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {
 
-#if !defined(_LIBCPP_ABI_MICROSOFT)
-class _LIBCPP_EXCEPTION_ABI type_info
+#if !defined(_MUSEUM_LIBCPP_ABI_MICROSOFT)
+class _MUSEUM_LIBCPP_EXCEPTION_ABI type_info
 {
     type_info& operator=(const type_info&);
     type_info(const type_info&);
 
-#if defined(_LIBCPP_HAS_NONUNIQUE_TYPEINFO)
-    _LIBCPP_INLINE_VISIBILITY
+#if defined(_MUSEUM_LIBCPP_HAS_NONUNIQUE_TYPEINFO)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     int __compare_nonunique_names(const type_info &__arg) const _NOEXCEPT
     { return __builtin_strcmp(name(), __arg.name()); }
 #endif
 
 protected:
-#if defined(_LIBCPP_HAS_NONUNIQUE_TYPEINFO)
+#if defined(_MUSEUM_LIBCPP_HAS_NONUNIQUE_TYPEINFO)
     // A const char* with the non-unique RTTI bit possibly set.
     uintptr_t __type_name;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit type_info(const char* __n)
       : __type_name(reinterpret_cast<uintptr_t>(__n)) {}
 #else
     const char *__type_name;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit type_info(const char* __n) : __type_name(__n) {}
 #endif
 
 public:
     virtual ~type_info();
 
-#if defined(_LIBCPP_HAS_NONUNIQUE_TYPEINFO)
-    _LIBCPP_INLINE_VISIBILITY
+#if defined(_MUSEUM_LIBCPP_HAS_NONUNIQUE_TYPEINFO)
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const char* name() const _NOEXCEPT
     {
       return reinterpret_cast<const char*>(__type_name &
-                                           ~_LIBCPP_NONUNIQUE_RTTI_BIT);
+                                           ~_MUSEUM_LIBCPP_NONUNIQUE_RTTI_BIT);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool before(const type_info& __arg) const _NOEXCEPT
     {
-      if (!((__type_name & __arg.__type_name) & _LIBCPP_NONUNIQUE_RTTI_BIT))
+      if (!((__type_name & __arg.__type_name) & _MUSEUM_LIBCPP_NONUNIQUE_RTTI_BIT))
         return __type_name < __arg.__type_name;
       return __compare_nonunique_names(__arg) < 0;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t hash_code() const _NOEXCEPT
     {
-      if (!(__type_name & _LIBCPP_NONUNIQUE_RTTI_BIT))
+      if (!(__type_name & _MUSEUM_LIBCPP_NONUNIQUE_RTTI_BIT))
         return __type_name;
 
       const char* __ptr = name();
@@ -139,40 +139,40 @@ public:
       return __hash;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator==(const type_info& __arg) const _NOEXCEPT
     {
       if (__type_name == __arg.__type_name)
         return true;
 
-      if (!((__type_name & __arg.__type_name) & _LIBCPP_NONUNIQUE_RTTI_BIT))
+      if (!((__type_name & __arg.__type_name) & _MUSEUM_LIBCPP_NONUNIQUE_RTTI_BIT))
         return false;
       return __compare_nonunique_names(__arg) == 0;
     }
 #else
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     const char* name() const _NOEXCEPT
     { return __type_name; }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool before(const type_info& __arg) const _NOEXCEPT
     { return __type_name < __arg.__type_name; }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     size_t hash_code() const _NOEXCEPT
     { return reinterpret_cast<size_t>(__type_name); }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator==(const type_info& __arg) const _NOEXCEPT
     { return __type_name == __arg.__type_name; }
 #endif
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool operator!=(const type_info& __arg) const _NOEXCEPT
     { return !operator==(__arg); }
 };
 
-class _LIBCPP_EXCEPTION_ABI bad_cast
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_cast
     : public exception
 {
 public:
@@ -181,7 +181,7 @@ public:
     virtual const char* what() const _NOEXCEPT;
 };
 
-class _LIBCPP_EXCEPTION_ABI bad_typeid
+class _MUSEUM_LIBCPP_EXCEPTION_ABI bad_typeid
     : public exception
 {
 public:
@@ -190,20 +190,20 @@ public:
     virtual const char* what() const _NOEXCEPT;
 };
 
-#endif // !_LIBCPP_ABI_MICROSOFT
+#endif // !_MUSEUM_LIBCPP_ABI_MICROSOFT
 
 } } } }  // facebook::museum::MUSEUM_VERSION::std
 
-_LIBCPP_BEGIN_NAMESPACE_STD
-_LIBCPP_NORETURN inline _LIBCPP_ALWAYS_INLINE
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_NORETURN inline _MUSEUM_LIBCPP_ALWAYS_INLINE
 void __throw_bad_cast()
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     throw bad_cast();
 #else
-	_VSTD::abort();
+	_MUSEUM_VSTD::abort();
 #endif
 }
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // __LIBCPP_TYPEINFO
+#endif  // __MUSEUM_LIBCPP_TYPEINFO

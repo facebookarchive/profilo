@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_EXPERIMENTAL_DEQUE
-#define _LIBCPP_EXPERIMENTAL_DEQUE
+#ifndef _MUSEUM_LIBCPP_EXPERIMENTAL_DEQUE
+#define _MUSEUM_LIBCPP_EXPERIMENTAL_DEQUE
 /*
     experimental/deque synopsis
 
@@ -33,15 +33,15 @@ namespace pmr {
 #include <museum/8.0.0/external/libcxx/experimental/deque>
 #include <museum/8.0.0/external/libcxx/experimental/memory_resource>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_LFTS_PMR
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_LFTS_PMR
 
 template <class _ValueT>
-using deque = _VSTD::deque<_ValueT, polymorphic_allocator<_ValueT>>;
+using deque = _MUSEUM_VSTD::deque<_ValueT, polymorphic_allocator<_ValueT>>;
 
-_LIBCPP_END_NAMESPACE_LFTS_PMR
+_MUSEUM_LIBCPP_END_NAMESPACE_LFTS_PMR
 
-#endif /* _LIBCPP_EXPERIMENTAL_DEQUE */
+#endif /* _MUSEUM_LIBCPP_EXPERIMENTAL_DEQUE */

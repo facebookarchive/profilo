@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_TGMATH_H
-#define _LIBCPP_TGMATH_H
+#ifndef _MUSEUM_LIBCPP_TGMATH_H
+#define _MUSEUM_LIBCPP_TGMATH_H
 
 /*
     tgmath.h synopsis
@@ -22,8 +22,8 @@
 #include <museum/6.0.1/external/libcxx/complex.h>
 #include <museum/6.0.1/bionic/libm/math.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-#endif  // _LIBCPP_TGMATH_H
+#endif  // _MUSEUM_LIBCPP_TGMATH_H

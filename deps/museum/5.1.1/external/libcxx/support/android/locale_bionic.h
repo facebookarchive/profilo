@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
-#define _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#define _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
 
 #if defined(__ANDROID__)
 
@@ -189,4 +189,4 @@ static inline long double wcstold_l(const wchar_t *nptr, wchar_t **endptr,
 }
 #endif
 #endif // defined(__ANDROID__)
-#endif // _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H

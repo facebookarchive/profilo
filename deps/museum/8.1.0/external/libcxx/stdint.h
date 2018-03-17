@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_STDINT_H
-#define _LIBCPP_STDINT_H
+#ifndef _MUSEUM_LIBCPP_STDINT_H
+#define _MUSEUM_LIBCPP_STDINT_H
 
 /*
     stdint.h synopsis
@@ -101,7 +101,7 @@ Macros:
 
 #include <museum/8.1.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -118,4 +118,4 @@ Macros:
 
 #include <museum/8.1.0/bionic/libc/stdint.h>
 
-#endif  // _LIBCPP_STDINT_H
+#endif  // _MUSEUM_LIBCPP_STDINT_H

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CERRNO
-#define _LIBCPP_CERRNO
+#ifndef _MUSEUM_LIBCPP_CERRNO
+#define _MUSEUM_LIBCPP_CERRNO
 
 /*
     cerrno synopsis
@@ -26,7 +26,7 @@ Macros:
 #include <museum/5.0.0/external/libcxx/__config>
 #include <museum/5.0.0/bionic/libc/errno.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -390,4 +390,4 @@ const int __elast2 = 105;
 #define EMLINK 9979
 #endif
 
-#endif  // _LIBCPP_CERRNO
+#endif  // _MUSEUM_LIBCPP_CERRNO

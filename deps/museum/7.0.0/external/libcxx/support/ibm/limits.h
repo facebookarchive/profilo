@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SUPPORT_IBM_LIMITS_H
-#define _LIBCPP_SUPPORT_IBM_LIMITS_H
+#ifndef _MUSEUM_LIBCPP_SUPPORT_IBM_LIMITS_H
+#define _MUSEUM_LIBCPP_SUPPORT_IBM_LIMITS_H
 
 #if !defined(_AIX) // Linux
 #include <museum/7.0.0/bionic/libm/math.h> // for HUGE_VAL, HUGE_VALF, HUGE_VALL, and NAN
@@ -96,4 +96,4 @@ static const unsigned int _SNAN_LDBL128[4] = {0x7ff55555, 0x55555555, 0x0, 0x0};
 
 #endif // _AIX
 
-#endif // _LIBCPP_SUPPORT_IBM_LIMITS_H
+#endif // _MUSEUM_LIBCPP_SUPPORT_IBM_LIMITS_H

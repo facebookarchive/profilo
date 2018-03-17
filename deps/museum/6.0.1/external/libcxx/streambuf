@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_STEAMBUF
-#define _LIBCPP_STEAMBUF
+#ifndef _MUSEUM_LIBCPP_STEAMBUF
+#define _MUSEUM_LIBCPP_STEAMBUF
 
 /*
     streambuf synopsis
@@ -112,14 +112,14 @@ protected:
 #include <museum/6.0.1/external/libcxx/iosfwd>
 #include <museum/6.0.1/external/libcxx/ios>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _CharT, class _Traits>
-class _LIBCPP_TYPE_VIS_ONLY basic_streambuf
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY basic_streambuf
 {
 public:
     // types:
@@ -166,16 +166,16 @@ protected:
     void swap(basic_streambuf& __rhs);
 
     // 27.6.2.3.2 Get area:
-    _LIBCPP_ALWAYS_INLINE char_type* eback() const {return __binp_;}
-    _LIBCPP_ALWAYS_INLINE char_type* gptr()  const {return __ninp_;}
-    _LIBCPP_ALWAYS_INLINE char_type* egptr() const {return __einp_;}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type* eback() const {return __binp_;}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type* gptr()  const {return __ninp_;}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type* egptr() const {return __einp_;}
     void gbump(int __n);
     void setg(char_type* __gbeg, char_type* __gnext, char_type* __gend);
 
     // 27.6.2.3.3 Put area:
-    _LIBCPP_ALWAYS_INLINE char_type* pbase() const {return __bout_;}
-    _LIBCPP_ALWAYS_INLINE char_type* pptr()  const {return __nout_;}
-    _LIBCPP_ALWAYS_INLINE char_type* epptr() const {return __eout_;}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type* pbase() const {return __bout_;}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type* pptr()  const {return __nout_;}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type* epptr() const {return __eout_;}
     void pbump(int __n);
     void setp(char_type* __pbeg, char_type* __pend);
 
@@ -220,7 +220,7 @@ basic_streambuf<_CharT, _Traits>::~basic_streambuf()
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 locale
 basic_streambuf<_CharT, _Traits>::pubimbue(const locale& __loc)
 {
@@ -231,7 +231,7 @@ basic_streambuf<_CharT, _Traits>::pubimbue(const locale& __loc)
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 locale
 basic_streambuf<_CharT, _Traits>::getloc() const
 {
@@ -239,7 +239,7 @@ basic_streambuf<_CharT, _Traits>::getloc() const
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_streambuf<_CharT, _Traits>*
 basic_streambuf<_CharT, _Traits>::pubsetbuf(char_type* __s, streamsize __n)
 {
@@ -247,7 +247,7 @@ basic_streambuf<_CharT, _Traits>::pubsetbuf(char_type* __s, streamsize __n)
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::pos_type
 basic_streambuf<_CharT, _Traits>::pubseekoff(off_type __off,
                                              ios_base::seekdir __way,
@@ -257,7 +257,7 @@ basic_streambuf<_CharT, _Traits>::pubseekoff(off_type __off,
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::pos_type
 basic_streambuf<_CharT, _Traits>::pubseekpos(pos_type __sp,
                                              ios_base::openmode __which)
@@ -266,7 +266,7 @@ basic_streambuf<_CharT, _Traits>::pubseekpos(pos_type __sp,
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 int
 basic_streambuf<_CharT, _Traits>::pubsync()
 {
@@ -274,7 +274,7 @@ basic_streambuf<_CharT, _Traits>::pubsync()
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 streamsize
 basic_streambuf<_CharT, _Traits>::in_avail()
 {
@@ -284,7 +284,7 @@ basic_streambuf<_CharT, _Traits>::in_avail()
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::int_type
 basic_streambuf<_CharT, _Traits>::snextc()
 {
@@ -294,7 +294,7 @@ basic_streambuf<_CharT, _Traits>::snextc()
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::int_type
 basic_streambuf<_CharT, _Traits>::sbumpc()
 {
@@ -304,7 +304,7 @@ basic_streambuf<_CharT, _Traits>::sbumpc()
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::int_type
 basic_streambuf<_CharT, _Traits>::sgetc()
 {
@@ -314,7 +314,7 @@ basic_streambuf<_CharT, _Traits>::sgetc()
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 streamsize
 basic_streambuf<_CharT, _Traits>::sgetn(char_type* __s, streamsize __n)
 {
@@ -322,7 +322,7 @@ basic_streambuf<_CharT, _Traits>::sgetn(char_type* __s, streamsize __n)
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::int_type
 basic_streambuf<_CharT, _Traits>::sputbackc(char_type __c)
 {
@@ -332,7 +332,7 @@ basic_streambuf<_CharT, _Traits>::sputbackc(char_type __c)
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::int_type
 basic_streambuf<_CharT, _Traits>::sungetc()
 {
@@ -342,7 +342,7 @@ basic_streambuf<_CharT, _Traits>::sungetc()
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename basic_streambuf<_CharT, _Traits>::int_type
 basic_streambuf<_CharT, _Traits>::sputc(char_type __c)
 {
@@ -353,7 +353,7 @@ basic_streambuf<_CharT, _Traits>::sputc(char_type __c)
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 streamsize
 basic_streambuf<_CharT, _Traits>::sputn(const char_type* __s, streamsize __n)
 {
@@ -401,17 +401,17 @@ template <class _CharT, class _Traits>
 void
 basic_streambuf<_CharT, _Traits>::swap(basic_streambuf& __sb)
 {
-    _VSTD::swap(__loc_, __sb.__loc_);
-    _VSTD::swap(__binp_, __sb.__binp_);
-    _VSTD::swap(__ninp_, __sb.__ninp_);
-    _VSTD::swap(__einp_, __sb.__einp_);
-    _VSTD::swap(__bout_, __sb.__bout_);
-    _VSTD::swap(__nout_, __sb.__nout_);
-    _VSTD::swap(__eout_, __sb.__eout_);
+    _MUSEUM_VSTD::swap(__loc_, __sb.__loc_);
+    _MUSEUM_VSTD::swap(__binp_, __sb.__binp_);
+    _MUSEUM_VSTD::swap(__ninp_, __sb.__ninp_);
+    _MUSEUM_VSTD::swap(__einp_, __sb.__einp_);
+    _MUSEUM_VSTD::swap(__bout_, __sb.__bout_);
+    _MUSEUM_VSTD::swap(__nout_, __sb.__nout_);
+    _MUSEUM_VSTD::swap(__eout_, __sb.__eout_);
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 basic_streambuf<_CharT, _Traits>::gbump(int __n)
 {
@@ -419,7 +419,7 @@ basic_streambuf<_CharT, _Traits>::gbump(int __n)
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 basic_streambuf<_CharT, _Traits>::setg(char_type* __gbeg, char_type* __gnext,
                                                           char_type* __gend)
@@ -430,7 +430,7 @@ basic_streambuf<_CharT, _Traits>::setg(char_type* __gbeg, char_type* __gnext,
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 basic_streambuf<_CharT, _Traits>::pbump(int __n)
 {
@@ -438,7 +438,7 @@ basic_streambuf<_CharT, _Traits>::pbump(int __n)
 }
 
 template <class _CharT, class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 basic_streambuf<_CharT, _Traits>::setp(char_type* __pbeg, char_type* __pend)
 {
@@ -547,7 +547,7 @@ basic_streambuf<_CharT, _Traits>::xsputn(const char_type* __s, streamsize __n)
         }
         else
         {
-            streamsize __chunk_size = _VSTD::min(__eout_ - __nout_, __n - __i);
+            streamsize __chunk_size = _MUSEUM_VSTD::min(__eout_ - __nout_, __n - __i);
             traits_type::copy(__nout_, __s, __chunk_size);
             __nout_ += __chunk_size;
             __s     += __chunk_size;
@@ -564,12 +564,12 @@ basic_streambuf<_CharT, _Traits>::overflow(int_type)
     return traits_type::eof();
 }
 
-_LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_TYPE_VIS basic_streambuf<char>)
-_LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_TYPE_VIS basic_streambuf<wchar_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(class _MUSEUM_LIBCPP_TYPE_VIS basic_streambuf<char>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(class _MUSEUM_LIBCPP_TYPE_VIS basic_streambuf<wchar_t>)
 
-_LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_TYPE_VIS basic_ios<char>)
-_LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_TYPE_VIS basic_ios<wchar_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(class _MUSEUM_LIBCPP_TYPE_VIS basic_ios<char>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(class _MUSEUM_LIBCPP_TYPE_VIS basic_ios<wchar_t>)
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_STEAMBUF
+#endif  // _MUSEUM_LIBCPP_STEAMBUF

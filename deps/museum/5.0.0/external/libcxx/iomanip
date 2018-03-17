@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_IOMANIP
-#define _LIBCPP_IOMANIP
+#ifndef _MUSEUM_LIBCPP_IOMANIP
+#define _MUSEUM_LIBCPP_IOMANIP
 
 /*
     iomanip synopsis
@@ -46,11 +46,11 @@ template <class charT, class traits, class Allocator>
 #include <museum/5.0.0/external/libcxx/__config>
 #include <museum/5.0.0/external/libcxx/istream>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 // resetiosflags
 
@@ -58,12 +58,12 @@ class __iom_t1
 {
     ios_base::fmtflags __mask_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __iom_t1(ios_base::fmtflags __m) : __mask_(__m) {}
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istream<_CharT, _Traits>&
     operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t1& __x)
     {
@@ -73,7 +73,7 @@ public:
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_ostream<_CharT, _Traits>&
     operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t1& __x)
     {
@@ -82,7 +82,7 @@ public:
     }
 };
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t1
 resetiosflags(ios_base::fmtflags __mask)
 {
@@ -95,12 +95,12 @@ class __iom_t2
 {
     ios_base::fmtflags __mask_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __iom_t2(ios_base::fmtflags __m) : __mask_(__m) {}
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istream<_CharT, _Traits>&
     operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t2& __x)
     {
@@ -110,7 +110,7 @@ public:
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_ostream<_CharT, _Traits>&
     operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t2& __x)
     {
@@ -119,7 +119,7 @@ public:
     }
 };
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t2
 setiosflags(ios_base::fmtflags __mask)
 {
@@ -132,12 +132,12 @@ class __iom_t3
 {
     int __base_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __iom_t3(int __b) : __base_(__b) {}
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istream<_CharT, _Traits>&
     operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t3& __x)
     {
@@ -150,7 +150,7 @@ public:
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_ostream<_CharT, _Traits>&
     operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t3& __x)
     {
@@ -162,7 +162,7 @@ public:
     }
 };
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t3
 setbase(int __base)
 {
@@ -176,12 +176,12 @@ class __iom_t4
 {
     _CharT __fill_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __iom_t4(_CharT __c) : __fill_(__c) {}
 
     template <class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_ostream<_CharT, _Traits>&
     operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t4& __x)
     {
@@ -191,7 +191,7 @@ public:
 };
 
 template<class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t4<_CharT>
 setfill(_CharT __c)
 {
@@ -204,12 +204,12 @@ class __iom_t5
 {
     int __n_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __iom_t5(int __n) : __n_(__n) {}
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istream<_CharT, _Traits>&
     operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t5& __x)
     {
@@ -219,7 +219,7 @@ public:
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_ostream<_CharT, _Traits>&
     operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t5& __x)
     {
@@ -228,7 +228,7 @@ public:
     }
 };
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t5
 setprecision(int __n)
 {
@@ -241,12 +241,12 @@ class __iom_t6
 {
     int __n_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit __iom_t6(int __n) : __n_(__n) {}
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istream<_CharT, _Traits>&
     operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t6& __x)
     {
@@ -256,7 +256,7 @@ public:
 
     template <class _CharT, class _Traits>
     friend
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_ostream<_CharT, _Traits>&
     operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t6& __x)
     {
@@ -265,7 +265,7 @@ public:
     }
 };
 
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t6
 setw(int __n)
 {
@@ -286,7 +286,7 @@ class __iom_t7
     _MoneyT& __mon_;
     bool __intl_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __iom_t7(_MoneyT& __mon, bool __intl)
         : __mon_(__mon), __intl_(__intl) {}
 
@@ -300,10 +300,10 @@ template <class _CharT, class _Traits, class _MoneyT>
 basic_istream<_CharT, _Traits>&
 operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t7<_MoneyT>& __x)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __s(__is);
         if (__s)
         {
@@ -314,18 +314,18 @@ operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t7<_MoneyT>& __x)
             __mf.get(_Ip(__is), _Ip(), __x.__intl_, __is, __err, __x.__mon_);
             __is.setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
 template <class _MoneyT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t7<_MoneyT>
 get_money(_MoneyT& __mon, bool __intl = false)
 {
@@ -346,7 +346,7 @@ class __iom_t8
     const _MoneyT& __mon_;
     bool __intl_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __iom_t8(const _MoneyT& __mon, bool __intl)
         : __mon_(__mon), __intl_(__intl) {}
 
@@ -360,10 +360,10 @@ template <class _CharT, class _Traits, class _MoneyT>
 basic_ostream<_CharT, _Traits>&
 operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t8<_MoneyT>& __x)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_ostream<_CharT, _Traits>::sentry __s(__os);
         if (__s)
         {
@@ -373,18 +373,18 @@ operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t8<_MoneyT>& __x)
             if (__mf.put(_Op(__os), __x.__intl_, __os, __os.fill(), __x.__mon_).failed())
                 __os.setstate(ios_base::badbit);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __os.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __os;
 }
 
 template <class _MoneyT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t8<_MoneyT>
 put_money(const _MoneyT& __mon, bool __intl = false)
 {
@@ -405,7 +405,7 @@ class __iom_t9
     tm* __tm_;
     const _CharT* __fmt_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __iom_t9(tm* __tm, const _CharT* __fmt)
         : __tm_(__tm), __fmt_(__fmt) {}
 
@@ -419,10 +419,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t9<_CharT>& __x)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __s(__is);
         if (__s)
         {
@@ -434,18 +434,18 @@ operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t9<_CharT>& __x)
                      __x.__fmt_, __x.__fmt_ + _Traits::length(__x.__fmt_));
             __is.setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t9<_CharT>
 get_time(tm* __tm, const _CharT* __fmt)
 {
@@ -466,7 +466,7 @@ class __iom_t10
     const tm* __tm_;
     const _CharT* __fmt_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __iom_t10(const tm* __tm, const _CharT* __fmt)
         : __tm_(__tm), __fmt_(__fmt) {}
 
@@ -480,10 +480,10 @@ template <class _CharT, class _Traits>
 basic_ostream<_CharT, _Traits>&
 operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t10<_CharT>& __x)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_ostream<_CharT, _Traits>::sentry __s(__os);
         if (__s)
         {
@@ -494,32 +494,32 @@ operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t10<_CharT>& __x)
                          __x.__fmt_, __x.__fmt_ + _Traits::length(__x.__fmt_)).failed())
                 __os.setstate(ios_base::badbit);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __os.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __os;
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __iom_t10<_CharT>
 put_time(const tm* __tm, const _CharT* __fmt)
 {
     return __iom_t10<_CharT>(__tm, __fmt);
 }
 
-#if _LIBCPP_STD_VER > 11
+#if _MUSEUM_LIBCPP_STD_VER > 11
 
 template <class _CharT, class _Traits, class _ForwardIterator>
 facebook::museum::MUSEUM_VERSION::std::basic_ostream<_CharT, _Traits> &
 __quoted_output ( basic_ostream<_CharT, _Traits> &__os, 
         _ForwardIterator __first, _ForwardIterator __last, _CharT __delim, _CharT __escape )
 {
-    _VSTD::basic_string<_CharT, _Traits> __str;
+    _MUSEUM_VSTD::basic_string<_CharT, _Traits> __str;
     __str.push_back(__delim);
     for ( ; __first != __last; ++ __first )
     {
@@ -602,7 +602,7 @@ struct __quoted_proxy
 };
 
 template <class _CharT, class _Traits, class _Allocator>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_ostream<_CharT, _Traits>& operator<<(
         basic_ostream<_CharT, _Traits>& __os, 
         const __quoted_proxy<_CharT, _Traits, _Allocator> & __proxy)
@@ -612,7 +612,7 @@ basic_ostream<_CharT, _Traits>& operator<<(
 
 //  extractor for non-const basic_string& proxies
 template <class _CharT, class _Traits, class _Allocator>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<_CharT, _Traits>& operator>>(
         basic_istream<_CharT, _Traits>& __is, 
         const __quoted_proxy<_CharT, _Traits, _Allocator> & __proxy)
@@ -622,7 +622,7 @@ basic_istream<_CharT, _Traits>& operator>>(
 
 
 template <class _CharT>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 __quoted_output_proxy<_CharT, const _CharT *>
 quoted ( const _CharT *__s, _CharT __delim = _CharT('"'), _CharT __escape =_CharT('\\'))
 {
@@ -632,7 +632,7 @@ quoted ( const _CharT *__s, _CharT __delim = _CharT('"'), _CharT __escape =_Char
 }
 
 template <class _CharT, class _Traits, class _Allocator>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 __quoted_output_proxy<_CharT, typename basic_string <_CharT, _Traits, _Allocator>::const_iterator>
 quoted ( const basic_string <_CharT, _Traits, _Allocator> &__s, _CharT __delim = _CharT('"'), _CharT __escape=_CharT('\\'))
 {
@@ -649,6 +649,6 @@ quoted ( basic_string <_CharT, _Traits, _Allocator> &__s, _CharT __delim = _Char
 }
 #endif
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_IOMANIP
+#endif  // _MUSEUM_LIBCPP_IOMANIP

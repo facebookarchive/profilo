@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_ISTREAM
-#define _LIBCPP_ISTREAM
+#ifndef _MUSEUM_LIBCPP_ISTREAM
+#define _MUSEUM_LIBCPP_ISTREAM
 
 /*
     istream synopsis
@@ -164,14 +164,14 @@ template <class charT, class traits, class T>
 
 #include <museum/8.1.0/external/libcxx/__undef_min_max>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 template <class _CharT, class _Traits>
-class _LIBCPP_TEMPLATE_VIS basic_istream
+class _MUSEUM_LIBCPP_TEMPLATE_VIS basic_istream
     : virtual public basic_ios<_CharT, _Traits>
 {
     streamsize __gc_;
@@ -184,47 +184,47 @@ public:
     typedef typename traits_type::off_type off_type;
 
     // 27.7.1.1.1 Constructor/destructor:
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     explicit basic_istream(basic_streambuf<char_type, traits_type>* __sb) : __gc_(0)
     { this->init(__sb); }
     virtual ~basic_istream();
 protected:
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istream(basic_istream&& __rhs);
 #endif
     // 27.7.1.1.2 Assign/swap:
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istream& operator=(basic_istream&& __rhs);
 #endif
 
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     void swap(basic_istream& __rhs) {
-      _VSTD::swap(__gc_, __rhs.__gc_);
+      _MUSEUM_VSTD::swap(__gc_, __rhs.__gc_);
       basic_ios<char_type, traits_type>::swap(__rhs);
     }
 
-#ifndef _LIBCPP_CXX03_LANG
+#ifndef _MUSEUM_LIBCPP_CXX03_LANG
     basic_istream           (const basic_istream& __rhs) = delete;
     basic_istream& operator=(const basic_istream& __rhs) = delete;
 #endif
 public:
 
     // 27.7.1.1.3 Prefix/suffix:
-    class _LIBCPP_TEMPLATE_VIS sentry;
+    class _MUSEUM_LIBCPP_TEMPLATE_VIS sentry;
 
     // 27.7.1.2 Formatted input:
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     basic_istream& operator>>(basic_istream& (*__pf)(basic_istream&))
     { return __pf(*this); }
 
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     basic_istream& operator>>(basic_ios<char_type, traits_type>&
                               (*__pf)(basic_ios<char_type, traits_type>&))
     { __pf(*this); return *this; }
 
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     basic_istream& operator>>(ios_base& (*__pf)(ios_base&))
     { __pf(*this); return *this; }
 
@@ -244,11 +244,11 @@ public:
     basic_istream& operator>>(void*& __p);
 
     // 27.7.1.3 Unformatted input:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     streamsize gcount() const {return __gc_;}
     int_type get();
 
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     basic_istream& get(char_type& __c) {
       int_type __ch = get();
       if (__ch != traits_type::eof())
@@ -256,19 +256,19 @@ public:
       return *this;
     }
 
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     basic_istream& get(char_type* __s, streamsize __n)
     { return get(__s, __n, this->widen('\n')); }
 
     basic_istream& get(char_type* __s, streamsize __n, char_type __dlm);
 
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     basic_istream& get(basic_streambuf<char_type, traits_type>& __sb)
     { return get(__sb, this->widen('\n')); }
 
     basic_istream& get(basic_streambuf<char_type, traits_type>& __sb, char_type __dlm);
 
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     basic_istream& getline(char_type* __s, streamsize __n)
     { return getline(__s, __n, this->widen('\n')); }
 
@@ -289,7 +289,7 @@ public:
 };
 
 template <class _CharT, class _Traits>
-class _LIBCPP_TEMPLATE_VIS basic_istream<_CharT, _Traits>::sentry
+class _MUSEUM_LIBCPP_TEMPLATE_VIS basic_istream<_CharT, _Traits>::sentry
 {
     bool __ok_;
 
@@ -300,8 +300,8 @@ public:
     explicit sentry(basic_istream<_CharT, _Traits>& __is, bool __noskipws = false);
 //    ~sentry() = default;
 
-    _LIBCPP_INLINE_VISIBILITY
-        _LIBCPP_EXPLICIT
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+        _MUSEUM_LIBCPP_EXPLICIT
         operator bool() const {return __ok_;}
 };
 
@@ -332,7 +332,7 @@ basic_istream<_CharT, _Traits>::sentry::sentry(basic_istream<_CharT, _Traits>& _
         __is.setstate(ios_base::failbit);
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>::basic_istream(basic_istream&& __rhs)
@@ -350,7 +350,7 @@ basic_istream<_CharT, _Traits>::operator=(basic_istream&& __rhs)
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>::~basic_istream()
@@ -361,10 +361,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(unsigned short& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -374,13 +374,13 @@ basic_istream<_CharT, _Traits>::operator>>(unsigned short& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -388,10 +388,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(unsigned int& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -401,13 +401,13 @@ basic_istream<_CharT, _Traits>::operator>>(unsigned int& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -415,10 +415,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(long& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -428,13 +428,13 @@ basic_istream<_CharT, _Traits>::operator>>(long& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -442,10 +442,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(unsigned long& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -455,13 +455,13 @@ basic_istream<_CharT, _Traits>::operator>>(unsigned long& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -469,10 +469,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(long long& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -482,13 +482,13 @@ basic_istream<_CharT, _Traits>::operator>>(long long& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -496,10 +496,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(unsigned long long& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -509,13 +509,13 @@ basic_istream<_CharT, _Traits>::operator>>(unsigned long long& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -523,10 +523,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(float& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -536,13 +536,13 @@ basic_istream<_CharT, _Traits>::operator>>(float& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -550,10 +550,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(double& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -563,13 +563,13 @@ basic_istream<_CharT, _Traits>::operator>>(double& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -577,10 +577,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(long double& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -590,13 +590,13 @@ basic_istream<_CharT, _Traits>::operator>>(long double& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -604,10 +604,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(bool& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -617,13 +617,13 @@ basic_istream<_CharT, _Traits>::operator>>(bool& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -631,10 +631,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(void*& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -644,13 +644,13 @@ basic_istream<_CharT, _Traits>::operator>>(void*& __n)
             use_facet<_Fp>(this->getloc()).get(_Ip(*this), _Ip(), *this, __err, __n);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -658,10 +658,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(short& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -684,13 +684,13 @@ basic_istream<_CharT, _Traits>::operator>>(short& __n)
                 __n = static_cast<short>(__temp);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -698,10 +698,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(int& __n)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this);
         if (__s)
         {
@@ -724,13 +724,13 @@ basic_istream<_CharT, _Traits>::operator>>(int& __n)
                 __n = static_cast<int>(__temp);
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -738,10 +738,10 @@ template<class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 operator>>(basic_istream<_CharT, _Traits>& __is, _CharT* __s)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __sen(__is);
         if (__sen)
         {
@@ -772,18 +772,18 @@ operator>>(basic_istream<_CharT, _Traits>& __is, _CharT* __s)
                __err |= ios_base::failbit;
             __is.setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
 template<class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<char, _Traits>&
 operator>>(basic_istream<char, _Traits>& __is, unsigned char* __s)
 {
@@ -791,7 +791,7 @@ operator>>(basic_istream<char, _Traits>& __is, unsigned char* __s)
 }
 
 template<class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<char, _Traits>&
 operator>>(basic_istream<char, _Traits>& __is, signed char* __s)
 {
@@ -802,10 +802,10 @@ template<class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 operator>>(basic_istream<_CharT, _Traits>& __is, _CharT& __c)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __sen(__is);
         if (__sen)
         {
@@ -815,18 +815,18 @@ operator>>(basic_istream<_CharT, _Traits>& __is, _CharT& __c)
             else
                 __c = _Traits::to_char_type(__i);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
 template<class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<char, _Traits>&
 operator>>(basic_istream<char, _Traits>& __is, unsigned char& __c)
 {
@@ -834,7 +834,7 @@ operator>>(basic_istream<char, _Traits>& __is, unsigned char& __c)
 }
 
 template<class _Traits>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<char, _Traits>&
 operator>>(basic_istream<char, _Traits>& __is, signed char& __c)
 {
@@ -846,19 +846,19 @@ basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::operator>>(basic_streambuf<char_type, traits_type>* __sb)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this, true);
         if (__s)
         {
             if (__sb)
             {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
                 try
                 {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
                     ios_base::iostate __err = ios_base::goodbit;
                     while (true)
                     {
@@ -878,25 +878,25 @@ basic_istream<_CharT, _Traits>::operator>>(basic_streambuf<char_type, traits_typ
                     if (__gc_ == 0)
                        __err |= ios_base::failbit;
                     this->setstate(__err);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
                 }
                 catch (...)
                 {
                     if (__gc_ == 0)
                         this->__set_failbit_and_consider_rethrow();
                 }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             }
             else
                 this->setstate(ios_base::failbit);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -906,10 +906,10 @@ basic_istream<_CharT, _Traits>::get()
 {
     __gc_ = 0;
     int_type __r = traits_type::eof();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __s(*this, true);
         if (__s)
         {
@@ -919,13 +919,13 @@ basic_istream<_CharT, _Traits>::get()
             else
                 __gc_ = 1;
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __r;
 }
 
@@ -934,10 +934,10 @@ basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::get(char_type* __s, streamsize __n, char_type __dlm)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
@@ -967,13 +967,13 @@ basic_istream<_CharT, _Traits>::get(char_type* __s, streamsize __n, char_type __
             else
                 this->setstate(ios_base::failbit);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -983,18 +983,18 @@ basic_istream<_CharT, _Traits>::get(basic_streambuf<char_type, traits_type>& __s
                                     char_type __dlm)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
             ios_base::iostate __err = ios_base::goodbit;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
             try
             {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
                 while (true)
                 {
                     typename traits_type::int_type __i = this->rdbuf()->sgetc();
@@ -1011,23 +1011,23 @@ basic_istream<_CharT, _Traits>::get(basic_streambuf<char_type, traits_type>& __s
                     ++__gc_;
                     this->rdbuf()->sbumpc();
                 }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
             }
             catch (...)
             {
             }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
             if (__gc_ == 0)
                __err |= ios_base::failbit;
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1036,10 +1036,10 @@ basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::getline(char_type* __s, streamsize __n, char_type __dlm)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
@@ -1074,13 +1074,13 @@ basic_istream<_CharT, _Traits>::getline(char_type* __s, streamsize __n, char_typ
                __err |= ios_base::failbit;
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1089,10 +1089,10 @@ basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::ignore(streamsize __n, int_type __dlm)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
@@ -1129,13 +1129,13 @@ basic_istream<_CharT, _Traits>::ignore(streamsize __n, int_type __dlm)
             }
             this->setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1145,10 +1145,10 @@ basic_istream<_CharT, _Traits>::peek()
 {
     __gc_ = 0;
     int_type __r = traits_type::eof();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
@@ -1156,13 +1156,13 @@ basic_istream<_CharT, _Traits>::peek()
             if (traits_type::eq_int_type(__r, traits_type::eof()))
                 this->setstate(ios_base::eofbit);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __r;
 }
 
@@ -1171,10 +1171,10 @@ basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::read(char_type* __s, streamsize __n)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
@@ -1184,13 +1184,13 @@ basic_istream<_CharT, _Traits>::read(char_type* __s, streamsize __n)
         }
         else
             this->setstate(ios_base::failbit);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1199,10 +1199,10 @@ streamsize
 basic_istream<_CharT, _Traits>::readsome(char_type* __s, streamsize __n)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
@@ -1215,19 +1215,19 @@ basic_istream<_CharT, _Traits>::readsome(char_type* __s, streamsize __n)
             case 0:
                 break;
             default:
-                read(__s, _VSTD::min(__c, __n));
+                read(__s, _MUSEUM_VSTD::min(__c, __n));
                 break;
             }
         }
         else
             this->setstate(ios_base::failbit);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __gc_;
 }
 
@@ -1236,10 +1236,10 @@ basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::putback(char_type __c)
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         this->clear(this->rdstate() & ~ios_base::eofbit);
         sentry __sen(*this, true);
         if (__sen)
@@ -1249,13 +1249,13 @@ basic_istream<_CharT, _Traits>::putback(char_type __c)
         }
         else
             this->setstate(ios_base::failbit);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1264,10 +1264,10 @@ basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::unget()
 {
     __gc_ = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         this->clear(this->rdstate() & ~ios_base::eofbit);
         sentry __sen(*this, true);
         if (__sen)
@@ -1277,13 +1277,13 @@ basic_istream<_CharT, _Traits>::unget()
         }
         else
             this->setstate(ios_base::failbit);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1292,10 +1292,10 @@ int
 basic_istream<_CharT, _Traits>::sync()
 {
     int __r = 0;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
         {
@@ -1307,13 +1307,13 @@ basic_istream<_CharT, _Traits>::sync()
                 return -1;
             }
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __r;
 }
 
@@ -1322,20 +1322,20 @@ typename basic_istream<_CharT, _Traits>::pos_type
 basic_istream<_CharT, _Traits>::tellg()
 {
     pos_type __r(-1);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         sentry __sen(*this, true);
         if (__sen)
             __r = this->rdbuf()->pubseekoff(0, ios_base::cur, ios_base::in);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __r;
 }
 
@@ -1343,10 +1343,10 @@ template<class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::seekg(pos_type __pos)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         this->clear(this->rdstate() & ~ios_base::eofbit);
         sentry __sen(*this, true);
         if (__sen)
@@ -1354,13 +1354,13 @@ basic_istream<_CharT, _Traits>::seekg(pos_type __pos)
             if (this->rdbuf()->pubseekpos(__pos, ios_base::in) == pos_type(-1))
                 this->setstate(ios_base::failbit);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1368,10 +1368,10 @@ template<class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 basic_istream<_CharT, _Traits>::seekg(off_type __off, ios_base::seekdir __dir)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         this->clear(this->rdstate() & ~ios_base::eofbit);
         sentry __sen(*this, true);
         if (__sen)
@@ -1379,13 +1379,13 @@ basic_istream<_CharT, _Traits>::seekg(off_type __off, ios_base::seekdir __dir)
             if (this->rdbuf()->pubseekoff(__off, __dir, ios_base::in) == pos_type(-1))
                 this->setstate(ios_base::failbit);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         this->__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return *this;
 }
 
@@ -1393,10 +1393,10 @@ template <class _CharT, class _Traits>
 basic_istream<_CharT, _Traits>&
 ws(basic_istream<_CharT, _Traits>& __is)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __sen(__is, true);
         if (__sen)
         {
@@ -1414,31 +1414,31 @@ ws(basic_istream<_CharT, _Traits>& __is)
                 __is.rdbuf()->sbumpc();
             }
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Tp>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<_CharT, _Traits>&
 operator>>(basic_istream<_CharT, _Traits>&& __is, _Tp&& __x)
 {
-    __is >> _VSTD::forward<_Tp>(__x);
+    __is >> _MUSEUM_VSTD::forward<_Tp>(__x);
     return __is;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits>
-class _LIBCPP_TEMPLATE_VIS basic_iostream
+class _MUSEUM_LIBCPP_TEMPLATE_VIS basic_iostream
     : public basic_istream<_CharT, _Traits>,
       public basic_ostream<_CharT, _Traits>
 {
@@ -1451,34 +1451,34 @@ public:
     typedef typename traits_type::off_type off_type;
 
     // constructor/destructor
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     explicit basic_iostream(basic_streambuf<char_type, traits_type>* __sb)
       : basic_istream<_CharT, _Traits>(__sb)
     {}
 
     virtual ~basic_iostream();
 protected:
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_iostream(basic_iostream&& __rhs);
 #endif
 
     // assign/swap
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_iostream& operator=(basic_iostream&& __rhs);
 #endif
-    inline _LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_EXTERN_TEMPLATE_INLINE_VISIBILITY
     void swap(basic_iostream& __rhs)
     { basic_istream<char_type, traits_type>::swap(__rhs); }
 public:
 };
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits>
 basic_iostream<_CharT, _Traits>::basic_iostream(basic_iostream&& __rhs)
-    : basic_istream<_CharT, _Traits>(_VSTD::move(__rhs))
+    : basic_istream<_CharT, _Traits>(_MUSEUM_VSTD::move(__rhs))
 {
 }
 
@@ -1490,7 +1490,7 @@ basic_iostream<_CharT, _Traits>::operator=(basic_iostream&& __rhs)
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits>
 basic_iostream<_CharT, _Traits>::~basic_iostream()
@@ -1502,10 +1502,10 @@ basic_istream<_CharT, _Traits>&
 operator>>(basic_istream<_CharT, _Traits>& __is,
            basic_string<_CharT, _Traits, _Allocator>& __str)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __sen(__is);
         if (__sen)
         {
@@ -1540,13 +1540,13 @@ operator>>(basic_istream<_CharT, _Traits>& __is,
         }
         else
             __is.setstate(ios_base::failbit);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
@@ -1555,10 +1555,10 @@ basic_istream<_CharT, _Traits>&
 getline(basic_istream<_CharT, _Traits>& __is,
         basic_string<_CharT, _Traits, _Allocator>& __str, _CharT __dlm)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __sen(__is, true);
         if (__sen)
         {
@@ -1588,18 +1588,18 @@ getline(basic_istream<_CharT, _Traits>& __is,
                __err |= ios_base::failbit;
             __is.setstate(__err);
         }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
 template<class _CharT, class _Traits, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<_CharT, _Traits>&
 getline(basic_istream<_CharT, _Traits>& __is,
         basic_string<_CharT, _Traits, _Allocator>& __str)
@@ -1607,10 +1607,10 @@ getline(basic_istream<_CharT, _Traits>& __is,
     return getline(__is, __str, __is.widen('\n'));
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template<class _CharT, class _Traits, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<_CharT, _Traits>&
 getline(basic_istream<_CharT, _Traits>&& __is,
         basic_string<_CharT, _Traits, _Allocator>& __str, _CharT __dlm)
@@ -1619,7 +1619,7 @@ getline(basic_istream<_CharT, _Traits>&& __is,
 }
 
 template<class _CharT, class _Traits, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 basic_istream<_CharT, _Traits>&
 getline(basic_istream<_CharT, _Traits>&& __is,
         basic_string<_CharT, _Traits, _Allocator>& __str)
@@ -1627,16 +1627,16 @@ getline(basic_istream<_CharT, _Traits>&& __is,
     return getline(__is, __str, __is.widen('\n'));
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, size_t _Size>
 basic_istream<_CharT, _Traits>&
 operator>>(basic_istream<_CharT, _Traits>& __is, bitset<_Size>& __x)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         typename basic_istream<_CharT, _Traits>::sentry __sen(__is);
         if (__sen)
         {
@@ -1668,20 +1668,20 @@ operator>>(basic_istream<_CharT, _Traits>& __is, bitset<_Size>& __x)
         }
         else
             __is.setstate(ios_base::failbit);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
     }
     catch (...)
     {
         __is.__set_badbit_and_consider_rethrow();
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
     return __is;
 }
 
-_LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_EXTERN_TEMPLATE_TYPE_VIS basic_istream<char>)
-_LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_EXTERN_TEMPLATE_TYPE_VIS basic_istream<wchar_t>)
-_LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_EXTERN_TEMPLATE_TYPE_VIS basic_iostream<char>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(class _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS basic_istream<char>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(class _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS basic_istream<wchar_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE(class _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS basic_iostream<char>)
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_ISTREAM
+#endif  // _MUSEUM_LIBCPP_ISTREAM

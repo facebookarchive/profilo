@@ -8,29 +8,29 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP___MUTEX_BASE
-#define _LIBCPP___MUTEX_BASE
+#ifndef _MUSEUM_LIBCPP___MUTEX_BASE
+#define _MUSEUM_LIBCPP___MUTEX_BASE
 
 #include <museum/6.0.1/external/libcxx/__config>
 #include <museum/6.0.1/external/libcxx/chrono>
 #include <museum/6.0.1/external/libcxx/system_error>
 #include <museum/6.0.1/bionic/libc/pthread.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-#ifndef _LIBCPP_HAS_NO_THREADS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_THREADS
 
-class _LIBCPP_TYPE_VIS mutex
+class _MUSEUM_LIBCPP_TYPE_VIS mutex
 {
     pthread_mutex_t __m_;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
-#ifndef _LIBCPP_HAS_NO_CONSTEXPR
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_CONSTEXPR
      constexpr mutex() _NOEXCEPT : __m_(PTHREAD_MUTEX_INITIALIZER) {}
 #else
      mutex() _NOEXCEPT {__m_ = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;}
@@ -47,14 +47,14 @@ public:
     void unlock() _NOEXCEPT;
 
     typedef pthread_mutex_t* native_handle_type;
-    _LIBCPP_INLINE_VISIBILITY native_handle_type native_handle() {return &__m_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY native_handle_type native_handle() {return &__m_;}
 };
 
-struct _LIBCPP_TYPE_VIS defer_lock_t {};
-struct _LIBCPP_TYPE_VIS try_to_lock_t {};
-struct _LIBCPP_TYPE_VIS adopt_lock_t {};
+struct _MUSEUM_LIBCPP_TYPE_VIS defer_lock_t {};
+struct _MUSEUM_LIBCPP_TYPE_VIS try_to_lock_t {};
+struct _MUSEUM_LIBCPP_TYPE_VIS adopt_lock_t {};
 
-#if defined(_LIBCPP_HAS_NO_CONSTEXPR) || defined(_LIBCPP_BUILDING_MUTEX)
+#if defined(_MUSEUM_LIBCPP_HAS_NO_CONSTEXPR) || defined(_MUSEUM_LIBCPP_BUILDING_MUTEX)
 
 extern const defer_lock_t  defer_lock;
 extern const try_to_lock_t try_to_lock;
@@ -69,7 +69,7 @@ constexpr adopt_lock_t  adopt_lock  = adopt_lock_t();
 #endif
 
 template <class _Mutex>
-class _LIBCPP_TYPE_VIS_ONLY lock_guard
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY lock_guard
 {
 public:
     typedef _Mutex mutex_type;
@@ -78,13 +78,13 @@ private:
     mutex_type& __m_;
 public:
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit lock_guard(mutex_type& __m)
         : __m_(__m) {__m_.lock();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     lock_guard(mutex_type& __m, adopt_lock_t)
         : __m_(__m) {}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     ~lock_guard() {__m_.unlock();}
 
 private:
@@ -93,7 +93,7 @@ private:
 };
 
 template <class _Mutex>
-class _LIBCPP_TYPE_VIS_ONLY unique_lock
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY unique_lock
 {
 public:
     typedef _Mutex mutex_type;
@@ -103,29 +103,29 @@ private:
     bool __owns_;
 
 public:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     unique_lock() _NOEXCEPT : __m_(nullptr), __owns_(false) {}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit unique_lock(mutex_type& __m)
         : __m_(&__m), __owns_(true) {__m_->lock();}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     unique_lock(mutex_type& __m, defer_lock_t) _NOEXCEPT
         : __m_(&__m), __owns_(false) {}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     unique_lock(mutex_type& __m, try_to_lock_t)
         : __m_(&__m), __owns_(__m.try_lock()) {}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     unique_lock(mutex_type& __m, adopt_lock_t)
         : __m_(&__m), __owns_(true) {}
     template <class _Clock, class _Duration>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
         unique_lock(mutex_type& __m, const chrono::time_point<_Clock, _Duration>& __t)
             : __m_(&__m), __owns_(__m.try_lock_until(__t)) {}
     template <class _Rep, class _Period>
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
         unique_lock(mutex_type& __m, const chrono::duration<_Rep, _Period>& __d)
             : __m_(&__m), __owns_(__m.try_lock_for(__d)) {}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     ~unique_lock()
     {
         if (__owns_)
@@ -137,12 +137,12 @@ private:
     unique_lock& operator=(unique_lock const&); // = delete;
 
 public:
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     unique_lock(unique_lock&& __u) _NOEXCEPT
         : __m_(__u.__m_), __owns_(__u.__owns_)
         {__u.__m_ = nullptr; __u.__owns_ = false;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     unique_lock& operator=(unique_lock&& __u) _NOEXCEPT
         {
             if (__owns_)
@@ -154,7 +154,7 @@ public:
             return *this;
         }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     void lock();
     bool try_lock();
@@ -166,13 +166,13 @@ public:
 
     void unlock();
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void swap(unique_lock& __u) _NOEXCEPT
     {
-        _VSTD::swap(__m_, __u.__m_);
-        _VSTD::swap(__owns_, __u.__owns_);
+        _MUSEUM_VSTD::swap(__m_, __u.__m_);
+        _MUSEUM_VSTD::swap(__owns_, __u.__owns_);
     }
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     mutex_type* release() _NOEXCEPT
     {
         mutex_type* __m = __m_;
@@ -181,12 +181,12 @@ public:
         return __m;
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     bool owns_lock() const _NOEXCEPT {return __owns_;}
-    _LIBCPP_INLINE_VISIBILITY
-    _LIBCPP_EXPLICIT
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_EXPLICIT
         operator bool () const _NOEXCEPT {return __owns_;}
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     mutex_type* mutex() const _NOEXCEPT {return __m_;}
 };
 
@@ -251,25 +251,25 @@ unique_lock<_Mutex>::unlock()
 }
 
 template <class _Mutex>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(unique_lock<_Mutex>& __x, unique_lock<_Mutex>& __y) _NOEXCEPT
     {__x.swap(__y);}
 
 //enum class cv_status
-_LIBCPP_DECLARE_STRONG_ENUM(cv_status)
+_MUSEUM_LIBCPP_DECLARE_STRONG_ENUM(cv_status)
 {
     no_timeout,
     timeout
 };
-_LIBCPP_DECLARE_STRONG_ENUM_EPILOG(cv_status)
+_MUSEUM_LIBCPP_DECLARE_STRONG_ENUM_EPILOG(cv_status)
 
-class _LIBCPP_TYPE_VIS condition_variable
+class _MUSEUM_LIBCPP_TYPE_VIS condition_variable
 {
     pthread_cond_t __cv_;
 public:
-    _LIBCPP_INLINE_VISIBILITY
-#ifndef _LIBCPP_HAS_NO_CONSTEXPR
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_CONSTEXPR
     constexpr condition_variable() : __cv_(PTHREAD_COND_INITIALIZER) {}
 #else
     condition_variable() {__cv_ = (pthread_cond_t)PTHREAD_COND_INITIALIZER;}
@@ -311,16 +311,16 @@ public:
                  _Predicate __pred);
 
     typedef pthread_cond_t* native_handle_type;
-    _LIBCPP_INLINE_VISIBILITY native_handle_type native_handle() {return &__cv_;}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY native_handle_type native_handle() {return &__cv_;}
 
 private:
     void __do_timed_wait(unique_lock<mutex>& __lk,
        chrono::time_point<chrono::system_clock, chrono::nanoseconds>) _NOEXCEPT;
 };
-#endif // !_LIBCPP_HAS_NO_THREADS
+#endif // !_MUSEUM_LIBCPP_HAS_NO_THREADS
 
 template <class _To, class _Rep, class _Period>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 typename enable_if
 <
     chrono::__is_duration<_To>::value,
@@ -335,7 +335,7 @@ __ceil(chrono::duration<_Rep, _Period> __d)
     return __r;
 }
 
-#ifndef _LIBCPP_HAS_NO_THREADS
+#ifndef _MUSEUM_LIBCPP_HAS_NO_THREADS
 template <class _Predicate>
 void
 condition_variable::wait(unique_lock<mutex>& __lk, _Predicate __pred)
@@ -390,18 +390,18 @@ condition_variable::wait_for(unique_lock<mutex>& __lk,
 }
 
 template <class _Rep, class _Period, class _Predicate>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 condition_variable::wait_for(unique_lock<mutex>& __lk,
                              const chrono::duration<_Rep, _Period>& __d,
                              _Predicate __pred)
 {
     return wait_until(__lk, chrono::steady_clock::now() + __d,
-                      _VSTD::move(__pred));
+                      _MUSEUM_VSTD::move(__pred));
 }
 
-#endif // !_LIBCPP_HAS_NO_THREADS
+#endif // !_MUSEUM_LIBCPP_HAS_NO_THREADS
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP___MUTEX_BASE
+#endif  // _MUSEUM_LIBCPP___MUTEX_BASE

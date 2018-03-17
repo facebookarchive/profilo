@@ -7,8 +7,8 @@
 // Source Licenses. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-#ifndef _LIBCPP_STDBOOL_H
-#define _LIBCPP_STDBOOL_H
+#ifndef _MUSEUM_LIBCPP_STDBOOL_H
+#define _MUSEUM_LIBCPP_STDBOOL_H
 
 
 /*
@@ -22,7 +22,7 @@ Macros:
 
 #include <museum/8.1.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -36,4 +36,4 @@ Macros:
 #define __bool_true_false_are_defined 1
 #endif
 
-#endif  // _LIBCPP_STDBOOL_H
+#endif  // _MUSEUM_LIBCPP_STDBOOL_H

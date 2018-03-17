@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_LOCALE_H
-#define _LIBCPP_LOCALE_H
+#ifndef _MUSEUM_LIBCPP_LOCALE_H
+#define _MUSEUM_LIBCPP_LOCALE_H
 
 /*
     locale.h synopsis
@@ -36,10 +36,10 @@ Functions:
 
 #include <museum/8.0.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
 #include <museum/8.0.0/bionic/libc/locale.h>
 
-#endif  // _LIBCPP_LOCALE_H
+#endif  // _MUSEUM_LIBCPP_LOCALE_H

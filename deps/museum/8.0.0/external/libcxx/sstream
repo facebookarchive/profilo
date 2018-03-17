@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SSTREAM
-#define _LIBCPP_SSTREAM
+#ifndef _MUSEUM_LIBCPP_SSTREAM
+#define _MUSEUM_LIBCPP_SSTREAM
 
 /*
     sstream synopsis
@@ -177,16 +177,16 @@ typedef basic_stringstream<wchar_t> wstringstream;
 
 #include <museum/8.0.0/external/libcxx/__undef_min_max>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
 // basic_stringbuf
 
 template <class _CharT, class _Traits, class _Allocator>
-class _LIBCPP_TEMPLATE_VIS basic_stringbuf
+class _MUSEUM_LIBCPP_TEMPLATE_VIS basic_stringbuf
     : public basic_streambuf<_CharT, _Traits>
 {
 public:
@@ -207,17 +207,17 @@ private:
 
 public:
     // 27.8.1.1 Constructors:
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_stringbuf(ios_base::openmode __wch = ios_base::in | ios_base::out);
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_stringbuf(const string_type& __s,
                              ios_base::openmode __wch = ios_base::in | ios_base::out);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     basic_stringbuf(basic_stringbuf&& __rhs);
 #endif
 
     // 27.8.1.2 Assign and swap:
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
     basic_stringbuf& operator=(basic_stringbuf&& __rhs);
 #endif
     void swap(basic_stringbuf& __rhs);
@@ -233,7 +233,7 @@ protected:
     virtual int_type overflow (int_type __c = traits_type::eof());
     virtual pos_type seekoff(off_type __off, ios_base::seekdir __way,
                              ios_base::openmode __wch = ios_base::in | ios_base::out);
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     virtual pos_type seekpos(pos_type __sp,
                              ios_base::openmode __wch = ios_base::in | ios_base::out);
 };
@@ -255,7 +255,7 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::basic_stringbuf(const string_type&
     str(__s);
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 basic_stringbuf<_CharT, _Traits, _Allocator>::basic_stringbuf(basic_stringbuf&& __rhs)
@@ -281,7 +281,7 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::basic_stringbuf(basic_stringbuf&& 
         __eout = __rhs.epptr() - __p;
     }
     ptrdiff_t __hm = __rhs.__hm_ == nullptr ? -1 : __rhs.__hm_ - __p;
-    __str_ = _VSTD::move(__rhs.__str_);
+    __str_ = _MUSEUM_VSTD::move(__rhs.__str_);
     __p = const_cast<char_type*>(__str_.data());
     if (__binp != -1)
         this->setg(__p + __binp, __p + __ninp, __p + __einp);
@@ -322,7 +322,7 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::operator=(basic_stringbuf&& __rhs)
         __eout = __rhs.epptr() - __p;
     }
     ptrdiff_t __hm = __rhs.__hm_ == nullptr ? -1 : __rhs.__hm_ - __p;
-    __str_ = _VSTD::move(__rhs.__str_);
+    __str_ = _MUSEUM_VSTD::move(__rhs.__str_);
     __p = const_cast<char_type*>(__str_.data());
     if (__binp != -1)
         this->setg(__p + __binp, __p + __ninp, __p + __einp);
@@ -346,7 +346,7 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::operator=(basic_stringbuf&& __rhs)
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 void
@@ -392,7 +392,7 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::swap(basic_stringbuf& __rhs)
         __leout = this->epptr() - __p;
     }
     ptrdiff_t __lhm = __hm_ == nullptr ? -1 : __hm_ - __p;
-    _VSTD::swap(__mode_, __rhs.__mode_);
+    _MUSEUM_VSTD::swap(__mode_, __rhs.__mode_);
     __str_.swap(__rhs.__str_);
     __p = const_cast<char_type*>(__str_.data());
     if (__rbinp != -1)
@@ -426,7 +426,7 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::swap(basic_stringbuf& __rhs)
 }
 
 template <class _CharT, class _Traits, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(basic_stringbuf<_CharT, _Traits, _Allocator>& __x,
      basic_stringbuf<_CharT, _Traits, _Allocator>& __y)
@@ -525,10 +525,10 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::overflow(int_type __c)
         {
             if (!(__mode_ & ios_base::out))
                 return traits_type::eof();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
             try
             {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
                 ptrdiff_t __nout = this->pptr()  - this->pbase();
                 ptrdiff_t __hm = __hm_ - this->pbase();
                 __str_.push_back(char_type());
@@ -537,15 +537,15 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::overflow(int_type __c)
                 this->setp(__p, __p + __str_.size());
                 this->pbump(__nout);
                 __hm_ = this->pbase() + __hm;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
             }
             catch (...)
             {
                 return traits_type::eof();
             }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
         }
-        __hm_ = _VSTD::max(this->pptr() + 1, __hm_);
+        __hm_ = _MUSEUM_VSTD::max(this->pptr() + 1, __hm_);
         if (__mode_ & ios_base::in)
         {
             char_type* __p = const_cast<char_type*>(__str_.data());
@@ -618,7 +618,7 @@ basic_stringbuf<_CharT, _Traits, _Allocator>::seekpos(pos_type __sp,
 // basic_istringstream
 
 template <class _CharT, class _Traits, class _Allocator>
-class _LIBCPP_TEMPLATE_VIS basic_istringstream
+class _MUSEUM_LIBCPP_TEMPLATE_VIS basic_istringstream
     : public basic_istream<_CharT, _Traits>
 {
 public:
@@ -636,27 +636,27 @@ private:
 
 public:
     // 27.8.2.1 Constructors:
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_istringstream(ios_base::openmode __wch = ios_base::in);
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_istringstream(const string_type& __s,
                                  ios_base::openmode __wch = ios_base::in);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_istringstream(basic_istringstream&& __rhs);
 
     // 27.8.2.2 Assign and swap:
     basic_istringstream& operator=(basic_istringstream&& __rhs);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void swap(basic_istringstream& __rhs);
 
     // 27.8.2.3 Members:
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_stringbuf<char_type, traits_type, allocator_type>* rdbuf() const;
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     string_type str() const;
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void str(const string_type& __s);
 };
 
@@ -675,12 +675,12 @@ basic_istringstream<_CharT, _Traits, _Allocator>::basic_istringstream(const stri
 {
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 basic_istringstream<_CharT, _Traits, _Allocator>::basic_istringstream(basic_istringstream&& __rhs)
-    : basic_istream<_CharT, _Traits>(_VSTD::move(__rhs)),
-      __sb_(_VSTD::move(__rhs.__sb_))
+    : basic_istream<_CharT, _Traits>(_MUSEUM_VSTD::move(__rhs)),
+      __sb_(_MUSEUM_VSTD::move(__rhs.__sb_))
 {
     basic_istream<_CharT, _Traits>::set_rdbuf(&__sb_);
 }
@@ -689,12 +689,12 @@ template <class _CharT, class _Traits, class _Allocator>
 basic_istringstream<_CharT, _Traits, _Allocator>&
 basic_istringstream<_CharT, _Traits, _Allocator>::operator=(basic_istringstream&& __rhs)
 {
-    basic_istream<char_type, traits_type>::operator=(_VSTD::move(__rhs));
-    __sb_ = _VSTD::move(__rhs.__sb_);
+    basic_istream<char_type, traits_type>::operator=(_MUSEUM_VSTD::move(__rhs));
+    __sb_ = _MUSEUM_VSTD::move(__rhs.__sb_);
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 void basic_istringstream<_CharT, _Traits, _Allocator>::swap(basic_istringstream& __rhs)
@@ -704,7 +704,7 @@ void basic_istringstream<_CharT, _Traits, _Allocator>::swap(basic_istringstream&
 }
 
 template <class _CharT, class _Traits, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(basic_istringstream<_CharT, _Traits, _Allocator>& __x,
      basic_istringstream<_CharT, _Traits, _Allocator>& __y)
@@ -735,7 +735,7 @@ void basic_istringstream<_CharT, _Traits, _Allocator>::str(const string_type& __
 // basic_ostringstream
 
 template <class _CharT, class _Traits, class _Allocator>
-class _LIBCPP_TEMPLATE_VIS basic_ostringstream
+class _MUSEUM_LIBCPP_TEMPLATE_VIS basic_ostringstream
     : public basic_ostream<_CharT, _Traits>
 {
 public:
@@ -753,27 +753,27 @@ private:
 
 public:
     // 27.8.2.1 Constructors:
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_ostringstream(ios_base::openmode __wch = ios_base::out);
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_ostringstream(const string_type& __s,
                                  ios_base::openmode __wch = ios_base::out);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_ostringstream(basic_ostringstream&& __rhs);
 
     // 27.8.2.2 Assign and swap:
     basic_ostringstream& operator=(basic_ostringstream&& __rhs);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void swap(basic_ostringstream& __rhs);
 
     // 27.8.2.3 Members:
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_stringbuf<char_type, traits_type, allocator_type>* rdbuf() const;
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     string_type str() const;
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void str(const string_type& __s);
 };
 
@@ -792,12 +792,12 @@ basic_ostringstream<_CharT, _Traits, _Allocator>::basic_ostringstream(const stri
 {
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 basic_ostringstream<_CharT, _Traits, _Allocator>::basic_ostringstream(basic_ostringstream&& __rhs)
-    : basic_ostream<_CharT, _Traits>(_VSTD::move(__rhs)),
-      __sb_(_VSTD::move(__rhs.__sb_))
+    : basic_ostream<_CharT, _Traits>(_MUSEUM_VSTD::move(__rhs)),
+      __sb_(_MUSEUM_VSTD::move(__rhs.__sb_))
 {
     basic_ostream<_CharT, _Traits>::set_rdbuf(&__sb_);
 }
@@ -806,12 +806,12 @@ template <class _CharT, class _Traits, class _Allocator>
 basic_ostringstream<_CharT, _Traits, _Allocator>&
 basic_ostringstream<_CharT, _Traits, _Allocator>::operator=(basic_ostringstream&& __rhs)
 {
-    basic_ostream<char_type, traits_type>::operator=(_VSTD::move(__rhs));
-    __sb_ = _VSTD::move(__rhs.__sb_);
+    basic_ostream<char_type, traits_type>::operator=(_MUSEUM_VSTD::move(__rhs));
+    __sb_ = _MUSEUM_VSTD::move(__rhs.__sb_);
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 void
@@ -822,7 +822,7 @@ basic_ostringstream<_CharT, _Traits, _Allocator>::swap(basic_ostringstream& __rh
 }
 
 template <class _CharT, class _Traits, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(basic_ostringstream<_CharT, _Traits, _Allocator>& __x,
      basic_ostringstream<_CharT, _Traits, _Allocator>& __y)
@@ -854,7 +854,7 @@ basic_ostringstream<_CharT, _Traits, _Allocator>::str(const string_type& __s)
 // basic_stringstream
 
 template <class _CharT, class _Traits, class _Allocator>
-class _LIBCPP_TEMPLATE_VIS basic_stringstream
+class _MUSEUM_LIBCPP_TEMPLATE_VIS basic_stringstream
     : public basic_iostream<_CharT, _Traits>
 {
 public:
@@ -872,27 +872,27 @@ private:
 
 public:
     // 27.8.2.1 Constructors:
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_stringstream(ios_base::openmode __wch = ios_base::in | ios_base::out);
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit basic_stringstream(const string_type& __s,
                                 ios_base::openmode __wch = ios_base::in | ios_base::out);
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_stringstream(basic_stringstream&& __rhs);
 
     // 27.8.2.2 Assign and swap:
     basic_stringstream& operator=(basic_stringstream&& __rhs);
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    inline _LIBCPP_INLINE_VISIBILITY
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void swap(basic_stringstream& __rhs);
 
     // 27.8.2.3 Members:
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     basic_stringbuf<char_type, traits_type, allocator_type>* rdbuf() const;
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     string_type str() const;
-    inline _LIBCPP_INLINE_VISIBILITY
+    inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
     void str(const string_type& __s);
 };
 
@@ -911,12 +911,12 @@ basic_stringstream<_CharT, _Traits, _Allocator>::basic_stringstream(const string
 {
 }
 
-#ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#ifndef _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 basic_stringstream<_CharT, _Traits, _Allocator>::basic_stringstream(basic_stringstream&& __rhs)
-    : basic_iostream<_CharT, _Traits>(_VSTD::move(__rhs)),
-      __sb_(_VSTD::move(__rhs.__sb_))
+    : basic_iostream<_CharT, _Traits>(_MUSEUM_VSTD::move(__rhs)),
+      __sb_(_MUSEUM_VSTD::move(__rhs.__sb_))
 {
     basic_istream<_CharT, _Traits>::set_rdbuf(&__sb_);
 }
@@ -925,12 +925,12 @@ template <class _CharT, class _Traits, class _Allocator>
 basic_stringstream<_CharT, _Traits, _Allocator>&
 basic_stringstream<_CharT, _Traits, _Allocator>::operator=(basic_stringstream&& __rhs)
 {
-    basic_iostream<char_type, traits_type>::operator=(_VSTD::move(__rhs));
-    __sb_ = _VSTD::move(__rhs.__sb_);
+    basic_iostream<char_type, traits_type>::operator=(_MUSEUM_VSTD::move(__rhs));
+    __sb_ = _MUSEUM_VSTD::move(__rhs.__sb_);
     return *this;
 }
 
-#endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+#endif  // _MUSEUM_LIBCPP_HAS_NO_RVALUE_REFERENCES
 
 template <class _CharT, class _Traits, class _Allocator>
 void
@@ -941,7 +941,7 @@ basic_stringstream<_CharT, _Traits, _Allocator>::swap(basic_stringstream& __rhs)
 }
 
 template <class _CharT, class _Traits, class _Allocator>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 void
 swap(basic_stringstream<_CharT, _Traits, _Allocator>& __x,
      basic_stringstream<_CharT, _Traits, _Allocator>& __y)
@@ -970,6 +970,6 @@ basic_stringstream<_CharT, _Traits, _Allocator>::str(const string_type& __s)
     __sb_.str(__s);
 }
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP_SSTREAM
+#endif  // _MUSEUM_LIBCPP_SSTREAM

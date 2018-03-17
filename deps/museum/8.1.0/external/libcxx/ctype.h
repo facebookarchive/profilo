@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_CTYPE_H
-#define _LIBCPP_CTYPE_H
+#ifndef _MUSEUM_LIBCPP_CTYPE_H
+#define _MUSEUM_LIBCPP_CTYPE_H
 
 /*
     ctype.h synopsis
@@ -32,7 +32,7 @@ int toupper(int c);
 
 #include <museum/8.1.0/external/libcxx/__config>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
@@ -40,14 +40,14 @@ int toupper(int c);
 
 #ifdef __cplusplus
 
-#if defined(_LIBCPP_MSVCRT)
+#if defined(_MUSEUM_LIBCPP_MSVCRT)
 // We support including .h headers inside 'extern "C"' contexts, so switch
 // back to C++ linkage before including these C++ headers.
 extern "C++" {
   #include <museum/8.1.0/external/libcxx/support/win32/support.h>
   #include <museum/8.1.0/external/libcxx/support/win32/locale_win32.h>
 }
-#endif // _LIBCPP_MSVCRT
+#endif // _MUSEUM_LIBCPP_MSVCRT
 
 #undef isalnum
 #undef isalpha
@@ -66,4 +66,4 @@ extern "C++" {
 
 #endif
 
-#endif  // _LIBCPP_CTYPE_H
+#endif  // _MUSEUM_LIBCPP_CTYPE_H

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP___LOCALE
-#define _LIBCPP___LOCALE
+#ifndef _MUSEUM_LIBCPP___LOCALE
+#define _MUSEUM_LIBCPP___LOCALE
 
 #include <museum/7.1.2/external/libcxx/__config>
 #include <museum/7.1.2/external/libcxx/string>
@@ -19,7 +19,7 @@
 #include <museum/7.1.2/external/libcxx/cstdint>
 #include <museum/7.1.2/external/libcxx/cctype>
 #include <museum/7.1.2/bionic/libc/locale.h>
-#if defined(_LIBCPP_MSVCRT) || defined(__MINGW32__)
+#if defined(_MUSEUM_LIBCPP_MSVCRT) || defined(__MINGW32__)
 # include <museum/7.1.2/external/libcxx/support/win32/locale_win32.h>
 #elif defined(_AIX)
 # include <museum/7.1.2/external/libcxx/support/ibm/xlocale.h>
@@ -39,30 +39,30 @@
 # include <museum/7.1.2/bionic/libc/xlocale.h>
 #endif // __GLIBC__ || __APPLE__ || __FreeBSD__ || __sun__ || __EMSCRIPTEN__ || __IBMCPP__
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
+#if !defined(_MUSEUM_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #pragma GCC system_header
 #endif
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+_MUSEUM_LIBCPP_BEGIN_NAMESPACE_STD
 
-class _LIBCPP_TYPE_VIS locale;
+class _MUSEUM_LIBCPP_TYPE_VIS locale;
 
 template <class _Facet>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 has_facet(const locale&) _NOEXCEPT;
 
 template <class _Facet>
-_LIBCPP_INLINE_VISIBILITY
+_MUSEUM_LIBCPP_INLINE_VISIBILITY
 const _Facet&
 use_facet(const locale&);
 
-class _LIBCPP_TYPE_VIS locale
+class _MUSEUM_LIBCPP_TYPE_VIS locale
 {
 public:
     // types:
-    class _LIBCPP_TYPE_VIS facet;
-    class _LIBCPP_TYPE_VIS id;
+    class _MUSEUM_LIBCPP_TYPE_VIS facet;
+    class _MUSEUM_LIBCPP_TYPE_VIS id;
 
     typedef int category;
     static const category // values assigned here are for exposition only
@@ -83,7 +83,7 @@ public:
     locale(const locale&, const char*, category);
     locale(const locale&, const string&, category);
     template <class _Facet>
-        _LIBCPP_INLINE_VISIBILITY locale(const locale&, _Facet*);
+        _MUSEUM_LIBCPP_INLINE_VISIBILITY locale(const locale&, _Facet*);
     locale(const locale&, const locale&, category);
 
     ~locale();
@@ -117,11 +117,11 @@ private:
     template <class _Facet> friend const _Facet& use_facet(const locale&);
 };
 
-class _LIBCPP_TYPE_VIS locale::facet
+class _MUSEUM_LIBCPP_TYPE_VIS locale::facet
     : public __shared_count
 {
 protected:
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit facet(size_t __refs = 0)
         : __shared_count(static_cast<long>(__refs)-1) {}
 
@@ -133,14 +133,14 @@ private:
     virtual void __on_zero_shared() _NOEXCEPT;
 };
 
-class _LIBCPP_TYPE_VIS locale::id
+class _MUSEUM_LIBCPP_TYPE_VIS locale::id
 {
     once_flag      __flag_;
     int32_t        __id_;
 
     static int32_t __next_id;
 public:
-    _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR id() :__id_(0) {}
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_CONSTEXPR id() :__id_(0) {}
 private:
     void __init();
     void operator=(const id&); // = delete;
@@ -153,7 +153,7 @@ public:  // only needed for tests
 };
 
 template <class _Facet>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 locale::locale(const locale& __other, _Facet* __f)
 {
     __install_ctor(__other, __f, __f ? __f->id.__get() : 0);
@@ -163,15 +163,15 @@ template <class _Facet>
 locale
 locale::combine(const locale& __other) const
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
-    if (!_VSTD::has_facet<_Facet>(__other))
+#ifndef _MUSEUM_LIBCPP_NO_EXCEPTIONS
+    if (!_MUSEUM_VSTD::has_facet<_Facet>(__other))
         throw runtime_error("locale::combine: locale missing facet");
-#endif  // _LIBCPP_NO_EXCEPTIONS
-    return locale(*this, &const_cast<_Facet&>(_VSTD::use_facet<_Facet>(__other)));
+#endif  // _MUSEUM_LIBCPP_NO_EXCEPTIONS
+    return locale(*this, &const_cast<_Facet&>(_MUSEUM_VSTD::use_facet<_Facet>(__other)));
 }
 
 template <class _Facet>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 has_facet(const locale& __l)  _NOEXCEPT
 {
@@ -179,7 +179,7 @@ has_facet(const locale& __l)  _NOEXCEPT
 }
 
 template <class _Facet>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 const _Facet&
 use_facet(const locale& __l)
 {
@@ -189,31 +189,31 @@ use_facet(const locale& __l)
 // template <class _CharT> class collate;
 
 template <class _CharT>
-class _LIBCPP_TYPE_VIS_ONLY collate
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY collate
     : public locale::facet
 {
 public:
     typedef _CharT char_type;
     typedef basic_string<char_type> string_type;
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     explicit collate(size_t __refs = 0)
         : locale::facet(__refs) {}
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     int compare(const char_type* __lo1, const char_type* __hi1,
                 const char_type* __lo2, const char_type* __hi2) const
     {
         return do_compare(__lo1, __hi1, __lo2, __hi2);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     string_type transform(const char_type* __lo, const char_type* __hi) const
     {
         return do_transform(__lo, __hi);
     }
 
-    _LIBCPP_INLINE_VISIBILITY
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     long hash(const char_type* __lo, const char_type* __hi) const
     {
         return do_hash(__lo, __hi);
@@ -268,15 +268,15 @@ collate<_CharT>::do_hash(const char_type* __lo, const char_type* __hi) const
     return static_cast<long>(__h);
 }
 
-_LIBCPP_EXTERN_TEMPLATE2(class _LIBCPP_TYPE_VIS collate<char>)
-_LIBCPP_EXTERN_TEMPLATE2(class _LIBCPP_TYPE_VIS collate<wchar_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_TYPE_VIS collate<char>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_TYPE_VIS collate<wchar_t>)
 
 // template <class CharT> class collate_byname;
 
-template <class _CharT> class _LIBCPP_TYPE_VIS_ONLY collate_byname;
+template <class _CharT> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY collate_byname;
 
 template <>
-class _LIBCPP_TYPE_VIS collate_byname<char>
+class _MUSEUM_LIBCPP_TYPE_VIS collate_byname<char>
     : public collate<char>
 {
     locale_t __l;
@@ -295,7 +295,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS collate_byname<wchar_t>
+class _MUSEUM_LIBCPP_TYPE_VIS collate_byname<wchar_t>
     : public collate<wchar_t>
 {
     locale_t __l;
@@ -319,14 +319,14 @@ bool
 locale::operator()(const basic_string<_CharT, _Traits, _Allocator>& __x,
                    const basic_string<_CharT, _Traits, _Allocator>& __y) const
 {
-    return _VSTD::use_facet<_VSTD::collate<_CharT> >(*this).compare(
+    return _MUSEUM_VSTD::use_facet<_MUSEUM_VSTD::collate<_CharT> >(*this).compare(
                                        __x.data(), __x.data() + __x.size(),
                                        __y.data(), __y.data() + __y.size()) < 0;
 }
 
 // template <class charT> class ctype
 
-class _LIBCPP_TYPE_VIS ctype_base
+class _MUSEUM_LIBCPP_TYPE_VIS ctype_base
 {
 public:
 #ifdef __GLIBC__
@@ -353,7 +353,7 @@ public:
     static const mask punct  = _PUNCT;
     static const mask xdigit = _HEX;
     static const mask blank  = _BLANK;
-# define _LIBCPP_CTYPE_MASK_IS_COMPOSITE_PRINT
+# define _MUSEUM_LIBCPP_CTYPE_MASK_IS_COMPOSITE_PRINT
 #elif defined(__APPLE__) || defined(__FreeBSD__) || defined(__EMSCRIPTEN__) || defined(__NetBSD__)
 # ifdef __APPLE__
     typedef __uint32_t mask;
@@ -402,9 +402,9 @@ public:
     static const mask punct  = _P;
     static const mask xdigit = _X | _N;
     static const mask blank  = _B;
-# define _LIBCPP_CTYPE_MASK_IS_COMPOSITE_PRINT
-# define _LIBCPP_CTYPE_MASK_IS_COMPOSITE_ALPHA
-# define _LIBCPP_CTYPE_MASK_IS_COMPOSITE_XDIGIT
+# define _MUSEUM_LIBCPP_CTYPE_MASK_IS_COMPOSITE_PRINT
+# define _MUSEUM_LIBCPP_CTYPE_MASK_IS_COMPOSITE_ALPHA
+# define _MUSEUM_LIBCPP_CTYPE_MASK_IS_COMPOSITE_XDIGIT
 #else
     typedef unsigned long mask;
     static const mask space  = 1<<0;
@@ -421,90 +421,90 @@ public:
     static const mask alnum  = alpha | digit;
     static const mask graph  = alnum | punct;
 
-    _LIBCPP_ALWAYS_INLINE ctype_base() {}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE ctype_base() {}
 };
 
-template <class _CharT> class _LIBCPP_TYPE_VIS_ONLY ctype;
+template <class _CharT> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY ctype;
 
 template <>
-class _LIBCPP_TYPE_VIS ctype<wchar_t>
+class _MUSEUM_LIBCPP_TYPE_VIS ctype<wchar_t>
     : public locale::facet,
       public ctype_base
 {
 public:
     typedef wchar_t char_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit ctype(size_t __refs = 0)
         : locale::facet(__refs) {}
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     bool is(mask __m, char_type __c) const
     {
         return do_is(__m, __c);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* is(const char_type* __low, const char_type* __high, mask* __vec) const
     {
         return do_is(__low, __high, __vec);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* scan_is(mask __m, const char_type* __low, const char_type* __high) const
     {
         return do_scan_is(__m, __low, __high);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* scan_not(mask __m, const char_type* __low, const char_type* __high) const
     {
         return do_scan_not(__m, __low, __high);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char_type toupper(char_type __c) const
     {
         return do_toupper(__c);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* toupper(char_type* __low, const char_type* __high) const
     {
         return do_toupper(__low, __high);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char_type tolower(char_type __c) const
     {
         return do_tolower(__c);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* tolower(char_type* __low, const char_type* __high) const
     {
         return do_tolower(__low, __high);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char_type widen(char __c) const
     {
         return do_widen(__c);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char* widen(const char* __low, const char* __high, char_type* __to) const
     {
         return do_widen(__low, __high, __to);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char narrow(char_type __c, char __dfault) const
     {
         return do_narrow(__c, __dfault);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* narrow(const char_type* __low, const char_type* __high, char __dfault, char* __to) const
     {
         return do_narrow(__low, __high, __dfault, __to);
@@ -529,7 +529,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS ctype<char>
+class _MUSEUM_LIBCPP_TYPE_VIS ctype<char>
     : public locale::facet, public ctype_base
 {
     const mask* __tab_;
@@ -539,13 +539,13 @@ public:
 
     explicit ctype(const mask* __tab = 0, bool __del = false, size_t __refs = 0);
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     bool is(mask __m, char_type __c) const
     {
         return isascii(__c) ? (__tab_[static_cast<int>(__c)] & __m) !=0 : false;
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* is(const char_type* __low, const char_type* __high, mask* __vec) const
     {
         for (; __low != __high; ++__low, ++__vec)
@@ -553,7 +553,7 @@ public:
         return __low;
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* scan_is (mask __m, const char_type* __low, const char_type* __high) const
     {
         for (; __low != __high; ++__low)
@@ -562,7 +562,7 @@ public:
         return __low;
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* scan_not(mask __m, const char_type* __low, const char_type* __high) const
     {
         for (; __low != __high; ++__low)
@@ -571,49 +571,49 @@ public:
         return __low;
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char_type toupper(char_type __c) const
     {
         return do_toupper(__c);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* toupper(char_type* __low, const char_type* __high) const
     {
         return do_toupper(__low, __high);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char_type tolower(char_type __c) const
     {
         return do_tolower(__c);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char_type* tolower(char_type* __low, const char_type* __high) const
     {
         return do_tolower(__low, __high);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char_type widen(char __c) const
     {
         return do_widen(__c);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char* widen(const char* __low, const char* __high, char_type* __to) const
     {
         return do_widen(__low, __high, __to);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     char narrow(char_type __c, char __dfault) const
     {
         return do_narrow(__c, __dfault);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     const char* narrow(const char_type* __low, const char_type* __high, char __dfault, char* __to) const
     {
         return do_narrow(__low, __high, __dfault, __to);
@@ -626,7 +626,7 @@ public:
 #else
     static const size_t table_size = 256;  // FIXME: Don't hardcode this.
 #endif
-    _LIBCPP_ALWAYS_INLINE const mask* table() const  _NOEXCEPT {return __tab_;}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE const mask* table() const  _NOEXCEPT {return __tab_;}
     static const mask* classic_table()  _NOEXCEPT;
 #if defined(__GLIBC__) || defined(__EMSCRIPTEN__)
     static const int* __classic_upper_table() _NOEXCEPT;
@@ -651,10 +651,10 @@ protected:
 
 // template <class CharT> class ctype_byname;
 
-template <class _CharT> class _LIBCPP_TYPE_VIS_ONLY ctype_byname;
+template <class _CharT> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY ctype_byname;
 
 template <>
-class _LIBCPP_TYPE_VIS ctype_byname<char>
+class _MUSEUM_LIBCPP_TYPE_VIS ctype_byname<char>
     : public ctype<char>
 {
     locale_t __l;
@@ -672,7 +672,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS ctype_byname<wchar_t>
+class _MUSEUM_LIBCPP_TYPE_VIS ctype_byname<wchar_t>
     : public ctype<wchar_t>
 {
     locale_t __l;
@@ -698,7 +698,7 @@ protected:
 };
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isspace(_CharT __c, const locale& __loc)
 {
@@ -706,7 +706,7 @@ isspace(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isprint(_CharT __c, const locale& __loc)
 {
@@ -714,7 +714,7 @@ isprint(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 iscntrl(_CharT __c, const locale& __loc)
 {
@@ -722,7 +722,7 @@ iscntrl(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isupper(_CharT __c, const locale& __loc)
 {
@@ -730,7 +730,7 @@ isupper(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 islower(_CharT __c, const locale& __loc)
 {
@@ -738,7 +738,7 @@ islower(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isalpha(_CharT __c, const locale& __loc)
 {
@@ -746,7 +746,7 @@ isalpha(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isdigit(_CharT __c, const locale& __loc)
 {
@@ -754,7 +754,7 @@ isdigit(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 ispunct(_CharT __c, const locale& __loc)
 {
@@ -762,7 +762,7 @@ ispunct(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isxdigit(_CharT __c, const locale& __loc)
 {
@@ -770,7 +770,7 @@ isxdigit(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isalnum(_CharT __c, const locale& __loc)
 {
@@ -778,7 +778,7 @@ isalnum(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 bool
 isgraph(_CharT __c, const locale& __loc)
 {
@@ -786,7 +786,7 @@ isgraph(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _CharT
 toupper(_CharT __c, const locale& __loc)
 {
@@ -794,7 +794,7 @@ toupper(_CharT __c, const locale& __loc)
 }
 
 template <class _CharT>
-inline _LIBCPP_INLINE_VISIBILITY
+inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 _CharT
 tolower(_CharT __c, const locale& __loc)
 {
@@ -803,21 +803,21 @@ tolower(_CharT __c, const locale& __loc)
 
 // codecvt_base
 
-class _LIBCPP_TYPE_VIS codecvt_base
+class _MUSEUM_LIBCPP_TYPE_VIS codecvt_base
 {
 public:
-    _LIBCPP_ALWAYS_INLINE codecvt_base() {}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE codecvt_base() {}
     enum result {ok, partial, error, noconv};
 };
 
 // template <class internT, class externT, class stateT> class codecvt;
 
-template <class _InternT, class _ExternT, class _StateT> class _LIBCPP_TYPE_VIS_ONLY codecvt;
+template <class _InternT, class _ExternT, class _StateT> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY codecvt;
 
 // template <> class codecvt<char, char, mbstate_t>
 
 template <>
-class _LIBCPP_TYPE_VIS codecvt<char, char, mbstate_t>
+class _MUSEUM_LIBCPP_TYPE_VIS codecvt<char, char, mbstate_t>
     : public locale::facet,
       public codecvt_base
 {
@@ -826,11 +826,11 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt(size_t __refs = 0)
         : locale::facet(__refs) {}
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result out(state_type& __st,
                const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
                extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -838,14 +838,14 @@ public:
         return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result unshift(state_type& __st,
                    extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
     {
         return do_unshift(__st, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result in(state_type& __st,
               const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
               intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -853,25 +853,25 @@ public:
         return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int encoding() const  _NOEXCEPT
     {
         return do_encoding();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     bool always_noconv() const  _NOEXCEPT
     {
         return do_always_noconv();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
     {
         return do_length(__st, __frm, __end, __mx);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int max_length() const  _NOEXCEPT
     {
         return do_max_length();
@@ -880,7 +880,7 @@ public:
     static locale::id& get_id();
 
 protected:
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt(const char*, size_t __refs = 0)
         : locale::facet(__refs) {}
 
@@ -903,7 +903,7 @@ protected:
 // template <> class codecvt<wchar_t, char, mbstate_t>
 
 template <>
-class _LIBCPP_TYPE_VIS codecvt<wchar_t, char, mbstate_t>
+class _MUSEUM_LIBCPP_TYPE_VIS codecvt<wchar_t, char, mbstate_t>
     : public locale::facet,
       public codecvt_base
 {
@@ -915,7 +915,7 @@ public:
 
     explicit codecvt(size_t __refs = 0);
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result out(state_type& __st,
                const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
                extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -923,14 +923,14 @@ public:
         return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result unshift(state_type& __st,
                    extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
     {
         return do_unshift(__st, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result in(state_type& __st,
               const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
               intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -938,25 +938,25 @@ public:
         return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int encoding() const  _NOEXCEPT
     {
         return do_encoding();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     bool always_noconv() const  _NOEXCEPT
     {
         return do_always_noconv();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
     {
         return do_length(__st, __frm, __end, __mx);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int max_length() const  _NOEXCEPT
     {
         return do_max_length();
@@ -986,7 +986,7 @@ protected:
 // template <> class codecvt<char16_t, char, mbstate_t>
 
 template <>
-class _LIBCPP_TYPE_VIS codecvt<char16_t, char, mbstate_t>
+class _MUSEUM_LIBCPP_TYPE_VIS codecvt<char16_t, char, mbstate_t>
     : public locale::facet,
       public codecvt_base
 {
@@ -995,11 +995,11 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt(size_t __refs = 0)
         : locale::facet(__refs) {}
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result out(state_type& __st,
                const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
                extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -1007,14 +1007,14 @@ public:
         return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result unshift(state_type& __st,
                    extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
     {
         return do_unshift(__st, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result in(state_type& __st,
               const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
               intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -1022,25 +1022,25 @@ public:
         return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int encoding() const  _NOEXCEPT
     {
         return do_encoding();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     bool always_noconv() const  _NOEXCEPT
     {
         return do_always_noconv();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
     {
         return do_length(__st, __frm, __end, __mx);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int max_length() const  _NOEXCEPT
     {
         return do_max_length();
@@ -1049,7 +1049,7 @@ public:
     static locale::id& get_id();
 
 protected:
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt(const char*, size_t __refs = 0)
         : locale::facet(__refs) {}
 
@@ -1072,7 +1072,7 @@ protected:
 // template <> class codecvt<char32_t, char, mbstate_t>
 
 template <>
-class _LIBCPP_TYPE_VIS codecvt<char32_t, char, mbstate_t>
+class _MUSEUM_LIBCPP_TYPE_VIS codecvt<char32_t, char, mbstate_t>
     : public locale::facet,
       public codecvt_base
 {
@@ -1081,11 +1081,11 @@ public:
     typedef char      extern_type;
     typedef mbstate_t state_type;
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt(size_t __refs = 0)
         : locale::facet(__refs) {}
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result out(state_type& __st,
                const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
                extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -1093,14 +1093,14 @@ public:
         return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result unshift(state_type& __st,
                    extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
     {
         return do_unshift(__st, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     result in(state_type& __st,
               const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
               intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -1108,25 +1108,25 @@ public:
         return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int encoding() const  _NOEXCEPT
     {
         return do_encoding();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     bool always_noconv() const  _NOEXCEPT
     {
         return do_always_noconv();
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
     {
         return do_length(__st, __frm, __end, __mx);
     }
 
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     int max_length() const  _NOEXCEPT
     {
         return do_max_length();
@@ -1135,7 +1135,7 @@ public:
     static locale::id& get_id();
 
 protected:
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt(const char*, size_t __refs = 0)
         : locale::facet(__refs) {}
 
@@ -1158,14 +1158,14 @@ protected:
 // template <class _InternT, class _ExternT, class _StateT> class codecvt_byname
 
 template <class _InternT, class _ExternT, class _StateT>
-class _LIBCPP_TYPE_VIS_ONLY codecvt_byname
+class _MUSEUM_LIBCPP_TYPE_VIS_ONLY codecvt_byname
     : public codecvt<_InternT, _ExternT, _StateT>
 {
 public:
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt_byname(const char* __nm, size_t __refs = 0)
         : codecvt<_InternT, _ExternT, _StateT>(__nm, __refs) {}
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     explicit codecvt_byname(const string& __nm, size_t __refs = 0)
         : codecvt<_InternT, _ExternT, _StateT>(__nm.c_str(), __refs) {}
 protected:
@@ -1177,12 +1177,12 @@ codecvt_byname<_InternT, _ExternT, _StateT>::~codecvt_byname()
 {
 }
 
-_LIBCPP_EXTERN_TEMPLATE2(class _LIBCPP_TYPE_VIS codecvt_byname<char, char, mbstate_t>)
-_LIBCPP_EXTERN_TEMPLATE2(class _LIBCPP_TYPE_VIS codecvt_byname<wchar_t, char, mbstate_t>)
-_LIBCPP_EXTERN_TEMPLATE2(class _LIBCPP_TYPE_VIS codecvt_byname<char16_t, char, mbstate_t>)
-_LIBCPP_EXTERN_TEMPLATE2(class _LIBCPP_TYPE_VIS codecvt_byname<char32_t, char, mbstate_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_TYPE_VIS codecvt_byname<char, char, mbstate_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_TYPE_VIS codecvt_byname<wchar_t, char, mbstate_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_TYPE_VIS codecvt_byname<char16_t, char, mbstate_t>)
+_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_TYPE_VIS codecvt_byname<char32_t, char, mbstate_t>)
 
-_LIBCPP_FUNC_VIS void __throw_runtime_error(const char*);
+_MUSEUM_LIBCPP_FUNC_VIS void __throw_runtime_error(const char*);
 
 template <size_t _Np>
 struct __narrow_to_utf8
@@ -1196,7 +1196,7 @@ template <>
 struct __narrow_to_utf8<8>
 {
     template <class _OutputIterator, class _CharT>
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     _OutputIterator
     operator()(_OutputIterator __s, const _CharT* __wb, const _CharT* __we) const
     {
@@ -1210,13 +1210,13 @@ template <>
 struct __narrow_to_utf8<16>
     : public codecvt<char16_t, char, mbstate_t>
 {
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     __narrow_to_utf8() : codecvt<char16_t, char, mbstate_t>(1) {}
 
     ~__narrow_to_utf8();
 
     template <class _OutputIterator, class _CharT>
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     _OutputIterator
     operator()(_OutputIterator __s, const _CharT* __wb, const _CharT* __we) const
     {
@@ -1244,13 +1244,13 @@ template <>
 struct __narrow_to_utf8<32>
     : public codecvt<char32_t, char, mbstate_t>
 {
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     __narrow_to_utf8() : codecvt<char32_t, char, mbstate_t>(1) {}
 
     ~__narrow_to_utf8();
 
     template <class _OutputIterator, class _CharT>
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     _OutputIterator
     operator()(_OutputIterator __s, const _CharT* __wb, const _CharT* __we) const
     {
@@ -1286,7 +1286,7 @@ template <>
 struct __widen_from_utf8<8>
 {
     template <class _OutputIterator>
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     _OutputIterator
     operator()(_OutputIterator __s, const char* __nb, const char* __ne) const
     {
@@ -1300,13 +1300,13 @@ template <>
 struct __widen_from_utf8<16>
     : public codecvt<char16_t, char, mbstate_t>
 {
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     __widen_from_utf8() : codecvt<char16_t, char, mbstate_t>(1) {}
 
     ~__widen_from_utf8();
 
     template <class _OutputIterator>
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     _OutputIterator
     operator()(_OutputIterator __s, const char* __nb, const char* __ne) const
     {
@@ -1334,13 +1334,13 @@ template <>
 struct __widen_from_utf8<32>
     : public codecvt<char32_t, char, mbstate_t>
 {
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     __widen_from_utf8() : codecvt<char32_t, char, mbstate_t>(1) {}
 
     ~__widen_from_utf8();
 
     template <class _OutputIterator>
-    _LIBCPP_ALWAYS_INLINE
+    _MUSEUM_LIBCPP_ALWAYS_INLINE
     _OutputIterator
     operator()(_OutputIterator __s, const char* __nb, const char* __ne) const
     {
@@ -1366,10 +1366,10 @@ struct __widen_from_utf8<32>
 
 // template <class charT> class numpunct
 
-template <class _CharT> class _LIBCPP_TYPE_VIS_ONLY numpunct;
+template <class _CharT> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY numpunct;
 
 template <>
-class _LIBCPP_TYPE_VIS numpunct<char>
+class _MUSEUM_LIBCPP_TYPE_VIS numpunct<char>
     : public locale::facet
 {
 public:
@@ -1378,11 +1378,11 @@ public:
 
     explicit numpunct(size_t __refs = 0);
 
-    _LIBCPP_ALWAYS_INLINE char_type decimal_point() const {return do_decimal_point();}
-    _LIBCPP_ALWAYS_INLINE char_type thousands_sep() const {return do_thousands_sep();}
-    _LIBCPP_ALWAYS_INLINE string grouping() const         {return do_grouping();}
-    _LIBCPP_ALWAYS_INLINE string_type truename() const    {return do_truename();}
-    _LIBCPP_ALWAYS_INLINE string_type falsename() const   {return do_falsename();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type decimal_point() const {return do_decimal_point();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type thousands_sep() const {return do_thousands_sep();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE string grouping() const         {return do_grouping();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE string_type truename() const    {return do_truename();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE string_type falsename() const   {return do_falsename();}
 
     static locale::id& get_id();
 
@@ -1400,7 +1400,7 @@ protected:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS numpunct<wchar_t>
+class _MUSEUM_LIBCPP_TYPE_VIS numpunct<wchar_t>
     : public locale::facet
 {
 public:
@@ -1409,11 +1409,11 @@ public:
 
     explicit numpunct(size_t __refs = 0);
 
-    _LIBCPP_ALWAYS_INLINE char_type decimal_point() const {return do_decimal_point();}
-    _LIBCPP_ALWAYS_INLINE char_type thousands_sep() const {return do_thousands_sep();}
-    _LIBCPP_ALWAYS_INLINE string grouping() const         {return do_grouping();}
-    _LIBCPP_ALWAYS_INLINE string_type truename() const    {return do_truename();}
-    _LIBCPP_ALWAYS_INLINE string_type falsename() const   {return do_falsename();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type decimal_point() const {return do_decimal_point();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE char_type thousands_sep() const {return do_thousands_sep();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE string grouping() const         {return do_grouping();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE string_type truename() const    {return do_truename();}
+    _MUSEUM_LIBCPP_ALWAYS_INLINE string_type falsename() const   {return do_falsename();}
 
     static locale::id& get_id();
 
@@ -1432,10 +1432,10 @@ protected:
 
 // template <class charT> class numpunct_byname
 
-template <class _CharT> class _LIBCPP_TYPE_VIS_ONLY numpunct_byname;
+template <class _CharT> class _MUSEUM_LIBCPP_TYPE_VIS_ONLY numpunct_byname;
 
 template <>
-class _LIBCPP_TYPE_VIS numpunct_byname<char>
+class _MUSEUM_LIBCPP_TYPE_VIS numpunct_byname<char>
 : public numpunct<char>
 {
 public:
@@ -1453,7 +1453,7 @@ private:
 };
 
 template <>
-class _LIBCPP_TYPE_VIS numpunct_byname<wchar_t>
+class _MUSEUM_LIBCPP_TYPE_VIS numpunct_byname<wchar_t>
 : public numpunct<wchar_t>
 {
 public:
@@ -1470,6 +1470,6 @@ private:
     void __init(const char*);
 };
 
-_LIBCPP_END_NAMESPACE_STD
+_MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif  // _LIBCPP___LOCALE
+#endif  // _MUSEUM_LIBCPP___LOCALE
