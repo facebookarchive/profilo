@@ -1,7 +1,7 @@
 """Wrapper for a Museum import library."""
 
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-load("//build_defs:fb_xplat_cxx.bzl", "fb_xplat_cxx_library")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
 
 def museum_library(
