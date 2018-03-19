@@ -8,10 +8,10 @@
 <p>Profilo comes with a Python library which can parse traces into a semantic trace object. This trace object can then be traversed and examined to extract meaningful metrics.</p>
 <h2><a class="anchor" aria-hidden="true" id="trace-model"></a><a href="#trace-model" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Trace model</h2>
 <p>The semantic trace objects follow a hierarchy (or trace model):</p>
-<p>Traces consist of execution units.</p>
-<p>Execution units consist of blocks. Execution units are usually individual threads in Profilo traces.</p>
-<p>Blocks consist of points. A block always has a start and end point. Points within a block can share timestamps but are uniquely identifiable.</p>
-<p>Edges can indicate change of control flow between any two points. There's an implicit edge between the start and end points of a block, as well as between the boundary points of consecutive blocks in an execution unit. All other edges must be explicitly created.</p>
+<p><em>Traces</em> consist of execution units.</p>
+<p><em>Execution units</em> consist of <em>blocks</em>. Execution units are usually individual threads in Profilo traces.</p>
+<p><em>Blocks</em> consist of <em>points</em>. A block always has a start and end point. Points within a block can share timestamps but are uniquely identifiable.</p>
+<p><em>Edges</em> can indicate change of control flow between any two points. There's an implicit edge between the start and end points of a block, as well as between the boundary points of consecutive blocks in an execution unit. All other edges must be explicitly created.</p>
 <p>All of the above objects can have &quot;annotations&quot; (props in API) attached to them. Annotations are key-value pairs with very loose typing.</p>
 <pre><code class="hljs"><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">Execution</span> <span class="hljs-comment">Unit</span> <span class="hljs-comment">1</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>
 
@@ -49,20 +49,31 @@
 <h2><a class="anchor" aria-hidden="true" id="workflow"></a><a href="#workflow" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Workflow</h2>
 <p>The complete flow for tracing-downloading-analyzing is as follows:</p>
 <ol>
+<li>Ensure you have a environment which contains the dependencies listed in <code>python/requirements.txt</code>. For example, you can use <a href="https://github.com/pypa/virtualenv">virtualenv</a> like so:</li>
+</ol>
+<pre><code class="hljs">virtualenv -<span class="hljs-selector-tag">p</span> python3 env
+source env/bin/activate
+pip3 install -r requirements<span class="hljs-selector-class">.txt</span>
+</code></pre>
+<ol>
 <li><p>Start and stop a trace in the app. (You can use the sample app to play with traces)</p></li>
 <li><p>Download the trace on a host. This can be done in a few ways:</p>
 <p>a. Navigate to python/ and run
-<code>python -m profilo.profilo pull_last_trace &lt;your_application_package&gt;</code></p>
+<code>python3 -m profilo.profilo pull_last_trace &lt;your_application_package&gt;</code></p>
 <p>In this case:</p>
-<p><code>python -m profilo.profilo pull_last_trace com.facebook.profilo.sample</code></p>
-<p>b. Navigate to python/profilo/device, start an interactive Python shell, and
+<p><code>python3 -m profilo.profilo pull_last_trace com.facebook.profilo.sample</code></p>
+<p>b. Navigate to <code>python/profilo/device</code>, start an interactive Python shell, and
 use the &quot;device&quot; module directly:</p>
-<pre><code class="hljs">  <span class="hljs-keyword">import</span> device
-  device.pull_last_trace(<span class="hljs-symbol">'com</span>.example.<span class="hljs-keyword">package</span>.name')
-</code></pre>
-<p>Both approaches will result in a file with the same name as the trace to be created in the current directory.</p></li>
-<li><p>Analyze the data. A sample demo script is provided in
-<code>python/profilo/workflow_demo.py</code>. It contains logic to perform analysis on stacks, blocks, and system counters.</p></li>
+<pre><code class="hljs"></code></pre></li>
+</ol>
+<p>import device
+device.pull_last_trace('com.example.package.name')
+```</p>
+<p>Both approaches will result in a file with the same name as the trace to be created in the current directory.</p>
+<ol start="3">
+<li><p>Analyze the data. A sample demo script is provided in <code>python/profilo/workflow_demo.py</code>.</p>
+<p>You can run from within the <code>python/</code> folder via <code>python3 -m profilo.workflow_demo --help</code>. Don't forget to activate your virtualenv first, if you are using one.</p>
+<p>The workflow demo contains logic to perform analysis on stacks, blocks, and system counters.</p></li>
 </ol>
 <p>a. Stacks:
 Parses the sampled stacks from a trace file into a format similar to that of DTrace. This allows for visualizations such as <a href="https://github.com/brendangregg/FlameGraph">FlameGraph</a>.</p>
