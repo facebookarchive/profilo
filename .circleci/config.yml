@@ -52,4 +52,4 @@ workflows:
   build_and_deploy:
     jobs:
       - deploy-website
-    filters: *filter-only-master
+        filters: *filter-only-master
