@@ -34,4 +34,8 @@ dso const& libnativehelper();
 
 dso const& libm();
 
+dso const& libhwui();
+
+dso const& libutils();
+
 } // namespace facebook

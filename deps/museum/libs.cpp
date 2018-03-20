@@ -45,4 +45,13 @@ dso const& libm() {
   return libm;
 }
 
+dso const& libhwui() {
+  static dso const libhwui("libhwui.so");
+  return libhwui;
+}
+dso const& libutils() {
+  static dso const libutils("libutils.so");
+  return libutils;
+}
+
 } // namespace facebook
