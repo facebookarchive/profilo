@@ -152,6 +152,8 @@ signal_always_fatal_p(int signum)
   switch (signum) {
     case SIGSEGV:
     case SIGBUS:
+    case SIGABRT:
+    case SIGILL:
       return true;
     default:
       return false;
