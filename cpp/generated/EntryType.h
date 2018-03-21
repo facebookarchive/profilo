@@ -1,5 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<e540fd69405eb2c92f9a2f08938d184a>>
+// @generated SignedSource<<b72735f7e8c588660738a9ad39e49c3e>>
 
 #pragma once
 
@@ -94,6 +93,7 @@ enum EntryType {
   PROCESS_LIST = 84,
   IO_START = 85,
   IO_END = 86,
+  CPU_COUNTER = 87,
 };
 
 

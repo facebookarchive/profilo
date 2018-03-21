@@ -113,13 +113,14 @@ ThreadStatInfo::ThreadStatInfo() :
     cpuTimeMs(),
     state(ThreadState::TS_UNKNOWN),
     majorFaults(),
+    cpuNum(-1),
     highPrecisionCpuTimeMs(),
     waitToRunTimeMs(),
     nrVoluntarySwitches(),
     nrInvoluntarySwitches(),
     iowaitSum(),
     iowaitCount(),
-    availableStatsMask(0xffff) {}
+    availableStatsMask(0) {}
 
 SchedstatInfo::SchedstatInfo() : cpuTimeMs(0), waitToRunTimeMs(0) {}
 
@@ -130,9 +131,25 @@ SchedInfo::SchedInfo()
       iowaitCount(0) {}
 
 TaskStatInfo::TaskStatInfo()
-    : cpuTime(0), state(ThreadState::TS_UNKNOWN), majorFaults(0) {}
+    : cpuTime(0), state(ThreadState::TS_UNKNOWN), majorFaults(0), cpuNum(-1) {}
 
 namespace {
+
+enum StatFileType: int8_t {
+  STAT      = 0,
+  SCHEDSTAT = 1,
+  SCHED     = 2,
+};
+
+static const std::array<int32_t, 3> kFileStats = {
+  /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS | StatType::CPU_NUM,
+  /*SCHEDSTAT*/ StatType::HIGH_PRECISION_CPU_TIME | StatType::WAIT_TO_RUN_TIME,
+  /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
+    StatType::NR_INVOLUNTARY_SWITCHES |
+    StatType::IOWAIT_SUM |
+    StatType::IOWAIT_COUNT,
+};
+
 inline ThreadState convertCharToStateEnum(char stateChar) {
   switch (stateChar) {
     case 'R' : return TS_RUNNING;
@@ -175,7 +192,7 @@ char* skipUntil(char* data, const char* end, char ch) {
   return ++data;
 }
 
-TaskStatInfo parseStatFile(char* data, size_t size) {
+TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   const char* end = (data + size);
 
   data = skipUntil(data, end, ' '); // pid
@@ -217,6 +234,42 @@ TaskStatInfo parseStatFile(char* data, size_t size) {
     throw std::runtime_error("Could not parse stime");
   }
 
+  int cpuNum = 0;
+  if (StatType::CPU_NUM & stats_mask) {
+    data = skipUntil(endptr, end, ' ');
+
+    data = skipUntil(data, end, ' '); // cutime
+    data = skipUntil(data, end, ' '); // cstime
+    data = skipUntil(data, end, ' '); // priority
+    data = skipUntil(data, end, ' '); // nice
+    data = skipUntil(data, end, ' '); // num_threads
+    data = skipUntil(data, end, ' '); // itrealvalue
+    data = skipUntil(data, end, ' '); // starttime
+
+    data = skipUntil(data, end, ' '); // vsize
+    data = skipUntil(data, end, ' '); // rss
+    data = skipUntil(data, end, ' '); // rsslim
+    data = skipUntil(data, end, ' '); // startcode
+    data = skipUntil(data, end, ' '); // endcode
+    data = skipUntil(data, end, ' '); // startstack
+    data = skipUntil(data, end, ' '); // kstkesp
+    data = skipUntil(data, end, ' '); // kstkeip
+
+    data = skipUntil(data, end, ' '); // signal
+    data = skipUntil(data, end, ' '); // blocked
+    data = skipUntil(data, end, ' '); // sigignore
+    data = skipUntil(data, end, ' '); // sigcatch
+    data = skipUntil(data, end, ' '); // wchan
+    data = skipUntil(data, end, ' '); // nswap
+    data = skipUntil(data, end, ' '); // cnswap
+    data = skipUntil(data, end, ' '); // exit_signal
+    endptr = nullptr;
+    cpuNum = strtol(data, &endptr, 10); // processor
+    if (errno == ERANGE || data == endptr || endptr > end) {
+      throw std::runtime_error("Could not parse cpu num");
+    }
+  }
+
   // SYSTEM_CLK_TCK is defined as 100 in linux as is unchanged in android.
   // Therefore there are 10 milli seconds in each clock tick.
   constexpr int kClockTicksMs = 10;
@@ -225,6 +278,7 @@ TaskStatInfo parseStatFile(char* data, size_t size) {
   info.cpuTime = kClockTicksMs * (utime + stime);
   info.state = convertCharToStateEnum(state);
   info.majorFaults = majflt;
+  info.cpuNum = cpuNum;
 
   return info;
 }
@@ -276,7 +330,7 @@ SchedstatInfo parseSchedstatFile(char* data, size_t size) {
 TaskStatFile::TaskStatFile(uint32_t tid)
     : BaseStatFile<TaskStatInfo>(tidToStatPath(tid, "stat")) {}
 
-TaskStatInfo TaskStatFile::doRead(int fd) {
+TaskStatInfo TaskStatFile::doRead(int fd, uint32_t requested_stats_mask) {
   // This is a conservative upper bound, so we can read the
   // entire file in one fread call.
   constexpr size_t kMaxStatFileLength = 512;
@@ -292,13 +346,13 @@ TaskStatInfo TaskStatFile::doRead(int fd) {
 
   // At this point we know that `buffer` must be null terminated because we
   // zeroed the array before we read at most `sizeof(buffer) - 1` from the file.
-  return parseStatFile(buffer, bytes_read);
+  return parseStatFile(buffer, bytes_read, requested_stats_mask);
 }
 
 TaskSchedstatFile::TaskSchedstatFile(uint32_t tid)
     : BaseStatFile<SchedstatInfo>(tidToStatPath(tid, "schedstat")) {}
 
-SchedstatInfo TaskSchedstatFile::doRead(int fd) {
+SchedstatInfo TaskSchedstatFile::doRead(int fd, uint32_t requested_stats_mask) {
   // This is a conservative upper bound, so we can read the
   // entire file in one fread call.
   constexpr size_t kMaxStatFileLength = 128;
@@ -324,7 +378,7 @@ TaskSchedFile::TaskSchedFile(uint32_t tid)
   value_size_(),
   availableStatsMask(0) {}
 
-SchedInfo TaskSchedFile::doRead(int fd) {
+SchedInfo TaskSchedFile::doRead(int fd, uint32_t requested_stats_mask) {
   constexpr size_t kMaxStatLineLength = 4096;
   char buffer[kMaxStatLineLength]{};
   int size = read(fd, buffer, sizeof(buffer) - 1);
@@ -450,11 +504,13 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     if (stat_file_.get() == nullptr) {
       stat_file_ = std::make_unique<TaskStatFile>(tid_);
     }
-    auto statInfo = stat_file_->refresh();
+    auto statInfo = stat_file_->refresh(requested_stats_mask);
     last_info_.cpuTimeMs = statInfo.cpuTime;
     last_info_.state = statInfo.state;
     last_info_.majorFaults = statInfo.majorFaults;
-    availableStatsMask_ |= kFileStats[StatFileType::STAT];
+    last_info_.cpuNum = statInfo.cpuNum;
+    availableStatsMask_ |=
+      kFileStats[StatFileType::STAT] & requested_stats_mask;
   }
   // If /proc/self/<tid>/schedstat is requested, we will try to read it.
   // If we get exception on first read the availableStatFilesMask will be
@@ -465,7 +521,7 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
       schedstat_file_ = std::make_unique<TaskSchedstatFile>(tid_);
     }
     try {
-      auto schedstatInfo = schedstat_file_->refresh();
+      auto schedstatInfo = schedstat_file_->refresh(requested_stats_mask);
       last_info_.waitToRunTimeMs = schedstatInfo.waitToRunTimeMs;
       last_info_.highPrecisionCpuTimeMs = schedstatInfo.cpuTimeMs;
       availableStatsMask_ |= kFileStats[StatFileType::SCHEDSTAT];
@@ -484,7 +540,7 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
       sched_file_ = std::make_unique<TaskSchedFile>(tid_);
     }
     try {
-      auto schedInfo = sched_file_->refresh();
+      auto schedInfo = sched_file_->refresh(requested_stats_mask);
       last_info_.nrVoluntarySwitches = schedInfo.nrVoluntarySwitches;
       last_info_.nrInvoluntarySwitches = schedInfo.nrInvoluntarySwitches;
       last_info_.iowaitSum = schedInfo.iowaitSum;
@@ -556,7 +612,14 @@ void ThreadCache::forThread(
   callback(tid, prevInfo, currInfo);
 }
 
-int32_t ThreadCache::getStatsAvailablilty(int32_t tid) {
+ThreadStatInfo ThreadCache::getRecentStats(int32_t tid) {
+  if (getStatsAvailabililty(tid) == 0) {
+    throw new std::runtime_error("Cache is empty");
+  }
+  return cache_.at(tid).getInfo();
+}
+
+int32_t ThreadCache::getStatsAvailabililty(int32_t tid) {
   int32_t stats_mask = 0;
   if (cache_.find(tid) != cache_.end()) {
       stats_mask = cache_.at(tid).getInfo().availableStatsMask;

@@ -18,6 +18,7 @@
 
 #include <fbjni/fbjni.h>
 #include <util/ProcFs.h>
+#include <util/SysFs.h>
 
 #include <mutex>
 #include <unordered_map>
@@ -44,8 +45,11 @@ class SystemCounterThread : public facebook::jni::HybridClass<SystemCounterThrea
   std::mutex mtx_; // Guards cache_
   util::ThreadCache cache_;
   std::unique_ptr<util::TaskStatFile> processStatFile_;
+  std::unique_ptr<util::CpuFrequencyStats> cpuFrequencyStats_;
+  int32_t extraAvailableCounters_;
 
   void logProcessCounters();
+  void logCpuFrequencyInfo();
 };
 
 } // namespace profilo

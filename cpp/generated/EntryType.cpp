@@ -1,5 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<301f9660d6f7f5dd33cf976b6b7a29b8>>
+// @generated SignedSource<<70aa43dfd3cb64c6364e0dc06efa5e68>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -97,6 +96,7 @@ const char* to_string(EntryType type) {
     case PROCESS_LIST: return "PROCESS_LIST";
     case IO_START: return "IO_START";
     case IO_END: return "IO_END";
+    case CPU_COUNTER: return "CPU_COUNTER";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

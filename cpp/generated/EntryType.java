@@ -1,5 +1,4 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
-// @generated SignedSource<<6d9c73cd423aa26852819839f20c29e3>>
+// @generated SignedSource<<0eb955cc4ec52f3ad830015bc00335a7>>
 
 package com.facebook.profilo.entries;
 
@@ -92,6 +91,7 @@ public class EntryType {
   public static final int PROCESS_LIST = 84;
   public static final int IO_START = 85;
   public static final int IO_END = 86;
+  public static final int CPU_COUNTER = 87;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -181,5 +181,6 @@ public class EntryType {
     "PROCESS_LIST",
     "IO_START",
     "IO_END",
+    "CPU_COUNTER",
   };
 }

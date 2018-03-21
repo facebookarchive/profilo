@@ -143,6 +143,8 @@ NAMES = [
 
     'IO_START',
     'IO_END',
+
+    'CPU_COUNTER',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

@@ -20,6 +20,7 @@
 #include <profilo/log.h>
 #include <fb/log.h>
 #include <util/common.h>
+#include <util/SysFs.h>
 
 #include <sys/sysinfo.h>
 #include <sys/syscall.h>
@@ -28,6 +29,7 @@
 
 using facebook::jni::alias_ref;
 using facebook::jni::local_ref;
+using facebook::profilo::util::StatType;
 
 namespace facebook {
 namespace profilo {
@@ -36,10 +38,14 @@ namespace {
 
 constexpr auto kTidAllThreads = 0;
 
-const auto kAllThreadsStatsMask = util::kFileStats[util::StatFileType::STAT];
-const auto kHighFreqStatsMask =
-  util::kFileStats[util::StatFileType::SCHEDSTAT] |
-    util::kFileStats[util::StatFileType::SCHED];
+const auto kAllThreadsStatsMask =
+    StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS;
+
+const auto kHighFreqStatsMask = StatType::CPU_TIME | StatType::STATE |
+    StatType::MAJOR_FAULTS | StatType::CPU_NUM |
+    StatType::HIGH_PRECISION_CPU_TIME | StatType::WAIT_TO_RUN_TIME |
+    StatType::NR_VOLUNTARY_SWITCHES | StatType::NR_INVOLUNTARY_SWITCHES |
+    StatType::IOWAIT_SUM | StatType::IOWAIT_COUNT;
 
 inline void logCounter(
     Logger& logger,
@@ -55,6 +61,34 @@ inline void logCounter(
     .matchid = 0,
     .extra = value,
   });
+}
+
+inline void logCpuCoreCounter(
+    Logger& logger,
+    int32_t counter_name,
+    int64_t value,
+    int32_t core,
+    int32_t thread_id = threadID()) {
+  logger.write(StandardEntry {
+    .id = 0,
+    .type = entries::CPU_COUNTER,
+    .timestamp = monotonicTime(),
+    .tid = thread_id,
+    .callid = counter_name,
+    .matchid = core,
+    .extra = value,
+  });
+}
+
+inline void logNonMonotonicCounter(
+    int64_t prev_value,
+    int64_t value,
+    int32_t thread_id,
+    int32_t quicklog_id) {
+  if (prev_value == value) {
+    return;
+  }
+  logCounter(Logger::get(), quicklog_id, value, thread_id);
 }
 
 inline void logMonotonicCounter(
@@ -192,51 +226,58 @@ void threadCountersCallback(
   util::ThreadStatInfo& currInfo) {
 
   if (prevInfo.highPrecisionCpuTimeMs != 0 &&
-      (currInfo.availableStatsMask & util::StatType::HIGH_PRECISION_CPU_TIME)) {
+      (currInfo.availableStatsMask & StatType::HIGH_PRECISION_CPU_TIME)) {
     // Don't log the initial value
     logCPUTimeCounter(
         prevInfo.highPrecisionCpuTimeMs, currInfo.highPrecisionCpuTimeMs, tid);
   } else if (
       prevInfo.cpuTimeMs != 0 &&
-      (currInfo.availableStatsMask & util::StatType::CPU_TIME)) {
+      (currInfo.availableStatsMask & StatType::CPU_TIME)) {
     // Don't log the initial value
     logCPUTimeCounter(prevInfo.cpuTimeMs, currInfo.cpuTimeMs, tid);
   }
   if (prevInfo.waitToRunTimeMs != 0 &&
-      (currInfo.availableStatsMask & util::StatType::WAIT_TO_RUN_TIME)) {
+      (currInfo.availableStatsMask & StatType::WAIT_TO_RUN_TIME)) {
     logCPUWaitTimeCounter(
         prevInfo.waitToRunTimeMs, currInfo.waitToRunTimeMs, tid);
   }
-  if (currInfo.availableStatsMask & util::StatType::MAJOR_FAULTS) {
+  if (currInfo.availableStatsMask & StatType::MAJOR_FAULTS) {
     logThreadMajorFaults(prevInfo.majorFaults, currInfo.majorFaults, tid);
   }
-  if (currInfo.availableStatsMask & util::StatType::NR_VOLUNTARY_SWITCHES) {
+  if (currInfo.availableStatsMask & StatType::NR_VOLUNTARY_SWITCHES) {
     logMonotonicCounter(
         prevInfo.nrVoluntarySwitches,
         currInfo.nrVoluntarySwitches,
         tid,
         QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY);
   }
-  if (currInfo.availableStatsMask & util::StatType::NR_INVOLUNTARY_SWITCHES) {
+  if (currInfo.availableStatsMask & StatType::NR_INVOLUNTARY_SWITCHES) {
     logMonotonicCounter(
         prevInfo.nrInvoluntarySwitches,
         currInfo.nrInvoluntarySwitches,
         tid,
         QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY);
   }
-  if (currInfo.availableStatsMask & util::StatType::IOWAIT_SUM) {
+  if (currInfo.availableStatsMask & StatType::IOWAIT_SUM) {
     logMonotonicCounter(
         prevInfo.iowaitSum,
         currInfo.iowaitSum,
         tid,
         QuickLogConstants::IOWAIT_TIME);
   }
-  if (currInfo.availableStatsMask & util::StatType::IOWAIT_COUNT) {
+  if (currInfo.availableStatsMask & StatType::IOWAIT_COUNT) {
     logMonotonicCounter(
         prevInfo.iowaitCount,
         currInfo.iowaitCount,
         tid,
         QuickLogConstants::IOWAIT_COUNT);
+  }
+  if (currInfo.availableStatsMask & StatType::CPU_NUM) {
+    logNonMonotonicCounter(
+        prevInfo.cpuNum,
+        currInfo.cpuNum,
+        tid,
+        QuickLogConstants::THREAD_CPU_NUM);
   }
 }
 } // anonymous
@@ -273,6 +314,48 @@ void SystemCounterThread::logThreadCounters(int tid) {
     cache_.forEach(&threadCountersCallback, kAllThreadsStatsMask);
   } else {
     cache_.forThread(tid, &threadCountersCallback, kHighFreqStatsMask);
+    logCpuFrequencyInfo();
+  }
+}
+
+void SystemCounterThread::logCpuFrequencyInfo() {
+  static bool freqStatsAvailable = true;
+  if (!freqStatsAvailable) {
+    return;
+  }
+  static auto cpu_cores = sysconf(_SC_NPROCESSORS_ONLN);
+  static auto tid = threadID();
+  if (cpu_cores <= 0) {
+    freqStatsAvailable = false;
+    return;
+  }
+  try {
+    auto& logger = Logger::get();
+    if (!cpuFrequencyStats_) {
+      cpuFrequencyStats_.reset(new util::CpuFrequencyStats(cpu_cores));
+      // Log max frequency only once
+      for (int core = 0; core < cpu_cores; ++core) {
+        int64_t maxFrequency = cpuFrequencyStats_->getMaxCpuFrequency(core);
+        logCpuCoreCounter(
+            logger,
+            QuickLogConstants::MAX_CPU_CORE_FREQUENCY,
+            maxFrequency,
+            core,
+            tid);
+      }
+    }
+    for (int core = 0; core < cpu_cores; ++core) {
+      int64_t prev = cpuFrequencyStats_->getCachedCpuFrequency(core);
+      int64_t curr = cpuFrequencyStats_->refresh(core);
+      if (prev == curr) {
+        continue;
+      }
+      logCpuCoreCounter(
+          logger, QuickLogConstants::CPU_CORE_FREQUENCY, curr, core, tid);
+    }
+    extraAvailableCounters_ |= StatType::CPU_FREQ;
+  } catch (std::exception const& e) {
+    freqStatsAvailable = false;
   }
 }
 
@@ -280,7 +363,7 @@ void SystemCounterThread::logTraceAnnotations(int tid) {
   std::lock_guard<std::mutex> lock(mtx_);
   Logger::get().writeTraceAnnotation(
       QuickLogConstants::AVAILABLE_COUNTERS,
-      cache_.getStatsAvailablilty(tid));
+      cache_.getStatsAvailabililty(tid) | extraAvailableCounters_);
 }
 
 // Log CPU time and major faults via /proc/self/stat

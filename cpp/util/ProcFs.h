@@ -32,39 +32,11 @@
 #include <unordered_set>
 #include <vector>
 
+#include <util/BaseStatFile.h>
+
 namespace facebook {
 namespace profilo {
 namespace util {
-
-// May not be needed afterwards
-enum StatFileType: int8_t {
-  STAT      = 1,
-  SCHEDSTAT = 1 << 1,
-  SCHED     = 1 << 2,
-};
-
-enum StatType: int32_t {
-  CPU_TIME                = 1,
-  STATE                   = 1 << 1,
-  MAJOR_FAULTS            = 1 << 2,
-  HIGH_PRECISION_CPU_TIME = 1 << 3,
-  WAIT_TO_RUN_TIME        = 1 << 4,
-  NR_VOLUNTARY_SWITCHES   = 1 << 5,
-  NR_INVOLUNTARY_SWITCHES = 1 << 6,
-  IOWAIT_SUM              = 1 << 7,
-  IOWAIT_COUNT            = 1 << 8,
-};
-
-static const std::array<int32_t, 5> kFileStats = {
-  0,
-  /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS,
-  /*SCHEDSTAT*/ StatType::HIGH_PRECISION_CPU_TIME | StatType::WAIT_TO_RUN_TIME,
-  0,
-  /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
-    StatType::NR_INVOLUNTARY_SWITCHES |
-    StatType::IOWAIT_SUM |
-    StatType::IOWAIT_COUNT
-};
 
 enum ThreadState: int {
   TS_RUNNING = 1,       // R
@@ -87,6 +59,7 @@ struct TaskStatInfo {
   long cpuTime;
   ThreadState state;
   long majorFaults;
+  long cpuNum;
 
   TaskStatInfo();
 };
@@ -99,7 +72,7 @@ struct SchedstatInfo {
   SchedstatInfo();
 };
 
-// Struct for data from /proc/self/task/<pid>/schedstat
+// Struct for data from /proc/self/task/<pid>/sched
 struct SchedInfo {
   uint32_t nrVoluntarySwitches;
   uint32_t nrInvoluntarySwitches;
@@ -115,6 +88,7 @@ struct ThreadStatInfo {
   long cpuTimeMs;
   ThreadState state;
   long majorFaults;
+  long cpuNum;
   // SCHEDSTAT
   long highPrecisionCpuTimeMs;
   long waitToRunTimeMs;
@@ -134,72 +108,6 @@ using stats_callback_fn = std::function<void (
   ThreadStatInfo &, /* previous stats */
   ThreadStatInfo & /* current stats */)>;
 
-template<class StatInfo>
-class BaseStatFile {
-public:
-  explicit BaseStatFile(std::string path):
-    path_(path), fd_(-1), last_info_() {}
-
-  BaseStatFile() = delete;
-  BaseStatFile(const BaseStatFile&) = delete;
-  BaseStatFile& operator=(const BaseStatFile&) = delete;
-
-  BaseStatFile(BaseStatFile&&) = default;
-  BaseStatFile& operator=(BaseStatFile&&) = default;
-  virtual ~BaseStatFile() {
-    if (fd_ != -1) {
-      close(fd_); // silently swallow errors
-      fd_ = -1;
-    }
-  }
-
-  // Returns the last read StatInfo or a default-constructed
-  // one, if never read.
-  StatInfo getInfo() const {
-    return last_info_;
-  }
-
-  // Re-reads the stat file, opening it if necessary.
-  // Can throw std::system_error or std::runtime_error.
-  //
-  // Returns the new StatInfo.
-  StatInfo refresh() {
-    if (fd_ == -1) {
-      fd_ = doOpen(path_);
-    }
-
-    if (lseek(fd_, 0, SEEK_SET)) {
-      throw std::system_error(
-        errno,
-        std::system_category(),
-        "Could not rewind file");
-    }
-
-    last_info_ = doRead(fd_);
-    return last_info_;
-  }
-
-  int doOpen(const std::string& path) {
-    int statFile = open(path.c_str(), O_SYNC|O_RDONLY);
-
-    if (statFile == -1) {
-      throw std::system_error(
-        errno,
-        std::system_category(),
-        "Could not open stat file");
-    }
-    return statFile;
-  }
-
-protected:
-  virtual StatInfo doRead(int fd) = 0;
-
-private:
-  std::string path_;
-  int fd_;
-  StatInfo last_info_;
-};
-
 using ThreadList = std::unordered_set<uint32_t>;
 ThreadList threadListFromProcFs();
 
@@ -215,21 +123,21 @@ public:
   explicit TaskStatFile(uint32_t tid);
   explicit TaskStatFile(std::string path) : BaseStatFile(path) {}
 
-  TaskStatInfo doRead(int fd) override;
+  TaskStatInfo doRead(int fd, uint32_t requested_stats_mask) override;
 };
 
 class TaskSchedstatFile: public BaseStatFile<SchedstatInfo> {
 public:
   explicit TaskSchedstatFile(uint32_t tid);
 
-  SchedstatInfo doRead(int fd) override;
+  SchedstatInfo doRead(int fd, uint32_t requested_stats_mask) override;
 };
 
 class TaskSchedFile: public BaseStatFile<SchedInfo> {
 public:
   explicit TaskSchedFile(uint32_t tid);
 
-  SchedInfo doRead(int fd) override;
+  SchedInfo doRead(int fd, uint32_t requested_stats_mask) override;
 
 private:
   std::vector<std::pair<int32_t, int32_t>> value_offsets_;
@@ -274,7 +182,9 @@ class ThreadCache {
     stats_callback_fn callback,
     uint32_t requested_stats_mask);
 
-  int32_t getStatsAvailablilty(int32_t tid);
+  int32_t getStatsAvailabililty(int32_t tid);
+
+  ThreadStatInfo getRecentStats(int32_t tid);
 
   void clear();
 

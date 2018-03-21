@@ -4,6 +4,8 @@ load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 UTIL_EXPORTED_HEADERS = [
     "common.h",
     "ProcFs.h",
+    "SysFs.h",
+    "BaseStatFile.h",
 ]
 
 fb_xplat_cxx_library(
@@ -11,6 +13,7 @@ fb_xplat_cxx_library(
     srcs = glob([
         "common.cpp",
         "ProcFs.cpp",
+        "SysFs.cpp",
     ]),
     headers = glob(
         ["*.h"],
