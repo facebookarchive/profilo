@@ -16,46 +16,21 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _XT_RATEEST_MATCH_H
-#define _XT_RATEEST_MATCH_H
-#define XT_RATEEST_MATCH_H
-#define XT_RATEEST_MATCH_H_
-#define _UAPI_XT_RATEEST_MATCH_H
-#define _UAPI_XT_RATEEST_MATCH_H_
-#define _XT_RATEEST_MATCH_H_
+#ifndef _XT_RATEEST_TARGET_H
+#define _XT_RATEEST_TARGET_H
+#define XT_RATEEST_TARGET_H
+#define XT_RATEEST_TARGET_H_
+#define _UAPI_XT_RATEEST_TARGET_H
+#define _UAPI_XT_RATEEST_TARGET_H_
+#define _XT_RATEEST_TARGET_H_
 #include <museum/8.0.0/bionic/libc/linux/types.h>
 #include <museum/8.0.0/bionic/libc/linux/if.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-enum xt_rateest_match_flags {
-  XT_RATEEST_MATCH_INVERT = 1 << 0,
-  XT_RATEEST_MATCH_ABS = 1 << 1,
-  XT_RATEEST_MATCH_REL = 1 << 2,
+struct xt_rateest_target_info {
+  char name[IFNAMSIZ];
+  __s8 interval;
+  __u8 ewma_log;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-  XT_RATEEST_MATCH_DELTA = 1 << 3,
-  XT_RATEEST_MATCH_BPS = 1 << 4,
-  XT_RATEEST_MATCH_PPS = 1 << 5,
-};
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-enum xt_rateest_match_mode {
-  XT_RATEEST_MATCH_NONE,
-  XT_RATEEST_MATCH_EQ,
-  XT_RATEEST_MATCH_LT,
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-  XT_RATEEST_MATCH_GT,
-};
-struct xt_rateest_match_info {
-  char name1[IFNAMSIZ];
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-  char name2[IFNAMSIZ];
-  __u16 flags;
-  __u16 mode;
-  __u32 bps1;
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-  __u32 pps1;
-  __u32 bps2;
-  __u32 pps2;
-  struct xt_rateest * est1 __attribute__((aligned(8)));
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-  struct xt_rateest * est2 __attribute__((aligned(8)));
+  struct xt_rateest * est __attribute__((aligned(8)));
 };
 #endif

@@ -16,23 +16,31 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _IPT_ECN_H
-#define _IPT_ECN_H
-#define IPT_ECN_H
-#define IPT_ECN_H_
-#define _UAPI_IPT_ECN_H
-#define _UAPI_IPT_ECN_H_
-#define _IPT_ECN_H_
-#include <museum/8.0.0/bionic/libc/linux/netfilter/xt_ecn.h>
-#define ipt_ecn_info xt_ecn_info
+#ifndef _IPT_ECN_TARGET_H
+#define _IPT_ECN_TARGET_H
+#define IPT_ECN_TARGET_H
+#define IPT_ECN_TARGET_H_
+#define _UAPI_IPT_ECN_TARGET_H
+#define _UAPI_IPT_ECN_TARGET_H_
+#define _IPT_ECN_TARGET_H_
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+#include <museum/8.0.0/bionic/libc/linux/netfilter/xt_DSCP.h>
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-enum {
-  IPT_ECN_IP_MASK = XT_ECN_IP_MASK,
-  IPT_ECN_OP_MATCH_IP = XT_ECN_OP_MATCH_IP,
-  IPT_ECN_OP_MATCH_ECE = XT_ECN_OP_MATCH_ECE,
+#define IPT_ECN_IP_MASK (~XT_DSCP_MASK)
+#define IPT_ECN_OP_SET_IP 0x01
+#define IPT_ECN_OP_SET_ECE 0x10
+#define IPT_ECN_OP_SET_CWR 0x20
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-  IPT_ECN_OP_MATCH_CWR = XT_ECN_OP_MATCH_CWR,
-  IPT_ECN_OP_MATCH_MASK = XT_ECN_OP_MATCH_MASK,
+#define IPT_ECN_OP_MASK 0xce
+struct ipt_ECN_info {
+  __u8 operation;
+  __u8 ip_ect;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+  union {
+    struct {
+      __u8 ece : 1, cwr : 1;
+    } tcp;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+  } proto;
 };
 #endif
-/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

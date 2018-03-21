@@ -16,29 +16,7 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _XT_CONNMARK_H
-#define _XT_CONNMARK_H
-#define XT_CONNMARK_H
-#define XT_CONNMARK_H_
-#define NDK_ANDROID_SUPPORT_XT_CONNMARK_H
-#define NDK_ANDROID_SUPPORT_XT_CONNMARK_H_
-#define NDK_ANDROID_SUPPORT_UAPI_XT_CONNMARK_H
-#define NDK_ANDROID_SUPPORT_UAPI_XT_CONNMARK_H_
-#define _UAPI_XT_CONNMARK_H
-#define _UAPI_XT_CONNMARK_H_
-#define _XT_CONNMARK_H_
-#include <museum/8.1.0/bionic/libc/linux/types.h>
-enum {
-  XT_CONNMARK_SET = 0,
-  XT_CONNMARK_SAVE,
-  XT_CONNMARK_RESTORE
-};
-struct xt_connmark_tginfo1 {
-  __u32 ctmark, ctmask, nfmask;
-  __u8 mode;
-};
-struct xt_connmark_mtinfo1 {
-  __u32 mark, mask;
-  __u8 invert;
-};
+#ifndef _XT_CONNMARK_H_target
+#define _XT_CONNMARK_H_target
+#include <museum/8.1.0/bionic/libc/linux/netfilter/xt_connmark.h>
 #endif

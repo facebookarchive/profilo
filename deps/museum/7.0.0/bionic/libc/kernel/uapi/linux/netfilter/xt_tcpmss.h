@@ -16,18 +16,18 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _XT_TCPMSS_MATCH_H
-#define _XT_TCPMSS_MATCH_H
-#define XT_TCPMSS_MATCH_H
-#define XT_TCPMSS_MATCH_H_
-#define _UAPI_XT_TCPMSS_MATCH_H
-#define _UAPI_XT_TCPMSS_MATCH_H_
-#define _XT_TCPMSS_MATCH_H_
+#ifndef _XT_TCPMSS_H
+#define _XT_TCPMSS_H
+#define XT_TCPMSS_H
+#define XT_TCPMSS_H_
+#define _UAPI_XT_TCPMSS_H
+#define _UAPI_XT_TCPMSS_H_
+#define _XT_TCPMSS_H_
 #include <museum/7.0.0/bionic/libc/linux/types.h>
-struct xt_tcpmss_match_info {
+struct xt_tcpmss_info {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-  __u16 mss_min, mss_max;
-  __u8 invert;
+  __u16 mss;
 };
+#define XT_TCPMSS_CLAMP_PMTU 0xffff
 #endif
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

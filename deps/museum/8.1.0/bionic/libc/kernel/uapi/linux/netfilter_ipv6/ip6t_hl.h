@@ -20,12 +20,12 @@
 #define _IP6T_HL_H
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
-  IP6T_HL_EQ = 0,
-  IP6T_HL_NE,
-  IP6T_HL_LT,
-  IP6T_HL_GT,
+  IP6T_HL_SET = 0,
+  IP6T_HL_INC,
+  IP6T_HL_DEC
 };
-struct ip6t_hl_info {
+#define IP6T_HL_MAXMODE IP6T_HL_DEC
+struct ip6t_HL_info {
   __u8 mode;
   __u8 hop_limit;
 };

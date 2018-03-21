@@ -29,12 +29,12 @@
 #define _IPT_TTL_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
 enum {
-  IPT_TTL_EQ = 0,
-  IPT_TTL_NE,
-  IPT_TTL_LT,
-  IPT_TTL_GT,
+  IPT_TTL_SET = 0,
+  IPT_TTL_INC,
+  IPT_TTL_DEC
 };
-struct ipt_ttl_info {
+#define IPT_TTL_MAXMODE IPT_TTL_DEC
+struct ipt_TTL_info {
   __u8 mode;
   __u8 ttl;
 };
