@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <array>
 #include <algorithm>
+#include <util/common.h>
 
 namespace facebook {
 namespace profilo {
@@ -114,6 +115,8 @@ ThreadStatInfo::ThreadStatInfo() :
     state(ThreadState::TS_UNKNOWN),
     majorFaults(),
     cpuNum(-1),
+    kernelCpuTimeMs(),
+    minorFaults(),
     highPrecisionCpuTimeMs(),
     waitToRunTimeMs(),
     nrVoluntarySwitches(),
@@ -131,7 +134,12 @@ SchedInfo::SchedInfo()
       iowaitCount(0) {}
 
 TaskStatInfo::TaskStatInfo()
-    : cpuTime(0), state(ThreadState::TS_UNKNOWN), majorFaults(0), cpuNum(-1) {}
+    : cpuTime(0),
+      state(ThreadState::TS_UNKNOWN),
+      majorFaults(0),
+      cpuNum(-1),
+      kernelCpuTimeMs(0),
+      minorFaults(0) {}
 
 namespace {
 
@@ -142,12 +150,13 @@ enum StatFileType: int8_t {
 };
 
 static const std::array<int32_t, 3> kFileStats = {
-  /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS | StatType::CPU_NUM,
-  /*SCHEDSTAT*/ StatType::HIGH_PRECISION_CPU_TIME | StatType::WAIT_TO_RUN_TIME,
-  /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
-    StatType::NR_INVOLUNTARY_SWITCHES |
-    StatType::IOWAIT_SUM |
-    StatType::IOWAIT_COUNT,
+    /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS |
+        StatType::CPU_NUM | StatType::KERNEL_CPU_TIME | StatType::MINOR_FAULTS,
+    /*SCHEDSTAT*/ StatType::HIGH_PRECISION_CPU_TIME |
+        StatType::WAIT_TO_RUN_TIME,
+    /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
+        StatType::NR_INVOLUNTARY_SWITCHES | StatType::IOWAIT_SUM |
+        StatType::IOWAIT_COUNT,
 };
 
 inline ThreadState convertCharToStateEnum(char stateChar) {
@@ -209,10 +218,16 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   data = skipUntil(data, end, ' '); // tpgid
 
   data = skipUntil(data, end, ' '); // flags
-  data = skipUntil(data, end, ' '); // minflt
-  data = skipUntil(data, end, ' '); // cminflt
 
   char* endptr = nullptr;
+  long minflt = strtol(data, &endptr, 10); // minflt
+  if (errno == ERANGE || data == endptr || endptr > end) {
+    throw std::runtime_error("Could not parse minflt");
+  }
+
+  data = skipUntil(endptr, end, ' '); // cminflt
+
+  endptr = nullptr;
   long majflt = strtol(data, &endptr, 10); // majflt
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse majflt");
@@ -272,12 +287,14 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
 
   // SYSTEM_CLK_TCK is defined as 100 in linux as is unchanged in android.
   // Therefore there are 10 milli seconds in each clock tick.
-  constexpr int kClockTicksMs = 10;
+  static int kClockTicksMs = systemClockTickIntervalMs();
 
   TaskStatInfo info{};
   info.cpuTime = kClockTicksMs * (utime + stime);
+  info.kernelCpuTimeMs = kClockTicksMs * stime;
   info.state = convertCharToStateEnum(state);
   info.majorFaults = majflt;
+  info.minorFaults = minflt;
   info.cpuNum = cpuNum;
 
   return info;
@@ -509,6 +526,8 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     last_info_.state = statInfo.state;
     last_info_.majorFaults = statInfo.majorFaults;
     last_info_.cpuNum = statInfo.cpuNum;
+    last_info_.kernelCpuTimeMs = statInfo.kernelCpuTimeMs;
+    last_info_.minorFaults = statInfo.minorFaults;
     availableStatsMask_ |=
       kFileStats[StatFileType::STAT] & requested_stats_mask;
   }

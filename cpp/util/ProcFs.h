@@ -60,6 +60,8 @@ struct TaskStatInfo {
   ThreadState state;
   long majorFaults;
   long cpuNum;
+  long kernelCpuTimeMs;
+  long minorFaults;
 
   TaskStatInfo();
 };
@@ -89,6 +91,8 @@ struct ThreadStatInfo {
   ThreadState state;
   long majorFaults;
   long cpuNum;
+  long kernelCpuTimeMs;
+  long minorFaults;
   // SCHEDSTAT
   long highPrecisionCpuTimeMs;
   long waitToRunTimeMs;

@@ -26,6 +26,8 @@ enum StatType : int32_t {
   IOWAIT_COUNT = 1 << 8,
   CPU_NUM = 1 << 9,
   CPU_FREQ = 1 << 10,
+  MINOR_FAULTS = 1 << 11,
+  KERNEL_CPU_TIME = 1 << 12,
 };
 
 template<class StatInfo>

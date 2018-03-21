@@ -38,8 +38,8 @@ namespace {
 
 constexpr auto kTidAllThreads = 0;
 
-const auto kAllThreadsStatsMask =
-    StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS;
+const auto kAllThreadsStatsMask = StatType::CPU_TIME | StatType::STATE |
+    StatType::MAJOR_FAULTS | StatType::MINOR_FAULTS | StatType::KERNEL_CPU_TIME;
 
 const auto kHighFreqStatsMask = StatType::CPU_TIME | StatType::STATE |
     StatType::MAJOR_FAULTS | StatType::CPU_NUM |
@@ -279,6 +279,20 @@ void threadCountersCallback(
         tid,
         QuickLogConstants::THREAD_CPU_NUM);
   }
+  if (currInfo.availableStatsMask & StatType::KERNEL_CPU_TIME) {
+    logMonotonicCounter(
+        prevInfo.kernelCpuTimeMs,
+        currInfo.kernelCpuTimeMs,
+        tid,
+        QuickLogConstants::THREAD_KERNEL_CPU_TIME);
+  }
+  if (currInfo.availableStatsMask & StatType::MINOR_FAULTS) {
+    logMonotonicCounter(
+        prevInfo.minorFaults,
+        currInfo.minorFaults,
+        tid,
+        QuickLogConstants::THREAD_SW_FAULTS_MINOR);
+  }
 }
 } // anonymous
 
@@ -372,8 +386,6 @@ void SystemCounterThread::logProcessCounters() {
     processStatFile_.reset(new util::TaskStatFile("/proc/self/stat"));
   }
 
-  auto& logger = Logger::get();
-
   auto prevInfo = processStatFile_->getInfo();
   util::TaskStatInfo currInfo;
 
@@ -385,26 +397,37 @@ void SystemCounterThread::logProcessCounters() {
     return;
   }
 
+  auto tid = threadID();
+
   if (prevInfo.cpuTime != 0) {
     // Don't log the initial value
     const auto kThresholdMs = 1;
 
-    if (currInfo.cpuTime > prevInfo.cpuTime + kThresholdMs) {
-      logCounter(
-        logger,
-        QuickLogConstants::PROC_CPU_TIME,
+    logMonotonicCounter(
+        prevInfo.cpuTime,
         currInfo.cpuTime,
-        threadID());
-    }
+        tid,
+        QuickLogConstants::PROC_CPU_TIME,
+        kThresholdMs);
+
+    logMonotonicCounter(
+        prevInfo.kernelCpuTimeMs,
+        currInfo.kernelCpuTimeMs,
+        tid,
+        QuickLogConstants::PROC_KERNEL_CPU_TIME);
   }
 
-  if (prevInfo.majorFaults != currInfo.majorFaults) {
-    logCounter(
-      logger,
-      QuickLogConstants::PROC_SW_FAULTS_MAJOR,
+  logMonotonicCounter(
+      prevInfo.majorFaults,
       currInfo.majorFaults,
-      threadID());
-  }
+      tid,
+      QuickLogConstants::PROC_SW_FAULTS_MAJOR);
+
+  logMonotonicCounter(
+      prevInfo.minorFaults,
+      currInfo.minorFaults,
+      tid,
+      QuickLogConstants::PROC_SW_FAULTS_MINOR);
 }
 
 } // profilo
