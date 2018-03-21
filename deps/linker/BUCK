@@ -18,8 +18,7 @@ profilo_oss_cxx_library(
             ["-D__X86__"],
         ),
     ],
-    preferred_linkage = "shared",
-    soname = "libprofilo_linker.$(ext)",
+    preferred_linkage = "static",
     visibility = [
         "PUBLIC",
     ],
