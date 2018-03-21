@@ -16,20 +16,20 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _XT_TCPMSS_H
-#define _XT_TCPMSS_H
-#define XT_TCPMSS_H
-#define XT_TCPMSS_H_
-#define NDK_ANDROID_SUPPORT_XT_TCPMSS_H
-#define NDK_ANDROID_SUPPORT_XT_TCPMSS_H_
-#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPMSS_H
-#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPMSS_H_
-#define _UAPI_XT_TCPMSS_H
-#define _UAPI_XT_TCPMSS_H_
-#define _XT_TCPMSS_H_
+#ifndef _XT_TCPMSS_MATCH_H
+#define _XT_TCPMSS_MATCH_H
+#define XT_TCPMSS_MATCH_H
+#define XT_TCPMSS_MATCH_H_
+#define NDK_ANDROID_SUPPORT_XT_TCPMSS_MATCH_H
+#define NDK_ANDROID_SUPPORT_XT_TCPMSS_MATCH_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPMSS_MATCH_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_TCPMSS_MATCH_H_
+#define _UAPI_XT_TCPMSS_MATCH_H
+#define _UAPI_XT_TCPMSS_MATCH_H_
+#define _XT_TCPMSS_MATCH_H_
 #include <museum/8.1.0/bionic/libc/linux/types.h>
-struct xt_tcpmss_info {
-  __u16 mss;
+struct xt_tcpmss_match_info {
+  __u16 mss_min, mss_max;
+  __u8 invert;
 };
-#define XT_TCPMSS_CLAMP_PMTU 0xffff
 #endif

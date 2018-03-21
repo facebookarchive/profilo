@@ -26,13 +26,13 @@
 #include <museum/5.1.1/bionic/libc/linux/types.h>
 enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- IPT_TTL_SET = 0,
- IPT_TTL_INC,
- IPT_TTL_DEC
-};
+ IPT_TTL_EQ = 0,
+ IPT_TTL_NE,
+ IPT_TTL_LT,
+ IPT_TTL_GT,
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
-#define IPT_TTL_MAXMODE IPT_TTL_DEC
-struct ipt_TTL_info {
+};
+struct ipt_ttl_info {
  __u8 mode;
  __u8 ttl;
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */

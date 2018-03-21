@@ -16,20 +16,45 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _XT_RATEEST_TARGET_H
-#define _XT_RATEEST_TARGET_H
-#define XT_RATEEST_TARGET_H
-#define XT_RATEEST_TARGET_H_
-#define _UAPI_XT_RATEEST_TARGET_H
-#define _UAPI_XT_RATEEST_TARGET_H_
-#define _XT_RATEEST_TARGET_H_
+#ifndef _XT_RATEEST_MATCH_H
+#define _XT_RATEEST_MATCH_H
+#define XT_RATEEST_MATCH_H
+#define XT_RATEEST_MATCH_H_
+#define _UAPI_XT_RATEEST_MATCH_H
+#define _UAPI_XT_RATEEST_MATCH_H_
+#define _XT_RATEEST_MATCH_H_
 #include <museum/5.1.1/bionic/libc/linux/types.h>
-struct xt_rateest_target_info {
+enum xt_rateest_match_flags {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
- char name[IFNAMSIZ];
- __s8 interval;
- __u8 ewma_log;
- struct xt_rateest *est __attribute__((aligned(8)));
+ XT_RATEEST_MATCH_INVERT = 1<<0,
+ XT_RATEEST_MATCH_ABS = 1<<1,
+ XT_RATEEST_MATCH_REL = 1<<2,
+ XT_RATEEST_MATCH_DELTA = 1<<3,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ XT_RATEEST_MATCH_BPS = 1<<4,
+ XT_RATEEST_MATCH_PPS = 1<<5,
+};
+enum xt_rateest_match_mode {
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ XT_RATEEST_MATCH_NONE,
+ XT_RATEEST_MATCH_EQ,
+ XT_RATEEST_MATCH_LT,
+ XT_RATEEST_MATCH_GT,
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+};
+struct xt_rateest_match_info {
+ char name1[IFNAMSIZ];
+ char name2[IFNAMSIZ];
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ __u16 flags;
+ __u16 mode;
+ __u32 bps1;
+ __u32 pps1;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+ __u32 bps2;
+ __u32 pps2;
+ struct xt_rateest *est1 __attribute__((aligned(8)));
+ struct xt_rateest *est2 __attribute__((aligned(8)));
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
 };
 #endif

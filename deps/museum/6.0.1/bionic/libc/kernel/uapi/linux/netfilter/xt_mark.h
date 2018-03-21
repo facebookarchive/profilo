@@ -16,8 +16,25 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _XT_MARK_H_target
-#define _XT_MARK_H_target
-#include <museum/6.0.1/bionic/libc/linux/netfilter/xt_mark.h>
-#endif
+#ifndef _XT_MARK_H
+#define _XT_MARK_H
+#define XT_MARK_H
+#define XT_MARK_H_
+#define NDK_ANDROID_SUPPORT_XT_MARK_H
+#define NDK_ANDROID_SUPPORT_XT_MARK_H_
+#define NDK_ANDROID_SUPPORT_UAPI_XT_MARK_H
+#define NDK_ANDROID_SUPPORT_UAPI_XT_MARK_H_
+#define _UAPI_XT_MARK_H
+#define _UAPI_XT_MARK_H_
+#define _XT_MARK_H_
+#include <museum/6.0.1/bionic/libc/linux/types.h>
+struct xt_mark_tginfo2 {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+  __u32 mark, mask;
+};
+struct xt_mark_mtinfo1 {
+  __u32 mark, mask;
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+  __u8 invert;
+};
+#endif

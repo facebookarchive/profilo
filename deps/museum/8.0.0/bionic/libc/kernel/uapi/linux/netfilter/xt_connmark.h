@@ -16,8 +16,29 @@
  ***
  ****************************************************************************
  ****************************************************************************/
-#ifndef _XT_CONNMARK_H_target
-#define _XT_CONNMARK_H_target
-#include <museum/8.0.0/bionic/libc/linux/netfilter/xt_connmark.h>
-#endif
+#ifndef _XT_CONNMARK_H
+#define _XT_CONNMARK_H
+#define XT_CONNMARK_H
+#define XT_CONNMARK_H_
+#define _UAPI_XT_CONNMARK_H
+#define _UAPI_XT_CONNMARK_H_
+#define _XT_CONNMARK_H_
+#include <museum/8.0.0/bionic/libc/linux/types.h>
+enum {
 /* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+  XT_CONNMARK_SET = 0,
+  XT_CONNMARK_SAVE,
+  XT_CONNMARK_RESTORE
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct xt_connmark_tginfo1 {
+  __u32 ctmark, ctmask, nfmask;
+  __u8 mode;
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+struct xt_connmark_mtinfo1 {
+  __u32 mark, mask;
+  __u8 invert;
+};
+/* WARNING: DO NOT EDIT, AUTO-GENERATED CODE - SEE TOP FOR INSTRUCTIONS */
+#endif
