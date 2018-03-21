@@ -6,7 +6,35 @@ UTIL_EXPORTED_HEADERS = [
     "ProcFs.h",
     "SysFs.h",
     "BaseStatFile.h",
+    "hooks.h",
 ]
+
+fb_xplat_cxx_library(
+    name = "hooks",
+    srcs = [
+        "hooks.cpp",
+    ],
+    headers = [
+        "hooks.h",
+    ],
+    header_namespace = "util",
+    exported_headers = [
+        "hooks.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-Wall",
+    ],
+    force_static = True,
+    visibility = [
+        profilo_path("cpp/..."),
+        profilo_path("facebook/cpp/..."),
+    ],
+    deps = [
+        profilo_path("deps/linker:linker"),
+    ],
+)
 
 fb_xplat_cxx_library(
     name = "util",

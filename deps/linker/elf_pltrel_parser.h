@@ -34,9 +34,9 @@
 static const uint8_t EXPECTED_ELF_HEADER_IDENT[] =
     {ELFMAG0, ELFMAG1, ELFMAG2, ELFMAG3, ELFCLASS32, ELFDATA2LSB, EV_CURRENT};
 
-class EltPLTRelParser {
+class ElfPLTRelParser {
   public:
-    EltPLTRelParser(const void* map_address)
+    ElfPLTRelParser(const void* map_address)
         : mLoadBias(nullptr),
           mPltRelTable(nullptr),
           mPltRelTableSize(0),
@@ -45,7 +45,7 @@ class EltPLTRelParser {
       if (!map_address) {
         return;
       }
-      const Elf32_Ehdr* header = EltPLTRelParser::checkHeader(map_address);
+      const Elf32_Ehdr* header = ElfPLTRelParser::checkHeader(map_address);
       if (!header) {
         return;
       }
@@ -53,7 +53,7 @@ class EltPLTRelParser {
       const Elf32_Phdr* phdr =
           reinterpret_cast<const Elf32_Phdr*>((const uint8_t*)map_address + header->e_phoff);
       const Elf32_Dyn* dynamic_table = nullptr;
-      if (!EltPLTRelParser::parseSegments(
+      if (!ElfPLTRelParser::parseSegments(
             map_address, phdr, header->e_phnum, mLoadBias, dynamic_table)) {
         return;
       }

@@ -29,6 +29,7 @@
 #include <fb/xplat_init.h>
 #include <linker/linker.h>
 #include <linker/bionic_linker.h>
+#include <util/hooks.h>
 
 #include <profilo/Logger.h>
 #include <profilo/LogEntry.h>
@@ -43,22 +44,6 @@ namespace profilo {
 namespace atrace {
 
 namespace {
-
-namespace {
-struct SharedLibrary {
-  SharedLibrary(std::string& lib, int mode):
-    handle(dlopen(lib.c_str(), mode)) {}
-
-  ~SharedLibrary() {
-    if (handle != nullptr) {
-      dlclose(handle);
-    }
-  }
-
-  void* handle;
-};
-} // namespace
-
 
 int *atrace_marker_fd = nullptr;
 std::atomic<uint64_t> *atrace_enabled_tags = nullptr;
@@ -135,75 +120,59 @@ void log_systrace(int fd, const void *buf, size_t count) {
 
 ssize_t write_hook(int fd, const void *buf, size_t count) {
   log_systrace(fd, buf, count);
-  return CALL_PREV(&write, fd, buf, count);
+  return CALL_PREV(&write_hook, fd, buf, count);
 }
 
-inline bool ends_with(std::string const &value, std::string const &ending) {
-  if (ending.size() > value.size()) {
-    return false;
-  }
-  return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+ssize_t __write_chk_hook(int fd, const void *buf, size_t count, size_t buf_size) {
+  log_systrace(fd, buf, count);
+  return CALL_PREV(&__write_chk_hook, fd, buf, count, buf_size);
 }
 
 } // namespace
 
+std::vector<std::pair<char const*, void*>>& getFunctionHooks() {
+  static std::vector<std::pair<char const*, void*>> functionHooks = {
+    {"write", reinterpret_cast<void*>(&write_hook)},
+    {"__write_chk", reinterpret_cast<void*>(__write_chk_hook)},
+  };
+  return functionHooks;
+}
+
+// Returns the set of libraries that we don't want to hook.
+std::unordered_set<std::string>& getSeenLibs() {
+  static bool init = false;
+  static std::unordered_set<std::string> seenLibs;
+
+  // Add this library's name to the set that we won't hook
+  if (!init) {
+
+    seenLibs.insert("/system/lib/libc.so");
+
+    Dl_info info;
+    if (!dladdr((void *)&getSeenLibs, &info)) {
+      FBLOGV("Failed to find module name");
+    }
+    if (info.dli_fname == nullptr) {
+      // Not safe to continue as a thread may block trying to hook the current
+      // library
+      throw std::runtime_error("could not resolve current library");
+    }
+
+    seenLibs.insert(info.dli_fname);
+    init = true;
+  }
+  return seenLibs;
+}
+
 void hookLoadedLibs() {
-  static std::unordered_set<std::string> seen_libs;
-  Dl_info info;
-  if (!dladdr((void *)&hookLoadedLibs, &info)) {
-    FBLOGV("Failed to find module name");
-  }
-  if (info.dli_fname == nullptr) {
-    // It's not safe to continue as thread may block trying to hook the current library
-    throw std::runtime_error("could not resolve current library");
-  }
-  std::string cur_module(info.dli_fname);
+  auto& functionHooks = getFunctionHooks();
+  auto& seenLibs = getSeenLibs();
 
-  FBLOGV("hooking write(2) for profilo systrace collection");
-  // Reading somain soinfo structure which will allow walking through other
-  // global libs
-  soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
-  for (; si != nullptr; si = si->next) {
-    if (!si->link_map_head.l_name) {
-      continue;
-    }
-    std::string libname(si->link_map_head.l_name);
-
-    if (seen_libs.find(libname) != seen_libs.end()) {
-      FBLOGV("Found library %s in seen_libs - ignoring", libname.c_str());
-      continue;
-    }
-    FBLOGV("Processing library %s", libname.c_str());
-    seen_libs.insert(libname);
-    try {
-      // Filtering out libs we shouldn't hook
-      if (!ends_with(libname, ".so") || ends_with(libname, "libc.so")) {
-        continue;
-      }
-      if (ends_with(cur_module, libname)) {
-        continue;
-      }
-
-      int res =
-          hook_plt_method(si, libname.c_str(), "write", reinterpret_cast<void*>(&write_hook));
-      if (res) {
-        FBLOGV("could not hook write(2) in %s", libname.c_str());
-        continue;
-      }
-    } catch (const std::runtime_error& e) {
-      FBLOGW("Error hooking %s: %s", libname.c_str(), e.what());
-      continue;
-    }
-  }
+  facebook::profilo::hooks::hookLoadedLibs(functionHooks, seenLibs);
 }
 
 void installSystraceSnooper(int providerMask) {
   auto sdk = build::Build::getAndroidSdk();
-  if (sdk > 23 /*Marshmallow*/) {
-    FBLOGI("skipping installSystraceSnooper for sdk %i", sdk);
-    return;
-  }
-
   {
     std::string lib_name("libcutils.so");
     std::string enabled_tags_sym("atrace_enabled_tags");
@@ -217,17 +186,23 @@ void installSystraceSnooper(int providerMask) {
       fd_sym = "_ZN7android6Tracer8sTraceFDE";
     }
 
-    SharedLibrary libcutils(lib_name, RTLD_LOCAL);
+    void* handle;
+    if (sdk < 21) {
+      handle = dlopen(lib_name.c_str(), RTLD_LOCAL);
+    } else {
+      handle = dlopen(nullptr, RTLD_GLOBAL);
+    }
 
     atrace_enabled_tags =
       reinterpret_cast<std::atomic<uint64_t> *>(
-        dlsym(libcutils.handle, enabled_tags_sym.c_str()));
+          dlsym(handle, enabled_tags_sym.c_str()));
+
     if (atrace_enabled_tags == nullptr) {
       throw std::runtime_error("Enabled Tags not defined");
     }
 
     atrace_marker_fd =
-      reinterpret_cast<int *>(dlsym(libcutils.handle, fd_sym.c_str()));
+      reinterpret_cast<int*>(dlsym(handle, fd_sym.c_str()));
 
     if (atrace_marker_fd == nullptr) {
       throw std::runtime_error("Trace FD not defined");
@@ -238,14 +213,13 @@ void installSystraceSnooper(int providerMask) {
   }
 
   if (linker_initialize()) {
-    throw std::runtime_error("could not initialize linker library");
+    throw std::runtime_error("Could not initialize linker library");
   }
 
   hookLoadedLibs();
 
   systrace_installed = true;
   provider_mask = providerMask;
-  FBLOGI("write(atrace_marker_fd) hook installed");
 }
 
 void enableSystrace() {

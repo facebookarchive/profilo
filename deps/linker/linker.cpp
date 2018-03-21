@@ -33,6 +33,7 @@
 #include <sys/syscall.h>
 #include <sys/system_properties.h>
 #include <unistd.h>
+#include <string>
 
 #include <sig_safe_write/sig_safe_write.h>
 #include <cjni/log.h>
@@ -41,8 +42,19 @@
 #include <cinttypes>
 #include <map>
 #include <unordered_map>
+#include <algorithm>
 
 #define PAGE_ALIGN(ptr, pagesize) (void*) (((uintptr_t) (ptr)) & ~((pagesize) - 1))
+
+#define ANDROID_L  21
+
+#if defined(__x86__64__) || defined(__aarch64__)
+# define ELF_RELOC_TYPE ELF64_R_TYPE
+# define ELF_RELOC_SYM  ELF64_R_SYM
+#else
+# define ELF_RELOC_TYPE ELF32_R_TYPE
+# define ELF_RELOC_SYM  ELF32_R_SYM
+#endif
 
 namespace {
 
@@ -52,6 +64,33 @@ struct fault_handler_data {
   int active;
   jmp_buf jump_buffer;
 };
+
+typedef struct _elfSharedLibData {
+  uint8_t* loadBias;
+  ElfW(Rel) const* pltRelTable;
+  size_t pltRelTableLen;
+  ElfW(Sym) const* dynSymbolsTable;
+  char const* dynStrsTable;
+
+  // Fields used only for Android < 21 (L)
+  uint32_t* hashBucket;
+  size_t nHashBucket;
+  uint32_t* hashChain;
+
+  _elfSharedLibData() :
+    loadBias(nullptr),
+    pltRelTable(nullptr),
+    pltRelTableLen(0),
+    dynSymbolsTable(nullptr),
+    dynStrsTable(nullptr),
+    hashBucket(nullptr),
+    nHashBucket(0),
+    hashChain(nullptr)
+  {}
+
+} elfSharedLibData;
+
+static std::unordered_map<std::string, elfSharedLibData> sharedLibData;
 
 // hook -> lib -> orig_func
 static std::map<void*, std::unordered_map<void*, void*>>* orig_functions;
@@ -121,76 +160,6 @@ static unsigned elfhash(const char* _name) {
   return h;
 }
 
-/**
- * Finds a GOT entry which is used by PLT associated with given name in given
- * library.
- * On failure returns nullptr and errno is set.
- */
-static void*
-find_got_entry_for_plt_function(
-  void* dlhandle,
-  const char* name
-) {
-  struct soinfo* si = (struct soinfo*) dlhandle;
-
-  if (!si) {
-    errno = EINVAL;
-    return nullptr;
-  }
-
-  // Alternative way to check if a symbol is defined in the given library is
-  // to use symbol hash table (HASH section) and fail fast avoiding iteration
-  // over plt records.
-  // NOTE: This won't work for GNU_HASH section which is supported for API >= 23
-  bool use_hash = si->nbucket_ != 0;
-  uint32_t sym_index = 0;
-
-  if (use_hash) {
-    auto hash = elfhash(name);
-    sym_index = si->bucket_[hash % si->nbucket_];
-    for (; sym_index != 0; sym_index = si->chain_[sym_index]) {
-      Elf32_Sym symbol = si->symtab_[sym_index];
-      if (strcmp(si->strtab_ + symbol.st_name, name) == 0) {
-        break;
-      }
-    }
-    if (sym_index == 0) {
-      errno = EINVAL;
-      return nullptr;
-    }
-  }
-
-  for (unsigned i = 0; i < si->plt_rel_count_; ++i) {
-    Elf32_Rel rel = si->plt_rel_[i];
-    unsigned rel_type = ELF32_R_TYPE(rel.r_info);
-    unsigned rel_sym = ELF32_R_SYM(rel.r_info);
-
-    if (rel_type != PLT_RELOCATION_TYPE || rel_sym == 0) {
-      continue;
-    }
-
-    bool plt_found = false;
-    if (use_hash) {
-      plt_found = rel_sym == sym_index;
-    } else {
-      Elf32_Sym symbol = si->symtab_[rel_sym];
-      const char* symbol_name = si->strtab_ + symbol.st_name;
-      plt_found = strcmp(symbol_name, name) == 0;
-    }
-
-    if (plt_found) {
-      if (get_sdk_version() >= 17) {
-        return (void*) (rel.r_offset + si->load_bias);
-      } else { // the linker did not support load_bias before 17
-        return (void*) (rel.r_offset + si->base);
-      }
-    }
-  }
-
-  errno = ENOENT;
-  return nullptr;
-}
-
 bool
 ends_with(const char* str, const char* ending) {
   size_t str_len = strlen(str);
@@ -202,52 +171,154 @@ ends_with(const char* str, const char* ending) {
   return strcmp(str + (str_len - ending_len), ending) == 0;
 }
 
-/*
- * Looks inside /proc/self/maps for a entry ending in /<libname.so> and offset 0
- *
- * NOTE: this function won't work with libs with spaces in theirs names like
- *       "lib name.so"
- */
-void*
-get_library_mapping_address(const char* libname) {
-  if (nullptr == libname || strlen(libname) == 0) {
-    return nullptr;
+} // namespace (anonymous)
+
+typedef int (*dl_iterate_phdr_type)(int (*)(struct dl_phdr_info* info,
+      size_t size, void* data), void* data);
+
+// Parse all the shared libraries from the executable, storing the necessary
+// information to find the relocation symbols and addresses we want to patch.
+static int dl_iterate_phdr_cb(struct dl_phdr_info* info, size_t size, void* data) {
+  if (!info->dlpi_name || info->dlpi_name[0] == '\0') {
+    // Go to the next shared library
+    return 0;
   }
 
-  FILE* maps = fopen("/proc/self/maps", "r");
-  if (maps == nullptr) {
-    return nullptr;
+  if (!ends_with(info->dlpi_name, ".so")) {
+    return 0;
   }
 
-  void* mapping_address = nullptr;
+  if (sharedLibData.find(info->dlpi_name) != sharedLibData.cend()) {
+    // Library already parsed, go to the next one.
+    return 0;
+  }
 
-  char line[256]{};
-  while (fgets(line, 256, maps) != nullptr) {
-    uint64_t range_begin;
-    uint32_t offset;
-    char mapname[256]{};
-    sscanf(
-      line,
-      "%llx-%*x %*s %x %*s %*d %s",
-      &range_begin,
-      &offset,
-      mapname
-    );
+  elfSharedLibData elfData {};
+  ElfW(Dyn) const* dynamic_table = nullptr;
 
-    char slash_libname[64];
-    snprintf(slash_libname, sizeof(slash_libname), "/%s", libname);
-    if (0 == offset && ends_with(mapname, slash_libname)) {
-      mapping_address = (void*)range_begin;
+  elfData.loadBias = (uint8_t*)info->dlpi_addr;
+
+  for (int i = 0; i < info->dlpi_phnum; ++i) {
+    ElfW(Phdr) const* phdr = &info->dlpi_phdr[i];
+    if (phdr->p_type == PT_DYNAMIC) {
+      dynamic_table = reinterpret_cast<ElfW(Dyn) const*>(elfData.loadBias + phdr->p_vaddr);
       break;
     }
   }
 
-  fclose(maps);
+  if (dynamic_table == nullptr) {
+    // Failed to find the necessary segments. Go to next library.
+    return 0;
+  }
 
-  return mapping_address;
+  bool pltRelTableLenFound = false;
+  bool pltRelTableFound = false;
+  bool dynSymbolsTableFound = false;
+  bool dynStrsTableFound = false;
+
+  for (ElfW(Dyn) const* entry = dynamic_table; entry && entry->d_tag != DT_NULL; ++entry) {
+    switch (entry->d_tag) {
+      case DT_PLTRELSZ:
+        elfData.pltRelTableLen = entry->d_un.d_val / sizeof(ElfW(Rel));
+        pltRelTableLenFound = true;
+        break;
+
+      case DT_JMPREL:
+        elfData.pltRelTable =
+          reinterpret_cast<ElfW(Rel) const*>(elfData.loadBias + entry->d_un.d_ptr);
+        pltRelTableFound = true;
+        break;
+
+      case DT_SYMTAB:
+        elfData.dynSymbolsTable =
+          reinterpret_cast<ElfW(Sym) const*>(elfData.loadBias + entry->d_un.d_ptr);
+        dynSymbolsTableFound = true;
+        break;
+
+      case DT_STRTAB:
+        elfData.dynStrsTable =
+          reinterpret_cast<char const*>(elfData.loadBias + entry->d_un.d_ptr);
+        dynStrsTableFound = true;
+        break;
+    }
+
+    if (pltRelTableLenFound && pltRelTableFound &&
+        dynSymbolsTableFound && dynStrsTableFound) {
+      break;
+    }
+  }
+
+  if (!pltRelTableLenFound || !pltRelTableFound ||
+      !dynSymbolsTableFound || !dynStrsTableFound) {
+    // Error, go to next library
+    return 0;
+  }
+
+  sharedLibData.emplace(info->dlpi_name, std::move(elfData));
+  return 0;
 }
 
-} // namespace (anonymous)
+int
+refresh_shared_libs() {
+
+  int const sdk_version = get_sdk_version();
+
+  if (sdk_version >= ANDROID_L) {
+    dl_iterate_phdr_type phdr_iter_function =
+      (dl_iterate_phdr_type) dlsym(RTLD_DEFAULT, "dl_iterate_phdr");
+
+    if (phdr_iter_function == nullptr) {
+      // Undefined symbol.
+      return 1;
+    }
+
+    (*phdr_iter_function)(dl_iterate_phdr_cb, nullptr);
+  } else {
+    soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
+
+    if (si == nullptr) {
+      return 1;
+    }
+
+    for (; si != nullptr; si = si->next) {
+      if (!si->link_map_head.l_name) {
+        continue;
+      }
+
+      char const* libname = si->link_map_head.l_name;
+      char const* const so_ext = ".so";
+
+      if (!ends_with(libname, so_ext)) {
+        continue;
+      }
+
+      if (sharedLibData.find(libname) != sharedLibData.cend()) {
+        // Library already parsed, go to the next one.
+        return 0;
+      }
+
+      elfSharedLibData elfData {};
+
+      elfData.pltRelTableLen = si->plt_rel_count_;
+      elfData.pltRelTable = si->plt_rel_;
+      elfData.dynSymbolsTable = si->symtab_;
+      elfData.dynStrsTable = si->strtab_;
+      elfData.hashBucket = si->bucket_;
+      elfData.nHashBucket = si->nbucket_;
+      elfData.hashChain = si->chain_;
+
+
+      if (sdk_version >= 17) {
+        elfData.loadBias = reinterpret_cast<uint8_t*>(si->load_bias);
+      } else {
+        elfData.loadBias = reinterpret_cast<uint8_t*>(si->base);
+      }
+
+      sharedLibData.emplace(libname, std::move(elfData));
+    }
+  }
+  return 0;
+}
 
 int
 linker_initialize()
@@ -267,29 +338,11 @@ linker_initialize()
     }
   }
 
-  return 0;
+  return refresh_shared_libs();
 }
 
 int
-hook_plt_method_impl(void* dlhandle, const char* libname, const char* name, void* hook)
-{
-  if (orig_functions == nullptr) {
-    errno = EPERM;
-    return 1;
-  }
-
-  void* plt_got_entry = nullptr;
-  if (get_sdk_version() >= 24) { // Android N+
-    plt_got_entry =
-      EltPLTRelParser(get_library_mapping_address(libname)).getPltGotEntry(name);
-  } else {
-    plt_got_entry = find_got_entry_for_plt_function(dlhandle, name);
-  }
-
-  if (plt_got_entry == nullptr) {
-    return 1;
-  }
-
+patch_relocation_address(void* plt_got_entry, void* hook) {
   Dl_info info;
   if (!dladdr(plt_got_entry, &info)) {
     return 1;
@@ -323,7 +376,7 @@ hook_plt_method_impl(void* dlhandle, const char* libname, const char* name, void
       * This library allows us to "link" hooks, that is,
       * func() -> hook_n() -> hook_n-1() ... -> hook_1() -> actual_func()
       * To account for the case where hook_n() lives in a library that has
-      * noot been hooked (and thus doesn't have an entry in the <orig_functions>
+      * not been hooked (and thus doesn't have an entry in the <orig_functions>
       * map) insert said entry here, so that the "chain" of hooks is never
       * broken.
       */
@@ -348,26 +401,120 @@ hook_plt_method_impl(void* dlhandle, const char* libname, const char* name, void
 
 int
 hook_plt_method(void* dlhandle, const char* libname, const char* name, void* hook) {
-  WriterLock wl(&plt_mutex);
-  return hook_plt_method_impl(dlhandle, libname, name, hook);
+
+  plt_hook_spec spec(nullptr, name, hook);
+  return hook_single_lib(dlhandle, libname, &spec, 1);
 }
 
-void
-hook_plt_methods(plt_hook_spec* hook_specs, size_t num_hook_specs) {
+int hook_single_lib(
+    void* dlhandle,
+    char const* libname,
+    plt_hook_spec* specs,
+    size_t num_specs) {
+
+  if (orig_functions == nullptr) {
+    errno = EPERM;
+    return 1;
+  }
+
   WriterLock wl(&plt_mutex);
 
-  for (size_t i=0; i < num_hook_specs; ++i) {
-    plt_hook_spec& spec = hook_specs[i];
-    void* handle = dlopen(spec.lib_name, RTLD_LOCAL);
-    if (handle == nullptr) {
-      spec.dlopen_result = 1;
+  elfSharedLibData const* elfData;
+  try {
+    elfData = &sharedLibData.at(libname);
+  } catch (std::out_of_range& e) {
+    // We didn't cache this library during dl_iterate_phdr
+    return 1;
+  }
+
+  bool const use_hash = elfData->nHashBucket > 0;
+  bool hooking_just_one = num_specs == 1;
+  bool hooked_some = false;
+
+  for (unsigned int specCnt = 0; specCnt < num_specs; ++specCnt) {
+    const plt_hook_spec& spec = specs[specCnt];
+    char const* functionName = spec.fn_name;
+    void* hook = spec.hook_fn;
+    uint32_t sym_index = 0;
+
+    // Fail-fast method. Will work only for Android < L
+    if (use_hash) {
+      auto hash = elfhash(functionName);
+      sym_index = elfData->hashBucket[hash % elfData->nHashBucket];
+      for (; sym_index != 0; sym_index = elfData->hashChain[sym_index]) {
+        ElfW(Sym) const& symbol = elfData->dynSymbolsTable[sym_index];
+        if (strcmp(elfData->dynStrsTable + symbol.st_name, functionName) == 0) {
+          break;
+        }
+      }
+      if (sym_index == 0) {
+        // Did not find symbol in the hash table, so go to next spec
+        continue;
+      }
+    }
+
+    for (unsigned int i = 0; i < elfData->pltRelTableLen; i++) {
+      ElfW(Rel) const& rel = elfData->pltRelTable[i];
+      unsigned rel_type = ELF_RELOC_TYPE(rel.r_info);
+      unsigned rel_sym = ELF_RELOC_SYM(rel.r_info);
+
+      if (rel_type != PLT_RELOCATION_TYPE || !rel_sym) {
+        continue;
+      }
+
+      bool plt_found = false;
+
+      if (use_hash) {
+        plt_found = rel_sym == sym_index;
+      } else {
+        ElfW(Sym) const& symbol = elfData->dynSymbolsTable[rel_sym];
+        char const* symbol_name = elfData->dynStrsTable + symbol.st_name;
+        plt_found = strcmp(symbol_name, functionName) == 0;
+      }
+
+      if (plt_found) {
+        // Found the address of the relocation
+        void* plt_got_entry = elfData->loadBias + rel.r_offset;
+        patch_relocation_address(plt_got_entry, hook);
+        hooked_some = true;
+        break;
+      }
+    }
+  }
+
+  if (hooking_just_one && !hooked_some) {
+    // Bad: we attempted hooking a single library and were unable to.
+    return 1;
+  }
+
+  return 0;
+}
+
+int
+hook_all_libs(plt_hook_spec* specs, size_t num_specs,
+    bool (*allowHookingLib)(char const* libname, void* data), void* data) {
+
+  char const* libname;
+
+  int refreshRet = refresh_shared_libs();
+
+  if (refreshRet) {
+    // Could not properly refresh the cache of shared library data
+    return 1;
+  }
+
+  for (auto const& elfMap : sharedLibData) {
+    libname = elfMap.first.c_str();
+
+    if (!allowHookingLib(libname, data)) {
       continue;
     }
 
-    spec.dlopen_result = 0;
-    spec.hook_result = hook_plt_method_impl(handle, spec.lib_name, spec.fn_name, spec.hook_fn);
-    dlclose(handle);
+    // Hook every <spec.fn_name> with <spec.hook_fn> in <libname>
+    hook_single_lib(nullptr, libname, specs, num_specs);
   }
+
+  return 0;
 }
 
 void*

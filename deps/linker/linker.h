@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include <unistd.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -29,9 +31,17 @@ int
 linker_initialize();
 
 /**
+ * Populates the global cache of shared library data which is used to install
+ * hooks.
+*/
+int
+refresh_shared_libs();
+
+/**
  * Overwrites GOT entry for particular function with provided address,
  * effectively hijacking all invocations of given function in given library.
  * In case of failure non-zero value is returned and errno is set.
+ * ##### NOTE: USE ABSOLUTE PATHS FOR LIBRARY NAMES #####
  */
 int
 hook_plt_method(void* dlhandle, const char* libname, const char* name, void* hook);
@@ -55,8 +65,18 @@ typedef struct _plt_hook_spec {
 #endif //defined(__cplusplus)
 } plt_hook_spec;
 
-void
-hook_plt_methods(plt_hook_spec* hook_specs, size_t num_hook_specs);
+/**
+ * Overwrites GOT entry for particular function with provided address,
+ * effectively hijacking all invocations of given function in given library.
+ * In case of failure non-zero value is returned and errno is set.
+ */
+int
+hook_single_lib(void* dlhandle, char const* libname, plt_hook_spec* specs,
+    size_t num_specs);
+
+int
+hook_all_libs(plt_hook_spec* specs, size_t num_specs,
+    bool (*allowHookingLib)(char const* libname, void* data), void* data);
 
 
 /**
