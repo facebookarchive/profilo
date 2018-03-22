@@ -19,7 +19,6 @@ package com.facebook.profilo.logger;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.fail;
 
-import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
 import com.google.common.base.Function;
 import com.google.common.io.Files;
 import java.io.File;
@@ -32,7 +31,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(WithTestDefaultsRunner.class)
 public class FileManagerTest {
 
   private File mFolder;

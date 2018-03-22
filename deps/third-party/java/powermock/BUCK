@@ -1,0 +1,76 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_maven_library")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_java_library")
+
+profilo_oss_java_library(
+    name = "powermock",
+    exported_deps = [
+        ":powermock-api-mockito",
+        ":powermock-api-support",
+        ":powermock-core",
+        ":powermock-module",
+        ":powermock-module-junit4-common",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)
+
+profilo_oss_maven_library(
+    name = "powermock-module",
+    artifact = "powermock-module-junit4",
+    group = "org.powermock",
+    scope = "test",
+    sha1 = "878ef25550c9e757d6073b70f3ab18c04f3bc33f",
+    version = "1.5.6",
+    visibility = [
+        "PUBLIC",
+    ],
+)
+
+profilo_oss_maven_library(
+    name = "powermock-api-mockito",
+    artifact = "powermock-api-mockito",
+    group = "org.powermock",
+    scope = "test",
+    sha1 = "97f1e2bfbedc1a0459c4eacfe3524e367d1918d0",
+    version = "1.5.6",
+    visibility = [
+        "PUBLIC",
+    ],
+)
+
+profilo_oss_maven_library(
+    name = "powermock-api-support",
+    artifact = "powermock-api-support",
+    group = "org.powermock",
+    scope = "provided",
+    sha1 = "8884532ded864f892b03a0769fd212d34653d5f3",
+    version = "1.5.6",
+    visibility = [
+        "PUBLIC",
+    ],
+)
+
+profilo_oss_maven_library(
+    name = "powermock-core",
+    artifact = "powermock-core",
+    group = "org.powermock",
+    scope = "test",
+    sha1 = "2cf9445b015ff4831487b6cb7667068b3a306066",
+    version = "1.5.6",
+    visibility = [
+        "PUBLIC",
+    ],
+)
+
+profilo_oss_maven_library(
+    name = "powermock-module-junit4-common",
+    artifact = "powermock-module-junit4-common",
+    group = "org.powermock",
+    scope = "test",
+    sha1 = "3cc7cf1df7a7283b6b1c96a52a8ea4d183deea31",
+    version = "1.5.6",
+    visibility = [
+        "PUBLIC",
+    ],
+)

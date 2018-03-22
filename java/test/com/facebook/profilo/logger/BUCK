@@ -1,5 +1,4 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-load("//tools/build_defs:robolectric3_test.bzl", "robolectric3_test")
 
 android_library(
     name = "utils",
@@ -11,37 +10,26 @@ android_library(
         profilo_path("java/test/com/facebook/profilo/core:core"),
     ],
     deps = [
-        "//java/com/facebook/testing/powermock:powermock",
+        profilo_path("deps/third-party/java/powermock:powermock"),
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/proguard:annotations"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
-        "//third-party/java/junit:junit",
+        profilo_path("deps/third-party/java/junit:junit"),
     ],
 )
 
-robolectric3_test(
+robolectric_test(
     name = "logger",
     srcs = glob(["*Test.java"]),
     contacts = ["oncall+loom@xmail.facebook.com"],
     deps = [
         ":utils",
-        "//java/com/facebook/controllercallbacks:controllercallbacks",
-        "//java/com/facebook/quicklog/module:quicklog",
-        "//java/com/facebook/testing/powermock:powermock",
-        "//java/com/facebook/testing/robolectric:robolectric",
-        "//java/com/facebook/testing/robolectric/v3:v3",
-        "//java/com/facebook/testing/robolectric/v3/shadows:shadows",
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("java/main/com/facebook/profilo/core:core"),
         profilo_path("java/main/com/facebook/profilo/core:events"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
-        "//third-party/java/assertj:assertj-android",
-        "//third-party/java/assertj:assertj-core",
-        "//third-party/java/fest:fest",
-        "//third-party/java/fest:fest_android",
-        "//third-party/java/guava:guava",
-        "//third-party/java/junit:junit",
-        "//third-party/java/mockito:mockito",
-        "//third-party/java/robolectric3/robolectric:robolectric",
+        profilo_path("deps/third-party/java/assertj:assertj-core"),
+        profilo_path("deps/third-party/java/guava:guava"),
+        profilo_path("deps/third-party/java/junit:junit"),
     ],
 )

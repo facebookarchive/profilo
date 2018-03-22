@@ -1,0 +1,25 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_maven_library")
+
+profilo_oss_maven_library(
+    name = "assertj-core",
+    artifact = "assertj-core",
+    group = "org.assertj",
+    scope = "test",
+    sha1 = "716730b203ba8bbc075241e9f13ccbae6ddbdf13",
+    version = "2.8.0",
+    visibility = [
+        "PUBLIC",
+    ],
+)
+
+profilo_oss_maven_library(
+    name = "assertj-android",
+    artifact = "assertj-android",
+    group = "com.squareup.assertj",
+    scope = "provided",
+    sha1 = "60a4d9a4cbf3fc789d4b370de18161268af69a34",
+    version = "1.2.0",
+    visibility = [
+        "PUBLIC",
+    ],
+)
