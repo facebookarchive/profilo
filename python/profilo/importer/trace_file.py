@@ -121,8 +121,9 @@ class TraceFile(object):
 
     @staticmethod
     def from_string(data):
+
         # Headers are separated from actual data by '\n\n'.
-        data = data.split("\n\n")
+        data = data.split("\n\n", 1)
 
         # Headers have a `key|value` format.
         headers = [x.split("|") for x in data[0].split("\n")]
@@ -131,7 +132,7 @@ class TraceFile(object):
 
         # Don't materialize the full list of delta-encoded entries,
         # generate them on demand.
-        gen_entries = (TraceEntry.construct(line) for line in data.split("\n"))
+        gen_entries = (TraceEntry.construct(line) for line in data.split("\n") if len(line.strip()) > 0)
         entries = TraceFile.__delta_decode_entries(headers, gen_entries)
 
         return TraceFile(headers=headers, entries=entries)
