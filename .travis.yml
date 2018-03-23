@@ -9,8 +9,8 @@ install:
 
 script:
 - set -e
-- docker run -t profilo:17.10 /usr/bin/env TERM=dumb bash /repo/build/build.sh
 - docker run -t profilo:17.10 /usr/bin/env TERM=dumb bash /repo/build/test.sh
+- docker run -t profilo:17.10 /usr/bin/env TERM=dumb bash /repo/build/build.sh
 - build/copy_artifacts_to_host.sh
 
 before_deploy:
