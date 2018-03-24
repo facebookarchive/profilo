@@ -66,7 +66,10 @@ public final class TraceOrchestrator
         int trimmedFromCount,
         int trimmedFromAge,
         int filesAddedToUpload);
-    void onConfigChanged();
+    /** Config update has been received but not yet applied. */
+    void onBeforeConfigUpdate();
+    /** New updated config has been applied. */
+    void onAfterConfigUpdate();
 
     void onProvidersInitialized(TraceContext ctx);
   }
@@ -287,24 +290,27 @@ public final class TraceOrchestrator
     }
   }
 
-  public synchronized void addListener(TraceListener listener) {
+  public void addListener(TraceListener listener) {
     mListenerManager.addEventListener(listener);
   }
 
-  public synchronized void removeListener(TraceListener listener) {
+  public void removeListener(TraceListener listener) {
     mListenerManager.removeEventListener(listener);
   }
 
   @Override
-  synchronized public void onConfigUpdated(Config config) {
-    // Defer updating the config if we're inside a trace
-    TraceControl traceControl = TraceControl.get();
-    if (traceControl != null && traceControl.isInsideTrace()) {
-      // OnTraceStop/Abort this will cause config to be updated.
-      mNextConfigProvider = mConfigProvider;
-      return;
+  public void onConfigUpdated(Config config) {
+    mListenerManager.onBeforeConfigUpdate();
+    synchronized (this) {
+      // Defer updating the config if we're inside a trace
+      TraceControl traceControl = TraceControl.get();
+      if (traceControl != null && traceControl.isInsideTrace()) {
+        // OnTraceStop/Abort this will cause config to be updated.
+        mNextConfigProvider = mConfigProvider;
+        return;
+      }
+      performConfigTransition(config);
     }
-    performConfigTransition(config);
   }
 
   private void performConfigProviderTransition(ConfigProvider newConfigProvider) {
@@ -314,7 +320,7 @@ public final class TraceOrchestrator
       mConfigProvider = newConfigProvider;
       performConfigTransition(newConfigProvider.getFullConfig());
     }
-    mListenerManager.onConfigChanged();
+    mListenerManager.onAfterConfigUpdate();
   }
 
   @GuardedBy("this")
@@ -437,11 +443,16 @@ public final class TraceOrchestrator
     }
   }
 
-  private synchronized void checkConfigTransition() {
-    if (mNextConfigProvider != null) {
-      performConfigProviderTransition(mNextConfigProvider);
+  private void checkConfigTransition() {
+    ConfigProvider nextProvider;
+    synchronized (this) {
+      if (mNextConfigProvider == null) {
+        return;
+      }
+      nextProvider = mNextConfigProvider;
       mNextConfigProvider = null;
     }
+    performConfigProviderTransition(nextProvider);
   }
 
   @Override

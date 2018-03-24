@@ -88,10 +88,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onConfigChanged() {
+  public void onBeforeConfigUpdate() {
     Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onConfigChanged();
+      iterator.next().onBeforeConfigUpdate();
+    }
+  }
+
+  @Override
+  public void onAfterConfigUpdate() {
+    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    while (iterator.hasNext()) {
+      iterator.next().onAfterConfigUpdate();
     }
   }
 
