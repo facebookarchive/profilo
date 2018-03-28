@@ -97,7 +97,7 @@ public final class TraceOrchestrator
     BackgroundUploadService getUploadService();
     ConfigProvider getProvider();
 
-    TraceListener getListener();
+    TraceListener[] getListeners();
 
     boolean isMultiProcessTracingEnabled();
   }
@@ -284,9 +284,11 @@ public final class TraceOrchestrator
 
   public synchronized void setProfiloBridgeFactory(ProfiloBridgeFactory profiloFactory) {
     mProfiloBridgeFactory = profiloFactory;
-    TraceListener listener = profiloFactory.getListener();
-    if (listener != null) {
-      mListenerManager.addEventListener(listener);
+    TraceListener[] listeners = profiloFactory.getListeners();
+    if (listeners != null) {
+      for (TraceListener listener : listeners) {
+        mListenerManager.addEventListener(listener);
+      }
     }
   }
 
