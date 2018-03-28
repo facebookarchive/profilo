@@ -42,7 +42,7 @@ void InstallRuntime(JNIEnv* env, void* thread) {
 size_t GetStackTrace(JavaFrame* frames, size_t max_frames, void* thread) {
   struct InplaceStackVisitor: public StackVisitor {
     InplaceStackVisitor(JavaFrame* frames, size_t max_frames, Thread* thread):
-      StackVisitor(thread, nullptr, StackWalkKind::kIncludeInlinedFrames),
+      StackVisitor(thread, nullptr, StackWalkKind::kSkipInlinedFrames),
       frames_(frames),
       max_frames_(max_frames),
       idx_(0)
