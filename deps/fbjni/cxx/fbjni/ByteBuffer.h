@@ -21,9 +21,16 @@
 namespace facebook {
 namespace jni {
 
+class JBuffer : public JavaClass<JBuffer> {
+public:
+  static constexpr const char* kJavaDescriptor = "Ljava/nio/Buffer;";
+
+  void rewind() const;
+};
+
 // JNI's NIO support has some awkward preconditions and error reporting. This
 // class provides much more user-friendly access.
-class JByteBuffer : public JavaClass<JByteBuffer> {
+class JByteBuffer : public JavaClass<JByteBuffer, JBuffer> {
  public:
   static constexpr const char* kJavaDescriptor = "Ljava/nio/ByteBuffer;";
 
