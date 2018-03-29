@@ -154,7 +154,7 @@ namespaces:
     symbols:
     - symbolName: ~ios_base
       mangledNames:
-      - _ZNSt3__18ios_baseD0Ev
+      - _ZNSt3__18ios_baseD1Ev
     - symbolName: clear
       params:
       - ios_base::iostate
