@@ -100,17 +100,26 @@ static pthread_rwlock_t plt_mutex = PTHREAD_RWLOCK_INITIALIZER;
 class ReaderLock {
 private:
   pthread_rwlock_t *_lock;
+  bool _disabled;
 
 public:
   inline ReaderLock(pthread_rwlock_t *lock) :
-    _lock(lock) {
-    if (pthread_rwlock_rdlock(lock) != 0) {
+    _lock(lock),
+    _disabled(false) {
+    auto ret = pthread_rwlock_rdlock(lock); 
+    if (ret == EDEADLK) {
+      _disabled = true;
+    } else if (ret != 0) {
       abort();
     }
   }
 
   inline ~ReaderLock() {
-    if (pthread_rwlock_unlock(_lock) != 0) {
+    if (_disabled) {
+      return;
+    }
+    auto ret = pthread_rwlock_unlock(_lock);
+    if (ret != 0) {
       abort();
     }
   }
@@ -406,6 +415,28 @@ hook_plt_method(void* dlhandle, const char* libname, const char* name, void* hoo
   return hook_single_lib(dlhandle, libname, &spec, 1);
 }
 
+/* It can happen that, after caching a shared object's data in sharedLibData,
+ * the library is unloaded, so references to memory in that address space
+ * result in SIGSEGVs. Thus, check here that the addresses are still valid.
+*/
+bool
+validateSharedLibData(elfSharedLibData const* elfData) {
+  Dl_info info;
+  if (!dladdr(elfData->pltRelTable, &info)) {
+    return false;
+  }
+
+  if (!dladdr(elfData->dynSymbolsTable, &info)) {
+    return false;
+  }
+
+  if (!dladdr(elfData->dynStrsTable, &info)) {
+    return false;
+  }
+
+  return true;
+}
+
 int hook_single_lib(
     void* dlhandle,
     char const* libname,
@@ -424,6 +455,12 @@ int hook_single_lib(
     elfData = &sharedLibData.at(libname);
   } catch (std::out_of_range& e) {
     // We didn't cache this library during dl_iterate_phdr
+    return 1;
+  }
+
+  // Make sure every piece of data we need is valid (i.e. lives within
+  // a shared object we actually loaded).
+  if (!validateSharedLibData(elfData)) {
     return 1;
   }
 
