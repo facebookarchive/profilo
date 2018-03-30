@@ -5,6 +5,8 @@
 library: libart
 
 headers:
+- museum/6.0.1/art/runtime/mirror/array.h
+- museum/6.0.1/art/runtime/mirror/throwable.h
 - museum/6.0.1/art/runtime/dex_file.h
 - museum/6.0.1/art/runtime/base/logging.h
 - museum/6.0.1/art/runtime/base/logging-inl.h
@@ -19,6 +21,34 @@ headers:
 - new
 
 namespaces:
+- nsName:
+  - art
+  - mirror
+  classes:
+  - className: Array
+    symbols:
+    - symbolName: ThrowArrayStoreException
+      params:
+      - Object*
+      returnType: void
+      mangledNames:
+      - _ZN3art6mirror5Array24ThrowArrayStoreExceptionEPNS0_6ObjectE
+    - symbolName: ThrowArrayIndexOutOfBoundsException
+      params:
+      - int32_t
+      returnType: void
+      mangledNames:
+      - _ZN3art6mirror5Array35ThrowArrayIndexOutOfBoundsExceptionEi
+
+  - className: Throwable
+    symbols:
+    - symbolName: SetCause
+      params:
+      - Throwable*
+      returnType: void
+      mangledNames:
+      - _ZN3art6mirror9Throwable8SetCauseEPS1_
+
 - nsName:
   - art
   classes:
@@ -211,9 +241,27 @@ namespaces:
       returnType: Runtime*
       mangledNames:
       - _ZN3art7Runtime9instance_E
+    - symbolName: RecordWriteFieldReference
+      params:
+      - mirror::Object*
+      - MemberOffset
+      - mirror::Object*
+      - bool
+      returnType: void
+      cvFlags: const
+      mangledNames:
+      - _ZNK3art7Runtime25RecordWriteFieldReferenceEPNS_6mirror6ObjectENS_12MemberOffsetES3_b
 
   - className: Thread
     symbols:
+    - symbolName: ThrowNewException
+      params:
+      - char const*
+      - char const*
+      returnType: void
+      mangledNames:
+      - _ZN3art6Thread17ThrowNewExceptionEPKcS2_
+
     - symbolName: DecodeJObject
       params:
       - jobject
