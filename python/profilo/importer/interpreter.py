@@ -238,6 +238,13 @@ class TraceFileInterpreter(object):
                 continue
 
             key = keys[0]
+
+            # If the trace was stopped at an inopportune time, we might miss
+            # the VALUE of a KEY. This is malformed beyond repair, so
+            # avoid creating an entry altogether.
+            if key not in self.children:
+                return
+
             assert len(self.children[key]) == 1
             value = self.children[key][0]
 
