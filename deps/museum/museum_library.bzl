@@ -64,6 +64,8 @@ def museum_library(
             "-D__STDC_FORMAT_MACROS",
             "-DMUSEUM_VERSION=v" + museum_version.replace(".", "_"),
             "-DMUSEUM_VERSION_NUM=" + museum_version.replace(".", ""),
+            "-DMUSEUM_VERSION_DOT=" + museum_version,
+            "-DMUSEUM_VERSION_" + museum_version.replace(".", "_"),
             "-Wno-inconsistent-missing-override",
             "-Wno-unknown-attributes",
         ] + exported_preprocessor_flags,
