@@ -1,0 +1,18 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load(profilo_path("deps/museum:museum_library.bzl"), "museum_library")
+
+museum_library(
+    exported_preprocessor_flags = [
+        "-Wno-unused-local-typedefs",
+        "-Dprivate=public",
+        "-DART_DEFAULT_GC_TYPE_IS_CMS",
+        "-DIMT_SIZE=64",
+        "-DBUILDING_LIBART",
+    ],
+    museum_deps = [
+        "bionic/libc",
+        "bionic/libm",
+        "external/libcxx",
+        "libnativehelper",
+    ],
+)
