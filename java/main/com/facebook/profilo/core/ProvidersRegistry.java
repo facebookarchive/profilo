@@ -18,6 +18,8 @@ package com.facebook.profilo.core;
 
 import com.facebook.proguard.annotations.DoNotStrip;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Maintains a one-to-many mapping between strings and integer identifiers.
@@ -90,5 +92,10 @@ public final class ProvidersRegistry {
       }
     }
     return result;
+  }
+
+  /** Retrieve all registered providers. */
+  public static List<String> getRegisteredProviders() {
+    return Collections.unmodifiableList(sProviders);
   }
 }

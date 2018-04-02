@@ -1,104 +1,102 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
+load(profilo_path("build_defs:profilo_sample_app.bzl"), "profilo_sample_app")
 
 keystore(
     name = "keystore",
     properties = "sample.keystore.properties",
     store = "sample.keystore",
+    visibility = [
+        profilo_path("..."),
+    ],
 )
 
-PROVIDER_TO_RULE = {
-    "atrace": profilo_path("java/main/com/facebook/profilo/provider/atrace:atrace"),
-    "systemcounters": profilo_path("java/main/com/facebook/profilo/provider/systemcounters:systemcounters"),
-    "stacktrace": profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),
-    "threadmetadata": profilo_path("java/main/com/facebook/profilo/provider/threadmetadata:threadmetadata"),
-    "processmetadata": profilo_path("java/main/com/facebook/profilo/provider/processmetadata:processmetadata"),
-    "yarn": profilo_path("java/main/com/facebook/profilo/provider/yarn:yarn"),
-}
+android_manifest(
+    name = "manifest",
+    skeleton = "AndroidManifest.xml",
+    visibility = [
+        profilo_path("..."),
+    ],
+)
 
-def profilo_sample_app(providers):
-    if providers:
-        providers = sorted(providers)
-        providers_string = "-".join(providers)
-        providers_deps = [PROVIDER_TO_RULE[provider] for provider in providers]
-    else:
-        providers_string = "none"
-        providers_deps = []
+SAMPLE_LIB_SRCS = [
+    "BaseSampleAppMainActivity.java",
+    "WorkloadThread.java",
+]
 
-    android_build_config(
-      name = "sample-buildconfig-{}".format(providers_string),
-      package = "com.facebook.profilo",
-      values = [
-        "String PROVIDERS = \"{}\"".format(providers_string),
-      ],
-    )
+android_build_config(
+    name = "sample-buildconfig-dummy",
+    package = "com.facebook.profilo",
+    values = [
+        "String[] PROVIDERS = new String[] { }",
+    ],
+)
 
-    # We want all providers on the compile path but only package the ones that
-    # the current config enables. However, the provided_deps take precedence
-    # and targets specified in both provided and normal deps will be elided.
-    #
-    # Therefore, calculate the difference between the full set and the enabled
-    # set and put only that in the provided list.
+android_library(
+    name = "sample-lib",
+    srcs = SAMPLE_LIB_SRCS,
+    provided_deps = [
+        ":sample-buildconfig-dummy",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("java/main/com/facebook/profilo/config:config"),
+        profilo_path("java/main/com/facebook/profilo/controllers/external:external"),
+        profilo_path("java/main/com/facebook/profilo/controllers/external/api:api"),
+        profilo_path("java/main/com/facebook/profilo/core:core"),
+        profilo_path("deps/soloader:soloader"),
+    ],
+)
 
-    provided_deps = [x for x in PROVIDER_TO_RULE.values()
-                     if x not in providers_deps]
+ACTIVITY_SRCS = glob(
+    ["*.java"],
+    excludes = SAMPLE_LIB_SRCS,
+)
 
-    android_library(
-        name = "sample-lib-{}".format(providers_string),
-        srcs = glob(["*.java"]),
-
-        provided_deps = provided_deps,
-        deps = [
-            ":sample-buildconfig-{}".format(providers_string),
-            profilo_path("java/main/com/facebook/profilo/config:config"),
-            profilo_path("java/main/com/facebook/profilo/controllers/external:external"),
-            profilo_path("java/main/com/facebook/profilo/controllers/external/api:api"),
-            profilo_path("java/main/com/facebook/profilo/core:core"),
-            profilo_path("deps/soloader:soloader"),
-        ] + providers_deps,
-        visibility = [
-            "PUBLIC",
-        ],
-    )
-
-    android_aar(
-        name = "sample-aar-{}".format(providers_string),
-        deps = [
-            ":sample-lib-{}".format(providers_string),
-        ],
-        manifest_skeleton = "AndroidManifest.xml",
-        visibility = [
-            "PUBLIC",
-        ],
-    )
-
-    android_binary(
-        name = "sample-{}".format(providers_string),
-        keystore = ":keystore",
-        manifest = "AndroidManifest.xml",
-        deps = [
-            ":sample-lib-{}".format(providers_string),
-        ],
-        aapt_mode = "aapt2",
-    )
-
-profilo_sample_app(None)
+profilo_sample_app(
+    srcs = ACTIVITY_SRCS,
+    manifest = "AndroidManifest.xml",
+    providers = None,
+)
 
 # Referred to by open source buckconfig, don't forget to update it there.
-profilo_sample_app([
-    "atrace",
-    "stacktrace",
-    "systemcounters",
-    "threadmetadata",
-])
+profilo_sample_app(
+    srcs = ACTIVITY_SRCS,
+    manifest = "AndroidManifest.xml",
+    providers = [
+        "atrace",
+        "stacktrace",
+        "systemcounters",
+        "threadmetadata",
+    ],
+)
 
-profilo_sample_app([
-    "atrace",
-    "stacktrace",
-    "systemcounters",
-    "threadmetadata",
-    "processmetadata",
-])
+profilo_sample_app(
+    srcs = ACTIVITY_SRCS,
+    manifest = "AndroidManifest.xml",
+    providers = [
+        "atrace",
+        "processmetadata",
+        "stacktrace",
+        "systemcounters",
+        "threadmetadata",
+    ],
+)
 
 # Generate a target for each individual provider
-for provider in PROVIDER_TO_RULE.keys():
-    profilo_sample_app([provider])
+for provider in [
+        "atrace",
+        "processmetadata",
+        "stacktrace",
+        "systemcounters",
+        "threadmetadata",
+        "yarn",
+    ]:
+    profilo_sample_app(
+        srcs = ACTIVITY_SRCS,
+        manifest = "AndroidManifest.xml",
+        providers = [
+            provider,
+        ],
+    )
