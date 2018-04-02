@@ -20,7 +20,7 @@ def tracer_library(version):
             "-fexceptions",
             "-std=gnu++14",
             "-DLOG_TAG=\"Profilo/ArtCompat\"",
-            "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v{}_profilo".format(version_),
+            "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v{}_readonly".format(version_),
             #'-DFBLOG_NDEBUG=0', # extra logging
         ],
         exported_headers = {
@@ -44,7 +44,7 @@ def tracer_library(version):
             profilo_path("deps/fb:fb"),
             profilo_path("deps/fbjni:fbjni"),
             profilo_path("deps/forkjail:forkjail"),
-            profilo_path("cpp/museum/{version}/art/runtime:runtime".format(version=version)),
+            profilo_path("cpp/museum-readonly/{version}/art/runtime:runtime".format(version=version)),
             profilo_path("cpp/logger:logger"),
         ],
     )

@@ -23,7 +23,7 @@ fb_xplat_cxx_library(
         "-Wno-pmf-conversions",
         "-Wno-inconsistent-missing-override",
         "-Wno-unknown-warning-option",
-        "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v6_0_1_profilo",
+        "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v6_0_1_readonly",
     ],
     exported_deps = [
         profilo_path("deps/museum/6.0.1/external/libcxx:headers"),

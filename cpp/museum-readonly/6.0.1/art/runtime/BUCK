@@ -23,17 +23,17 @@ fb_xplat_cxx_library(
         "-Wno-pmf-conversions",
         "-Wno-inconsistent-missing-override",
         "-Wno-unknown-warning-option",
-        "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v7_0_0_profilo",
+        "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v6_0_1_readonly",
     ],
     exported_deps = [
-        profilo_path("deps/museum/7.0.0/art/runtime:headers"),
+        profilo_path("deps/museum/6.0.1/art/runtime:headers"),
     ],
     force_static = True,
     visibility = [
         "PUBLIC",
     ],
     deps = [
-        profilo_path("cpp/museum/7.0.0/external/libcxx:libcxx"),
+        profilo_path("cpp/museum-readonly/6.0.1/external/libcxx:libcxx"),
         profilo_path("deps/museum:museum"),
     ],
 )

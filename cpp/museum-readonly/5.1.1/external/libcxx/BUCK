@@ -2,7 +2,7 @@ load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
 fb_xplat_cxx_library(
-    name = "runtime",
+    name = "libcxx",
     srcs = glob(
         ["**/*.cc"],
     ),
@@ -23,17 +23,17 @@ fb_xplat_cxx_library(
         "-Wno-pmf-conversions",
         "-Wno-inconsistent-missing-override",
         "-Wno-unknown-warning-option",
-        "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v5_1_1_profilo",
+        "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v5_1_1_readonly",
     ],
     exported_deps = [
-        profilo_path("deps/museum/5.1.1/art/runtime:headers"),
+        profilo_path("deps/museum/5.1.1/external/libcxx:headers"),
     ],
     force_static = True,
     visibility = [
         "PUBLIC",
     ],
     deps = [
-        profilo_path("cpp/museum/5.1.1/external/libcxx:libcxx"),
+        profilo_path("deps/museum/5.1.1/bionic/libc:libc"),
         profilo_path("deps/museum:museum"),
     ],
 )
