@@ -193,10 +193,10 @@ struct LogMessageData {
  public:
   LogMessageData(const char* file, int line, LogSeverity severity, int error);
   std::ostringstream buffer;
-  const char* const file;
-  const int line_number;
-  const LogSeverity severity;
-  const int error;
+  const char* file;
+  int line_number;
+  LogSeverity severity;
+  int error;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(LogMessageData);

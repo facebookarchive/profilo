@@ -934,10 +934,12 @@ class Thread {
   static constexpr uint32_t kMaxCheckpoints = 3;
 
   // Has Thread::Startup been called?
-  static bool is_started_;
+  static bool& is_started_();
+  #define is_started_ is_started_()
 
   // TLS key used to retrieve the Thread*.
-  static pthread_key_t pthread_key_self_;
+  static pthread_key_t& pthread_key_self_();
+  #define pthread_key_self_ pthread_key_self_()
 
   // Used to notify threads that they should attempt to resume, they will suspend again if
   // their suspend count is > 0.

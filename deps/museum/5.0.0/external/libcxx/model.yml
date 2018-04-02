@@ -64,6 +64,9 @@ namespaces:
   classes:
   - className: locale
     symbols:
+    - symbolName: locale
+      mangledNames:
+      - _ZNSt3__16localeC1Ev
     - symbolName: ~locale
       mangledNames:
       - _ZNSt3__16localeD1Ev
@@ -170,6 +173,12 @@ namespaces:
       mangledNames:
       - _ZNKSt3__18ios_base6getlocEv
       cvFlags: const
+    - symbolName: init
+      params:
+      - void*
+      returnType: void
+      mangledNames:
+      - _ZNSt3__18ios_base4initEPv
 
   - className:
     symbols:

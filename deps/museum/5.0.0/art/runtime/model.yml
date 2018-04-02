@@ -5,7 +5,12 @@
 library: libart
 
 headers:
+- museum/5.0.0/art/runtime/base/logging.h
 - museum/5.0.0/art/runtime/mirror/array.h
+- museum/5.0.0/art/runtime/mirror/art_method.h
+- museum/5.0.0/art/runtime/runtime.h
+- museum/5.0.0/art/runtime/thread.h
+- museum/5.0.0/art/runtime/utils.h
 - new
 
 namespaces:
@@ -21,3 +26,59 @@ namespaces:
       returnType: void
       mangledNames:
       - _ZN3art6mirror5Array35ThrowArrayIndexOutOfBoundsExceptionEi
+  - className: ArtMethod
+    symbols:
+    - symbolName: IsProxyMethod
+      returnType: bool
+      mangledNames:
+      - _ZN3art6mirror9ArtMethod13IsProxyMethodEv
+- nsName:
+  - art
+  classes:
+  - className: LogMessage
+    symbols:
+    - symbolName: ~LogMessage
+      mangledNames:
+      - _ZN3art10LogMessageD1Ev
+  - className: LogMessageData
+    symbols:
+    - symbolName: LogMessageData
+      params:
+      - char const*
+      - int
+      - LogSeverity
+      - int
+      mangledNames:
+      - _ZN3art14LogMessageDataC1EPKciii
+  - className: Runtime
+    symbols:
+    - symbolName: IsShuttingDown
+      params:
+      - Thread*
+      returnType: bool
+      mangledNames:
+      - _ZN3art7Runtime14IsShuttingDownEPNS_6ThreadE
+    - symbolName: instance_
+      isStaticVar: true
+      skipMethodWrap: true
+      returnType: Runtime*
+      mangledNames:
+      - _ZN3art7Runtime9instance_E
+  - className: Thread
+    symbols:
+    - symbolName: is_started_
+      returnType: bool
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread11is_started_E
+    - symbolName: pthread_key_self_
+      returnType: pthread_key_t
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread17pthread_key_self_E
+  - className:
+    symbols:
+    - symbolName: GetTid
+      returnType: pid_t
+      mangledNames:
+      - _ZN3art6GetTidEv

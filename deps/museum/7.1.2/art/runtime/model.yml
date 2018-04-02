@@ -200,6 +200,16 @@ namespaces:
       returnType: void
       mangledNames:
       - _ZN3art5Mutex15ExclusiveUnlockEPNS_6ThreadE
+  - className: ReaderWriterMutex
+    symbols:
+    - symbolName: HandleSharedLockContention
+      params:
+      - Thread*
+      - int32_t
+      returnType: void
+      mangledNames:
+      - _ZN3art17ReaderWriterMutex26HandleSharedLockContentionEPNS_6ThreadEi
+      conditional: ART_USE_FUTEXES
   - className: Runtime
     symbols:
     - symbolName: GetPreAllocatedNoClassDefFoundError
@@ -251,6 +261,13 @@ namespaces:
       cvFlags: const
       mangledNames:
       - _ZNK3art6Thread13DecodeJObjectEP8_jobject
+    - symbolName: IsJWeakCleared
+      returnType: bool
+      params:
+      - jweak
+      cvFlags: const
+      mangledNames:
+      - _ZNK3art6Thread14IsJWeakClearedEP8_jobject
     - symbolName: AssertNoPendingException
       returnType: void
       cvFlags: const

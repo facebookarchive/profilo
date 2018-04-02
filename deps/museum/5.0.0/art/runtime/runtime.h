@@ -172,7 +172,7 @@ class Runtime {
   }
 
   static Runtime* Current() {
-    return instance_;
+    return instance_();
   }
 
   // Aborts semi-cleanly. Used in the implementation of LOG(FATAL), which most
@@ -502,7 +502,7 @@ class Runtime {
   void StartSignalCatcher();
 
   // A pointer to the active runtime or NULL.
-  static Runtime* instance_;
+  static Runtime*& instance_();
 
   static const char* kDefaultInstructionSetFeatures;
 
