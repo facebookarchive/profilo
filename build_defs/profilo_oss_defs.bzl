@@ -2,6 +2,8 @@
 
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
+IS_OSS_BUILD = True
+
 
 def profilo_oss_android_library(**kwargs):
     """Delegates to the native android_library rule."""

@@ -1,11 +1,12 @@
-load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_java_library")
+load("//build_defs:profilo_oss_defs.bzl", "IS_OSS_BUILD", "profilo_oss_java_library")
 
-profilo_oss_java_library(
-    name = "buildconstants",
-    srcs = [
-        "BuildConstants.java",
-    ],
-    visibility = [
-        "PUBLIC",
-    ],
-)
+if IS_OSS_BUILD:
+    profilo_oss_java_library(
+        name = "buildconstants",
+        srcs = [
+            "BuildConstants.java",
+        ],
+        visibility = [
+            "PUBLIC",
+        ],
+    )
