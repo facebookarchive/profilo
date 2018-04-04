@@ -54,6 +54,8 @@ bool first_enable = true;
 
 namespace {
 
+ssize_t const kAtraceMessageLength = 1024;
+
 void log_systrace(int fd, const void *buf, size_t count) {
   if (systrace_installed &&
       fd == *atrace_marker_fd &&
@@ -99,7 +101,7 @@ void log_systrace(int fd, const void *buf, size_t count) {
         return;
       }
       name++; // skip '|' to the next character
-      size_t len = msg + count - name;
+      ssize_t len = msg + count - name;
       if (len > 0) {
         id = logger.writeBytes(
           entries::STRING_KEY,
@@ -110,7 +112,7 @@ void log_systrace(int fd, const void *buf, size_t count) {
           entries::STRING_VALUE,
           id,
           (const uint8_t *)name,
-          len);
+          std::min(len, kAtraceMessageLength));
 
         FBLOGV("systrace event: %s", name);
       }
@@ -173,6 +175,11 @@ void hookLoadedLibs() {
 
 void installSystraceSnooper(int providerMask) {
   auto sdk = build::Build::getAndroidSdk();
+  if (sdk > 23) { // Marshmallow
+    FBLOGI("Skipping installSystraceSnooper for sdk %i", sdk);
+    return;
+  }
+
   {
     std::string lib_name("libcutils.so");
     std::string enabled_tags_sym("atrace_enabled_tags");
