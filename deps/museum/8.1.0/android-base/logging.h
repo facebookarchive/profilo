@@ -63,6 +63,12 @@
 
 #include <museum/8.1.0/android-base/macros.h>
 
+#if defined(MUSEUM_NOOP_CHECK_MACROS)
+#define __MUSEUM_CHECK_MAYBE_NOOP false
+#else
+#define __MUSEUM_CHECK_MAYBE_NOOP true
+#endif
+
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace android {
 namespace base {
 
@@ -164,7 +170,7 @@ class ErrnoRestorer {
   using ::android::base::FATAL;               \
   return (severity); }())
 
-#ifdef __clang_analyzer__
+#if defined(__clang_analyzer__) && !defined(MUSEUM_NOOP_CHECK_MACROS)
 // Clang's static analyzer does not see the conditional statement inside
 // LogMessage's destructor that will abort on FATAL severity.
 #define ABORT_AFTER_LOG_FATAL for (;; abort())
@@ -248,7 +254,7 @@ struct LogAbortAfterFullExpr {
 //     CHECK(false == true) results in a log message of
 //       "Check failed: false == true".
 #define CHECK(x)                                                                \
-  LIKELY((x)) || ABORT_AFTER_LOG_FATAL_EXPR(false) ||                           \
+  LIKELY((x)) || !__MUSEUM_CHECK_MAYBE_NOOP || ABORT_AFTER_LOG_FATAL_EXPR(false) ||                           \
       ::android::base::LogMessage(                                              \
           __FILE__, __LINE__, ::android::base::DEFAULT, ::android::base::FATAL, \
           -1).stream()                                                          \
@@ -257,7 +263,7 @@ struct LogAbortAfterFullExpr {
 // Helper for CHECK_xx(x,y) macros.
 #define CHECK_OP(LHS, RHS, OP)                                              \
   for (auto _values = ::android::base::MakeEagerEvaluator(LHS, RHS);        \
-       UNLIKELY(!(_values.lhs OP _values.rhs));                             \
+       UNLIKELY(!(_values.lhs OP _values.rhs)) && __MUSEUM_CHECK_MAYBE_NOOP;                             \
        /* empty */)                                                         \
   ABORT_AFTER_LOG_FATAL                                                     \
   ::android::base::LogMessage(__FILE__, __LINE__, ::android::base::DEFAULT, \
@@ -280,7 +286,7 @@ struct LogAbortAfterFullExpr {
 
 // Helper for CHECK_STRxx(s1,s2) macros.
 #define CHECK_STROP(s1, s2, sense)                                             \
-  while (UNLIKELY((strcmp(s1, s2) == 0) != (sense)))                           \
+  while (UNLIKELY((strcmp(s1, s2) == 0) != (sense)) && __MUSEUM_CHECK_MAYBE_NOOP)                           \
     ABORT_AFTER_LOG_FATAL                                                      \
     ::android::base::LogMessage(__FILE__, __LINE__, ::android::base::DEFAULT,  \
                                 ::android::base::FATAL, -1).stream()           \
@@ -295,7 +301,7 @@ struct LogAbortAfterFullExpr {
 #define CHECK_PTHREAD_CALL(call, args, what)                           \
   do {                                                                 \
     int rc = call args;                                                \
-    if (rc != 0) {                                                     \
+    if (rc != 0 && __MUSEUM_CHECK_MAYBE_NOOP) {                                                     \
       errno = rc;                                                      \
       ABORT_AFTER_LOG_FATAL                                            \
       PLOG(FATAL) << #call << " failed for " << (what);                \
@@ -312,7 +318,7 @@ struct LogAbortAfterFullExpr {
 //          n / 2;
 //    }
 #define CHECK_CONSTEXPR(x, out, dummy)                                     \
-  (UNLIKELY(!(x)))                                                         \
+  (UNLIKELY(!(x)) && __MUSEUM_CHECK_MAYBE_NOOP)                                                         \
       ? (LOG(FATAL) << "Check failed: " << #x out, dummy) \
       :
 

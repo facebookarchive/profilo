@@ -22,6 +22,12 @@
 
 #include <museum/6.0.1/art/runtime/base/macros.h>
 
+#if defined(MUSEUM_NOOP_CHECK_MACROS)
+#define __MUSEUM_CHECK_MAYBE_NOOP false
+#else
+#define __MUSEUM_CHECK_MAYBE_NOOP true
+#endif
+
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 enum LogSeverity {
@@ -110,14 +116,14 @@ extern const char* ProgramInvocationShortName();
 // evaluated once. Extra logging can be appended using << after. For example,
 // CHECK(false == true) results in a log message of "Check failed: false == true".
 #define CHECK(x) \
-  if (UNLIKELY(!(x))) \
+  if (UNLIKELY(!(x)) && __MUSEUM_CHECK_MAYBE_NOOP) \
     ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::art::FATAL, -1).stream() \
         << "Check failed: " #x << " "
 
 // Helper for CHECK_xx(x,y) macros.
 #define CHECK_OP(LHS, RHS, OP) \
   for (auto _values = ::facebook::museum::MUSEUM_VERSION::art::MakeEagerEvaluator(LHS, RHS); \
-       UNLIKELY(!(_values.lhs OP _values.rhs)); /* empty */) \
+       UNLIKELY(!(_values.lhs OP _values.rhs)) && __MUSEUM_CHECK_MAYBE_NOOP; /* empty */) \
     ::facebook::museum::MUSEUM_VERSION::art::LogMessage(__FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::art::FATAL, -1).stream() \
         << "Check failed: " << #LHS << " " << #OP << " " << #RHS \
         << " (" #LHS "=" << _values.lhs << ", " #RHS "=" << _values.rhs << ") "
@@ -135,7 +141,7 @@ extern const char* ProgramInvocationShortName();
 
 // Helper for CHECK_STRxx(s1,s2) macros.
 #define CHECK_STROP(s1, s2, sense) \
-  if (UNLIKELY((strcmp(s1, s2) == 0) != sense)) \
+  if (UNLIKELY((strcmp(s1, s2) == 0) != sense) && __MUSEUM_CHECK_MAYBE_NOOP) \
     LOG(::facebook::museum::MUSEUM_VERSION::art::FATAL) << "Check failed: " \
         << "\"" << s1 << "\"" \
         << (sense ? " == " : " != ") \
@@ -149,7 +155,7 @@ extern const char* ProgramInvocationShortName();
 #define CHECK_PTHREAD_CALL(call, args, what) \
   do { \
     int rc = call args; \
-    if (rc != 0) { \
+    if (rc != 0 && __MUSEUM_CHECK_MAYBE_NOOP) { \
       errno = rc; \
       PLOG(::facebook::museum::MUSEUM_VERSION::art::FATAL) << # call << " failed for " << what; \
     } \
@@ -163,7 +169,7 @@ extern const char* ProgramInvocationShortName();
 //          n / 2;
 //    }
 #define CHECK_CONSTEXPR(x, out, dummy) \
-  (UNLIKELY(!(x))) ? (LOG(::facebook::museum::MUSEUM_VERSION::art::FATAL) << "Check failed: " << #x out, dummy) :
+  (UNLIKELY(!(x)) && __MUSEUM_CHECK_MAYBE_NOOP) ? (LOG(::facebook::museum::MUSEUM_VERSION::art::FATAL) << "Check failed: " << #x out, dummy) :
 
 
 // DCHECKs are debug variants of CHECKs only enabled in debug builds. Generally CHECK should be

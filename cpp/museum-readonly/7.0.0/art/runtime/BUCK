@@ -24,6 +24,7 @@ fb_xplat_cxx_library(
         "-Wno-inconsistent-missing-override",
         "-Wno-unknown-warning-option",
         "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v7_0_0_readonly",
+        "-DMUSEUM_NOOP_CHECK_MACROS",
     ],
     exported_deps = [
         profilo_path("deps/museum/7.0.0/art/runtime:headers"),
