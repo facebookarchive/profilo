@@ -255,19 +255,25 @@ public final class TraceOrchestrator
     mTraceProviders = providers;
   }
 
-  synchronized public void setConfigProvider(ConfigProvider newConfigProvider) {
-    if (newConfigProvider.equals(mConfigProvider)) {
-      return;
+  public void setConfigProvider(ConfigProvider newConfigProvider) {
+    synchronized (this) {
+      if (newConfigProvider.equals(mConfigProvider)) {
+        return;
+      }
     }
 
-    // Defer updating the config provider if we're inside a trace
-    TraceControl traceControl = TraceControl.get();
-    if (traceControl != null && traceControl.isInsideTrace()) {
-      mNextConfigProvider = newConfigProvider;
-      return;
-    }
+    mListenerManager.onBeforeConfigUpdate();
 
-    performConfigProviderTransition(newConfigProvider);
+    synchronized (this) {
+      // Defer updating the config provider if we're inside a trace
+      TraceControl traceControl = TraceControl.get();
+      if (traceControl != null && traceControl.isInsideTrace()) {
+        mNextConfigProvider = newConfigProvider;
+        return;
+      }
+
+      performConfigProviderTransition(newConfigProvider);
+    }
   }
 
   public synchronized void setBackgroundUploadService(
