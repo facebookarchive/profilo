@@ -80,12 +80,12 @@ static bool threadIsUnwinding() {
 }
 
 sigmux_action sigcatch_handler(struct sigmux_siginfo* siginfo, void* handler_data) {
-  int32_t tid = threadID();
-  auto& profileState = getProfileState();
-
   if (!threadIsUnwinding()) {
     return SIGMUX_CONTINUE_SEARCH;
   }
+
+  int32_t tid = threadID();
+  auto& profileState = getProfileState();
 
   // We know the thread that raised the signal was unwinding, find its slot and
   // jump to the saved state there.
@@ -127,7 +127,6 @@ void maybeSignalReader(bool stackCollected) {
 }
 
 void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
-  auto& profileState = getProfileState();
   if (threadIsUnwinding()) {
     // Jump out, we're already in this handler.
     //
@@ -136,9 +135,10 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
     // the masks can get confused, especially when using a
     // clock to send signals.
     return;
-  } else {
-    pthread_setspecific(profileState.threadIsProfilingKey, (void*) 1);
   }
+
+  auto& profileState = getProfileState();
+  pthread_setspecific(profileState.threadIsProfilingKey, (void*) 1);
 
   auto tid = threadID();
   for (const auto& tracerEntry : profileState.tracersMap) {
@@ -168,7 +168,8 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
 
     if (!slot_found) {
       profileState.errSlotMisses.fetch_add(1);
-      goto sigprof_out;
+      // We're out of slots, no tracer is likely to succeed.
+      break;
     }
 
     auto& slot = profileState.stacks[slotIndex];
@@ -209,7 +210,6 @@ void sigprof_handler(int signum, siginfo_t* siginfo, void* ucontext) {
   }
 
   pthread_setspecific(profileState.threadIsProfilingKey, (void*) 0);
-sigprof_out:
 
   struct sigaction& oldact = profileState.oldSigprofAct;
   if (oldact.sa_sigaction != nullptr || oldact.sa_handler != nullptr) {
