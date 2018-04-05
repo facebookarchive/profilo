@@ -743,18 +743,30 @@ class Thread {
 
   // Linked list recording fragments of managed stack.
   void PushManagedStackFragment(ManagedStack* fragment) {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
     tlsPtr_.managed_stack.PushManagedStackFragment(fragment);
+#endif
   }
   void PopManagedStackFragment(const ManagedStack& fragment) {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
     tlsPtr_.managed_stack.PopManagedStackFragment(fragment);
+#endif
   }
 
   ShadowFrame* PushShadowFrame(ShadowFrame* new_top_frame) {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
     return tlsPtr_.managed_stack.PushShadowFrame(new_top_frame);
+#else
+    return nullptr;
+#endif
   }
 
   ShadowFrame* PopShadowFrame() {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
     return tlsPtr_.managed_stack.PopShadowFrame();
+#else
+    return nullptr;
+#endif
   }
 
   template<size_t pointer_size>
@@ -788,15 +800,21 @@ class Thread {
   }
 
   void PushHandleScope(HandleScope* handle_scope) {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
     DCHECK_EQ(handle_scope->GetLink(), tlsPtr_.top_handle_scope);
     tlsPtr_.top_handle_scope = handle_scope;
+#endif
   }
 
   HandleScope* PopHandleScope() {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
     HandleScope* handle_scope = tlsPtr_.top_handle_scope;
     DCHECK(handle_scope != nullptr);
     tlsPtr_.top_handle_scope = tlsPtr_.top_handle_scope->GetLink();
     return handle_scope;
+#else
+    return nullptr;
+#endif
   }
 
   template<size_t pointer_size>

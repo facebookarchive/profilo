@@ -383,11 +383,19 @@ inline bool Thread::ModifySuspendCount(Thread* self,
 }
 
 inline ShadowFrame* Thread::PushShadowFrame(ShadowFrame* new_top_frame) {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
   return tlsPtr_.managed_stack.PushShadowFrame(new_top_frame);
+#else
+  return nullptr;
+#endif
 }
 
 inline ShadowFrame* Thread::PopShadowFrame() {
+#ifndef MUSEUM_NOOP_THREAD_MUTATORS
   return tlsPtr_.managed_stack.PopShadowFrame();
+#else
+  return nullptr;
+#endif
 }
 
 } } } } // namespace facebook::museum::MUSEUM_VERSION::art
