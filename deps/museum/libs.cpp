@@ -54,4 +54,9 @@ dso const& libutils() {
   return libutils;
 }
 
+dso const& libandroid() {
+  static dso const libandroid("libandroid.so");
+  return libandroid;
+}
+
 } // namespace facebook

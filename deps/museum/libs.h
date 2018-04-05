@@ -38,4 +38,6 @@ dso const& libhwui();
 
 dso const& libutils();
 
+dso const& libandroid();
+
 } // namespace facebook
