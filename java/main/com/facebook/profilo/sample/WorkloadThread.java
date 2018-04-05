@@ -62,7 +62,7 @@ public class WorkloadThread extends Thread {
     }
 
     try {
-      Thread.sleep(250);
+      Thread.sleep(1);
     } catch (InterruptedException e) {
       // OK to just ignore exception
     }
@@ -87,7 +87,7 @@ public class WorkloadThread extends Thread {
     }
 
     try {
-      Thread.sleep(250);
+      Thread.sleep(1);
     } catch (InterruptedException e) {
       // OK to just ignore exception
     }
@@ -112,7 +112,7 @@ public class WorkloadThread extends Thread {
     }
 
     try {
-      Thread.sleep(250);
+      Thread.sleep(1);
     } catch (InterruptedException e) {
       // OK to just ignore exception
     }

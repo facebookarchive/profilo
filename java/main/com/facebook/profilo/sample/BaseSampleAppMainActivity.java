@@ -25,14 +25,16 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 import com.facebook.profilo.BuildConfig;
-import com.facebook.profilo.controllers.external.api.ExternalTraceControl;
 import com.facebook.profilo.controllers.external.ExternalController;
+import com.facebook.profilo.controllers.external.api.ExternalTraceControl;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TraceOrchestrator;
 import com.facebook.soloader.SoLoader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseSampleAppMainActivity extends Activity {
 
@@ -134,7 +136,15 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     }
 
   protected int getProvidersToEnable() {
-    return ProvidersRegistry.getBitMaskFor(ProvidersRegistry.getRegisteredProviders());
+    List<String> allProviders = ProvidersRegistry.getRegisteredProviders();
+    ArrayList<String> validProviders = new ArrayList<>();
+    for (String prov : allProviders) {
+      if (prov.equals("wall_time_stack_trace") || prov.equals("native_stack_trace")) {
+        continue;
+      }
+      validProviders.add(prov);
+    }
+    return ProvidersRegistry.getBitMaskFor(validProviders);
   }
 
   protected TraceOrchestrator.TraceProvider createProvider(String providerName) {

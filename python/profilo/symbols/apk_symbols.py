@@ -31,27 +31,32 @@ def parse_dex_id(signature):
 
 def parse_type_signature(s):
     primitives = {
-        'V': 'void',
-        'Z': 'boolean',
-        'B': 'byte',
-        'S': 'short',
-        'C': 'char',
-        'I': 'int',
-        'J': 'long',
-        'F': 'float',
-        'D': 'double',
+        ord('V'): b'void',
+        ord('Z'): b'boolean',
+        ord('B'): b'byte',
+        ord('S'): b'short',
+        ord('C'): b'char',
+        ord('I'): b'int',
+        ord('J'): b'long',
+        ord('F'): b'float',
+        ord('D'): b'double',
     }
     array_order = 0
     type_name = None
     for i, c in enumerate(s):
         if c in primitives:
             type_name = primitives[c]
-        elif c == '[':
+        elif c == b'[':
             array_order += 1
-        elif c == 'L':
-            type_name = s[i + 1:-1].replace('/', '.')
+        elif c == ord('L'):
+            type_name = s[i + 1:-1].replace(b'/', b'.')
             break
-    return type_name + '[]' * array_order
+    try:
+        type_name = type_name.decode("ascii")
+        return type_name + '[]' * array_order
+    except UnicodeDecodeError:
+        # Non-ASCII == garbage
+        return None
 
 
 def uleb128_decode(f):
@@ -140,9 +145,9 @@ class StringDataItem(object):
         # This doesn't really handle the MUTF-8 encoding,
         # but should be okay for class and method names in our apps.
         self.utf16_size = uleb128_decode(f)
-        self.data = str()
+        self.data = bytes()
         while True:
-            c = f.read(1).decode("ascii")
+            c = f.read(1)
             if ord(c) == 0:
                 return
             else:
@@ -157,13 +162,13 @@ class Dex(object):
         dex_version = int(self.header.dex_file_magic[4:7])
         assert(dex_version <= DEX_FILE_VERSION_MAX)
         self.dex_id = parse_dex_id(self.header.signature)
-        self.strings = self._read_strings(f)
+        self.bytes = self._read_bytes(f)
         self.method_ids = self._read(
             f, self.header.method_ids_off, self.header.method_ids_size, MethodIdItem)
         self.type_ids = self._read(
             f, self.header.type_ids_off, self.header.type_ids_size, TypeIdItem)
 
-    def _read_strings(self, f):
+    def _read_bytes(self, f):
         offsets = []
         f.seek(self.header.string_ids_off)
         for _ in range(self.header.string_ids_size):
@@ -189,8 +194,13 @@ class Dex(object):
         methods_map = {}
         for method_idx, m in self.method_ids:
             class_name = parse_type_signature(
-                self.strings[self.type_ids[m.class_idx][1].descriptor_idx])
-            method_name = self.strings[m.name_idx]
+                self.bytes[self.type_ids[m.class_idx][1].descriptor_idx])
+            if not class_name:
+                continue
+            try:
+                method_name = self.bytes[m.name_idx].decode("ascii")
+            except UnicodeDecodeError:
+                continue
             methods_map[self._global_id(method_idx)] = \
                 "{}::{}".format(class_name, method_name)
         return methods_map
@@ -199,7 +209,9 @@ class Dex(object):
         """Returns a dictionary with all classes in the Dex file """
         classes_map = {}
         for class_idx, t in self.type_ids:
-            class_name = parse_type_signature(self.strings[t.descriptor_idx])
+            class_name = parse_type_signature(self.bytes[t.descriptor_idx])
+            if not class_name:
+                continue
             classes_map[self._global_id(class_idx)] = class_name
         return classes_map
 
