@@ -33,7 +33,7 @@ def tracer_library(version):
         header_namespace = "profiler",
         headers = glob(
             ["*.h"],
-            excludes = exported_headers,
+            exclude = exported_headers,
         ),
         reexport_all_header_dependencies = False,
         soname = "libprofiloprofiler{version_num}.$(ext)".format(version_num=version_num),
@@ -91,7 +91,7 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
-        excludes = PROFILER_EXPORTED_HEADERS,
+        exclude = PROFILER_EXPORTED_HEADERS,
     ),
     header_namespace = "profiler",
     exported_headers = PROFILER_EXPORTED_HEADERS,

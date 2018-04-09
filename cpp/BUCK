@@ -10,7 +10,7 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
-        excludes = PROVIDER_EXPORTED_HEADERS,
+        exclude = PROVIDER_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
     exported_headers = PROVIDER_EXPORTED_HEADERS,
@@ -36,7 +36,7 @@ fb_xplat_cxx_library(
     name = "constants",
     headers = glob(
         ["*.h"],
-        excludes = CONSTS_EXPORTED_HEADERS,
+        exclude = CONSTS_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
     exported_headers = CONSTS_EXPORTED_HEADERS,
@@ -65,7 +65,7 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
-        excludes = PROFILO_EXPORTED_HEADERS,
+        exclude = PROFILO_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
     exported_headers = PROFILO_EXPORTED_HEADERS,

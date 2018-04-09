@@ -1,5 +1,8 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-load(profilo_path("build_defs:profilo_sample_app.bzl"), "profilo_sample_app")
+load(
+    profilo_path("build_defs:profilo_sample_app.bzl"),
+    "profilo_sample_app",
+)
 
 keystore(
     name = "keystore",
@@ -51,7 +54,7 @@ android_library(
 
 ACTIVITY_SRCS = glob(
     ["*.java"],
-    excludes = SAMPLE_LIB_SRCS,
+    exclude = SAMPLE_LIB_SRCS,
 )
 
 profilo_sample_app(

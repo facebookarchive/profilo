@@ -45,7 +45,7 @@ fb_xplat_cxx_library(
     ]),
     headers = glob(
         ["*.h"],
-        excludes = UTIL_EXPORTED_HEADERS,
+        exclude = UTIL_EXPORTED_HEADERS,
     ),
     header_namespace = "util",
     exported_headers = UTIL_EXPORTED_HEADERS,

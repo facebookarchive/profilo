@@ -7,7 +7,7 @@ profilo_oss_cxx_library(
         [
             "**/*.cpp",
         ],
-        excludes = [
+        exclude = [
             "jni/android/*.cpp",
         ],
     ),

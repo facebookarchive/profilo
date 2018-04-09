@@ -92,7 +92,7 @@ android_library(
     name = "core",
     srcs = glob(
         ["*.java"],
-        excludes = CONSTANTS + EVENTS + CONTROL + REGISTRY,
+        exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY,
     ),
     exported_deps = [
         ":constants",

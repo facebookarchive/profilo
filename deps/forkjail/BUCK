@@ -13,7 +13,7 @@ profilo_oss_cxx_library(
     ]),
     headers = glob(
         ["*.h"],
-        excludes = FORKJAIL_EXPORTED_HEADERS,
+        exclude = FORKJAIL_EXPORTED_HEADERS,
     ),
     header_namespace = "forkjail",
     exported_headers = FORKJAIL_EXPORTED_HEADERS,

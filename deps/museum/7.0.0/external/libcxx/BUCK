@@ -1,14 +1,18 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-load(profilo_path("deps/museum:museum_library.bzl"), "museum_library")
+load(
+    profilo_path("deps/museum:museum_library.bzl"),
+    "museum_library",
+)
 
 museum_library(
     exported_headers = glob(
         ["**/*"],
-        excludes = glob(["**/*.cc"]) + [
+        exclude = glob(["**/*.cc"]) + [
             "BUCK",
             "module.modulemap",
             "model.yml",
-        ]),
+        ],
+    ),
     museum_deps = [
         "bionic/libc",
         "bionic/libm",

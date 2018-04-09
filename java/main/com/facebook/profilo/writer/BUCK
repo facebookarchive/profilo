@@ -6,7 +6,7 @@ android_library(
     name = "writer",
     srcs = glob(
         ["*.java"],
-        excludes = CALLBACKS_SRC,
+        exclude = CALLBACKS_SRC,
     ),
     exported_deps = [
         ":writer_callbacks",

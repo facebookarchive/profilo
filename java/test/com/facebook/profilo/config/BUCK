@@ -8,7 +8,7 @@ robolectric3_test(
             "coldstart/*Test.java",
             "*Test.java",
         ],
-        excludes = [
+        exclude = [
             "json/**/*",
         ],
     ),
