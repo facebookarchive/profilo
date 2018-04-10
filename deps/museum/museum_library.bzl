@@ -36,7 +36,7 @@ def museum_library(
       extra_visibility: Any targets that this library should be visible to beyond the Museum
                         defaults.
 
-      exported_headers: Custom header exports. If not set, uses `glob(["**/*.h"])`. Only used by
+      exported_headers: Custom header exports. If not set, uses `native.glob(["**/*.h"])`. Only used by
                         the headers target.
 
       exported_platform_headers: Custom platform-specific header exports. Only used by the headers
@@ -53,7 +53,7 @@ def museum_library(
     fb_xplat_cxx_library(
         name="headers",
         header_namespace="museum/" + "/".join(path[2:]),
-        exported_headers=exported_headers if exported_headers else glob([
+        exported_headers=exported_headers if exported_headers else native.glob([
             "**/*.h",
         ]),
         exported_platform_headers=exported_platform_headers,
@@ -77,7 +77,7 @@ def museum_library(
     fb_xplat_cxx_library(
         name=name,
         header_namespace="museum/{}/{}".format(museum_version, name),
-        srcs=glob(["**/*.c", "**/*.cc", "**/*.cpp"]),
+        srcs=native.glob(["**/*.c", "**/*.cc", "**/*.cpp"]),
         compiler_flags=[
             "-std=c++11",
             "-fvisibility=hidden",
