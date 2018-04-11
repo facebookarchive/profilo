@@ -224,8 +224,9 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse minflt");
   }
+  data = skipUntil(endptr, end, ' ');
 
-  data = skipUntil(endptr, end, ' '); // cminflt
+  data = skipUntil(data, end, ' '); // cminflt
 
   endptr = nullptr;
   long majflt = strtol(data, &endptr, 10); // majflt
