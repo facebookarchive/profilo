@@ -40,4 +40,6 @@ dso const& libutils();
 
 dso const& libandroid();
 
+dso const& libcutils();
+
 } // namespace facebook

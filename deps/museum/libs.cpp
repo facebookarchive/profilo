@@ -59,4 +59,9 @@ dso const& libandroid() {
   return libandroid;
 }
 
+dso const& libcutils() {
+  static dso const libcutils("libcutils.so");
+  return libcutils;
+}
+
 } // namespace facebook
