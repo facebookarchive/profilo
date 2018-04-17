@@ -20,6 +20,8 @@
 #include <museum/7.0.0/art/runtime/fbentrypoints.h>
 #include <museum/7.0.0/art/runtime/entrypoints/quick/quick_entrypoints.h>
 
+#include <museum/libs.h>
+
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 #ifndef BUILDING_LIBART
@@ -58,12 +60,11 @@ static inline const void* GetQuickGenericJniStub() {
 }
 
 // Return the address of quick stub code for handling transitions into the proxy invoke handler.
-extern "C" void art_quick_proxy_invoke_handler();
 static inline const void* GetQuickProxyInvokeHandler() {
   // FB
-  QuickEntryPoints* entrypoints = (QuickEntryPoints*) entrypoints::HostEntryPoints::quick_entrypoints;
-  return reinterpret_cast<const void*>(entrypoints->pQuickProxyInvokeHandler);
-  //return reinterpret_cast<const void*>(art_quick_proxy_invoke_handler);
+  static auto art_quick_proxy_invoke_handler =
+    ::facebook::libart().get_symbol<void const*>("art_quick_proxy_invoke_handler");
+  return art_quick_proxy_invoke_handler;
   // FB END
 }
 
@@ -84,12 +85,11 @@ static inline const void* GetQuickDeoptimizationEntryPoint() {
 }
 
 // Return address of instrumentation entry point used by non-interpreter based tracing.
-extern "C" void art_quick_instrumentation_entry(void*);
 static inline const void* GetQuickInstrumentationEntryPoint() {
   // FB
-  QuickEntryPoints* entrypoints = (QuickEntryPoints*) entrypoints::HostEntryPoints::quick_entrypoints;
-  return reinterpret_cast<const void*>(entrypoints->pQuickInstrumentationEntryPoint);
-  //return reinterpret_cast<const void*>(art_quick_instrumentation_entry);
+  static auto art_quick_instrumentation_entry =
+    ::facebook::libart().get_symbol<void const*>("art_quick_instrumentation_entry");
+  return art_quick_instrumentation_entry;
   // FB END
 }
 
@@ -97,13 +97,10 @@ static inline const void* GetQuickInstrumentationEntryPoint() {
 extern "C" void art_quick_deoptimize_from_compiled_code();
 
 // The return_pc of instrumentation exit stub.
-extern "C" void art_quick_instrumentation_exit();
 static inline const void* GetQuickInstrumentationExitPc() {
-  // FB
-  QuickEntryPoints* entrypoints = (QuickEntryPoints*) entrypoints::HostEntryPoints::quick_entrypoints;
-  return reinterpret_cast<const void*>(entrypoints->pQuickInstrumentationExitPc);
-  //return reinterpret_cast<const void*>(art_quick_instrumentation_exit);
-  // FB END
+  static auto art_quick_instrumentation_exit =
+    ::facebook::libart().get_symbol<void const*>("art_quick_instrumentation_exit");
+  return art_quick_instrumentation_exit;
 }
 
 } } } } // namespace facebook::museum::MUSEUM_VERSION::art

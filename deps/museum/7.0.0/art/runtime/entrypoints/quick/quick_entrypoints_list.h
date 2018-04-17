@@ -126,9 +126,6 @@
   V(QuickImtConflictTrampoline, void, ArtMethod*) \
   V(QuickResolutionTrampoline, void, ArtMethod*) \
   V(QuickToInterpreterBridge, void, ArtMethod*) \
-  V(QuickInstrumentationExitPc, void, ArtMethod*) \
-  V(QuickProxyInvokeHandler, void, ArtMethod*) \
-  V(QuickInstrumentationEntryPoint, void, ArtMethod*) \
   V(InvokeDirectTrampolineWithAccessCheck, void, uint32_t, void*) \
   V(InvokeInterfaceTrampolineWithAccessCheck, void, uint32_t, void*) \
   V(InvokeStaticTrampolineWithAccessCheck, void, uint32_t, void*) \
