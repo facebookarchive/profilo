@@ -45,6 +45,21 @@ class JThread : public JavaClass<JThread> {
     auto jrunnable = JNativeRunnable::newObjectCxxArgs(std::move(runnable));
     return newInstance(static_ref_cast<JRunnable::javaobject>(jrunnable), make_jstring(std::move(name)));
   }
+
+  static local_ref<JThread> getCurrent() {
+    static const auto method = javaClassStatic()->getStaticMethod<local_ref<JThread>()>("currentThread");
+    return method(javaClassStatic());
+  }
+
+  int getPriority() {
+    static const auto method = getClass()->getMethod<jint()>("getPriority");
+    return method(self());
+  }
+
+  void setPriority(int priority) {
+    static const auto method = getClass()->getMethod<void(int)>("setPriority");
+    method(self(), priority);
+  }
 };
 
 }
