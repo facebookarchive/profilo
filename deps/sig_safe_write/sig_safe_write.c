@@ -23,6 +23,7 @@
 struct fault_handler_data {
   int tid;
   int active;
+  int check_sigill;
   jmp_buf jump_buffer;
 };
 
@@ -37,9 +38,8 @@ as_safe_gettid()
 }
 
 /**
- * SIGSEGV and SIGBUS handler that jumps out of the handler
- * after determining the signal is caused by accessing
- * predetermined memory location on predetermined thread.
+ * Signal handler that jumps out of the handler after determining the signal is
+ * caused by executing predetermined code on predetermined thread.
  */
 static enum sigmux_action
 fault_handler(
@@ -57,10 +57,16 @@ fault_handler(
     return SIGMUX_CONTINUE_SEARCH;
   }
 
-  if (info->si_signo != SIGSEGV &&
-      info->si_signo != SIGBUS)
-  {
-    return SIGMUX_CONTINUE_SEARCH;
+  if (__atomic_load_n(&data->check_sigill, __ATOMIC_SEQ_CST)) {
+    /* Expect SIGILL signal */
+    if (info->si_signo != SIGILL) {
+      return SIGMUX_CONTINUE_SEARCH;
+    }
+  } else {
+    /* Expect SIGSEGV or SIGBUS signal */
+    if (info->si_signo != SIGSEGV && info->si_signo != SIGBUS) {
+      return SIGMUX_CONTINUE_SEARCH;
+    }
   }
 
   sigmux_longjmp(siginfo, data->jump_buffer, 1);
@@ -77,6 +83,7 @@ sig_safe_op (void (*op)(void*), void* data)
   int result = 1;
 
   __atomic_store_n(&handler_data.tid, as_safe_gettid(), __ATOMIC_SEQ_CST);
+  __atomic_store_n(&handler_data.check_sigill, 0, __ATOMIC_SEQ_CST);
 
   if (sigsetjmp(handler_data.jump_buffer, 1)) {
     errno = EFAULT;
@@ -87,6 +94,49 @@ sig_safe_op (void (*op)(void*), void* data)
   if (sigemptyset(&sigset) ||
       sigaddset(&sigset, SIGSEGV) ||
       sigaddset(&sigset, SIGBUS))
+  {
+    goto out;
+  }
+
+  registration = sigmux_register(&sigset, &fault_handler, &handler_data, 0);
+  if (!registration) {
+    goto out;
+  }
+
+  __atomic_store_n(&handler_data.active, 1, __ATOMIC_SEQ_CST);
+  op(data);
+  __atomic_store_n(&handler_data.active, 0, __ATOMIC_SEQ_CST);
+
+  result = 0;
+
+out:
+  if (registration) {
+    int old_errno = errno;
+    sigmux_unregister(registration);
+    errno = old_errno;
+  }
+
+  return result;
+}
+
+int
+sig_safe_exec (void (*op)(void*), void* data)
+{
+  struct fault_handler_data handler_data = {};
+  struct sigmux_registration* registration = NULL;
+  int result = 1;
+
+  __atomic_store_n(&handler_data.tid, as_safe_gettid(), __ATOMIC_SEQ_CST);
+  __atomic_store_n(&handler_data.check_sigill, 1, __ATOMIC_SEQ_CST);
+
+  if (sigsetjmp(handler_data.jump_buffer, 1)) {
+    errno = EFAULT;
+    goto out;
+  }
+
+  sigset_t sigset;
+  if (sigemptyset(&sigset) ||
+      sigaddset(&sigset, SIGILL))
   {
     goto out;
   }

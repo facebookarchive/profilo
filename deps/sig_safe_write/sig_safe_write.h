@@ -36,6 +36,18 @@ int
 sig_safe_op(void (*op)(void* data), void* data);
 
 /**
+ * SIGILL safe op. Performs the specified op, but first registers sigmux based
+ * SIGILL handler that bails out in case of failure.
+ *
+ * The operation will receive the value of data as a parameter.
+ *
+ * If successful, returns 0. In case of error returns non-zero
+ * value and sets errno appropriately.
+ */
+int
+sig_safe_exec(void (*op)(void* data), void* data);
+
+/**
  * Like sig_safe_op but specifically for memory writes.
  * Writes the specified value to the target address with all the protections
  * of sig_safe_op.
