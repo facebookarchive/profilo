@@ -1,0 +1,16 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+android_library(
+    name = "mappingdensity",
+    srcs = glob(["*.java"]),
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/proguard:annotations"),
+        profilo_path("deps/soloader:soloader"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("cpp/mappingdensity:mappingdensity"),
+        profilo_path("java/main/com/facebook/profilo/core:core"),
+    ],
+)

@@ -13,6 +13,7 @@ load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 PROVIDER_TO_RULE = {
     "atrace": profilo_path("java/main/com/facebook/profilo/provider/atrace:atrace"),
+    "mappingdensity": profilo_path("java/main/com/facebook/profilo/provider/mappingdensity:mappingdensity"),
     "processmetadata": profilo_path("java/main/com/facebook/profilo/provider/processmetadata:processmetadata"),
     "stacktrace": profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),
     "systemcounters": profilo_path("java/main/com/facebook/profilo/provider/systemcounters:systemcounters"),

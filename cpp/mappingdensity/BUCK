@@ -1,0 +1,31 @@
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "mappingdensity",
+    srcs = [
+        "jni.cpp",
+        "mappingdensity.cpp",
+    ],
+    headers = glob(["*.h"]),
+    header_namespace = "mappingdensity",
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo/MappingDensity\"",
+        #'-DFBLOG_NDEBUG=0', # verbose logging
+        # "-O0",
+        # "-g3",
+    ],
+    soname = "libprofilo_mappingdensity.$(ext)",
+    supported_platforms_regex = "^android-(armv7|x86)$",
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/procmaps:procmaps"),
+    ],
+)

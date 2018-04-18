@@ -4,6 +4,7 @@ package com.facebook.profilo.sample;
 
 import com.facebook.profilo.core.TraceOrchestrator;
 import com.facebook.profilo.provider.atrace.SystraceProvider;
+import com.facebook.profilo.provider.mappingdensity.MappingDensityProvider;
 import com.facebook.profilo.provider.processmetadata.ProcessMetadataProvider;
 import com.facebook.profilo.provider.stacktrace.StackFrameThread;
 import com.facebook.profilo.provider.systemcounters.SystemCounterThread;
@@ -16,6 +17,8 @@ public class SampleAppMainActivity extends BaseSampleAppMainActivity {
     switch (provider) {
       case "atrace":
         return new SystraceProvider();
+      case "mappingdensity":
+        return new MappingDensityProvider();
       case "systemcounters":
         return new SystemCounterThread();
       case "stacktrace":
