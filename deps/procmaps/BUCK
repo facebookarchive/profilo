@@ -1,0 +1,19 @@
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "procmaps",
+    srcs = [
+        "procmaps.c",
+    ],
+    header_namespace = "",
+    exported_headers = subdir_glob([
+        ("", "*.h"),
+    ]),
+    compiler_flags = [
+        "-std=gnu99",
+    ],
+    force_static = True,
+    visibility = [
+        "PUBLIC",
+    ],
+)
