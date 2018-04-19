@@ -51,10 +51,8 @@ void dumpMappingDensities(
        vma != nullptr;
        vma = memorymap_vma_next(vma)) {
     if (!std::regex_search(memorymap_vma_file(vma) ?: "", mapRegex)) {
-      FBLOGD("skipping %s", memorymap_vma_file(vma) ?: "(null)");
       continue;
     }
-    FBLOGD("processing %s", memorymap_vma_file(vma));
 
     int ret = mincore(
       reinterpret_cast<void*>(memorymap_vma_start(vma)),
