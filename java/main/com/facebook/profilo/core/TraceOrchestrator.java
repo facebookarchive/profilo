@@ -378,20 +378,8 @@ public final class TraceOrchestrator
    */
   @Override
   public void onTraceStart(TraceContext context) {
-    Config config;
-    synchronized (this) {
-      config = mConfig;
-    }
-    if (config != null) {
-      // Increment the providers
-      TraceEvents.enableProviders(context.enabledProviders);
-
-      Logger.writeEntryWithoutMatch(
-          ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
-          EntryType.TRACE_ANNOTATION,
-          Identifiers.CONFIG_ID,
-          config.getConfigID());
-    }
+    // Increment the providers
+    TraceEvents.enableProviders(context.enabledProviders);
 
     mListenerManager.onTraceStart(context);
 
@@ -415,8 +403,18 @@ public final class TraceOrchestrator
   @Override
   public void onTraceStop(TraceContext context) {
     TraceProvider[] providers;
+    Config config;
     synchronized (this) {
       providers = mTraceProviders;
+      config = mConfig;
+    }
+
+    if (config != null) {
+      Logger.writeEntryWithoutMatch(
+          ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+          EntryType.TRACE_ANNOTATION,
+          Identifiers.CONFIG_ID,
+          config.getConfigID());
     }
 
     // Decrement providers for current trace
