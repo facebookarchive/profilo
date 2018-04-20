@@ -51,12 +51,22 @@ void api_mark_end(const char* provider) {
   }
   api->mark_end(provider);
 }
+
+void api_log_classload(const char* provider, int64_t classid) {
+  auto api = get_api_int();
+  if (api == nullptr) {
+    return;
+  }
+  api->log_classload(provider, classid);
+}
+
 } // namespace anonymous
 
 ProfiloApi* profilo_api() {
   static ProfiloApi api {
     .mark_start = &api_mark_start,
-    .mark_end = &api_mark_end
+    .mark_end = &api_mark_end,
+    .log_classload = &api_log_classload,
   };
   return &api;
 }

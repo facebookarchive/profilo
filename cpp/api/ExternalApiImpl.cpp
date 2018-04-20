@@ -59,6 +59,20 @@ void internal_mark_end(const char* provider) {
   logger.write(std::move(entry));
 }
 
+void internal_log_classload(const char* provider, int64_t classid) {
+  if (!TraceProviders::get().isEnabled(provider)) {
+    return;
+  }
+
+  auto& logger = Logger::get();
+  StandardEntry entry{};
+  entry.tid = threadID();
+  entry.timestamp = monotonicTime();
+  entry.type = entries::CLASS_LOAD;
+  entry.extra = classid;
+  logger.write(std::move(entry));
+}
+
 } // namespace
 
 #ifdef __cplusplus
@@ -69,7 +83,8 @@ extern "C" {
 
 PROFILO_EXPORT ProfiloApi profilo_api_int {
   .mark_start = &internal_mark_start,
-  .mark_end = &internal_mark_end
+  .mark_end = &internal_mark_end,
+  .log_classload = &internal_log_classload,
 };
 
 #ifdef __cplusplus
