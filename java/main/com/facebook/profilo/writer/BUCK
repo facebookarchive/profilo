@@ -1,8 +1,9 @@
+load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 CALLBACKS_SRC = ["NativeTraceWriterCallbacks.java"]
 
-android_library(
+fb_core_android_library(
     name = "writer",
     srcs = glob(
         ["*.java"],
@@ -23,7 +24,7 @@ android_library(
     ],
 )
 
-android_library(
+fb_core_android_library(
     name = "writer_callbacks",
     srcs = glob(CALLBACKS_SRC),
     visibility = [

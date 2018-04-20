@@ -7,7 +7,7 @@ PROVIDER_TO_RULE - Map that links provider "short names" to the provider class a
                    Can be extended in individual BUCK files to add more providers specific to
                    those files.
 """
-
+load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 
@@ -67,7 +67,7 @@ def profilo_sample_app(srcs, manifest, providers, deps=[]):
     provided_deps = [x for x in PROVIDER_TO_RULE.values()
                      if x not in provider_deps]
 
-    android_library(
+    fb_core_android_library(
         name="sample-activity-{}".format(providers_string),
         srcs=srcs,
         provided_deps=provided_deps,

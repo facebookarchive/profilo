@@ -1,3 +1,4 @@
+load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 CONSTANTS = [
@@ -21,7 +22,7 @@ REGISTRY = [
     "ProvidersRegistry.java",
 ]
 
-android_library(
+fb_core_android_library(
     name = "providersregistry",
     srcs = REGISTRY,
     visibility = [
@@ -33,7 +34,7 @@ android_library(
     ],
 )
 
-android_library(
+fb_core_android_library(
     name = "constants",
     srcs = CONSTANTS,
     visibility = [
@@ -45,7 +46,7 @@ android_library(
     ],
 )
 
-android_library(
+fb_core_android_library(
     name = "events",
     srcs = EVENTS,
     exported_deps = [
@@ -62,7 +63,7 @@ android_library(
     ],
 )
 
-android_library(
+fb_core_android_library(
     name = "control",
     srcs = CONTROL,
     exported_deps = [
@@ -88,7 +89,7 @@ android_library(
     ],
 )
 
-android_library(
+fb_core_android_library(
     name = "core",
     srcs = glob(
         ["*.java"],

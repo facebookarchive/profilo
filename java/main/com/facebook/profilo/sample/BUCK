@@ -1,3 +1,4 @@
+load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 load(
     profilo_path("build_defs:profilo_sample_app.bzl"),
@@ -34,7 +35,7 @@ android_build_config(
     ],
 )
 
-android_library(
+fb_core_android_library(
     name = "sample-lib",
     srcs = SAMPLE_LIB_SRCS,
     provided_deps = [

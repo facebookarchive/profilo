@@ -1,5 +1,4 @@
 """Provides OSS compatibile macros."""
-
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
 IS_OSS_BUILD = True
