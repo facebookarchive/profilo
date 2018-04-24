@@ -1,3 +1,4 @@
+# BUILD FILE SYNTAX: SKYLARK
 load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 

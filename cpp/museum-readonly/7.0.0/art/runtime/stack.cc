@@ -834,36 +834,38 @@ void StackVisitor::WalkStack(bool include_transitions) {
         uint8_t* return_pc_addr = reinterpret_cast<uint8_t*>(cur_quick_frame_) + return_pc_offset;
         uintptr_t return_pc = *reinterpret_cast<uintptr_t*>(return_pc_addr);
 
-        if (UNLIKELY(exit_stubs_installed)) {
-          // While profiling, the return pc is restored from the side stack, except when walking
-          // the stack for an exception where the side stack will be unwound in VisitFrame.
-          if (reinterpret_cast<uintptr_t>(GetQuickInstrumentationExitPc()) == return_pc) {
-            const instrumentation::InstrumentationStackFrame& instrumentation_frame =
-                GetInstrumentationStackFrame(thread_, instrumentation_stack_depth);
-            instrumentation_stack_depth++;
-            if (GetMethod() == Runtime::Current()->GetCalleeSaveMethod(Runtime::kSaveAll)) {
-              // Skip runtime save all callee frames which are used to deliver exceptions.
-            } else if (instrumentation_frame.interpreter_entry_) {
-              ArtMethod* callee = Runtime::Current()->GetCalleeSaveMethod(Runtime::kRefsAndArgs);
-              //CHECK_EQ(GetMethod(), callee) << "Expected: " << PrettyMethod(callee) << " Found: "
-              //                              << PrettyMethod(GetMethod());
-            } else {
-              //CHECK_EQ(instrumentation_frame.method_, GetMethod())
-              //    << "Expected: " << PrettyMethod(instrumentation_frame.method_)
-              //    << " Found: " << PrettyMethod(GetMethod());
-            }
-            if (num_frames_ != 0) {
-              // Check agreement of frame Ids only if num_frames_ is computed to avoid infinite
-              // recursion.
-              size_t frame_id = instrumentation::Instrumentation::ComputeFrameId(
-                  thread_,
-                  cur_depth_,
-                  inlined_frames_count);
-              CHECK_EQ(instrumentation_frame.frame_id_, frame_id);
-            }
-            return_pc = instrumentation_frame.return_pc_;
-          }
-        }
+        // FB
+        // if (UNLIKELY(exit_stubs_installed)) {
+        //   // While profiling, the return pc is restored from the side stack, except when walking
+        //   // the stack for an exception where the side stack will be unwound in VisitFrame.
+        //   if (reinterpret_cast<uintptr_t>(GetQuickInstrumentationExitPc()) == return_pc) {
+        //     const instrumentation::InstrumentationStackFrame& instrumentation_frame =
+        //         GetInstrumentationStackFrame(thread_, instrumentation_stack_depth);
+        //     instrumentation_stack_depth++;
+        //     if (GetMethod() == Runtime::Current()->GetCalleeSaveMethod(Runtime::kSaveAll)) {
+        //       // Skip runtime save all callee frames which are used to deliver exceptions.
+        //     } else if (instrumentation_frame.interpreter_entry_) {
+        //       ArtMethod* callee = Runtime::Current()->GetCalleeSaveMethod(Runtime::kRefsAndArgs);
+        //       //CHECK_EQ(GetMethod(), callee) << "Expected: " << PrettyMethod(callee) << " Found: "
+        //       //                              << PrettyMethod(GetMethod());
+        //     } else {
+        //       //CHECK_EQ(instrumentation_frame.method_, GetMethod())
+        //       //    << "Expected: " << PrettyMethod(instrumentation_frame.method_)
+        //       //    << " Found: " << PrettyMethod(GetMethod());
+        //     }
+        //     if (num_frames_ != 0) {
+        //       // Check agreement of frame Ids only if num_frames_ is computed to avoid infinite
+        //       // recursion.
+        //       size_t frame_id = instrumentation::Instrumentation::ComputeFrameId(
+        //           thread_,
+        //           cur_depth_,
+        //           inlined_frames_count);
+        //       CHECK_EQ(instrumentation_frame.frame_id_, frame_id);
+        //     }
+        //     return_pc = instrumentation_frame.return_pc_;
+        //   }
+        // }
+        // END FB
 
         cur_quick_frame_pc_ = return_pc;
         uint8_t* next_frame = reinterpret_cast<uint8_t*>(cur_quick_frame_) + frame_size;

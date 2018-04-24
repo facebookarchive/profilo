@@ -38,7 +38,7 @@ void dumpMappingDensities(
       continue;
     }
 
-    size_t sz = memorymap_vma_end(vma) - memorymap_vma_end(vma);
+    size_t sz = memorymap_vma_end(vma) - memorymap_vma_start(vma);
     if (sz > maxSize) {
       maxSize = sz;
     }

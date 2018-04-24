@@ -91,7 +91,7 @@ final public class TraceControl {
   /*package*/ static void initialize(
       SparseArray<TraceController> controllers,
       @Nullable TraceControlListener listener,
-      @Nullable Config.RootControllerConfig initialConfig) {
+      @Nullable Config initialConfig) {
 
     // Use double-checked locking to avoid using AtomicReference and thus increasing the
     // overhead of each read by adding a virtual call to it.
@@ -116,7 +116,7 @@ final public class TraceControl {
   private final SparseArray<TraceController> mControllers;
 
   private final AtomicReferenceArray<TraceContext> mCurrentTraces;
-  private final AtomicReference<Config.RootControllerConfig> mCurrentConfig;
+  private final AtomicReference<Config> mCurrentConfig;
   private final AtomicInteger mCurrentTracesMask;
   @Nullable private final TraceControlListener mListener;
   @Nullable private TraceControlHandler mTraceControlHandler;
@@ -124,7 +124,7 @@ final public class TraceControl {
   // VisibleForTesting
   /*package*/ TraceControl(
       SparseArray<TraceController> controllers,
-      @Nullable Config.RootControllerConfig config,
+      @Nullable Config config,
       @Nullable TraceControlListener listener) {
     mControllers = controllers;
     mCurrentConfig = new AtomicReference<>(config);
@@ -133,8 +133,8 @@ final public class TraceControl {
     mListener = listener;
   }
 
-  public void setConfig(@Nullable Config.RootControllerConfig config) {
-    Config.RootControllerConfig oldConfig = mCurrentConfig.get();
+  public void setConfig(@Nullable Config config) {
+    Config oldConfig = mCurrentConfig.get();
     if (!mCurrentConfig.compareAndSet(oldConfig, config)) {
       Log.d(LOG_TAG, "Tried to update the config and failed due to CAS");
     }
@@ -246,8 +246,13 @@ final public class TraceControl {
       return false;
     }
 
-    ControllerConfig controllerConfig = mCurrentConfig.get().getConfigForController(controller);
+    Config rootConfig = mCurrentConfig.get();
+    if (rootConfig == null) {
+      return false;
+    }
 
+    ControllerConfig controllerConfig =
+        rootConfig.getControllersConfig().getConfigForController(controller);
     if (controllerConfig == null) {
       // No config for this controller
       return false;
@@ -271,16 +276,17 @@ final public class TraceControl {
 
     long traceId = nextTraceID();
     Log.w(LOG_TAG, "START PROFILO_TRACEID: " + FbTraceId.encode(traceId));
-    TraceContext nextContext = new TraceContext(
-          traceId,
-          FbTraceId.encode(traceId),
-          controller,
-          traceController,
-          context,
-          intContext,
-          providers,
-          traceController.getCpuSamplingRateMs(context, controllerConfig),
-          flags);
+    TraceContext nextContext =
+        new TraceContext(
+            traceId,
+            FbTraceId.encode(traceId),
+            controller,
+            traceController,
+            context,
+            intContext,
+            providers,
+            traceController.getCpuSamplingRateMs(context, controllerConfig),
+            flags);
 
     return startTraceInternal(flags, nextContext);
   }
@@ -314,7 +320,11 @@ final public class TraceControl {
       }
     }
 
-    int timeout = mCurrentConfig.get().getTraceTimeoutMs();
+    Config rootConfig = mCurrentConfig.get();
+    if (rootConfig == null) {
+      return false;
+    }
+    int timeout = rootConfig.getControllersConfig().getTraceTimeoutMs();
     if (timeout == -1) { // config doesn't specify a value, use default
       timeout = TRACE_TIMEOUT_MS;
     }
@@ -533,8 +543,11 @@ final public class TraceControl {
    */
   @Nullable
   public ControllerConfig getControllerConfig(int controller) {
-    Config.RootControllerConfig config = mCurrentConfig.get();
-    return config.getConfigForController(controller);
+    Config config = mCurrentConfig.get();
+    if (config == null) {
+      return null;
+    }
+    return config.getControllersConfig().getConfigForController(controller);
   }
 
   /** @return current fbtrace encoded trace ID or 'AAAAAAAAAAA' (encoded 0) if not inside a trace */

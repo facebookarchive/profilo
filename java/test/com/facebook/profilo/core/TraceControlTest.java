@@ -58,7 +58,6 @@ import org.powermock.core.classloader.annotations.SuppressStaticInitializationFo
 public class TraceControlTest {
 
   private static final int TRACE_CONTROLLER_ID = 100;
-  private static final int TEST_TRACE_TIMEOUT_MS = 7000;
   private static final long TEST_TRACE_ID = 10000l;
 
   private static final int PROVIDER_TEST = ProvidersRegistry.newProvider("test");
@@ -68,29 +67,14 @@ public class TraceControlTest {
   private TraceController mController;
   private TraceControlHandler mTraceControlHandler;
   private TraceContext mTraceContext;
-  private final ControllerConfig mControllerConfig = new ControllerConfig() {
-  };
-  private final Config.RootControllerConfig mConfig = new Config.RootControllerConfig() {
-
-    @Override
-    public ControllerConfig getConfigForController(int controller) {
-      if (controller == TRACE_CONTROLLER_ID) {
-        return mControllerConfig;
-      } else {
-        return null;
-      }
-    }
-
-    @Override
-    public int getTraceTimeoutMs() {
-      return TEST_TRACE_TIMEOUT_MS;
-    }
-
-    @Override
-    public int getTimedOutUploadSampleRate() {
-      return 0;
-    }
-  };
+  private final TestConfigProvider mTraceConfigProvider =
+      new TestConfigProvider().setControllers(TRACE_CONTROLLER_ID);
+  private final ControllerConfig mControllerConfig =
+      mTraceConfigProvider
+          .getFullConfig()
+          .getControllersConfig()
+          .getConfigForController(TRACE_CONTROLLER_ID);
+  private final Config mConfig = mTraceConfigProvider.getFullConfig();
 
   @Before
   public void setUp() throws Exception {
@@ -124,7 +108,8 @@ public class TraceControlTest {
             1,
             PROVIDER_TEST,
             100,
-            1);
+            1,
+            222);
   }
 
   @Test
@@ -232,7 +217,9 @@ public class TraceControlTest {
     verifyStatic();
     Logger.postCreateTrace(anyLong(), eq(flags), anyInt());
 
-    verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), eq(TEST_TRACE_TIMEOUT_MS));
+    verify(mTraceControlHandler)
+        .onTraceStart(
+            any(TraceContext.class), eq(mConfig.getControllersConfig().getTraceTimeoutMs()));
   }
 
   @Test
@@ -294,7 +281,7 @@ public class TraceControlTest {
   @Test
   public void testConfigChangeOutsideTraceWritesNothing() {
     TestConfigProvider provider = new TestConfigProvider().setControllers(1, 2);
-    mTraceControl.setConfig(provider.getFullConfig().getControllersConfig());
+    mTraceControl.setConfig(provider.getFullConfig());
 
     verifyStatic(never());
     Logger.postAbortTrace(anyLong());
@@ -306,7 +293,7 @@ public class TraceControlTest {
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isTrue();
 
     TestConfigProvider provider = new TestConfigProvider().setControllers(1, 2);
-    mTraceControl.setConfig(provider.getFullConfig().getControllersConfig());
+    mTraceControl.setConfig(provider.getFullConfig());
 
     assertTracing();
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, context, 0);

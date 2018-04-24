@@ -1,3 +1,4 @@
+# BUILD FILE SYNTAX: SKYLARK
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_xplat_cxx_library")
 

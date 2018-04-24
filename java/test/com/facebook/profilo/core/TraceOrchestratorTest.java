@@ -140,16 +140,17 @@ public class TraceOrchestratorTest {
     mFileManager = mock(FileManager.class);
     mUploadService = mock(BackgroundUploadService.class);
     mConfigProvider = new TestConfigProvider();
-    mTraceContext = new TraceContext(
-        0xFACEB00C, // traceId
-        "FACEBOOOK", // encodedTraceId
-        0, // controller
-        null, // controllerObject
-        null, // context
-        0, // intContext
-        DEFAULT_TRACING_PROVIDERS,
-        0, // cpuSamplingRateMs
-        1); // flags
+    mTraceContext =
+        new TraceContext(
+            0xFACEB00C, // traceId
+            "FACEBOOOK", // encodedTraceId
+            0, // controller
+            null, // controllerObject
+            null, // context
+            0, // intContext
+            DEFAULT_TRACING_PROVIDERS,
+            0, // cpuSamplingRateMs
+            1); // flags
     mSecondTraceContext =
         new TraceContext(
             0xFACEB000, // traceId
@@ -207,10 +208,7 @@ public class TraceOrchestratorTest {
   public void testInitialBindInstallsProviders() {
     verifyStatic();
     //noinspection unchecked
-    TraceControl.initialize(
-        notNull(SparseArray.class),
-        same(mOrchestrator),
-        notNull(Config.RootControllerConfig.class));
+    TraceControl.initialize(notNull(SparseArray.class), same(mOrchestrator), notNull(Config.class));
 
     assertThat(TraceEvents.isEnabled(DEFAULT_TRACING_PROVIDERS)).isFalse();
   }
@@ -221,24 +219,52 @@ public class TraceOrchestratorTest {
     mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
 
     assertThatAllProvidersDisabled();
-    verify(mTraceControl).setConfig(any(Config.RootControllerConfig.class));
+    verify(mTraceControl).setConfig(any(Config.class));
   }
 
   @Test
   public void testConfigChangeDuringTraceIsDeferredToStop() {
     when(mTraceControl.isInsideTrace()).thenReturn(true); // Inside trace
 
+    mOrchestrator.onTraceStart(mTraceContext);
     mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
     // Providers are untouched
-    assertThatAllProvidersDisabled();
+    assertProvidersTheSame(mTraceContext.enabledProviders);
     // TraceControl doesn't get called with new config
-    verify(mTraceControl, times(1)).setConfig(any(Config.RootControllerConfig.class));
+    verify(mTraceControl, times(1)).setConfig(any(Config.class));
 
     // Stop Trace to see the deferred change
+    when(mTraceControl.isInsideTrace()).thenReturn(false);
     mOrchestrator.onTraceStop(mTraceContext);
 
     assertThatAllProvidersDisabled();
-    verify(mTraceControl, times(2)).setConfig(any(Config.RootControllerConfig.class));
+    verify(mTraceControl, times(2)).setConfig(any(Config.class));
+  }
+
+  @Test
+  public void testConfigChangeDuringDeferredForMultipleRunningTraces() {
+    when(mTraceControl.isInsideTrace()).thenReturn(true); // Inside trace
+
+    mOrchestrator.onTraceStart(mTraceContext);
+    mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
+    mOrchestrator.onTraceStart(mSecondTraceContext);
+
+    // Providers are untouched
+    assertProvidersTheSame(mTraceContext.enabledProviders | mSecondTraceContext.enabledProviders);
+    // TraceControl doesn't get called with new config
+    verify(mTraceControl, times(1)).setConfig(any(Config.class));
+
+    // First trace is stopped but the second one is still running, expect no config change
+    mOrchestrator.onTraceStop(mSecondTraceContext);
+    assertProvidersTheSame(mTraceContext.enabledProviders);
+    verify(mTraceControl, times(1)).setConfig(any(Config.class));
+
+    // Stop Trace to see the deferred change
+    when(mTraceControl.isInsideTrace()).thenReturn(false);
+    mOrchestrator.onTraceStop(mTraceContext);
+
+    assertThatAllProvidersDisabled();
+    verify(mTraceControl, times(2)).setConfig(any(Config.class));
   }
 
   @Test
@@ -410,7 +436,8 @@ public class TraceOrchestratorTest {
             0, // intContext
             DEFAULT_TRACING_PROVIDERS,
             0, // cpuSamplingRateMs
-            1);
+            1, // flags
+            1); // configId
     mOrchestrator.onTraceStart(anotherContext);
     mOrchestrator.traceStart(anotherContext);
     verify(mBaseTraceProvider, never()).disable();
@@ -448,9 +475,11 @@ public class TraceOrchestratorTest {
     verify(mTraceProvider).onDisable(any(TraceContext.class), any(File.class));
   }
 
+  private void assertProvidersTheSame(int providers) {
+    assertThat(TraceEvents.enabledMask(providers)).isEqualTo(providers);
+  }
+
   private void assertThatAllProvidersDisabled() {
-    for (int p = 1; p != Integer.MIN_VALUE; p <<= 1) {
-      assertThat(TraceEvents.isEnabled(p)).isFalse();
-    }
+    assertThat(TraceEvents.enabledMask(0xFFFFFFFF)).isZero();
   }
 }

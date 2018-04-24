@@ -389,11 +389,19 @@ const OatQuickMethodHeader* ArtMethod::GetOatQuickMethodHeader(uintptr_t pc) {
     return nullptr;
   }
 
-  if (existing_entry_point == GetQuickProxyInvokeHandler()) {
-    DCHECK(IsProxyMethod() && !IsConstructor());
-    // The proxy entry point does not have any method header.
+  // FB
+  if (IsProxyMethod() && !IsConstructor()) {
     return nullptr;
   }
+  // We cannot use GetQuickProxyInvokeHandler as we cannot get that value from
+  // the host VM without parsing the libart.so in memory.
+  //
+  // if (existing_entry_point == GetQuickProxyInvokeHandler()) {
+  //   DCHECK(IsProxyMethod() && !IsConstructor());
+  //   // The proxy entry point does not have any method header.
+  //   return nullptr;
+  // }
+  // END FB
 
   // Check whether the current entry point contains this pc.
   if (!class_linker->IsQuickResolutionStub(existing_entry_point) &&
@@ -437,12 +445,15 @@ const OatQuickMethodHeader* ArtMethod::GetOatQuickMethodHeader(uintptr_t pc) {
       DCHECK(IsNative());
       return nullptr;
     }
-    if (existing_entry_point == GetQuickInstrumentationEntryPoint()) {
-      // We are running the generic jni stub, but the method is being instrumented.
-      DCHECK_EQ(pc, 0u) << "Should be a downcall";
-      DCHECK(IsNative());
-      return nullptr;
-    }
+    
+    // FB
+    // if (existing_entry_point == GetQuickInstrumentationEntryPoint()) {
+    //   // We are running the generic jni stub, but the method is being instrumented.
+    //   DCHECK_EQ(pc, 0u) << "Should be a downcall";
+    //   DCHECK(IsNative());
+    //   return nullptr;
+    // }
+    // End FB
     // Only for unit tests.
     // TODO(ngeoffray): Update these tests to pass the right pc?
     return OatQuickMethodHeader::FromEntryPoint(existing_entry_point);

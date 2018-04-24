@@ -221,7 +221,7 @@ public final class TraceOrchestrator
     }
 
     // Install the available TraceControllers
-    TraceControl.initialize(controllers, this, initialConfig.getControllersConfig());
+    TraceControl.initialize(controllers, this, initialConfig);
 
     File folder;
     synchronized (this) {
@@ -346,7 +346,7 @@ public final class TraceOrchestrator
       throw new IllegalStateException(
           "Performing config change before TraceControl has been initialized");
     }
-    traceControl.setConfig(newConfig.getControllersConfig());
+    traceControl.setConfig(newConfig);
 
     BackgroundUploadService backgroundUploadService = getUploadService();
 
@@ -453,6 +453,10 @@ public final class TraceOrchestrator
     ConfigProvider nextProvider;
     synchronized (this) {
       if (mNextConfigProvider == null) {
+        return;
+      }
+      TraceControl traceControl = TraceControl.get();
+      if (traceControl != null && traceControl.isInsideTrace()) {
         return;
       }
       nextProvider = mNextConfigProvider;

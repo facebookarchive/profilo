@@ -21,14 +21,12 @@ import com.facebook.profilo.config.ConfigProvider;
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.config.DefaultConfigProvider;
 import com.facebook.profilo.config.SystemControlConfig;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
 
 public final class TestConfigProvider implements ConfigProvider {
 
   private static final int TEST_TRACE_TIMEOUT_MS = 30000;
-  private final Set<Integer> mControllers = new HashSet<>();
+  private final HashMap<Integer, ControllerConfig> mControllers = new HashMap<>();
   private ConfigUpdateListener mListener;
   private SystemControlConfig mSystemControlConfig =
     new DefaultConfigProvider().getFullConfig().getSystemControl();
@@ -36,7 +34,9 @@ public final class TestConfigProvider implements ConfigProvider {
 
   public TestConfigProvider setControllers(Integer... controllers) {
     mControllers.clear();
-    mControllers.addAll(Arrays.asList(controllers));
+    for (int c : controllers) {
+      mControllers.put(c, new ControllerConfig() {});
+    }
     return this;
   }
 
@@ -66,8 +66,7 @@ public final class TestConfigProvider implements ConfigProvider {
 
           @Override
           public ControllerConfig getConfigForController(int controller) {
-            return new ControllerConfig() {
-            };
+            return mControllers.get(controller);
           }
 
           @Override
