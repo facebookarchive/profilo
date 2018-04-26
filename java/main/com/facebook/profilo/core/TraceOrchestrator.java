@@ -98,8 +98,6 @@ public final class TraceOrchestrator
     ConfigProvider getProvider();
 
     TraceListener[] getListeners();
-
-    boolean isMultiProcessTracingEnabled();
   }
 
   class TraceEventsHandler extends Handler {
