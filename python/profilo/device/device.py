@@ -77,7 +77,7 @@ def _validate_trace(package, data_dir_path, file_path):
     """
     1) If the file is a zip file (not gzip) then this is a multiproc trace,
        so unzip it and validate that all the files inside are profilo traces
-       (skipping the "extra" files, which end in *.tnd).
+       (skipping the "extra" directory)
     2) If the file is not a zip file, validate that it is a profilo trace
 
     A file is a "profilo trace" if:
@@ -95,7 +95,7 @@ def _validate_trace(package, data_dir_path, file_path):
             info = zipped.infolist()
             for info_file in info:
                 # Ignore *.tnd files
-                if info_file.filename.endswith(".tnd"):
+                if info_file.filename.startswith("extra/"):
                     continue
                 f = zipped.open(info_file)
                 gz = gzip.GzipFile(fileobj=BytesIO(f.read()))
