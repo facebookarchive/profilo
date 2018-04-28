@@ -15,6 +15,7 @@ headers:
 - museum/5.1.1/art/runtime/jni_internal.h
 - museum/5.1.1/art/runtime/runtime.h
 - museum/5.1.1/art/runtime/thread.h
+- museum/5.1.1/art/runtime/thread_list.h
 - museum/5.1.1/art/runtime/utf.h
 - museum/5.1.1/art/runtime/stack.h
 - new
@@ -289,6 +290,17 @@ namespaces:
       cvFlags: const
       mangledNames:
       - _ZNK3art12StackVisitor13GetThisObjectEv
+
+  - className: ThreadList
+    symbols:
+    - symbolName: ResumeAll
+      returnType: void
+      mangledNames:
+      - _ZN3art10ThreadList9ResumeAllEv
+    - symbolName: SuspendAll
+      returnType: void
+      mangledNames:
+      - _ZN3art10ThreadList10SuspendAllEv
 
   # Special set: Unattached methods. Give them an empty className, and poof.
   - className:

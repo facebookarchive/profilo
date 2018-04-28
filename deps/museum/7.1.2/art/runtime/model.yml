@@ -18,6 +18,7 @@ headers:
 - museum/7.1.2/art/runtime/jni_env_ext.h
 - museum/7.1.2/art/runtime/runtime.h
 - museum/7.1.2/art/runtime/thread.h
+- museum/7.1.2/art/runtime/thread_list.h
 - museum/7.1.2/art/runtime/utf.h
 - museum/7.1.2/art/runtime/stack.h
 - new
@@ -366,6 +367,20 @@ namespaces:
   #   - symbolName: ~MemMap
   #     mangledNames:
   #     - _ZN3art6MemMapD1Ev
+
+  - className: ThreadList
+    symbols:
+    - symbolName: ResumeAll
+      returnType: void
+      mangledNames:
+      - _ZN3art10ThreadList9ResumeAllEv
+    - symbolName: SuspendAll
+      returnType: void
+      params:
+      - char const*
+      - bool
+      mangledNames:
+      - _ZN3art10ThreadList10SuspendAllEPKcb
 
   # unattached methods
   - className:

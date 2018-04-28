@@ -17,6 +17,7 @@ headers:
 - museum/6.0.1/art/runtime/runtime.h
 - museum/6.0.1/art/runtime/stack_map.h
 - museum/6.0.1/art/runtime/thread.h
+- museum/6.0.1/art/runtime/thread_list.h
 - museum/6.0.1/art/runtime/utf.h
 - new
 
@@ -340,6 +341,20 @@ namespaces:
       cvFlags: const
       mangledNames:
       - _ZNK3art12StackVisitor13GetThisObjectEv
+
+  - className: ThreadList
+    symbols:
+    - symbolName: ResumeAll
+      returnType: void
+      mangledNames:
+      - _ZN3art10ThreadList9ResumeAllEv
+    - symbolName: SuspendAll
+      returnType: void
+      params:
+      - char const*
+      - bool
+      mangledNames:
+      - _ZN3art10ThreadList10SuspendAllEPKcb
 
   # Special set: Unattached methods. Give them an empty className, and poof.
   - className:
