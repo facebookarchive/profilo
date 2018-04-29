@@ -55,3 +55,66 @@ def profilo_oss_maven_library(
 
 def profilo_oss_xplat_cxx_library(**kwargs):
     fb_xplat_cxx_library(**kwargs)
+
+
+def setup_profilo_oss_xplat_cxx_library():
+    profilo_oss_xplat_cxx_library(
+        name = "fbjni",
+        srcs = glob([
+            "cxx/fbjni/**/*.cpp",
+        ]),
+        header_namespace = "",
+        exported_headers = subdir_glob([
+            ("cxx", "fbjni/**/*.h"),
+        ]),
+        compiler_flags = [
+            "-fexceptions",
+            "-frtti",
+        ],
+        exported_platform_headers = [
+            (
+                "^(?!android-arm$).*$",
+                subdir_glob([
+                    ("cxx", "lyra/**/*.h"),
+                ]),
+            ),
+        ],
+        exported_platform_linker_flags = [
+            (
+                "^android",
+                ["-llog"],
+            ),
+        ],
+        platform_srcs = [
+            (
+                "^(?!android-arm$).*$",
+                glob([
+                    "cxx/lyra/*.cpp",
+                ]),
+            ),
+        ],
+        soname = "libfbjni.$(ext)",
+        visibility = [
+            "PUBLIC",
+        ],
+    )
+
+
+def setup_profilo_oss_cxx_library():
+    profilo_oss_cxx_library(
+        name = "procmaps",
+        srcs = [
+            "procmaps.c",
+        ],
+        header_namespace = "",
+        exported_headers = subdir_glob([
+            ("", "*.h"),
+        ]),
+        compiler_flags = [
+            "-std=gnu99",
+        ],
+        force_static = True,
+        visibility = [
+            "PUBLIC",
+        ],
+    )

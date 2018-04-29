@@ -1,46 +1,8 @@
+# BUILD FILE SYNTAX: SKYLARK
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_xplat_cxx_library", "profilo_oss_android_library")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_android_library", "setup_profilo_oss_xplat_cxx_library")
 
-profilo_oss_xplat_cxx_library(
-    name = "fbjni",
-    srcs = glob([
-        "cxx/fbjni/**/*.cpp",
-    ]),
-    header_namespace = "",
-    exported_headers = subdir_glob([
-        ("cxx", "fbjni/**/*.h"),
-    ]),
-    compiler_flags = [
-        "-fexceptions",
-        "-frtti",
-    ],
-    exported_platform_headers = [
-        (
-            "^(?!android-arm$).*$",
-            subdir_glob([
-                ("cxx", "lyra/**/*.h"),
-            ]),
-        ),
-    ],
-    exported_platform_linker_flags = [
-        (
-            "^android",
-            ["-llog"],
-        ),
-    ],
-    platform_srcs = [
-        (
-            "^(?!android-arm$).*$",
-            glob([
-                "cxx/lyra/*.cpp",
-            ]),
-        ),
-    ],
-    soname = "libfbjni.$(ext)",
-    visibility = [
-        "PUBLIC",
-    ],
-)
+setup_profilo_oss_xplat_cxx_library()
 
 profilo_oss_android_library(
     name = "fbjni-java",
