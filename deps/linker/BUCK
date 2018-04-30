@@ -8,7 +8,12 @@ profilo_oss_cxx_library(
         "linker.cpp",
     ],
     header_namespace = "linker",
-    exported_headers = glob(["*.h"]),
+    exported_headers = glob(
+        [
+            "*.h",
+            "*.hpp",
+        ],
+    ),
     platform_preprocessor_flags = [
         (
             "android-arm",

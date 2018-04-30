@@ -22,14 +22,17 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 #include <unordered_set>
+#include <sstream>
 
 #include <fb/Build.h>
 #include <fbjni/fbjni.h>
 #include <fb/log.h>
 #include <fb/xplat_init.h>
 #include <linker/linker.h>
+#include <linker/linker.hpp>
 #include <linker/bionic_linker.h>
 #include <util/hooks.h>
+#include <abort_with_reason.h>
 
 #include <profilo/Logger.h>
 #include <profilo/LogEntry.h>
@@ -122,12 +125,24 @@ void log_systrace(int fd, const void *buf, size_t count) {
 
 ssize_t write_hook(int fd, const void *buf, size_t count) {
   log_systrace(fd, buf, count);
-  return CALL_PREV(&write_hook, fd, buf, count);
+  try {
+    return CALL_PREV(&write_hook, fd, buf, count);
+  } catch (linker::internal_exception const& e) {
+    std::stringstream ss;
+    ss << __FILE__ << ":" << __TO_STR(__LINE__) << " " << e.what();
+    abortWithReasonImpl(ss.str().c_str());
+  }
 }
 
 ssize_t __write_chk_hook(int fd, const void *buf, size_t count, size_t buf_size) {
   log_systrace(fd, buf, count);
-  return CALL_PREV(&__write_chk_hook, fd, buf, count, buf_size);
+  try {
+    return CALL_PREV(&__write_chk_hook, fd, buf, count, buf_size);
+  } catch (linker::internal_exception const& e) {
+    std::stringstream ss;
+    ss << __FILE__ << ":" << __TO_STR(__LINE__) << " " << e.what();
+    abortWithReasonImpl(ss.str().c_str());
+  }
 }
 
 } // namespace
@@ -175,11 +190,6 @@ void hookLoadedLibs() {
 
 void installSystraceSnooper(int providerMask) {
   auto sdk = build::Build::getAndroidSdk();
-  if (sdk > 23) { // Marshmallow
-    FBLOGI("Skipping installSystraceSnooper for sdk %i", sdk);
-    return;
-  }
-
   {
     std::string lib_name("libcutils.so");
     std::string enabled_tags_sym("atrace_enabled_tags");

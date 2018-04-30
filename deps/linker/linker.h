@@ -17,6 +17,9 @@
 #pragma once
 
 #include <unistd.h>
+#include <string.h>
+#include <stdio.h>
+#include <dlfcn.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -102,26 +105,6 @@ __attribute__((noinline))
 void*
 get_pc_thunk();
 
-/**
- * Calls the original (or at least, previous) method pointed to by the PLT.
- * Looks up PLT entries by hook *and* by library, since each library has its
- * own PLT and thus could have different entries.
- *
- * Takes as the first parameter a pointer to the original function (used only
- * by the compiler, actual runtime pointer value is unused) and then the args
- * as normal of the function. Returns the same type as the hooked function.
- *
- * Example:
- *   int write_hook(int fd, const void* buf, size_t count) {
- *     // do_some_hooky_stuff
- *     return CALL_PREV(&write, fd, buf, count);
- *   }
- */
-#define CALL_PREV(orig_method, ...)                                 \
-  (((decltype(orig_method))lookup_prev_plt_method(                  \
-    get_pc_thunk(),                                                 \
-    __builtin_return_address(0)))(__VA_ARGS__))
-
 #ifdef __cplusplus
-}
+} // extern "C"
 #endif
