@@ -1,0 +1,22 @@
+# BUILD FILE SYNTAX: SKYLARK
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "abort-with-reason",
+    srcs = [
+        "abort_with_reason.c",
+    ],
+    header_namespace = "",
+    exported_headers = [
+        "abort_with_reason.h",
+    ],
+    preferred_linkage = "static",
+    soname = "libbreakpadabort.$(ext)",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/fb:fb"),
+    ],
+)
