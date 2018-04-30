@@ -482,8 +482,7 @@ SchedInfo TaskSchedFile::doRead(int fd, uint32_t requested_stats_mask) {
       throw std::runtime_error(
           "Error trying to read value by pre-defined offset");
     }
-    char* end_buffer = buffer + size - 1;
-    auto value = strtoul(buffer + value_offset, &end_buffer, value_size_);
+    auto value = strtoul(buffer + value_offset, nullptr, 10);
     if (errno == ERANGE) {
       throw std::runtime_error("Value out of range");
     }
