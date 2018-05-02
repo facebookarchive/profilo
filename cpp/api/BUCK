@@ -26,6 +26,7 @@ fb_xplat_cxx_library(
     srcs = [
         "ExternalApiImpl.cpp",
     ],
+    allow_jni_merging = False,
     compiler_flags = [
         "-DLOG_TAG=\"Profilo/ExternalApi\"",
         #"-DFBLOG_NDEBUG=0",  # verbose logging

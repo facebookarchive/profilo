@@ -29,6 +29,7 @@ def tracer_library(version):
         exported_preprocessor_flags = [
             "-DMUSEUM_VERSION_{}".format(version_),
         ],
+        allow_jni_merging = False,
         force_static = True,
         header_namespace = "profiler",
         headers = glob(
