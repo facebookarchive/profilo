@@ -24,6 +24,16 @@ import gzip
 import zipfile
 from io import BytesIO
 
+
+# Traces go to the cache/ directory when they are created, then moved into the
+# cache/upload/ directory for uploading, and then moved back to cache/ once
+# the upload is finished. This exception will get thrown if a trace file was
+# found in one place and then moved and thus was not found at a later point
+# in time.
+class FileMovedException(Exception):
+    def __init__(self, message):
+        Exception.__init__(self, message)
+
 # FileManager#getBaseFolder has the logic for where Profilo traces will exist. For
 # now we assume that the traces will exist inside the internal data dir of our
 # package, under the cache/ folder.
@@ -43,6 +53,8 @@ _CHECK_PROFILO_DIR_EXISTS_CMD = ['ls', _PROFILO_DIR]
 _ADB_EXEC_OUT_CMD_BASE = ['adb', 'exec-out', 'run-as']
 _CAT_CMD = ['cat']
 
+_NO_SUCH_FILE = b'No such file or directory'
+
 
 DeviceTrace = collections.namedtuple('DeviceTrace', ['file_name', 'full_path',
     'modified_time', 'size'])
@@ -53,7 +65,12 @@ def _get_file_modified_unix_time(package, path):
     # precise modified time.
     command = list(_ADB_CMD_BASE) + [package] \
         + list(_GET_FILE_MODIFIED_UNIX_TIME_CMD) + [path]
-    return int(subprocess.check_output(command).strip())
+    output = subprocess.Popen(command, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+    o_out, o_err = output.communicate()
+    if o_err and _NO_SUCH_FILE in o_err:
+        raise FileMovedException("File {f} was moved".format(f=path))
+    return int(o_out.strip())
 
 
 def _get_data_dir_full_path(package):
@@ -88,7 +105,20 @@ def _validate_trace(package, data_dir_path, file_path):
     full_path = "/data/data/{package}/{path}".format(
                 package=package, path=file_path)
     command = list(_ADB_EXEC_OUT_CMD_BASE) + [package] + list(_CAT_CMD) + [full_path]
-    content = subprocess.check_output(command)
+
+    output = subprocess.Popen(command, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+    o_out, o_err = output.communicate()
+
+    # I've seen "no such file or directory" errors in cat being thrown to
+    # STDOUT (in Android devices) and to STDERR in Linux desktops, so I'm
+    # not going to take any chances and will just check both
+    if (o_out and _NO_SUCH_FILE in o_out) or \
+       (o_err and _NO_SUCH_FILE in o_err):
+        raise FileMovedException("File {f} was moved".format(f=full_path))
+
+    content = o_out
+
     file_like = BytesIO(content)
     if zipfile.is_zipfile(file_like):
         with zipfile.ZipFile(file_like) as zipped:
@@ -129,7 +159,13 @@ def _create_trace(package, data_dir_path, file_path):
     command = list(_ADB_CMD_BASE) + [package] + list(_GET_FILE_SIZE_CMD) + \
                 [full_path]
 
-    size = int(subprocess.check_output(command).strip())
+    output = subprocess.Popen(command, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+    o_out, o_err = output.communicate()
+    if o_err and _NO_SUCH_FILE in o_err:
+        raise FileMovedException("File {f} was moved".format(f=full_path))
+
+    size = int(o_out.strip())
 
     return DeviceTrace(file_name=file_name, full_path=full_path,
         modified_time=modified_time, size=size)
@@ -173,7 +209,13 @@ def list_traces(package):
 
 
 def pull_last_trace(package):
-    traces = list_traces(package)
+    while True:
+        try:
+            traces = list_traces(package)
+            break
+        except FileMovedException as e:
+            print(str(e) + ". Retrying...", file=sys.stderr)
+
     if not traces:
         print("Could not find any traces for package", package, file=sys.stderr)
         return None
