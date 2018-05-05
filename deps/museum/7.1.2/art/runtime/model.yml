@@ -110,6 +110,22 @@ namespaces:
       returnType: bool
       mangledNames:
       - _ZN3art11ClassLinker26FindClassInPathClassLoaderERNS_33ScopedObjectAccessAlreadyRunnableEPNS_6ThreadEPKcjNS_6HandleINS_6mirror11ClassLoaderEEEPPNS8_5ClassE
+    - symbolName: CreateArrayClass
+      params:
+      - Thread*
+      - char const*
+      - size_t
+      - Handle<mirror::ClassLoader>
+      returnType: mirror::Class*
+      mangledNames:
+      - _ZN3art11ClassLinker16CreateArrayClassEPNS_6ThreadEPKcjNS_6HandleINS_6mirror11ClassLoaderEEE
+    - symbolName: FindPrimitiveClass
+      params:
+      - char
+      returnType: mirror::Class*
+      mangledNames:
+      - _ZN3art11ClassLinker18FindPrimitiveClassEc
+
   - className: ConditionVariable
     symbols:
     - symbolName: Wait
