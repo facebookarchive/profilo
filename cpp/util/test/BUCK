@@ -19,3 +19,23 @@ cxx_binary(
         profilo_path("cpp/util:util"),
     ],
 )
+
+cxx_test(
+    name = "procfs",
+    srcs = [
+        "ProcFsTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-pthread",
+        "-ldl",
+    ],
+    deps = [
+        "xplat//folly:test-util",
+        profilo_path("cpp/util:util"),
+    ],
+)

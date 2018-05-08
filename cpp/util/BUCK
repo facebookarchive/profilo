@@ -57,6 +57,9 @@ fb_xplat_cxx_library(
         "-Wall",
     ],
     force_static = True,
+    tests = [
+        profilo_path("cpp/util/test:procfs"),
+    ],
     visibility = [
         profilo_path("..."),
     ],

@@ -133,6 +133,7 @@ public:
 class TaskSchedstatFile: public BaseStatFile<SchedstatInfo> {
 public:
   explicit TaskSchedstatFile(uint32_t tid);
+  explicit TaskSchedstatFile(std::string path) : BaseStatFile(path) {}
 
   SchedstatInfo doRead(int fd, uint32_t requested_stats_mask) override;
 };
@@ -140,6 +141,11 @@ public:
 class TaskSchedFile: public BaseStatFile<SchedInfo> {
 public:
   explicit TaskSchedFile(uint32_t tid);
+  explicit TaskSchedFile(std::string path) : BaseStatFile(path),
+    value_offsets_(),
+    initialized_(false),
+    value_size_(),
+    availableStatsMask(0) {}
 
   SchedInfo doRead(int fd, uint32_t requested_stats_mask) override;
 
