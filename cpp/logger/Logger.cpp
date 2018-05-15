@@ -41,9 +41,6 @@ int32_t Logger::writeBytes(
   if (len > kMaxVariableLengthEntry) {
     throw std::overflow_error("len is bigger than kMaxVariableLengthEntry");
   }
-  if (len == 0) {
-    throw std::invalid_argument("length must be nonzero");
-  }
   if (arg2 == nullptr) {
     throw std::invalid_argument("arg2 is null");
   }

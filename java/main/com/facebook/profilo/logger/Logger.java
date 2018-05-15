@@ -359,7 +359,7 @@ final public class Logger {
       return ProfiloConstants.TRACING_DISABLED;
     }
 
-    if (str != null && !str.isEmpty()) {
+    if (str != null) {
       return loggerWriteString(type, matchID, str);
     }
     return loggerWrite(type, callID, matchID, extra);
