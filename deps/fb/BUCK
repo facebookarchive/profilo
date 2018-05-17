@@ -19,7 +19,7 @@ profilo_oss_cxx_library(
     compiler_flags = [
         "-fexceptions",
     ],
-    linker_flags = [
+    exported_linker_flags = [
         "-llog",
     ],
     preprocessor_flags = [

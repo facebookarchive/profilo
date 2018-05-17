@@ -23,16 +23,14 @@
 #include <unistd.h>
 #include <unordered_set>
 #include <sstream>
+#include <libgen.h>
 
 #include <fb/Build.h>
 #include <fbjni/fbjni.h>
 #include <fb/log.h>
 #include <fb/xplat_init.h>
 #include <linker/linker.h>
-#include <linker/linker.hpp>
-#include <linker/bionic_linker.h>
 #include <util/hooks.h>
-#include <abort_with_reason.h>
 
 #include <profilo/Logger.h>
 #include <profilo/LogEntry.h>
@@ -125,24 +123,12 @@ void log_systrace(int fd, const void *buf, size_t count) {
 
 ssize_t write_hook(int fd, const void *buf, size_t count) {
   log_systrace(fd, buf, count);
-  try {
-    return CALL_PREV(&write_hook, fd, buf, count);
-  } catch (linker::internal_exception const& e) {
-    std::stringstream ss;
-    ss << __FILE__ << ":" << __TO_STR(__LINE__) << " " << e.what();
-    abortWithReasonImpl(ss.str().c_str());
-  }
+  return CALL_PREV(write_hook, fd, buf, count);
 }
 
 ssize_t __write_chk_hook(int fd, const void *buf, size_t count, size_t buf_size) {
   log_systrace(fd, buf, count);
-  try {
-    return CALL_PREV(&__write_chk_hook, fd, buf, count, buf_size);
-  } catch (linker::internal_exception const& e) {
-    std::stringstream ss;
-    ss << __FILE__ << ":" << __TO_STR(__LINE__) << " " << e.what();
-    abortWithReasonImpl(ss.str().c_str());
-  }
+  return CALL_PREV(__write_chk_hook, fd, buf, count, buf_size);
 }
 
 } // namespace
@@ -163,7 +149,7 @@ std::unordered_set<std::string>& getSeenLibs() {
   // Add this library's name to the set that we won't hook
   if (!init) {
 
-    seenLibs.insert("/system/lib/libc.so");
+    seenLibs.insert("libc.so");
 
     Dl_info info;
     if (!dladdr((void *)&getSeenLibs, &info)) {
@@ -175,7 +161,7 @@ std::unordered_set<std::string>& getSeenLibs() {
       throw std::runtime_error("could not resolve current library");
     }
 
-    seenLibs.insert(info.dli_fname);
+    seenLibs.insert(basename(info.dli_fname));
     init = true;
   }
   return seenLibs;

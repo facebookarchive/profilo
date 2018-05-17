@@ -20,57 +20,62 @@
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdexcept>
+
+#include <fb/Build.h>
+#include <cppdistract/dso.h>
 
 #include <linker/linker.h>
+#include <linker/link.h>
+#include <linker/sharedlibs.h>
 
-typedef clock_t (*call_clock_fn)();
+#include <plthooktests/test.h>
 
-static clock_t hook_call_clock() {
+static clock_t hook_clock() {
+  if (CALL_PREV(hook_clock) == 0) {
+    return 0;
+  }
   return 0xface;
 }
 
-bool
-ends_with(const char* str, const char* ending) {
-  size_t str_len = strlen(str);
-  size_t ending_len = strlen(ending);
+struct OneHookTest : public BaseTest {
+  OneHookTest()
+    : libtarget(LIBDIR("libtarget.so")) { }
 
-  if (ending_len > str_len) {
-    return false;
+  virtual void SetUp() {
+    BaseTest::SetUp();
+    ASSERT_EQ(0, hook_plt_method("libtarget.so", "clock", (void*)hook_clock));
   }
-  return strcmp(str + (str_len - ending_len), ending) == 0;
+
+  facebook::cppdistract::dso const libtarget;
+};
+
+TEST_F(OneHookTest, testHook) {
+  auto call_clock = libtarget.get_symbol<int()>("call_clock");
+  ASSERT_EQ(0xface, call_clock());
 }
 
-void get_full_soname(char* soname) {
-  FILE* f = fopen("/proc/self/maps", "r");
-  char line[512]{};
-  while (fgets(line, 512, f) != nullptr) {
-    sscanf(
-        line,
-        "%*x-%*x %*s %*x %*s %*d %s",
-        soname
-    );
-    if (ends_with(soname, "libtarget.so")) {
-      break;
-    }
+struct TwoHookTest : public OneHookTest {
+  TwoHookTest()
+    : libsecond_hook(LIBDIR("libsecond_hook.so")),
+      perform_hook(libsecond_hook.get_symbol<int()>("perform_hook")),
+      cleanup(libsecond_hook.get_symbol<int()>("cleanup")) { }
+
+  ~TwoHookTest() {
+    cleanup();
   }
-}
 
-TEST(PltHook, testHook) {
-  void* handle = dlopen("libtarget.so", RTLD_LOCAL);
-  EXPECT_NE(nullptr, handle) << "Error: " << dlerror();
+  virtual void SetUp() {
+    OneHookTest::SetUp();
+    ASSERT_EQ(1, perform_hook());
+  }
 
-  // We have to call this AFTER we dlopen() the library so that it will
-  // actually show up during dl_iterate_phdr or in /proc/self/maps
-  EXPECT_EQ(0, linker_initialize());
+  facebook::cppdistract::dso const libsecond_hook;
+  int (* const perform_hook)();
+  int (* const cleanup)();
+};
 
-  call_clock_fn fn = (call_clock_fn) dlsym(handle, "call_clock");
-
-  char soname[512]{};
-  get_full_soname(soname);
-  int ret = hook_plt_method(handle, soname, "clock", (void*)hook_call_clock);
-  EXPECT_EQ(0, ret);
-
-  EXPECT_EQ(0xface, fn());
-
-  dlclose(handle);
+TEST_F(TwoHookTest, testDoubleHook) {
+  auto call_clock = libtarget.get_symbol<int()>("call_clock");
+  ASSERT_EQ(0xfaceb00c, call_clock());
 }

@@ -47,7 +47,7 @@ void* resolve_symbol(const char* name) {
     // https://code.google.com/p/android/issues/detail?id=61799
     soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
     for (; si != nullptr; si = si->next) {
-      if (!si->link_map_head.l_name || si->nbucket_ == 0) {
+      if (!si->link_map.l_name || si->nbucket == 0) {
         continue;
       }
         auto ptr = dlsym(si, name);

@@ -4,16 +4,9 @@ load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
 profilo_oss_cxx_library(
     name = "linker",
-    srcs = [
-        "linker.cpp",
-    ],
+    srcs = glob(["*.cpp"]),
     header_namespace = "linker",
-    exported_headers = glob(
-        [
-            "*.h",
-            "*.hpp",
-        ],
-    ),
+    exported_headers = glob(["*.h"]),
     platform_preprocessor_flags = [
         (
             "android-arm",
@@ -31,6 +24,7 @@ profilo_oss_cxx_library(
     ],
     deps = [
         profilo_path("deps/cjni:cjni"),
+        profilo_path("deps/fb:fb"),
         profilo_path("deps/sig_safe_write:sig_safe_write"),
         profilo_path("deps/sigmux:sigmux"),
     ],

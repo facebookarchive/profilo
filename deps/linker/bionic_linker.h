@@ -1,167 +1,133 @@
 /**
- * Copyright 2018-present, Facebook, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright 2018-present, Facebook, Inc.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 /*
- * Copyright (C) 2008 The Android Open Source Project
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *  * Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  * Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
- * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
-
-#include <elf.h>
-#include <link.h>
-#include <stdbool.h>
+* Copyright (C) 2008 The Android Open Source Project
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions
+* are met:
+*  * Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+*  * Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in
+*    the documentation and/or other materials provided with the
+*    distribution.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+* OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+* AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+* OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+* SUCH DAMAGE.
+*/
 
 #pragma once
 
-#define R_386_JUMP_SLOT  7
-#define R_ARM_JUMP_SLOT  22
+#include <unistd.h>
+#include <sys/types.h>
+#include <elf.h>
 
-#ifdef __ARM__
-#define PLT_RELOCATION_TYPE R_ARM_JUMP_SLOT
-#endif
+#include <link.h>
 
-#ifdef __X86__
-#define PLT_RELOCATION_TYPE R_386_JUMP_SLOT
-#endif
-
-#ifndef PT_GNU_RELRO
-#define PT_GNU_RELRO 0x6474e552
-#endif
+// Magic shared structures that GDB knows about.
+struct link_map_t {
+  uintptr_t l_addr;
+  char*  l_name;
+  uintptr_t l_ld;
+  link_map_t* l_next;
+  link_map_t* l_prev;
+};
 
 #define SOINFO_NAME_LEN 128
-#define __work_around_b_19059885__ 1
 
 typedef void (*linker_function_t)();
 
-#if (__ANDROID_API__ < 21)
-struct link_map {
-  ElfW(Addr) l_addr;
-  char* l_name;
-  ElfW(Dyn)* l_ld;
-  struct link_map* l_next;
-  struct link_map* l_prev;
-};
-typedef struct link_map link_map;
-#endif
-
-struct soinfo;
-typedef struct soinfo soinfo;
-
+// NOTE: This struct is ONLY accurate for API <21. Do not use for later versions.
+// It uses 32-bit ELF structures (pre-L didn't have x64 support) and the struct
+// offsets are different in newer versions.
+// We don't need this on 21+, as we'll grab the info we require from dl_iterate_phdr
 struct soinfo {
-#if defined(__work_around_b_19059885__)
-  char old_name_[SOINFO_NAME_LEN];
-#endif
-  const ElfW(Phdr)* phdr;
+public:
+  char name[SOINFO_NAME_LEN];
+  const Elf32_Phdr* phdr;
   size_t phnum;
-  ElfW(Addr) entry;
-  ElfW(Addr) base;
-  size_t size;
+  Elf32_Addr entry;
+  Elf32_Addr base;
+  unsigned size;
 
-#if defined(__work_around_b_19059885__)
   uint32_t unused1;  // DO NOT USE, maintained for compatibility.
-#endif
 
-  ElfW(Dyn)* dynamic;
+  Elf32_Dyn* dynamic;
 
-#if defined(__work_around_b_19059885__)
   uint32_t unused2; // DO NOT USE, maintained for compatibility
   uint32_t unused3; // DO NOT USE, maintained for compatibility
-#endif
 
   soinfo* next;
-  uint32_t flags_;
+  unsigned flags;
 
-  const char* strtab_;
-  ElfW(Sym)* symtab_;
+  const char* strtab;
+  Elf32_Sym* symtab;
 
-  size_t nbucket_;
-  size_t nchain_;
-  uint32_t* bucket_;
-  uint32_t* chain_;
+  size_t nbucket;
+  size_t nchain;
+  unsigned* bucket;
+  unsigned* chain;
 
-#if defined(__mips__) || !defined(__LP64__)
-  // This is only used by mips and mips64, but needs to be here for
-  // all 32-bit architectures to preserve binary compatibility.
-  ElfW(Addr)** plt_got_;
-#endif
+  unsigned* plt_got;
 
-#if defined(USE_RELA)
-  ElfW(Rela)* plt_rela_;
-  size_t plt_rela_count_;
+  Elf32_Rel* plt_rel;
+  size_t plt_rel_count;
 
-  ElfW(Rela)* rela_;
-  size_t rela_count_;
-#else
-  ElfW(Rel)* plt_rel_;
-  size_t plt_rel_count_;
+  Elf32_Rel* rel;
+  size_t rel_count;
 
-  ElfW(Rel)* rel_;
-  size_t rel_count_;
-#endif
+  linker_function_t* preinit_array;
+  size_t preinit_array_count;
 
-  linker_function_t* preinit_array_;
-  size_t preinit_array_count_;
+  linker_function_t* init_array;
+  size_t init_array_count;
+  linker_function_t* fini_array;
+  size_t fini_array_count;
 
-  linker_function_t* init_array_;
-  size_t init_array_count_;
-  linker_function_t* fini_array_;
-  size_t fini_array_count_;
-
-  linker_function_t init_func_;
-  linker_function_t fini_func_;
+  linker_function_t init_func;
+  linker_function_t fini_func;
 
 #if defined(__arm__)
   // ARM EABI section used for stack unwinding.
-  uint32_t* ARM_exidx;
+  unsigned* ARM_exidx;
   size_t ARM_exidx_count;
-#elif defined(__mips__)
-  uint32_t mips_symtabno_;
-  uint32_t mips_local_gotno_;
-  uint32_t mips_gotsym_;
-
 #endif
-  size_t ref_count_;
-  link_map link_map_head;
 
-  _Bool constructors_called;
+  size_t ref_count;
+  link_map_t link_map;
+
+  bool constructors_called;
 
   // When you read a virtual address from the ELF file, add this
   // value to get the corresponding address in the process' address space.
-  ElfW(Addr) load_bias;
+  Elf32_Addr load_bias;
 
+  bool has_text_relocations;
+  bool has_DT_SYMBOLIC;
 };

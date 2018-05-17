@@ -14,8 +14,30 @@
  * limitations under the License.
  */
 
-#include <time.h>
+#pragma once
 
-__attribute__((visibility("default"))) clock_t call_clock() {
-  return clock();
+#ifdef __ANDROID__
+
+#include <android/log.h>
+#include <stdlib.h>
+
+__attribute__ ((noreturn))
+static void log_assert(char const* msg) {
+  __android_log_assert("", "native/linker", "%s", msg);
+  abort(); // just for good measure
 }
+
+#else
+
+#include <stdio.h>
+#include <stdlib.h>
+
+__attribute__ ((noreturn))
+static void log_assert(char const* msg) {
+  fputs("Assertion Failure: ", stderr);
+  fputs(msg, stderr);
+  fputc('\n', stderr);
+  abort();
+}
+
+#endif
