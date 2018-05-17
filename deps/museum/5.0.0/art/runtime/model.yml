@@ -10,6 +10,7 @@ headers:
 - museum/5.0.0/art/runtime/mirror/art_method.h
 - museum/5.0.0/art/runtime/runtime.h
 - museum/5.0.0/art/runtime/thread.h
+- museum/5.0.0/art/runtime/thread_list.h
 - museum/5.0.0/art/runtime/utils.h
 - new
 
@@ -76,6 +77,16 @@ namespaces:
       isStaticVar: true
       mangledNames:
       - _ZN3art6Thread17pthread_key_self_E
+  - className: ThreadList
+    symbols:
+    - symbolName: ResumeAll
+      returnType: void
+      mangledNames:
+      - _ZN3art10ThreadList9ResumeAllEv
+    - symbolName: SuspendAll
+      returnType: void
+      mangledNames:
+      - _ZN3art10ThreadList10SuspendAllEv
   - className:
     symbols:
     - symbolName: GetTid
