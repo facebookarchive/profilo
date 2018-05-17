@@ -2317,6 +2317,33 @@ struct kernel_statfs {
       LSS_RETURN(int, __res);
     }
   #elif defined(__ARM_EABI__)
+    /*
+     * The syscall number used to be coded as a simple movs, but that
+     * constrains the immediate operand to [0..255]. ARM has syscall
+     * numbers greater-than 255, so now we must use the Thumb-ish sequence
+     * (for NR in the generous range [0..4095]):
+     *
+     *   movs r7, NR >> 4
+     *   lsls r7, #4
+     *   adds r7, NR & 15
+     *
+     * The next complication is getting both assemblers (gas and LLVM) to
+     * accept lsls and adds for both Thumb modes (Thumb16 and Thumb2).
+     * Gas has a longstanding bug in Thumb16 mode whereby it rejects
+     * "lsls" and "adds" but accepts "lsl" and "add", then cheerfully
+     * encodes them as "lsls" and "adds" anyway.
+     * The LSS_S(opcode) macro issues the idiosyncratic opcodes for
+     * gas + Thumb16, and the proper ones otherwise.
+     *
+     * In concept, we could also solve for gas+Thumb16 via the directive
+     *  .syntax unified
+     * but I don't want to wield such a large hammer here.
+     */
+    #if __llvm__ || __thumb2__
+    #define LSS_S(opcode) #opcode "s "
+    #else
+    #define LSS_S(opcode) #opcode " "
+    #endif
     /* Most definitions of _syscallX() neglect to mark "memory" as being
      * clobbered. This causes problems with compilers, that do a better job
      * at optimizing across __asm__ calls.
@@ -2329,7 +2356,10 @@ struct kernel_statfs {
           register long __res_r0 __asm__("r0");                               \
           long __res;                                                         \
           __asm__ __volatile__ ("push {r7}\n"                                 \
-                                "mov r7, %1\n"                                \
+                                "@DEBUG_VALUE: __r7 <- %1\n"                  \
+                                "movs r7, %1 >> 4\n"                          \
+                                LSS_S(lsl) "r7, #4\n"                         \
+                                LSS_S(add) "r7, %1 & 15\n"                    \
                                 "swi 0x0\n"                                   \
                                 "pop {r7}\n"                                  \
                                 : "=r"(__res_r0)                              \
