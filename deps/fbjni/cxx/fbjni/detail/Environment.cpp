@@ -113,11 +113,20 @@ inline JNIEnv* cachedOrNull() {
   return (pdata ? pdata->env : nullptr);
 }
 
+}
+
+namespace detail {
+
 // This will return a cached env if there is one, or get one from JNI
 // if the thread has already been attached some other way.  If it
-// returns nullptr, then the thread has never been registered.
+// returns nullptr, then the thread has never been registered, or the
+// VM has never been set up for fbjni.
 
-inline JNIEnv* currentOrNull() {
+JNIEnv* currentOrNull() {
+  if (!g_vm) {
+    return nullptr;
+  }
+
   detail::TLData* pdata = getTLData(getTLKey());
   if (pdata && pdata->env) {
     return pdata->env;
@@ -131,10 +140,6 @@ inline JNIEnv* currentOrNull() {
   }
   return env;
 }
-
-}
-
-namespace detail {
 
 // To understand JniEnvCacher and ThreadScope, it is helpful to
 // realize that if a flagged JniEnvCacher is on the stack, then a
@@ -188,6 +193,10 @@ JniEnvCacher::~JniEnvCacher() {
 ThreadScope::ThreadScope()
   : thisAttached_(false)
 {
+  if (g_vm == nullptr) {
+    throw std::runtime_error("fbjni is uninitialized; no thread can be attached.");
+  }
+
   JNIEnv* env;
 
   // Check if the thread is attached somehow.
@@ -230,7 +239,8 @@ ThreadScope::~ThreadScope() {
 
 /* static */
 JNIEnv* Environment::current() {
-  JNIEnv* env = currentOrNull();
+  FBJNI_ASSERT(g_vm);
+  JNIEnv* env = detail::currentOrNull();
   if (env == nullptr) {
     throw std::runtime_error("Unable to retrieve jni environment. Is the thread attached?");
   }
@@ -239,7 +249,8 @@ JNIEnv* Environment::current() {
 
 /* static */
 JNIEnv* Environment::ensureCurrentThreadIsAttached() {
-  JNIEnv* env = currentOrNull();
+  FBJNI_ASSERT(g_vm);
+  JNIEnv* env = detail::currentOrNull();
   if (env == nullptr) {
     env = attachCurrentThread();
     FBJNI_ASSERT(env);

@@ -62,7 +62,7 @@ jint initialize(JavaVM* vm, std::function<void()>&& init_fn) noexcept {
 }
 
 alias_ref<JClass> findClassStatic(const char* name) {
-  const auto env = Environment::current();
+  const auto env = detail::currentOrNull();
   if (!env) {
     throw std::runtime_error("Unable to retrieve JNIEnv*.");
   }
@@ -74,7 +74,7 @@ alias_ref<JClass> findClassStatic(const char* name) {
 }
 
 local_ref<JClass> findClassLocal(const char* name) {
-  const auto env = Environment::current();
+  const auto env = detail::currentOrNull();
   if (!env) {
     throw std::runtime_error("Unable to retrieve JNIEnv*.");
   }

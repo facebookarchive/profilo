@@ -25,7 +25,7 @@ namespace jni {
 
 // Keeps a thread-local reference to the current thread's JNIEnv.
 struct Environment {
-  // May be null if this thread isn't attached to the JVM
+  // Throws a std::runtime_error if this thread isn't attached to the JVM
   // TODO(T6594868) Benchmark against raw JNI access
   static JNIEnv* current();
   static void initialize(JavaVM* vm);
@@ -37,6 +37,11 @@ struct Environment {
 };
 
 namespace detail {
+
+// This will return null the thread isn't attached to the VM, or if
+// fbjni has never been initialized with a VM at all.  You probably
+// shouldn't be using this.
+JNIEnv* currentOrNull();
 
 /**
  * If there's thread-local data, it's a pointer to one of these.  The
@@ -98,6 +103,9 @@ private:
  *    class or instance to the new thread; this bypasses the need for the class loader.
  *    (See http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/invocation.html#attach_current_thread)
  *    If you need access to the application's classes, you can use ThreadScope::WithClassLoader.
+ *  - If fbjni has never been initialized, there will be no JavaVM object to attach with.
+ *    In that case, a std::runtime_error will be thrown.  This is only likely to happen in a
+ *    standalone C++ application, or if Environment::initialize is not used.
  */
 class ThreadScope {
  public:
