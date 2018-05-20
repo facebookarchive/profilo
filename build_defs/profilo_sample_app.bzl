@@ -7,9 +7,9 @@ PROVIDER_TO_RULE - Map that links provider "short names" to the provider class a
                    Can be extended in individual BUCK files to add more providers specific to
                    those files.
 """
+
 load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-
 
 PROVIDER_TO_RULE = {
     "atrace": profilo_path("java/main/com/facebook/profilo/provider/atrace:atrace"),
@@ -21,8 +21,7 @@ PROVIDER_TO_RULE = {
     "yarn": profilo_path("java/main/com/facebook/profilo/provider/yarn:yarn"),
 }
 
-
-def profilo_sample_app(srcs, manifest, providers, deps=[]):
+def profilo_sample_app(srcs, manifest, providers, deps = []):
     """
     Defines a sample app based on a list of provider short names.
 
@@ -48,11 +47,11 @@ def profilo_sample_app(srcs, manifest, providers, deps=[]):
         provider_deps = []
 
     android_build_config(
-        name="sample-buildconfig-{}".format(providers_string),
-        package="com.facebook.profilo",
-        values=[
+        name = "sample-buildconfig-{}".format(providers_string),
+        package = "com.facebook.profilo",
+        values = [
             "String[] PROVIDERS = new String[] {{ {} }}".format(
-                ",".join(["\"{}\"".format(provider) for provider in (providers if providers else [])])
+                ",".join(["\"{}\"".format(provider) for provider in (providers if providers else [])]),
             ),
         ],
     )
@@ -64,41 +63,44 @@ def profilo_sample_app(srcs, manifest, providers, deps=[]):
     # Therefore, calculate the difference between the full set and the enabled
     # set and put only that in the provided list.
 
-    provided_deps = [x for x in PROVIDER_TO_RULE.values()
-                     if x not in provider_deps]
+    provided_deps = [
+        x
+        for x in PROVIDER_TO_RULE.values()
+        if x not in provider_deps
+    ]
 
     fb_core_android_library(
-        name="sample-activity-{}".format(providers_string),
-        srcs=srcs,
-        provided_deps=provided_deps,
-        visibility=[
+        name = "sample-activity-{}".format(providers_string),
+        srcs = srcs,
+        provided_deps = provided_deps,
+        visibility = [
             profilo_path("..."),
         ],
-        deps=[
+        deps = [
             profilo_path("java/main/com/facebook/profilo/core:core"),
             profilo_path("java/main/com/facebook/profilo/sample:sample-lib"),
         ] + provider_deps + deps,
     )
 
     android_aar(
-        name="sample-aar-{}".format(providers_string),
-        manifest_skeleton=manifest,
-        deps=[
+        name = "sample-aar-{}".format(providers_string),
+        manifest_skeleton = manifest,
+        deps = [
             ":sample-buildconfig-{}".format(providers_string),
             ":sample-activity-{}".format(providers_string),
         ],
-        visibility=[
+        visibility = [
             "PUBLIC",
         ],
     )
 
     android_binary(
-        name="sample-{}".format(providers_string),
-        keystore=profilo_path("java/main/com/facebook/profilo/sample:keystore"),
-        manifest=manifest,
-        deps=[
+        name = "sample-{}".format(providers_string),
+        keystore = profilo_path("java/main/com/facebook/profilo/sample:keystore"),
+        manifest = manifest,
+        deps = [
             ":sample-buildconfig-{}".format(providers_string),
             ":sample-activity-{}".format(providers_string),
         ],
-        aapt_mode="aapt2",
+        aapt_mode = "aapt2",
     )

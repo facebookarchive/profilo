@@ -3,14 +3,13 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
-
 def museum_library(
-        museum_deps=[],
-        exported_preprocessor_flags=[],
-        compiler_flags=[],
-        extra_visibility=[],
-        exported_headers=None,
-        exported_platform_headers=None):
+        museum_deps = [],
+        exported_preprocessor_flags = [],
+        compiler_flags = [],
+        extra_visibility = [],
+        exported_headers = None,
+        exported_platform_headers = None):
     """
     Wrapper for a Museum library.
 
@@ -51,16 +50,17 @@ def museum_library(
     name = path[-1]
 
     fb_xplat_cxx_library(
-        name="headers",
-        header_namespace="museum/" + "/".join(path[2:]),
-        exported_headers=exported_headers if exported_headers else native.glob([
+        name = "headers",
+        header_namespace = "museum/" + "/".join(path[2:]),
+        exported_headers = exported_headers if exported_headers else native.glob([
             "**/*.h",
         ]),
-        exported_platform_headers=exported_platform_headers,
-        exported_deps=[
-            profilo_path("deps/museum/{}/{}:headers".format(museum_version, museum_dep)) for museum_dep in museum_deps
+        exported_platform_headers = exported_platform_headers,
+        exported_deps = [
+            profilo_path("deps/museum/{}/{}:headers".format(museum_version, museum_dep))
+            for museum_dep in museum_deps
         ],
-        exported_preprocessor_flags=[
+        exported_preprocessor_flags = [
             "-D__STDC_FORMAT_MACROS",
             "-DMUSEUM_VERSION=v" + museum_version.replace(".", "_"),
             "-DMUSEUM_VERSION_NUM=" + museum_version.replace(".", ""),
@@ -69,16 +69,16 @@ def museum_library(
             "-Wno-inconsistent-missing-override",
             "-Wno-unknown-attributes",
         ] + exported_preprocessor_flags,
-        visibility=[
+        visibility = [
             profilo_path("..."),
         ] + extra_visibility,
     )
 
     fb_xplat_cxx_library(
-        name=name,
-        header_namespace="museum/{}/{}".format(museum_version, name),
-        srcs=native.glob(["**/*.c", "**/*.cc", "**/*.cpp"]),
-        compiler_flags=[
+        name = name,
+        header_namespace = "museum/{}/{}".format(museum_version, name),
+        srcs = native.glob(["**/*.c", "**/*.cc", "**/*.cpp"]),
+        compiler_flags = [
             "-std=c++11",
             "-fvisibility=hidden",
             "-fno-exceptions",
@@ -94,14 +94,15 @@ def museum_library(
             "-Wno-pmf-conversions",
             "-Wno-unknown-warning-option",
         ] + compiler_flags,
-        deps=[
-            profilo_path("deps/museum/{}/{}:{}".format(museum_version, museum_dep, museum_dep.split("/")[-1])) for museum_dep in museum_deps
+        deps = [
+            profilo_path("deps/museum/{}/{}:{}".format(museum_version, museum_dep, museum_dep.split("/")[-1]))
+            for museum_dep in museum_deps
         ] + [profilo_path("deps/museum:museum")],
-        exported_deps=[
+        exported_deps = [
             ":headers",
         ],
-        force_static=True,  # TODO: how to get rid of this?
-        visibility=[
+        force_static = True,  # TODO: how to get rid of this?
+        visibility = [
             profilo_path("deps/museum/..."),
         ] + extra_visibility,
     )
