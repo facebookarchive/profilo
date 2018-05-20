@@ -26,6 +26,7 @@ namespace facebook { namespace linker {
 
 struct BaseTest : public testing::Test {
   virtual void SetUp() {
+    linker_set_enabled(true);
     ASSERT_EQ(0, linker_initialize());
   }
 

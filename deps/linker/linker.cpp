@@ -39,6 +39,7 @@
 #include <sig_safe_write/sig_safe_write.h>
 #include <sigmux.h>
 
+#include <atomic>
 #include <algorithm>
 #include <cinttypes>
 #include <map>
@@ -80,11 +81,22 @@ static std::unordered_map<std::pair<hook_func, lib_base>, prev_func, pairhash>& 
 }
 static pthread_rwlock_t orig_functions_mutex_ = PTHREAD_RWLOCK_INITIALIZER;
 
+static std::atomic<bool> g_linker_enabled(false);
+
+}
+
+void
+linker_set_enabled(int enabled)
+{
+  g_linker_enabled = enabled;
 }
 
 int
 linker_initialize()
 {
+  if (!g_linker_enabled.load()) {
+    return 1;
+  }
   if (sigmux_init(SIGSEGV) ||
       sigmux_init(SIGBUS))
   {
