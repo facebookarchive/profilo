@@ -10,7 +10,7 @@ def tracer_library(version):
         "ArtTracer.h",
     ]
     fb_xplat_cxx_library(
-        name = "tracer-{version}".format(version=version),
+        name = "tracer-{version}".format(version = version),
         srcs = [
             "ArtCompatibility.cpp",
             "ArtTracer.cpp",
@@ -20,11 +20,13 @@ def tracer_library(version):
             "-fexceptions",
             "-std=gnu++14",
             "-DLOG_TAG=\"Profilo/ArtCompat\"",
-            "-UMUSEUM_VERSION", "-DMUSEUM_VERSION=v{}_readonly".format(version_),
+            "-UMUSEUM_VERSION",
+            "-DMUSEUM_VERSION=v{}_readonly".format(version_),
             #'-DFBLOG_NDEBUG=0', # extra logging
         ],
         exported_headers = {
-            header.replace(".h", "_" + version_num + ".h"): header for header in exported_headers
+            header.replace(".h", "_" + version_num + ".h"): header
+            for header in exported_headers
         },
         exported_preprocessor_flags = [
             "-DMUSEUM_VERSION_{}".format(version_),
@@ -37,7 +39,7 @@ def tracer_library(version):
             exclude = exported_headers,
         ),
         reexport_all_header_dependencies = False,
-        soname = "libprofiloprofiler{version_num}.$(ext)".format(version_num=version_num),
+        soname = "libprofiloprofiler{version_num}.$(ext)".format(version_num = version_num),
         visibility = [
             profilo_path("..."),
         ],
@@ -45,7 +47,7 @@ def tracer_library(version):
             profilo_path("deps/fb:fb"),
             profilo_path("deps/fbjni:fbjni"),
             profilo_path("deps/forkjail:forkjail"),
-            profilo_path("cpp/museum-readonly/{version}/art/runtime:runtime".format(version=version)),
+            profilo_path("cpp/museum-readonly/{version}/art/runtime:runtime".format(version = version)),
             profilo_path("cpp/logger:logger"),
         ],
     )
