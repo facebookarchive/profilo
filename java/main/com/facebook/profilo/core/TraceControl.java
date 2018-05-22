@@ -246,27 +246,29 @@ final public class TraceControl {
       return false;
     }
 
+    TraceController traceController = mControllers.get(controller);
+    if (traceController == null) {
+      throw new IllegalArgumentException("Unregistered controller for id = " + controller);
+    }
+
     Config rootConfig = mCurrentConfig.get();
     if (rootConfig == null) {
       return false;
     }
 
-    ControllerConfig controllerConfig =
-        rootConfig.getControllersConfig().getConfigForController(controller);
-    if (controllerConfig == null) {
-      // No config for this controller
-      return false;
+    ControllerConfig controllerConfig = null;
+    if (traceController.isConfigurable()) {
+      controllerConfig = rootConfig.getControllersConfig().getConfigForController(controller);
+      if (controllerConfig == null) {
+        // We need a config but don't have one
+        return false;
+      }
     }
 
     TraceContext traceContext = findCurrentTraceByContext(controller, intContext, context);
     if (traceContext != null) {
       // Attempted start during a trace with the same Id
       return false;
-    }
-
-    TraceController traceController = mControllers.get(controller);
-    if (traceController == null) {
-      throw new IllegalArgumentException("Unregistered controller for id = " + controller);
     }
 
     int providers = traceController.evaluateConfig(context, controllerConfig);
@@ -356,6 +358,11 @@ final public class TraceControl {
         TraceStopReason.ABORT,
         intContext,
         ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
+  }
+
+  public void abortTraceWithReason(
+      String trigger, @Nullable Object context, int intContext, int abortReason) {
+    abortTraceWithReason(TriggerRegistry.getBitMaskFor(trigger), context, intContext, abortReason);
   }
 
   public void abortTraceWithReason(
@@ -451,15 +458,6 @@ final public class TraceControl {
       }
     }
     return null;
-  }
-
-  @Nullable
-  public String getBlackBoxTraceEncodedId() {
-    TraceContext ctx = findCurrentTraceByContext(ProfiloConstants.TRIGGER_BLACK_BOX, 0, null);
-    if (ctx == null) {
-      return null;
-    }
-    return ctx.encodedTraceId;
   }
 
   @Nullable

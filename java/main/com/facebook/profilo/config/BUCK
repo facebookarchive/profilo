@@ -18,5 +18,6 @@ fb_core_android_library(
     deps = [
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("java/main/com/facebook/profilo/core:constants"),
+        profilo_path("java/main/com/facebook/profilo/core:registry"),
     ],
 )

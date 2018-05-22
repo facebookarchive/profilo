@@ -84,6 +84,10 @@ public class StringController implements TraceController {
     }
     return fst == snd || fst.equals(snd);
   }
+  
+  public boolean isConfigurable() {
+    return true;
+  }
 ```
 
 This controller can then be used as follows:

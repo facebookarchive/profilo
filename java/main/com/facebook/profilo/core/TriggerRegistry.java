@@ -29,42 +29,43 @@ import javax.annotation.Nullable;
  * <p>The general pattern is:
  *
  * <pre>
- *   class MyProvider extends TraceOrchestrator.TraceProvider {
- *   public static final int PROVIDER_MYPROVIDER = ProviderRegistry.newProvider("myprovider");
+ *   class MyController implements TraceController {
+ *   public static final int TRIGGER_MYTRIGGER = TriggerRegistry.newTrigger("mytrigger");
  *   ...
  *   }
  * </pre>
  */
 @DoNotStrip
-public final class ProvidersRegistry {
+public final class TriggerRegistry {
   static final GenericRegistry<String> sRegistry = new GenericRegistry<>();
 
   /**
-   * Assigns a new integer identifier to {@code provider}.
+   * Assigns a new integer identifier to {@code trigger}.
    *
    * <p>You can register the same name more than once and receive unique IDs for each call.
    */
-  public static int newProvider(String provider) {
-    return sRegistry.newEntry(provider);
+  public static int newTrigger(String trigger) {
+    return sRegistry.newEntry(trigger);
   }
 
-  /**
-   * Retrieve the bitmask for the given provider name.
-   *
-   * <p>Called from JNI.
-   */
+  /** Retrieve the bitmask for the given trigger name. */
   @DoNotStrip
-  public static int getBitMaskFor(String provider) {
-    return sRegistry.getBitMaskFor(provider);
+  public static int getBitMaskFor(String trigger) {
+    return sRegistry.getBitMaskFor(trigger);
   }
 
-  /** Retrieve the bitmask for the given providers. */
-  public static int getBitMaskFor(@Nullable Iterable<String> providers) {
-    return sRegistry.getBitMaskFor(providers);
+  /** Retrieve the bitmask for the given triggers. */
+  public static int getBitMaskFor(@Nullable Iterable<String> triggers) {
+    return sRegistry.getBitMaskFor(triggers);
   }
 
-  /** Retrieve the list of the registered provider names. */
-  public static List<String> getRegisteredProviders() {
+  /** Retrieve the list of the registered trigger names. */
+  public static List<String> getRegisteredTriggers() {
     return sRegistry.getRegisteredEntries();
+  }
+
+  /** Retrieve the bitmask for the registered triggers. */
+  public static int getBitMaskForAllTriggers() {
+    return sRegistry.getBitMaskForAllEntries();
   }
 }

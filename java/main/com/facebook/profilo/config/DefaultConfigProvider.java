@@ -16,7 +16,6 @@
 
 package com.facebook.profilo.config;
 
-import com.facebook.profilo.core.ProfiloConstants;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
@@ -39,12 +38,6 @@ public class DefaultConfigProvider implements ConfigProvider {
             @Override
             @Nullable
             public ControllerConfig getConfigForController(int controller) {
-              if (controller == ProfiloConstants.TRIGGER_MANUAL
-                  || controller == ProfiloConstants.TRIGGER_EXTERNAL
-                  || controller == ProfiloConstants.TRIGGER_VIDEO_PROFILER
-                  || controller == ProfiloConstants.TRIGGER_LITE) {
-                return mControllerConfig;
-              }
               return null;
             }
 

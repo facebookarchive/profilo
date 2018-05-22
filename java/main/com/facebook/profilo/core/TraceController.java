@@ -43,4 +43,10 @@ public interface TraceController {
   int getCpuSamplingRateMs(Object context, ControllerConfig config);
 
   boolean contextsEqual(int fstInt, @Nullable Object fst, int sndInt, @Nullable Object snd);
+
+  /**
+   * Returns true if the controller is based on a config, and false otherwise which means hardcoded
+   * behavior.
+   */
+  boolean isConfigurable();
 }

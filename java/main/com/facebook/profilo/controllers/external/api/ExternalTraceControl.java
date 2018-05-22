@@ -17,7 +17,6 @@
 package com.facebook.profilo.controllers.external.api;
 
 import com.facebook.profilo.controllers.external.ExternalController;
-import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.TraceControl;
 import com.facebook.profilo.logger.Trace;
 
@@ -39,7 +38,7 @@ public class ExternalTraceControl {
     // config in DefaultConfigProvider.
     //
     final int flags = Trace.FLAG_MANUAL;
-    return control.startTrace(ProfiloConstants.TRIGGER_EXTERNAL, flags, config, 0);
+    return control.startTrace(ExternalController.TRIGGER_EXTERNAL, flags, config, 0);
   }
 
   public static void stopTrace() {
@@ -47,6 +46,6 @@ public class ExternalTraceControl {
     if (control == null) {
       return;
     }
-    control.stopTrace(ProfiloConstants.TRIGGER_EXTERNAL, null, 0);
+    control.stopTrace(ExternalController.TRIGGER_EXTERNAL, null, 0);
   }
 }

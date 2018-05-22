@@ -27,7 +27,6 @@ import android.widget.ToggleButton;
 import com.facebook.profilo.BuildConfig;
 import com.facebook.profilo.controllers.external.ExternalController;
 import com.facebook.profilo.controllers.external.api.ExternalTraceControl;
-import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TraceOrchestrator;
@@ -77,7 +76,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     }
 
     SparseArray<TraceController> controllers = new SparseArray<>(1);
-    controllers.put(ProfiloConstants.TRIGGER_EXTERNAL, new ExternalController());
+    controllers.put(ExternalController.TRIGGER_EXTERNAL, new ExternalController());
 
     TraceOrchestrator.initialize(
         this.getApplicationContext(),

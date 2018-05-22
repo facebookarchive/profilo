@@ -20,11 +20,13 @@ CONTROL = [
 ]
 
 REGISTRY = [
+    "GenericRegistry.java",
     "ProvidersRegistry.java",
+    "TriggerRegistry.java",
 ]
 
 fb_core_android_library(
-    name = "providersregistry",
+    name = "registry",
     srcs = REGISTRY,
     visibility = [
         "PUBLIC",
@@ -83,6 +85,7 @@ fb_core_android_library(
     ],
     deps = [
         ":constants",
+        ":registry",
         profilo_path("deps/androidinternals:os"),
         profilo_path("deps/buildconstants:buildconstants"),
         profilo_path("deps/fbtrace:utils"),
@@ -100,7 +103,7 @@ fb_core_android_library(
         ":constants",
         ":control",
         ":events",
-        ":providersregistry",
+        ":registry",
         profilo_path("java/main/com/facebook/profilo/config:config"),
         profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
     ],

@@ -18,9 +18,12 @@ package com.facebook.profilo.controllers.external;
 
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.core.TraceController;
+import com.facebook.profilo.core.TriggerRegistry;
 import javax.annotation.Nullable;
 
 public class ExternalController implements TraceController {
+
+  public static final int TRIGGER_EXTERNAL = TriggerRegistry.newTrigger("external");
 
   public static class Config {
 
@@ -51,5 +54,10 @@ public class ExternalController implements TraceController {
     // Always honor stop requests.
 
     return true;
+  }
+
+  @Override
+  public boolean isConfigurable() {
+    return false;
   }
 }

@@ -86,6 +86,7 @@ public class TraceControlTest {
         .thenReturn(PROVIDER_TEST);
     when(mController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
+    when(mController.isConfigurable()).thenReturn(true);
     //noinspection unchecked
     mControllers = mock(SparseArray.class);
     when(mControllers.get(eq(TRACE_CONTROLLER_ID))).thenReturn(mController);
@@ -131,6 +132,14 @@ public class TraceControlTest {
 
   @Test
   public void testStartFiltersOutControllers() {
+    TraceController secondController = mock(TraceController.class);
+    when(secondController.evaluateConfig(anyObject(), same(mControllerConfig)))
+        .thenReturn(PROVIDER_TEST);
+    when(secondController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
+        .thenReturn(true);
+    when(secondController.isConfigurable()).thenReturn(true);
+    when(mControllers.get(eq(~TRACE_CONTROLLER_ID))).thenReturn(secondController);
+
     assertThat(mTraceControl.startTrace(~TRACE_CONTROLLER_ID, 0, new Object(), 0)).isFalse();
     assertNotTracing();
 
@@ -146,7 +155,28 @@ public class TraceControlTest {
   }
 
   @Test
+  public void testNonConfigurableControllerTraceStart() {
+    TraceController noConfController = mock(TraceController.class);
+    when(noConfController.evaluateConfig(anyObject(), same(mControllerConfig)))
+        .thenReturn(PROVIDER_TEST);
+    when(noConfController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
+        .thenReturn(true);
+    when(noConfController.isConfigurable()).thenReturn(false);
+    when(mControllers.get(eq(~TRACE_CONTROLLER_ID))).thenReturn(noConfController);
+
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isTrue();
+  }
+
+  @Test
   public void testStartFromInsideTraceFails() {
+    TraceController secondController = mock(TraceController.class);
+    when(secondController.evaluateConfig(anyObject(), same(mControllerConfig)))
+        .thenReturn(PROVIDER_TEST);
+    when(secondController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
+        .thenReturn(true);
+    when(secondController.isConfigurable()).thenReturn(true);
+    when(mControllers.get(eq(~TRACE_CONTROLLER_ID))).thenReturn(secondController);
+
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isTrue();
     assertTracing();
 
