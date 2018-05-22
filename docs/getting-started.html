@@ -30,7 +30,7 @@
 SparseArray&lt;TraceController&gt; controllers = <span class="hljs-keyword">new</span> SparseArray&lt;&gt;(<span class="hljs-number">1</span>);
 
 <span class="hljs-comment">// We want the "ExternalController" with the id specified by TRIGGER_EXTERNAL.</span>
-controllers.put(ProfiloConstants.TRIGGER_EXTERNAL, <span class="hljs-keyword">new</span> ExternalController());
+controllers.put(ExternalController.TRIGGER_EXTERNAL, <span class="hljs-keyword">new</span> ExternalController());
 
 TraceOrchestrator.TraceProvider[] providers = <span class="hljs-keyword">new</span> TraceOrchestrator.TraceProvider[] {
     <span class="hljs-keyword">new</span> SystemCounterThread(),

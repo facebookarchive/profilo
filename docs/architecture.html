@@ -70,6 +70,10 @@
     }
     <span class="hljs-keyword">return</span> fst == snd || fst.equals(snd);
   }
+  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isConfigurable</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+  }
 </code></pre>
 <p>This controller can then be used as follows:</p>
 <pre><code class="hljs css java">TraceControl.get().startTrace(
