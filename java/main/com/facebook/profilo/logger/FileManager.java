@@ -85,22 +85,24 @@ public class FileManager {
   FileManagerStatistics mFileManagerStatistics =
       new FileManagerStatistics();
 
-  private static final FilenameFilter TRIMMABLE_FILES_FILTER = new FilenameFilter() {
-    @Override
-    public boolean accept(File dir, String filename) {
-      return !filename.startsWith(UNTRIMMABLE_PREFIX) &&
-          (filename.endsWith(LOG_SUFFIX) ||
-              filename.endsWith(ZIP_SUFFIX) ||
-              filename.endsWith(TMP_SUFFIX));
-    }
-  };
+  public static final FilenameFilter TRIMMABLE_FILES_FILTER =
+      new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String filename) {
+          return !filename.startsWith(UNTRIMMABLE_PREFIX)
+              && (filename.endsWith(LOG_SUFFIX)
+                  || filename.endsWith(ZIP_SUFFIX)
+                  || filename.endsWith(TMP_SUFFIX));
+        }
+      };
 
-  private static final FilenameFilter UNTRIMMABLE_FILES_FILTER = new FilenameFilter() {
-    @Override
-    public boolean accept(File dir, String filename) {
-      return filename.startsWith(UNTRIMMABLE_PREFIX) && filename.endsWith(LOG_SUFFIX);
-    }
-  };
+  public static final FilenameFilter UNTRIMMABLE_FILES_FILTER =
+      new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String filename) {
+          return filename.startsWith(UNTRIMMABLE_PREFIX) && filename.endsWith(LOG_SUFFIX);
+        }
+      };
 
   private final File mBaseFolder;
 
