@@ -1,5 +1,8 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-load(profilo_path("deps/museum:museum_library.bzl"), "museum_library")
+load(
+    profilo_path("deps/museum:museum_library.bzl"),
+    "museum_library",
+)
 
 museum_library(
     exported_preprocessor_flags = [
