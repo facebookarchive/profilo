@@ -10,9 +10,6 @@ fb_core_android_library(
         ["*.java"],
         exclude = CALLBACKS_SRC,
     ),
-    exported_deps = [
-        ":writer_callbacks",
-    ],
     visibility = [
         profilo_path("..."),
     ],
@@ -22,6 +19,9 @@ fb_core_android_library(
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/proguard:annotations"),
         profilo_path("deps/soloader:soloader"),
+    ],
+    exported_deps = [
+        ":writer_callbacks",
     ],
 )
 

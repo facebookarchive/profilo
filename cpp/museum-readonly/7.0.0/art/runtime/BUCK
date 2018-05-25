@@ -29,9 +29,6 @@ fb_xplat_cxx_library(
         "-DMUSEUM_NOOP_CHECK_MACROS",
         "-DMUSEUM_NOOP_THREAD_MUTATORS",
     ],
-    exported_deps = [
-        profilo_path("deps/museum/7.0.0/art/runtime:headers"),
-    ],
     force_static = True,
     visibility = [
         "PUBLIC",
@@ -39,5 +36,8 @@ fb_xplat_cxx_library(
     deps = [
         profilo_path("cpp/museum-readonly/7.0.0/external/libcxx:libcxx"),
         profilo_path("deps/museum:museum"),
+    ],
+    exported_deps = [
+        profilo_path("deps/museum/7.0.0/art/runtime:headers"),
     ],
 )

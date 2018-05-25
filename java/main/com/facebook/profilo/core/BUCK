@@ -52,9 +52,6 @@ fb_core_android_library(
 fb_core_android_library(
     name = "events",
     srcs = EVENTS,
-    exported_deps = [
-        ":constants",
-    ],
     visibility = [
         "//javatests/com/facebook/profilo/...",
         profilo_path("..."),
@@ -64,17 +61,14 @@ fb_core_android_library(
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/soloader:soloader"),
     ],
+    exported_deps = [
+        ":constants",
+    ],
 )
 
 fb_core_android_library(
     name = "control",
     srcs = CONTROL,
-    exported_deps = [
-        ":constants",
-        profilo_path("aidl:aidl"),
-        profilo_path("java/main/com/facebook/profilo/config:config"),
-        profilo_path("java/main/com/facebook/profilo/logger:logger"),
-    ],
     required_for_source_only_abi = True,
     visibility = [
         profilo_path("..."),
@@ -91,6 +85,12 @@ fb_core_android_library(
         profilo_path("deps/fbtrace:utils"),
         profilo_path("deps/jsr-305:jsr-305"),
     ],
+    exported_deps = [
+        ":constants",
+        profilo_path("aidl:aidl"),
+        profilo_path("java/main/com/facebook/profilo/config:config"),
+        profilo_path("java/main/com/facebook/profilo/logger:logger"),
+    ],
 )
 
 fb_core_android_library(
@@ -99,14 +99,6 @@ fb_core_android_library(
         ["*.java"],
         exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY,
     ),
-    exported_deps = [
-        ":constants",
-        ":control",
-        ":events",
-        ":registry",
-        profilo_path("java/main/com/facebook/profilo/config:config"),
-        profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
-    ],
     tests = [
         profilo_path("java/test/com/facebook/profilo/core:core"),
     ],
@@ -127,5 +119,13 @@ fb_core_android_library(
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/zip:zip"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
+    ],
+    exported_deps = [
+        ":constants",
+        ":control",
+        ":events",
+        ":registry",
+        profilo_path("java/main/com/facebook/profilo/config:config"),
+        profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
     ],
 )

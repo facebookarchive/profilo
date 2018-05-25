@@ -17,12 +17,12 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    exported_deps = [
-        profilo_path("cpp/writer:writer"),
-        profilo_path("deps/fbjni:fbjni"),
-    ],
     force_static = True,
     visibility = [
         profilo_path("..."),
+    ],
+    exported_deps = [
+        profilo_path("cpp/writer:writer"),
+        profilo_path("deps/fbjni:fbjni"),
     ],
 )

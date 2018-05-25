@@ -5,9 +5,6 @@ load("//buck_imports:profilo_path.bzl", "profilo_path")
 fb_core_android_library(
     name = "api",
     srcs = glob(["*.java"]),
-    exported_deps = [
-        profilo_path("java/main/com/facebook/profilo/core:constants"),
-    ],
     visibility = [
         "PUBLIC",
     ],
@@ -15,5 +12,8 @@ fb_core_android_library(
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("java/main/com/facebook/profilo/controllers/external:external"),
         profilo_path("java/main/com/facebook/profilo/core:core"),
+    ],
+    exported_deps = [
+        profilo_path("java/main/com/facebook/profilo/core:constants"),
     ],
 )

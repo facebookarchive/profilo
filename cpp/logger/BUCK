@@ -20,15 +20,15 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
-    exported_deps = [
-        profilo_path("cpp/generated:cpp"),
-        profilo_path("cpp/logger/lfrb:lfrb"),
-    ],
     visibility = [
         profilo_path("..."),
     ],
     deps = [
         profilo_path("cpp:constants"),
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
+        profilo_path("cpp/logger/lfrb:lfrb"),
     ],
 )
 

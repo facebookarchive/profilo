@@ -16,15 +16,15 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    exported_deps = [
-        profilo_path("cpp/generated:cpp"),
-    ],
     preferred_linkage = "static",
     tests = [
         profilo_path("cpp/test:codegen"),
     ],
     visibility = [
         profilo_path("cpp/test/..."),
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
     ],
 )
 
@@ -44,15 +44,15 @@ fb_xplat_cxx_library(
         # no __builtin_sub/add_overflow on gcc 4.9, so let's do this instead
         "-fwrapv",
     ],
-    exported_deps = [
-        profilo_path("cpp/generated:cpp"),
-    ],
     preferred_linkage = "static",
     tests = [
         profilo_path("cpp/test:delta_visitor"),
     ],
     visibility = [
         profilo_path("cpp/test/..."),
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
     ],
 )
 
@@ -70,12 +70,12 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    exported_deps = [
-        profilo_path("cpp/generated:cpp"),
-    ],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/test/..."),
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
     ],
 )
 
@@ -93,15 +93,15 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    exported_deps = [
-        profilo_path("cpp/generated:cpp"),
-    ],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/test/..."),
     ],
     deps = [
         profilo_path("cpp/profiler:constants"),
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
     ],
 )
 
@@ -119,12 +119,12 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    exported_deps = [
-        profilo_path("cpp/logger:logger"),
-    ],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/test/..."),
+    ],
+    exported_deps = [
+        profilo_path("cpp/logger:logger"),
     ],
 )
 
@@ -150,9 +150,6 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    exported_deps = [
-        profilo_path("cpp/generated:cpp"),
-    ],
     preferred_linkage = "static",
     tests = [
         profilo_path("cpp/test:trace_writer"),
@@ -169,5 +166,8 @@ fb_xplat_cxx_library(
         ":timestamp_truncating_visitor",
         profilo_path("cpp/logger:logger"),
         profilo_path("deps/zstr:zstr"),
+    ],
+    exported_deps = [
+        profilo_path("cpp/generated:cpp"),
     ],
 )

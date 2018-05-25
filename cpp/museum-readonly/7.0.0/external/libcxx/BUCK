@@ -27,9 +27,6 @@ fb_xplat_cxx_library(
         "-UMUSEUM_VERSION",
         "-DMUSEUM_VERSION=v7_0_0_readonly",
     ],
-    exported_deps = [
-        profilo_path("deps/museum/7.0.0/external/libcxx:headers"),
-    ],
     force_static = True,
     visibility = [
         "PUBLIC",
@@ -37,5 +34,8 @@ fb_xplat_cxx_library(
     deps = [
         profilo_path("deps/museum/7.0.0/bionic/libc:libc"),
         profilo_path("deps/museum:museum"),
+    ],
+    exported_deps = [
+        profilo_path("deps/museum/7.0.0/external/libcxx:headers"),
     ],
 )
