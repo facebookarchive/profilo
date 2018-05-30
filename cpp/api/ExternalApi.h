@@ -45,22 +45,14 @@
 
 #pragma once
 
+#include <profilo/ExternalApiGlue.h>
+
 #include <unistd.h>
 #include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-typedef void (*profilo_int_mark_start)(const char* provider, const char* msg);
-typedef void (*profilo_int_mark_end)(const char* provider);
-typedef void (*profilo_int_log_classload)(const char* provider, int64_t classid);
-
-typedef struct ProfiloApi {
-  profilo_int_mark_start mark_start;
-  profilo_int_mark_end mark_end;
-  profilo_int_log_classload log_classload;
-} ProfiloApi;
 
 ProfiloApi* profilo_api();
 

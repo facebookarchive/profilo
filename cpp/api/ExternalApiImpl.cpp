@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <profilo/ExternalApi.h>
+#include <profilo/ExternalApiGlue.h>
 
 #include <unistd.h>
 
@@ -75,18 +75,9 @@ void internal_log_classload(const char* provider, int64_t classid) {
 
 } // namespace
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define PROFILO_EXPORT __attribute__((visibility ("default")))
-
-PROFILO_EXPORT ProfiloApi profilo_api_int {
-  .mark_start = &internal_mark_start,
-  .mark_end = &internal_mark_end,
-  .log_classload = &internal_log_classload,
-};
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
+__attribute__((constructor))
+void init_external_api() {
+  profilo_api_int.mark_start = &internal_mark_start;
+  profilo_api_int.mark_end = &internal_mark_end;
+  profilo_api_int.log_classload = &internal_log_classload;
+}

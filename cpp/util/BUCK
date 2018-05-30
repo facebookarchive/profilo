@@ -64,27 +64,3 @@ fb_xplat_cxx_library(
         profilo_path("..."),
     ],
 )
-
-fb_xplat_cxx_library(
-    name = "so_utils",
-    srcs = glob([
-        "SoUtils.cpp",
-    ]),
-    header_namespace = "util",
-    exported_headers = glob([
-        "SoUtils.h",
-    ]),
-    compiler_flags = [
-        "-fexceptions",
-        "-fPIC",
-        "-std=gnu++14",
-        "-Wall",
-    ],
-    force_static = True,
-    visibility = [
-        profilo_path("..."),
-    ],
-    deps = [
-        profilo_path("deps/linker:linker"),
-    ],
-)

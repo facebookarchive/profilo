@@ -18,46 +18,31 @@
 
 #include <unistd.h>
 
-#include <util/SoUtils.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 namespace {
 
-ProfiloApi* resolve_api_int() {
-  return reinterpret_cast<ProfiloApi*>(
-    facebook::profilo::util::resolve_symbol("profilo_api_int"));
-}
-
-ProfiloApi* get_api_int() {
-  static auto api = resolve_api_int();
-  return api;
-}
-
 void api_mark_start(const char* provider, const char* name) {
-  auto api = get_api_int();
-  if (api == nullptr) {
+  if (profilo_api_int.mark_start == nullptr) {
     return;
   }
-  api->mark_start(provider, name);
+  profilo_api_int.mark_start(provider, name);
 }
 
 void api_mark_end(const char* provider) {
-  auto api = get_api_int();
-  if (api == nullptr) {
+  if (profilo_api_int.mark_end == nullptr) {
     return;
   }
-  api->mark_end(provider);
+  profilo_api_int.mark_end(provider);
 }
 
 void api_log_classload(const char* provider, int64_t classid) {
-  auto api = get_api_int();
-  if (api == nullptr) {
+  if (profilo_api_int.log_classload == nullptr) {
     return;
   }
-  api->log_classload(provider, classid);
+  profilo_api_int.log_classload(provider, classid);
 }
 
 } // namespace anonymous

@@ -12,12 +12,31 @@ fb_xplat_cxx_library(
         "ExternalApi.h",
     ],
     force_static = True,
+    link_style = "shared",
+    preferred_linkage = "static",
     supported_platforms_regex = "^android-(arm|armv7|x86)$",
     visibility = [
         "PUBLIC",
     ],
     deps = [
-        profilo_path("cpp/util:so_utils"),
+        ":external_api_glue",
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "external_api_glue",
+    srcs = [
+        "ExternalApiGlue.cpp",
+    ],
+    header_namespace = "profilo",
+    exported_headers = [
+        "ExternalApiGlue.h",
+    ],
+    link_style = "shared",
+    soname = "libprofiloextapi.$(ext)",
+    supported_platforms_regex = "^android-(arm|armv7|x86)$",
+    visibility = [
+        profilo_path("..."),
     ],
 )
 
@@ -27,16 +46,12 @@ fb_xplat_cxx_library(
         "ExternalApiImpl.cpp",
     ],
     allow_jni_merging = False,
-    compiler_flags = [
-        "-DLOG_TAG=\"Profilo/ExternalApi\"",
-        #"-DFBLOG_NDEBUG=0",  # verbose logging
-    ],
     force_static = True,
     visibility = [
         profilo_path("..."),
     ],
     deps = [
-        ":external_api",
+        ":external_api_glue",
         profilo_path("cpp:constants"),
         profilo_path("cpp:providers"),
         profilo_path("cpp/logger:logger"),
