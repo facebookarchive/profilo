@@ -4,7 +4,10 @@ load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
 profilo_oss_cxx_library(
     name = "linker",
-    srcs = glob(["*.cpp"]),
+    srcs = glob(
+        ["*.cpp"],
+        exclude = ["trampoline_arm.c"],
+    ),
     header_namespace = "linker",
     exported_headers = glob(["*.h"]),
     platform_preprocessor_flags = [
@@ -23,9 +26,47 @@ profilo_oss_cxx_library(
         "PUBLIC",
     ],
     deps = [
+        ":trampoline_arm",
+        ":trampoline_thumb",
         profilo_path("deps/cjni:cjni"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/sig_safe_write:sig_safe_write"),
         profilo_path("deps/sigmux:sigmux"),
     ],
+)
+
+profilo_oss_cxx_library(
+    name = "trampoline_arm",
+    platform_compiler_flags = [(
+        "armv7",
+        [
+            "-marm",
+            "-DTRAMP_ARM",
+        ],
+    )],
+    platform_srcs = [
+        (
+            "armv7",
+            ["trampoline_arm.c"],
+        ),
+    ],
+    preferred_linkage = "static",
+)
+
+profilo_oss_cxx_library(
+    name = "trampoline_thumb",
+    platform_compiler_flags = [(
+        "armv7",
+        [
+            "-mthumb",
+            "-DTRAMP_THUMB",
+        ],
+    )],
+    platform_srcs = [
+        (
+            "armv7",
+            ["trampoline_arm.c"],
+        ),
+    ],
+    preferred_linkage = "static",
 )

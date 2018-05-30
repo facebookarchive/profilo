@@ -21,9 +21,15 @@
 #include <android/log.h>
 #include <stdlib.h>
 
+#ifdef LOG_TAG
+#define LINKER_ASSERT_LOG_TAG LOG_TAG
+#else
+#define LINKER_ASSERT_LOG_TAG "linkerlib"
+#endif
+
 __attribute__ ((noreturn))
 static void log_assert(char const* msg) {
-  __android_log_assert("", "native/linker", "%s", msg);
+  __android_log_assert("", LINKER_ASSERT_LOG_TAG, "%s", msg);
   abort(); // just for good measure
 }
 

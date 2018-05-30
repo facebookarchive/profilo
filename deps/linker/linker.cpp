@@ -19,6 +19,7 @@
 #include <linker/sharedlibs.h>
 #include <linker/locks.h>
 #include <linker/log_assert.h>
+#include <linker/trampoline.h>
 
 #include <assert.h>
 #include <dlfcn.h>
@@ -58,28 +59,6 @@ typedef void* prev_func;
 typedef void* lib_base;
 
 namespace {
-
-struct pairhash {
-  std::size_t operator()(std::pair<hook_func, lib_base> const& pair) const {
-    // guts of boost::hash_combine. see https://stackoverflow.com/a/27952689 for more
-#if __SIZEOF_SIZE_T__ == 4
-    constexpr size_t kGolden = 0x9e3779b9;
-#elif __SIZEOF_SIZE_T__ == 8
-    constexpr size_t kGolden = 0x9e3779b97f4a7c17;
-#endif
-    std::size_t ret = 0;
-    ret ^= std::hash<hook_func>()(pair.first) + kGolden + (ret << 6) + (ret >> 2);
-    ret ^= std::hash<lib_base>()(pair.second) + kGolden + (ret << 6) + (ret >> 2);
-    return ret;
-  }
-};
-
-// (hook function, library of instruction which called hook function) -> original function
-static std::unordered_map<std::pair<hook_func, lib_base>, prev_func, pairhash>& orig_functions() {
-  static std::unordered_map<std::pair<hook_func, lib_base>, prev_func, pairhash> map_;
-  return map_;
-}
-static pthread_rwlock_t orig_functions_mutex_ = PTHREAD_RWLOCK_INITIALIZER;
 
 static std::atomic<bool> g_linker_enabled(false);
 
@@ -137,78 +116,43 @@ patch_relocation_address(prev_func* plt_got_entry, hook_func hook) {
   if (!hook || !dladdr(plt_got_entry, &info)) {
     return 1;
   }
-  lib_base lib_being_hooked = info.dli_fbase;
 
-  prev_func old_got_entry = *plt_got_entry;
-  int rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(hook));
+  try {
+    hook_func trampoline = create_trampoline(hook, *plt_got_entry);
 
-  // if we need to mprotect, it must be done under lock - don't want to set +w,
-  // then have somebody else finish and set -w, before we're done with our write
-  WriterLock wl(&orig_functions_mutex_);
+    int rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(trampoline));
 
-  if (rc && errno == EFAULT) {
-    int pagesize = getpagesize();
-    void* page = PAGE_ALIGN(plt_got_entry, pagesize);
+    if (rc && errno == EFAULT) {
+      // if we need to mprotect, it must be done under lock - don't want to set +w,
+      // then have somebody else finish and set -w, before we're done with our write
+      static pthread_rwlock_t mprotect_mutex_ = PTHREAD_RWLOCK_INITIALIZER;
+      WriterLock wl(&mprotect_mutex_);
 
-    if (mprotect(page, pagesize, PROT_READ | PROT_WRITE)) {
-      return 1;
-    }
+      int pagesize = getpagesize();
+      void* page = PAGE_ALIGN(plt_got_entry, pagesize);
 
-    rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(hook));
-
-    int old_errno = errno;
-    if (mprotect(page, pagesize, PROT_READ)) {
-      abort();
-    };
-    errno = old_errno;
-  }
-
-  if (rc == 0) {
-    orig_functions()[std::make_pair(hook, lib_being_hooked)] = old_got_entry;
-
-    /**
-      * "Chaining" mechanism:
-      * This library allows us to "link" hooks, that is,
-      * func() -> hook_n() -> hook_n-1() ... -> hook_1() -> actual_func()
-      * To account for the case where hook_n() lives in a library that has
-      * not been hooked (and thus doesn't have an entry in the <orig_functions>
-      * map) insert said entry here, so that the "chain" of hooks is never
-      * broken.
-      *
-      * Think of the chain as a linked list, where lib_being_hooked's PLT always
-      * points to HEAD, and each (func, calling_lib) entry in orig_functions must
-      * point to the next function in the chain
-      */
-    auto oldHookEntry = orig_functions().find(std::make_pair(old_got_entry, lib_being_hooked));
-    if (oldHookEntry != orig_functions().end()) {
-      if (!dladdr(hook, &info)) {
-        return 1; // wtf? maybe should abort, or perform this check earlier
+      if (mprotect(page, pagesize, PROT_READ | PROT_WRITE)) {
+        return 2;
       }
-      lib_base lib_of_new_hook = info.dli_fbase;
 
-      // 1. if libfoo has hooked write(2) calls from libart, then libart_write = libfoo_write_hook and
-      //    orig_functions[libfoo_write_hook, libart] = write
-      // 2. if libbar later hooks write(2) from libart, then libart_write = libbar_write_hook and
-      //    orig_functions[libbar_write_hook, libart] = libfoo_write_hook
-      // 3. however, notice: #2 will cause flow to go from libart_write -> libbar_write_hook -> libfoo_write_hook
-      //    *BUT*, orig_functions[libfoo_write_hook, libbar] doesn't exist!
-      // 4. So, we need to set up a chain and make orig_functions[libfoo_write_hook, libbar] = orig_functions[libfoo_write_hook, libart] (= write)
-      // 5. libbaz then hooks write(2) in libart. libart_write = libbaz_write_hook, orig_functions[libbaz_write_hook, libart] = libbar_write_hook,
-      //    orig_functions[libbar_write_hook, libbaz] = orig_functions[libbar_write_hook, libart] = libfoo_write_hook
-      // ... etc etc etc ..
-      auto existing_hook_record = std::make_pair(old_got_entry, lib_being_hooked);
-      auto new_record_for_existing_hook = std::make_pair(old_got_entry, lib_of_new_hook);
-      orig_functions()[new_record_for_existing_hook] = orig_functions()[existing_hook_record];
-      orig_functions().erase(existing_hook_record);
+      rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(trampoline));
+
+      int old_errno = errno;
+      if (mprotect(page, pagesize, PROT_READ)) {
+        abort();
+      };
+      errno = old_errno;
     }
-  }
 
-  return rc;
+    return rc;
+  } catch (std::runtime_error const&) {
+    return 3;
+  }
 }
 
 int
 hook_plt_method(const char* libname, const char* name, hook_func hook) {
-  plt_hook_spec spec(libname, name, hook);
+  plt_hook_spec spec(name, hook);
   if (hook_single_lib(libname, &spec, 1) == 0 && spec.hook_result == 1) {
     return 0;
   }
@@ -258,70 +202,4 @@ hook_all_libs(plt_hook_spec* specs, size_t num_specs,
   }
 
   return failures;
-}
-
-static lib_base return_addr_base(void* return_address) {
-  // write-through dladdr(2) cache, basically
-
-  // note: if you're like @csarbora, you may spend twenty minutes or more thinking
-  // about why we need a second map at all, and whether or not this cache functionality
-  // couldn't just be integrated directly into the orig_functions map.
-  //
-  // to save you the time, we do NOT want to integrate this into the orig_functions map
-  // because when someone re-hooks a hooked function, we need to be able to fix up
-  // that original hook record. (the original hook record knows what its CALL_PREV should
-  // be when it gets called from the library being hooked, but it doesn't know what its
-  // CALL_PREV should be when it gets called from the library containing the new, second,
-  // hook.) if we looked up by insn site instead of just lib_base in lookup_prev_plt_method,
-  // then we'd need to fix up ALL the entries for a hooked function (lib base + all the insn
-  // sites), which we can't look up efficiently.
-
-  static std::unordered_map<void*, lib_base> cache_;
-  static pthread_rwlock_t cacheMutex_ = PTHREAD_RWLOCK_INITIALIZER;
-
-  {
-    ReaderLock rl(&cacheMutex_);
-    auto it = cache_.find(return_address);
-    if (it != cache_.end()) {
-      return it->second; // cache hit!
-    }
-  }
-
-  Dl_info info;
-  if (!dladdr(return_address, &info)) {
-    // only way i can think of this ever happening is if a CALL_PREV resolved to a function that
-    // got unloaded, which could only happen if it were something that was dlopen'ed (or was a
-    // dominated dep of something that was dlopen'ed) and that something was then later dlclose'ed
-    // *while* the call stack was still executing. this race is inherent to dlclose() however; it's
-    // still possible that a thread executing foo() in libbar blows up because libbar unloads
-    std::stringstream ss;
-    ss << "return_address " << std::hex << return_address << " not part of our process";
-    log_assert(ss.str().c_str());
-  }
-
-  // we can release the ReaderLock and later grab the WriterLock - without worrying about
-  // the state of the set changing from under us - because in a race we're simply re-adding
-  // an identical pair. return_address is not going to map to more than one lib_base unless
-  // dlclose starts racing with us, per ^ comment, so this emplace call won't have diff data
-  WriterLock wl(&cacheMutex_);
-  cache_.emplace(return_address, info.dli_fbase);
-  return info.dli_fbase;
-}
-
-prev_func lookup_prev_plt_method(
-    void* hook_insn,
-    void* return_address,
-    char const* file,
-    int line) {
-  lib_base calling_lib = return_addr_base(return_address);
-
-  ReaderLock rl(&orig_functions_mutex_);
-
-  auto method_it = orig_functions().find(std::make_pair(hook_insn, calling_lib));
-  if (method_it == orig_functions().cend()) {
-    std::stringstream ss;
-    ss << file << ":" << line << " unable to find previous method";
-    log_assert(ss.str().c_str());
-  }
-  return method_it->second;
 }

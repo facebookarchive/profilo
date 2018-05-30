@@ -16,21 +16,20 @@
 
 #pragma once
 
-extern int meaning_of_life;
+#include <stdint.h>
 
-struct large {
-  double a;
-  int b;
-  double c;
-  char const* d;
-  char e, f, g;
-};
+namespace facebook { namespace linker {
 
-double nice1(int one);
-int nice2(int one, double two);
+void* create_trampoline(void* hook, void* chained);
 
-#define EVIL2_MUNGE_CALLBACK_INT(initial)     (-(initial))
-#define EVIL3_MUNGE_CALLBACK_INT(a, b, c)     (((a) + (b)) * (c))
-void evil1(struct large one, int two, void (*cb)(struct large*, int, void*), void* unk);
-void* evil2(int one, struct large two, void (*cb)(struct large*, int, void*), void* unk);
-struct large evil3(int one, int two, int three, struct large four, void (*cb)(struct large*, int, void*), void* unk);
+} } // namespace facebook::linker
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void* get_chained_plt_method();
+
+#ifdef __cplusplus
+}
+#endif

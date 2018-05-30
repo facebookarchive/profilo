@@ -80,16 +80,16 @@ int
 hook_plt_method(const char* libname, const char* name, hook_func hook);
 
 typedef struct _plt_hook_spec {
-  const char* lib_name;
   const char* fn_name;
   hook_func hook_fn;
-  int dlopen_result;
   int hook_result;
 
 #if defined(__cplusplus)
-  _plt_hook_spec(const char* lname, const char* fname, hook_func hfn)
-    : lib_name(lname), fn_name(fname), hook_fn(hfn), dlopen_result(0), hook_result(0)
+  _plt_hook_spec(const char* fname, hook_func hfn)
+    : fn_name(fname), hook_fn(hfn), hook_result(0)
   {}
+  _plt_hook_spec(void*, const char* fname, hook_func hfn)
+    : _plt_hook_spec(fname, hfn) {}
 #endif //defined(__cplusplus)
 } plt_hook_spec;
 
@@ -150,26 +150,18 @@ hook_all_libs(plt_hook_spec* specs, size_t num_specs,
 
 #define __CALL_PREV_IMPL(hook, hook_sig, ...)                           \
   ({                                                                    \
-    void* _caller = __builtin_return_address(0);                        \
-    void* _prev = lookup_prev_plt_method(                               \
-      (hook_func)hook, _caller, __FILE__, __LINE__);                    \
+    void* _prev = get_chained_plt_method();                             \
     ((hook_sig)_prev)(__VA_ARGS__);                                     \
   })
 /**
  * Looks up the previous PLT entry for a given hook and library. Here be
  * dragons; you probably want CALL_PREV(..) instead.
  *
- * hook - Address of the currently-executing hook function.
- * return_address - Return address for the current frame, used to look up which
- *                  library's PLT entry is needed.
- * file - Filename of callsite, only used in case of error.
- * line - Line of callsite, only used in case of error.
- *
  * Returns: void* - code address of the function previously pointed to by the
  *                  appropriate entry of the appropriate PLT
  */
 void*
-lookup_prev_plt_method(hook_func hook, void* return_address, char const* file, int line);
+get_chained_plt_method();
 
 #ifdef __cplusplus
 } // extern "C"
