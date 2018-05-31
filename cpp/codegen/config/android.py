@@ -148,6 +148,7 @@ NAMES = [
 
     'CLASS_LOAD_START',
     'CLASS_LOAD_END',
+    'CLASS_LOAD_FAILED',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

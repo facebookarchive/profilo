@@ -1,4 +1,4 @@
-// @generated SignedSource<<d70ea12b2c565aa35452cc568d3d1961>>
+// @generated SignedSource<<c98bb416744d9fac0ab41bf3d67e1b9b>>
 
 #pragma once
 
@@ -96,6 +96,7 @@ enum EntryType {
   CPU_COUNTER = 87,
   CLASS_LOAD_START = 88,
   CLASS_LOAD_END = 89,
+  CLASS_LOAD_FAILED = 90,
 };
 
 

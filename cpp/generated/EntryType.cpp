@@ -1,4 +1,4 @@
-// @generated SignedSource<<2c1e9c53aaff3a19c0eebfa273214bf5>>
+// @generated SignedSource<<9fa634e6215470aef9a398af6d96c188>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -99,6 +99,7 @@ const char* to_string(EntryType type) {
     case CPU_COUNTER: return "CPU_COUNTER";
     case CLASS_LOAD_START: return "CLASS_LOAD_START";
     case CLASS_LOAD_END: return "CLASS_LOAD_END";
+    case CLASS_LOAD_FAILED: return "CLASS_LOAD_FAILED";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }
