@@ -59,7 +59,7 @@ void internal_mark_end(const char* provider) {
   logger.write(std::move(entry));
 }
 
-void internal_log_classload(const char* provider, int64_t classid) {
+void internal_log_classload_start(const char* provider) {
   if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }
@@ -68,8 +68,36 @@ void internal_log_classload(const char* provider, int64_t classid) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = entries::CLASS_LOAD;
+  entry.type = entries::CLASS_LOAD_START;
+  entry.extra = 0;
+  logger.write(std::move(entry));
+}
+
+void internal_log_classload_end(const char* provider, int64_t classid) {
+  if (!TraceProviders::get().isEnabled(provider)) {
+    return;
+  }
+
+  auto& logger = Logger::get();
+  StandardEntry entry{};
+  entry.tid = threadID();
+  entry.timestamp = monotonicTime();
+  entry.type = entries::CLASS_LOAD_END;
   entry.extra = classid;
+  logger.write(std::move(entry));
+}
+
+void internal_log_classload_failed(const char* provider) {
+  if (!TraceProviders::get().isEnabled(provider)) {
+    return;
+  }
+
+  auto& logger = Logger::get();
+  StandardEntry entry{};
+  entry.tid = threadID();
+  entry.timestamp = monotonicTime();
+  entry.type = entries::CLASS_LOAD_FAILED;
+  entry.extra = 0;
   logger.write(std::move(entry));
 }
 
@@ -79,5 +107,7 @@ __attribute__((constructor))
 void init_external_api() {
   profilo_api_int.mark_start = &internal_mark_start;
   profilo_api_int.mark_end = &internal_mark_end;
-  profilo_api_int.log_classload = &internal_log_classload;
+  profilo_api_int.log_classload_start = &internal_log_classload_start;
+  profilo_api_int.log_classload_end = &internal_log_classload_end;
+  profilo_api_int.log_classload_failed = &internal_log_classload_failed;
 }

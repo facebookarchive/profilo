@@ -38,11 +38,25 @@ void api_mark_end(const char* provider) {
   profilo_api_int.mark_end(provider);
 }
 
-void api_log_classload(const char* provider, int64_t classid) {
-  if (profilo_api_int.log_classload == nullptr) {
+void api_log_classload_start(const char* provider) {
+  if (profilo_api_int.log_classload_start == nullptr) {
     return;
   }
-  profilo_api_int.log_classload(provider, classid);
+  profilo_api_int.log_classload_start(provider);
+}
+
+void api_log_classload_end(const char* provider, int64_t classid) {
+  if (profilo_api_int.log_classload_end == nullptr) {
+    return;
+  }
+  profilo_api_int.log_classload_end(provider, classid);
+}
+
+void api_log_classload_failed(const char* provider) {
+  if (profilo_api_int.log_classload_failed == nullptr) {
+    return;
+  }
+  profilo_api_int.log_classload_failed(provider);
 }
 
 } // namespace anonymous
@@ -51,7 +65,9 @@ ProfiloApi* profilo_api() {
   static ProfiloApi api {
     .mark_start = &api_mark_start,
     .mark_end = &api_mark_end,
-    .log_classload = &api_log_classload,
+    .log_classload_start = &api_log_classload_start,
+    .log_classload_end = &api_log_classload_end,
+    .log_classload_failed = &api_log_classload_failed,
   };
   return &api;
 }

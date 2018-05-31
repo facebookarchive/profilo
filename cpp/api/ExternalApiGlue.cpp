@@ -25,7 +25,9 @@ extern "C" {
 PROFILO_EXPORT ProfiloApi profilo_api_int {
   .mark_start = nullptr,
   .mark_end = nullptr,
-  .log_classload = nullptr,
+  .log_classload_start = nullptr,
+  .log_classload_end = nullptr,
+  .log_classload_failed = nullptr,
 };
 
 #ifdef __cplusplus
