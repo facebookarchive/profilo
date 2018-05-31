@@ -397,6 +397,13 @@ namespaces:
       - bool
       mangledNames:
       - _ZN3art10ThreadList10SuspendAllEPKcb
+    - symbolName: VisitRoots
+      params:
+      - RootVisitor*
+      returnType: void
+      cvFlags: const
+      mangledNames:
+      - _ZNK3art10ThreadList10VisitRootsEPNS_11RootVisitorE
 
   # unattached methods
   - className:
