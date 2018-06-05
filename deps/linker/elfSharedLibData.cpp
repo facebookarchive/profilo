@@ -126,7 +126,7 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
           reinterpret_cast<Elf_Reloc const*>(loadBias + entry->d_un.d_ptr);
         break;
 
-      // TODO: handle DT_ANDROID_REL[A][SZ]
+      // TODO (t30088113): handle DT_ANDROID_REL[A][SZ]
 
       case DT_SYMTAB:
         dynSymbolsTable =
@@ -182,18 +182,12 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
         break;
     }
 
-    if (pltRelocationsLen && pltRelocations &&
-        relocationsLen && relocations &&
-        dynSymbolsTable && dynStrsTable &&
-        (elfHash_.numbuckets_ > 0 || gnuHash_.numbuckets_ > 0)) {
+    if (is_complete()) {
       break;
     }
   }
 
-  if (!pltRelocationsLen || !pltRelocations ||
-      !relocationsLen || !relocations ||
-      !dynSymbolsTable || !dynStrsTable ||
-      !(elfHash_.numbuckets_ > 0 || gnuHash_.numbuckets_ > 0)) {
+  if (!is_complete()) {
     // Error, go to next library
     throw input_parse_error("not all info found");
   }
@@ -338,12 +332,23 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_s
   return relocs;
 }
 
+bool elfSharedLibData::is_complete() const {
+  return pltRelocationsLen && pltRelocations &&
+         // relocationsLen && relocations &&     TODO (t30088113): re-enable when DT_ANDROID_REL is supported
+         dynSymbolsTable && dynStrsTable &&
+         (elfHash_.numbuckets_ > 0 || gnuHash_.numbuckets_ > 0);
+}
+
 /* It can happen that, after caching a shared object's data in sharedLibData,
  * the library is unloaded, so references to memory in that address space
  * result in SIGSEGVs. Thus, check here that the addresses are still valid.
 */
 elfSharedLibData::operator bool() const {
   Dl_info info;
+
+  if (!is_complete()) {
+    return false;
+  }
 
   // pltRelocations is somewhat special: the "bad" constructor explicitly sets
   // this to nullptr in order to mark the entire object as invalid. if this check

@@ -95,6 +95,7 @@ private:
   ElfW(Sym) const* elf_find_symbol_by_name(char const*) const;
   ElfW(Sym) const* gnu_find_symbol_by_name(char const*) const;
   std::vector<void**> get_relocations_internal(void*, Elf_Reloc const*, size_t) const;
+  bool is_complete() const;
 
   uintptr_t loadBias {};
   Elf_Reloc const* pltRelocations {};
