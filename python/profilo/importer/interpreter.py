@@ -80,9 +80,16 @@ class TraceFileInterpreter(object):
         parents = {}  # entry -> entry
         children = {}  # entry -> [entry]
 
+        ignore_parent_entries = {
+            "CPU_COUNTER",   # arg2 == "core number"
+        }
+
         for entry in self.trace_file.entries:
             entries[entry.id] = entry
             if isinstance(entry, StandardEntry):
+                # For some entry types, arg2 is not the "parent" entry
+                if entry.type in ignore_parent_entries:
+                    continue
                 parent_id = entry.arg2
             elif isinstance(entry, BytesEntry):
                 parent_id = entry.arg1
