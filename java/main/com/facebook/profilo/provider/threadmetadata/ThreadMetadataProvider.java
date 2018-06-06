@@ -18,13 +18,12 @@ package com.facebook.profilo.provider.threadmetadata;
 
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.ipc.TraceContext;
-import com.facebook.soloader.SoLoader;
 import java.io.File;
 
 public final class ThreadMetadataProvider extends BaseTraceProvider {
 
-  static {
-    SoLoader.loadLibrary("profilo_threadmetadata");
+  public ThreadMetadataProvider() {
+    super("profilo_threadmetadata");
   }
 
   @Override

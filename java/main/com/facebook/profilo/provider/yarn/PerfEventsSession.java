@@ -26,10 +26,6 @@ import javax.annotation.concurrent.GuardedBy;
 @DoNotStrip
 public class PerfEventsSession {
 
-  static {
-    SoLoader.loadLibrary("profilo_yarn");
-  }
-
   // Lower than UI (0), higher than BACKGROUND (10)
   private static final int READER_THREAD_PRIORITY = THREAD_PRIORITY_BACKGROUND / 2;
 

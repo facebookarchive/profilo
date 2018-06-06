@@ -29,15 +29,10 @@ import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
 public final class StackFrameThread extends BaseTraceProvider {
-
-  static {
-    SoLoader.loadLibrary("profilo_stacktrace");
-  }
 
   public static final int PROVIDER_STACK_FRAME = ProvidersRegistry.newProvider("stack_trace");
   public static final int PROVIDER_WALL_TIME_STACK_TRACE =
@@ -55,6 +50,7 @@ public final class StackFrameThread extends BaseTraceProvider {
   @Nullable private TraceContext mSavedTraceContext;
 
   public StackFrameThread(Context context) {
+    super("profilo_stacktrace");
     Context applicationContext = context.getApplicationContext();
     if (applicationContext == null && context instanceof Application) {
       // When the context is passed in from com.facebook.katana.app.FacebookApplication

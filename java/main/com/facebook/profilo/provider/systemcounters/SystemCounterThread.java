@@ -26,7 +26,6 @@ import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceEvents;
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -36,9 +35,6 @@ import javax.annotation.concurrent.GuardedBy;
  */
 @DoNotStrip
 public final class SystemCounterThread extends BaseTraceProvider {
-  static {
-    SoLoader.loadLibrary("profilo_systemcounters");
-  }
 
   public static final int PROVIDER_SYSTEM_COUNTERS =
       ProvidersRegistry.newProvider("system_counters");
@@ -72,6 +68,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
    * the rest of the system counters.
    */
   public SystemCounterThread(@Nullable Runnable periodicWork) {
+    super("profilo_systemcounters");
     mExtraRunnable = periodicWork;
   }
 

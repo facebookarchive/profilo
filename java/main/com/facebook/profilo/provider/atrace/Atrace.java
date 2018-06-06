@@ -25,9 +25,6 @@ import java.lang.reflect.Method;
 
 @DoNotStrip
 public final class Atrace {
-  static {
-    SoLoader.loadLibrary("profilo_atrace");
-  }
 
   private static boolean sHasHook = false;
   private static boolean sHookFailed = false;

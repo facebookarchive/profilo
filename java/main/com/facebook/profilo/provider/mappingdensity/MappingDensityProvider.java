@@ -3,43 +3,40 @@
 package com.facebook.profilo.provider.mappingdensity;
 
 import android.util.Log;
+import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
-import com.facebook.profilo.core.TraceEvents;
-import com.facebook.profilo.core.TraceOrchestrator;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 import java.io.File;
-import javax.annotation.Nullable;
 
 @DoNotStrip
-public class MappingDensityProvider implements TraceOrchestrator.TraceProvider {
-
-  static {
-    SoLoader.loadLibrary("profilo_mappingdensity");
-  }
+public final class MappingDensityProvider extends BaseTraceProvider {
 
   public static final int PROVIDER_MAPPINGDENSITY = ProvidersRegistry.newProvider("mapping_density");
 
-  @Nullable private TraceContext mSavedContext;
+  public MappingDensityProvider() {
+    super("profilo_mappingdensity");
+  }
 
   @Override
-  public synchronized void onEnable(TraceContext context, File extraDataFolder) {
-    if (!TraceEvents.isEnabled(PROVIDER_MAPPINGDENSITY) || mSavedContext != null) {
-      return;
-    }
-    mSavedContext = context;
+  protected void enable() {}
+
+  @Override
+  protected void disable() {}
+
+  @Override
+  protected void onTraceStarted(TraceContext context, File extraDataFolder) {
     doDump(extraDataFolder, "start");
   }
 
-  /** @see TraceOrchestrator.TraceProvider#onDisable */
   @Override
-  public synchronized void onDisable(TraceContext context, File extraDataFolder) {
-    if (mSavedContext == null || mSavedContext.traceId != context.traceId) {
-      return; // Ensuring that the context which started the provider will stop it
-    }
-    mSavedContext = null;
+  protected void onTraceEnded(TraceContext context, File extraDataFolder) {
     doDump(extraDataFolder, "end");
+  }
+
+  @Override
+  protected int getSupportedProviders() {
+    return PROVIDER_MAPPINGDENSITY;
   }
 
   private static void doDump(File extraDataFolder, String dumpName) {

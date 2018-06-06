@@ -16,6 +16,7 @@
 package com.facebook.profilo.core;
 
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.soloader.SoLoader;
 import java.io.File;
 import javax.annotation.Nullable;
 
@@ -55,14 +56,41 @@ public abstract class BaseTraceProvider extends TraceOrchestrator.TraceProvider 
   private File mExtraFolder;
   protected static final int EVERY_PROVIDER_CHANGE = 0xFFFFFFFF;
 
+  @Nullable private String mSolib;
+  private boolean mSolibInitialized;
+
+  protected BaseTraceProvider() {
+    this(null);
+  }
+
+  protected BaseTraceProvider(@Nullable String nativeLibrary) {
+    mSolib = nativeLibrary;
+
+    // if no native lib, treat it as initialized
+    mSolibInitialized = nativeLibrary == null;
+  }
+
+  protected final void ensureSolibLoaded() {
+    if (!mSolibInitialized) {
+      synchronized (this) {
+        if (!mSolibInitialized) {
+          SoLoader.loadLibrary(mSolib);
+          mSolibInitialized = true;
+        }
+      }
+    }
+  }
+
   @Override
   public final void onEnable(TraceContext context, File extraDataFolder) {
+    ensureSolibLoaded();
     onTraceStarted(context, extraDataFolder);
     processStateChange(context, extraDataFolder);
   }
 
   @Override
   public final void onDisable(TraceContext context, File extraDataFolder) {
+    ensureSolibLoaded();
     onTraceEnded(context, extraDataFolder);
     processStateChange(context, extraDataFolder);
   }

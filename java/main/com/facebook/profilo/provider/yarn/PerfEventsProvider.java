@@ -29,6 +29,10 @@ public final class PerfEventsProvider extends BaseTraceProvider {
   @GuardedBy("this")
   private PerfEventsSession mSession = null;
 
+  public PerfEventsProvider() {
+    super("profilo_yarn");
+  }
+
   @Override
   protected void enable() {
     PerfEventsSession session = mSession;
