@@ -84,6 +84,21 @@ struct SchedInfo {
   SchedInfo();
 };
 
+// Struct for data from /proc/vmstat
+struct VmStatInfo {
+  uint64_t nrFreePages;
+  uint64_t nrDirty;
+  uint64_t nrWriteback;
+  uint64_t pgPgIn;
+  uint64_t pgPgOut;
+  uint64_t pgMajFault;
+  uint64_t allocStall;
+  uint64_t pageOutrun;
+  uint64_t kswapdSteal;
+
+  VmStatInfo();
+};
+
 // Consolidated stats from different stat files
 struct ThreadStatInfo {
   // STAT
@@ -155,6 +170,33 @@ private:
   int32_t value_size_;
 public:
   int32_t availableStatsMask;
+};
+
+class VmStatFile : public BaseStatFile<VmStatInfo> {
+public:
+  explicit VmStatFile(std::string path);
+  explicit VmStatFile() : VmStatFile("/proc/vmstat") {}
+
+  VmStatInfo doRead(int fd, uint32_t requested_stats_mask) override;
+
+private:
+  void recalculateOffsets();
+
+  static const auto kNotFound = -1;
+  static const auto kNotSet = -2;
+  static const size_t kMaxStatFileLength = 4096;
+
+  struct Key {
+    const char * name;
+    uint8_t length;
+    int16_t offset;
+    uint64_t& stat_field;
+  };
+
+  char buffer_[kMaxStatFileLength];
+  size_t read_;
+  VmStatInfo stat_info_;
+  std::vector<Key> keys_;
 };
 
 // Consolidated stat files manager class

@@ -320,6 +320,7 @@ void SystemCounterThread::logCounters () {
   logThreadCounters(kTidAllThreads);
   logSysinfo();
   logMallinfo();
+  logVmStatCounters();
 }
 
 void SystemCounterThread::logThreadCounters(int tid) {
@@ -428,6 +429,71 @@ void SystemCounterThread::logProcessCounters() {
       currInfo.minorFaults,
       tid,
       QuickLogConstants::PROC_SW_FAULTS_MINOR);
+}
+
+void SystemCounterThread::logVmStatCounters() {
+  if (!vmStats_) {
+    vmStats_.reset(new util::VmStatFile());
+  }
+
+  auto prevInfo = vmStats_->getInfo();
+  util::VmStatInfo currInfo;
+  try {
+    currInfo = vmStats_->refresh();
+  } catch (const std::system_error& e) {
+    return;
+  } catch (const std::runtime_error& e) {
+    return;
+  }
+
+  auto tid = threadID();
+
+  logNonMonotonicCounter(
+      prevInfo.nrFreePages,
+      currInfo.nrFreePages,
+      tid,
+      QuickLogConstants::VMSTAT_NR_FREE_PAGES);
+  logNonMonotonicCounter(
+      prevInfo.nrDirty,
+      currInfo.nrDirty,
+      tid,
+      QuickLogConstants::VMSTAT_NR_DIRTY);
+  logNonMonotonicCounter(
+      prevInfo.nrWriteback,
+      currInfo.nrWriteback,
+      tid,
+      QuickLogConstants::VMSTAT_NR_WRITEBACK);
+  logMonotonicCounter(
+      prevInfo.pgPgIn,
+      currInfo.pgPgIn,
+      tid,
+      QuickLogConstants::VMSTAT_PGPGIN);
+  logMonotonicCounter(
+      prevInfo.pgPgOut,
+      currInfo.pgPgOut,
+      tid,
+      QuickLogConstants::VMSTAT_PGPGOUT);
+  logMonotonicCounter(
+      prevInfo.pgMajFault,
+      currInfo.pgMajFault,
+      tid,
+      QuickLogConstants::VMSTAT_PGMAJFAULT);
+  logMonotonicCounter(
+      prevInfo.allocStall,
+      currInfo.allocStall,
+      tid,
+      QuickLogConstants::VMSTAT_ALLOCSTALL);
+  logMonotonicCounter(
+      prevInfo.pageOutrun,
+      currInfo.pageOutrun,
+      tid,
+      QuickLogConstants::VMSTAT_PAGEOUTRUN);
+  logMonotonicCounter(
+      prevInfo.kswapdSteal,
+      currInfo.kswapdSteal,
+      tid,
+      QuickLogConstants::VMSTAT_KSWAPD_STEAL);
+
 }
 
 } // profilo

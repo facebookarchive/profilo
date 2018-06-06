@@ -48,6 +48,47 @@ static const std::string SCHED_CONTENT =
     "nr_involuntary_switches                      :                   46\n"
     "prio                                         :                  120\n"
     "clock-delta                                  :                  573\n";
+static const std::string VMSTAT_CONTENT =
+    "nr_free_pages 123\n"
+    "nr_dirty 74317\n"
+    "nr_mapped 76672\n"
+    "nr_file_pages 235292\n"
+    "nr_writeback 17\n"
+    "nr_unstable 0\n"
+    "nr_bounce 0\n"
+    "pgpgin 862085\n"
+    "pgpgout 133892\n"
+    "pgmajfault 109\n"
+    "pgfree 978797\n"
+    "kswapd_steal 101\n"
+    "kswapd_low_wmark_hit_quickly 0\n"
+    "kswapd_high_wmark_hit_quickly 0\n"
+    "pageoutrun 12\n"
+    "allocstall 3\n";
+static const std::string VMSTAT_CONTENT_MODIFIED =
+    "nr_free_pages 123\n"
+    "nr_dirty 74317\n"
+    "nr_mapped 76672\n"
+    "nr_file_pages 235292\n"
+    "nr_writeback 1\n"
+    "nr_unstable 0\n"
+    "nr_bounce 0\n"
+    "pgpgin 1857940636\n"
+    "pgpgout 133892\n"
+    "pgmajfault 109\n"
+    "pgfree 978797\n"
+    "kswapd_steal 101\n"
+    "kswapd_low_wmark_hit_quickly 0\n"
+    "kswapd_high_wmark_hit_quickly 0\n"
+    "pageoutrun 12\n"
+    "allocstall 32\n";
+static const std::string VMSTAT_CONTENT_WITH_SPLIT_KSWAPD =
+    "nr_free_pages 123\n"
+    "pgsteal_kswapd_dma 236448262\n"
+    "pgsteal_kswapd_normal 228999324\n"
+    "pgsteal_kswapd_movable 1\n"
+    "pageoutrun 12\n"
+    "allocstall 3\n";
 
 class ProcFsTest : public ::testing::Test {
  protected:
@@ -95,6 +136,45 @@ TEST_F(ProcFsTest, testStatFile) {
   EXPECT_EQ(statInfo.kernelCpuTimeMs, 32 * CLK_TICK);
   EXPECT_EQ(statInfo.cpuTime, 136 * CLK_TICK);
   EXPECT_EQ(statInfo.cpuNum, 2);
+}
+
+TEST_F(ProcFsTest, testVmStatFile) {
+  fs::path statPath = SetUpTempFile(VMSTAT_CONTENT);
+  VmStatFile statFile {statPath.native()};
+  VmStatInfo statInfo = statFile.refresh(ALL_STATS_MASK);
+
+  EXPECT_EQ(statInfo.nrFreePages, 123);
+  EXPECT_EQ(statInfo.nrDirty, 74317);
+  EXPECT_EQ(statInfo.nrWriteback, 17);
+  EXPECT_EQ(statInfo.pgPgIn, 862085);
+  EXPECT_EQ(statInfo.pgPgOut, 133892);
+  EXPECT_EQ(statInfo.pgMajFault, 109);
+  EXPECT_EQ(statInfo.allocStall, 3);
+  EXPECT_EQ(statInfo.pageOutrun, 12);
+  EXPECT_EQ(statInfo.kswapdSteal, 101);
+
+  SetUpTempFile(VMSTAT_CONTENT_MODIFIED);
+  statInfo = statFile.refresh(ALL_STATS_MASK);
+  EXPECT_EQ(statInfo.nrFreePages, 123);
+  EXPECT_EQ(statInfo.nrDirty, 74317);
+  EXPECT_EQ(statInfo.nrWriteback, 1);
+  EXPECT_EQ(statInfo.pgPgIn, 1857940636);
+  EXPECT_EQ(statInfo.pgPgOut, 133892);
+  EXPECT_EQ(statInfo.pgMajFault, 109);
+  EXPECT_EQ(statInfo.allocStall, 32);
+  EXPECT_EQ(statInfo.pageOutrun, 12);
+  EXPECT_EQ(statInfo.kswapdSteal, 101);
+}
+
+TEST_F(ProcFsTest, testVmStatFileWithSplitKswapd) {
+  fs::path statPath = SetUpTempFile(VMSTAT_CONTENT_WITH_SPLIT_KSWAPD);
+  VmStatFile statFile {statPath.native()};
+  VmStatInfo statInfo = statFile.refresh(ALL_STATS_MASK);
+
+  EXPECT_EQ(statInfo.nrFreePages, 123);
+  EXPECT_EQ(statInfo.allocStall, 3);
+  EXPECT_EQ(statInfo.pageOutrun, 12);
+  EXPECT_EQ(statInfo.kswapdSteal, 465447587);
 }
 
 } // namespace util
