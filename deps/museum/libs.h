@@ -44,4 +44,6 @@ dso const& libcutils();
 
 dso const& libandroid_runtime();
 
+dso const& libbinder();
+
 } // namespace facebook

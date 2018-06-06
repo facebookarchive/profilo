@@ -69,4 +69,10 @@ dso const& libandroid_runtime() {
   return libandroid_runtime;
 }
 
+dso const& libbinder() {
+  static dso const libbinder("libbinder.so");
+  return libbinder;
+}
+
+
 } // namespace facebook
