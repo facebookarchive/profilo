@@ -48,7 +48,7 @@ import javax.annotation.Nullable;
  * ending trace context is the same as the one from {@link #getEnablingTraceContext()}), or any
  * other custom situation.
  */
-public abstract class BaseTraceProvider implements TraceOrchestrator.TraceProvider {
+public abstract class BaseTraceProvider extends TraceOrchestrator.TraceProvider {
 
   private int mSavedProviders;
   private TraceContext mEnablingContext;

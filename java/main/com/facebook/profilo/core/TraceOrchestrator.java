@@ -74,7 +74,7 @@ public final class TraceOrchestrator
     void onProvidersInitialized(TraceContext ctx);
   }
 
-  public interface TraceProvider {
+  public abstract static class TraceProvider {
 
     /**
      * @param context - the TraceContext describing the active trace
@@ -82,7 +82,7 @@ public final class TraceOrchestrator
      *     yet. TraceProviders are encouraged to save temporary files elsewhere and only
      *     move/hardlink into this folder in {@link #onDisable(TraceContext, File)}.
      */
-    void onEnable(TraceContext context, File extraDataFolder);
+    public abstract void onEnable(TraceContext context, File extraDataFolder);
 
     /**
      * @param context - the TraceContext describing the active trace
@@ -90,7 +90,7 @@ public final class TraceOrchestrator
      *     yet.
      * @see #onEnable(TraceContext, File)
      */
-    void onDisable(TraceContext context, File extraDataFolder);
+    public abstract void onDisable(TraceContext context, File extraDataFolder);
   }
 
   public interface ProfiloBridgeFactory {
