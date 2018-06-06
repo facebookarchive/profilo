@@ -16,24 +16,31 @@
 
 package com.facebook.profilo.provider.threadmetadata;
 
-import com.facebook.profilo.core.TraceOrchestrator;
+import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
 
-public class ThreadMetadataProvider implements TraceOrchestrator.TraceProvider {
+public final class ThreadMetadataProvider extends BaseTraceProvider {
 
   static {
     SoLoader.loadLibrary("profilo_threadmetadata");
   }
 
   @Override
-  public void onEnable(TraceContext context, File extraDataFolder) {}
+  protected void onTraceEnded(TraceContext context, File extraDataFolder) {
+    nativeLogThreadMetadata();
+  }
 
   @Override
-  public void onDisable(TraceContext context, File extraDataFolder) {
-    // Always enabled, if this provider is installed.
-    nativeLogThreadMetadata();
+  protected void enable() {}
+
+  @Override
+  protected void disable() {}
+
+  @Override
+  protected int getSupportedProviders() {
+    return EVERY_PROVIDER_CHANGE;
   }
 
   /* Log thread names and priorities. */

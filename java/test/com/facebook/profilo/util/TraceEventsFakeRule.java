@@ -27,8 +27,25 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.powermock.reflect.Whitebox;
 
 public class TraceEventsFakeRule implements MethodRule {
+
+  public void enableProviders(int providers) {
+    try {
+      Whitebox.invokeMethod(TraceEvents.class, "enableProviders", providers);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void disableProviders(int providers) {
+    try {
+      Whitebox.invokeMethod(TraceEvents.class, "disableProviders", providers);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   private static class StatementWithTraceEventsMock extends Statement {
 

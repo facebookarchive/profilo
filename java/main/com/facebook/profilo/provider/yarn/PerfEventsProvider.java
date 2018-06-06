@@ -16,13 +16,11 @@
 
 package com.facebook.profilo.provider.yarn;
 
+import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
-import com.facebook.profilo.core.TraceOrchestrator;
-import com.facebook.profilo.ipc.TraceContext;
-import java.io.File;
 import javax.annotation.concurrent.GuardedBy;
 
-public final class PerfEventsProvider implements TraceOrchestrator.TraceProvider {
+public final class PerfEventsProvider extends BaseTraceProvider {
 
   public static final int PROVIDER_MAJOR_FAULTS = ProvidersRegistry.newProvider("major_faults");
   public static final int PROVIDER_THREAD_SCHEDULE =
@@ -32,24 +30,29 @@ public final class PerfEventsProvider implements TraceOrchestrator.TraceProvider
   private PerfEventsSession mSession = null;
 
   @Override
-  public synchronized void onEnable(TraceContext context, File extraDataFolder) {
+  protected void enable() {
     PerfEventsSession session = mSession;
     if (session == null) {
       session = new PerfEventsSession();
       mSession = session;
     }
 
-    if (session.attach(context.enabledProviders)) {
+    if (session.attach(getEnablingTraceContext().enabledProviders)) {
       session.start();
     }
   }
 
   @Override
-  public synchronized void onDisable(TraceContext context, File extraDataFolder) {
+  protected void disable() {
     PerfEventsSession session = mSession;
     if (session != null) {
       session.stop();
       session.detach();
     }
+  }
+
+  @Override
+  protected int getSupportedProviders() {
+    return PROVIDER_MAJOR_FAULTS | PROVIDER_THREAD_SCHEDULE;
   }
 }

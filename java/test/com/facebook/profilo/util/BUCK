@@ -6,7 +6,7 @@ fb_core_android_library(
     name = "util",
     srcs = glob(["*.java"]),
     visibility = [
-        profilo_path("..."),
+        "PUBLIC",
     ],
     deps = [
         "//java/com/facebook/testing/powermock:powermock",
