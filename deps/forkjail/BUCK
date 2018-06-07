@@ -1,4 +1,5 @@
 # BUILD FILE SYNTAX: SKYLARK
+load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
 FORKJAIL_EXPORTED_HEADERS = [
@@ -26,5 +27,8 @@ profilo_oss_cxx_library(
     force_static = True,
     visibility = [
         "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/lss:linux-syscall-support"),
     ],
 )

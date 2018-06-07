@@ -16,6 +16,7 @@
 
 
 #include "ForkJail.h"
+#include "linux_syscall_support.h"
 
 #include <unistd.h>
 #include <signal.h>
@@ -69,14 +70,14 @@ inline pid_t real_fork() {
 
 inline int real_sigaction(
     int signum,
-    const struct sigaction *act,
-    struct sigaction *oldact) {
+    const struct kernel_sigaction *act,
+    struct kernel_sigaction *oldact) {
 
 #ifndef ANDROID
   // Assume we don't have to go through these hoops for non-Android code.
-  return sigaction(signum, act, oldact);
+  return sys_sigaction(signum, act, oldact);
 #else
-  return syscall(__NR_sigaction, signum, act, oldact);
+  return sys_rt_sigaction(signum, act, oldact, sizeof(kernel_sigset_t));
 #endif
 }
 
@@ -138,11 +139,11 @@ pid_t ForkJail::forkAndRun() {
     }
 
     // Restore the signal handlers to their default values.
-    struct sigaction dfltaction;
-    dfltaction.sa_handler = SIG_DFL;
+    struct kernel_sigaction dfltaction;
+    dfltaction.sa_handler_ = SIG_DFL;
     dfltaction.sa_flags = 0;
 
-    if(sigemptyset(&dfltaction.sa_mask)) {
+    if(sys_sigemptyset(&dfltaction.sa_mask)) {
       throw errno_error("sigemptyset(dfltaction)");
     }
 
@@ -162,11 +163,11 @@ pid_t ForkJail::forkAndRun() {
 
     // Set an alarm handler which exits with a different exit code.
 
-    struct sigaction alarm_act;
-    alarm_act.sa_handler = &ForkJail::alarm_handler;
+    struct kernel_sigaction alarm_act;
+    alarm_act.sa_handler_ = &ForkJail::alarm_handler;
     alarm_act.sa_flags = 0;
 
-    if (sigfillset(&alarm_act.sa_mask)) {
+    if (sys_sigfillset(&alarm_act.sa_mask)) {
       //LOGE("sigemptyset in child: %s", strerror(errno));
       _exit(kChildSetupExitCode);
     }
