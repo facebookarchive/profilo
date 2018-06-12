@@ -13,6 +13,7 @@ fb_core_android_library(
         profilo_path("deps/soloader:soloader"),
         profilo_path("java/main/com/facebook/profilo/core:core"),
         profilo_path("java/main/com/facebook/profilo/core:events"),
+        profilo_path("java/main/com/facebook/profilo/experiments:experiments"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
     ],
 )

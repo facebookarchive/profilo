@@ -1,0 +1,18 @@
+# BUILD FILE SYNTAX: SKYLARK
+load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+fb_core_android_library(
+    name = "experiments",
+    srcs = [
+        "Experiments.java",
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("java/main/com/facebook/profilo/core:constants"),
+        profilo_path("java/main/com/facebook/profilo/logger:logger"),
+    ],
+)

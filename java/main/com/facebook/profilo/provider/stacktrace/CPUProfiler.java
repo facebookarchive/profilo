@@ -15,6 +15,7 @@ package com.facebook.profilo.provider.stacktrace;
 
 import android.content.Context;
 import android.os.Build;
+import com.facebook.profilo.experiments.Experiments;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 
@@ -73,7 +74,7 @@ public class CPUProfiler {
       return true;
     }
 
-    sAvailableTracers = calculateTracers(context, false);
+    sAvailableTracers = calculateTracers(context, Experiments.STACKTRACE_ALTERNATIVE_TRACERS);
     sInitialized = nativeInitialize(sAvailableTracers);
     return sInitialized;
   }
