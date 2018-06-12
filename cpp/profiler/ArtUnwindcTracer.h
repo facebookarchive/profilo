@@ -17,43 +17,47 @@
 #pragma once
 
 #include <unistd.h>
-#include <ucontext.h>
 
-static constexpr const uint32_t kSystemDexId = 0xFFFFFFFF;
+#include "profiler/BaseTracer.h"
 
 namespace facebook {
 namespace profilo {
 namespace profiler {
+#ifdef ANDROID_VERSION_600
+namespace android_600 {
+#else 
+#error Unknown Android version
+#endif
 
-namespace tracers {
-  enum Tracer: uint8_t {
-    DALVIK = 1,
-    ART_6_0 = 1 << 1,
-    NATIVE = 1 << 2,
-    ART_5_1 = 1 << 3,
-    ART_7_0 = 1 << 4,
-    ART_UNWINDC_6_0 = 1 << 5,
-  };
-}
-
-class BaseTracer {
+class ArtUnwindcTracer : public BaseTracer {
 public:
-  virtual bool collectStack(
-    ucontext_t* ucontext,
-    int64_t* frames,
-    uint8_t& depth,
-    uint8_t max_depth) = 0;
 
-  virtual void flushStack(
+  ArtUnwindcTracer();
+
+  bool collectStack(
+      ucontext_t* ucontext,
+      int64_t* frames,
+      uint8_t& depth,
+      uint8_t max_depth) override;
+
+  void flushStack(
     int64_t* frames,
     uint8_t depth,
     int tid,
-    int64_t time_) = 0;
+    int64_t time_) override;
 
-  virtual void startTracing() = 0;
+  void stopTracing() override;
 
-  virtual void stopTracing() = 0;
+  void startTracing() override;
 };
+
+} // namespace android_*
+
+#ifdef ANDROID_VERSION_600
+using ArtUnwindcTracer60 = android_600::ArtUnwindcTracer;
+#else 
+#error Unknown Android version
+#endif
 
 } // namespace profiler
 } // namespace profilo

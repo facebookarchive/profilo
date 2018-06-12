@@ -44,7 +44,7 @@ public class ArtCompatibility {
     }
   }
 
-  public static boolean isCompatible(Context context) {
+  public static boolean isCompatible(Context context, boolean useAlternatives) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       return false;
     }
@@ -67,7 +67,11 @@ public class ArtCompatibility {
             break;
           case "6.0":
           case "6.0.1":
-          result = nativeCheck(CPUProfiler.TRACER_ART_6_0);
+            if (useAlternatives) {
+              result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_6_0);
+            } else {
+              result = nativeCheck(CPUProfiler.TRACER_ART_6_0);
+            }
             break;
           case "5.1":
           case "5.1.0":

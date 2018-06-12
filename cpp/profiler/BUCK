@@ -1,7 +1,7 @@
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
-def tracer_library(version):
+def museum_tracer_library(version):
     version_ = version.replace(".", "_")
     version_num = version.replace(".", "")
 
@@ -9,7 +9,7 @@ def tracer_library(version):
         "ArtTracer.h",
     ]
     fb_xplat_cxx_library(
-        name = "tracer-{version}".format(version = version),
+        name = "museum-tracer-{version}".format(version = version),
         srcs = [
             "ArtTracer.cpp",
         ],
@@ -50,11 +50,66 @@ def tracer_library(version):
         ],
     )
 
-tracer_library(version = "5.1.1")
+museum_tracer_library(version = "5.1.1")
 
-tracer_library(version = "6.0.1")
+museum_tracer_library(version = "6.0.1")
 
-tracer_library(version = "7.0.0")
+museum_tracer_library(version = "7.0.0")
+
+def unwindc_tracer_library(version):
+    version_num = version.replace(".", "")
+    android_version = "android_{}".format(version_num)
+
+    fb_xplat_cxx_library(
+        name = "unwindc-tracer-{}".format(version),
+        srcs = [
+            "ArtUnwindcTracer.cpp",
+        ],
+        compiler_flags = [
+            "-fvisibility=hidden",
+            "-fexceptions",
+            "-std=gnu++14",
+            '-DLOG_TAG="Profilo/Unwindc"',
+            "-O3",
+            "-Wno-self-assign",
+            "-Wno-parentheses-equality",
+            "-Wno-unused-variable",
+        ],
+        exported_preprocessor_flags = [
+            "-DANDROID_VERSION_{}".format(version_num),
+        ],
+        force_static = True,
+        header_namespace = "profiler",
+        headers = [
+            "ArtUnwindcTracer.h",
+            "BaseTracer.h",
+            "unwindc/runtime.h",
+        ],
+        exported_headers = {
+            "ArtUnwindcTracer_{}.h".format(version_num):
+                "ArtUnwindcTracer.h",
+        },
+        platform_headers = [
+            (".*x86", {
+                "unwindc/unwinder.h":
+                "unwindc/{}/x86/unwinder.h".format(android_version),
+            }),
+            (".*armv7", {
+                "unwindc/unwinder.h":
+                "unwindc/{}/arm/unwinder.h".format(android_version),
+            }),
+        ],
+        soname = "libprofiloprofilerunwindc{version_num}.$(ext)".format(version_num=version_num),
+        visibility = [
+            profilo_path("..."),
+        ],
+        deps = [
+            profilo_path("deps/fb:fb"),
+            profilo_path("cpp/logger:logger"),
+        ],
+    )
+
+unwindc_tracer_library("6.0.0")
 
 PROFILER_EXPORTED_HEADERS = [
     "DalvikTracer.h",
@@ -98,9 +153,10 @@ fb_xplat_cxx_library(
     soname = "libprofilo_stacktrace_artcompat.so",
     deps = [
         ":base_tracer",
-        ":tracer-5.1.1",
-        ":tracer-6.0.1",
-        ":tracer-7.0.0",
+        ":museum-tracer-5.1.1",
+        ":museum-tracer-6.0.1",
+        ":museum-tracer-7.0.0",
+        ":unwindc-tracer-6.0.0",
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
         profilo_path("deps/forkjail:forkjail"),
@@ -151,9 +207,10 @@ fb_xplat_cxx_library(
         ":artcompat",
         ":base_tracer",
         ":constants",
-        ":tracer-5.1.1",
-        ":tracer-6.0.1",
-        ":tracer-7.0.0",
+        ":museum-tracer-5.1.1",
+        ":museum-tracer-6.0.1",
+        ":museum-tracer-7.0.0",
+        ":unwindc-tracer-6.0.0",
         profilo_path("cpp:constants"),
         profilo_path("cpp:profilo"),
         profilo_path("cpp:providers"),

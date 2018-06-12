@@ -34,6 +34,7 @@
 #include "profiler/ArtTracer_511.h"
 #include "profiler/ArtTracer_601.h"
 #include "profiler/ArtTracer_700.h"
+#include "profiler/ArtUnwindcTracer_600.h"
 #include "DalvikTracer.h"
 
 #if HAS_NATIVE_TRACER
@@ -362,6 +363,11 @@ bool initialize(
 
   if (available_tracers & tracers::ART_6_0) {
     profileState.tracersMap[tracers::ART_6_0] = std::make_unique<Art6Tracer>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_6_0) {
+    profileState.tracersMap[tracers::ART_UNWINDC_6_0] =
+      std::make_unique<ArtUnwindcTracer60>();
   }
 
   if (available_tracers & tracers::ART_5_1) {
