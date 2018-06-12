@@ -63,16 +63,16 @@ public class ArtCompatibility {
       } else {
         switch (Build.VERSION.RELEASE) {
           case "7.0":
-            result = nativeCheckArt7_0();
+            result = nativeCheck(CPUProfiler.TRACER_ART_7_0);
             break;
           case "6.0":
           case "6.0.1":
-            result = nativeCheckArt6_0();
+          result = nativeCheck(CPUProfiler.TRACER_ART_6_0);
             break;
           case "5.1":
           case "5.1.0":
           case "5.1.1":
-            result = nativeCheckArt5_1();
+            result = nativeCheck(CPUProfiler.TRACER_ART_5_1);
             break;
           default:
             result = false;
@@ -107,7 +107,6 @@ public class ArtCompatibility {
     }
   }
 
-  @DoNotStrip private static native boolean nativeCheckArt7_0();
-  @DoNotStrip private static native boolean nativeCheckArt6_0();
-  @DoNotStrip private static native boolean nativeCheckArt5_1();
+  @DoNotStrip
+  private static native boolean nativeCheck(int tracer);
 }

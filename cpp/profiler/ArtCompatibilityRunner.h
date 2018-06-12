@@ -13,15 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 #pragma once
+
+#include "profiler/BaseTracer.h"
 
 namespace facebook {
 namespace profilo {
 namespace artcompat {
 
-void registerNatives();
+namespace versions {
+enum AndroidVersion : uint8_t {
+  ANDROID_5_1,
+  ANDROID_6_0,
+  ANDROID_7_0,
+};
+} // namespace versions
 
-} // artcompat
-} // profilo
-} // facebook
+bool runJavaCompatibilityCheck(
+    versions::AndroidVersion version,
+    profiler::BaseTracer* tracer);
+
+} // namespace artcompat
+} // namespace profilo
+} // namespace facebook

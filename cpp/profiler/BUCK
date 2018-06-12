@@ -6,13 +6,11 @@ def tracer_library(version):
     version_num = version.replace(".", "")
 
     exported_headers = [
-        "ArtCompatibility.h",
         "ArtTracer.h",
     ]
     fb_xplat_cxx_library(
         name = "tracer-{version}".format(version = version),
         srcs = [
-            "ArtCompatibility.cpp",
             "ArtTracer.cpp",
         ],
         compiler_flags = [
@@ -75,6 +73,42 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "artcompat",
+    srcs = [
+        "ArtCompatibility.cpp",
+        "ArtCompatibilityRunner.cpp",
+    ],
+    headers = [
+        "ArtCompatibility.h",
+        "ArtCompatibilityRunner.h",
+    ],
+    header_namespace = "profiler",
+    exported_headers = [
+        "ArtCompatibility.h",
+    ],
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo/ArtCompatibility\"",
+        #"-DFBLOG_NDEBUG=0",  # verbose logging
+    ],
+    force_static = True,
+    soname = "libprofilo_stacktrace_artcompat.so",
+    deps = [
+        ":base_tracer",
+        ":tracer-5.1.1",
+        ":tracer-6.0.1",
+        ":tracer-7.0.0",
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
+        profilo_path("deps/forkjail:forkjail"),
+        profilo_path("cpp/logger:logger"),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "base_tracer",
     header_namespace = "profiler",
     exported_headers = [
@@ -114,6 +148,7 @@ fb_xplat_cxx_library(
         profilo_path("java/main/com/facebook/profilo/provider/stacktrace:"),
     ],
     deps = [
+        ":artcompat",
         ":base_tracer",
         ":constants",
         ":tracer-5.1.1",
