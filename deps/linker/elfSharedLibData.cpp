@@ -193,6 +193,7 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
   }
 }
 
+#if !defined(__aarch64__)
 elfSharedLibData::elfSharedLibData(soinfo const* si) {
   pltRelocationsLen = si->plt_rel_count;
   pltRelocations = si->plt_rel;
@@ -216,6 +217,7 @@ elfSharedLibData::elfSharedLibData(soinfo const* si) {
 
   libName = si->name;
 }
+#endif
 
 ElfW(Sym) const* elfSharedLibData::find_symbol_by_name(char const* name) const {
   auto sym = usesGnuHashTable() ? gnu_find_symbol_by_name(name)

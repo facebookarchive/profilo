@@ -44,7 +44,9 @@ public:
   elfSharedLibData();
   // throws input_parse_error if it fails to parse all the info it needs from dlpi
   explicit elfSharedLibData(dl_phdr_info const* dlpi);
+#if !defined(__aarch64__)
   explicit elfSharedLibData(soinfo const* si);
+#endif
 
   /**
    * Returns a pointer to the ElfW(Sym) for the given symbol name.
