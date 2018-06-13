@@ -119,6 +119,7 @@ static std::vector<trampoline_stack_entry>& get_hook_stack() {
   return *vec;
 }
 
+#if defined (__arm__)
 void push_hook_stack(void* chained, void* lr, void* ip) {
   trampoline_stack_entry entry = { chained, lr, ip };
   get_hook_stack().push_back(entry);
@@ -134,6 +135,7 @@ uint64_t pop_hook_stack() {
   // stored and fetched from memory: more complicated, and more slower.
   return reinterpret_cast<uint64_t>(back.ip) << 32 | reinterpret_cast<uint64_t>(back.lr);
 }
+#endif
 
 class trampoline {
 public:
@@ -141,6 +143,7 @@ public:
       : code_size_(reinterpret_cast<uintptr_t>(trampoline_data(chained)) -
                    reinterpret_cast<uintptr_t>(trampoline_template(chained))),
         code_(allocate(code_size_ + trampoline_data_size())) {
+#if defined (__arm__)
     std::memcpy(code_, trampoline_template(chained), code_size_);
 
     auto* data = reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(code_) + code_size_);
@@ -149,6 +152,7 @@ public:
     *data++ = reinterpret_cast<uint32_t>(pop_hook_stack);
     *data++ = reinterpret_cast<uint32_t>(hook);
     *data++ = reinterpret_cast<uint32_t>(chained);
+#endif
   }
 
   trampoline(void* existing_trampoline)
