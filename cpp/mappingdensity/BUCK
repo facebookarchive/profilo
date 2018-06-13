@@ -21,7 +21,7 @@ fb_xplat_cxx_library(
         # "-g3",
     ],
     soname = "libprofilo_mappingdensity.$(ext)",
-    supported_platforms_regex = "^android-(armv7|x86)$",
+    supported_platforms_regex = "^android-(armv7|arm64|x86)$",
     visibility = [
         profilo_path("..."),
     ],

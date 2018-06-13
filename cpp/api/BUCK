@@ -14,7 +14,7 @@ fb_xplat_cxx_library(
     force_static = True,
     link_style = "shared",
     preferred_linkage = "static",
-    supported_platforms_regex = "^android-(arm|armv7|x86)$",
+    supported_platforms_regex = "^android-(arm|armv7|arm64|x86)$",
     visibility = [
         "PUBLIC",
     ],
@@ -34,7 +34,7 @@ fb_xplat_cxx_library(
     ],
     link_style = "shared",
     soname = "libprofiloextapi.$(ext)",
-    supported_platforms_regex = "^android-(arm|armv7|x86)$",
+    supported_platforms_regex = "^android-(arm|armv7|arm64|x86)$",
     visibility = [
         profilo_path("..."),
     ],
