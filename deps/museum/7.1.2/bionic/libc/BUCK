@@ -40,6 +40,13 @@ museum_library(
             ),
         ),
         (
+            "android-arm64",
+            merge_dicts(
+                flattened_glob("kernel/uapi/asm-arm64/", "**/*.h"),
+                flattened_glob("arch-arm64/include/", "**/*.h"),
+            ),
+        ),
+        (
             "android-x86",
             merge_dicts(
                 flattened_glob("kernel/uapi/asm-x86/", "**/*.h"),
