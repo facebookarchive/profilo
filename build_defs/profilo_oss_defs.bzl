@@ -79,6 +79,14 @@ def setup_profilo_oss_xplat_cxx_library():
                 "^android",
                 ["-llog"],
             ),
+            # There is a bug in ndk that would make linking fail for android log
+            # lib. This is a workaround for older ndk, because newer ndk would
+            # use a linker without bug.
+            # See https://github.com/android-ndk/ndk/issues/556
+            (
+                "^android-arm64",
+                ["-fuse-ld=gold"],
+            ),
         ],
         platform_srcs = [
             (
