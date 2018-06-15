@@ -67,5 +67,6 @@ fb_xplat_cxx_library(
         profilo_path("cpp:constants"),
         profilo_path("cpp/generated:cpp"),
         profilo_path("cpp/logger/lfrb:lfrb"),
+        profilo_path("deps/fb:fb"),
     ],
 )

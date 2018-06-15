@@ -33,7 +33,8 @@ class RingBuffer {
   static const size_t DEFAULT_SLOT_COUNT = 1000;
 
   public:
-  PROFILOEXPORT static TraceBuffer& get(size_t sz = DEFAULT_SLOT_COUNT);
+  PROFILOEXPORT static TraceBuffer& init(size_t sz = DEFAULT_SLOT_COUNT);
+  PROFILOEXPORT static TraceBuffer& get();
 };
 
 } // namespace profilo

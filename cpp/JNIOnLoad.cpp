@@ -183,6 +183,10 @@ static void clearAllProviders(JNIEnv* env, jobject cls) {
   TraceProviders::get().clearAllProviders();
 }
 
+static void initRingBuffer(JNIEnv* env, jobject cls, jint size) {
+  RingBuffer::init(size);
+}
+
 } // namespace profilo
 } // namespace facebook
 
@@ -208,6 +212,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         makeNativeMethod("loggerWriteForThread", profilo::loggerWriteForThread),
         makeNativeMethod("loggerWriteString", profilo::loggerWriteString),
         makeNativeMethod("loggerWriteAndWakeupTraceWriter", profilo::loggerWriteAndWakeupTraceWriter),
+        makeNativeMethod("nativeInitRingBuffer", profilo::initRingBuffer),
       });
 
     profilo::writer::NativeTraceWriter::registerNatives();

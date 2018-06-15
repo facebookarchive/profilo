@@ -46,7 +46,6 @@ class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
     fbjni::alias_ref<jclass>,
     std::string trace_folder,
     std::string trace_prefix,
-    int bufferSize,
     fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks
   );
 
@@ -62,7 +61,6 @@ class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
   NativeTraceWriter(
     std::string trace_folder,
     std::string trace_prefix,
-    size_t bufferSize,
     fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks
   );
 

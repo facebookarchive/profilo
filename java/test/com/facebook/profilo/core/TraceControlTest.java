@@ -257,7 +257,7 @@ public class TraceControlTest {
     int flags = Trace.FLAG_MEMORY_ONLY;
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, flags, new Object(), 0)).isTrue();
 
-    verifyStatic(never());
+    verifyStatic(times(1));
     Logger.postCreateTrace(anyLong(), eq(flags), anyInt());
     verifyStatic(never());
     Logger.postCreateBackwardTrace(anyLong());

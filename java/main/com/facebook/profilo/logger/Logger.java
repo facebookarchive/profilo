@@ -267,17 +267,20 @@ final public class Logger {
   }
 
   public static void postCreateTrace(long traceId, int flags, int timeoutMs) {
-    if (sInitialized) {
-      startWorkerThreadIfNecessary();
-
-      loggerWriteAndWakeupTraceWriter(
-          sTraceWriter,
-          traceId,
-          EntryType.TRACE_START,
-          timeoutMs,
-          flags,
-          traceId);
+    if (!sInitialized) {
+      return;
     }
+
+    nativeInitRingBuffer(sRingBufferSize);
+
+    // Do not trigger trace writer for memory-only trace
+    if ((flags & Trace.FLAG_MEMORY_ONLY) != 0) {
+      return;
+    }
+
+    startWorkerThreadIfNecessary();
+    loggerWriteAndWakeupTraceWriter(
+        sTraceWriter, traceId, EntryType.TRACE_START, timeoutMs, flags, traceId);
   }
 
   public static void postCreateBackwardTrace(long traceId) {
@@ -376,7 +379,6 @@ final public class Logger {
         new NativeTraceWriter(
             sTraceDirectory.getAbsolutePath(),
             sFilePrefix,
-            sRingBufferSize,
             sNativeTraceWriterCallbacks);
 
     LoggerWorkerThread thread = new LoggerWorkerThread(writer);
@@ -398,4 +400,6 @@ final public class Logger {
 
     thread.start();
   }
+
+  private static native void nativeInitRingBuffer(int size);
 }

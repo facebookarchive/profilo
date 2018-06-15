@@ -32,19 +32,16 @@ public final class NativeTraceWriter {
   public NativeTraceWriter(
       String traceFolder,
       String tracePrefix,
-      int preferredBufferSize,
       NativeTraceWriterCallbacks callbacks) {
     mHybridData = initHybrid(
       traceFolder,
       tracePrefix,
-      preferredBufferSize,
       callbacks);
   }
 
   private static native HybridData initHybrid(
       String traceFolder,
       String tracePrefix,
-      int preferredBufferSize,
       NativeTraceWriterCallbacks callbacks);
 
   public native void loop();

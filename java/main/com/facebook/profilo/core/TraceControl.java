@@ -334,10 +334,7 @@ final public class TraceControl {
       // manual and in-memory traces should not time out
       timeout = Integer.MAX_VALUE;
     }
-    // Do not trigger trace writer for memory only trace
-    if ((flags & Trace.FLAG_MEMORY_ONLY) == 0) {
-      Logger.postCreateTrace(nextContext.traceId, flags, timeout);
-    }
+    Logger.postCreateTrace(nextContext.traceId, flags, timeout);
 
     synchronized (this) {
       ensureHandlerInitialized();

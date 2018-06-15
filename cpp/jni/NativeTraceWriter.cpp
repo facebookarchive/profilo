@@ -154,14 +154,13 @@ std::vector<std::pair<std::string, std::string>> calculateHeaders() {
 NativeTraceWriter::NativeTraceWriter(
   std::string trace_folder,
   std::string trace_prefix,
-  size_t bufferSize,
   fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks):
 
   callbacks_(std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks)),
   writer_(
     std::move(trace_folder),
     std::move(trace_prefix),
-    RingBuffer::get(bufferSize),
+    RingBuffer::get(),
     callbacks_,
     calculateHeaders()
   ) {}
@@ -178,13 +177,9 @@ local_ref<NativeTraceWriter::jhybriddata> NativeTraceWriter::initHybrid(
   alias_ref<jclass>,
   std::string trace_folder,
   std::string trace_prefix,
-  int bufferSize,
   fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks
 ) {
-  if (bufferSize <= 0) {
-    throw std::invalid_argument("buffer size must be positive");
-  }
-  return makeCxxInstance(trace_folder, trace_prefix, bufferSize, callbacks);
+  return makeCxxInstance(trace_folder, trace_prefix, callbacks);
 }
 
 void NativeTraceWriter::registerNatives() {

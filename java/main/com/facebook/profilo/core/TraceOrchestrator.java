@@ -122,7 +122,8 @@ public final class TraceOrchestrator
   public static final String MAIN_PROCESS_NAME = "main";
 
   private static final String TAG = "Profilo/TraceOrchestrator";
-  private static final int RING_BUFFER_SIZE = 5000;
+  private static final int RING_BUFFER_SIZE_MAIN_PROCESS = 5000;
+  private static final int RING_BUFFER_SIZE_SECONDARY_PROCESS = 1000;
   private boolean mHasReadFromBridge = false;
 
   private final HashMap<Long, Trace> mTraces;
@@ -226,7 +227,12 @@ public final class TraceOrchestrator
       folder = mFileManager.getFolder();
 
       // using process name as a unique prefix for each process
-      Logger.initialize(RING_BUFFER_SIZE, folder, processName, this, this);
+      Logger.initialize(
+          mIsMainProcess ? RING_BUFFER_SIZE_MAIN_PROCESS : RING_BUFFER_SIZE_SECONDARY_PROCESS,
+          folder,
+          processName,
+          this,
+          this);
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
       performConfigTransition(initialConfig);
