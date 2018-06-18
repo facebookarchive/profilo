@@ -1,4 +1,5 @@
-load("@xplat//tools/build_defs:glob_defs.bzl", "subdir_glob")
+# BUILD FILE SYNTAX: SKYLARK
+load("//build_defs:glob_defs.bzl", "subdir_glob")
 load("//build_defs:profilo_oss_defs.bzl", "profilo_oss_cxx_library")
 
 profilo_oss_cxx_library(
