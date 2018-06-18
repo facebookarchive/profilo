@@ -1,4 +1,5 @@
 # BUILD FILE SYNTAX: PYTHON_DSL
+# BUILD FILE SYNTAX: PYTHON_DSL
 load(
     "//build_defs:profilo_oss_defs.bzl",
     "IS_OSS_BUILD",

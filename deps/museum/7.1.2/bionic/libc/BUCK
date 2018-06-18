@@ -1,3 +1,4 @@
+# BUILD FILE SYNTAX: PYTHON_DSL
 def flattened_glob(prefix, glob_pattern, exclude = []):
     prefix_len = len(prefix)
     return { x[prefix_len:]: x for x in glob([prefix + glob_pattern], exclude = [prefix + e for e in exclude]) }

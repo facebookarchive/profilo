@@ -1,3 +1,4 @@
+# BUILD FILE SYNTAX: PYTHON_DSL
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 load(
     profilo_path("deps/museum:museum_library.bzl"),
