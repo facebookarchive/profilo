@@ -17,6 +17,9 @@ def profilo_oss_java_library(**kwargs):
     """Delegates to the native java_library rule."""
     native.java_library(**kwargs)
 
+def profilo_oss_only_java_library(**kwargs):
+    profilo_oss_java_library(**kwargs)
+
 def profilo_oss_maven_library(
         name,
         group,

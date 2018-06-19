@@ -1,25 +1,23 @@
-# BUILD FILE SYNTAX: PYTHON_DSL
 load(
     "//build_defs:profilo_oss_defs.bzl",
     "IS_OSS_BUILD",
-    "profilo_oss_java_library",
+    "profilo_oss_only_java_library",
     "profilo_oss_maven_library",
 )
 
-if IS_OSS_BUILD:
-    profilo_oss_java_library(
-        name = "powermock",
-        exported_deps = [
-            ":powermock-api-mockito",
-            ":powermock-api-support",
-            ":powermock-core",
-            ":powermock-module",
-            ":powermock-module-junit4-common",
-        ],
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_only_java_library(
+    name = "powermock",
+    visibility = [
+        "PUBLIC",
+    ],
+    exported_deps = [
+        ":powermock-api-mockito",
+        ":powermock-api-support",
+        ":powermock-core",
+        ":powermock-module",
+        ":powermock-module-junit4-common",
+    ],
+)
 
 profilo_oss_maven_library(
     name = "powermock-module",

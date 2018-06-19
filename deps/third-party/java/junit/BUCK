@@ -1,23 +1,20 @@
-# BUILD FILE SYNTAX: PYTHON_DSL
-# BUILD FILE SYNTAX: PYTHON_DSL
 load(
     "//build_defs:profilo_oss_defs.bzl",
     "IS_OSS_BUILD",
-    "profilo_oss_java_library",
+    "profilo_oss_only_java_library",
     "profilo_oss_maven_library",
 )
 
-if IS_OSS_BUILD:
-    profilo_oss_java_library(
-        name = "junit",
-        exported_deps = [
-            ":hamcrest",
-            ":junit-artifact",
-        ],
-        visibility = [
-            "PUBLIC",
-        ],
-    )
+profilo_oss_only_java_library(
+    name = "junit",
+    visibility = [
+        "PUBLIC",
+    ],
+    exported_deps = [
+        ":hamcrest",
+        ":junit-artifact",
+    ],
+)
 
 profilo_oss_maven_library(
     name = "junit-artifact",
