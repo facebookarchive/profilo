@@ -42,9 +42,9 @@ def museum_library(
                                  target.
     """
 
-    path = get_base_path().split("/")
+    path = native.package_name().split("/")
     if path[0] != "deps" or path[1] != "museum":
-        fail("museum_library declaration at unexpected path: " + get_base_path())
+        fail("museum_library declaration at unexpected path: " + native.package_name())
 
     museum_version = path[2]
     name = path[-1]
