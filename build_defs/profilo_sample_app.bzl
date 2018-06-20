@@ -21,7 +21,7 @@ PROVIDER_TO_RULE = {
     "yarn": profilo_path("java/main/com/facebook/profilo/provider/yarn:yarn"),
 }
 
-def profilo_sample_app(srcs, manifest, providers, deps = []):
+def profilo_sample_app(srcs, manifest, providers, deps = [], provider_to_rule=PROVIDER_TO_RULE):
     """
     Defines a sample app based on a list of provider short names.
 
@@ -41,12 +41,12 @@ def profilo_sample_app(srcs, manifest, providers, deps = []):
     if providers:
         providers = sorted(providers)
         providers_string = "-".join(providers)
-        provider_deps = [PROVIDER_TO_RULE[provider] for provider in providers]
+        provider_deps = [provider_to_rule[provider] for provider in providers]
     else:
         providers_string = "none"
         provider_deps = []
 
-    android_build_config(
+    native.android_build_config(
         name = "sample-buildconfig-{}".format(providers_string),
         package = "com.facebook.profilo",
         values = [
@@ -65,7 +65,7 @@ def profilo_sample_app(srcs, manifest, providers, deps = []):
 
     provided_deps = [
         x
-        for x in PROVIDER_TO_RULE.values()
+        for x in provider_to_rule.values()
         if x not in provider_deps
     ]
 
@@ -82,7 +82,7 @@ def profilo_sample_app(srcs, manifest, providers, deps = []):
         ] + provider_deps + deps,
     )
 
-    android_aar(
+    native.android_aar(
         name = "sample-aar-{}".format(providers_string),
         manifest_skeleton = manifest,
         deps = [
@@ -94,7 +94,7 @@ def profilo_sample_app(srcs, manifest, providers, deps = []):
         ],
     )
 
-    android_binary(
+    native.android_binary(
         name = "sample-{}".format(providers_string),
         keystore = profilo_path("java/main/com/facebook/profilo/sample:keystore"),
         manifest = manifest,

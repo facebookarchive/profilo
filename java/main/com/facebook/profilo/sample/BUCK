@@ -1,10 +1,6 @@
-# BUILD FILE SYNTAX: PYTHON_DSL
 load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
-load(
-    profilo_path("build_defs:profilo_sample_app.bzl"),
-    "profilo_sample_app",
-)
+load("//build_defs:profilo_sample_app.bzl", "profilo_sample_app")
 
 keystore(
     name = "keystore",
@@ -90,14 +86,7 @@ profilo_sample_app(
 )
 
 # Generate a target for each individual provider
-for provider in [
-        "atrace",
-        "processmetadata",
-        "stacktrace",
-        "systemcounters",
-        "threadmetadata",
-        "yarn",
-    ]:
+[
     profilo_sample_app(
         srcs = ACTIVITY_SRCS,
         manifest = "AndroidManifest.xml",
@@ -105,3 +94,12 @@ for provider in [
             provider,
         ],
     )
+    for provider in [
+        "atrace",
+        "processmetadata",
+        "stacktrace",
+        "systemcounters",
+        "threadmetadata",
+        "yarn",
+    ]
+]
