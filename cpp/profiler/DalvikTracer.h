@@ -21,7 +21,7 @@
 
 #include <dalvik-subset/internals.h>
 
-#include "BaseTracer.h"
+#include "profiler/BaseTracer.h"
 #include "profilo/Logger.h"
 
 namespace facebook {
