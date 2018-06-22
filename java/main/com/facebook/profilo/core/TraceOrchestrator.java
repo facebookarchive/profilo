@@ -60,7 +60,8 @@ public final class TraceOrchestrator
           BackgroundUploadService.BackgroundUploadListener,
           TraceControl.TraceControlListener,
           LoggerCallbacks {
-    void onTraceFlushed(File trace);
+    void onTraceFlushed(File trace, long traceId);
+
     void onTraceFlushedDoFileAnalytics(
         int totalErrors,
         int trimmedFromCount,
@@ -523,7 +524,7 @@ public final class TraceOrchestrator
       return;
     }
 
-    uploadTrace(logFile, uploadFile, parent, trace.getFlags());
+    uploadTrace(logFile, uploadFile, parent, trace.getFlags(), traceId);
   }
 
   @Override
@@ -575,10 +576,11 @@ public final class TraceOrchestrator
       ZipHelper.deleteDirectory(parent);
       return;
     }
-    uploadTrace(logFile, logFile, parent, trace.getFlags());
+    uploadTrace(logFile, logFile, parent, trace.getFlags(), traceId);
   }
 
-  private void uploadTrace(File logFile, File uploadFile, File parent, int traceFlags) {
+  private void uploadTrace(
+      File logFile, File uploadFile, File parent, int traceFlags, long traceId) {
     FileManager.FileManagerStatistics fStats;
     synchronized (this) {
       // Manual traces are untrimmable, everything else can be cleaned up
@@ -589,7 +591,7 @@ public final class TraceOrchestrator
     }
     ZipHelper.deleteDirectory(parent);
 
-    mListenerManager.onTraceFlushed(logFile);
+    mListenerManager.onTraceFlushed(logFile, traceId);
     // This is as good a time to do some analytics as any.
     mListenerManager.onTraceFlushedDoFileAnalytics(
         fStats.getTotalErrors(),

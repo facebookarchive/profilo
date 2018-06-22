@@ -461,7 +461,7 @@ public class TraceOrchestratorTest {
     mOrchestrator.onTraceWriteEnd(traceId, crc);
 
     ArgumentCaptor<File> fileCaptor = ArgumentCaptor.forClass(File.class);
-    verify(fileListener).onTraceFlushed(fileCaptor.capture());
+    verify(fileListener).onTraceFlushed(fileCaptor.capture(), eq(traceId));
     String filename = fileCaptor.getValue().getName();
     String filenameNoExt = filename.substring(0, filename.lastIndexOf('.'));
     String result_crc =

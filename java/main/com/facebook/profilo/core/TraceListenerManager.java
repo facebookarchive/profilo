@@ -67,10 +67,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceFlushed(File trace) {
+  public void onTraceFlushed(File trace, long traceId) {
     Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceFlushed(trace);
+      iterator.next().onTraceFlushed(trace, traceId);
     }
   }
 

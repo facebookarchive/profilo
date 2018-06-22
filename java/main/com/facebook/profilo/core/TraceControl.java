@@ -466,6 +466,15 @@ final public class TraceControl {
     return ctx.encodedTraceId;
   }
 
+  @Nullable
+  public long getCurrentTraceIdByTrigger(int controller, int intContext, Object context) {
+    TraceContext ctx = findCurrentTraceByContext(controller, intContext, context);
+    if (ctx == null) {
+      return 0;
+    }
+    return ctx.traceId;
+  }
+
   /** Return some context about the triggering controller and context. */
   @Nullable
   public String[] getTriggerContextStrings() {
