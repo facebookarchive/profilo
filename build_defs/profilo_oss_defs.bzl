@@ -68,7 +68,9 @@ def setup_profilo_oss_xplat_cxx_library():
         ]),
         compiler_flags = [
             "-fexceptions",
+            "-fno-omit-frame-pointer",
             "-frtti",
+            "-ffunction-sections",
         ],
         exported_platform_headers = [
             (
@@ -90,6 +92,10 @@ def setup_profilo_oss_xplat_cxx_library():
             (
                 "^android-arm64",
                 ["-fuse-ld=gold"],
+            ),
+            (
+                "^android-x86",
+                ["-latomic"],
             ),
         ],
         platform_srcs = [

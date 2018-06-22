@@ -11,6 +11,19 @@ profilo_oss_cxx_library(
     exported_headers = [
         "dso.h",
     ],
+    compiler_flags = [
+        "-std=gnu++14",
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-Wextra",
+        "-Wno-unused-parameter",
+        "-Wno-format-security",
+        "-Wno-unused-local-typedef",
+        "-Wno-unused",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-alignof-expression",
+        "-O3",
+    ],
     preferred_linkage = "static",
     visibility = [
         profilo_path("..."),

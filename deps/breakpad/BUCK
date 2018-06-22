@@ -11,6 +11,16 @@ profilo_oss_cxx_library(
     exported_headers = [
         "abort_with_reason.h",
     ],
+    compiler_flags = [
+        # Make legacy Breakpad code compile, for now
+        "-Wno-unused-variable",
+        "-Wno-unused-function",
+        "-Wno-unused-private-field",
+        "-Wno-reorder",
+        "-Wno-empty-body",
+        "-Wno-deprecated-register",
+        "-Wno-format-security",
+    ],
     preferred_linkage = "static",
     soname = "libbreakpadabort.$(ext)",
     visibility = [

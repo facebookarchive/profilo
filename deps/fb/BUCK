@@ -18,6 +18,9 @@ profilo_oss_cxx_library(
     ]),
     compiler_flags = [
         "-fexceptions",
+        "-fno-omit-frame-pointer",
+        "-frtti",
+        "-ffunction-sections",
     ],
     exported_linker_flags = [
         "-llog",

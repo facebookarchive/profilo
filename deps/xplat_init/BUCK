@@ -11,6 +11,12 @@ profilo_oss_cxx_library(
     exported_headers = [
         "xplat_init.h",
     ],
+    compiler_flags = [
+        "-fexceptions",
+        "-fno-omit-frame-pointer",
+        "-frtti",
+        "-ffunction-sections",
+    ],
     preferred_linkage = "static",
     visibility = [
         "PUBLIC",

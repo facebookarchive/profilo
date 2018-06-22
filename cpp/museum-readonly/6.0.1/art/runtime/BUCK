@@ -24,6 +24,7 @@ fb_xplat_cxx_library(
         "-Wno-pmf-conversions",
         "-Wno-inconsistent-missing-override",
         "-Wno-unknown-warning-option",
+        "-Wno-mismatched-tags",
         "-UMUSEUM_VERSION",
         "-DMUSEUM_VERSION=v6_0_1_readonly",
         "-DMUSEUM_NOOP_CHECK_MACROS",

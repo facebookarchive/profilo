@@ -4,22 +4,20 @@
 
 [ndk]
     ndk_version = 15.2.4203891
-    gcc_version = 4.9
     app_platform = android-15
     cpu_abis = armv7, x86
-    extra_cxxflags = \
-      -std=gnu++14 \
-      -Wno-maybe-uninitialized \
-      -fexceptions
-    extra_cflags = \
-      -Wno-maybe-uninitialized
+    compiler = clang
+    clang_version = 5.0
+    extra_ldflags = -Wl,-Bsymbolic
+    extra_cflags = -Og
+    extra_cxxflags = -Og -std=gnu++14 -Wno-nullability-completeness
 
 [download]
     maven_repo = https://repo1.maven.org/maven2
 
 [cxx]
     preprocess_mode = combined
-    cxx_runtime = gnustl
+    enable_deprecated_prebuilt_cxx_library_api = false
     cppflags = \
         -std=gnu11 \
         -pthread
