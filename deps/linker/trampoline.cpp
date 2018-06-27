@@ -44,20 +44,20 @@ public:
   allocator_block()
     : map_(mmap(
         nullptr,
-        kPagesPerBlock * kPageSize,
+        kSize,
         PROT_READ | PROT_WRITE | PROT_EXEC,
         MAP_PRIVATE | MAP_ANONYMOUS,
         -1, /* invalid fd */
         0)
       ) {
     if (map_ == MAP_FAILED) {
-      throw std::system_error(errno, std::generic_category());
+      throw std::system_error(errno, std::system_category());
     }
     top_ = reinterpret_cast<uint8_t*>(map_);
   }
 
   size_t remaining() const {
-    return (kPageSize * kPagesPerBlock) - (top_ - reinterpret_cast<uint8_t* const>(map_));
+    return kSize - (top_ - reinterpret_cast<uint8_t* const>(map_));
   }
 
   void* allocate(size_t sz) {
@@ -71,7 +71,8 @@ public:
 
 private:
   static constexpr size_t kPageSize = 4096;
-  static constexpr size_t kPagesPerBlock = 4;
+  static constexpr size_t kPagesPerBlock = 1;
+  static constexpr size_t kSize = kPageSize * kPagesPerBlock;
 
   void* const map_;
   uint8_t* top_;
@@ -99,7 +100,7 @@ struct trampoline_stack_entry {
   void* const ip;
 };
 
-static std::vector<trampoline_stack_entry>& get_hook_stack() {
+static pthread_key_t get_hook_stack_key() {
   static pthread_key_t tls_key_ = ({
     pthread_key_t key;
     if (pthread_key_create(&key, +[](void* obj) {
@@ -110,16 +111,32 @@ static std::vector<trampoline_stack_entry>& get_hook_stack() {
     }
     key;
   });
+  return tls_key_;
+}
+
+static std::vector<trampoline_stack_entry>& get_hook_stack() {
+  auto key = get_hook_stack_key();
   auto vec = reinterpret_cast<std::vector<trampoline_stack_entry>*>(
-    pthread_getspecific(tls_key_));
-  if (!vec) {
+    pthread_getspecific(key));
+  if (vec == nullptr) {
     vec = new std::vector<trampoline_stack_entry>();
-    pthread_setspecific(tls_key_, vec);
+    pthread_setspecific(key, vec);
   }
   return *vec;
 }
 
 #if defined (__arm__)
+static void delete_hook_stack() {
+  auto key = get_hook_stack_key();
+  auto vec = reinterpret_cast<std::vector<trampoline_stack_entry>*>(
+      pthread_getspecific(key));
+  if (vec == nullptr) {
+    return;
+  }
+  delete vec;
+  pthread_setspecific(key, nullptr);
+}
+
 void push_hook_stack(void* chained, void* lr, void* ip) {
   trampoline_stack_entry entry = { chained, lr, ip };
   get_hook_stack().push_back(entry);
@@ -129,6 +146,9 @@ uint64_t pop_hook_stack() {
   auto& stack = get_hook_stack();
   auto back = stack.back();
   stack.pop_back();
+  if (stack.empty()) {
+    delete_hook_stack();
+  }
   // this bitshift-and-return is a bit wonky, but it's taking advantage of the ARM
   // procedure call standard for returning a 64-bit fundamental type as simply two
   // paired registers. if we were to return a struct of some sort, it would get
