@@ -53,6 +53,9 @@ public:
   virtual void startTracing() = 0;
 
   virtual void stopTracing() = 0;
+
+  // May be called to initialize static state. Must be always safe.
+  virtual void prepare() = 0;
 };
 
 } // namespace profiler

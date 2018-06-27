@@ -89,10 +89,14 @@ void ArtUnwindcTracer::flushStack(
     depth);
 }
 
+void ArtUnwindcTracer::startTracing() {
+  prepare();
+}
+
 void ArtUnwindcTracer::stopTracing() {
 }
 
-void ArtUnwindcTracer::startTracing() {
+void ArtUnwindcTracer::prepare() {
   // Preinitialize static state.
 
   (void) get_art_thread();

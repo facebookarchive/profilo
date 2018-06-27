@@ -181,7 +181,15 @@ template<> void ArtTracer<kVersion>::flushStack(
     depth);
 }
 
+template<> void ArtTracer<kVersion>::prepare() {
+#if defined(MUSEUM_VERSION_6_0_1) || defined(MUSEUM_VERSION_7_0_0)
+  InitRuntime();
+#endif
+}
+
 template<> void ArtTracer<kVersion>::startTracing() {
+  prepare();
+
   if(!installRuntime()) {
     // The caller should have ensured compatibility before calling us.
     throw std::runtime_error("Unable to install ArtTracer runtime copy");

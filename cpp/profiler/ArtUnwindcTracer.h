@@ -46,9 +46,11 @@ public:
     int tid,
     int64_t time_) override;
 
-  void stopTracing() override;
+  void prepare() override;
 
   void startTracing() override;
+
+  void stopTracing() override;
 };
 
 } // namespace android_*

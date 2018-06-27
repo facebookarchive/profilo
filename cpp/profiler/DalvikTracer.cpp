@@ -265,6 +265,9 @@ void DalvikTracer::flushStack(
     depth);
 }
 
+void DalvikTracer::prepare() {
+}
+
 void DalvikTracer::startTracing() {
 }
 

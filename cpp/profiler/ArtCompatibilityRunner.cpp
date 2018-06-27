@@ -232,11 +232,13 @@ bool runJavaCompatibilityCheckInternal(
   }
 
   // Performs initialization in the parent, before we fork.
-  tracer->startTracing();
+  tracer->prepare();
 
   forkjail::ForkJail jail(
       [&javaStack, tracer] {
         try {
+          tracer->startTracing();
+
           std::array<uint32_t, kStackSize> cppStack;
           auto cppStackSize = getCppStackTrace(tracer, cppStack);
 

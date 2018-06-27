@@ -20,19 +20,11 @@ void* HostEntryPoints::quick_entrypoints = nullptr;
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 namespace entrypoints {
 
-static JavaVMExt* JavaVmExtFromEnv(JNIEnv* env) {
-  return reinterpret_cast<JNIEnvExt*>(env)->vm;
-}
-
-static Runtime* GetRuntimeFromEnv(JNIEnv* env) {
-  return JavaVmExtFromEnv(env)->GetRuntime();
-}
-
 void InitRuntime() {
   Runtime::Current();
 }
 
-void InstallRuntime(JNIEnv* env, void* thread) {
+void InstallRuntime(JNIEnv*, void* thread) {
   Thread* artThread = reinterpret_cast<Thread*>(thread);
 
   QuickEntryPoints* host = new QuickEntryPoints(artThread->GetQuickEntryPoints());

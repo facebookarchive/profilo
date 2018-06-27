@@ -50,9 +50,12 @@ public:
     int tid,
     int64_t time_) override;
 
+  void prepare() override;
+
   void stopTracing() override;
 
   void startTracing() override;
+
 
 private:
   int64_t getMethodIdForSymbolication(const Method* method);
