@@ -21,6 +21,8 @@
 #include <museum/5.1.1/art/runtime/mirror/object.h>
 #include <museum/5.1.1/art/runtime/object_callbacks.h>
 
+#define java_lang_String_ java_lang_String_()
+
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 template<class T> class Handle;
@@ -157,7 +159,7 @@ class MANAGED String FINAL : public Object {
 
   int32_t offset_;
 
-  static GcRoot<Class> java_lang_String_;
+  static GcRoot<Class>& java_lang_String_;
 
   friend struct facebook::museum::MUSEUM_VERSION::art::StringOffsets;  // for verifying offset information
 

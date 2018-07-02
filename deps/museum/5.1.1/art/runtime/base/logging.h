@@ -327,7 +327,8 @@ extern std::vector<std::string> gVerboseMethods;
 
 // Used on fatal exit. Prevents recursive aborts. Allows us to disable
 // some error checking to ensure fatal shutdown makes forward progress.
-extern unsigned int gAborting;
+#define gAborting gAborting()
+unsigned int& gAborting;
 
 extern void InitLogging(char* argv[]);
 

@@ -5,19 +5,23 @@
 library: libart
 
 headers:
-- museum/5.1.1/art/runtime/mirror/array.h
-- museum/5.1.1/art/runtime/mirror/throwable.h
-- museum/5.1.1/art/runtime/dex_file.h
 - museum/5.1.1/art/runtime/base/logging.h
 - museum/5.1.1/art/runtime/base/mutex.h
 - museum/5.1.1/art/runtime/class_linker.h
+- museum/5.1.1/art/runtime/dex_file.h
+- museum/5.1.1/art/runtime/gc_root.h
 - museum/5.1.1/art/runtime/indirect_reference_table.h
 - museum/5.1.1/art/runtime/jni_internal.h
+- museum/5.1.1/art/runtime/mirror/array.h
+- museum/5.1.1/art/runtime/mirror/art_field.h
+- museum/5.1.1/art/runtime/mirror/art_method.h
+- museum/5.1.1/art/runtime/mirror/string.h
+- museum/5.1.1/art/runtime/mirror/throwable.h
 - museum/5.1.1/art/runtime/runtime.h
-- museum/5.1.1/art/runtime/thread.h
-- museum/5.1.1/art/runtime/thread_list.h
-- museum/5.1.1/art/runtime/utf.h
 - museum/5.1.1/art/runtime/stack.h
+- museum/5.1.1/art/runtime/thread_list.h
+- museum/5.1.1/art/runtime/thread.h
+- museum/5.1.1/art/runtime/utf.h
 - new
 
 namespaces:
@@ -42,6 +46,33 @@ namespaces:
       returnType: void
       mangledNames:
       - _ZN3art6mirror9Throwable8SetCauseEPS1_
+
+  - className: ArtMethod
+    symbols:
+    - symbolName: java_lang_reflect_ArtMethod_
+      returnType: art::GcRoot<Class>
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6mirror9ArtMethod28java_lang_reflect_ArtMethod_E
+      conditional: !defined(NDEBUG)
+
+  - className: ArtField
+    symbols:
+    - symbolName: java_lang_reflect_ArtField_
+      returnType: art::GcRoot<Class>
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6mirror8ArtField27java_lang_reflect_ArtField_E
+      conditional: !defined(NDEBUG)
+
+  - className: String
+    symbols:
+    - symbolName: java_lang_String_
+      returnType: art::GcRoot<Class>
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6mirror6String17java_lang_String_E
+      conditional: !defined(NDEBUG)
 
 - nsName:
   - art
@@ -304,6 +335,12 @@ namespaces:
       mangledNames:
       - _ZN3art6Thread17pthread_key_self_E
 
+    - symbolName: VerifyStackImpl
+      returnType: void
+      mangledNames:
+      - _ZN3art6Thread15VerifyStackImplEv
+      conditional: !defined(NDEBUG)
+
   - className: StackVisitor
     symbols:
     - symbolName: GetThisObject
@@ -330,6 +367,17 @@ namespaces:
       cvFlags: const
       mangledNames:
       - _ZNK3art10ThreadList10VisitRootsEPFvPPNS_6mirror6ObjectEPvRKNS_8RootInfoEES5_
+
+  - className: ReaderWriterMutex
+    symbols:
+    - symbolName: IsSharedHeld
+      params:
+      - Thread const*
+      returnType: bool
+      cvFlags: const
+      mangledNames:
+      - _ZNK3art17ReaderWriterMutex12IsSharedHeldEPKNS_6ThreadE
+      conditional: !defined(NDEBUG)
 
   # Special set: Unattached methods. Give them an empty className, and poof.
   - className:
@@ -368,3 +416,36 @@ namespaces:
       returnType: std::string
       mangledNames:
       - _ZN3art15DescriptorToDotEPKc
+
+    - symbolName: PrettyClass
+      params:
+      - mirror::Class*
+      returnType: std::string
+      mangledNames:
+      - _ZN3art11PrettyClassEPNS_6mirror5ClassE
+      conditional: !defined(NDEBUG)
+
+    - symbolName: operator<<
+      params:
+      - std::ostream&
+      - LockLevel const&
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_9LockLevelE
+      conditional: !defined(NDEBUG)
+
+    - symbolName: operator<<
+      params:
+      - std::ostream&
+      - ReaderWriterMutex const&
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_17ReaderWriterMutexE
+      conditional: !defined(NDEBUG)
+
+    - symbolName: gAborting
+      returnType: unsigned int
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art9gAbortingE
+      conditional: !defined(NDEBUG)

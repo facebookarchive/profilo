@@ -27,6 +27,8 @@
 #include <museum/5.1.1/art/runtime/read_barrier_option.h>
 #include <museum/5.1.1/art/runtime/stack.h>
 
+#define java_lang_reflect_ArtMethod_ java_lang_reflect_ArtMethod_()
+
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ArtMethodOffsets;
@@ -608,7 +610,7 @@ class MANAGED ArtMethod FINAL : public Object {
 #endif
   } ptr_sized_fields_;
 
-  static GcRoot<Class> java_lang_reflect_ArtMethod_;
+  static GcRoot<Class>& java_lang_reflect_ArtMethod_;
 
  private:
   ALWAYS_INLINE void CheckObjectSizeEqualsMirrorSize() SHARED_LOCKS_REQUIRED(Locks::mutator_lock_);

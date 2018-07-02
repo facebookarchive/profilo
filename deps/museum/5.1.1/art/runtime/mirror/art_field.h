@@ -26,6 +26,8 @@
 #include <museum/5.1.1/art/runtime/primitive.h>
 #include <museum/5.1.1/art/runtime/read_barrier_option.h>
 
+#define java_lang_reflect_ArtField_ java_lang_reflect_ArtField_()
+
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 struct ArtFieldOffsets;
@@ -180,7 +182,7 @@ class MANAGED ArtField FINAL : public Object {
   // Offset of field within an instance or in the Class' static fields
   uint32_t offset_;
 
-  static GcRoot<Class> java_lang_reflect_ArtField_;
+  static GcRoot<Class>& java_lang_reflect_ArtField_;
 
   friend struct facebook::museum::MUSEUM_VERSION::art::ArtFieldOffsets;  // for verifying offset information
   DISALLOW_IMPLICIT_CONSTRUCTORS(ArtField);

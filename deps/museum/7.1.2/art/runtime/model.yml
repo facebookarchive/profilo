@@ -5,22 +5,24 @@
 library: libart
 
 headers:
-- museum/7.1.2/art/runtime/mirror/array.h
-- museum/7.1.2/art/runtime/mirror/throwable.h
-- museum/7.1.2/art/runtime/elf_file.h
-- museum/7.1.2/art/runtime/elf_file_impl.h
-- museum/7.1.2/art/runtime/dex_file.h
-- museum/7.1.2/art/runtime/base/logging.h
 - museum/7.1.2/art/runtime/base/logging-inl.h
+- museum/7.1.2/art/runtime/base/logging.h
 - museum/7.1.2/art/runtime/base/mutex.h
 - museum/7.1.2/art/runtime/class_linker.h
+- museum/7.1.2/art/runtime/dex_file.h
+- museum/7.1.2/art/runtime/elf_file_impl.h
+- museum/7.1.2/art/runtime/elf_file.h
+- museum/7.1.2/art/runtime/gc_root.h
 - museum/7.1.2/art/runtime/indirect_reference_table.h
 - museum/7.1.2/art/runtime/jni_env_ext.h
+- museum/7.1.2/art/runtime/mirror/array.h
+- museum/7.1.2/art/runtime/mirror/string.h
+- museum/7.1.2/art/runtime/mirror/throwable.h
 - museum/7.1.2/art/runtime/runtime.h
-- museum/7.1.2/art/runtime/thread.h
-- museum/7.1.2/art/runtime/thread_list.h
-- museum/7.1.2/art/runtime/utf.h
 - museum/7.1.2/art/runtime/stack.h
+- museum/7.1.2/art/runtime/thread_list.h
+- museum/7.1.2/art/runtime/thread.h
+- museum/7.1.2/art/runtime/utf.h
 - new
 
 namespaces:
@@ -51,6 +53,26 @@ namespaces:
       returnType: void
       mangledNames:
       - _ZN3art6mirror9Throwable8SetCauseEPS1_
+
+  - className: String
+    symbols:
+    - symbolName: java_lang_String_
+      returnType: art::GcRoot<Class>
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6mirror6String17java_lang_String_E
+      conditional: !defined(NDEBUG)
+
+  - className:
+    symbols:
+    - symbolName: operator<<
+      params:
+      - std::ostream&
+      - Class::Status const&
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN3art6mirrorlsERNSt3__113basic_ostreamIcNS1_11char_traitsIcEEEERKNS0_5Class6StatusE
+      conditional: !defined(NDEBUG)
 
 - nsName:
   - art
@@ -227,6 +249,14 @@ namespaces:
       mangledNames:
       - _ZN3art17ReaderWriterMutex26HandleSharedLockContentionEPNS_6ThreadEi
       conditional: ART_USE_FUTEXES
+    - symbolName: IsSharedHeld
+      params:
+      - Thread const*
+      returnType: bool
+      cvFlags: const
+      mangledNames:
+      - _ZNK3art17ReaderWriterMutex12IsSharedHeldEPKNS_6ThreadE
+      conditional: !defined(NDEBUG)
   - className: Runtime
     symbols:
     - symbolName: GetPreAllocatedNoClassDefFoundError
@@ -325,6 +355,19 @@ namespaces:
       isStaticVar: true
       mangledNames:
       - _ZN3art6Thread17pthread_key_self_E
+    - symbolName: VerifyStackImpl
+      returnType: void
+      mangledNames:
+      - _ZN3art6Thread15VerifyStackImplEv
+      conditional: !defined(NDEBUG)
+    - symbolName: GetThreadName
+      params:
+      - std::string&
+      returnType: void
+      cvFlags: const
+      mangledNames:
+      - _ZNK3art6Thread13GetThreadNameERNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE
+      conditional: !defined(NDEBUG)
   # - className: ElfFile
   #   symbols:
   #   - symbolName: Open
@@ -435,3 +478,39 @@ namespaces:
       - ThreadState const&
       mangledNames:
       - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_11ThreadStateE
+    - symbolName: PrettyClass
+      params:
+      - mirror::Class*
+      returnType: std::string
+      mangledNames:
+      - _ZN3art11PrettyClassEPNS_6mirror5ClassE
+      conditional: !defined(NDEBUG)
+    - symbolName: PrettyDescriptor
+      params:
+      - mirror::Class*
+      returnType: std::string
+      mangledNames:
+      - _ZN3art16PrettyDescriptorEPNS_6mirror5ClassE
+      conditional: !defined(NDEBUG)
+    - symbolName: operator<<
+      params:
+      - std::ostream&
+      - LockLevel const&
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_9LockLevelE
+      conditional: !defined(NDEBUG)
+    - symbolName: operator<<
+      params:
+      - std::ostream&
+      - ReaderWriterMutex const&
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_17ReaderWriterMutexE
+      conditional: !defined(NDEBUG)
+    - symbolName: gAborting
+      returnType: unsigned int
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art9gAbortingE
+      conditional: !defined(NDEBUG)
