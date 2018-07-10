@@ -32,6 +32,7 @@ def profilo_oss_maven_library(
     """
     Creates remote_file and prebuilt_jar rules for a maven artifact.
     """
+    _ignore = scope
     remote_file_name = "{}-remote".format(name)
     remote_file(
         name = remote_file_name,
