@@ -1,0 +1,25 @@
+# BUILD FILE SYNTAX: SKYLARK
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+
+fb_xplat_cxx_library(
+    name = "sigmuxsetup",
+    header_namespace = "sigmuxsetup",
+    exported_headers = [
+        "sigmuxsetup.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-Wall",
+    ],
+    visibility = [
+        profilo_path("cpp/..."),
+        profilo_path("facebook/cpp/..."),
+    ],
+    exported_deps = [
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/lss:linux-syscall-support"),
+        profilo_path("deps/sigmux:sigmux"),
+    ],
+)
