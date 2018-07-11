@@ -57,6 +57,12 @@ public:
     top_ = reinterpret_cast<uint8_t*>(map_);
   }
 
+  allocator_block(allocator_block const&) = delete;
+  allocator_block(allocator_block&&) = delete;
+
+  allocator_block& operator=(allocator_block const&) = delete;
+  allocator_block& operator=(allocator_block&&) = delete;
+
   size_t remaining() const {
     return kSize - (top_ - reinterpret_cast<uint8_t* const>(map_));
   }
@@ -175,6 +181,12 @@ public:
     *data++ = reinterpret_cast<uint32_t>(chained);
 #endif
   }
+
+  trampoline(trampoline const&) = delete;
+  trampoline(trampoline&&) = delete;
+
+  trampoline& operator=(trampoline const&) = delete;
+  trampoline& operator=(trampoline&&) = delete;
 
   trampoline(void* existing_trampoline)
     : code_size_(0), code_(existing_trampoline) { }
