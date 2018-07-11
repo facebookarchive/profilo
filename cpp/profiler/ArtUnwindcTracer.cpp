@@ -22,16 +22,37 @@
 #include "profilo/Logger.h"
 
 #include "profiler/unwindc/runtime.h"
-#include "profiler/unwindc/unwinder.h"
+
 
 namespace facebook {
 namespace profilo {
 namespace profiler {
-#ifdef ANDROID_VERSION_600
-namespace android_600 {
-#else
-#error Unknown Android version
+
+#if ANDROID_VERSION_NUM == 600
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc600;
+#elif ANDROID_VERSION_NUM == 700
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc700;
+#elif ANDROID_VERSION_NUM == 710
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc710;
+#elif ANDROID_VERSION_NUM == 711
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc711;
+#elif ANDROID_VERSION_NUM == 712
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc712;
 #endif
+
+/**
+ * We need to namespace the codegen'd symbols in unwinder.h to appease the
+ * linker.
+ *
+ * Since this compilation unit will only ever have one of these versions
+ * defined at a time, we can just ignore the namespacing by means of
+ * `using namespace`.
+ */
+namespace ANDROID_NAMESPACE { // ANDROID_NAMESPACE is a preprocessor variable
+#include "profiler/unwindc/unwinder.h"
+} // namespace android_*
+
+using namespace ANDROID_NAMESPACE;
 
 namespace {
 
@@ -55,9 +76,9 @@ bool unwind_cb(uintptr_t frame, void* data) {
 
 } // anonymous
 
-ArtUnwindcTracer::ArtUnwindcTracer() {}
+template<> ArtUnwindcTracer<kVersion>::ArtUnwindcTracer() {}
 
-bool ArtUnwindcTracer::collectStack(
+template<> bool ArtUnwindcTracer<kVersion>::collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
       uint8_t& depth,
@@ -76,7 +97,7 @@ bool ArtUnwindcTracer::collectStack(
   return true;
 }
 
-void ArtUnwindcTracer::flushStack(
+template<> void ArtUnwindcTracer<kVersion>::flushStack(
     int64_t* frames,
     uint8_t depth,
     int tid,
@@ -89,21 +110,19 @@ void ArtUnwindcTracer::flushStack(
     depth);
 }
 
-void ArtUnwindcTracer::startTracing() {
-  prepare();
-}
-
-void ArtUnwindcTracer::stopTracing() {
-}
-
-void ArtUnwindcTracer::prepare() {
+template<> void ArtUnwindcTracer<kVersion>::prepare() {
   // Preinitialize static state.
 
   (void) get_art_thread();
-  (void) get_runtime();
 }
 
-} // namespace android_*
+template<> void ArtUnwindcTracer<kVersion>::startTracing() {
+  prepare();
+}
+
+template<> void ArtUnwindcTracer<kVersion>::stopTracing() {
+}
+
 } // namespace profiler
 } // namespace profilo
 } // namespace facebook

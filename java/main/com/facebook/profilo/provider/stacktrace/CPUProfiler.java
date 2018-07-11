@@ -38,6 +38,10 @@ public class CPUProfiler {
   public static final int TRACER_ART_5_1 = 1 << 3;
   public static final int TRACER_ART_7_0 = 1 << 4;
   public static final int TRACER_ART_UNWINDC_6_0 = 1 << 5;
+  public static final int TRACER_ART_UNWINDC_7_0_0 = 1 << 6;
+  public static final int TRACER_ART_UNWINDC_7_1_0 = 1 << 7;
+  public static final int TRACER_ART_UNWINDC_7_1_1 = 1 << 8;
+  public static final int TRACER_ART_UNWINDC_7_1_2 = 1 << 9;
 
   private static int calculateTracers(Context context, boolean useAlternatives) {
     int tracers = 0;
@@ -46,8 +50,18 @@ public class CPUProfiler {
       tracers |= TRACER_DALVIK;
     } else if (ArtCompatibility.isCompatible(context, useAlternatives)) {
       switch (Build.VERSION.RELEASE) {
+        case "7.1.2":
+          tracers |= useAlternatives? TRACER_ART_UNWINDC_7_1_2 : 0;
+          break;
+        case "7.1.1":
+          tracers |= useAlternatives? TRACER_ART_UNWINDC_7_1_1 : 0;
+          break;
+        case "7.1":
+        case "7.1.0":
+          tracers |= useAlternatives ? TRACER_ART_UNWINDC_7_1_0 : 0;
+          break;
         case "7.0":
-          tracers |= TRACER_ART_7_0;
+          tracers |= useAlternatives? TRACER_ART_UNWINDC_7_0_0 : TRACER_ART_7_0;
           break;
         case "6.0":
         case "6.0.1":

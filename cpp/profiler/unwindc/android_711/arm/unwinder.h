@@ -29,10 +29,10 @@ auto get_runtime() {
 }
 
 auto get_class_dexfile(uintptr_t cls) {
-  uintptr_t dexcache_heap_ref = AccessField(cls, 16U);
+  uintptr_t dexcache_heap_ref = AccessField(cls, 20U);
   uint32_t dexcache_ptr = Read4(AccessField(dexcache_heap_ref, 0U));
   uint32_t dexcache = dexcache_ptr;
-  uint64_t dexfile = Read8(AccessField(dexcache, 32U));
+  uint64_t dexfile = Read8(AccessField(dexcache, 16U));
   return dexfile;
 }
 
@@ -68,14 +68,14 @@ auto get_method_trace_id(uintptr_t method) {
   uintptr_t signature = AccessField(Read4(AccessField(dexfile, 32U)), 12U);
   uint32_t dex_id = Read4(signature);
   dex_id = dex_id;
-  uint32_t method_id = Read4(AccessField(method, 20U));
+  uint32_t method_id = Read4(AccessField(method, 12U));
   return GetMethodTraceId(dex_id, method_id);
 }
 
 auto get_method_name(uintptr_t method) {
   auto cls = get_declaring_class(method);
   auto dexfile = get_class_dexfile(cls);
-  uint32_t dex_method_index = Read4(AccessField(method, 20U));
+  uint32_t dex_method_index = Read4(AccessField(method, 12U));
   uintptr_t method_id =
       AccessArrayItem(Read4(AccessField(dexfile, 48U)), dex_method_index, 8U);
   uint32_t name_idx = Read4(AccessField(method_id, 4U));
@@ -84,7 +84,7 @@ auto get_method_name(uintptr_t method) {
 
 auto get_class_descriptor(uintptr_t cls) {
   auto dexfile = get_class_dexfile(cls);
-  uint32_t typeidx = Read4(AccessField(cls, 92U));
+  uint32_t typeidx = Read4(AccessField(cls, 96U));
   uintptr_t typeid_ =
       AccessArrayItem(Read4(AccessField(dexfile, 40U)), typeidx, 4U);
   uint32_t descriptor_idx = Read4(AccessField(typeid_, 0U));
@@ -94,7 +94,7 @@ auto get_class_descriptor(uintptr_t cls) {
 auto get_method_shorty(uintptr_t method) {
   auto cls = get_declaring_class(method);
   auto dexfile = get_class_dexfile(cls);
-  uint32_t dex_method_index = Read4(AccessField(method, 20U));
+  uint32_t dex_method_index = Read4(AccessField(method, 12U));
   uintptr_t method_id =
       AccessArrayItem(Read4(AccessField(dexfile, 48U)), dex_method_index, 8U);
   uint16_t proto_idx = Read2(AccessField(method_id, 2U));
@@ -110,7 +110,7 @@ auto get_number_of_refs_without_receiver(uintptr_t method) {
 }
 
 auto is_runtime_method(uintptr_t method) {
-  uint32_t dex_method_index = Read4(AccessField(method, 20U));
+  uint32_t dex_method_index = Read4(AccessField(method, 12U));
   bool is_runtime_method = (dex_method_index == 4294967295U);
   return is_runtime_method;
 }
@@ -127,7 +127,7 @@ auto is_proxy_method(uintptr_t method) {
 }
 
 auto is_static_method(uintptr_t method) {
-  uint32_t access_flags = Read4(AccessField(method, 12U));
+  uint32_t access_flags = Read4(AccessField(method, 4U));
   uint32_t kAccStatic = 8U;
   if ((access_flags & kAccStatic)) {
     return true;
@@ -137,7 +137,7 @@ auto is_static_method(uintptr_t method) {
 }
 
 auto is_direct_method(uintptr_t method) {
-  uint32_t access_flags = Read4(AccessField(method, 12U));
+  uint32_t access_flags = Read4(AccessField(method, 4U));
   uint32_t kAccStatic = 8U;
   uint32_t kAccPrivate = 2U;
   uint32_t kAccConstructor = 65536U;
@@ -149,7 +149,7 @@ auto is_direct_method(uintptr_t method) {
 }
 
 auto is_native_method(uintptr_t method) {
-  uint32_t access_flags = Read4(AccessField(method, 12U));
+  uint32_t access_flags = Read4(AccessField(method, 4U));
   uint32_t kAccNative = 256U;
   if ((access_flags & kAccNative)) {
     return true;
@@ -162,38 +162,38 @@ auto is_quick_resolution_stub(
     uintptr_t entry_point,
     uintptr_t runtime,
     uintptr_t thread) {
-  uint32_t class_linker = Read4(AccessField(runtime, 236U));
-  uintptr_t entry_points = AccessField(AccessField(thread, 128U), 136U);
+  uint32_t class_linker = Read4(AccessField(runtime, 240U));
+  uintptr_t entry_points = AccessField(AccessField(thread, 128U), 144U);
   return (
-      (Read4(AccessField(class_linker, 284U)) == entry_point) ||
-      (Read4(AccessField(entry_points, 312U)) == entry_point));
+      (Read4(AccessField(class_linker, 256U)) == entry_point) ||
+      (Read4(AccessField(entry_points, 380U)) == entry_point));
 }
 
 auto is_quick_to_interpreter_bridge(
     uintptr_t entry_point,
     uintptr_t runtime,
     uintptr_t thread) {
-  uint32_t class_linker = Read4(AccessField(runtime, 236U));
-  uintptr_t entry_points = AccessField(AccessField(thread, 128U), 136U);
+  uint32_t class_linker = Read4(AccessField(runtime, 240U));
+  uintptr_t entry_points = AccessField(AccessField(thread, 128U), 144U);
   return (
-      (Read4(AccessField(class_linker, 296U)) == entry_point) ||
-      (Read4(AccessField(entry_points, 316U)) == entry_point));
+      (Read4(AccessField(class_linker, 268U)) == entry_point) ||
+      (Read4(AccessField(entry_points, 384U)) == entry_point));
 }
 
 auto is_quick_generic_jni_stub(
     uintptr_t entry_point,
     uintptr_t runtime,
     uintptr_t thread) {
-  uint32_t class_linker = Read4(AccessField(runtime, 236U));
-  uintptr_t entry_points = AccessField(AccessField(thread, 128U), 136U);
+  uint32_t class_linker = Read4(AccessField(runtime, 240U));
+  uintptr_t entry_points = AccessField(AccessField(thread, 128U), 144U);
   return (
-      (Read4(AccessField(class_linker, 292U)) == entry_point) ||
+      (Read4(AccessField(class_linker, 264U)) == entry_point) ||
       (Read4(AccessField(entry_points, 208U)) == entry_point));
 }
 
 auto get_quick_entry_point_from_compiled_code(uintptr_t method) {
-  uintptr_t ptr_fields = AccessField(method, 28U);
-  uint32_t entry_point = Read4(AccessField(ptr_fields, 8U));
+  uintptr_t ptr_fields = AccessField(method, 20U);
+  uint32_t entry_point = Read4(AccessField(ptr_fields, 12U));
   entry_point = entry_point;
   return entry_point;
 }
@@ -201,9 +201,9 @@ auto get_quick_entry_point_from_compiled_code(uintptr_t method) {
 auto get_quick_frame_info_from_entry_point(uintptr_t entry_point) {
   entry_point = entry_point;
   entry_point = (entry_point & (~1U));
-  uint32_t header_offset = 28U;
+  uint32_t header_offset = 20U;
   uintptr_t oat_method = (entry_point - header_offset);
-  return AccessField(oat_method, 12U);
+  return AccessField(oat_method, 4U);
 }
 
 auto get_frame_size(
@@ -219,7 +219,7 @@ auto get_frame_size(
   uint32_t kRefsOnly = 1U;
   uint32_t kRefsAndArgs = 2U;
   uint32_t method_info = 0U;
-  uint32_t access_flags = Read4(AccessField(method, 12U));
+  uint32_t access_flags = Read4(AccessField(method, 4U));
   if ((access_flags & 1024U)) {
     method_info = AccessArrayItem(callee_save_infos, kRefsAndArgs, 12U);
     size = Read4(AccessField(method_info, 0U));
@@ -293,7 +293,7 @@ auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
   uintptr_t tls = AccessField(thread_obj, 128U);
   uintptr_t mstack = AccessField(tls, 12U);
   uint32_t generic_jni_trampoline =
-      Read4(AccessField(AccessField(tls, 136U), 208U));
+      Read4(AccessField(AccessField(tls, 144U), 208U));
   while ((mstack != 0U)) {
     uint32_t quick_frame = Read4(AccessField(mstack, 0U));
     quick_frame = quick_frame;
@@ -321,14 +321,14 @@ auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
       if ((shadow_frame != 0U)) {
         while (((shadow_frame != 0U) && (depth < kMaxFrames))) {
           uint32_t frame_obj = shadow_frame;
-          uint32_t artmethodptr = Read4(AccessField(frame_obj, 8U));
+          uint32_t artmethodptr = Read4(AccessField(frame_obj, 4U));
           uint32_t artmethod = artmethodptr;
           if ((!is_runtime_method(artmethod))) {
             if ((!__unwind_callback(artmethod, __unwind_data))) {
               return false;
             }
           }
-          shadow_frame = Read4(AccessField(frame_obj, 4U));
+          shadow_frame = Read4(AccessField(frame_obj, 0U));
           depth = (depth + 1U);
         }
       }

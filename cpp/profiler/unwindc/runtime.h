@@ -23,6 +23,11 @@
 #include <dlfcn.h>
 #include <fbjni/fbjni.h>
 
+namespace facebook {
+namespace profilo {
+namespace profiler {
+namespace ANDROID_NAMESPACE { // ANDROID_NAMESPACE is a preprocessor variable
+
 namespace fbjni = facebook::jni;
 
 struct string_t {
@@ -32,23 +37,7 @@ struct string_t {
 
 typedef bool (*unwind_callback_t)(uintptr_t, void*);
 
-static void* find_runtime_instance() {
-  auto handle = dlopen("libart.so", RTLD_NOW|RTLD_GLOBAL);
-  if (handle == nullptr) {
-    FBLOGE("Need libart.so");
-    return nullptr;
-  }
-  auto result = dlsym(handle, "_ZN3art7Runtime9instance_E");
-  dlclose(handle);
-  void** ptr = reinterpret_cast<void**>(result);
-  return *ptr;
-}
-
-uintptr_t get_runtime() {
-  static void* runtime = find_runtime_instance();
-  return reinterpret_cast<uintptr_t>(runtime);
-}
-
+#if ANDROID_VERSION_NUM <= 601
 pthread_key_t determineThreadInstanceTLSKey() {
   auto jlThread_class = fbjni::findClassLocal("java/lang/Thread");
   auto jlThread_nativePeer = jlThread_class->getField<jlong>("nativePeer");
@@ -76,9 +65,38 @@ pthread_key_t getThreadInstanceTLSKey() {
   static pthread_key_t key = determineThreadInstanceTLSKey();
   return key;
 }
+#elif ANDROID_VERSION_NUM >= 700
+
+#if defined(__aarch64__)
+# define __get_tls() ({ void** __val; __asm__("mrs %0, tpidr_el0" : "=r"(__val)); __val; })
+#elif defined(__arm__)
+# define __get_tls() ({ void** __val; __asm__("mrc p15, 0, %0, c13, c0, 3" : "=r"(__val)); __val; })
+#elif defined(__mips__)
+# define __get_tls() \
+    /* On mips32r1, this goes via a kernel illegal instruction trap that's optimized for v1. */ \
+    ({ register void** __val asm("v1"); \
+       __asm__(".set    push\n" \
+               ".set    mips32r2\n" \
+               "rdhwr   %0,$29\n" \
+               ".set    pop\n" : "=r"(__val)); \
+       __val; })
+#elif defined(__i386__)
+# define __get_tls() ({ void** __val; __asm__("movl %%gs:0, %0" : "=r"(__val)); __val; })
+#elif defined(__x86_64__)
+# define __get_tls() ({ void** __val; __asm__("mov %%fs:0, %0" : "=r"(__val)); __val; })
+#else
+#error unsupported architecture
+#endif
+
+#endif
 
 void* getThreadInstance() {
+#if ANDROID_VERSION_NUM >= 700
+  constexpr int kTlsSlotArtThreadSelf = 7;
+  return __get_tls()[kTlsSlotArtThreadSelf];
+#else
   return pthread_getspecific(getThreadInstanceTLSKey());
+#endif
 }
 
 uintptr_t get_art_thread() {
@@ -143,3 +161,8 @@ __attribute__((always_inline))
 inline uintptr_t AccessArrayItem(uintptr_t addr, uint32_t item_size, uint32_t item) {
   return addr + (item_size * item);
 }
+
+} // namespace android_*
+} // namespace profiler
+} // namespace profilo
+} // namespace facebook

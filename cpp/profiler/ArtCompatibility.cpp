@@ -22,6 +22,10 @@
 #include "profiler/ArtTracer_601.h"
 #include "profiler/ArtTracer_700.h"
 #include "profiler/ArtUnwindcTracer_600.h"
+#include "profiler/ArtUnwindcTracer_700.h"
+#include "profiler/ArtUnwindcTracer_710.h"
+#include "profiler/ArtUnwindcTracer_711.h"
+#include "profiler/ArtUnwindcTracer_712.h"
 
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
@@ -53,6 +57,26 @@ jboolean check(JNIEnv* env, jclass, jint tracers) {
     auto tracer = std::make_unique<profiler::ArtUnwindcTracer60>();
     return runJavaCompatibilityCheck(
       versions::ANDROID_6_0,
+      tracer.get());
+  } else if (tracers & ART_UNWINDC_7_0_0) {
+    auto tracer = std::make_unique<profiler::ArtUnwindcTracer700>();
+    return runJavaCompatibilityCheck(
+      versions::ANDROID_7_0,
+      tracer.get());
+  } else if (tracers & ART_UNWINDC_7_1_0) {
+    auto tracer = std::make_unique<profiler::ArtUnwindcTracer710>();
+    return runJavaCompatibilityCheck(
+      versions::ANDROID_7_0,
+      tracer.get());
+  } else if (tracers & ART_UNWINDC_7_1_1) {
+    auto tracer = std::make_unique<profiler::ArtUnwindcTracer711>();
+    return runJavaCompatibilityCheck(
+      versions::ANDROID_7_0,
+      tracer.get());
+  } else if (tracers & ART_UNWINDC_7_1_2) {
+    auto tracer = std::make_unique<profiler::ArtUnwindcTracer712>();
+    return runJavaCompatibilityCheck(
+      versions::ANDROID_7_0,
       tracer.get());
   } else if (tracers & ART_7_0) {
     auto tracer = std::make_unique<profiler::Art70Tracer>();

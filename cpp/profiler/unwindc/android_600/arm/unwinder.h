@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2004-present, Facebook, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +14,20 @@
  * limitations under the License.
  */
 
+
 // @nolint
 // @generated
+auto get_runtime_from_thread(uintptr_t thread) {
+  uint32_t jni_env = Read4(AccessField(AccessField(thread, 128U), 28U));
+  uint32_t java_vm = Read4(AccessField(jni_env, 8U));
+  uint32_t runtime = Read4(AccessField(java_vm, 4U));
+  return runtime;
+}
+
+auto get_runtime() {
+  return get_runtime_from_thread(get_art_thread());
+}
+
 auto get_class_dexfile(uintptr_t cls) {
   uintptr_t dexcache_heap_ref = AccessField(cls, 16U);
   uint32_t dexcache_ptr = Read4(AccessField(dexcache_heap_ref, 0U));
@@ -187,6 +199,7 @@ auto get_quick_entry_point_from_compiled_code(uintptr_t method) {
 }
 
 auto get_quick_frame_info_from_entry_point(uintptr_t entry_point) {
+  entry_point = entry_point;
   entry_point = (entry_point & (~1U));
   uint32_t header_offset = 28U;
   uintptr_t oat_method = (entry_point - header_offset);
@@ -271,6 +284,9 @@ auto get_frame_size(
 
 auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
   uintptr_t thread = get_art_thread();
+  if ((thread == 0U)) {
+    return true;
+  }
   uintptr_t runtime = get_runtime();
   uintptr_t thread_obj = thread;
   uintptr_t runtime_obj = runtime;

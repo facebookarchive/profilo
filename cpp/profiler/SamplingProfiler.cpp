@@ -36,6 +36,10 @@
 #include "profiler/ArtTracer_601.h"
 #include "profiler/ArtTracer_700.h"
 #include "profiler/ArtUnwindcTracer_600.h"
+#include "profiler/ArtUnwindcTracer_700.h"
+#include "profiler/ArtUnwindcTracer_710.h"
+#include "profiler/ArtUnwindcTracer_711.h"
+#include "profiler/ArtUnwindcTracer_712.h"
 #include "DalvikTracer.h"
 
 #if HAS_NATIVE_TRACER
@@ -361,6 +365,26 @@ bool initialize(
 
   if (available_tracers & tracers::ART_7_0) {
     profileState.tracersMap[tracers::ART_7_0] = std::make_unique<Art70Tracer>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
+    profileState.tracersMap[tracers::ART_UNWINDC_7_0_0] =
+        std::make_unique<ArtUnwindcTracer700>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_0) {
+    profileState.tracersMap[tracers::ART_UNWINDC_7_1_0] =
+        std::make_unique<ArtUnwindcTracer710>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_1) {
+    profileState.tracersMap[tracers::ART_UNWINDC_7_1_1] =
+        std::make_unique<ArtUnwindcTracer711>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
+    profileState.tracersMap[tracers::ART_UNWINDC_7_1_2] =
+        std::make_unique<ArtUnwindcTracer712>();
   }
 
   initSignalHandlers();

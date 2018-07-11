@@ -72,11 +72,14 @@ def unwindc_tracer_library(version):
         exported_preprocessor_flags = [
             "-DANDROID_VERSION_{}".format(version_num),
         ],
+        preprocessor_flags = [
+            "-DANDROID_NAMESPACE=android_{}".format(version_num),
+            "-DANDROID_VERSION_NUM={}".format(version_num),
+        ],
         force_static = True,
         header_namespace = "profiler",
         headers = [
             "ArtUnwindcTracer.h",
-            "BaseTracer.h",
             "unwindc/runtime.h",
         ],
         exported_headers = {
@@ -100,5 +103,6 @@ def unwindc_tracer_library(version):
         deps = [
             profilo_path("deps/fb:fb"),
             profilo_path("cpp/logger:logger"),
+            profilo_path("cpp/profiler:base_tracer"),
         ],
     )

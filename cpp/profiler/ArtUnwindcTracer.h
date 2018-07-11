@@ -23,12 +23,16 @@
 namespace facebook {
 namespace profilo {
 namespace profiler {
-#ifdef ANDROID_VERSION_600
-namespace android_600 {
-#else 
-#error Unknown Android version
-#endif
 
+enum ArtUnwindcVersion {
+  kArtUnwindc600,
+  kArtUnwindc700,
+  kArtUnwindc710,
+  kArtUnwindc711,
+  kArtUnwindc712,
+};
+
+template<ArtUnwindcVersion kVersion>
 class ArtUnwindcTracer : public BaseTracer {
 public:
 
@@ -53,12 +57,25 @@ public:
   void stopTracing() override;
 };
 
-} // namespace android_*
-
 #ifdef ANDROID_VERSION_600
-using ArtUnwindcTracer60 = android_600::ArtUnwindcTracer;
-#else 
-#error Unknown Android version
+template class ArtUnwindcTracer<kArtUnwindc600>;
+using ArtUnwindcTracer60 = ArtUnwindcTracer<kArtUnwindc600>;
+#endif
+#ifdef ANDROID_VERSION_700
+template class ArtUnwindcTracer<kArtUnwindc700>;
+using ArtUnwindcTracer700 = ArtUnwindcTracer<kArtUnwindc700>;
+#endif
+#ifdef ANDROID_VERSION_710
+template class ArtUnwindcTracer<kArtUnwindc710>;
+using ArtUnwindcTracer710 = ArtUnwindcTracer<kArtUnwindc710>;
+#endif
+#ifdef ANDROID_VERSION_711
+template class ArtUnwindcTracer<kArtUnwindc711>;
+using ArtUnwindcTracer711 = ArtUnwindcTracer<kArtUnwindc711>;
+#endif
+#ifdef ANDROID_VERSION_712
+template class ArtUnwindcTracer<kArtUnwindc712>;
+using ArtUnwindcTracer712 = ArtUnwindcTracer<kArtUnwindc712>;
 #endif
 
 } // namespace profiler
