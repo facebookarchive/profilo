@@ -18,12 +18,13 @@
 #include <linker/locks.h>
 
 #include <cstring>
+#include <list>
 #include <memory>
-#include <system_error>
-#include <sys/mman.h>
-#include <set>
 #include <ostream>
+#include <set>
 #include <sstream>
+#include <sys/mman.h>
+#include <system_error>
 #include <vector>
 
 #if defined(__arm__)
@@ -81,7 +82,7 @@ private:
 static void* allocate(size_t sz) {
   static constexpr size_t kAlignment = 4;
   static_assert((kAlignment & (kAlignment - 1)) == 0, "kAlignment must be power of 2");
-  static std::vector<allocator_block> blocks_;
+  static std::list<allocator_block> blocks_;
   static pthread_rwlock_t lock_ = PTHREAD_RWLOCK_INITIALIZER;
 
   // round sz up to nearest kAlignment-bytes boundary
@@ -237,7 +238,7 @@ private:
 
 void* create_trampoline(void* hook, void* chained) {
 #if defined(__arm__)
-  static std::vector<trampoline> trampolines_;
+  static std::list<trampoline> trampolines_;
   static pthread_rwlock_t lock_ = PTHREAD_RWLOCK_INITIALIZER;
 
   WriterLock wl(&lock_);
