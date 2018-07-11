@@ -60,7 +60,7 @@ typedef void* lib_base;
 
 namespace {
 
-static std::atomic<bool> g_linker_enabled(true);
+static std::atomic<bool> g_linker_enabled(false);
 
 }
 
