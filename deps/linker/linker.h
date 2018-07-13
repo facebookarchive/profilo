@@ -34,9 +34,8 @@ typedef void* hook_func;
 typedef void** reloc;
 
 /**
- * Guards initialization from above. 
- * By default, linker_initialize calls will fail unless
- * linker_set_enabled(true) is called first.
+ * Guards initialization from above. Can be used to no-op calls to 
+ * linker_initialize by calling this with `false`.
  */
 void
 linker_set_enabled(int enabled);
