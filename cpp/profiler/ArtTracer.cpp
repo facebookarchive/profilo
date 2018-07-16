@@ -21,9 +21,7 @@
 #include <pthread.h>
 #include <stdexcept>
 
-#if defined(MUSEUM_VERSION_5_1_1)
-  #include <museum/5.1.1/art/runtime/fbstack_art511.h>
-#elif defined(MUSEUM_VERSION_6_0_1)
+#if defined(MUSEUM_VERSION_6_0_1)
   #include <museum/6.0.1/art/runtime/fbstack_art601.h>
 #elif defined(MUSEUM_VERSION_7_0_0)
   #include <museum/7.0.0/art/runtime/fbstack_art700.h>
@@ -55,9 +53,7 @@ namespace {
 
 using namespace museum::MUSEUM_VERSION::art::entrypoints;
 
-#if defined(MUSEUM_VERSION_5_1_1)
-  static constexpr ArtVersion kVersion = kArt511;
-#elif defined(MUSEUM_VERSION_6_0_1)
+#if defined(MUSEUM_VERSION_6_0_1)
   static constexpr ArtVersion kVersion = kArt601;
 #elif defined(MUSEUM_VERSION_7_0_0)
   static constexpr ArtVersion kVersion = kArt700;
@@ -81,15 +77,9 @@ pthread_key_t determineThreadInstanceTLSKey() {
   auto nativePeer = jlThread->getFieldValue(jlThread_nativePeer);
   void* nativeThread = reinterpret_cast<void*>(nativePeer);
 
-#if defined(MUSEUM_VERSION_5_1_1)
-  constexpr int32_t kMaxPthreadKey = 148;
-  constexpr int32_t kUserPthreadKeyStart = 7;
-  constexpr int32_t kKeyValidFlag = 0; // not actually in 5.1.1
-#elif defined(MUSEUM_VERSION_6_0_1)
   constexpr int32_t kMaxPthreadKey = 128;
   constexpr int32_t kUserPthreadKeyStart = 0;
   constexpr int32_t kKeyValidFlag = 1 << 31; // bionic tags keys by setting the MSB
-#endif
 
   for (pthread_key_t i = kUserPthreadKeyStart; i < kMaxPthreadKey; i++) {
     pthread_key_t tagged = i | kKeyValidFlag;

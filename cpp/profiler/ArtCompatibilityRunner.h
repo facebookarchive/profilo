@@ -23,7 +23,6 @@ namespace artcompat {
 
 namespace versions {
 enum AndroidVersion : uint8_t {
-  ANDROID_5_1,
   ANDROID_6_0,
   ANDROID_7_0,
 };

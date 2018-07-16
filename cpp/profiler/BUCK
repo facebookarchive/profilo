@@ -2,8 +2,6 @@ load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load(":build_defs.bzl", "museum_tracer_library", "unwindc_tracer_library")
 
-museum_tracer_library(version = "5.1.1")
-
 museum_tracer_library(version = "6.0.1")
 
 museum_tracer_library(version = "7.0.0")
@@ -60,7 +58,6 @@ fb_xplat_cxx_library(
     soname = "libprofilo_stacktrace_artcompat.so",
     deps = [
         ":base_tracer",
-        ":museum-tracer-5.1.1",
         ":museum-tracer-6.0.1",
         ":museum-tracer-7.0.0",
         ":unwindc-tracer-6.0.0",
@@ -118,7 +115,6 @@ fb_xplat_cxx_library(
         ":artcompat",
         ":base_tracer",
         ":constants",
-        ":museum-tracer-5.1.1",
         ":museum-tracer-6.0.1",
         ":museum-tracer-7.0.0",
         ":unwindc-tracer-6.0.0",

@@ -51,18 +51,6 @@ fbjni::local_ref<jclass> getThreadClass() {
   return fbjni::findClassLocal("java/lang/Thread");
 }
 
-uint32_t getDexMethodIndex51(fbjni::alias_ref<jobject> method) {
-  auto jlrMethod_class = fbjni::findClassLocal("java/lang/reflect/Method");
-  auto jlrArtMethod_class =
-      fbjni::findClassLocal("java/lang/reflect/ArtMethod");
-  auto jlrMethod_getArtMethod = jlrMethod_class->getMethod<jobject()>(
-      "getArtMethod", "()Ljava/lang/reflect/ArtMethod;");
-  auto jlrArtMethod_dexMethodIndex =
-      jlrArtMethod_class->getField<jint>("dexMethodIndex");
-  auto artMethod = jlrMethod_getArtMethod(method);
-  return (uint32_t)artMethod->getFieldValue(jlrArtMethod_dexMethodIndex);
-}
-
 uint32_t getDexMethodIndex67(fbjni::alias_ref<jobject> method) {
   auto jlrMethod_class = fbjni::findClassLocal("java/lang/reflect/Method");
   auto jlrMethod_dexMethodIndex =
@@ -113,9 +101,7 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(
     for (size_t meth_idx = 0; meth_idx < cls_methods_size; meth_idx++) {
       auto method = cls_methods->getElement(meth_idx);
       uint32_t dexMethodIndex;
-      if (version == versions::ANDROID_5_1) {
-        dexMethodIndex = getDexMethodIndex51(method);
-      } else {
+      if (version == versions::ANDROID_6_0 || version == versions::ANDROID_7_0) {
         dexMethodIndex = getDexMethodIndex67(method);
       }
       methods_map.insert(std::make_pair(

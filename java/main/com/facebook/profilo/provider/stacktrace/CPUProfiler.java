@@ -35,13 +35,12 @@ public class CPUProfiler {
   public static final int TRACER_DALVIK = 1;
   public static final int TRACER_ART_6_0 = 1 << 1;
   public static final int TRACER_NATIVE = 1 << 2;
-  public static final int TRACER_ART_5_1 = 1 << 3;
-  public static final int TRACER_ART_7_0 = 1 << 4;
-  public static final int TRACER_ART_UNWINDC_6_0 = 1 << 5;
-  public static final int TRACER_ART_UNWINDC_7_0_0 = 1 << 6;
-  public static final int TRACER_ART_UNWINDC_7_1_0 = 1 << 7;
-  public static final int TRACER_ART_UNWINDC_7_1_1 = 1 << 8;
-  public static final int TRACER_ART_UNWINDC_7_1_2 = 1 << 9;
+  public static final int TRACER_ART_7_0 = 1 << 3;
+  public static final int TRACER_ART_UNWINDC_6_0 = 1 << 4;
+  public static final int TRACER_ART_UNWINDC_7_0_0 = 1 << 5;
+  public static final int TRACER_ART_UNWINDC_7_1_0 = 1 << 6;
+  public static final int TRACER_ART_UNWINDC_7_1_1 = 1 << 7;
+  public static final int TRACER_ART_UNWINDC_7_1_2 = 1 << 8;
 
   private static int calculateTracers(Context context, boolean useAlternatives) {
     int tracers = 0;
@@ -67,10 +66,6 @@ public class CPUProfiler {
         case "6.0.1":
           tracers |= useAlternatives ? TRACER_ART_UNWINDC_6_0 : TRACER_ART_6_0;
           break;
-        case "5.1":
-        case "5.1.0":
-        case "5.1.1":
-          tracers |= TRACER_ART_5_1;
       }
     }
 

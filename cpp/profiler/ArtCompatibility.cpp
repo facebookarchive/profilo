@@ -18,7 +18,6 @@
 #include "ArtCompatibilityRunner.h"
 
 #include "profiler/BaseTracer.h"
-#include "profiler/ArtTracer_511.h"
 #include "profiler/ArtTracer_601.h"
 #include "profiler/ArtTracer_700.h"
 #include "profiler/ArtUnwindcTracer_600.h"
@@ -43,12 +42,7 @@ namespace {
 using namespace profiler::tracers;
 
 jboolean check(JNIEnv* env, jclass, jint tracers) {
-  if (tracers & ART_5_1) {
-    auto tracer = std::make_unique<profiler::Art51Tracer>();
-    return runJavaCompatibilityCheck(
-      versions::ANDROID_5_1,
-      tracer.get());
-  } else if (tracers & ART_6_0) {
+  if (tracers & ART_6_0) {
     auto tracer = std::make_unique<profiler::Art6Tracer>();
     return runJavaCompatibilityCheck(
       versions::ANDROID_6_0,
