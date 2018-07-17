@@ -2,8 +2,9 @@
 
 set -e
 set -o pipefail
-ROOT=$(buck root)
-OUTPUT_PATH="$ROOT/libraries/profilo/cpp/generated"
+REPO_ROOT=$(hg root)
+OUTPUT_PATH="$REPO_ROOT/fbandroid/libraries/profilo/cpp/generated"
+# TODO(T31664478): Replace this target with an alias
 CODEGEN_TARGET="//libraries/profilo/cpp/codegen:codegen"
 
 buck run ${CODEGEN_TARGET} -- --lang cpp --module android --mode entry_types > $OUTPUT_PATH/EntryType.h
