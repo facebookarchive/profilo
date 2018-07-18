@@ -74,10 +74,15 @@ bool doesGetObjectRefTypeWork() {
 }
 
 bool isObjectRefType(jobject reference, jobjectRefType refType) {
+  // null-check first so that we short-circuit during (safe) global
+  // constructors, where we won't have an Environment::current() yet
+  if (!reference) {
+    return true;
+  }
+
   static bool getObjectRefTypeWorks = doesGetObjectRefTypeWork();
 
   return
-    !reference ||
     !getObjectRefTypeWorks ||
     Environment::current()->GetObjectRefType(reference) == refType;
 }
