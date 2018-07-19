@@ -270,3 +270,5 @@ struct TurnSequencer {
 } // namespace logger
 } // namespace profilo
 } // namespace facebook
+
+#undef DCHECK
