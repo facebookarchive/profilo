@@ -46,8 +46,6 @@ inline ArtMethod* GetResolvedMethod(ArtMethod* outer_method,
                                     uint8_t inlining_depth)
   SHARED_REQUIRES(Locks::mutator_lock_) {
   uint32_t method_index = inline_info.GetMethodIndexAtDepth(encoding, inlining_depth);
-  InvokeType invoke_type = static_cast<InvokeType>(
-        inline_info.GetInvokeTypeAtDepth(encoding, inlining_depth));
   ArtMethod* caller = outer_method->GetDexCacheResolvedMethod(method_index, sizeof(void*));
   if (!caller->IsRuntimeMethod()) {
     return caller;
@@ -63,7 +61,6 @@ inline ArtMethod* GetResolvedMethod(ArtMethod* outer_method,
   // We first find the class loader of our caller. If it is the outer method, we can directly
   // use its class loader. Otherwise, we also need to resolve our caller.
   StackHandleScope<2> hs(Thread::Current());
-  ClassLinker* class_linker = Runtime::Current()->GetClassLinker();
   MutableHandle<mirror::ClassLoader> class_loader(hs.NewHandle<mirror::Class>(nullptr));
   Handle<mirror::DexCache> dex_cache(hs.NewHandle(outer_method->GetDexCache()));
   if (inlining_depth == 0) {
@@ -78,6 +75,9 @@ inline ArtMethod* GetResolvedMethod(ArtMethod* outer_method,
 
   return nullptr;
   // FB
+  //ClassLinker* class_linker = Runtime::Current()->GetClassLinker();
+  //InvokeType invoke_type = static_cast<InvokeType>(
+  //      inline_info.GetInvokeTypeAtDepth(encoding, inlining_depth));
   //return class_linker->ResolveMethod<ClassLinker::kNoICCECheckForCache>(
   //    *outer_method->GetDexFile(), method_index, dex_cache, class_loader, nullptr, invoke_type);
   // FB END
