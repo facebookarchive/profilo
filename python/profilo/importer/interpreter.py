@@ -125,6 +125,8 @@ class TraceFileInterpreter(object):
         BLOCK_START_ENTRIES = ["MARK_PUSH", "IO_START"]
         BLOCK_END_ENTRIES = ["MARK_POP", "IO_END"]
 
+        THREAD_METADATA_ENTRIES = ["TRACE_THREAD_NAME", "TRACE_THREAD_PRI"]
+
         for tid, items in thread_items.items():
             entries = list(
                 sorted(items, key=cmp_to_key(entry_compare))
@@ -147,6 +149,8 @@ class TraceFileInterpreter(object):
                 elif entry.type == "STACK_FRAME":
                     # While we're here, build the stack trace maps.
                     stacks.setdefault(entry.timestamp, []).append(entry.arg3)
+                elif entry.type in THREAD_METADATA_ENTRIES:
+                    self.process_thread_metadata(entry)
 
                 if block:
                     block_entries = self.block_entries[block]
@@ -205,6 +209,32 @@ class TraceFileInterpreter(object):
 
         return self.trace
 
+    def process_thread_metadata(self, entry):
+        assert isinstance(entry, StandardEntry)
+        if entry.type == "TRACE_THREAD_PRI":
+            unit = self.ensure_unit(entry.tid)
+            unit.properties.coreProps['priority'] = entry.arg3
+        elif entry.type == "TRACE_THREAD_NAME":
+            key_child = self.children.get(entry, [])
+            assert len(key_child) == 1
+            key_child = key_child[0]
+            assert key_child.type == "STRING_KEY"
+            tid = key_child.data
+
+            value_child = self.children.get(key_child, [])
+            assert len(value_child) == 1
+            value_child = value_child[0]
+            assert value_child.type == "STRING_VALUE"
+            tname = value_child.data
+
+            unit = self.ensure_unit(tid)
+            currname = unit.properties.coreProps['name']
+            if 'Main' in currname:
+                unit.properties.coreProps['name'] = "(Main) {tname}".format(tname=tname)
+            else:
+                unit.properties.coreProps['name'] = "{tname}".format(tname=tname)
+
+
     def ensure_unit(self, tid):
         tid = str(tid)
         if tid == self.trace_file.headers.get('pid', None):
@@ -217,6 +247,7 @@ class TraceFileInterpreter(object):
             unit = self.trace.add_unit()
             unit.properties.coreProps['name'] = name
             unit.properties.customProps['tid'] = tid
+            unit.properties.coreProps['priority'] = 0
             self.units[name] = unit
         return unit
 
