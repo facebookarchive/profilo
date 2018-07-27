@@ -244,7 +244,9 @@ public:
   // particular java class) to be hoisted to a common function.  If
   // mapException returns, then the std::exception will be translated
   // to Java.
-  static void mapException(const std::exception& ex) {}
+  static void mapException(const std::exception& ex) {
+    (void)ex;
+  }
 };
 
 template <typename T, typename B>

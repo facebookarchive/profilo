@@ -522,6 +522,8 @@ class PinnedCriticalAlloc {
       T** elements,
       size_t* size,
       jboolean* isCopy) {
+    (void)start;
+    (void)length;
     const auto env = Environment::current();
     *elements = static_cast<T*>(env->GetPrimitiveArrayCritical(array.get(), isCopy));
     FACEBOOK_JNI_THROW_EXCEPTION_IF(!elements);
@@ -533,6 +535,8 @@ class PinnedCriticalAlloc {
       jint start,
       jint size,
       jint mode) {
+    (void)start;
+    (void)size;
     const auto env = Environment::current();
     env->ReleasePrimitiveArrayCritical(array.get(), elements, mode);
   }

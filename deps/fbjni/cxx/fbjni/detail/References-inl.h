@@ -217,7 +217,9 @@ inline base_owned_ref<T, Alloc>::base_owned_ref() noexcept
 template<typename T, typename Alloc>
 inline base_owned_ref<T, Alloc>::base_owned_ref(std::nullptr_t t) noexcept
   : base_owned_ref(static_cast<javaobject>(nullptr))
-{}
+{
+  (void)t;
+}
 
 template<typename T, typename Alloc>
 inline base_owned_ref<T, Alloc>::base_owned_ref(const base_owned_ref& other)
