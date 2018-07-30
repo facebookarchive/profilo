@@ -45,7 +45,8 @@ _PROFILO_HEADER_START = 'dt\n'.encode("utf-8")
 # -t to order by modified time for a nice default ordering.
 _ADB_CMD_BASE = ['adb', 'shell', 'run-as']
 _GET_DATA_DIR_FULL_PATH_CMD = ['pwd']
-_GET_TRACES_CMD = ['find', '.', '-name', _TRACE_FILE_EXPRESSION]
+_GET_TRACES_CMD_FIND = ['find', '.', '-name', _TRACE_FILE_EXPRESSION]
+_GET_TRACES_CMD_LS = ['ls', '-R', '|', 'grep', '-B', '1', '\.log']
 _GET_FILE_MODIFIED_UNIX_TIME_CMD = ['stat', '-c', '%Y']
 _GET_FILE_SIZE_CMD = ['stat', '-c', '%s']
 # I'd rather use `test -d $dir` but we need a binary to run within `run-as`
@@ -194,11 +195,25 @@ def list_traces(package):
         return []
 
     data_dir_path = _get_data_dir_full_path(package)
+    used_ls = False
 
-    command = list(_ADB_CMD_BASE) + [package] + list(_GET_TRACES_CMD)
-    trace_files = subprocess.check_output(command).decode("utf-8").split('\n')
-    trace_files = [x.strip() for x in trace_files]
-    trace_files = [_f for _f in trace_files if _f]
+    try:
+        command = list(_ADB_CMD_BASE) + [package] + list(_GET_TRACES_CMD_FIND)
+        trace_files = subprocess.check_output(command).decode("utf-8").split('\n')
+        trace_files = [x.strip() for x in trace_files]
+        trace_files = [_f for _f in trace_files if _f]
+    except subprocess.CalledProcessError as e:
+        # Some devices don't have "find", so do this with "ls -R"
+        print(str(e) + " Retrying with ls", file=sys.stderr)
+        used_ls = True
+
+    if used_ls:
+        command = list(_ADB_CMD_BASE) + [package] + list(_GET_TRACES_CMD_LS)
+        trace_files = subprocess.check_output(command).decode("utf-8").split('\n')
+        trace_files = [x.strip() for x in trace_files]
+        trace_files = [_f for _f in trace_files if _f]
+        directory = trace_files.pop(0)[:-1]  # Remove trailing ":"
+        trace_files = ["{d}/{f}".format(d=directory, f=x) for x in trace_files]
 
     # Due to the generality of the trace file expression, we might get stuff
     # that isn't actually a trace. Thus, do some validation.
@@ -215,6 +230,9 @@ def pull_last_trace(package):
             break
         except FileMovedException as e:
             print(str(e) + ". Retrying...", file=sys.stderr)
+        except Exception as e:
+            print(str(e) + ". Exiting", file=sys.stderr)
+            sys.exit(1)
 
     if not traces:
         print("Could not find any traces for package", package, file=sys.stderr)
