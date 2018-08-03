@@ -89,7 +89,7 @@ namespace {{{library}}} { namespace lookups {
 {{/namespaces}}
 
 namespace {{{library}}} {
-  void preinitSymbols() {
+  void preinit{{{preinitSpecializer}}}Symbols() {
     {{#namespaces}}
     {{#hasNsName}}using namespace ::facebook::museum::MUSEUM_VERSION{{#nsName}}::{{{name}}}{{/nsName}};{{/hasNsName}}
     {{#classes}}{{#symbols}}
