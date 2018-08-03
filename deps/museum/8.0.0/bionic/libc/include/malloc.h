@@ -26,15 +26,10 @@
 
 __BEGIN_DECLS
 
-#if defined(__clang__)
-/* clang should support alloc_size in the nearish future. */
 #if __has_attribute(alloc_size)
-#error "We should enable alloc_size for clang."
+#define __BIONIC_ALLOC_SIZE(...) __attribute__((__alloc_size__(__VA_ARGS__)))
 #else
 #define __BIONIC_ALLOC_SIZE(...)
-#endif
-#else
-#define __BIONIC_ALLOC_SIZE(...) __attribute__((__alloc_size__(__VA_ARGS__)))
 #endif
 
 void* malloc(size_t byte_count) __mallocfunc __BIONIC_ALLOC_SIZE(1) __wur;

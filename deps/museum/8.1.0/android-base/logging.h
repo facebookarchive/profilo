@@ -161,13 +161,13 @@ class ErrnoRestorer {
 // unqualified name for a LogSeverity, and returns a LogSeverity value.
 // Note: DO NOT USE DIRECTLY. This is an implementation detail.
 #define SEVERITY_LAMBDA(severity) ([&]() {    \
-  using ::android::base::VERBOSE;             \
-  using ::android::base::DEBUG;               \
-  using ::android::base::INFO;                \
-  using ::android::base::WARNING;             \
-  using ::android::base::ERROR;               \
-  using ::android::base::FATAL_WITHOUT_ABORT; \
-  using ::android::base::FATAL;               \
+  using ::facebook::museum::MUSEUM_VERSION::android::base::VERBOSE;             \
+  using ::facebook::museum::MUSEUM_VERSION::android::base::DEBUG;               \
+  using ::facebook::museum::MUSEUM_VERSION::android::base::INFO;                \
+  using ::facebook::museum::MUSEUM_VERSION::android::base::WARNING;             \
+  using ::facebook::museum::MUSEUM_VERSION::android::base::ERROR;               \
+  using ::facebook::museum::MUSEUM_VERSION::android::base::FATAL_WITHOUT_ABORT; \
+  using ::facebook::museum::MUSEUM_VERSION::android::base::FATAL;               \
   return (severity); }())
 
 #if defined(__clang_analyzer__) && !defined(MUSEUM_NOOP_CHECK_MACROS)
@@ -181,9 +181,9 @@ struct LogAbortAfterFullExpr {
 };
 // Provides an expression that evaluates to the truthiness of `x`, automatically
 // aborting if `c` is true.
-#define ABORT_AFTER_LOG_EXPR_IF(c, x) (((c) && ::android::base::LogAbortAfterFullExpr()) || (x))
+#define ABORT_AFTER_LOG_EXPR_IF(c, x) (((c) && ::facebook::museum::MUSEUM_VERSION::android::base::LogAbortAfterFullExpr()) || (x))
 // Note to the static analyzer that we always execute FATAL logs in practice.
-#define MUST_LOG_MESSAGE(severity) (SEVERITY_LAMBDA(severity) == ::android::base::FATAL)
+#define MUST_LOG_MESSAGE(severity) (SEVERITY_LAMBDA(severity) == ::facebook::museum::MUSEUM_VERSION::android::base::FATAL)
 #else
 #define ABORT_AFTER_LOG_FATAL
 #define ABORT_AFTER_LOG_EXPR_IF(c, x) (x)
@@ -193,7 +193,7 @@ struct LogAbortAfterFullExpr {
 
 // Defines whether the given severity will be logged or silently swallowed.
 #define WOULD_LOG(severity) \
-  (UNLIKELY((SEVERITY_LAMBDA(severity)) >= ::android::base::GetMinimumLogSeverity()) || \
+  (UNLIKELY((SEVERITY_LAMBDA(severity)) >= ::facebook::museum::MUSEUM_VERSION::android::base::GetMinimumLogSeverity()) || \
    MUST_LOG_MESSAGE(severity))
 
 // Get an ostream that can be used for logging at the given severity and to the default
@@ -208,8 +208,8 @@ struct LogAbortAfterFullExpr {
 // Get an ostream that can be used for logging at the given severity and to the
 // given destination. The same notes as for LOG_STREAM apply.
 #define LOG_STREAM_TO(dest, severity)                                   \
-  ::android::base::LogMessage(__FILE__, __LINE__,                       \
-                              ::android::base::dest,                    \
+  ::facebook::museum::MUSEUM_VERSION::android::base::LogMessage(__FILE__, __LINE__,                       \
+                              ::facebook::museum::MUSEUM_VERSION::android::base::dest,                    \
                               SEVERITY_LAMBDA(severity), -1).stream()
 
 // Logs a message to logcat on Android otherwise to stderr. If the severity is
@@ -223,8 +223,8 @@ struct LogAbortAfterFullExpr {
 // Note: DO NOT USE DIRECTLY. This is an implementation detail.
 #define LOGGING_PREAMBLE(severity)                                                         \
   (WOULD_LOG(severity) &&                                                                  \
-   ABORT_AFTER_LOG_EXPR_IF((SEVERITY_LAMBDA(severity)) == ::android::base::FATAL, true) && \
-   ::android::base::ErrnoRestorer())
+   ABORT_AFTER_LOG_EXPR_IF((SEVERITY_LAMBDA(severity)) == ::facebook::museum::MUSEUM_VERSION::android::base::FATAL, true) && \
+   ::facebook::museum::MUSEUM_VERSION::android::base::ErrnoRestorer())
 
 // Logs a message to logcat with the specified log ID on Android otherwise to
 // stderr. If the severity is FATAL it also causes an abort.
@@ -239,7 +239,7 @@ struct LogAbortAfterFullExpr {
 // Behaves like PLOG, but logs to the specified log ID.
 #define PLOG_TO(dest, severity)                                              \
   LOGGING_PREAMBLE(severity) &&                                              \
-      ::android::base::LogMessage(__FILE__, __LINE__, ::android::base::dest, \
+      ::facebook::museum::MUSEUM_VERSION::android::base::LogMessage(__FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::android::base::dest, \
                                   SEVERITY_LAMBDA(severity), errno)          \
           .stream()
 
@@ -255,19 +255,19 @@ struct LogAbortAfterFullExpr {
 //       "Check failed: false == true".
 #define CHECK(x)                                                                \
   LIKELY((x)) || !__MUSEUM_CHECK_MAYBE_NOOP || ABORT_AFTER_LOG_FATAL_EXPR(false) ||                           \
-      ::android::base::LogMessage(                                              \
-          __FILE__, __LINE__, ::android::base::DEFAULT, ::android::base::FATAL, \
+      ::facebook::museum::MUSEUM_VERSION::android::base::LogMessage(                                              \
+          __FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::android::base::DEFAULT, ::facebook::museum::MUSEUM_VERSION::android::base::FATAL, \
           -1).stream()                                                          \
           << "Check failed: " #x << " "
 
 // Helper for CHECK_xx(x,y) macros.
 #define CHECK_OP(LHS, RHS, OP)                                              \
-  for (auto _values = ::android::base::MakeEagerEvaluator(LHS, RHS);        \
+  for (auto _values = ::facebook::museum::MUSEUM_VERSION::android::base::MakeEagerEvaluator(LHS, RHS);        \
        UNLIKELY(!(_values.lhs OP _values.rhs)) && __MUSEUM_CHECK_MAYBE_NOOP;                             \
        /* empty */)                                                         \
   ABORT_AFTER_LOG_FATAL                                                     \
-  ::android::base::LogMessage(__FILE__, __LINE__, ::android::base::DEFAULT, \
-                              ::android::base::FATAL, -1).stream()          \
+  ::facebook::museum::MUSEUM_VERSION::android::base::LogMessage(__FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::android::base::DEFAULT, \
+                              ::facebook::museum::MUSEUM_VERSION::android::base::FATAL, -1).stream()          \
       << "Check failed: " << #LHS << " " << #OP << " " << #RHS              \
       << " (" #LHS "=" << _values.lhs << ", " #RHS "=" << _values.rhs << ") "
 
@@ -288,8 +288,8 @@ struct LogAbortAfterFullExpr {
 #define CHECK_STROP(s1, s2, sense)                                             \
   while (UNLIKELY((strcmp(s1, s2) == 0) != (sense)) && __MUSEUM_CHECK_MAYBE_NOOP)                           \
     ABORT_AFTER_LOG_FATAL                                                      \
-    ::android::base::LogMessage(__FILE__, __LINE__, ::android::base::DEFAULT,  \
-                                ::android::base::FATAL, -1).stream()           \
+    ::facebook::museum::MUSEUM_VERSION::android::base::LogMessage(__FILE__, __LINE__, ::facebook::museum::MUSEUM_VERSION::android::base::DEFAULT,  \
+                                ::facebook::museum::MUSEUM_VERSION::android::base::FATAL, -1).stream()           \
         << "Check failed: " << "\"" << (s1) << "\""                            \
         << ((sense) ? " == " : " != ") << "\"" << (s2) << "\""
 
@@ -332,23 +332,23 @@ static constexpr bool kEnableDChecks = true;
 #endif
 
 #define DCHECK(x) \
-  if (::android::base::kEnableDChecks) CHECK(x)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK(x)
 #define DCHECK_EQ(x, y) \
-  if (::android::base::kEnableDChecks) CHECK_EQ(x, y)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_EQ(x, y)
 #define DCHECK_NE(x, y) \
-  if (::android::base::kEnableDChecks) CHECK_NE(x, y)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_NE(x, y)
 #define DCHECK_LE(x, y) \
-  if (::android::base::kEnableDChecks) CHECK_LE(x, y)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_LE(x, y)
 #define DCHECK_LT(x, y) \
-  if (::android::base::kEnableDChecks) CHECK_LT(x, y)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_LT(x, y)
 #define DCHECK_GE(x, y) \
-  if (::android::base::kEnableDChecks) CHECK_GE(x, y)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_GE(x, y)
 #define DCHECK_GT(x, y) \
-  if (::android::base::kEnableDChecks) CHECK_GT(x, y)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_GT(x, y)
 #define DCHECK_STREQ(s1, s2) \
-  if (::android::base::kEnableDChecks) CHECK_STREQ(s1, s2)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_STREQ(s1, s2)
 #define DCHECK_STRNE(s1, s2) \
-  if (::android::base::kEnableDChecks) CHECK_STRNE(s1, s2)
+  if (::facebook::museum::MUSEUM_VERSION::android::base::kEnableDChecks) CHECK_STRNE(s1, s2)
 #if defined(NDEBUG) && !defined(__clang_analyzer__)
 #define DCHECK_CONSTEXPR(x, out, dummy)
 #else

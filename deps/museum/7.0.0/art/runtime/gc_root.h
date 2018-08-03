@@ -195,7 +195,8 @@ class GcRoot {
     return root_.IsNull();
   }
 
-  ALWAYS_INLINE GcRoot(MirrorType* ref = nullptr) SHARED_REQUIRES(Locks::mutator_lock_);
+  ALWAYS_INLINE GcRoot() {}
+  explicit ALWAYS_INLINE GcRoot(MirrorType* ref) SHARED_REQUIRES(Locks::mutator_lock_);
 
  private:
   // Root visitors take pointers to root_ and place them in CompressedReference** arrays. We use a

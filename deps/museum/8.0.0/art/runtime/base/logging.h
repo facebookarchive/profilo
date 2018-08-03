@@ -26,8 +26,8 @@
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace art {
 
 // Make libbase's LogSeverity more easily available.
-using ::android::base::LogSeverity;
-using ::android::base::ScopedLogSeverity;
+using ::facebook::museum::MUSEUM_VERSION::android::base::LogSeverity;
+using ::facebook::museum::MUSEUM_VERSION::android::base::ScopedLogSeverity;
 
 // Abort function.
 using AbortFunction = void(const char*);

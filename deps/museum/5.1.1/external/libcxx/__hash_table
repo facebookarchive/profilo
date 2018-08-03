@@ -259,7 +259,7 @@ public:
         __get_db()->__insert_i(this);
 #endif
     }
-    _MUSEUM_LIBCPP_INLINE_VISIBILITY 
+    _MUSEUM_LIBCPP_INLINE_VISIBILITY
     __hash_const_iterator(const __non_const_iterator& __x) _NOEXCEPT
         : __node_(__x.__node_)
     {
@@ -1168,10 +1168,11 @@ template <class _Tp, class _Hash, class _Equal, class _Alloc>
 inline _MUSEUM_LIBCPP_INLINE_VISIBILITY
 __hash_table<_Tp, _Hash, _Equal, _Alloc>::__hash_table()
     _NOEXCEPT_(
-        is_nothrow_default_constructible<__bucket_list>::value &&
-        is_nothrow_default_constructible<__first_node>::value &&
-        is_nothrow_default_constructible<hasher>::value &&
-        is_nothrow_default_constructible<key_equal>::value)
+      is_nothrow_default_constructible<__bucket_list>::value &&
+      is_nothrow_default_constructible<__first_node>::value &&
+      is_nothrow_default_constructible<__node_allocator>::value &&
+      is_nothrow_default_constructible<hasher>::value &&
+      is_nothrow_default_constructible<key_equal>::value)
     : __p2_(0),
       __p3_(1.0f)
 {
@@ -1236,10 +1237,11 @@ __hash_table<_Tp, _Hash, _Equal, _Alloc>::__hash_table(const __hash_table& __u,
 template <class _Tp, class _Hash, class _Equal, class _Alloc>
 __hash_table<_Tp, _Hash, _Equal, _Alloc>::__hash_table(__hash_table&& __u)
         _NOEXCEPT_(
-            is_nothrow_move_constructible<__bucket_list>::value &&
-            is_nothrow_move_constructible<__first_node>::value &&
-            is_nothrow_move_constructible<hasher>::value &&
-            is_nothrow_move_constructible<key_equal>::value)
+          is_nothrow_move_constructible<__bucket_list>::value &&
+          is_nothrow_move_constructible<__first_node>::value &&
+          is_nothrow_move_constructible<__node_allocator>::value &&
+          is_nothrow_move_constructible<hasher>::value &&
+          is_nothrow_move_constructible<key_equal>::value)
     : __bucket_list_(_MUSEUM_VSTD::move(__u.__bucket_list_)),
       __p1_(_MUSEUM_VSTD::move(__u.__p1_)),
       __p2_(_MUSEUM_VSTD::move(__u.__p2_)),

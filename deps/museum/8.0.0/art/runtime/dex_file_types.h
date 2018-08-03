@@ -96,7 +96,7 @@ std::ostream& operator<<(std::ostream& os, const TypeIndex& index);
 }  // namespace dex
 } } } } // namespace facebook::museum::MUSEUM_VERSION::art
 
-namespace std {
+namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std {
 
 template<> struct hash<facebook::museum::MUSEUM_VERSION::art::dex::StringIndex> {
   size_t operator()(const facebook::museum::MUSEUM_VERSION::art::dex::StringIndex& index) const {
@@ -110,6 +110,6 @@ template<> struct hash<facebook::museum::MUSEUM_VERSION::art::dex::TypeIndex> {
   }
 };
 
-}  // namespace std
+} } } }  // namespace facebook::museum::MUSEUM_VERSION::std
 
 #endif  // ART_RUNTIME_DEX_FILE_TYPES_H_
