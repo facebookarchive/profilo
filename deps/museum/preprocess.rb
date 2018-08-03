@@ -33,6 +33,7 @@ data = YAML.load(rawmodel)
         end
         symbol['params'] = newParams
       end
+      symbol['returnsSomething'] = (symbol['returnType'] != nil && symbol['returnType'] != 'void')
     end
   end
   if namespace['nsName'] != nil

@@ -44,6 +44,7 @@ YAML reference: http://www.yaml.org/refcard.html
   skipMethodWrap    => boolean              Optional        true to skip method-wrapping check (you don't need
                                                               this.. mostly a workaround for Runtime::instance_
                                                               that doesn't quite perfectly fit the pattern)
+  noreturn          => boolean              Optional        true if the trampolined function should not return
 }}
 
 {{#headers}}
@@ -76,11 +77,12 @@ namespace {{{library}}} { namespace lookups {
 #endif{{/skipMethodWrap}}{{/isStaticVar}}
   {{#instantiate}}template<>{{/instantiate}}
   {{{returnType}}}{{#isStaticVar}}&{{/isStaticVar}} {{#className}}{{{.}}}::{{/className}}{{{symbolName}}}({{#params}}{{{type}}} p{{{idx}}}, {{/params}}) {{{cvFlags}}} {{{exceptFlags}}} {
-    {{#returnType}}return{{#isStaticVar}} *{{/isStaticVar}}{{/returnType}}
+    {{#returnsSomething}}return{{#isStaticVar}} *{{/isStaticVar}}{{/returnsSomething}}
       ::facebook::museum::MUSEUM_VERSION::{{{library}}}::lookups::lookup_{{#mangledNames}}_{{{.}}}{{/mangledNames}}
       <{{{returnType}}}{{^returnType}}void{{/returnType}}
         {{^isStaticVar}}({{^isStaticMethod}}{{#className}}{{{.}}} {{{cvFlags}}}*, {{/className}}{{/isStaticMethod}}{{#params}}{{{type}}}, {{/params}}){{/isStaticVar}}>()
       {{^isStaticVar}}({{^isStaticMethod}}{{#className}}this, {{/className}}{{/isStaticMethod}}{{#params}}p{{{idx}}}, {{/params}}){{/isStaticVar}};
+    {{#noreturn}}__builtin_unreachable();{{/noreturn}}
   }
 {{#nsName}}} {{/nsName}}{{#hasNsName}}// namespace {{/hasNsName}}{{#nsName}}{{{name}}}::{{/nsName}}{{^nsName}} } // extern "C"{{/nsName}}
 {{#conditional}}#endif{{/conditional}}
