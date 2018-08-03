@@ -61,6 +61,7 @@ class _MUSEUM_LIBCPP_HIDDEN __libcpp_refstring
 
     bool __uses_refcount() const;
 public:
+    __libcpp_refstring() : __libcpp_refstring("") { }
     explicit __libcpp_refstring(const char* msg);
     __libcpp_refstring(const __libcpp_refstring& s) _NOEXCEPT;
     __libcpp_refstring& operator=(const __libcpp_refstring& s) _NOEXCEPT;
@@ -70,6 +71,8 @@ public:
 };
 
 _MUSEUM_LIBCPP_END_NAMESPACE_STD
+
+#include <museum/8.1.0/external/libcxx/__refstring>
 
 namespace facebook { namespace museum { namespace MUSEUM_VERSION { namespace std  // purposefully not using versioning namespace
 {

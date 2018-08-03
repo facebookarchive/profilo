@@ -961,7 +961,8 @@ class Thread {
 
   // Used to notify threads that they should attempt to resume, they will suspend again if
   // their suspend count is > 0.
-  static ConditionVariable* resume_cond_ GUARDED_BY(Locks::thread_suspend_count_lock_);
+  #define resume_cond_ resume_cond_()
+  static ConditionVariable*& resume_cond_ GUARDED_BY(Locks::thread_suspend_count_lock_);
 
   /***********************************************************************************************/
   // Thread local storage. Fields are grouped by size to enable 32 <-> 64 searching to account for

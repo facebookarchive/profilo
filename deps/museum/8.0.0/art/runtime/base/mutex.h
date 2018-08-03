@@ -629,7 +629,8 @@ class Locks {
   //    state is changed                           |  .. running ..
   //  - if the CAS operation fails then goto x     |  .. running ..
   //  .. running ..                                |  .. running ..
-  static MutatorMutex* mutator_lock_ ACQUIRED_AFTER(instrument_entrypoints_lock_);
+  #define mutator_lock_ mutator_lock_()
+  static MutatorMutex*& mutator_lock_ ACQUIRED_AFTER(instrument_entrypoints_lock_);
 
   // Allow reader-writer mutual exclusion on the mark and live bitmaps of the heap.
   static ReaderWriterMutex* heap_bitmap_lock_ ACQUIRED_AFTER(mutator_lock_);
@@ -718,7 +719,8 @@ class Locks {
   static ReaderWriterMutex* jni_globals_lock_ ACQUIRED_AFTER(reference_queue_soft_references_lock_);
 
   // Guard accesses to the JNI Weak Global Reference table.
-  static Mutex* jni_weak_globals_lock_ ACQUIRED_AFTER(jni_globals_lock_);
+  #define jni_weak_globals_lock_ jni_weak_globals_lock_()
+  static Mutex*& jni_weak_globals_lock_ ACQUIRED_AFTER(jni_globals_lock_);
 
   // Guard accesses to the JNI function table override.
   static Mutex* jni_function_table_lock_ ACQUIRED_AFTER(jni_weak_globals_lock_);
@@ -728,7 +730,8 @@ class Locks {
 
   // Allow mutual exclusion when manipulating Thread::suspend_count_.
   // TODO: Does the trade-off of a per-thread lock make sense?
-  static Mutex* thread_suspend_count_lock_ ACQUIRED_AFTER(abort_lock_);
+  #define thread_suspend_count_lock_ thread_suspend_count_lock_()
+  static Mutex*& thread_suspend_count_lock_ ACQUIRED_AFTER(abort_lock_);
 
   // One unexpected signal at a time lock.
   static Mutex* unexpected_signal_lock_ ACQUIRED_AFTER(thread_suspend_count_lock_);

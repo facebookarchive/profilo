@@ -1,0 +1,38 @@
+---
+library: libart
+preinitSpecializer: AndroidBase
+
+headers:
+- museum/8.0.0/android-base/logging-inl.h
+- museum/8.0.0/android-base/logging.h
+
+namespaces:
+- nsName:
+  - android
+  - base
+  classes:
+  - className: LogMessage
+    symbols:
+    - symbolName: LogMessage
+      params:
+      - char const*
+      - unsigned int
+      - LogId
+      - LogSeverity
+      - int
+      mangledNames:
+      - _ZN7android4base10LogMessageC1EPKcjNS0_5LogIdENS0_11LogSeverityEi
+    - symbolName: ~LogMessage
+      mangledNames:
+      - _ZN7android4base10LogMessageD1Ev
+    - symbolName: stream
+      params:
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN7android4base10LogMessage6streamEv
+  - className:
+    symbols:
+    - symbolName: GetMinimumLogSeverity
+      returnType: LogSeverity
+      mangledNames:
+      - _ZN7android4base21GetMinimumLogSeverityEv

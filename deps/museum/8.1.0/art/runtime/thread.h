@@ -1375,14 +1375,17 @@ class Thread {
   static constexpr uint32_t kMaxSuspendBarriers = 3;
 
   // Has Thread::Startup been called?
-  static bool is_started_;
+  #define is_started_ is_started_()
+  static bool& is_started_;
 
   // TLS key used to retrieve the Thread*.
-  static pthread_key_t pthread_key_self_;
+  #define pthread_key_self_ pthread_key_self_()
+  static pthread_key_t& pthread_key_self_;
 
   // Used to notify threads that they should attempt to resume, they will suspend again if
   // their suspend count is > 0.
-  static ConditionVariable* resume_cond_ GUARDED_BY(Locks::thread_suspend_count_lock_);
+  #define resume_cond_ resume_cond_()
+  static ConditionVariable*& resume_cond_ GUARDED_BY(Locks::thread_suspend_count_lock_);
 
   // Hook passed by framework which returns true
   // when StrictMode events are traced for the current thread.

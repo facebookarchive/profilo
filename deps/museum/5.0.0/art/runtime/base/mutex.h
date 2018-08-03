@@ -553,7 +553,8 @@ class Locks {
   // else                                          |  .. running ..
   //   Goto x                                      |  .. running ..
   //  .. running ..                                |  .. running ..
-  static ReaderWriterMutex* mutator_lock_ ACQUIRED_AFTER(instrument_entrypoints_lock_);
+  #define mutator_lock_ mutator_lock_()
+  static ReaderWriterMutex*& mutator_lock_ ACQUIRED_AFTER(instrument_entrypoints_lock_);
 
   // Allow reader-writer mutual exclusion on the mark and live bitmaps of the heap.
   static ReaderWriterMutex* heap_bitmap_lock_ ACQUIRED_AFTER(mutator_lock_);
@@ -623,7 +624,8 @@ class Locks {
 
   // Allow mutual exclusion when manipulating Thread::suspend_count_.
   // TODO: Does the trade-off of a per-thread lock make sense?
-  static Mutex* thread_suspend_count_lock_ ACQUIRED_AFTER(abort_lock_);
+  #define thread_suspend_count_lock_ thread_suspend_count_lock_()
+  static Mutex*& thread_suspend_count_lock_ ACQUIRED_AFTER(abort_lock_);
 
   // One unexpected signal at a time lock.
   static Mutex* unexpected_signal_lock_ ACQUIRED_AFTER(thread_suspend_count_lock_);

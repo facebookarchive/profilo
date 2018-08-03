@@ -1,0 +1,146 @@
+---
+library: libart
+
+headers:
+- museum/8.0.0/art/runtime/base/mutex.h
+- museum/8.0.0/art/runtime/intern_table.h
+- museum/8.0.0/art/runtime/java_vm_ext.h
+- museum/8.0.0/art/runtime/runtime.h
+- museum/8.0.0/art/runtime/thread.h
+- new
+
+namespaces:
+- nsName:
+  - art
+  classes:
+  - className: ConditionVariable
+    symbols:
+    - symbolName: Wait
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art17ConditionVariable4WaitEPNS_6ThreadE
+    - symbolName: WaitHoldingLocks
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art17ConditionVariable16WaitHoldingLocksEPNS_6ThreadE
+  - className: IndirectReferenceTable
+    symbols:
+    - symbolName: Resize
+      params:
+      - size_t
+      - std::string*
+      returnType: bool
+      mangledNames:
+      - _ZN3art22IndirectReferenceTable6ResizeEjPNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE
+  - className: InternTable
+    symbols:
+    - symbolName: ChangeWeakRootStateLocked
+      params:
+      - gc::WeakRootState
+      returnType: void
+      mangledNames:
+      - _ZN3art11InternTable25ChangeWeakRootStateLockedENS_2gc13WeakRootStateE
+  - className: JavaVMExt
+    symbols:
+    - symbolName: AllowNewWeakGlobals
+      returnType: void
+      mangledNames:
+      - _ZN3art9JavaVMExt19AllowNewWeakGlobalsEv
+    - symbolName: BroadcastForNewWeakGlobals
+      returnType: void
+      mangledNames:
+      - _ZN3art9JavaVMExt26BroadcastForNewWeakGlobalsEv
+  - className: Locks
+    symbols:
+    - symbolName: jni_weak_globals_lock_
+      isStaticVar: true
+      returnType: Mutex*
+      mangledNames:
+      - _ZN3art5Locks22jni_weak_globals_lock_E
+    - symbolName: mutator_lock_
+      isStaticVar: true
+      returnType: MutatorMutex*
+      mangledNames:
+      - _ZN3art5Locks13mutator_lock_E
+    - symbolName: thread_suspend_count_lock_
+      isStaticVar: true
+      returnType: Mutex*
+      mangledNames:
+      - _ZN3art5Locks26thread_suspend_count_lock_E
+  - className: Mutex
+    symbols:
+    - symbolName: ExclusiveLock
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art5Mutex13ExclusiveLockEPNS_6ThreadE
+    - symbolName: ExclusiveUnlock
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art5Mutex15ExclusiveUnlockEPNS_6ThreadE
+  - className: Runtime
+    symbols:
+    - symbolName: instance_
+      isStaticVar: true
+      skipMethodWrap: true
+      returnType: Runtime*
+      mangledNames:
+      - _ZN3art7Runtime9instance_E
+    - symbolName: IsShuttingDown
+      params:
+      - Thread*
+      returnType: bool
+      mangledNames:
+      - _ZN3art7Runtime14IsShuttingDownEPNS_6ThreadE
+  - className: Thread
+    symbols:
+    - symbolName: GetFlipFunction
+      returnType: Closure*
+      mangledNames:
+      - _ZN3art6Thread15GetFlipFunctionEv
+    - symbolName: is_started_
+      returnType: bool
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread11is_started_E
+    - symbolName: pthread_key_self_
+      returnType: pthread_key_t
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread17pthread_key_self_E
+    - symbolName: PassActiveSuspendBarriers
+      returnType: bool
+      params:
+      - Thread*
+      mangledNames:
+      - _ZN3art6Thread25PassActiveSuspendBarriersEPS0_
+    - symbolName: RunCheckpointFunction
+      returnType: void
+      mangledNames:
+      - _ZN3art6Thread21RunCheckpointFunctionEv
+    - symbolName: resume_cond_
+      returnType: ConditionVariable*
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread12resume_cond_E
+    - symbolName: RunEmptyCheckpoint
+      returnType: void
+      mangledNames:
+      - _ZN3art6Thread18RunEmptyCheckpointEv
+  - className:
+    symbols:
+    - symbolName: operator<<
+      params:
+      - std::ostream&
+      - ThreadState const&
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_11ThreadStateE
+      # conditional: !defined(NDEBUG)

@@ -127,7 +127,7 @@ public:
     wbuffer_convert(const wbuffer_convert&) = delete;               // C++14
     wbuffer_convert & operator=(const wbuffer_convert &) = delete;  // C++14
     ~wbuffer_convert();                                             // C++14
-    
+
     streambuf* rdbuf() const;
     streambuf* rdbuf(streambuf* bytebuf);
 
@@ -616,7 +616,7 @@ public:
         return do_get(__b, __e, __iob, __err, __v);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _MUSEUM_LIBCPP_ALWAYS_INLINE
@@ -684,9 +684,9 @@ protected:
                              ios_base::iostate& __err, void*& __v) const;
 };
 
-template <class _CharT, class _InputIterator>
-locale::id
-num_get<_CharT, _InputIterator>::id;
+// template <class _CharT, class _InputIterator>
+// locale::id
+// num_get<_CharT, _InputIterator>::id;
 
 template <class _Tp>
 _Tp
@@ -1196,8 +1196,8 @@ __num_put<_CharT>::__widen_and_group_float(char* __nb, char* __np, char* __ne,
         __op = __ob + (__np - __nb);
 }
 
-_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(struct _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS __num_put<char>)
-_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(struct _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS __num_put<wchar_t>)
+// _MUSEUM_LIBCPP_EXTERN_TEMPLATE2(struct _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS __num_put<char>)
+// _MUSEUM_LIBCPP_EXTERN_TEMPLATE2(struct _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS __num_put<wchar_t>)
 
 template <class _CharT, class _OutputIterator = ostreambuf_iterator<_CharT> >
 class _MUSEUM_LIBCPP_TEMPLATE_VIS num_put
@@ -1268,7 +1268,7 @@ public:
         return do_put(__s, __iob, __fl, __v);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _MUSEUM_LIBCPP_ALWAYS_INLINE
@@ -1292,9 +1292,9 @@ protected:
                              const void* __v) const;
 };
 
-template <class _CharT, class _OutputIterator>
-locale::id
-num_put<_CharT, _OutputIterator>::id;
+// template <class _CharT, class _OutputIterator>
+// locale::id
+// num_put<_CharT, _OutputIterator>::id;
 
 template <class _CharT, class _OutputIterator>
 _MUSEUM_LIBCPP_HIDDEN
@@ -1625,8 +1625,8 @@ num_put<_CharT, _OutputIterator>::do_put(iter_type __s, ios_base& __iob,
     return __pad_and_output(__s, __o, __op, __oe, __iob, __fl);
 }
 
-_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS num_put<char>)
-_MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS num_put<wchar_t>)
+// _MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS num_put<char>)
+// _MUSEUM_LIBCPP_EXTERN_TEMPLATE2(class _MUSEUM_LIBCPP_EXTERN_TEMPLATE_TYPE_VIS num_put<wchar_t>)
 
 template <class _CharT, class _InputIterator>
 _MUSEUM_LIBCPP_HIDDEN
@@ -1754,7 +1754,7 @@ public:
                   ios_base::iostate& __err, tm* __tm,
                   const char_type* __fmtb, const char_type* __fmte) const;
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _MUSEUM_LIBCPP_ALWAYS_INLINE
@@ -1834,9 +1834,9 @@ private:
                             const ctype<char_type>& __ct) const;
 };
 
-template <class _CharT, class _InputIterator>
-locale::id
-time_get<_CharT, _InputIterator>::id;
+// template <class _CharT, class _InputIterator>
+// locale::id
+// time_get<_CharT, _InputIterator>::id;
 
 // time_get primitives
 
@@ -2418,7 +2418,7 @@ public:
         return do_put(__s, __iob, __fl, __tm, __fmt, __mod);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _MUSEUM_LIBCPP_ALWAYS_INLINE
@@ -2436,9 +2436,9 @@ protected:
           __time_put(__nm) {}
 };
 
-template <class _CharT, class _OutputIterator>
-locale::id
-time_put<_CharT, _OutputIterator>::id;
+// template <class _CharT, class _OutputIterator>
+// locale::id
+// time_put<_CharT, _OutputIterator>::id;
 
 template <class _CharT, class _OutputIterator>
 _OutputIterator
@@ -2551,7 +2551,7 @@ public:
     _MUSEUM_LIBCPP_ALWAYS_INLINE pattern     pos_format()    const {return do_pos_format();}
     _MUSEUM_LIBCPP_ALWAYS_INLINE pattern     neg_format()    const {return do_neg_format();}
 
-    static locale::id id;
+    static locale::id& get_id();
     static const bool intl = _International;
 
 protected:
@@ -2571,9 +2571,9 @@ protected:
         {pattern __p = {{symbol, sign, none, value}}; return __p;}
 };
 
-template <class _CharT, bool _International>
-locale::id
-moneypunct<_CharT, _International>::id;
+// template <class _CharT, bool _International>
+// locale::id
+// moneypunct<_CharT, _International>::id;
 
 template <class _CharT, bool _International>
 const bool
@@ -2726,7 +2726,7 @@ public:
         return do_get(__b, __e, __intl, __iob, __err, __v);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
 
@@ -2749,9 +2749,9 @@ private:
                          char_type*& __wn, char_type* __we);
 };
 
-template <class _CharT, class _InputIterator>
-locale::id
-money_get<_CharT, _InputIterator>::id;
+// template <class _CharT, class _InputIterator>
+// locale::id
+// money_get<_CharT, _InputIterator>::id;
 
 _MUSEUM_LIBCPP_FUNC_VIS void __do_nothing(void*);
 
@@ -3284,7 +3284,7 @@ public:
         return do_put(__s, __intl, __iob, __fl, __digits);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _MUSEUM_LIBCPP_ALWAYS_INLINE
@@ -3296,9 +3296,9 @@ protected:
                              char_type __fl, const string_type& __digits) const;
 };
 
-template <class _CharT, class _OutputIterator>
-locale::id
-money_put<_CharT, _OutputIterator>::id;
+// template <class _CharT, class _OutputIterator>
+// locale::id
+// money_put<_CharT, _OutputIterator>::id;
 
 template <class _CharT, class _OutputIterator>
 _OutputIterator
@@ -3451,7 +3451,7 @@ public:
         do_close(__c);
     }
 
-    static locale::id id;
+    static locale::id& get_id();
 
 protected:
     _MUSEUM_LIBCPP_ALWAYS_INLINE
@@ -3463,9 +3463,9 @@ protected:
     virtual void do_close(catalog) const;
 };
 
-template <class _CharT>
-locale::id
-messages<_CharT>::id;
+// template <class _CharT>
+// locale::id
+// messages<_CharT>::id;
 
 template <class _CharT>
 typename messages<_CharT>::catalog
@@ -3833,7 +3833,7 @@ private:
     wbuffer_convert(const wbuffer_convert&);
     wbuffer_convert& operator=(const wbuffer_convert&);
 public:
-    _MUSEUM_LIBCPP_EXPLICIT_AFTER_CXX11 wbuffer_convert(streambuf* __bytebuf = 0, 
+    _MUSEUM_LIBCPP_EXPLICIT_AFTER_CXX11 wbuffer_convert(streambuf* __bytebuf = 0,
             _Codecvt* __pcvt = new _Codecvt, state_type __state = state_type());
     ~wbuffer_convert();
 

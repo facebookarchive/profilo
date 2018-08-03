@@ -137,6 +137,12 @@ namespaces:
       returnType: void
       mangledNames:
       - _ZN3art17ConditionVariable4WaitEPNS_6ThreadE
+    - symbolName: WaitHoldingLocks
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art17ConditionVariable16WaitHoldingLocksEPNS_6ThreadE
 
   - className: Locks
     symbols:

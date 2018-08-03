@@ -14,6 +14,8 @@ headers:
 - museum/7.1.2/art/runtime/elf_file.h
 - museum/7.1.2/art/runtime/gc_root.h
 - museum/7.1.2/art/runtime/indirect_reference_table.h
+- museum/7.1.2/art/runtime/intern_table.h
+- museum/7.1.2/art/runtime/java_vm_ext.h
 - museum/7.1.2/art/runtime/jni_env_ext.h
 - museum/7.1.2/art/runtime/mirror/array.h
 - museum/7.1.2/art/runtime/mirror/string.h
@@ -156,6 +158,13 @@ namespaces:
       returnType: void
       mangledNames:
       - _ZN3art17ConditionVariable4WaitEPNS_6ThreadE
+    - symbolName: WaitHoldingLocks
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art17ConditionVariable16WaitHoldingLocksEPNS_6ThreadE
+
   - className: DexFile
     symbols:
     - symbolName: FindClassDef
@@ -182,6 +191,24 @@ namespaces:
       returnType: IndirectRef
       mangledNames:
       - _ZN3art22IndirectReferenceTable3AddEjPNS_6mirror6ObjectE
+  - className: InternTable
+    symbols:
+    - symbolName: ChangeWeakRootStateLocked
+      params:
+      - gc::WeakRootState
+      returnType: void
+      mangledNames:
+      - _ZN3art11InternTable25ChangeWeakRootStateLockedENS_2gc13WeakRootStateE
+  - className: JavaVMExt
+    symbols:
+    - symbolName: AllowNewWeakGlobals
+      returnType: void
+      mangledNames:
+      - _ZN3art9JavaVMExt19AllowNewWeakGlobalsEv
+    - symbolName: BroadcastForNewWeakGlobals
+      returnType: void
+      mangledNames:
+      - _ZN3art9JavaVMExt26BroadcastForNewWeakGlobalsEv
   - className: JNIEnvExt
     symbols:
     - symbolName: NewLocalRef

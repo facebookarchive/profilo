@@ -20,7 +20,7 @@
 #include <museum/8.1.0/art/runtime/thread.h>
 
 #ifdef ART_TARGET_ANDROID
-#include <bionic_tls.h>  // Access to our own TLS slot.
+#include <museum/8.1.0/bionic/libc/bionic_tls.h>  // Access to our own TLS slot.
 #endif
 
 #include <museum/8.1.0/bionic/libc/pthread.h>

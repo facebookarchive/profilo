@@ -36,6 +36,32 @@ namespaces:
 - nsName:
   - art
   classes:
+  - className: ConditionVariable
+    symbols:
+    - symbolName: Wait
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art17ConditionVariable4WaitEPNS_6ThreadE
+    - symbolName: WaitHoldingLocks
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art17ConditionVariable16WaitHoldingLocksEPNS_6ThreadE
+  - className: Locks
+    symbols:
+    - symbolName: mutator_lock_
+      isStaticVar: true
+      returnType: ReaderWriterMutex*
+      mangledNames:
+      - _ZN3art5Locks13mutator_lock_E
+    - symbolName: thread_suspend_count_lock_
+      isStaticVar: true
+      returnType: Mutex*
+      mangledNames:
+      - _ZN3art5Locks26thread_suspend_count_lock_E
   - className: LogMessage
     symbols:
     - symbolName: ~LogMessage
@@ -51,6 +77,20 @@ namespaces:
       - int
       mangledNames:
       - _ZN3art14LogMessageDataC1EPKciii
+  - className: Mutex
+    symbols:
+    - symbolName: ExclusiveLock
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art5Mutex13ExclusiveLockEPNS_6ThreadE
+    - symbolName: ExclusiveUnlock
+      params:
+      - Thread*
+      returnType: void
+      mangledNames:
+      - _ZN3art5Mutex15ExclusiveUnlockEPNS_6ThreadE
   - className: Runtime
     symbols:
     - symbolName: IsShuttingDown
@@ -67,6 +107,17 @@ namespaces:
       - _ZN3art7Runtime9instance_E
   - className: Thread
     symbols:
+    - symbolName: DecodeJObject
+      params:
+      - jobject
+      returnType: mirror::Object*
+      cvFlags: const
+      mangledNames:
+      - _ZNK3art6Thread13DecodeJObjectEP8_jobject
+    - symbolName: RunCheckpointFunction
+      returnType: void
+      mangledNames:
+      - _ZN3art6Thread21RunCheckpointFunctionEv
     - symbolName: is_started_
       returnType: bool
       isStaticVar: true
@@ -77,6 +128,11 @@ namespaces:
       isStaticVar: true
       mangledNames:
       - _ZN3art6Thread17pthread_key_self_E
+    - symbolName: resume_cond_
+      returnType: ConditionVariable*
+      isStaticVar: true
+      mangledNames:
+      - _ZN3art6Thread12resume_cond_E
   - className: ThreadList
     symbols:
     - symbolName: ResumeAll
@@ -94,10 +150,17 @@ namespaces:
       returnType: void
       cvFlags: const
       mangledNames:
-      - _ZNK3art10ThreadList10VisitRootsEPFvPPNS_6mirror6ObjectEPvRKNS_8RootInfoEES5_
+      - _ZNK3art10ThreadList10VisitRootsEPFvPPNS_6mirror6ObjectEPvjNS_8RootTypeEES5_
   - className:
     symbols:
     - symbolName: GetTid
       returnType: pid_t
       mangledNames:
       - _ZN3art6GetTidEv
+    - symbolName: operator<<
+      params:
+      - std::ostream&
+      - ThreadState const&
+      returnType: std::ostream&
+      mangledNames:
+      - _ZN3artlsERNSt3__113basic_ostreamIcNS0_11char_traitsIcEEEERKNS_11ThreadStateE

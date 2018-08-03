@@ -181,7 +181,7 @@ char (&ArraySizeHelper(T (&array)[N]))[N];
 template<typename T> void UNUSED(const T&) {}
 
 // Annotalysis thread-safety analysis support.
-#if defined(__SUPPORT_TS_ANNOTATION__) || defined(__clang__)
+#if defined(__SUPPORT_TS_ANNOTATION__) || defined(__clang__) && false
 #define THREAD_ANNOTATION_ATTRIBUTE__(x)   __attribute__((x))
 #else
 #define THREAD_ANNOTATION_ATTRIBUTE__(x)   // no-op
