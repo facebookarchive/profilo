@@ -35,8 +35,12 @@ import com.facebook.profilo.logger.LoggerCallbacks;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -515,6 +519,11 @@ public final class TraceOrchestrator
     File parent = logFile.getParentFile();
     File uploadFile;
     if (ZipHelper.shouldZipDirectory(parent)) {
+      File parentWithNameUsingConvention =
+          new File(parent.getParent(), getTimestamp() + "-" + traceId);
+      if (parent.renameTo(parentWithNameUsingConvention)) {
+        parent = parentWithNameUsingConvention;
+      }
       uploadFile = ZipHelper.getCompressedFile(parent, ZipHelper.ZIP_SUFFIX + ZipHelper.TMP_SUFFIX);
       ZipHelper.deleteDirectory(parent);
     } else {
@@ -598,6 +607,12 @@ public final class TraceOrchestrator
         fStats.getTrimmedDueToCount(),
         fStats.getTrimmedDueToAge(),
         fStats.getAddedFilesToUpload());
+  }
+
+  private static String getTimestamp() {
+    Date date = new Date();
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", Locale.getDefault());
+    return dateFormat.format(date);
   }
 
   @Override
