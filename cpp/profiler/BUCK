@@ -84,6 +84,24 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "tracer_utils",
+    srcs = [
+        "DalvikUtils.cpp",
+    ],
+    header_namespace = "profiler",
+    exported_headers = [
+        "DalvikUtils.h",
+    ],
+    force_static = True,
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/dalvik:dalvik-subset-headers"),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "profiler",
     srcs = [
         "DalvikTracer.cpp",
@@ -117,6 +135,7 @@ fb_xplat_cxx_library(
         ":constants",
         ":museum-tracer-6.0.1",
         ":museum-tracer-7.0.0",
+        ":tracer_utils",
         ":unwindc-tracer-6.0.0",
         ":unwindc-tracer-7.0.0",
         ":unwindc-tracer-7.1.0",
