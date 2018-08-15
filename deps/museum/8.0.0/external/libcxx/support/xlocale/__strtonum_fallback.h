@@ -13,8 +13,8 @@
 // convert strings to some numeric type.
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SUPPORT_XLOCALE_STRTONUM_FALLBACK_H
-#define _MUSEUM_LIBCPP_SUPPORT_XLOCALE_STRTONUM_FALLBACK_H
+#ifndef _LIBCPP_SUPPORT_XLOCALE_STRTONUM_FALLBACK_H
+#define _LIBCPP_SUPPORT_XLOCALE_STRTONUM_FALLBACK_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,4 +64,4 @@ inline _MUSEUM_LIBCPP_ALWAYS_INLINE long double wcstold_l(const wchar_t *nptr,
 }
 #endif
 
-#endif // _MUSEUM_LIBCPP_SUPPORT_XLOCALE_STRTONUM_FALLBACK_H
+#endif // _LIBCPP_SUPPORT_XLOCALE_STRTONUM_FALLBACK_H

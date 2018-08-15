@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_COMPLEX_H
-#define _MUSEUM_LIBCPP_COMPLEX_H
+#ifndef _LIBCPP_COMPLEX_H
+#define _LIBCPP_COMPLEX_H
 
 /*
     complex.h synopsis
@@ -34,4 +34,4 @@
 
 #endif  // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_COMPLEX_H
+#endif  // _LIBCPP_COMPLEX_H

@@ -16,8 +16,8 @@
 
 #include <museum/8.1.0/bionic/libc/stdio.h>
 
-#elif !defined(_MUSEUM_LIBCPP_STDIO_H)
-#define _MUSEUM_LIBCPP_STDIO_H
+#elif !defined(_LIBCPP_STDIO_H)
+#define _LIBCPP_STDIO_H
 
 /*
     stdio.h synopsis
@@ -124,4 +124,4 @@ extern "C++" {
 
 #endif
 
-#endif  // _MUSEUM_LIBCPP_STDIO_H
+#endif  // _LIBCPP_STDIO_H

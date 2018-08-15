@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_MGMT_WIN32_H
-#define _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_MGMT_WIN32_H
+#ifndef _LIBCPP_SUPPORT_WIN32_LOCALE_MGMT_WIN32_H
+#define _LIBCPP_SUPPORT_WIN32_LOCALE_MGMT_WIN32_H
 
 #include <xlocinfo.h> // _locale_t
 #define locale_t _locale_t
@@ -30,4 +30,4 @@
 locale_t newlocale( int mask, const char * locale, locale_t base );
 locale_t uselocale( locale_t newloc );
 
-#endif // _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_MGMT_WIN32_H
+#endif // _LIBCPP_SUPPORT_WIN32_LOCALE_MGMT_WIN32_H

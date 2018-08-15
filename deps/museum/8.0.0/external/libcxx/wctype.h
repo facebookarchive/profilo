@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_WCTYPE_H
-#define _MUSEUM_LIBCPP_WCTYPE_H
+#ifndef _LIBCPP_WCTYPE_H
+#define _LIBCPP_WCTYPE_H
 
 /*
     wctype.h synopsis
@@ -76,4 +76,4 @@ wctrans_t wctrans(const char* property);
 
 #endif  // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_WCTYPE_H
+#endif  // _LIBCPP_WCTYPE_H

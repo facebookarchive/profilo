@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
-#define _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
+#ifndef _LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
+#define _LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
 
 #include <crtversion.h>
 
@@ -111,4 +111,4 @@ inline int isblank( int c, locale_t /*loc*/ )
 inline int iswblank( wint_t c, locale_t /*loc*/ )
 { return ( c == L' ' || c == L'\t' ); }
 #endif // _MUSEUM_LIBCPP_MSVCRT
-#endif // _MUSEUM_LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H
+#endif // _LIBCPP_SUPPORT_WIN32_LOCALE_WIN32_H

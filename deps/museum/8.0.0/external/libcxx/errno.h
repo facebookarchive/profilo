@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_ERRNO_H
-#define _MUSEUM_LIBCPP_ERRNO_H
+#ifndef _LIBCPP_ERRNO_H
+#define _LIBCPP_ERRNO_H
 
 /*
     errno.h synopsis
@@ -395,4 +395,4 @@ static const int __elast2 = 105;
 
 #endif // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_ERRNO_H
+#endif  // _LIBCPP_ERRNO_H

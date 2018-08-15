@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_LIMITS_H
-#define _MUSEUM_LIBCPP_LIMITS_H
+#ifndef _LIBCPP_LIMITS_H
+#define _LIBCPP_LIMITS_H
 
 /*
     limits.h synopsis
@@ -62,4 +62,4 @@ Macros:
 #include <museum/8.0.0/bionic/libc/limits.h>
 #endif // __GNUC__
 
-#endif  // _MUSEUM_LIBCPP_LIMITS_H
+#endif  // _LIBCPP_LIMITS_H

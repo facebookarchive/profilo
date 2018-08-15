@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_STRING_H
-#define _MUSEUM_LIBCPP_STRING_H
+#ifndef _LIBCPP_STRING_H
+#define _LIBCPP_STRING_H
 
 /*
     string.h synopsis
@@ -107,4 +107,4 @@ inline _MUSEUM_LIBCPP_INLINE_VISIBILITY _MUSEUM_LIBCPP_PREFERRED_OVERLOAD
 }
 #endif
 
-#endif  // _MUSEUM_LIBCPP_STRING_H
+#endif  // _LIBCPP_STRING_H

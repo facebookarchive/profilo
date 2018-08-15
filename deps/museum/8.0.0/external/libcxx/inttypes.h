@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_INTTYPES_H
-#define _MUSEUM_LIBCPP_INTTYPES_H
+#ifndef _LIBCPP_INTTYPES_H
+#define _LIBCPP_INTTYPES_H
 
 /*
     inttypes.h synopsis
@@ -255,4 +255,4 @@ uintmax_t wcstoumax(const wchar_t* restrict nptr, wchar_t** restrict endptr, int
 
 #endif // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_INTTYPES_H
+#endif  // _LIBCPP_INTTYPES_H

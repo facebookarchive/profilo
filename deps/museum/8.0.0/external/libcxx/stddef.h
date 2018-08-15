@@ -17,8 +17,8 @@
 
 #include_next <stddef.h>
 
-#elif !defined(_MUSEUM_LIBCPP_STDDEF_H)
-#define _MUSEUM_LIBCPP_STDDEF_H
+#elif !defined(_LIBCPP_STDDEF_H)
+#define _LIBCPP_STDDEF_H
 
 /*
     stddef.h synopsis
@@ -60,4 +60,4 @@ typedef long double max_align_t;
 
 #endif
 
-#endif  // _MUSEUM_LIBCPP_STDDEF_H
+#endif  // _LIBCPP_STDDEF_H

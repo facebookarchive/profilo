@@ -16,8 +16,8 @@
 
 #include <museum/8.0.0/bionic/libc/wchar.h>
 
-#elif !defined(_MUSEUM_LIBCPP_WCHAR_H)
-#define _MUSEUM_LIBCPP_WCHAR_H
+#elif !defined(_LIBCPP_WCHAR_H)
+#define _LIBCPP_WCHAR_H
 
 /*
     wchar.h synopsis
@@ -172,4 +172,4 @@ extern "C++" {
 }  // extern "C++"
 #endif  // __cplusplus && _MUSEUM_LIBCPP_MSVCRT
 
-#endif  // _MUSEUM_LIBCPP_WCHAR_H
+#endif  // _LIBCPP_WCHAR_H

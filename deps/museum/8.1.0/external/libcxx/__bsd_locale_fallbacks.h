@@ -11,8 +11,8 @@
 // of those functions for non-BSD platforms.
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_BSD_LOCALE_FALLBACKS_DEFAULTS_H
-#define _MUSEUM_LIBCPP_BSD_LOCALE_FALLBACKS_DEFAULTS_H
+#ifndef _LIBCPP_BSD_LOCALE_FALLBACKS_DEFAULTS_H
+#define _LIBCPP_BSD_LOCALE_FALLBACKS_DEFAULTS_H
 
 #include <museum/8.1.0/external/libcxx/stdlib.h>
 #include <museum/8.1.0/external/libcxx/memory>
@@ -135,4 +135,4 @@ int __libcpp_sscanf_l(const char *__s, locale_t __l, const char *__format, ...) 
 
 _MUSEUM_LIBCPP_END_NAMESPACE_STD
 
-#endif // _MUSEUM_LIBCPP_BSD_LOCALE_FALLBACKS_DEFAULTS_H
+#endif // _LIBCPP_BSD_LOCALE_FALLBACKS_DEFAULTS_H

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_TGMATH_H
-#define _MUSEUM_LIBCPP_TGMATH_H
+#ifndef _LIBCPP_TGMATH_H
+#define _LIBCPP_TGMATH_H
 
 /*
     tgmath.h synopsis
@@ -26,4 +26,4 @@
 #pragma GCC system_header
 #endif
 
-#endif  // _MUSEUM_LIBCPP_TGMATH_H
+#endif  // _LIBCPP_TGMATH_H

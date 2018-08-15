@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
-#define _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#ifndef _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#define _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
 
 #if defined(__BIONIC__)
 
@@ -28,4 +28,4 @@ extern "C" {
 #include <museum/8.1.0/external/libcxx/support/xlocale/__strtonum_fallback.h>
 
 #endif // defined(__BIONIC__)
-#endif // _MUSEUM_LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H
+#endif // _LIBCPP_SUPPORT_ANDROID_LOCALE_BIONIC_H

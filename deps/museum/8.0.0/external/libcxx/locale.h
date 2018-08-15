@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_LOCALE_H
-#define _MUSEUM_LIBCPP_LOCALE_H
+#ifndef _LIBCPP_LOCALE_H
+#define _LIBCPP_LOCALE_H
 
 /*
     locale.h synopsis
@@ -42,4 +42,4 @@ Functions:
 
 #include <museum/8.0.0/bionic/libc/locale.h>
 
-#endif  // _MUSEUM_LIBCPP_LOCALE_H
+#endif  // _LIBCPP_LOCALE_H

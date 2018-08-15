@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_STDINT_H
-#define _MUSEUM_LIBCPP_STDINT_H
+#ifndef _LIBCPP_STDINT_H
+#define _LIBCPP_STDINT_H
 
 /*
     stdint.h synopsis
@@ -118,4 +118,4 @@ Macros:
 
 #include <museum/8.0.0/bionic/libc/stdint.h>
 
-#endif  // _MUSEUM_LIBCPP_STDINT_H
+#endif  // _LIBCPP_STDINT_H

@@ -7,8 +7,8 @@
 // Source Licenses. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
-#ifndef _MUSEUM_LIBCPP_STDBOOL_H
-#define _MUSEUM_LIBCPP_STDBOOL_H
+#ifndef _LIBCPP_STDBOOL_H
+#define _LIBCPP_STDBOOL_H
 
 
 /*
@@ -36,4 +36,4 @@ Macros:
 #define __bool_true_false_are_defined 1
 #endif
 
-#endif  // _MUSEUM_LIBCPP_STDBOOL_H
+#endif  // _LIBCPP_STDBOOL_H

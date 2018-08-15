@@ -15,8 +15,8 @@
 // in Musl.
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SUPPORT_MUSL_XLOCALE_H
-#define _MUSEUM_LIBCPP_SUPPORT_MUSL_XLOCALE_H
+#ifndef _LIBCPP_SUPPORT_MUSL_XLOCALE_H
+#define _LIBCPP_SUPPORT_MUSL_XLOCALE_H
 
 #include <museum/8.1.0/external/libcxx/cstdlib>
 #include <museum/8.1.0/external/libcxx/cwchar>
@@ -55,4 +55,4 @@ static inline long double wcstold_l(const wchar_t *nptr, wchar_t **endptr,
 }
 #endif
 
-#endif // _MUSEUM_LIBCPP_SUPPORT_MUSL_XLOCALE_H
+#endif // _LIBCPP_SUPPORT_MUSL_XLOCALE_H

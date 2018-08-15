@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_CTYPE_H
-#define _MUSEUM_LIBCPP_CTYPE_H
+#ifndef _LIBCPP_CTYPE_H
+#define _LIBCPP_CTYPE_H
 
 /*
     ctype.h synopsis
@@ -66,4 +66,4 @@ extern "C++" {
 
 #endif
 
-#endif  // _MUSEUM_LIBCPP_CTYPE_H
+#endif  // _LIBCPP_CTYPE_H

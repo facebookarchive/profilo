@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_MATH_H
-#define _MUSEUM_LIBCPP_MATH_H
+#ifndef _LIBCPP_MATH_H
+#define _LIBCPP_MATH_H
 
 /*
     math.h synopsis
@@ -1430,4 +1430,4 @@ trunc(_A1 __lcpp_x) _NOEXCEPT {return ::trunc((double)__lcpp_x);}
 
 #endif // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_MATH_H
+#endif  // _LIBCPP_MATH_H

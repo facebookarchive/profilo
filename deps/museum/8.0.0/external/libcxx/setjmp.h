@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SETJMP_H
-#define _MUSEUM_LIBCPP_SETJMP_H
+#ifndef _LIBCPP_SETJMP_H
+#define _LIBCPP_SETJMP_H
 
 /*
     setjmp.h synopsis
@@ -42,4 +42,4 @@ void longjmp(jmp_buf env, int val);
 
 #endif // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_SETJMP_H
+#endif  // _LIBCPP_SETJMP_H

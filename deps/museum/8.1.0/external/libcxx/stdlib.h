@@ -16,8 +16,8 @@
 
 #include <museum/8.1.0/bionic/libc/stdlib.h>
 
-#elif !defined(_MUSEUM_LIBCPP_STDLIB_H)
-#define _MUSEUM_LIBCPP_STDLIB_H
+#elif !defined(_LIBCPP_STDLIB_H)
+#define _LIBCPP_STDLIB_H
 
 /*
     stdlib.h synopsis
@@ -127,4 +127,4 @@ inline _MUSEUM_LIBCPP_INLINE_VISIBILITY lldiv_t div(long long __x, long long __y
 
 #endif  // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_STDLIB_H
+#endif  // _LIBCPP_STDLIB_H

@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SUPPORT_WIN32_SUPPORT_H
-#define _MUSEUM_LIBCPP_SUPPORT_WIN32_SUPPORT_H
+#ifndef _LIBCPP_SUPPORT_WIN32_SUPPORT_H
+#define _LIBCPP_SUPPORT_WIN32_SUPPORT_H
 
 // Functions and constants used in libc++ that
 // are missing from the Windows C library.
@@ -182,4 +182,4 @@ _MUSEUM_LIBCPP_ALWAYS_INLINE int __builtin_clz(unsigned int x)
 }
 #endif // _MUSEUM_LIBCPP_MSVC
 
-#endif // _MUSEUM_LIBCPP_SUPPORT_WIN32_SUPPORT_H
+#endif // _LIBCPP_SUPPORT_WIN32_SUPPORT_H

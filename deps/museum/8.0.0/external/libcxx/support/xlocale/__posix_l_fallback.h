@@ -13,8 +13,8 @@
 // Android's bionic and Newlib).
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_SUPPORT_XLOCALE_POSIX_L_FALLBACK_H
-#define _MUSEUM_LIBCPP_SUPPORT_XLOCALE_POSIX_L_FALLBACK_H
+#ifndef _LIBCPP_SUPPORT_XLOCALE_POSIX_L_FALLBACK_H
+#define _LIBCPP_SUPPORT_XLOCALE_POSIX_L_FALLBACK_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -162,4 +162,4 @@ inline _MUSEUM_LIBCPP_ALWAYS_INLINE size_t wcsxfrm_l(wchar_t *dest, const wchar_
 }
 #endif
 
-#endif // _MUSEUM_LIBCPP_SUPPORT_XLOCALE_POSIX_L_FALLBACK_H
+#endif // _LIBCPP_SUPPORT_XLOCALE_POSIX_L_FALLBACK_H

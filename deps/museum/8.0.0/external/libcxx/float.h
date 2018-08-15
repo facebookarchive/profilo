@@ -8,8 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _MUSEUM_LIBCPP_FLOAT_H
-#define _MUSEUM_LIBCPP_FLOAT_H
+#ifndef _LIBCPP_FLOAT_H
+#define _LIBCPP_FLOAT_H
 
 /*
     float.h synopsis
@@ -80,4 +80,4 @@ Macros:
 
 #endif // __cplusplus
 
-#endif  // _MUSEUM_LIBCPP_FLOAT_H
+#endif  // _LIBCPP_FLOAT_H
