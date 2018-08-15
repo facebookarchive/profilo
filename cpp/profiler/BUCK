@@ -147,7 +147,7 @@ fb_xplat_cxx_library(
         profilo_path("cpp/logger:logger"),
         profilo_path("cpp/sigmuxsetup:sigmuxsetup"),
         profilo_path("cpp/util:util"),
-        profilo_path("deps/dalvik:dalvik-subset"),
+        profilo_path("deps/dalvik:dalvik-subset-headers"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
         profilo_path("deps/museum:museum"),
