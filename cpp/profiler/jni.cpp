@@ -27,6 +27,7 @@ using namespace facebook::profilo;
 
 const char* CPUProfilerType = "com/facebook/profilo/provider/stacktrace/CPUProfiler";
 const char* StackFrameThreadType = "com/facebook/profilo/provider/stacktrace/StackFrameThread";
+const char* StackTraceWhitelist = "com/facebook/profilo/provider/stacktrace/StackTraceWhitelist";
 
 namespace {
 
@@ -46,7 +47,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         makeNativeMethod("nativeLoggerLoop", "()V", profiler::loggerLoop),
         makeNativeMethod("nativeStopProfiling", "()V", profiler::stopProfiling),
         makeNativeMethod("nativeStartProfiling",
-          "(III)Z",
+          "(IIZ)Z",
           profiler::startProfiling),
       });
     fbjni::registerNatives(StackFrameThreadType,
@@ -54,6 +55,13 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         makeNativeMethod(
           "nativeSystemClockTickIntervalMs",
           getSystemClockTickIntervalMs),
+      });
+    fbjni::registerNatives(StackTraceWhitelist,
+      {
+        makeNativeMethod(
+          "nativeAddToWhitelist", "(I)V", profiler::addToWhitelist),
+        makeNativeMethod(
+          "nativeRemoveFromWhitelist", "(I)V", profiler::removeFromWhitelist),
       });
 
     artcompat::registerNatives();

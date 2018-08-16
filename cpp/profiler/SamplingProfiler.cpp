@@ -60,8 +60,6 @@ namespace profiler {
 
 namespace {
 
-const int32_t kAllThreads = 0;
-
 // Function wrapper around the static profile state to avoid
 // using a DSO constructor.
 ProfileState& getProfileState() {
@@ -118,7 +116,7 @@ void maybeSignalReader(bool stackCollected) {
   auto& profileState = getProfileState();
   uint32_t prevSlotCounter = profileState.fullSlotsCounter.fetch_add(1);
   if ((prevSlotCounter + 1) % FLUSH_STACKS_COUNT == 0) {
-    if (profileState.singleThreadMode) {
+    if (profileState.wallClockModeEnabled) {
       profileState.enoughStacks.store(true);
     }
     else {
@@ -416,13 +414,20 @@ void loggerLoop(alias_ref<jobject> obj) {
   bool done;
 
   do {
-    if (profileState.singleThreadMode) {
+    if (profileState.wallClockModeEnabled) {
       usleep(profileState.samplingRateUs);
-      res = syscall(__NR_tgkill, profileState.processId,
-                    profileState.targetThread, SIGPROF);
-      if (res == 0 && profileState.enoughStacks.load()) {
-        flushStackTraces();
-        profileState.enoughStacks.store(false);
+      std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
+      for (int32_t tid : profileState.whitelistedThreads) {
+        res = syscall(__NR_tgkill, profileState.processId, tid, SIGPROF);
+        if (res != 0 && errno == ESRCH) {
+          // If the thread id is bad or no longer exists, remove it from our
+          // whitelist.
+          profileState.whitelistedThreads.erase(tid);
+        }
+        if (res == 0 && profileState.enoughStacks.load()) {
+          flushStackTraces();
+          profileState.enoughStacks.store(false);
+        }
       }
     } else {
       // setitimer (i.e. every thread) case
@@ -441,7 +446,7 @@ bool startProfiling(
   fbjni::alias_ref<jobject> obj,
   int requested_tracers,
   int sampling_rate_ms,
-  int targetThread) {
+  bool wall_clock_mode_enabled) {
 
   FBLOGV("Start profiling");
   auto& profileState = getProfileState();
@@ -454,13 +459,8 @@ bool startProfiling(
     return false;
   }
 
-  profileState.targetThread = static_cast<int32_t>(targetThread);
-  profileState.singleThreadMode = false;
   profileState.samplingRateUs = sampling_rate_ms * 1000;
-
-  if (static_cast<int32_t>(targetThread) != kAllThreads) {
-    profileState.singleThreadMode = true;
-  }
+  profileState.wallClockModeEnabled = wall_clock_mode_enabled;
 
   for(const auto& tracerEntry : profileState.tracersMap) {
     if (tracerEntry.first & profileState.currentTracers) {
@@ -469,7 +469,7 @@ bool startProfiling(
   }
 
   // Call setitimer only if not in "single thread sampling" mode
-  if (!profileState.singleThreadMode) {
+  if (!profileState.wallClockModeEnabled) {
     auto sampleRateMicros = sampling_rate_ms * 1000;
     // Generate random initial delay. Used to calculate the initial trace delay
     // to avoid sampling bias.
@@ -507,7 +507,7 @@ void stopProfiling(fbjni::alias_ref<jobject> obj) {
 
   FBLOGV("Stopping profiling");
 
-  if (!profileState.singleThreadMode) {
+  if (!profileState.wallClockModeEnabled) {
     itimerval tv;
     tv.it_value.tv_sec = 0;
     tv.it_value.tv_usec = 0;
@@ -557,6 +557,18 @@ void stopProfiling(fbjni::alias_ref<jobject> obj) {
       tracerEntry.second->stopTracing();
     }
   }
+}
+
+void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread) {
+  auto& profileState = getProfileState();
+  std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
+  profileState.whitelistedThreads.insert(static_cast<int32_t>(targetThread));
+}
+
+void removeFromWhitelist(fbjni::alias_ref<jobject> obj, int targetThread) {
+  auto& profileState = getProfileState();
+  std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
+  profileState.whitelistedThreads.erase(targetThread);
 }
 
 } // namespace profiler

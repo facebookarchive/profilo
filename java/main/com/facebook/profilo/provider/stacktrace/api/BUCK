@@ -1,0 +1,14 @@
+# BUILD FILE SYNTAX: SKYLARK
+load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
+load("//buck_imports:profilo_path.bzl", "profilo_path")
+
+fb_core_android_library(
+    name = "api",
+    srcs = glob(["*.java"]),
+    provided_deps = [
+        profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

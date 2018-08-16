@@ -33,7 +33,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
 public final class StackFrameThread extends BaseTraceProvider {
-
   public static final int PROVIDER_STACK_FRAME = ProvidersRegistry.newProvider("stack_trace");
   public static final int PROVIDER_WALL_TIME_STACK_TRACE =
       ProvidersRegistry.newProvider("wall_time_stack_trace");
@@ -108,9 +107,10 @@ public final class StackFrameThread extends BaseTraceProvider {
 
     // Default to get stack traces from all threads, override for wall time
     // stack profiling of main thread on-demand.
-    int tids = ALL_THREADS;
+
+    boolean wallClockModeEnabled = false;
     if ((enabledProviders & PROVIDER_WALL_TIME_STACK_TRACE) != 0) {
-      tids = Process.myPid();
+      wallClockModeEnabled = true;
     } else {
       if (mSystemClockTimeIntervalMs == -1) {
         mSystemClockTimeIntervalMs = nativeSystemClockTickIntervalMs();
@@ -121,7 +121,8 @@ public final class StackFrameThread extends BaseTraceProvider {
     // might want to pass a list of all the interesting threads.
     // To use the setitimer logic, pass 0 as the second argument.
     boolean started =
-        CPUProfiler.startProfiling(providersToTracers(enabledProviders), sampleRateMs, tids);
+        CPUProfiler.startProfiling(
+            providersToTracers(enabledProviders), sampleRateMs, wallClockModeEnabled);
     if (!started) {
       return false;
     }

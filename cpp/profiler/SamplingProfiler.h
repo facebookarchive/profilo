@@ -16,10 +16,12 @@
 
 #pragma once
 
+#include <mutex>
 #include <semaphore.h>
 #include <setjmp.h>
 #include <signal.h>
 #include <unordered_map>
+#include <unordered_set>
 
 #if !defined(__GLIBCXX__)
 #include <__threading_support>
@@ -79,11 +81,15 @@ struct ProfileState {
   sem_t slotsCounterSem;
   std::atomic_bool isLoggerLoopDone;
 
-  // Allow targeting individual thread
-  int32_t targetThread;
-  bool singleThreadMode;
+  bool wallClockModeEnabled;
   int samplingRateUs;
   std::atomic_bool enoughStacks;
+
+  // When in "wall clock mode", we can optionally whitelist additional threads
+  // to profile as well.
+  std::unordered_set<int32_t> whitelistedThreads;
+  // Guards whitelistedThreads.
+  std::mutex whitelistMtx;
 
   ProfileState() {
     int ret;
@@ -103,7 +109,9 @@ bool startProfiling(
   fbjni::alias_ref<jobject> obj,
   int requested_providers,
   int sampling_rate_ms,
-  int targetThread);
+  bool wall_clock_mode_enabled);
+void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
+void removeFromWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
 
 } // namespace profiler
 } // namespace profilo

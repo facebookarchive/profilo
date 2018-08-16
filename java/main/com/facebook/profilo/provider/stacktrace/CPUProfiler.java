@@ -15,6 +15,7 @@ package com.facebook.profilo.provider.stacktrace;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Process;
 import com.facebook.profilo.experiments.Experiments;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
@@ -96,8 +97,12 @@ public class CPUProfiler {
   }
 
   public static synchronized boolean startProfiling(
-      int requestedTracers, int samplingRateMs, int targetThread) {
-    return sInitialized && nativeStartProfiling(requestedTracers, samplingRateMs, targetThread);
+      int requestedTracers, int samplingRateMs, boolean wallClockModeEnabled) {
+    // We always trace the main thread.
+    StackTraceWhitelist.add(Process.myPid());
+
+    return sInitialized
+        && nativeStartProfiling(requestedTracers, samplingRateMs, wallClockModeEnabled);
   }
 
   public static void loggerLoop() {
@@ -113,7 +118,7 @@ public class CPUProfiler {
 
   @DoNotStrip
   private static native boolean nativeStartProfiling(
-      int providers, int samplingRateMs, int targetThread);
+      int providers, int samplingRateMs, boolean wallClockModeEnabled);
 
   @DoNotStrip
   private static native void nativeStopProfiling();
