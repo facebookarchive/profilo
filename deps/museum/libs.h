@@ -46,4 +46,6 @@ dso const& libandroid_runtime();
 
 dso const& libbinder();
 
+dso const& libgui();
+
 } // namespace facebook

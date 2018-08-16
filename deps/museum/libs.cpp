@@ -74,5 +74,9 @@ dso const& libbinder() {
   return libbinder;
 }
 
+dso const& libgui() {
+  static dso const libgui("libgui.so");
+  return libgui;
+}
 
 } // namespace facebook
