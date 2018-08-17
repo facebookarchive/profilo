@@ -41,7 +41,7 @@ SparseArray<TraceController> controllers = new SparseArray<>(1);
 // We want the "ExternalController" with the id specified by TRIGGER_EXTERNAL.
 controllers.put(ExternalController.TRIGGER_EXTERNAL, new ExternalController());
 
-TraceOrchestrator.TraceProvider[] providers = new TraceOrchestrator.TraceProvider[] {
+BaseTraceProvider[] providers = new BaseTraceProvider[] {
     new SystemCounterThread(),
     new StackFrameThread(context),
     new SystraceProvider(),

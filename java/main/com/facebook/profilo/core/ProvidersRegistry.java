@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
  * <p>The general pattern is:
  *
  * <pre>
- *   class MyProvider extends TraceOrchestrator.TraceProvider {
+ *   class MyProvider extends BaseTraceProvider {
  *   public static final int PROVIDER_MYPROVIDER = ProviderRegistry.newProvider("myprovider");
  *   ...
  *   }

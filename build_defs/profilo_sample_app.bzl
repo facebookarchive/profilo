@@ -35,7 +35,7 @@ def profilo_sample_app(srcs, manifest, providers, deps = [], provider_to_rule=PR
         providers:     A list of valid entry keys in PROVIDER_TO_RULE, or None.
         deps:          Any extra dependencies your java files use. Provider dependencies, as well
                        as `profilo_path("java/main/com/facebook/profilo/core:core")` (for
-                       `TraceOrchestrator.TraceProvider`), will be automatically added and do not
+                       `BaseTraceProvider`), will be automatically added and do not
                        need to be listed.
     """
     if providers:

@@ -49,7 +49,7 @@ import javax.annotation.Nullable;
  * ending trace context is the same as the one from {@link #getEnablingTraceContext()}), or any
  * other custom situation.
  */
-public abstract class BaseTraceProvider extends TraceOrchestrator.TraceProvider {
+public abstract class BaseTraceProvider {
 
   private int mSavedProviders;
   private TraceContext mEnablingContext;
@@ -81,14 +81,12 @@ public abstract class BaseTraceProvider extends TraceOrchestrator.TraceProvider 
     }
   }
 
-  @Override
   public final void onEnable(TraceContext context, File extraDataFolder) {
     ensureSolibLoaded();
     onTraceStarted(context, extraDataFolder);
     processStateChange(context, extraDataFolder);
   }
 
-  @Override
   public final void onDisable(TraceContext context, File extraDataFolder) {
     ensureSolibLoaded();
     onTraceEnded(context, extraDataFolder);

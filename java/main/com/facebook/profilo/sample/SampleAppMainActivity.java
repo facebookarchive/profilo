@@ -2,7 +2,7 @@
 
 package com.facebook.profilo.sample;
 
-import com.facebook.profilo.core.TraceOrchestrator;
+import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.provider.atrace.SystraceProvider;
 import com.facebook.profilo.provider.mappingdensity.MappingDensityProvider;
 import com.facebook.profilo.provider.processmetadata.ProcessMetadataProvider;
@@ -13,7 +13,7 @@ import com.facebook.profilo.provider.yarn.PerfEventsProvider;
 
 public class SampleAppMainActivity extends BaseSampleAppMainActivity {
   @Override
-  protected TraceOrchestrator.TraceProvider createProvider(String provider) {
+  protected BaseTraceProvider createProvider(String provider) {
     switch (provider) {
       case "atrace":
         return new SystraceProvider();

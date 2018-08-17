@@ -97,7 +97,7 @@ public class TraceOrchestratorTest {
   private TraceContext mSecondTraceContext;
 
   @Rule TraceEventsFakeRule mTraceEventsRule = new TraceEventsFakeRule();
-  private TraceOrchestrator.TraceProvider mTraceProvider;
+  private BaseTraceProvider mTraceProvider;
   private BaseTraceProvider mBaseTraceProvider;
 
   static class TestBaseProvider extends BaseTraceProvider {
@@ -166,7 +166,7 @@ public class TraceOrchestratorTest {
     whenNew(SparseArray.class).withAnyArguments()
         .thenReturn(mock(SparseArray.class, RETURNS_MOCKS));
     whenNew(FileManager.class).withAnyArguments().thenReturn(mFileManager);
-    mTraceProvider = mock(TraceOrchestrator.TraceProvider.class);
+    mTraceProvider = mock(BaseTraceProvider.class);
     mBaseTraceProvider = spy(new TestBaseProvider());
     when(mFileManager.getAndResetStatistics()).
         thenReturn(mock(FileManager.FileManagerStatistics.class));
@@ -174,7 +174,7 @@ public class TraceOrchestratorTest {
         new TraceOrchestrator(
             mContext,
             mConfigProvider,
-            new TraceOrchestrator.TraceProvider[] {mTraceProvider, mBaseTraceProvider},
+            new BaseTraceProvider[] {mTraceProvider, mBaseTraceProvider},
             true); // isMainProcess
     mOrchestrator.bind(
         mContext,

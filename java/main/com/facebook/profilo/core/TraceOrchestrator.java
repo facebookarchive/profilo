@@ -79,25 +79,6 @@ public final class TraceOrchestrator
     void onProvidersInitialized(TraceContext ctx);
   }
 
-  public abstract static class TraceProvider {
-
-    /**
-     * @param context - the TraceContext describing the active trace
-     * @param extraDataFolder - A folder in which this provider can save extra data. May not exist
-     *     yet. TraceProviders are encouraged to save temporary files elsewhere and only
-     *     move/hardlink into this folder in {@link #onDisable(TraceContext, File)}.
-     */
-    public abstract void onEnable(TraceContext context, File extraDataFolder);
-
-    /**
-     * @param context - the TraceContext describing the active trace
-     * @param extraDataFolder - the folder in which this provider can save extra data. May not exist
-     *     yet.
-     * @see #onEnable(TraceContext, File)
-     */
-    public abstract void onDisable(TraceContext context, File extraDataFolder);
-  }
-
   public interface ProfiloBridgeFactory {
     BackgroundUploadService getUploadService();
     ConfigProvider getProvider();
@@ -142,7 +123,7 @@ public final class TraceOrchestrator
       @Nullable ConfigProvider configProvider,
       String processName,
       boolean isMainProcess,
-      TraceProvider[] providers,
+      BaseTraceProvider[] providers,
       SparseArray<TraceController> controllers) {
     if (configProvider == null) {
       configProvider = new DefaultConfigProvider();
@@ -185,7 +166,8 @@ public final class TraceOrchestrator
   @Nullable
   private ProfiloBridgeFactory mProfiloBridgeFactory;
 
-  @GuardedBy("this") private TraceProvider[] mTraceProviders;
+  @GuardedBy("this")
+  private BaseTraceProvider[] mBaseTraceProviders;
 
   private final TraceListenerManager mListenerManager;
   private final boolean mIsMainProcess;
@@ -194,14 +176,14 @@ public final class TraceOrchestrator
 
   private @Nullable TraceEventsHandler mHandler;
 
-  //VisibleForTesting
+  // VisibleForTesting
   /*package*/ TraceOrchestrator(
       Context context,
       ConfigProvider configProvider,
-      TraceProvider[] traceProviders,
+      BaseTraceProvider[] BaseTraceProviders,
       boolean isMainProcess) {
     mConfigProvider = configProvider;
-    mTraceProviders = traceProviders;
+    mBaseTraceProviders = BaseTraceProviders;
     mConfig = null;
     mFileManager = new FileManager(context);
     mBackgroundUploadService = null;
@@ -258,10 +240,11 @@ public final class TraceOrchestrator
     return mConfig;
   }
 
-  synchronized public void addTraceProvider(TraceProvider provider) {
-    TraceProvider[] providers = Arrays.copyOf(mTraceProviders, mTraceProviders.length + 1);
+  public synchronized void addTraceProvider(BaseTraceProvider provider) {
+    BaseTraceProvider[] providers =
+        Arrays.copyOf(mBaseTraceProviders, mBaseTraceProviders.length + 1);
     providers[providers.length - 1] = provider;
-    mTraceProviders = providers;
+    mBaseTraceProviders = providers;
   }
 
   public void setConfigProvider(ConfigProvider newConfigProvider) {
@@ -398,12 +381,12 @@ public final class TraceOrchestrator
 
   /** Asynchronous portion of trace start. Should include non-critical code for Trace startup. */
   void traceStart(TraceContext context) {
-    TraceProvider[] providers;
+    BaseTraceProvider[] providers;
     synchronized (this) {
-      providers = mTraceProviders;
+      providers = mBaseTraceProviders;
     }
     File folder = new File(getSanitizedTraceFolder(context), EXTRA_DATA_FOLDER_NAME);
-    for (TraceProvider provider : providers) {
+    for (BaseTraceProvider provider : providers) {
       provider.onEnable(context, folder);
     }
     mListenerManager.onProvidersInitialized(context);
@@ -411,10 +394,10 @@ public final class TraceOrchestrator
 
   @Override
   public void onTraceStop(TraceContext context) {
-    TraceProvider[] providers;
+    BaseTraceProvider[] providers;
     Config config;
     synchronized (this) {
-      providers = mTraceProviders;
+      providers = mBaseTraceProviders;
       config = mConfig;
     }
 
@@ -430,7 +413,7 @@ public final class TraceOrchestrator
     TraceEvents.disableProviders(context.enabledProviders);
 
     File folder = new File(getSanitizedTraceFolder(context), EXTRA_DATA_FOLDER_NAME);
-    for (TraceProvider provider : providers) {
+    for (BaseTraceProvider provider : providers) {
       provider.onDisable(context, folder);
     }
 
@@ -443,9 +426,9 @@ public final class TraceOrchestrator
   public void onTraceAbort(TraceContext context) {
     checkConfigTransition();
 
-    TraceProvider[] providers;
+    BaseTraceProvider[] providers;
     synchronized (this) {
-      providers = mTraceProviders;
+      providers = mBaseTraceProviders;
     }
     mListenerManager.onTraceAbort(context);
 
@@ -453,7 +436,7 @@ public final class TraceOrchestrator
     TraceEvents.disableProviders(context.enabledProviders);
 
     File folder = new File(getSanitizedTraceFolder(context), EXTRA_DATA_FOLDER_NAME);
-    for (TraceProvider provider : providers) {
+    for (BaseTraceProvider provider : providers) {
       provider.onDisable(context, folder);
     }
   }
