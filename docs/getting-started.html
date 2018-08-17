@@ -32,7 +32,7 @@ SparseArray&lt;TraceController&gt; controllers = <span class="hljs-keyword">new<
 <span class="hljs-comment">// We want the "ExternalController" with the id specified by TRIGGER_EXTERNAL.</span>
 controllers.put(ExternalController.TRIGGER_EXTERNAL, <span class="hljs-keyword">new</span> ExternalController());
 
-TraceOrchestrator.TraceProvider[] providers = <span class="hljs-keyword">new</span> TraceOrchestrator.TraceProvider[] {
+BaseTraceProvider[] providers = <span class="hljs-keyword">new</span> BaseTraceProvider[] {
     <span class="hljs-keyword">new</span> SystemCounterThread(),
     <span class="hljs-keyword">new</span> StackFrameThread(context),
     <span class="hljs-keyword">new</span> SystraceProvider(),
