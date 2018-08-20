@@ -117,6 +117,18 @@ final public class Logger {
     return loggerWriteForThread(tid, type, callID, ProfiloConstants.NO_MATCH, intExtra);
   }
 
+  public static int writeEntryWithoutMatchForThread(
+      int provider, int tid, int type, int callID, long intExtra, long monotonicTime) {
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
+    }
+
+    return loggerWriteForThreadWithMonotonicTime(
+        tid, type, callID, ProfiloConstants.NO_MATCH, intExtra, monotonicTime);
+  }
+
   public static int writeEntry(int provider, int type, int callID, int matchID) {
     if (!sInitialized) {
       return ProfiloConstants.TRACING_DISABLED;
@@ -224,6 +236,45 @@ final public class Logger {
     int returnedMatchID =
         loggerWriteWithMonotonicTime(
             type, callID, ProfiloConstants.NO_MATCH, intExtra, monotonicTime);
+    return writeKeyValueStringWithMatch(provider, returnedMatchID, strKey, strValue);
+  }
+
+  // Same as the two functions above but with the tid passed in as argument
+  public static int writeEntryWithStringWithNoMatch(
+      int provider,
+      int tid,
+      int type,
+      int callID,
+      long intExtra,
+      @Nullable String strKey,
+      String strValue) {
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
+    }
+
+    int returnedMatchID = writeEntryWithoutMatchForThread(provider, tid, type, callID, intExtra);
+    return writeKeyValueStringWithMatch(provider, returnedMatchID, strKey, strValue);
+  }
+
+  public static int writeEntryWithStringWithNoMatch(
+      int provider,
+      int tid,
+      int type,
+      int callID,
+      long intExtra,
+      @Nullable String strKey,
+      String strValue,
+      long monotonicTime) {
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
+    }
+    int returnedMatchID =
+        loggerWriteForThreadWithMonotonicTime(
+            tid, type, callID, ProfiloConstants.NO_MATCH, intExtra, monotonicTime);
     return writeKeyValueStringWithMatch(provider, returnedMatchID, strKey, strValue);
   }
 
@@ -339,6 +390,10 @@ final public class Logger {
       int callid,
       int matchid,
       long extra);
+
+  // Write a StandardEntry with caller-supplied tid
+  private static native int loggerWriteForThreadWithMonotonicTime(
+      int tid, int type, int callid, int matchid, long extra, long monotonicTime);
 
   private static native int loggerWriteAndWakeupTraceWriter(
       NativeTraceWriter writer,

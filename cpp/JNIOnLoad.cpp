@@ -99,6 +99,27 @@ static jint loggerWriteForThread(
   });
 }
 
+static jint loggerWriteForThreadWithMonotonicTime(
+    JNIEnv* env,
+    jobject cls,
+    jint tid,
+    jint type,
+    jint arg1,
+    jint arg2,
+    jlong arg3,
+    jlong time
+) {
+  return Logger::get().write(StandardEntry {
+    .id = 0,
+    .type = static_cast<decltype(StandardEntry::type)>(type),
+    .timestamp = time,
+    .tid = tid,
+    .callid = arg1,
+    .matchid = arg2,
+    .extra = arg3,
+  });
+}
+
 static jint loggerWriteAndWakeupTraceWriter(
     fbjni::alias_ref<jobject> cls,
     writer::NativeTraceWriter* writer,
@@ -210,6 +231,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         makeNativeMethod("loggerWrite", profilo::loggerWrite),
         makeNativeMethod("loggerWriteWithMonotonicTime", profilo::loggerWriteWithMonotonicTime),
         makeNativeMethod("loggerWriteForThread", profilo::loggerWriteForThread),
+        makeNativeMethod("loggerWriteForThreadWithMonotonicTime",
+                            profilo::loggerWriteForThreadWithMonotonicTime),
         makeNativeMethod("loggerWriteString", profilo::loggerWriteString),
         makeNativeMethod("loggerWriteAndWakeupTraceWriter", profilo::loggerWriteAndWakeupTraceWriter),
         makeNativeMethod("nativeInitRingBuffer", profilo::initRingBuffer),
