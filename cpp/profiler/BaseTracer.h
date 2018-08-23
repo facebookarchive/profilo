@@ -28,9 +28,7 @@ namespace profiler {
 namespace tracers {
   enum Tracer: uint32_t {
     DALVIK = 1,
-    ART_6_0 = 1 << 1,
     NATIVE = 1 << 2,
-    ART_7_0 = 1 << 3,
     ART_UNWINDC_6_0 = 1 << 4,
     ART_UNWINDC_7_0_0 = 1 << 5,
     ART_UNWINDC_7_1_0 = 1 << 6,

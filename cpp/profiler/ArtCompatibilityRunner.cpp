@@ -33,8 +33,6 @@
 #include <thread>
 #include <vector>
 
-#include "ArtTracer.h"
-
 #include <forkjail/ForkJail.h>
 
 namespace fbjni = facebook::jni;

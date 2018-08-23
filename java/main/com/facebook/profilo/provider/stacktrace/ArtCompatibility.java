@@ -44,7 +44,7 @@ public class ArtCompatibility {
     }
   }
 
-  public static boolean isCompatible(Context context, boolean useAlternatives) {
+  public static boolean isCompatible(Context context) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       return false;
     }
@@ -61,39 +61,25 @@ public class ArtCompatibility {
       if (file.exists()) {
         result = readCompatFile(file);
       } else {
-        if (useAlternatives) {
-          switch (Build.VERSION.RELEASE) {
-            case "7.1.2":
-              result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_1_2);
-              break;
-            case "7.1.1":
-              result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_1_1);
-              break;
-            case "7.1":
-            case "7.1.0":
-              result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_1_0);
-              break;
-            case "7.0":
-            case "7.0.0":
-              result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_0_0);
-              break;
-            case "6.0":
-            case "6.0.1":
-              result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_6_0);
-              break;
-          }
-        } else {
-          switch (Build.VERSION.RELEASE) {
-            case "7.0":
-              result = nativeCheck(CPUProfiler.TRACER_ART_7_0);
-              break;
-            case "6.0":
-            case "6.0.1":
-              result = nativeCheck(CPUProfiler.TRACER_ART_6_0);
-              break;
-            default:
-              result = false;
-          }
+        switch (Build.VERSION.RELEASE) {
+          case "7.1.2":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_1_2);
+            break;
+          case "7.1.1":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_1_1);
+            break;
+          case "7.1":
+          case "7.1.0":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_1_0);
+            break;
+          case "7.0":
+          case "7.0.0":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_0_0);
+            break;
+          case "6.0":
+          case "6.0.1":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_6_0);
+            break;
         }
         writeCompatFile(file, result);
       }
@@ -110,7 +96,7 @@ public class ArtCompatibility {
   }
 
   private static File getFileForRelease(Context context) {
-    return new File(context.getFilesDir(), "ProfiloArtProfiler_" + Build.VERSION.RELEASE);
+    return new File(context.getFilesDir(), "ProfiloArtUnwindcCompat_" + Build.VERSION.RELEASE);
   }
 
   private static boolean readCompatFile(File file) throws IOException {

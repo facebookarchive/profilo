@@ -32,8 +32,6 @@
 #include <fb/log.h>
 #include <sigmux.h>
 
-#include "profiler/ArtTracer_601.h"
-#include "profiler/ArtTracer_700.h"
 #include "profiler/ArtUnwindcTracer_600.h"
 #include "profiler/ArtUnwindcTracer_700.h"
 #include "profiler/ArtUnwindcTracer_710.h"
@@ -347,17 +345,9 @@ bool initialize(
   }
 #endif
 
-  if (available_tracers & tracers::ART_6_0) {
-    profileState.tracersMap[tracers::ART_6_0] = std::make_unique<Art6Tracer>();
-  }
-
   if (available_tracers & tracers::ART_UNWINDC_6_0) {
     profileState.tracersMap[tracers::ART_UNWINDC_6_0] =
       std::make_unique<ArtUnwindcTracer60>();
-  }
-
-  if (available_tracers & tracers::ART_7_0) {
-    profileState.tracersMap[tracers::ART_7_0] = std::make_unique<Art70Tracer>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_0_0) {

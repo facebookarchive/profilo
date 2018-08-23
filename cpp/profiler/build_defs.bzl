@@ -39,7 +39,7 @@ def museum_tracer_library(version):
         reexport_all_header_dependencies = False,
         soname = "libprofiloprofiler{version_num}.$(ext)".format(version_num = version_num),
         visibility = [
-            profilo_path("..."),
+            "PUBLIC",
         ],
         deps = [
             profilo_path("deps/fb:fb"),

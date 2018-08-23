@@ -68,8 +68,6 @@ public final class StackFrameThread extends BaseTraceProvider {
     if ((providers & (PROVIDER_STACK_FRAME | PROVIDER_WALL_TIME_STACK_TRACE)) != 0) {
       tracers |=
           CPUProfiler.TRACER_DALVIK
-              | CPUProfiler.TRACER_ART_7_0
-              | CPUProfiler.TRACER_ART_6_0
               | CPUProfiler.TRACER_ART_UNWINDC_6_0
               | CPUProfiler.TRACER_ART_UNWINDC_7_0_0
               | CPUProfiler.TRACER_ART_UNWINDC_7_1_0
