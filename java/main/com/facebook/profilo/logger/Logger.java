@@ -278,6 +278,16 @@ final public class Logger {
     return writeKeyValueStringWithMatch(provider, returnedMatchID, strKey, strValue);
   }
 
+  public static int writeMetadata(
+      int provider, int matchID, @Nullable String strKey, String strValue) {
+    if (!sInitialized
+        || (provider != ProfiloConstants.PROVIDER_PROFILO_SYSTEM
+            && !TraceEvents.isEnabled(provider))) {
+      return ProfiloConstants.TRACING_DISABLED;
+    }
+    return writeKeyValueStringWithMatch(provider, matchID, strKey, strValue);
+  }
+
   public static int writeKeyValueStringWithMatch(
       int provider,
       int matchID,
