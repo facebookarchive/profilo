@@ -17,6 +17,7 @@
 #include "sig_safe_write.h"
 
 #include <sys/syscall.h>
+#include <unistd.h>
 
 #include <sigmux.h>
 
