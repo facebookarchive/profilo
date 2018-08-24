@@ -21,7 +21,7 @@ import com.facebook.profilo.core.ProvidersRegistry;
 
 public final class SystraceProvider extends BaseTraceProvider {
 
-  public static final int PROVIDER_ATRACE = ProvidersRegistry.newProvider("other");
+  public static final int PROVIDER_ATRACE = ProvidersRegistry.newProvider("atrace");
 
   public SystraceProvider() {
     super("profilo_atrace");
