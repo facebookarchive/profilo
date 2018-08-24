@@ -1,4 +1,3 @@
-# BUILD FILE SYNTAX: SKYLARK
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("@fbsource//tools/build_defs/android:robolectric3_test.bzl", "robolectric3_test")
 

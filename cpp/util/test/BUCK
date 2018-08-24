@@ -1,4 +1,3 @@
-# BUILD FILE SYNTAX: SKYLARK
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 cxx_binary(
