@@ -1,4 +1,4 @@
-load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
+load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 load("//build_defs:profilo_sample_app.bzl", "profilo_sample_app")
 

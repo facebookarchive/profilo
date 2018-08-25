@@ -8,7 +8,7 @@ PROVIDER_TO_RULE - Map that links provider "short names" to the provider class a
                    those files.
 """
 
-load("//build_defs:fb_core_android_library.bzl", "fb_core_android_library")
+load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//buck_imports:profilo_path.bzl", "profilo_path")
 
 PROVIDER_TO_RULE = {
