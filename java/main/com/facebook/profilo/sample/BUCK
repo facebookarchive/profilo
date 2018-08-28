@@ -1,6 +1,6 @@
 load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
-load("//build_defs:profilo_sample_app.bzl", "profilo_sample_app")
+load("//tools/build_defs/oss:profilo_sample_app.bzl", "profilo_sample_app")
 
 keystore(
     name = "keystore",
