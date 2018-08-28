@@ -1,5 +1,6 @@
 load(
-    "//build_defs:profilo_oss_defs.bzl",
+    "//tools/build_defs/oss:profilo_defs.bzl",
+    "profilo_oss_only_java_library",
     "profilo_oss_maven_library",
     "profilo_oss_only_java_library",
 )

@@ -1,4 +1,4 @@
-load("//build_defs:museum_library.bzl", "museum_library")
+load("//tools/build_defs/oss:profilo_defs.bzl", "museum_library")
 
 museum_library(
     exported_headers = glob(

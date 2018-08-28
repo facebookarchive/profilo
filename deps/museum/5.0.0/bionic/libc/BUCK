@@ -1,5 +1,5 @@
-load("//buck_imports:profilo_path.bzl", "profilo_path")
-load("//build_defs:museum_library.bzl", "museum_library")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+load("//tools/build_defs/oss:profilo_defs.bzl", "museum_library")
 load(":build_defs.bzl", "flattened_glob", "merge_dicts")
 
 museum_library(
