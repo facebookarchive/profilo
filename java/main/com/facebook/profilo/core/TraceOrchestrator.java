@@ -76,7 +76,7 @@ public final class TraceOrchestrator
     /** New updated config has been applied. */
     void onAfterConfigUpdate();
 
-    void onProvidersInitialized(TraceContext ctx);
+    void onProvidersInitialized();
 
     void onProvidersStop(int activeProviders);
   }
@@ -393,7 +393,7 @@ public final class TraceOrchestrator
     for (BaseTraceProvider provider : providers) {
       provider.onEnable(context, folder);
     }
-    mListenerManager.onProvidersInitialized(context);
+    mListenerManager.onProvidersInitialized();
   }
 
   @Override

@@ -136,10 +136,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onProvidersInitialized(TraceContext ctx) {
+  public void onProvidersInitialized() {
     Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onProvidersInitialized(ctx);
+      iterator.next().onProvidersInitialized();
     }
   }
 

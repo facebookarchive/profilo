@@ -20,6 +20,19 @@ class CoreTraceAnnotationsListener extends DefaultTraceOrchestratorListener {
   }
 
   @Override
+  public void onProvidersInitialized() {
+    // Writing a marker block to denote providers init finish
+    Logger.writeEntryWithStringWithNoMatch(
+        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+        EntryType.MARK_PUSH,
+        0,
+        0,
+        ProfiloConstants.STRING_KEY_BLOCK_NAME,
+        "Profilo.ProvidersInitialized");
+    Logger.writeEntryWithoutMatch(ProfiloConstants.PROVIDER_PROFILO_SYSTEM, EntryType.MARK_POP, 0);
+  }
+
+  @Override
   public void onProvidersStop(int activeProviders) {
     Set<String> activeProviderNames =
         ProvidersRegistry.getRegisteredProvidersByBitMask(activeProviders);

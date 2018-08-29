@@ -20,7 +20,7 @@ public abstract class DefaultTraceOrchestratorListener implements TraceOrchestra
   public void onAfterConfigUpdate() {}
 
   @Override
-  public void onProvidersInitialized(TraceContext ctx) {}
+  public void onProvidersInitialized() {}
 
   @Override
   public void onProvidersStop(int activeProviders) {}
