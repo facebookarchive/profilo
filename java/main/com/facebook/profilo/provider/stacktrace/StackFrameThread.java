@@ -150,17 +150,18 @@ public final class StackFrameThread extends BaseTraceProvider {
       Log.e(LOG_TAG, "Duplicate attempt to enable sampling profiler.");
       return;
     }
+
+    boolean enabled = enableInternal(context.cpuSamplingRateMs, context.enabledProviders);
+    if (!enabled) {
+      return;
+    }
+    mSavedTraceContext = context;
+
     mProfilerThread =
         new Thread(
             new Runnable() {
               public void run() {
                 Process.setThreadPriority(Process.THREAD_PRIORITY_DEFAULT);
-                boolean enabled =
-                    enableInternal(context.cpuSamplingRateMs, context.enabledProviders);
-                if (!enabled) {
-                  return;
-                }
-                mSavedTraceContext = context;
                 try {
                   CPUProfiler.loggerLoop();
                 } catch (Exception ex) {
@@ -194,6 +195,24 @@ public final class StackFrameThread extends BaseTraceProvider {
   @Override
   protected int getSupportedProviders() {
     return PROVIDER_NATIVE_STACK_TRACE | PROVIDER_STACK_FRAME | PROVIDER_WALL_TIME_STACK_TRACE;
+  }
+
+  @Override
+  protected int getTracingProviders() {
+    TraceContext savedTraceContext = mSavedTraceContext;
+    if (!mEnabled || savedTraceContext == null) {
+      return 0;
+    }
+
+    int tracingProviders = 0;
+    int enabledProviders = savedTraceContext.enabledProviders;
+    if ((enabledProviders & PROVIDER_WALL_TIME_STACK_TRACE) != 0) {
+      tracingProviders |= PROVIDER_WALL_TIME_STACK_TRACE;
+    } else if ((enabledProviders & PROVIDER_STACK_FRAME) != 0) {
+      tracingProviders |= PROVIDER_STACK_FRAME;
+    }
+    tracingProviders |= enabledProviders & PROVIDER_NATIVE_STACK_TRACE;
+    return tracingProviders;
   }
 
   @DoNotStrip

@@ -23,6 +23,9 @@ public abstract class DefaultTraceOrchestratorListener implements TraceOrchestra
   public void onProvidersInitialized(TraceContext ctx) {}
 
   @Override
+  public void onProvidersStop(int activeProviders) {}
+
+  @Override
   public void onUploadSuccessful(File file) {}
 
   @Override

@@ -18,7 +18,9 @@ package com.facebook.profilo.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nullable;
 
 /** Maintains a one-to-many mapping between entries of a generic type and integer identifiers. */
@@ -85,5 +87,20 @@ final class GenericRegistry<EntryType> {
   /** Retrieve all registered entries. */
   public List<EntryType> getRegisteredEntries() {
     return Collections.unmodifiableList(mEntries);
+  }
+
+  /** Retrieve all entries matching the given bitMask */
+  public Set<EntryType> getRegisteredEntriesByBitMask(int bitMask) {
+    HashSet<EntryType> result = new HashSet<>();
+    synchronized (mEntries) {
+      int bit = 1;
+      for (EntryType entry : mEntries) {
+        if ((bit & bitMask) != 0) {
+          result.add(entry);
+        }
+        bit <<= 1;
+      }
+    }
+    return result;
   }
 }

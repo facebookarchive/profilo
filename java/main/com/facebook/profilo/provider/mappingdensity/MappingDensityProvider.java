@@ -12,17 +12,24 @@ import java.io.File;
 @DoNotStrip
 public final class MappingDensityProvider extends BaseTraceProvider {
 
-  public static final int PROVIDER_MAPPINGDENSITY = ProvidersRegistry.newProvider("mapping_density");
+  public static final int PROVIDER_MAPPINGDENSITY =
+      ProvidersRegistry.newProvider("mapping_density");
+
+  private boolean mEnabled;
 
   public MappingDensityProvider() {
     super("profilo_mappingdensity");
   }
 
   @Override
-  protected void enable() {}
+  protected void enable() {
+    mEnabled = true;
+  }
 
   @Override
-  protected void disable() {}
+  protected void disable() {
+    mEnabled = false;
+  }
 
   @Override
   protected void onTraceStarted(TraceContext context, File extraDataFolder) {
@@ -50,4 +57,9 @@ public final class MappingDensityProvider extends BaseTraceProvider {
 
   private static native void dumpMappingDensities(
       String mapRegex, String extraDataFolderPath, String dumpName);
+
+  @Override
+  protected int getTracingProviders() {
+    return mEnabled ? PROVIDER_MAPPINGDENSITY : 0;
+  }
 }

@@ -77,6 +77,8 @@ public final class TraceOrchestrator
     void onAfterConfigUpdate();
 
     void onProvidersInitialized(TraceContext ctx);
+
+    void onProvidersStop(int activeProviders);
   }
 
   public interface ProfiloBridgeFactory {
@@ -228,6 +230,8 @@ public final class TraceOrchestrator
       // TODO: get these out of the config
       mFileManager.setMaxScheduledAge(TimeUnit.DAYS.toSeconds(1));
       mFileManager.setTrimThreshold(10);
+
+      mListenerManager.addEventListener(new CoreTraceAnnotationsListener());
     }
   }
 
@@ -413,9 +417,12 @@ public final class TraceOrchestrator
     TraceEvents.disableProviders(context.enabledProviders);
 
     File folder = new File(getSanitizedTraceFolder(context), EXTRA_DATA_FOLDER_NAME);
+    int tracingProviders = 0;
     for (BaseTraceProvider provider : providers) {
+      tracingProviders |= provider.getActiveProviders();
       provider.onDisable(context, folder);
     }
+    mListenerManager.onProvidersStop(tracingProviders);
 
     checkConfigTransition();
 

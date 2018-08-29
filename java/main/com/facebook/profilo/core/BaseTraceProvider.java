@@ -150,6 +150,17 @@ public abstract class BaseTraceProvider {
     return mExtraFolder;
   }
 
-  /** @return Supported provider mask */
+  /** @return Supported provider mask (internal API) */
   protected abstract int getSupportedProviders();
+
+  /** @return Tracing provider mask (internal API) */
+  protected abstract int getTracingProviders();
+
+  /** @return Currently tracing providers bitmask. */
+  public int getActiveProviders() {
+    if (mSolib != null && !mSolibInitialized) {
+      return 0; // Not initialized => not tracing
+    }
+    return getTracingProviders();
+  }
 }

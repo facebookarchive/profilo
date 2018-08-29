@@ -55,6 +55,11 @@ public final class ProcessMetadataProvider extends BaseTraceProvider {
     return EVERY_PROVIDER_CHANGE;
   }
 
+  @Override
+  protected int getTracingProviders() {
+    return 0;
+  }
+
   private void logProcessList() {
     ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
     if (am == null) {

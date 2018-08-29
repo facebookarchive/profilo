@@ -102,6 +102,9 @@ public class TraceOrchestratorTest {
 
   static class TestBaseProvider extends BaseTraceProvider {
 
+    static final int SUPPORTED_PROVIDERS = 0x101;
+    static final int TRACING_PROVIDERS = 0x001;
+
     @Override
     protected void enable() {}
 
@@ -110,7 +113,12 @@ public class TraceOrchestratorTest {
 
     @Override
     protected int getSupportedProviders() {
-      return 0x101;
+      return SUPPORTED_PROVIDERS;
+    }
+
+    @Override
+    protected int getTracingProviders() {
+      return TRACING_PROVIDERS;
     }
   }
 
@@ -469,6 +477,31 @@ public class TraceOrchestratorTest {
             filenameNoExt.lastIndexOf(TraceOrchestrator.CHECKSUM_DELIM)
                 + TraceOrchestrator.CHECKSUM_DELIM.length());
     assertThat(result_crc).isEqualTo(Integer.toHexString(crc));
+  }
+
+  @Test
+  public void testTracingProvidersOnProvidersStop() {
+    TraceOrchestrator.TraceListener listener = mock(TraceOrchestrator.TraceListener.class);
+    mOrchestrator.addListener(listener);
+
+    int enabledProvidersMask = 0x11111;
+    TraceContext traceContext =
+        new TraceContext(
+            0xFACEB000, // traceId
+            "FACEBOOO0", // encodedTraceId
+            0, // controller
+            null, // controllerObject
+            null, // context
+            0, // intContext
+            enabledProvidersMask, // enabled providers mask
+            0, // cpuSamplingRateMs
+            1);
+    mOrchestrator.onTraceStop(traceContext);
+
+    ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
+    verify(listener).onProvidersStop(providerMaskCaptor.capture());
+    int tracingProviders = providerMaskCaptor.getValue();
+    assertThat(tracingProviders).isEqualTo(TestBaseProvider.TRACING_PROVIDERS);
   }
 
   private void verifyProvidersDisabled() {

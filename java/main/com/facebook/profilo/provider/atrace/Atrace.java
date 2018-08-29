@@ -18,7 +18,6 @@ package com.facebook.profilo.provider.atrace;
 
 import android.os.Trace;
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -63,6 +62,8 @@ public final class Atrace {
 
   private static native void enableSystraceNative();
   private static native void restoreSystraceNative();
+
+  public static native boolean isEnabled();
 
   private static final class SystraceReflector {
     public static final void updateSystraceTags() {

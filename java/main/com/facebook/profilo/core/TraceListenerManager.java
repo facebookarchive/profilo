@@ -143,6 +143,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
     }
   }
 
+  @Override
+  public void onProvidersStop(int activeProviders) {
+    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    while (iterator.hasNext()) {
+      iterator.next().onProvidersStop(activeProviders);
+    }
+  }
+
   public void addEventListener(TraceOrchestrator.TraceListener listener) {
     mEventListeners.add(listener);
   }

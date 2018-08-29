@@ -48,6 +48,11 @@ public final class MyProvider extends BaseTraceProvider {
   protected int getSupportedProviders() {
     return PROVIDER_MY_PROVIDER;
   }
+
+  @Override
+  protected int getTracingProviders() {
+    return PROVIDER_MY_PROVIDER;
+  }
 }
 ```
 
@@ -84,7 +89,7 @@ public class StringController implements TraceController {
     }
     return fst == snd || fst.equals(snd);
   }
-  
+
   public boolean isConfigurable() {
     return true;
   }

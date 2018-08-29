@@ -22,12 +22,18 @@ import javax.annotation.concurrent.GuardedBy;
 
 public final class PerfEventsProvider extends BaseTraceProvider {
 
-  public static final int PROVIDER_MAJOR_FAULTS = ProvidersRegistry.newProvider("major_faults");
+  public static final String PROVIDER_MAJOR_FAULTS_NAME = "major_faults";
+  public static final String PROVIDER_THREAD_SCHEDULE_NAME = "thread_schedule";
+
+  public static final int PROVIDER_MAJOR_FAULTS =
+      ProvidersRegistry.newProvider(PROVIDER_MAJOR_FAULTS_NAME);
   public static final int PROVIDER_THREAD_SCHEDULE =
-      ProvidersRegistry.newProvider("thread_schedule");
+      ProvidersRegistry.newProvider(PROVIDER_THREAD_SCHEDULE_NAME);
 
   @GuardedBy("this")
   private PerfEventsSession mSession = null;
+
+  private boolean mEnabled;
 
   public PerfEventsProvider() {
     super("profilo_yarn");
@@ -42,12 +48,14 @@ public final class PerfEventsProvider extends BaseTraceProvider {
     }
 
     if (session.attach(getEnablingTraceContext().enabledProviders)) {
+      mEnabled = true;
       session.start();
     }
   }
 
   @Override
   protected void disable() {
+    mEnabled = false;
     PerfEventsSession session = mSession;
     if (session != null) {
       session.stop();
@@ -58,5 +66,13 @@ public final class PerfEventsProvider extends BaseTraceProvider {
   @Override
   protected int getSupportedProviders() {
     return PROVIDER_MAJOR_FAULTS | PROVIDER_THREAD_SCHEDULE;
+  }
+
+  @Override
+  protected int getTracingProviders() {
+    if (!mEnabled || getEnablingTraceContext() == null) {
+      return 0;
+    }
+    return getEnablingTraceContext().enabledProviders & getSupportedProviders();
   }
 }

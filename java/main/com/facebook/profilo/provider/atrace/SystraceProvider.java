@@ -41,4 +41,9 @@ public final class SystraceProvider extends BaseTraceProvider {
   protected int getSupportedProviders() {
     return PROVIDER_ATRACE;
   }
+
+  @Override
+  protected int getTracingProviders() {
+    return Atrace.isEnabled() ? PROVIDER_ATRACE : 0;
+  }
 }

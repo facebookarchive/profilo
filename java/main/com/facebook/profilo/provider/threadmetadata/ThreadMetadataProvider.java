@@ -44,5 +44,9 @@ public final class ThreadMetadataProvider extends BaseTraceProvider {
 
   /* Log thread names and priorities. */
   private static native void nativeLogThreadMetadata();
-}
 
+  @Override
+  protected int getTracingProviders() {
+    return 0;
+  }
+}

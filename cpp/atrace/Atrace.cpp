@@ -52,6 +52,7 @@ std::atomic<uint64_t> original_tags(UINT64_MAX);
 std::atomic<bool> systrace_installed;
 std::atomic<uint32_t> provider_mask;
 bool first_enable = true;
+bool atrace_enabled;
 
 namespace {
 
@@ -245,9 +246,12 @@ void enableSystrace() {
   if (prev != UINT64_MAX) { // if we somehow call this twice in a row, don't overwrite the real tags
     original_tags = prev;
   }
+
+  atrace_enabled = true;
 }
 
 void restoreSystrace() {
+  atrace_enabled = false;
   if (!systrace_installed) {
     return;
   }
@@ -283,6 +287,10 @@ void JNI_restoreSystraceNative(JNIEnv*, jobject) {
   restoreSystrace();
 }
 
+bool JNI_isEnabled(JNIEnv*, jobject) {
+  return atrace_enabled;
+}
+
 namespace fbjni = facebook::jni;
 
 void registerNatives() {
@@ -292,6 +300,7 @@ void registerNatives() {
       makeNativeMethod("installSystraceHook", "(I)Z", JNI_installSystraceHook),
       makeNativeMethod("enableSystraceNative", "()V", JNI_enableSystraceNative),
       makeNativeMethod("restoreSystraceNative", "()V", JNI_restoreSystraceNative),
+      makeNativeMethod("isEnabled", "()Z", JNI_isEnabled),
     });
 }
 

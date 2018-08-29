@@ -181,4 +181,19 @@ public final class SystemCounterThread extends BaseTraceProvider {
   protected int getSupportedProviders() {
     return PROVIDER_SYSTEM_COUNTERS | PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS;
   }
+
+  @Override
+  protected int getTracingProviders() {
+    if (!mEnabled) {
+      return 0;
+    }
+    int tracingProviders = 0;
+    if (mAllThreadsMode) {
+      tracingProviders |= PROVIDER_SYSTEM_COUNTERS;
+    }
+    if (mHighFrequencyTid > 0) {
+      tracingProviders |= PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS;
+    }
+    return tracingProviders;
+  }
 }
