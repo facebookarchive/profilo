@@ -1,4 +1,4 @@
-load("//build_defs:glob_defs.bzl", "subdir_glob")
+load("//tools/build_defs:glob_defs.bzl", "subdir_glob")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_oss_cxx_library")
 
 profilo_oss_cxx_library(

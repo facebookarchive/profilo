@@ -1,6 +1,6 @@
 """Provides OSS compatibile macros."""
 
-load("//build_defs:glob_defs.bzl", "subdir_glob")
+load("//tools/build_defs:glob_defs.bzl", "subdir_glob")
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
 def profilo_path(dep):
