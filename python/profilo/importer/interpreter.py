@@ -251,6 +251,43 @@ class TraceFileInterpreter(object):
             self.units[name] = unit
         return unit
 
+    def __find_name_by_string_key_value(self, entry):
+        # Look for a STRING_KEY == "__name".
+        # Name is in the chained STRING_VALUE.
+        keys = (x for x in self.children.get(entry, [])
+                if entry and x.type == 'STRING_KEY')
+        keys = [x for x in keys if x.data == '__name']
+        assert len(keys) <= 1
+
+        if not keys:
+            # Alternatively, look for a STRING_NAME entry.
+            return None
+
+        key = keys[0]
+
+        # If the trace was stopped at an inopportune time, we might miss
+        # the VALUE of a KEY. This is malformed beyond repair, so
+        # avoid creating an entry altogether.
+        if key not in self.children:
+            return None
+
+        assert len(self.children[key]) == 1
+        value = self.children[key][0]
+
+        assert value.type == 'STRING_VALUE'
+        return value.data
+
+    def __find_name_by_string_name(self, entry):
+        # Look for a STRING_NAME child.
+        children = [x for x in self.children.get(entry, [])
+                    if entry and x.type == 'STRING_NAME']
+        assert len(children) <= 1
+
+        if not children:
+            return None
+
+        return children[0].data
+
     def assign_name(self, trace_element, entries=[]):
         pattern = "{}"
         name_entries = list(entries)
@@ -260,36 +297,20 @@ class TraceFileInterpreter(object):
             elif not entries[0] and entries[1]:
                 pattern = "Missing to {}"
 
-        # Look for a STRING_KEY of value "__name" as a child of either the
-        # beginning or end entry.
         name = None
         for entry in name_entries:
             if not entry:
                 continue
 
-            keys = (x for x in self.children.get(entry, [])
-                    if entry and x.type == 'STRING_KEY')
-            keys = [x for x in keys if x.data == '__name']
-            assert len(keys) <= 1
+            # Try the STRING_KEY/STRING_VALUE approach first.
+            name = self.__find_name_by_string_key_value(entry)
 
-            if not keys:
-                continue
+            if not name:
+                # Try STRING_NAME instead.
+                name = self.__find_name_by_string_name(entry)
 
-            key = keys[0]
-
-            # If the trace was stopped at an inopportune time, we might miss
-            # the VALUE of a KEY. This is malformed beyond repair, so
-            # avoid creating an entry altogether.
-            if key not in self.children:
-                return
-
-            assert len(self.children[key]) == 1
-            value = self.children[key][0]
-
-            assert value.type == 'STRING_VALUE'
-            name = value.data
-            # Found a name, we're done here.
-            break
+            if name:
+                break
 
         if not name:
             name = [x.type for x in name_entries if x]

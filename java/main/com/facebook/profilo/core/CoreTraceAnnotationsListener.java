@@ -22,12 +22,13 @@ class CoreTraceAnnotationsListener extends DefaultTraceOrchestratorListener {
   @Override
   public void onProvidersInitialized() {
     // Writing a marker block to denote providers init finish
-    Logger.writeEntryWithStringWithNoMatch(
+    int pushId =
+        Logger.writeEntryWithoutMatch(
+            ProfiloConstants.PROVIDER_PROFILO_SYSTEM, EntryType.MARK_PUSH, 0, 0);
+    Logger.writeEntry(
         ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
-        EntryType.MARK_PUSH,
-        0,
-        0,
-        ProfiloConstants.STRING_KEY_BLOCK_NAME,
+        EntryType.STRING_NAME,
+        pushId,
         "Profilo.ProvidersInitialized");
     Logger.writeEntryWithoutMatch(ProfiloConstants.PROVIDER_PROFILO_SYSTEM, EntryType.MARK_POP, 0);
   }

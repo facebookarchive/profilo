@@ -149,6 +149,8 @@ NAMES = [
     'CLASS_LOAD_START',
     'CLASS_LOAD_END',
     'CLASS_LOAD_FAILED',
+
+    'STRING_NAME',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([
@@ -160,6 +162,7 @@ STACK_FRAME_ENTRIES = frozenset([
 BYTES_ENTRIES = frozenset([
     'STRING_KEY',
     'STRING_VALUE',
+    'STRING_NAME',
 ])
 
 TARGET_SIZE = (

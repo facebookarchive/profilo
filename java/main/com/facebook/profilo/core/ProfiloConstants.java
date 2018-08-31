@@ -24,8 +24,6 @@ public final class ProfiloConstants {
   public static final int NO_MATCH = 0;
   public static final int TRACING_DISABLED = -1;
 
-  public static final String STRING_KEY_BLOCK_NAME = "__name";
-
   /* Keep in sync with AbortReason.h */
   public static final int ABORT_REASON_UNKNOWN = 1;
   public static final int ABORT_REASON_CONTROLLER_INITIATED = 2;

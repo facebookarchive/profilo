@@ -1,4 +1,4 @@
-// @generated SignedSource<<f8b72b7908b4fd460189c2c7b4762aa9>>
+// @generated SignedSource<<7c8dbe96e82514bb6f477836c4c9b3ca>>
 
 package com.facebook.profilo.entries;
 
@@ -95,6 +95,7 @@ public class EntryType {
   public static final int CLASS_LOAD_START = 88;
   public static final int CLASS_LOAD_END = 89;
   public static final int CLASS_LOAD_FAILED = 90;
+  public static final int STRING_NAME = 91;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -188,5 +189,6 @@ public class EntryType {
     "CLASS_LOAD_START",
     "CLASS_LOAD_END",
     "CLASS_LOAD_FAILED",
+    "STRING_NAME",
   };
 }

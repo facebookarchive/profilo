@@ -105,13 +105,8 @@ void log_systrace(int fd, const void *buf, size_t count) {
       name++; // skip '|' to the next character
       ssize_t len = msg + count - name;
       if (len > 0) {
-        id = logger.writeBytes(
-          entries::STRING_KEY,
-          id,
-          (const uint8_t *)"__name",
-          6);
         logger.writeBytes(
-          entries::STRING_VALUE,
+          entries::STRING_NAME,
           id,
           (const uint8_t *)name,
           std::min(len, kAtraceMessageLength));

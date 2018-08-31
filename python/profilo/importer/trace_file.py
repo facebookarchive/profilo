@@ -21,7 +21,7 @@ class TraceEntry(object):
     @staticmethod
     def construct(line):
         line = line.split('|')
-        if line[1] in ['STRING_KEY', 'STRING_VALUE']:
+        if line[1] in ['STRING_KEY', 'STRING_VALUE', 'STRING_NAME']:
             return BytesEntry(
                 id=int(line[0]),
                 type=line[1],

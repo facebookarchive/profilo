@@ -1,4 +1,4 @@
-// @generated SignedSource<<c98bb416744d9fac0ab41bf3d67e1b9b>>
+// @generated SignedSource<<f950ac61ee8a0e40f9f65c03d260b0f9>>
 
 #pragma once
 
@@ -97,6 +97,7 @@ enum EntryType {
   CLASS_LOAD_START = 88,
   CLASS_LOAD_END = 89,
   CLASS_LOAD_FAILED = 90,
+  STRING_NAME = 91,
 };
 
 
