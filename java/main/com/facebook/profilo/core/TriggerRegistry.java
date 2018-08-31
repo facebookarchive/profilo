@@ -18,6 +18,7 @@ package com.facebook.profilo.core;
 
 import com.facebook.proguard.annotations.DoNotStrip;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nullable;
 
 /**
@@ -67,5 +68,10 @@ public final class TriggerRegistry {
   /** Retrieve the bitmask for the registered triggers. */
   public static int getBitMaskForAllTriggers() {
     return sRegistry.getBitMaskForAllEntries();
+  }
+
+  /** Retrieve the names of the triggers from their bit mask. */
+  public static Set<String> getRegisteredTriggersByBitMask(int bitMask) {
+    return sRegistry.getRegisteredEntriesByBitMask(bitMask);
   }
 }
