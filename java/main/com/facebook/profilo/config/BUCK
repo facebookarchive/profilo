@@ -6,9 +6,6 @@ fb_core_android_library(
     srcs = glob([
         "*.java",
     ]),
-    tests = [
-        profilo_path("java/test/com/facebook/profilo/config:config"),
-    ],
     visibility = [
         "//instrumentation_tests/com/facebook/quicklog/...",
         profilo_path("..."),
