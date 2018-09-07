@@ -536,7 +536,7 @@ public final class TraceOrchestrator
     mTraces.remove(traceId);
     mListenerManager.onTraceWriteAbort(traceId, abortReason);
 
-    Log.w(TAG, "Trace is aborted with code: " + String.valueOf(abortReason));
+    Log.w(TAG, "Trace is aborted with code: " + ProfiloConstants.abortReasonName(abortReason));
     TraceControl traceControl = TraceControl.get();
     if (traceControl == null) {
       throw new IllegalStateException("No TraceControl when cleaning up aborted trace");

@@ -169,9 +169,10 @@ public class TraceControlHandler extends Handler {
           LOG_TAG,
           String.format(
               Locale.US,
-              "Aborted trace %s for reason %d",
+              "Aborted trace %s for reason %d%s",
               context.encodedTraceId,
-              context.abortReason));
+              ProfiloConstants.unpackRemoteAbortReason(context.abortReason),
+              ProfiloConstants.isRemoteAbort(context.abortReason) ? " (remote process)" : ""));
     }
   }
 }

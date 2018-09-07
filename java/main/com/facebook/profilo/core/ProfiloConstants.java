@@ -30,5 +30,37 @@ public final class ProfiloConstants {
   public static final int ABORT_REASON_MISSED_EVENT = 3;
   public static final int ABORT_REASON_TIMEOUT = 4;
   public static final int ABORT_REASON_NEW_START = 5;
-  public static final int ABORT_REASON_REMOTE_PROCESS = 6;
+
+  // Things in the remote process can go wrong for the same reason as in the
+  // main process. Thus, just mark if the reason is "remote" by using a single
+  // bit
+  public static final int REMOTE_PROCESS_BIT = 0x80000000;
+
+  public static int packRemoteAbortReason(int abortReason) {
+    return (abortReason | REMOTE_PROCESS_BIT);
+  }
+
+  public static int unpackRemoteAbortReason(int remoteAbortReason) {
+    return (remoteAbortReason & ~REMOTE_PROCESS_BIT);
+  }
+
+  public static boolean isRemoteAbort(int abortReason) {
+    return (abortReason & REMOTE_PROCESS_BIT) == REMOTE_PROCESS_BIT;
+  }
+
+  public static String abortReasonName(int abortReason) {
+    switch (abortReason) {
+      case ABORT_REASON_UNKNOWN:
+        return "unknown";
+      case ABORT_REASON_CONTROLLER_INITIATED:
+        return "controller_init";
+      case ABORT_REASON_MISSED_EVENT:
+        return "missed_event";
+      case ABORT_REASON_TIMEOUT:
+        return "timeout";
+      case ABORT_REASON_NEW_START:
+        return "new_start";
+    }
+    return "UNKNOWN REASON " + abortReason;
+  }
 }
