@@ -21,7 +21,7 @@ PROVIDER_TO_RULE = {
     "yarn": profilo_path("java/main/com/facebook/profilo/provider/yarn:yarn"),
 }
 
-def profilo_sample_app(srcs, manifest, providers, deps = [], provider_to_rule=PROVIDER_TO_RULE):
+def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], provider_to_rule=PROVIDER_TO_RULE):
     """
     Defines a sample app based on a list of provider short names.
 
@@ -31,7 +31,8 @@ def profilo_sample_app(srcs, manifest, providers, deps = [], provider_to_rule=PR
     Args:
         srcs:          Top-level java files. Should include, at least, a concrete
                        implementation of BaseSampleAppMainActivity.
-        manifest:      The manifest file, or target, to use for your sample app.
+        app_manifest:  The manifest file, or target, to use for your sample app.
+        aar_manifest:  The manifest file, or target, to use for the associated aar targets
         providers:     A list of valid entry keys in PROVIDER_TO_RULE, or None.
         deps:          Any extra dependencies your java files use. Provider dependencies, as well
                        as `profilo_path("java/main/com/facebook/profilo/core:core")` (for
@@ -70,24 +71,38 @@ def profilo_sample_app(srcs, manifest, providers, deps = [], provider_to_rule=PR
     ]
 
     fb_core_android_library(
-        name = "sample-activity-{}".format(providers_string),
-        srcs = srcs,
-        provided_deps = provided_deps,
+        name = "sample-providers-{}".format(providers_string),
+        exported_deps = [
+            profilo_path("java/main/com/facebook/profilo/core:core"),
+        ] + provider_deps + deps,
         visibility = [
             profilo_path("..."),
         ],
+    )
+
+    fb_core_android_library(
+        name = "sample-activity-{}".format(providers_string),
+        srcs = srcs,
+        provided_deps = provided_deps,
         deps = [
-            profilo_path("java/main/com/facebook/profilo/core:core"),
+            ":sample-providers-{}".format(providers_string),
             profilo_path("java/main/com/facebook/profilo/sample:sample-lib"),
-        ] + provider_deps + deps,
+        ],
+        visibility = [
+            profilo_path("..."),
+        ],
     )
 
     native.android_aar(
         name = "sample-aar-{}".format(providers_string),
-        manifest_skeleton = manifest,
+        manifest_skeleton = aar_manifest,
         deps = [
-            ":sample-buildconfig-{}".format(providers_string),
-            ":sample-activity-{}".format(providers_string),
+            ":sample-providers-{}".format(providers_string),
+            profilo_path("java/main/com/facebook/profilo/config:config"),
+            profilo_path("java/main/com/facebook/profilo/controllers/external:external"),
+            profilo_path("java/main/com/facebook/profilo/controllers/external/api:api"),
+            profilo_path("java/main/com/facebook/profilo/core:core"),
+            profilo_path("deps/soloader:soloader"),
         ],
         visibility = [
             "PUBLIC",
@@ -97,7 +112,7 @@ def profilo_sample_app(srcs, manifest, providers, deps = [], provider_to_rule=PR
     native.android_binary(
         name = "sample-{}".format(providers_string),
         keystore = profilo_path("java/main/com/facebook/profilo/sample:keystore"),
-        manifest = manifest,
+        manifest = app_manifest,
         deps = [
             ":sample-buildconfig-{}".format(providers_string),
             ":sample-activity-{}".format(providers_string),

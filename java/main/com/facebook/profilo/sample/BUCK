@@ -11,14 +11,6 @@ keystore(
     ],
 )
 
-android_manifest(
-    name = "manifest",
-    skeleton = "AndroidManifest.xml",
-    visibility = [
-        profilo_path("..."),
-    ],
-)
-
 SAMPLE_LIB_SRCS = [
     "BaseSampleAppMainActivity.java",
     "WorkloadThread.java",
@@ -55,16 +47,26 @@ ACTIVITY_SRCS = glob(
     exclude = SAMPLE_LIB_SRCS,
 )
 
+export_file(
+    name = "aar-manifest",
+    src = "AndroidManifest-aar.xml",
+    visibility = [
+        "PUBLIC",
+    ],
+)
+
 profilo_sample_app(
     srcs = ACTIVITY_SRCS,
-    manifest = "AndroidManifest.xml",
+    aar_manifest = ":aar-manifest",
+    app_manifest = "AndroidManifest-sample.xml",
     providers = None,
 )
 
 # Referred to by open source buckconfig, don't forget to update it there.
 profilo_sample_app(
     srcs = ACTIVITY_SRCS,
-    manifest = "AndroidManifest.xml",
+    aar_manifest = ":aar-manifest",
+    app_manifest = "AndroidManifest-sample.xml",
     providers = [
         "atrace",
         "stacktrace",
@@ -75,7 +77,8 @@ profilo_sample_app(
 
 profilo_sample_app(
     srcs = ACTIVITY_SRCS,
-    manifest = "AndroidManifest.xml",
+    aar_manifest = ":aar-manifest",
+    app_manifest = "AndroidManifest-sample.xml",
     providers = [
         "atrace",
         "processmetadata",
@@ -89,7 +92,8 @@ profilo_sample_app(
 [
     profilo_sample_app(
         srcs = ACTIVITY_SRCS,
-        manifest = "AndroidManifest.xml",
+        aar_manifest = ":aar-manifest",
+        app_manifest = "AndroidManifest-sample.xml",
         providers = [
             provider,
         ],
