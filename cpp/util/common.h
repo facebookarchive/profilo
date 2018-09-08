@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
+#include <unistd.h>
 #include <atomic>
 #include <type_traits>
-#include <unistd.h>
 
 namespace facebook {
 namespace profilo {
@@ -26,5 +26,5 @@ int32_t threadID();
 // Returns 0 if value was not found, and 1 if value <= 1, actual value otherwise
 int32_t systemClockTickIntervalMs();
 
-} // profilo
-} // facebook
+} // namespace profilo
+} // namespace facebook

@@ -24,6 +24,6 @@ namespace atrace {
 
 void registerNatives();
 
-} // atrace
-} // profilo
-} // facebook
+} // namespace atrace
+} // namespace profilo
+} // namespace facebook

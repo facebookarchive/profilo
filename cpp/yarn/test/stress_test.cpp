@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
+#include <stdlib.h>
 #include <atomic>
 #include <chrono>
 #include <cstdlib>
-#include <stdlib.h>
 #include <iostream>
 #include <mutex>
-#include <thread>
 #include <system_error>
+#include <thread>
 #include <vector>
 
 #include <yarn/Session.h>
@@ -52,62 +52,49 @@ void worker_thread() {
   }
 }
 
-class PrintingListener: public RecordListener {
-public:
+class PrintingListener : public RecordListener {
+ public:
   virtual void onMmap(const RecordMmap& record) {
     std::cout << "mmap {"
-      << "pid: " << record.pid
-      << " tid: " << record.tid
-      << " addr: " << record.addr
-      << " len: " << record.len
-      << " pgoff: " << record.pgoff
-      << " filename: " << &record.filename
-      << "}" << std::endl;
+              << "pid: " << record.pid << " tid: " << record.tid
+              << " addr: " << record.addr << " len: " << record.len
+              << " pgoff: " << record.pgoff << " filename: " << &record.filename
+              << "}" << std::endl;
   }
 
   virtual void onSample(const EventType type, const RecordSample& record) {
     std::cout << "sample "
-      << "(" << record.size() << ") "
-      << "{"
-      << "type: " << type
-      << " pid: " << record.pid()
-      << " tid: " << record.tid()
-      << " cpu: " << record.cpu()
-      //<< " ip: " << record.ip()
-      << " id: " << record.id()
-      << " (" << record.groupLeaderId() << ")"
-      << " addr: " << record.addr()
-      << " time: " << record.time()
-      << " running: " << record.timeRunning()
-      << " enabled: " << record.timeEnabled()
-      << "}" << "\n";
+              << "(" << record.size() << ") "
+              << "{"
+              << "type: " << type << " pid: " << record.pid()
+              << " tid: " << record.tid() << " cpu: "
+              << record.cpu()
+              //<< " ip: " << record.ip()
+              << " id: " << record.id() << " (" << record.groupLeaderId() << ")"
+              << " addr: " << record.addr() << " time: " << record.time()
+              << " running: " << record.timeRunning()
+              << " enabled: " << record.timeEnabled() << "}"
+              << "\n";
   }
 
   virtual void onForkEnter(const RecordForkExit& record) {
     std::cout << "fork_enter {"
-      << "pid: " << record.pid
-      << " tid: " << record.tid
-      << " ppid: " << record.ppid
-      << " ptid: " << record.ptid
-      << " time: " << record.time
-      << "}" << std::endl;
+              << "pid: " << record.pid << " tid: " << record.tid
+              << " ppid: " << record.ppid << " ptid: " << record.ptid
+              << " time: " << record.time << "}" << std::endl;
   }
 
   virtual void onForkExit(const RecordForkExit& record) {
     std::cout << "fork_exit {"
-      << "pid: " << record.pid
-      << " tid: " << record.tid
-      << " ppid: " << record.ppid
-      << " ptid: " << record.ptid
-      << " time: " << record.time
-      << "}" << std::endl;
+              << "pid: " << record.pid << " tid: " << record.tid
+              << " ppid: " << record.ppid << " ptid: " << record.ptid
+              << " time: " << record.time << "}" << std::endl;
   }
 
   virtual void onLost(const RecordLost& record) {
     std::cout << "lost {"
-      << "id: " << record.id
-      << " lost: " << record.lost
-      << "}" << std::endl;
+              << "id: " << record.id << " lost: " << record.lost << "}"
+              << std::endl;
   }
 
   virtual void onReaderStop() {
@@ -117,30 +104,21 @@ public:
 
 void perf_thread() {
   std::cout << ">> Perf tid: " << gettid() << std::endl;
-  EventSpec spec_clock = {
-    .type = EVENT_TYPE_TASK_CLOCK,
-    .tid = EventSpec::kAllThreads
-  };
-  (void) spec_clock;
-  EventSpec spec_ctx = {
-    .type = EVENT_TYPE_CONTEXT_SWITCHES,
-    .tid = EventSpec::kAllThreads
-  };
-  EventSpec spec_cpu_clock = {
-    .type = EVENT_TYPE_CPU_CLOCK,
-    .tid = EventSpec::kAllThreads
-  };
-  auto session = std::unique_ptr<Session>(
-    new Session(
-    {spec_ctx, spec_cpu_clock},
-    {
-      .fallbacks = FALLBACK_RAISE_RLIMIT,
-      .maxAttachIterations = 3,
-      .maxAttachedFdsRatio = 0.5,
-    },
-    std::unique_ptr<RecordListener>(new PrintingListener())
-    )
-  );
+  EventSpec spec_clock = {.type = EVENT_TYPE_TASK_CLOCK,
+                          .tid = EventSpec::kAllThreads};
+  (void)spec_clock;
+  EventSpec spec_ctx = {.type = EVENT_TYPE_CONTEXT_SWITCHES,
+                        .tid = EventSpec::kAllThreads};
+  EventSpec spec_cpu_clock = {.type = EVENT_TYPE_CPU_CLOCK,
+                              .tid = EventSpec::kAllThreads};
+  auto session = std::unique_ptr<Session>(new Session(
+      {spec_ctx, spec_cpu_clock},
+      {
+          .fallbacks = FALLBACK_RAISE_RLIMIT,
+          .maxAttachIterations = 3,
+          .maxAttachedFdsRatio = 0.5,
+      },
+      std::unique_ptr<RecordListener>(new PrintingListener())));
   if (!session->attach()) {
     std::cout << ">> Could not attach!" << std::endl;
     return;
@@ -148,8 +126,8 @@ void perf_thread() {
 
   std::cout << ">> Starting read loop.." << std::endl;
   auto reader_thread = std::thread([&session]() {
-      std::cout << ">> Reader tid: " << gettid() << std::endl;
-      session->read();
+    std::cout << ">> Reader tid: " << gettid() << std::endl;
+    session->read();
   });
 
   while (run_perf) {
@@ -176,7 +154,7 @@ int main(int argc, char** argv) {
     threads.emplace_back(std::thread(&worker_thread));
   }
 
-  for (auto& thread: threads) {
+  for (auto& thread : threads) {
     thread.join();
   }
   run_perf.store(false, std::memory_order_seq_cst);

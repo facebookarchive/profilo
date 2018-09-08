@@ -15,8 +15,8 @@
  */
 
 #include <jni.h>
-#include <fbjni/fbjni.h>
 #include <fb/xplat_init.h>
+#include <fbjni/fbjni.h>
 #include <sigmuxsetup/sigmuxsetup.h>
 
 #include "Atrace.h"

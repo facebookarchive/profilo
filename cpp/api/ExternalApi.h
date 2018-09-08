@@ -47,8 +47,8 @@
 
 #include <profilo/ExternalApiGlue.h>
 
-#include <unistd.h>
 #include <stdint.h>
+#include <unistd.h>
 
 #ifdef __cplusplus
 extern "C" {

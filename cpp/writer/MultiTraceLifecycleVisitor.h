@@ -17,10 +17,10 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <profilo/RingBuffer.h>
 #include <profilo/writer/AbortReason.h>
 #include <profilo/writer/TraceCallbacks.h>
 #include <profilo/writer/TraceLifecycleVisitor.h>
-#include <profilo/RingBuffer.h>
 
 namespace facebook {
 namespace profilo {
@@ -28,14 +28,15 @@ namespace writer {
 
 using namespace facebook::profilo::entries;
 
-class MultiTraceLifecycleVisitor: public EntryVisitor {
-public:
+class MultiTraceLifecycleVisitor : public EntryVisitor {
+ public:
   MultiTraceLifecycleVisitor(
-    const std::string& folder,
-    const std::string& trace_prefix,
-    std::shared_ptr<TraceCallbacks> callbacks,
-    const std::vector<std::pair<std::string, std::string>>& headers,
-    std::function<void(TraceLifecycleVisitor& visitor)> trace_backward_callback);
+      const std::string& folder,
+      const std::string& trace_prefix,
+      std::shared_ptr<TraceCallbacks> callbacks,
+      const std::vector<std::pair<std::string, std::string>>& headers,
+      std::function<void(TraceLifecycleVisitor& visitor)>
+          trace_backward_callback);
   virtual void visit(const StandardEntry& entry) override;
   virtual void visit(const FramesEntry& entry) override;
   virtual void visit(const BytesEntry& entry) override;
@@ -44,7 +45,7 @@ public:
   bool done();
   std::unordered_set<int64_t> getConsumedTraces();
 
-private:
+ private:
   const std::string& folder_;
   const std::string& trace_prefix_;
   std::shared_ptr<TraceCallbacks> callbacks_;

@@ -16,9 +16,9 @@
 
 #pragma once
 
-#include <utility>
-#include <system_error>
 #include <sys/resource.h>
+#include <system_error>
+#include <utility>
 
 namespace facebook {
 namespace yarn {
@@ -27,6 +27,6 @@ namespace detail {
 rlimit getrlimit(int resource);
 void setrlimit(int resource, const rlimit& limits);
 
-} // detail
-} // yarn
-} // facebook
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

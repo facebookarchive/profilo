@@ -23,36 +23,33 @@ namespace parser {
 
 // Returns the number of bytes read
 size_t parseEvent(
-  void* data,
-  size_t offset,
-  const Event& bufferEvent,
-  IdEventMap& idEventMap,
-  RecordListener* listener
-);
+    void* data,
+    size_t offset,
+    const Event& bufferEvent,
+    IdEventMap& idEventMap,
+    RecordListener* listener);
 void notifyMmap(void* data, RecordListener* listener);
 void notifyForkEnter(void* data, RecordListener* listener);
 void notifyForkExit(void* data, RecordListener* listener);
 void notifyLost(void* data, RecordListener* listener);
 void notifySample(
-  void* data,
-  size_t size,
-  uint64_t sample_type,
-  uint64_t read_format,
-  const IdEventMap& idEventMap,
-  RecordListener* listener
-);
+    void* data,
+    size_t size,
+    uint64_t sample_type,
+    uint64_t read_format,
+    const IdEventMap& idEventMap,
+    RecordListener* listener);
 
 void parseBuffer(
-  const Event& bufferEvent,
-  IdEventMap& idEventMap,
-  RecordListener* listener
-) {
+    const Event& bufferEvent,
+    IdEventMap& idEventMap,
+    RecordListener* listener) {
   if (bufferEvent.buffer() == nullptr) {
     throw std::invalid_argument("Event must be mapped in order to be parsed");
   }
 
   void* buffer = bufferEvent.buffer();
-  perf_event_mmap_page* header = (perf_event_mmap_page*) buffer;
+  perf_event_mmap_page* header = (perf_event_mmap_page*)buffer;
 
   /*printf("header version: %.8x\n", header->version);
   printf("  head: %.16llx\n", header->data_head);
@@ -60,16 +57,19 @@ void parseBuffer(
   printf("  lock: %.8x\n", header->lock);
   printf("  enabled: %.16llx\n", header->time_enabled);
   printf("  running: %.16llx\n", header->time_running);*/
-  printf("buffer {enabled: %llu running: %llu}\n", header->time_enabled, header->time_running);
+  printf(
+      "buffer {enabled: %llu running: %llu}\n",
+      header->time_enabled,
+      header->time_running);
 
-  uint8_t* data = ((uint8_t*) buffer) + PAGE_SIZE;
+  uint8_t* data = ((uint8_t*)buffer) + PAGE_SIZE;
   size_t last_read = header->data_tail;
 
   size_t buffer_data_size = bufferEvent.bufferSize() - PAGE_SIZE;
 
   while (last_read < header->data_head) {
-    // data_head and data_tail (last_read) are not restricted to within the buffer
-    // boundaries. Wrap explicitly to find the offset within the buffer.
+    // data_head and data_tail (last_read) are not restricted to within the
+    // buffer boundaries. Wrap explicitly to find the offset within the buffer.
     size_t offset = (last_read % buffer_data_size);
     last_read += parseEvent(data, offset, bufferEvent, idEventMap, listener);
   }
@@ -77,12 +77,11 @@ void parseBuffer(
 }
 
 size_t parseEvent(
-  void* data,
-  size_t offset,
-  const Event& bufferEvent,
-  IdEventMap& idEventMap,
-  RecordListener* listener
-) {
+    void* data,
+    size_t offset,
+    const Event& bufferEvent,
+    IdEventMap& idEventMap,
+    RecordListener* listener) {
   uint8_t split_buffer[128]; // buffer for reassembling split records
 
   size_t buffer_data_size = bufferEvent.bufferSize() - PAGE_SIZE;
@@ -90,28 +89,36 @@ size_t parseEvent(
     throw std::runtime_error("Unhandled: split perf_event_header");
   }
 
-  perf_event_header* evt_header = (perf_event_header*) ((uint8_t*) data + offset);
-  uint8_t* data_bytes = ((uint8_t*) evt_header) + sizeof(perf_event_header);
+  perf_event_header* evt_header = (perf_event_header*)((uint8_t*)data + offset);
+  uint8_t* data_bytes = ((uint8_t*)evt_header) + sizeof(perf_event_header);
 
   // Note: evt_header->size includes the size of the header itself
   if (offset + evt_header->size > buffer_data_size) {
-    // Split read, copy to buffer and present a contiguous view to the listeners/etc.
+    // Split read, copy to buffer and present a contiguous view to the
+    // listeners/etc.
     if (evt_header->size > sizeof(split_buffer)) {
       throw std::runtime_error("Split event is bigger than our buffer");
     }
-    size_t bytes_to_end = buffer_data_size - (offset + sizeof(perf_event_header));
+    size_t bytes_to_end =
+        buffer_data_size - (offset + sizeof(perf_event_header));
     std::memcpy(split_buffer, data_bytes, bytes_to_end);
-    std::memcpy(split_buffer + bytes_to_end, data, evt_header->size - bytes_to_end);
+    std::memcpy(
+        split_buffer + bytes_to_end, data, evt_header->size - bytes_to_end);
 
     data_bytes = split_buffer;
   }
 
   int type = evt_header->type;
   switch (type) {
-    case PERF_RECORD_SAMPLE:
-    {
+    case PERF_RECORD_SAMPLE: {
       auto attr = bufferEvent.attr();
-      notifySample(data_bytes, evt_header->size, attr.sample_type, attr.read_format, idEventMap, listener);
+      notifySample(
+          data_bytes,
+          evt_header->size,
+          attr.sample_type,
+          attr.read_format,
+          idEventMap,
+          listener);
       break;
     }
     case PERF_RECORD_MMAP:
@@ -133,20 +140,19 @@ size_t parseEvent(
       // Currently unhandled
       break;
     default:
-        throw std::runtime_error("Unhandled event type");
+      throw std::runtime_error("Unhandled event type");
   }
 
   return evt_header->size;
 }
 
 void notifySample(
-  void* data,
-  size_t size,
-  uint64_t sample_type,
-  uint64_t read_format,
-  const IdEventMap& idEventMap,
-  RecordListener* listener
-) {
+    void* data,
+    size_t size,
+    uint64_t sample_type,
+    uint64_t read_format,
+    const IdEventMap& idEventMap,
+    RecordListener* listener) {
   if (listener == nullptr) {
     return;
   }
@@ -162,7 +168,7 @@ void notifyMmap(void* data, RecordListener* listener) {
   if (listener == nullptr) {
     return;
   }
-  RecordMmap* rec = (RecordMmap*) data;
+  RecordMmap* rec = (RecordMmap*)data;
   listener->onMmap(*rec);
 }
 
@@ -170,7 +176,7 @@ void notifyForkEnter(void* data, RecordListener* listener) {
   if (listener == nullptr) {
     return;
   }
-  RecordForkExit* rec = (RecordForkExit*) data;
+  RecordForkExit* rec = (RecordForkExit*)data;
   listener->onForkEnter(*rec);
 }
 
@@ -178,7 +184,7 @@ void notifyForkExit(void* data, RecordListener* listener) {
   if (listener == nullptr) {
     return;
   }
-  RecordForkExit* rec = (RecordForkExit*) data;
+  RecordForkExit* rec = (RecordForkExit*)data;
   listener->onForkExit(*rec);
 }
 
@@ -186,11 +192,11 @@ void notifyLost(void* data, RecordListener* listener) {
   if (listener == nullptr) {
     return;
   }
-  RecordLost* rec = (RecordLost*) data;
+  RecordLost* rec = (RecordLost*)data;
   listener->onLost(*rec);
 }
 
-} // parser
-} // detail
-} // yarn
-} // facebook
+} // namespace parser
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

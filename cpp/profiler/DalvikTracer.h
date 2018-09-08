@@ -16,7 +16,6 @@
 
 #pragma once
 
-
 #include <unistd.h>
 
 #include <dalvik-subset/internals.h>
@@ -28,14 +27,13 @@ namespace facebook {
 namespace profilo {
 namespace profiler {
 
-using dvmThreadSelf_t = Thread*(*)();
+using dvmThreadSelf_t = Thread* (*)();
 
 class DalvikTracer : public BaseTracer {
-public:
-
+ public:
   DalvikTracer();
 
-  DalvikTracer(const DalvikTracer &obj) = delete;
+  DalvikTracer(const DalvikTracer& obj) = delete;
   DalvikTracer& operator=(DalvikTracer obj) = delete;
 
   bool collectStack(
@@ -44,11 +42,8 @@ public:
       uint8_t& depth,
       uint8_t max_depth) override;
 
-  void flushStack(
-    int64_t* frames,
-    uint8_t depth,
-    int tid,
-    int64_t time_) override;
+  void flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_)
+      override;
 
   void prepare() override;
 
@@ -56,8 +51,7 @@ public:
 
   void startTracing() override;
 
-
-private:
+ private:
   dvmThreadSelf_t dvmThreadSelf_;
 };
 

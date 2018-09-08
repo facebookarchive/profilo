@@ -20,14 +20,14 @@
 extern "C" {
 #endif
 
-#define __ABORT_MESSAGE_PREFIX(file, line)  file ":" line " "
-#define __TO_STR_INDIRECTED(x)  #x
+#define __ABORT_MESSAGE_PREFIX(file, line) file ":" line " "
+#define __TO_STR_INDIRECTED(x) #x
 #define __TO_STR(x) __TO_STR_INDIRECTED(x)
 
-#define abortWithReason(msg)  abortWithReasonImpl(__ABORT_MESSAGE_PREFIX(__FILE__, __TO_STR(__LINE__)) msg)
+#define abortWithReason(msg) \
+  abortWithReasonImpl(__ABORT_MESSAGE_PREFIX(__FILE__, __TO_STR(__LINE__)) msg)
 
-__attribute__((noreturn))
-void abortWithReasonImpl(const char* reason);
+__attribute__((noreturn)) void abortWithReasonImpl(const char* reason);
 
 #ifdef __cplusplus
 } // extern "C"

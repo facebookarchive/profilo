@@ -95,10 +95,9 @@ class LockFreeRingBuffer {
   };
 
   explicit LockFreeRingBuffer(uint32_t capacity) noexcept
-    : capacity_(capacity)
-    , slots_(new detail::RingBufferSlot<T,Atom>[capacity])
-    , ticket_(0)
-  {}
+      : capacity_(capacity),
+        slots_(new detail::RingBufferSlot<T, Atom>[capacity]),
+        ticket_(0) {}
 
   LockFreeRingBuffer(LockFreeRingBuffer const&) = delete;
   LockFreeRingBuffer& operator=(LockFreeRingBuffer const&) = delete;
@@ -161,13 +160,12 @@ class LockFreeRingBuffer {
     return Cursor(ticket - backStep);
   }
 
-  ~LockFreeRingBuffer() {
-  }
+  ~LockFreeRingBuffer() {}
 
  private:
   const uint32_t capacity_;
 
-  const std::unique_ptr<detail::RingBufferSlot<T,Atom>[]> slots_;
+  const std::unique_ptr<detail::RingBufferSlot<T, Atom>[]> slots_;
 
   Atom<uint64_t> ticket_;
 
@@ -184,11 +182,7 @@ namespace detail {
 template <typename T, template <typename> class Atom>
 class RingBufferSlot {
  public:
-  explicit RingBufferSlot() noexcept
-    : sequencer_()
-    , data()
-  {
-  }
+  explicit RingBufferSlot() noexcept : sequencer_(), data() {}
 
   void write(const uint32_t turn, T& value) noexcept {
     Atom<uint32_t> cutoff(0);
@@ -231,7 +225,7 @@ class RingBufferSlot {
   T data;
 }; // RingBufferSlot
 
-} //namespace detail
+} // namespace detail
 
 } // namespace lfrb
 

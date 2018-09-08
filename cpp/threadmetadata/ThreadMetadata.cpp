@@ -16,11 +16,11 @@
 
 #include <cstring>
 
-#include <profilo/threadmetadata/ThreadMetadata.h>
-#include <profilo/Logger.h>
 #include <profilo/LogEntry.h>
-#include <util/common.h>
+#include <profilo/Logger.h>
+#include <profilo/threadmetadata/ThreadMetadata.h>
 #include <util/ProcFs.h>
+#include <util/common.h>
 
 #include <sys/resource.h>
 
@@ -29,11 +29,10 @@ namespace profilo {
 namespace threadmetadata {
 
 static int32_t logAnnotation(
-  Logger& logger,
-  entries::EntryType type,
-  const char* key,
-  const char* value) {
-
+    Logger& logger,
+    entries::EntryType type,
+    const char* key,
+    const char* value) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
@@ -42,16 +41,16 @@ static int32_t logAnnotation(
   int32_t matchId = logger.write(std::move(entry));
   if (key != nullptr) {
     matchId = logger.writeBytes(
-      entries::STRING_KEY,
-      matchId,
-      reinterpret_cast<const uint8_t*>(key),
-      strlen(key));
+        entries::STRING_KEY,
+        matchId,
+        reinterpret_cast<const uint8_t*>(key),
+        strlen(key));
   }
   return logger.writeBytes(
-    entries::STRING_VALUE,
-    matchId,
-    reinterpret_cast<const uint8_t*>(value),
-    strlen(value));
+      entries::STRING_VALUE,
+      matchId,
+      reinterpret_cast<const uint8_t*>(value),
+      strlen(value));
 }
 
 static void logThreadName(Logger& logger, uint32_t tid) {
@@ -65,10 +64,7 @@ static void logThreadName(Logger& logger, uint32_t tid) {
   snprintf(threadId, 16, "%d", tid);
 
   logAnnotation(
-    logger,
-    entries::TRACE_THREAD_NAME,
-    threadId,
-    threadName.data());
+      logger, entries::TRACE_THREAD_NAME, threadId, threadName.data());
 }
 
 static void logThreadPriority(Logger& logger, int32_t tid) {
@@ -79,14 +75,14 @@ static void logThreadPriority(Logger& logger, int32_t tid) {
     return; // Priority is not available
   }
 
-  logger.write(StandardEntry {
-    .id = 0,
-    .type = entries::TRACE_THREAD_PRI,
-    .timestamp = monotonicTime(),
-    .tid = tid,
-    .callid = 0,
-    .matchid = 0,
-    .extra = priority,
+  logger.write(StandardEntry{
+      .id = 0,
+      .type = entries::TRACE_THREAD_PRI,
+      .timestamp = monotonicTime(),
+      .tid = tid,
+      .callid = 0,
+      .matchid = 0,
+      .extra = priority,
   });
 }
 
@@ -101,6 +97,6 @@ void logThreadMetadata(JNIEnv*, jobject) {
   }
 }
 
-} // threadmetadata
-} // profilo
-} // facebook
+} // namespace threadmetadata
+} // namespace profilo
+} // namespace facebook

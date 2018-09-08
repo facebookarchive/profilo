@@ -17,8 +17,8 @@
 #pragma once
 
 #include <linux/perf_event.h>
-#include <stdexcept>
 #include <unistd.h>
+#include <stdexcept>
 
 #include <yarn/Event.h>
 
@@ -42,16 +42,20 @@ struct RecordMmap {
 struct RecordLost {
   uint64_t id;
   uint64_t lost;
-  //struct sample_id sample_id;
+  // struct sample_id sample_id;
 };
 
 class RecordSample {
-public:
-  // Memory management is left to the caller, this class 
+ public:
+  // Memory management is left to the caller, this class
   // is just a facade and will perform no copies.
-  RecordSample(void* data, size_t len, uint64_t sample_type, uint64_t read_format);
+  RecordSample(
+      void* data,
+      size_t len,
+      uint64_t sample_type,
+      uint64_t read_format);
 
-  // This object does not own any data and a copy may outlive 
+  // This object does not own any data and a copy may outlive
   // the pointed-to buffer.
   RecordSample(const RecordSample& other) = delete;
 
@@ -68,8 +72,8 @@ public:
 
   // Debugging:
   size_t size() const;
-  
-private:
+
+ private:
   uint8_t* data_;
   size_t len_;
   uint64_t sample_type_;
@@ -86,12 +90,14 @@ private:
 //
 struct RecordListener {
   virtual void onMmap(const RecordMmap& record) = 0;
-  virtual void onSample(const EventType eventType, const RecordSample& record) = 0;
+  virtual void onSample(
+      const EventType eventType,
+      const RecordSample& record) = 0;
   virtual void onForkEnter(const RecordForkExit& record) = 0;
   virtual void onForkExit(const RecordForkExit& record) = 0;
   virtual void onLost(const RecordLost& record) = 0;
   virtual void onReaderStop() = 0;
 };
 
-} // yarn
-} // facebook
+} // namespace yarn
+} // namespace facebook

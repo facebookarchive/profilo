@@ -17,12 +17,12 @@
 #include "ArtCompatibility.h"
 #include "ArtCompatibilityRunner.h"
 
-#include "profiler/BaseTracer.h"
 #include "profiler/ArtUnwindcTracer_600.h"
 #include "profiler/ArtUnwindcTracer_700.h"
 #include "profiler/ArtUnwindcTracer_710.h"
 #include "profiler/ArtUnwindcTracer_711.h"
 #include "profiler/ArtUnwindcTracer_712.h"
+#include "profiler/BaseTracer.h"
 
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
@@ -42,46 +42,37 @@ using namespace profiler::tracers;
 jboolean check(JNIEnv* env, jclass, jint tracers) {
   if (tracers & ART_UNWINDC_6_0) {
     auto tracer = std::make_unique<profiler::ArtUnwindcTracer60>();
-    return runJavaCompatibilityCheck(
-      versions::ANDROID_6_0,
-      tracer.get());
+    return runJavaCompatibilityCheck(versions::ANDROID_6_0, tracer.get());
   } else if (tracers & ART_UNWINDC_7_0_0) {
     auto tracer = std::make_unique<profiler::ArtUnwindcTracer700>();
-    return runJavaCompatibilityCheck(
-      versions::ANDROID_7_0,
-      tracer.get());
+    return runJavaCompatibilityCheck(versions::ANDROID_7_0, tracer.get());
   } else if (tracers & ART_UNWINDC_7_1_0) {
     auto tracer = std::make_unique<profiler::ArtUnwindcTracer710>();
-    return runJavaCompatibilityCheck(
-      versions::ANDROID_7_0,
-      tracer.get());
+    return runJavaCompatibilityCheck(versions::ANDROID_7_0, tracer.get());
   } else if (tracers & ART_UNWINDC_7_1_1) {
     auto tracer = std::make_unique<profiler::ArtUnwindcTracer711>();
-    return runJavaCompatibilityCheck(
-      versions::ANDROID_7_0,
-      tracer.get());
+    return runJavaCompatibilityCheck(versions::ANDROID_7_0, tracer.get());
   } else if (tracers & ART_UNWINDC_7_1_2) {
     auto tracer = std::make_unique<profiler::ArtUnwindcTracer712>();
-    return runJavaCompatibilityCheck(
-      versions::ANDROID_7_0,
-      tracer.get());
+    return runJavaCompatibilityCheck(versions::ANDROID_7_0, tracer.get());
   } else {
     return false;
   }
 }
 
-}
+} // namespace
 
 void registerNatives() {
-  constexpr auto kArtCompatibilityType = "com/facebook/profilo/provider/stacktrace/ArtCompatibility";
+  constexpr auto kArtCompatibilityType =
+      "com/facebook/profilo/provider/stacktrace/ArtCompatibility";
 
   fbjni::registerNatives(
-    kArtCompatibilityType,
-    {
-      makeNativeMethod("nativeCheck", check),
-    });
+      kArtCompatibilityType,
+      {
+          makeNativeMethod("nativeCheck", check),
+      });
 }
 
-} // artcompat
-} // profilo
-} // facebook
+} // namespace artcompat
+} // namespace profilo
+} // namespace facebook

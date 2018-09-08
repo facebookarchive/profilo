@@ -16,19 +16,18 @@
 
 #include <yarn/Session.h>
 
-
 namespace facebook {
 namespace yarn {
 
 Session::Session(
-  const std::vector<EventSpec>& events,
-  const SessionSpec& spec,
-  std::unique_ptr<RecordListener> listener
-):events_(events),
-  spec_(spec),
-  perf_events_(),
-  reader_(nullptr),
-  listener_(std::move(listener)) {}
+    const std::vector<EventSpec>& events,
+    const SessionSpec& spec,
+    std::unique_ptr<RecordListener> listener)
+    : events_(events),
+      spec_(spec),
+      perf_events_(),
+      reader_(nullptr),
+      listener_(std::move(listener)) {}
 
 bool Session::attach() {
   if (!perf_events_.empty()) {
@@ -67,7 +66,8 @@ void Session::read() {
   }
 
   if (reader_ == nullptr) {
-    reader_ = detail::make_unique<detail::FdPollReader>(perf_events_, listener_.get());
+    reader_ = detail::make_unique<detail::FdPollReader>(
+        perf_events_, listener_.get());
   }
   reader_->run();
 }
@@ -79,6 +79,5 @@ void Session::stopRead() {
   reader_->stop();
 }
 
-
-} // yarn
-} // facebook
+} // namespace yarn
+} // namespace facebook

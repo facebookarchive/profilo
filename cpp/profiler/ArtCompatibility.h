@@ -22,6 +22,6 @@ namespace artcompat {
 
 void registerNatives();
 
-} // artcompat
-} // profilo
-} // facebook
+} // namespace artcompat
+} // namespace profilo
+} // namespace facebook

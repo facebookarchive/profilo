@@ -16,8 +16,8 @@
 
 #include <vector>
 
-#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/PacketLogger.h>
+#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/writer/PacketReassembler.h>
 
 #include <gtest/gtest.h>
@@ -38,9 +38,7 @@ TEST(Logger, testPacketizedWrite) {
   }
 
   PacketBuffer buffer(1000);
-  PacketLogger logger([&]() -> PacketBuffer& {
-    return buffer;
-  });
+  PacketLogger logger([&]() -> PacketBuffer& { return buffer; });
 
   //
   // Try different sized writes from 1 to data.size().
@@ -86,9 +84,7 @@ TEST(Logger, testPacketizedWriteBackwards) {
   //
   for (size_t i = 1; i <= data.size(); ++i) {
     PacketBuffer buffer(1000);
-    PacketLogger logger([&]() -> PacketBuffer& {
-      return buffer;
-    });
+    PacketLogger logger([&]() -> PacketBuffer& { return buffer; });
 
     logger.write(data.data(), i * kItemSize);
 
@@ -118,4 +114,5 @@ TEST(Logger, testPacketizedWriteBackwards) {
   }
 }
 
-} } // facebook::profilo
+} // namespace profilo
+} // namespace facebook

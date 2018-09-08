@@ -18,35 +18,27 @@
 
 #include <fb/Build.h>
 #include <fb/log.h>
-#include <sigmux.h>
 #include <linux_syscall_support.h>
+#include <sigmux.h>
 
 namespace facebook {
 namespace profilo {
 namespace sigmuxsetup {
 
 namespace {
-static int sys_sigaction(int signum, const struct sigaction* act,
+static int sys_sigaction(
+    int signum,
+    const struct sigaction* act,
     struct sigaction* oldact) {
 #ifdef __LP64__
-  return syscall(
-      __NR_rt_sigaction,
-      signum,
-      act,
-      oldact,
-      sizeof(sigset_t));
+  return syscall(__NR_rt_sigaction, signum, act, oldact, sizeof(sigset_t));
 #else
-  return syscall(
-      __NR_sigaction,
-      signum,
-      act,
-      oldact);
-#endif 
+  return syscall(__NR_sigaction, signum, act, oldact);
+#endif
 }
-} // namespace anonymous
+} // namespace
 
 inline void EnsureSigmuxOverridesArtFaultHandler() {
-
   static constexpr auto kL = 21;
   static constexpr auto kNMR1 = 25;
   auto sdk = build::Build::getAndroidSdk();
@@ -88,6 +80,6 @@ inline void EnsureSigmuxOverridesArtFaultHandler() {
   }
 }
 
-}
-}
-}
+} // namespace sigmuxsetup
+} // namespace profilo
+} // namespace facebook

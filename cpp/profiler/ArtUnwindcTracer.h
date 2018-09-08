@@ -32,10 +32,9 @@ enum ArtUnwindcVersion {
   kArtUnwindc712,
 };
 
-template<ArtUnwindcVersion kVersion>
+template <ArtUnwindcVersion kVersion>
 class ArtUnwindcTracer : public BaseTracer {
-public:
-
+ public:
   ArtUnwindcTracer();
 
   bool collectStack(
@@ -44,11 +43,8 @@ public:
       uint8_t& depth,
       uint8_t max_depth) override;
 
-  void flushStack(
-    int64_t* frames,
-    uint8_t depth,
-    int tid,
-    int64_t time_) override;
+  void flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_)
+      override;
 
   void prepare() override;
 

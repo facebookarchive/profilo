@@ -32,16 +32,15 @@ using namespace entries;
  * The profiler gives us frames in bottom-first format (since that's natural
  * for an unwinder). The file format however expects top-first.
  */
-class StackTraceInvertingVisitor: public EntryVisitor {
-public:
-
+class StackTraceInvertingVisitor : public EntryVisitor {
+ public:
   explicit StackTraceInvertingVisitor(EntryVisitor& delegate);
 
   virtual void visit(const StandardEntry& entry) override;
   virtual void visit(const FramesEntry& entry) override;
   virtual void visit(const BytesEntry& entry) override;
 
-private:
+ private:
   EntryVisitor& delegate_;
   std::unique_ptr<int64_t[]> stack_;
 };

@@ -34,8 +34,7 @@ enum ArtVersion {
 
 template <ArtVersion kVersion>
 class ArtTracer : public BaseTracer {
-public:
-
+ public:
   ArtTracer();
 
   bool collectStack(
@@ -44,11 +43,8 @@ public:
       uint8_t& depth,
       uint8_t max_depth) override;
 
-  void flushStack(
-    int64_t* frames,
-    uint8_t depth,
-    int tid,
-    int64_t time_) override;
+  void flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_)
+      override;
 
   void prepare() override;
 

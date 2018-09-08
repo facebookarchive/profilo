@@ -30,12 +30,11 @@ namespace parser {
 using IdEventMap = std::unordered_map<uint64_t, const Event&>;
 
 void parseBuffer(
-  const Event& bufferEvent, 
-  IdEventMap& idEventMap,
-  RecordListener* listener
-);
+    const Event& bufferEvent,
+    IdEventMap& idEventMap,
+    RecordListener* listener);
 
-} // parser
-} // detail
-} // yarn
-} // facebook
+} // namespace parser
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

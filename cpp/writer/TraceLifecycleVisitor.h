@@ -16,11 +16,11 @@
 
 #pragma once
 
+#include <errno.h>
 #include <deque>
 #include <memory>
 #include <utility>
 #include <vector>
-#include <errno.h>
 
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryParser.h>
@@ -35,20 +35,19 @@ namespace writer {
 
 using namespace facebook::profilo::entries;
 
-class TraceLifecycleVisitor: public EntryVisitor {
-public:
-
+class TraceLifecycleVisitor : public EntryVisitor {
+ public:
   // Timestamp precision is microsec by default.
   static const size_t kTimestampPrecision = 6;
 
   static const size_t kTraceFormatVersion = 3;
 
   TraceLifecycleVisitor(
-    const std::string& folder,
-    const std::string& trace_prefix,
-    std::shared_ptr<TraceCallbacks> callbacks,
-    const std::vector<std::pair<std::string, std::string>>& headers,
-    int64_t trace_id);
+      const std::string& folder,
+      const std::string& trace_prefix,
+      std::shared_ptr<TraceCallbacks> callbacks,
+      const std::vector<std::pair<std::string, std::string>>& headers,
+      int64_t trace_id);
 
   virtual void visit(const StandardEntry& entry) override;
   virtual void visit(const FramesEntry& entry) override;
@@ -60,7 +59,7 @@ public:
     return done_;
   }
 
-private:
+ private:
   const std::string folder_;
   const std::string trace_prefix_;
   const std::vector<std::pair<std::string, std::string>> trace_headers_;

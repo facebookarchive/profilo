@@ -17,7 +17,7 @@
 #pragma once
 
 #ifndef JNI_UTIL_STATIC
-#  define FBEXPORT __attribute__((visibility("default")))
+#define FBEXPORT __attribute__((visibility("default")))
 #else
-#  define FBEXPORT
+#define FBEXPORT
 #endif

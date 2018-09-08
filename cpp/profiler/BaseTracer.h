@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include <unistd.h>
 #include <ucontext.h>
+#include <unistd.h>
 
 static constexpr const uint32_t kSystemDexId = 0xFFFFFFFF;
 
@@ -26,30 +26,27 @@ namespace profilo {
 namespace profiler {
 
 namespace tracers {
-  enum Tracer: uint32_t {
-    DALVIK = 1,
-    NATIVE = 1 << 2,
-    ART_UNWINDC_6_0 = 1 << 4,
-    ART_UNWINDC_7_0_0 = 1 << 5,
-    ART_UNWINDC_7_1_0 = 1 << 6,
-    ART_UNWINDC_7_1_1 = 1 << 7,
-    ART_UNWINDC_7_1_2 = 1 << 8,
-  };
+enum Tracer : uint32_t {
+  DALVIK = 1,
+  NATIVE = 1 << 2,
+  ART_UNWINDC_6_0 = 1 << 4,
+  ART_UNWINDC_7_0_0 = 1 << 5,
+  ART_UNWINDC_7_1_0 = 1 << 6,
+  ART_UNWINDC_7_1_1 = 1 << 7,
+  ART_UNWINDC_7_1_2 = 1 << 8,
+};
 }
 
 class BaseTracer {
-public:
+ public:
   virtual bool collectStack(
-    ucontext_t* ucontext,
-    int64_t* frames,
-    uint8_t& depth,
-    uint8_t max_depth) = 0;
+      ucontext_t* ucontext,
+      int64_t* frames,
+      uint8_t& depth,
+      uint8_t max_depth) = 0;
 
-  virtual void flushStack(
-    int64_t* frames,
-    uint8_t depth,
-    int tid,
-    int64_t time_) = 0;
+  virtual void
+  flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_) = 0;
 
   virtual void startTracing() = 0;
 

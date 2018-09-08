@@ -26,11 +26,14 @@
 namespace facebook {
 namespace profilo {
 
-class SystemCounterThread : public facebook::jni::HybridClass<SystemCounterThread> {
+class SystemCounterThread
+    : public facebook::jni::HybridClass<SystemCounterThread> {
  public:
-  constexpr static auto kJavaDescriptor = "Lcom/facebook/profilo/provider/systemcounters/SystemCounterThread;";
+  constexpr static auto kJavaDescriptor =
+      "Lcom/facebook/profilo/provider/systemcounters/SystemCounterThread;";
 
-  static facebook::jni::local_ref<jhybriddata> initHybrid(facebook::jni::alias_ref<jclass>);
+  static facebook::jni::local_ref<jhybriddata> initHybrid(
+      facebook::jni::alias_ref<jclass>);
 
   static void registerNatives();
 

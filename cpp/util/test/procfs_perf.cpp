@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-#include <iostream>
-#include <unistd.h>
 #include <sys/types.h>
+#include <unistd.h>
+#include <iostream>
 
 #include <util/ProcFs.h>
 
 using namespace facebook::profilo;
 
 int main() {
-
-  util::TaskStatFile file{(uint32_t) getpid()};
+  util::TaskStatFile file{(uint32_t)getpid()};
 
   for (int i = 0; i < 1000000; i++) {
     auto info = file.refresh();
-    (void) info;
-    //std::cout << info.state << ' ' << info.cpuTime << '\n';
+    (void)info;
+    // std::cout << info.state << ' ' << info.cpuTime << '\n';
   }
   return 0;
 }

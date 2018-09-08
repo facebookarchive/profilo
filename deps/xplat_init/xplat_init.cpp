@@ -17,15 +17,14 @@
 #include <fbjni/detail/Environment.h>
 #include <fbjni/fbjni.h>
 
-namespace facebook { namespace xplat {
+namespace facebook {
+namespace xplat {
 
-__attribute__((visibility("default")))
-jint initialize(JavaVM* vm, void(*init_fn)()) noexcept {
-  return jni::initialize(vm, [init_fn] {
-      init_fn();
-  });
+__attribute__((visibility("default"))) jint initialize(
+    JavaVM* vm,
+    void (*init_fn)()) noexcept {
+  return jni::initialize(vm, [init_fn] { init_fn(); });
 }
 
-}
-}
-
+} // namespace xplat
+} // namespace facebook

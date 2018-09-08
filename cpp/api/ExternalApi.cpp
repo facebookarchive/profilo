@@ -59,15 +59,15 @@ void api_log_classload_failed(const char* provider) {
   profilo_api_int.log_classload_failed(provider);
 }
 
-} // namespace anonymous
+} // namespace
 
 ProfiloApi* profilo_api() {
-  static ProfiloApi api {
-    .mark_start = &api_mark_start,
-    .mark_end = &api_mark_end,
-    .log_classload_start = &api_log_classload_start,
-    .log_classload_end = &api_log_classload_end,
-    .log_classload_failed = &api_log_classload_failed,
+  static ProfiloApi api{
+      .mark_start = &api_mark_start,
+      .mark_end = &api_mark_end,
+      .log_classload_start = &api_log_classload_start,
+      .log_classload_end = &api_log_classload_end,
+      .log_classload_failed = &api_log_classload_failed,
   };
   return &api;
 }

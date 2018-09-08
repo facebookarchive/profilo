@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-#include <sstream>
 #include <limits>
+#include <sstream>
 
 #include <gtest/gtest.h>
 
-#include <profilo/entries/EntryType.h>
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryParser.h>
+#include <profilo/entries/EntryType.h>
 #include <profilo/writer/PrintEntryVisitor.h>
 
 namespace facebook {
@@ -30,8 +30,8 @@ namespace entries {
 
 using namespace writer;
 
-class TestVisitor: public EntryVisitor {
-public:
+class TestVisitor : public EntryVisitor {
+ public:
   StandardEntry standardEntry;
   FramesEntry framesEntry;
   BytesEntry bytesEntry;
@@ -48,17 +48,15 @@ public:
 };
 
 TEST(EntryCodegen, testPackUnpackStandardEntry) {
-  StandardEntry input{
-    .id = 10,
-    .type = TRACE_START,
-    .timestamp = 123,
-    .tid = 0,
-    .callid = 1,
-    .matchid = 2,
-    .extra = 3
-  };
+  StandardEntry input{.id = 10,
+                      .type = TRACE_START,
+                      .timestamp = 123,
+                      .tid = 0,
+                      .callid = 1,
+                      .matchid = 2,
+                      .extra = 3};
 
-  char buffer[sizeof(input)*2]{};
+  char buffer[sizeof(input) * 2]{};
   StandardEntry::pack(input, buffer, sizeof(buffer));
 
   TestVisitor visitor;
@@ -75,17 +73,15 @@ TEST(EntryCodegen, testPackUnpackStandardEntry) {
 }
 
 TEST(EntryCodegen, testPrintStandardEntry) {
-  StandardEntry input{
-    .id = 10,
-    .type = TRACE_START,
-    .timestamp = 123,
-    .tid = 0,
-    .callid = 1,
-    .matchid = 2,
-    .extra = 3
-  };
+  StandardEntry input{.id = 10,
+                      .type = TRACE_START,
+                      .timestamp = 123,
+                      .tid = 0,
+                      .callid = 1,
+                      .matchid = 2,
+                      .extra = 3};
 
-  char buffer[sizeof(StandardEntry)*2]{};
+  char buffer[sizeof(StandardEntry) * 2]{};
   StandardEntry::pack(input, buffer, sizeof(buffer));
 
   std::stringstream stream;
@@ -98,14 +94,14 @@ TEST(EntryCodegen, testPrintStandardEntry) {
 TEST(EntryCodegen, testPackUnpackBytesEntry) {
   uint8_t bytes[] = {'h', 'i', '!'};
   BytesEntry input{
-    .id = 10,
-    .type = STRING_KEY,
-    .matchid = 1,
-    .bytes.values = bytes,
-    .bytes.size = 3,
+      .id = 10,
+      .type = STRING_KEY,
+      .matchid = 1,
+      .bytes.values = bytes,
+      .bytes.size = 3,
   };
 
-  char buffer[sizeof(input)*2]{};
+  char buffer[sizeof(input) * 2]{};
   BytesEntry::pack(input, buffer, sizeof(buffer));
 
   TestVisitor visitor;
@@ -116,22 +112,23 @@ TEST(EntryCodegen, testPackUnpackBytesEntry) {
   EXPECT_EQ(input.type, entry.type);
   EXPECT_EQ(input.matchid, entry.matchid);
   EXPECT_EQ(input.bytes.size, entry.bytes.size);
-  EXPECT_TRUE(
-    std::equal(input.bytes.values, input.bytes.values + input.bytes.size, entry.bytes.values)
-  );
+  EXPECT_TRUE(std::equal(
+      input.bytes.values,
+      input.bytes.values + input.bytes.size,
+      entry.bytes.values));
 }
 
 TEST(EntryCodegen, testPrintBytesEntry) {
   uint8_t bytes[] = {'h', 'i', '!'};
   BytesEntry input{
-    .id = 10,
-    .type = STRING_KEY,
-    .matchid = 1,
-    .bytes.values = bytes,
-    .bytes.size = 3,
+      .id = 10,
+      .type = STRING_KEY,
+      .matchid = 1,
+      .bytes.values = bytes,
+      .bytes.size = 3,
   };
 
-  char buffer[sizeof(input)*2]{};
+  char buffer[sizeof(input) * 2]{};
   BytesEntry::pack(input, buffer, sizeof(buffer));
 
   std::stringstream stream;
@@ -144,15 +141,15 @@ TEST(EntryCodegen, testPrintBytesEntry) {
 TEST(EntryCodegen, testPackUnpackFramesEntry) {
   int64_t frames[] = {100, 200, 300};
   FramesEntry input{
-    .id = 10,
-    .type = STACK_FRAME,
-    .timestamp = 123,
-    .tid = 1,
-    .frames.values = frames,
-    .frames.size = 3,
+      .id = 10,
+      .type = STACK_FRAME,
+      .timestamp = 123,
+      .tid = 1,
+      .frames.values = frames,
+      .frames.size = 3,
   };
 
-  char buffer[sizeof(input)*2]{};
+  char buffer[sizeof(input) * 2]{};
   FramesEntry::pack(input, buffer, sizeof(buffer));
 
   TestVisitor visitor;
@@ -164,23 +161,24 @@ TEST(EntryCodegen, testPackUnpackFramesEntry) {
   EXPECT_EQ(input.timestamp, entry.timestamp);
   EXPECT_EQ(input.tid, entry.tid);
   EXPECT_EQ(input.frames.size, entry.frames.size);
-  EXPECT_TRUE(
-    std::equal(input.frames.values, input.frames.values + input.frames.size, entry.frames.values)
-  );
+  EXPECT_TRUE(std::equal(
+      input.frames.values,
+      input.frames.values + input.frames.size,
+      entry.frames.values));
 }
 
 TEST(EntryCodegen, testPrintFramesEntry) {
   int64_t frames[] = {100, 200, 300};
   FramesEntry input{
-    .id = 10,
-    .type = STACK_FRAME,
-    .timestamp = 123,
-    .tid = 1,
-    .frames.values = frames,
-    .frames.size = 3,
+      .id = 10,
+      .type = STACK_FRAME,
+      .timestamp = 123,
+      .tid = 1,
+      .frames.values = frames,
+      .frames.size = 3,
   };
 
-  char buffer[sizeof(input)*2]{};
+  char buffer[sizeof(input) * 2]{};
   FramesEntry::pack(input, buffer, sizeof(buffer));
 
   std::stringstream stream;
@@ -188,11 +186,10 @@ TEST(EntryCodegen, testPrintFramesEntry) {
   EntryParser::parse(buffer, sizeof(buffer), visitor);
 
   EXPECT_EQ(
-    stream.str(),
-    "10|STACK_FRAME|123|1|0|0|100\n"
-    "10|STACK_FRAME|123|1|0|0|200\n"
-    "10|STACK_FRAME|123|1|0|0|300\n"
-  );
+      stream.str(),
+      "10|STACK_FRAME|123|1|0|0|100\n"
+      "10|STACK_FRAME|123|1|0|0|200\n"
+      "10|STACK_FRAME|123|1|0|0|300\n");
 }
 
 TEST(EntryCodegen, testPackNullptrThrows) {
@@ -201,7 +198,7 @@ TEST(EntryCodegen, testPackNullptrThrows) {
   FramesEntry frames{};
 
   try {
-    StandardEntry::pack(standard, nullptr, sizeof(StandardEntry)*2);
+    StandardEntry::pack(standard, nullptr, sizeof(StandardEntry) * 2);
     FAIL() << "Expected std::invalid_argument";
   } catch (const std::invalid_argument& ex) {
     // intentionally empty
@@ -210,7 +207,7 @@ TEST(EntryCodegen, testPackNullptrThrows) {
   }
 
   try {
-    BytesEntry::pack(bytes, nullptr, sizeof(BytesEntry)*2);
+    BytesEntry::pack(bytes, nullptr, sizeof(BytesEntry) * 2);
     FAIL() << "Expected std::invalid_argument";
   } catch (const std::invalid_argument& ex) {
     // intentionally empty
@@ -219,7 +216,7 @@ TEST(EntryCodegen, testPackNullptrThrows) {
   }
 
   try {
-    FramesEntry::pack(frames, nullptr, sizeof(FramesEntry)*2);
+    FramesEntry::pack(frames, nullptr, sizeof(FramesEntry) * 2);
     FAIL() << "Expected std::invalid_argument";
   } catch (const std::invalid_argument& ex) {
     // intentionally empty
@@ -234,7 +231,7 @@ TEST(EntryCodegen, testUnpackNullptrThrows) {
   FramesEntry frames{};
 
   try {
-    StandardEntry::unpack(standard, nullptr, sizeof(StandardEntry)*2);
+    StandardEntry::unpack(standard, nullptr, sizeof(StandardEntry) * 2);
     FAIL() << "Expected std::invalid_argument";
   } catch (const std::invalid_argument& ex) {
     // intentionally empty
@@ -243,7 +240,7 @@ TEST(EntryCodegen, testUnpackNullptrThrows) {
   }
 
   try {
-    BytesEntry::unpack(bytes, nullptr, sizeof(BytesEntry)*2);
+    BytesEntry::unpack(bytes, nullptr, sizeof(BytesEntry) * 2);
     FAIL() << "Expected std::invalid_argument";
   } catch (const std::invalid_argument& ex) {
     // intentionally empty
@@ -252,7 +249,7 @@ TEST(EntryCodegen, testUnpackNullptrThrows) {
   }
 
   try {
-    FramesEntry::unpack(frames, nullptr, sizeof(FramesEntry)*2);
+    FramesEntry::unpack(frames, nullptr, sizeof(FramesEntry) * 2);
     FAIL() << "Expected std::invalid_argument";
   } catch (const std::invalid_argument& ex) {
     // intentionally empty
@@ -306,6 +303,6 @@ TEST(EntryCodegen, testPackTooSmallThrows) {
   }
 }
 
-} // entries
+} // namespace entries
 } // namespace profilo
 } // namespace facebook

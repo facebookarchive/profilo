@@ -15,15 +15,15 @@
  */
 
 #include "SystemCounterThread.h"
-#include <profilo/Logger.h>
-#include <profilo/LogEntry.h>
-#include <profilo/log.h>
 #include <fb/log.h>
-#include <util/common.h>
+#include <profilo/LogEntry.h>
+#include <profilo/Logger.h>
+#include <profilo/log.h>
 #include <util/SysFs.h>
+#include <util/common.h>
 
-#include <sys/sysinfo.h>
 #include <sys/syscall.h>
+#include <sys/sysinfo.h>
 
 #include <malloc.h>
 
@@ -52,14 +52,14 @@ inline void logCounter(
     int32_t counter_name,
     int64_t value,
     int32_t thread_id = threadID()) {
-  logger.write(StandardEntry {
-    .id = 0,
-    .type = entries::COUNTER,
-    .timestamp = monotonicTime(),
-    .tid = thread_id,
-    .callid = counter_name,
-    .matchid = 0,
-    .extra = value,
+  logger.write(StandardEntry{
+      .id = 0,
+      .type = entries::COUNTER,
+      .timestamp = monotonicTime(),
+      .tid = thread_id,
+      .callid = counter_name,
+      .matchid = 0,
+      .extra = value,
   });
 }
 
@@ -69,14 +69,14 @@ inline void logCpuCoreCounter(
     int64_t value,
     int32_t core,
     int32_t thread_id = threadID()) {
-  logger.write(StandardEntry {
-    .id = 0,
-    .type = entries::CPU_COUNTER,
-    .timestamp = monotonicTime(),
-    .tid = thread_id,
-    .callid = counter_name,
-    .matchid = core,
-    .extra = value,
+  logger.write(StandardEntry{
+      .id = 0,
+      .type = entries::CPU_COUNTER,
+      .timestamp = monotonicTime(),
+      .tid = thread_id,
+      .callid = counter_name,
+      .matchid = core,
+      .extra = value,
   });
 }
 
@@ -92,11 +92,11 @@ inline void logNonMonotonicCounter(
 }
 
 inline void logMonotonicCounter(
-  long prev,
-  long curr,
-  int tid,
-  uint32_t quicklog_id,
-  int threshold = 0) {
+    long prev,
+    long curr,
+    int tid,
+    uint32_t quicklog_id,
+    int threshold = 0) {
   auto& logger = Logger::get();
 
   if (curr > prev + threshold) {
@@ -107,17 +107,15 @@ inline void logMonotonicCounter(
 inline void logCPUTimeCounter(long prevCpuTime, long currCpuTime, int tid) {
   const auto kThresholdMs = 1;
   logMonotonicCounter(
-    prevCpuTime,
-    currCpuTime,
-    tid,
-    QuickLogConstants::THREAD_CPU_TIME,
-    kThresholdMs);
+      prevCpuTime,
+      currCpuTime,
+      tid,
+      QuickLogConstants::THREAD_CPU_TIME,
+      kThresholdMs);
 }
 
-inline void logThreadMajorFaults(
-  long prev_mfaults,
-  long curr_mfaults,
-  int tid) {
+inline void
+logThreadMajorFaults(long prev_mfaults, long curr_mfaults, int tid) {
   logMonotonicCounter(
       prev_mfaults,
       curr_mfaults,
@@ -125,17 +123,15 @@ inline void logThreadMajorFaults(
       QuickLogConstants::QL_THREAD_FAULTS_MAJOR);
 }
 
-inline void logCPUWaitTimeCounter(
-  long prevCpuWaitTime,
-  long currCpuWaitTime,
-  int tid) {
+inline void
+logCPUWaitTimeCounter(long prevCpuWaitTime, long currCpuWaitTime, int tid) {
   const auto kThresholdMs = 1;
   logMonotonicCounter(
-    prevCpuWaitTime,
-    currCpuWaitTime,
-    tid,
-    QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
-    kThresholdMs);
+      prevCpuWaitTime,
+      currCpuWaitTime,
+      tid,
+      QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
+      kThresholdMs);
 }
 
 static int64_t loadDecimal(int64_t load) {
@@ -145,86 +141,50 @@ static int64_t loadDecimal(int64_t load) {
 
 void logSysinfo() {
   auto& logger = Logger::get();
-  struct sysinfo info{};
+  struct sysinfo info {};
 
   if (syscall(__NR_sysinfo, &info) < 0) {
     FBLOGE("Couldn't get sysinfo!");
     return;
   }
 
+  logCounter(logger, QuickLogConstants::LOADAVG_1M, loadDecimal(info.loads[0]));
+  logCounter(logger, QuickLogConstants::LOADAVG_5M, loadDecimal(info.loads[1]));
   logCounter(
-    logger,
-    QuickLogConstants::LOADAVG_1M,
-    loadDecimal(info.loads[0])
-  );
+      logger, QuickLogConstants::LOADAVG_15M, loadDecimal(info.loads[2]));
+  logCounter(logger, QuickLogConstants::NUM_PROCS, info.procs);
   logCounter(
-    logger,
-    QuickLogConstants::LOADAVG_5M,
-    loadDecimal(info.loads[1])
-  );
+      logger,
+      QuickLogConstants::TOTAL_MEM,
+      (int64_t)info.totalram * (int64_t)info.mem_unit);
   logCounter(
-    logger,
-    QuickLogConstants::LOADAVG_15M,
-    loadDecimal(info.loads[2])
-  );
+      logger,
+      QuickLogConstants::FREE_MEM,
+      (int64_t)info.freeram * (int64_t)info.mem_unit);
   logCounter(
-    logger,
-    QuickLogConstants::NUM_PROCS,
-    info.procs
-  );
+      logger,
+      QuickLogConstants::SHARED_MEM,
+      (int64_t)info.sharedram * (int64_t)info.mem_unit);
   logCounter(
-    logger,
-    QuickLogConstants::TOTAL_MEM,
-    (int64_t) info.totalram * (int64_t) info.mem_unit
-  );
-  logCounter(
-    logger,
-    QuickLogConstants::FREE_MEM,
-    (int64_t) info.freeram * (int64_t) info.mem_unit
-  );
-  logCounter(
-    logger,
-    QuickLogConstants::SHARED_MEM,
-    (int64_t) info.sharedram * (int64_t) info.mem_unit
-  );
-  logCounter(
-    logger,
-    QuickLogConstants::BUFFER_MEM,
-    (int64_t) info.bufferram * (int64_t) info.mem_unit
-  );
+      logger,
+      QuickLogConstants::BUFFER_MEM,
+      (int64_t)info.bufferram * (int64_t)info.mem_unit);
 }
 
 void logMallinfo() {
   auto& logger = Logger::get();
   struct mallinfo info = mallinfo();
 
-  logCounter(
-    logger,
-    QuickLogConstants::ALLOC_MMAP_BYTES,
-    info.hblkhd
-  );
-  logCounter(
-    logger,
-    QuickLogConstants::ALLOC_MAX_BYTES,
-    info.usmblks
-  );
-  logCounter(
-    logger,
-    QuickLogConstants::ALLOC_TOTAL_BYTES,
-    info.uordblks
-  );
-  logCounter(
-    logger,
-    QuickLogConstants::ALLOC_FREE_BYTES,
-    info.fordblks
-  );
+  logCounter(logger, QuickLogConstants::ALLOC_MMAP_BYTES, info.hblkhd);
+  logCounter(logger, QuickLogConstants::ALLOC_MAX_BYTES, info.usmblks);
+  logCounter(logger, QuickLogConstants::ALLOC_TOTAL_BYTES, info.uordblks);
+  logCounter(logger, QuickLogConstants::ALLOC_FREE_BYTES, info.fordblks);
 }
 
 void threadCountersCallback(
-  uint32_t tid,
-  util::ThreadStatInfo& prevInfo,
-  util::ThreadStatInfo& currInfo) {
-
+    uint32_t tid,
+    util::ThreadStatInfo& prevInfo,
+    util::ThreadStatInfo& currInfo) {
   if (prevInfo.highPrecisionCpuTimeMs != 0 &&
       (currInfo.availableStatsMask & StatType::HIGH_PRECISION_CPU_TIME)) {
     // Don't log the initial value
@@ -294,28 +254,25 @@ void threadCountersCallback(
         QuickLogConstants::THREAD_SW_FAULTS_MINOR);
   }
 }
-} // anonymous
+} // namespace
 
-local_ref<SystemCounterThread::jhybriddata> SystemCounterThread::initHybrid(alias_ref<jclass>) {
+local_ref<SystemCounterThread::jhybriddata> SystemCounterThread::initHybrid(
+    alias_ref<jclass>) {
   return makeCxxInstance();
 }
 
 void SystemCounterThread::registerNatives() {
   registerHybrid({
-    makeNativeMethod("initHybrid", SystemCounterThread::initHybrid),
-    makeNativeMethod(
-      "logCounters",
-      SystemCounterThread::logCounters),
-    makeNativeMethod(
-      "logThreadCounters",
-      SystemCounterThread::logThreadCounters),
-    makeNativeMethod(
-      "logTraceAnnotations",
-      SystemCounterThread::logTraceAnnotations),
+      makeNativeMethod("initHybrid", SystemCounterThread::initHybrid),
+      makeNativeMethod("logCounters", SystemCounterThread::logCounters),
+      makeNativeMethod(
+          "logThreadCounters", SystemCounterThread::logThreadCounters),
+      makeNativeMethod(
+          "logTraceAnnotations", SystemCounterThread::logTraceAnnotations),
   });
 }
 
-void SystemCounterThread::logCounters () {
+void SystemCounterThread::logCounters() {
   logProcessCounters();
   logThreadCounters(kTidAllThreads);
   logSysinfo();
@@ -464,10 +421,7 @@ void SystemCounterThread::logVmStatCounters() {
       tid,
       QuickLogConstants::VMSTAT_NR_WRITEBACK);
   logMonotonicCounter(
-      prevInfo.pgPgIn,
-      currInfo.pgPgIn,
-      tid,
-      QuickLogConstants::VMSTAT_PGPGIN);
+      prevInfo.pgPgIn, currInfo.pgPgIn, tid, QuickLogConstants::VMSTAT_PGPGIN);
   logMonotonicCounter(
       prevInfo.pgPgOut,
       currInfo.pgPgOut,
@@ -493,8 +447,7 @@ void SystemCounterThread::logVmStatCounters() {
       currInfo.kswapdSteal,
       tid,
       QuickLogConstants::VMSTAT_KSWAPD_STEAL);
-
 }
 
-} // profilo
-} // facebook
+} // namespace profilo
+} // namespace facebook

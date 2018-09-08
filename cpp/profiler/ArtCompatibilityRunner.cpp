@@ -99,7 +99,8 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(
     for (size_t meth_idx = 0; meth_idx < cls_methods_size; meth_idx++) {
       auto method = cls_methods->getElement(meth_idx);
       uint32_t dexMethodIndex;
-      if (version == versions::ANDROID_6_0 || version == versions::ANDROID_7_0) {
+      if (version == versions::ANDROID_6_0 ||
+          version == versions::ANDROID_7_0) {
         dexMethodIndex = getDexMethodIndex67(method);
       }
       methods_map.insert(std::make_pair(

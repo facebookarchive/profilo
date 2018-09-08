@@ -33,12 +33,9 @@ struct PollSet {
 // 2) a pollfd (last element) for the stopfd that's passed in. The events
 // vector holds nullptr for this pollfd.
 //
-static std::unique_ptr<PollSet> createPollSet(
-    EventList& events,
-    int stopfd
-) {
+static std::unique_ptr<PollSet> createPollSet(EventList& events, int stopfd) {
   size_t buffer_events = 0;
-  for (auto& event: events) {
+  for (auto& event : events) {
     if (event.buffer() != nullptr) {
       ++buffer_events;
     }
@@ -49,7 +46,7 @@ static std::unique_ptr<PollSet> createPollSet(
   auto event_ptrs = detail::make_unique<std::vector<Event*>>(pollfd_size);
 
   size_t poll_set_idx = 0;
-  for (auto& event: events) {
+  for (auto& event : events) {
     if (event.buffer() != nullptr) {
       if (event.fd() == -1) {
         throw std::invalid_argument("Event is mapped but no longer open");
@@ -60,8 +57,8 @@ static std::unique_ptr<PollSet> createPollSet(
 
       (*poll_set)[poll_set_idx] = pfd;
 
-      // Not exactly safe. The alternative is to wrap every Event in a shared_ptr
-      // and that's quite expensive.
+      // Not exactly safe. The alternative is to wrap every Event in a
+      // shared_ptr and that's quite expensive.
       (*event_ptrs)[poll_set_idx] = &event;
       ++poll_set_idx;
     }
@@ -81,27 +78,22 @@ static std::unique_ptr<PollSet> createPollSet(
 }
 
 static std::unordered_map<uint64_t, const Event&> createIdEventMap(
-  EventList& events
-) {
+    EventList& events) {
   auto id_event_map = std::unordered_map<uint64_t, const Event&>();
-  for (auto& event: events) {
+  for (auto& event : events) {
     id_event_map.emplace(event.id(), event);
   }
   return id_event_map;
 }
 
-FdPollReader::FdPollReader(
-  EventList& events,
-  RecordListener* listener
-):
-  stop_fd_(eventfd(0, EFD_NONBLOCK)),
-  events_(events),
-  id_event_map_(createIdEventMap(events)),
-  listener_(listener),
-  running_(false),
-  running_cv_(),
-  running_mutex_()
-{}
+FdPollReader::FdPollReader(EventList& events, RecordListener* listener)
+    : stop_fd_(eventfd(0, EFD_NONBLOCK)),
+      events_(events),
+      id_event_map_(createIdEventMap(events)),
+      listener_(listener),
+      running_(false),
+      running_cv_(),
+      running_mutex_() {}
 
 FdPollReader::~FdPollReader() {
   close(stop_fd_); // ignore failure, can't really deal with it
@@ -117,17 +109,17 @@ void FdPollReader::run() {
   uint64_t stop_value = stopValue(); // reset the counter
   auto pollset = createPollSet(events_, stop_fd_);
 
-  for (auto& event: events_) {
+  for (auto& event : events_) {
     event.enable();
   }
 
   bool run = true;
 
-  while(run) {
+  while (run) {
     int ret = poll(
-      pollset->pollfds->data(),
-      pollset->pollfds->size(),
-      -1 /*infinite timeout*/
+        pollset->pollfds->data(),
+        pollset->pollfds->size(),
+        -1 /*infinite timeout*/
     );
 
     if (ret == -1 && errno == EINTR) {
@@ -157,18 +149,19 @@ void FdPollReader::run() {
       // Invariant: Only the buffer fds are left at this point.
       Event* evt = pollset->events->at(i);
       if (evt == nullptr) {
-        throw std::logic_error("Invariant violation: reached buffer flush with no Event pointer");
+        throw std::logic_error(
+            "Invariant violation: reached buffer flush with no Event pointer");
       }
       detail::parser::parseBuffer(*evt, id_event_map_, listener_);
     }
   }
 
-  for (auto& event: events_) {
+  for (auto& event : events_) {
     event.disable();
   }
 
   // Flush all buffers
-  for (Event* event: *(pollset->events)) {
+  for (Event* event : *(pollset->events)) {
     if (event == nullptr) { // the entry for the stopfd is nullptr
       continue;
     }
@@ -194,11 +187,12 @@ void FdPollReader::stop() {
   if (ret < 0) {
     throw std::system_error(errno, std::system_category());
   } else if (ret != sizeof(value)) {
-    throw std::logic_error("write() on eventfd wrote less than sizeof(uint64_t)");
+    throw std::logic_error(
+        "write() on eventfd wrote less than sizeof(uint64_t)");
   }
 
   std::unique_lock<std::mutex> lock(running_mutex_);
-  running_cv_.wait(lock, [this]{return !this->running_;});
+  running_cv_.wait(lock, [this] { return !this->running_; });
 }
 
 // Reads and resets the eventfd used to stop the reader.
@@ -213,11 +207,12 @@ uint64_t FdPollReader::stopValue() const {
       throw std::system_error(errno, std::system_category());
     }
   } else if (ret != sizeof(value)) {
-    throw std::logic_error("read() on eventfd returned non-uint64_t-sized value");
+    throw std::logic_error(
+        "read() on eventfd returned non-uint64_t-sized value");
   }
   return value;
 }
 
-} // detail
-} // yarn
-} // facebook
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

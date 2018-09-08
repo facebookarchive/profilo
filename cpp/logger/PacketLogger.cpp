@@ -16,24 +16,20 @@
 
 #include "PacketLogger.h"
 
-
 namespace facebook {
 namespace profilo {
 namespace logger {
 
 PacketLogger::PacketLogger(PacketBufferProvider provider)
-  : streamID_(0),
-    provider_(provider)
-  {}
+    : streamID_(0), provider_(provider) {}
 
 void PacketLogger::write(void* payload, size_t size) {
   writeAndGetCursor(payload, size);
 }
 
 PacketBuffer::Cursor PacketLogger::writeAndGetCursor(
-  void* payload,
-  size_t size
-) {
+    void* payload,
+    size_t size) {
   if (size == 0) {
     throw std::invalid_argument("size is 0");
   }
@@ -57,13 +53,11 @@ PacketBuffer::Cursor PacketLogger::writeAndGetCursor(
     bool has_next = remaining > kOnePacketSize;
     uint8_t write_size = std::min(kOnePacketSize, remaining);
 
-    Packet packet {
-      .stream = stream_id,
-      .start = offset == 0,
-      .next = has_next,
-      .size = write_size,
-      .data = {}
-    };
+    Packet packet{.stream = stream_id,
+                  .start = offset == 0,
+                  .next = has_next,
+                  .size = write_size,
+                  .data = {}};
 
     std::memcpy(packet.data, static_cast<char*>(payload) + offset, write_size);
 
@@ -79,4 +73,6 @@ PacketBuffer::Cursor PacketLogger::writeAndGetCursor(
   return cursor;
 }
 
-} } } // facebook::profilo::logger
+} // namespace logger
+} // namespace profilo
+} // namespace facebook

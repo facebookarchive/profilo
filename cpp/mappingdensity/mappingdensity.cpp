@@ -1,14 +1,14 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <cstring>
-#include <string>
 #include <fstream>
 #include <regex>
 #include <sstream>
-#include <sys/mman.h>
-#include <sys/types.h>
+#include <string>
 #include <system_error>
-#include <unistd.h>
 #include <vector>
 
 #include <fb/log.h>
@@ -58,11 +58,14 @@ void dumpMappingDensities(
     }
 
     int ret = mincore(
-      reinterpret_cast<void*>(memorymap_vma_start(vma)),
-      memorymap_vma_end(vma) - memorymap_vma_start(vma),
-      buf.data());
+        reinterpret_cast<void*>(memorymap_vma_start(vma)),
+        memorymap_vma_end(vma) - memorymap_vma_start(vma),
+        buf.data());
     if (ret != 0) {
-      FBLOGW("failed to get mincore for %s: %s", memorymap_vma_file(vma), std::strerror(errno));
+      FBLOGW(
+          "failed to get mincore for %s: %s",
+          memorymap_vma_file(vma),
+          std::strerror(errno));
     }
 
     os << memorymap_vma_file(vma) << std::ends;
@@ -81,10 +84,10 @@ void dumpMappingDensities(
 
     if (!os) {
       FBLOGE(
-        "failed to write mapping data for %s to %s: %s",
-        memorymap_vma_file(vma),
-        outFile.c_str(),
-        std::strerror(errno));
+          "failed to write mapping data for %s to %s: %s",
+          memorymap_vma_file(vma),
+          outFile.c_str(),
+          std::strerror(errno));
       break;
     }
   }
@@ -92,4 +95,6 @@ void dumpMappingDensities(
   memorymap_destroy(maps);
 }
 
-} } } // namespace facebook::profilo::mappingdensity
+} // namespace mappingdensity
+} // namespace profilo
+} // namespace facebook

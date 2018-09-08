@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include <functional>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
+#include <functional>
 
 #include "Packet.h"
 
@@ -33,18 +33,20 @@ using PacketBuffer = lfrb::LockFreeRingBuffer<Packet>;
 using PacketBufferProvider = std::function<PacketBuffer&()>;
 
 class PacketLogger {
-public:
+ public:
   PacketLogger(PacketBufferProvider provider);
   PacketLogger(const PacketLogger& other) = delete;
 
   PROFILOEXPORT void write(void* payload, size_t size);
   PROFILOEXPORT PacketBuffer::Cursor writeAndGetCursor(
-    void* payload,
-    size_t size);
+      void* payload,
+      size_t size);
 
-private:
+ private:
   std::atomic<uint32_t> streamID_;
   PacketBufferProvider provider_;
 };
 
-} } } // facebook::profilo::logger
+} // namespace logger
+} // namespace profilo
+} // namespace facebook

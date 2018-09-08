@@ -140,7 +140,7 @@ TEST_F(ProcFsTest, testStatFile) {
 
 TEST_F(ProcFsTest, testVmStatFile) {
   fs::path statPath = SetUpTempFile(VMSTAT_CONTENT);
-  VmStatFile statFile {statPath.native()};
+  VmStatFile statFile{statPath.native()};
   VmStatInfo statInfo = statFile.refresh(ALL_STATS_MASK);
 
   EXPECT_EQ(statInfo.nrFreePages, 123);
@@ -168,7 +168,7 @@ TEST_F(ProcFsTest, testVmStatFile) {
 
 TEST_F(ProcFsTest, testVmStatFileWithSplitKswapd) {
   fs::path statPath = SetUpTempFile(VMSTAT_CONTENT_WITH_SPLIT_KSWAPD);
-  VmStatFile statFile {statPath.native()};
+  VmStatFile statFile{statPath.native()};
   VmStatInfo statInfo = statFile.refresh(ALL_STATS_MASK);
 
   EXPECT_EQ(statInfo.nrFreePages, 123);

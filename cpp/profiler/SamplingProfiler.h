@@ -16,10 +16,10 @@
 
 #pragma once
 
-#include <mutex>
 #include <semaphore.h>
 #include <setjmp.h>
 #include <signal.h>
+#include <mutex>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -35,14 +35,13 @@
 #include "profilo/LogEntry.h"
 #include "util/ProcFs.h"
 
-
 namespace fbjni = facebook::jni;
 
 namespace facebook {
 namespace profilo {
 namespace profiler {
 
-enum StackSlotState: uint8_t {
+enum StackSlotState : uint8_t {
   FREE = 1,
   BUSY = 2,
   FULL = 3,
@@ -94,7 +93,8 @@ struct ProfileState {
   ProfileState() {
     int ret;
     if ((ret = pthread_key_create(&threadIsProfilingKey, nullptr))) {
-      throw std::system_error(ret, std::system_category(), "pthread_key_create");
+      throw std::system_error(
+          ret, std::system_category(), "pthread_key_create");
     }
   }
 };
@@ -106,10 +106,10 @@ bool initialize(fbjni::alias_ref<jobject> ref, jint available_tracers);
 void loggerLoop(fbjni::alias_ref<jobject> obj);
 void stopProfiling(fbjni::alias_ref<jobject> obj);
 bool startProfiling(
-  fbjni::alias_ref<jobject> obj,
-  int requested_providers,
-  int sampling_rate_ms,
-  bool wall_clock_mode_enabled);
+    fbjni::alias_ref<jobject> obj,
+    int requested_providers,
+    int sampling_rate_ms,
+    bool wall_clock_mode_enabled);
 void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
 void removeFromWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
 

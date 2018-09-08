@@ -18,9 +18,11 @@
 
 #include <jni.h>
 
-namespace facebook { namespace xplat {
+namespace facebook {
+namespace xplat {
 
-__attribute__((visibility("default")))
-jint initialize(JavaVM* vm, void(*init_fn)()) noexcept;
-
-}}
+__attribute__((visibility("default"))) jint initialize(
+    JavaVM* vm,
+    void (*init_fn)()) noexcept;
+}
+} // namespace facebook

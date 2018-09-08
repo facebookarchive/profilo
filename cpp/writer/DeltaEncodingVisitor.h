@@ -24,16 +24,15 @@ namespace writer {
 
 using namespace entries;
 
-class DeltaEncodingVisitor: public EntryVisitor {
-public:
-
+class DeltaEncodingVisitor : public EntryVisitor {
+ public:
   explicit DeltaEncodingVisitor(EntryVisitor& delegate);
 
   virtual void visit(const StandardEntry& entry) override;
   virtual void visit(const FramesEntry& entry) override;
   virtual void visit(const BytesEntry& entry) override;
 
-private:
+ private:
   EntryVisitor& delegate_;
 
   struct {

@@ -21,14 +21,15 @@
 #include <atomic>
 #include <memory>
 
-namespace facebook { namespace profilo {
+namespace facebook {
+namespace profilo {
 
 namespace {
 
 TraceBuffer noop_buffer(1);
 std::atomic<TraceBuffer*> buffer(&noop_buffer);
 
-} // namespace anonymous
+} // namespace
 
 TraceBuffer& RingBuffer::init(size_t sz) {
   if (buffer.load() != &noop_buffer) {
@@ -41,8 +42,8 @@ TraceBuffer& RingBuffer::init(size_t sz) {
 
   // We expect the update succeed only once for noop_buffer
   if (!buffer.compare_exchange_strong(expected, new_buffer)) {
-      delete new_buffer;
-      FBLOGE("Second attempt to init the TraceBuffer");
+    delete new_buffer;
+    FBLOGE("Second attempt to init the TraceBuffer");
   }
 
   return get();
@@ -52,4 +53,5 @@ TraceBuffer& RingBuffer::get() {
   return *buffer.load();
 }
 
-} } // namespace facebook::profilo
+} // namespace profilo
+} // namespace facebook

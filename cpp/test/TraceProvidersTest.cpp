@@ -16,8 +16,8 @@
 
 #include <limits>
 
-#include <profilo/TraceProviders.h>
 #include <gtest/gtest.h>
+#include <profilo/TraceProviders.h>
 
 namespace facebook {
 namespace profilo {
@@ -28,9 +28,9 @@ TEST(TraceProviders, testAdd) {
   tp.clearAllProviders();
   tp.enableProviders(0b0101);
 
-  EXPECT_TRUE( tp.isEnabled(0b0001));
-  EXPECT_TRUE( tp.isEnabled(0b0100));
-  EXPECT_TRUE( tp.isEnabled(0b0101));
+  EXPECT_TRUE(tp.isEnabled(0b0001));
+  EXPECT_TRUE(tp.isEnabled(0b0100));
+  EXPECT_TRUE(tp.isEnabled(0b0101));
   EXPECT_FALSE(tp.isEnabled(0b0010));
   EXPECT_FALSE(tp.isEnabled(0b1000));
   EXPECT_FALSE(tp.isEnabled(0b1010));
@@ -43,10 +43,10 @@ TEST(TraceProviders, testRemove) {
   tp.enableProviders(0b1111);
   tp.disableProviders(0b0100);
 
-  EXPECT_TRUE( tp.isEnabled(0b1000));
+  EXPECT_TRUE(tp.isEnabled(0b1000));
   EXPECT_FALSE(tp.isEnabled(0b0100));
-  EXPECT_TRUE( tp.isEnabled(0b0010));
-  EXPECT_TRUE( tp.isEnabled(0b0001));
+  EXPECT_TRUE(tp.isEnabled(0b0010));
+  EXPECT_TRUE(tp.isEnabled(0b0001));
 }
 
 TEST(TraceProviders, testAddRemoveEachBit) {

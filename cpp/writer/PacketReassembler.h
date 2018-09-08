@@ -41,17 +41,17 @@ struct PacketStream {
   PacketStream& operator=(PacketStream&& other) = default;
 };
 
-} // detail
+} // namespace detail
 
 class PacketReassembler {
-public:
+ public:
   using PayloadCallback = std::function<void(const void*, size_t)>;
 
   PacketReassembler(PayloadCallback callback);
   void process(Packet const& packet);
   void processBackwards(Packet const& packet);
 
-private:
+ private:
   static constexpr auto kStreamPoolSize = 8;
 
   std::list<detail::PacketStream> active_streams_;
@@ -63,4 +63,6 @@ private:
   void recycleStream(detail::PacketStream stream);
 };
 
-} } } // facebook::profilo::writer
+} // namespace writer
+} // namespace profilo
+} // namespace facebook

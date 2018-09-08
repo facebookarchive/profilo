@@ -38,18 +38,14 @@ int64_t calculateDenominator(size_t precision) {
   return denom;
 }
 
-
-} // anonymous
+} // namespace
 
 TimestampTruncatingVisitor::TimestampTruncatingVisitor(
-  EntryVisitor& delegate,
-  size_t precision
-):
-  delegate_(delegate),
-  denominator_(calculateDenominator(precision))
-{}
+    EntryVisitor& delegate,
+    size_t precision)
+    : delegate_(delegate), denominator_(calculateDenominator(precision)) {}
 
-template<class T>
+template <class T>
 T TimestampTruncatingVisitor::truncateTimestamp(const T& entry) {
   T copied(entry);
   auto newts = (copied.timestamp + denominator_ / 2) / denominator_;
@@ -71,6 +67,6 @@ void TimestampTruncatingVisitor::visit(const BytesEntry& entry) {
   delegate_.visit(entry);
 }
 
-} // writer
-} // profilo
-} // facebook
+} // namespace writer
+} // namespace profilo
+} // namespace facebook

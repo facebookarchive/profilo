@@ -16,29 +16,29 @@
 
 #include "ArtTracer.h"
 
+#include <pthread.h>
 #include <array>
 #include <mutex>
-#include <pthread.h>
 #include <stdexcept>
 
 #if defined(MUSEUM_VERSION_6_0_1)
-  #include <museum/6.0.1/art/runtime/fbstack_art601.h>
+#include <museum/6.0.1/art/runtime/fbstack_art601.h>
 #elif defined(MUSEUM_VERSION_7_0_0)
-  #include <museum/7.0.0/art/runtime/fbstack_art700.h>
+#include <museum/7.0.0/art/runtime/fbstack_art700.h>
 #else
-  #error "Invalid ART version"
+#error "Invalid ART version"
 #endif
 
 #if defined(MUSEUM_VERSION_6_0_1)
-  #include <sys/limits.h> // for PTHREAD_KEYS_MAX
-  #ifndef PTHREAD_KEYS_MAX
-    #define PTHREAD_KEYS_MAX 1024
-  #endif
+#include <sys/limits.h> // for PTHREAD_KEYS_MAX
+#ifndef PTHREAD_KEYS_MAX
+#define PTHREAD_KEYS_MAX 1024
+#endif
 #endif
 
 #if defined(MUSEUM_VERSION_7_0_0)
-  #include <museum/7.0.0/art/runtime/bionic/__get_tls.h>
-  #include <museum/7.0.0/art/runtime/bionic/bionic_tls.h>
+#include <museum/7.0.0/art/runtime/bionic/__get_tls.h>
+#include <museum/7.0.0/art/runtime/bionic/bionic_tls.h>
 #endif
 
 #include "profilo/Logger.h"
@@ -54,9 +54,9 @@ namespace {
 using namespace museum::MUSEUM_VERSION::art::entrypoints;
 
 #if defined(MUSEUM_VERSION_6_0_1)
-  static constexpr ArtVersion kVersion = kArt601;
+static constexpr ArtVersion kVersion = kArt601;
 #elif defined(MUSEUM_VERSION_7_0_0)
-  static constexpr ArtVersion kVersion = kArt700;
+static constexpr ArtVersion kVersion = kArt700;
 #endif
 
 //
@@ -70,8 +70,8 @@ using namespace museum::MUSEUM_VERSION::art::entrypoints;
 pthread_key_t determineThreadInstanceTLSKey() {
   auto jlThread_class = fbjni::findClassLocal("java/lang/Thread");
   auto jlThread_nativePeer = jlThread_class->getField<jlong>("nativePeer");
-  auto jlThread_currentThread =
-    jlThread_class->getStaticMethod<jobject()>("currentThread", "()Ljava/lang/Thread;");
+  auto jlThread_currentThread = jlThread_class->getStaticMethod<jobject()>(
+      "currentThread", "()Ljava/lang/Thread;");
   auto jlThread = jlThread_currentThread(jlThread_class);
 
   auto nativePeer = jlThread->getFieldValue(jlThread_nativePeer);
@@ -79,7 +79,8 @@ pthread_key_t determineThreadInstanceTLSKey() {
 
   constexpr int32_t kMaxPthreadKey = 128;
   constexpr int32_t kUserPthreadKeyStart = 0;
-  constexpr int32_t kKeyValidFlag = 1 << 31; // bionic tags keys by setting the MSB
+  constexpr int32_t kKeyValidFlag = 1
+      << 31; // bionic tags keys by setting the MSB
 
   for (pthread_key_t i = kUserPthreadKeyStart; i < kMaxPthreadKey; i++) {
     pthread_key_t tagged = i | kKeyValidFlag;
@@ -97,13 +98,13 @@ pthread_key_t getThreadInstanceTLSKey() {
 #endif // !defined(MUSEUM_VERSION_7_0_0)
 
 void* getThreadInstance() {
-  // See thread.cc source for the differing behavior:
-  // https://android.googlesource.com/platform/art/+/android-7.0.0_r33/runtime/thread.cc#708
-  #if defined(MUSEUM_VERSION_7_0_0)
-    return __get_tls()[TLS_SLOT_ART_THREAD_SELF];
-  #else
-    return pthread_getspecific(getThreadInstanceTLSKey());
-  #endif
+// See thread.cc source for the differing behavior:
+// https://android.googlesource.com/platform/art/+/android-7.0.0_r33/runtime/thread.cc#708
+#if defined(MUSEUM_VERSION_7_0_0)
+  return __get_tls()[TLS_SLOT_ART_THREAD_SELF];
+#else
+  return pthread_getspecific(getThreadInstanceTLSKey());
+#endif
 }
 
 bool tryInstallRuntime() {
@@ -112,7 +113,7 @@ bool tryInstallRuntime() {
     JNIEnv* env = fbjni::Environment::current();
     InstallRuntime(env, thread_instance);
     return true;
-  } catch(std::exception& ex) {
+  } catch (std::exception& ex) {
     // intentionally swallowed
   }
   return false;
@@ -125,14 +126,15 @@ bool installRuntime() {
 
 } // namespace
 
-template<> ArtTracer<kVersion>::ArtTracer() {}
+template <>
+ArtTracer<kVersion>::ArtTracer() {}
 
-template<> bool ArtTracer<kVersion>::collectStack(
-  ucontext_t*,
-  int64_t* frames,
-  uint8_t& depth,
-  uint8_t max_depth) {
-
+template <>
+bool ArtTracer<kVersion>::collectStack(
+    ucontext_t*,
+    int64_t* frames,
+    uint8_t& depth,
+    uint8_t max_depth) {
   void* thread = getThreadInstance();
 
   if (thread == nullptr) {
@@ -150,7 +152,7 @@ template<> bool ArtTracer<kVersion>::collectStack(
   for (size_t idx = 0; idx < size; idx++) {
     auto& frame = artframes[idx];
     frames[idx] =
-      static_cast<int64_t>(frame.methodIdx) << 32 | frame.dexSignature;
+        static_cast<int64_t>(frame.methodIdx) << 32 | frame.dexSignature;
   }
 
   depth = size;
@@ -158,37 +160,36 @@ template<> bool ArtTracer<kVersion>::collectStack(
   return true;
 }
 
-template<> void ArtTracer<kVersion>::flushStack(
-  int64_t* frames,
-  uint8_t depth,
-  int tid,
-  int64_t time_) {
-
+template <>
+void ArtTracer<kVersion>::flushStack(
+    int64_t* frames,
+    uint8_t depth,
+    int tid,
+    int64_t time_) {
   Logger::get().writeStackFrames(
-    tid,
-    static_cast<int64_t>(time_),
-    frames,
-    depth);
+      tid, static_cast<int64_t>(time_), frames, depth);
 }
 
-template<> void ArtTracer<kVersion>::prepare() {
+template <>
+void ArtTracer<kVersion>::prepare() {
 #if defined(MUSEUM_VERSION_6_0_1) || defined(MUSEUM_VERSION_7_0_0)
   InitRuntime();
 #endif
 }
 
-template<> void ArtTracer<kVersion>::startTracing() {
+template <>
+void ArtTracer<kVersion>::startTracing() {
   prepare();
 
-  if(!installRuntime()) {
+  if (!installRuntime()) {
     // The caller should have ensured compatibility before calling us.
     throw std::runtime_error("Unable to install ArtTracer runtime copy");
   }
 }
 
-template<> void ArtTracer<kVersion>::stopTracing() {
-}
+template <>
+void ArtTracer<kVersion>::stopTracing() {}
 
-} // profiler
-} // profilo
-} // facebook
+} // namespace profiler
+} // namespace profilo
+} // namespace facebook

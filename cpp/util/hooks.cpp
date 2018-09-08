@@ -1,14 +1,14 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include <linker/linker.h>
 #include <linker/bionic_linker.h>
+#include <linker/linker.h>
 
-#include <stdexcept>
-#include <unordered_set>
-#include <string>
-#include <vector>
 #include <dlfcn.h>
+#include <stdexcept>
+#include <string>
+#include <unordered_set>
 #include <utility>
+#include <vector>
 
 #include <util/hooks.h>
 
@@ -18,9 +18,8 @@ namespace profilo {
 namespace {
 
 bool allowHookingCb(char const* libname, void* data) {
-
   std::unordered_set<std::string>* seenLibs =
-    static_cast<std::unordered_set<std::string>*>(data);
+      static_cast<std::unordered_set<std::string>*>(data);
 
   if (seenLibs->find(libname) != seenLibs->cend()) {
     // We already hooked (or saw and decided not to hook) this library.
@@ -44,8 +43,7 @@ namespace hooks {
 void hookLoadedLibs(
     const std::vector<std::pair<char const*, void*>>& functionHooks,
     std::unordered_set<std::string>& seenLibs) {
-
-  std::vector<plt_hook_spec> specs {};
+  std::vector<plt_hook_spec> specs{};
   specs.reserve(functionHooks.size());
 
   for (auto const& hookPair : functionHooks) {
@@ -54,8 +52,10 @@ void hookLoadedLibs(
     specs.emplace_back(nullptr, functionName, hook);
   }
 
-  int ret =
-    hook_all_libs(specs.data(), specs.size(), allowHookingCb,
+  int ret = hook_all_libs(
+      specs.data(),
+      specs.size(),
+      allowHookingCb,
       static_cast<void*>(&seenLibs));
 
   if (ret) {

@@ -32,16 +32,15 @@ PerCoreAttachmentStrategy::PerCoreAttachmentStrategy(
     const EventSpecList& specs,
     uint32_t fallbacks,
     uint16_t max_iterations,
-    float open_fds_limit_ratio):
-  specs_(specs), // copy
-  global_specs_(0),
-  fallbacks_(fallbacks),
-  used_fallbacks_(0),
-  max_iterations_(max_iterations),
-  open_fds_limit_ratio_(open_fds_limit_ratio)
-{
+    float open_fds_limit_ratio)
+    : specs_(specs), // copy
+      global_specs_(0),
+      fallbacks_(fallbacks),
+      used_fallbacks_(0),
+      max_iterations_(max_iterations),
+      open_fds_limit_ratio_(open_fds_limit_ratio) {
   size_t global_events = 0; // process-wide events
-  for (auto& spec: specs) {
+  for (auto& spec : specs) {
     if (spec.isProcessWide()) {
       ++global_events;
     }
@@ -74,7 +73,7 @@ EventList PerCoreAttachmentStrategy::attach() {
     }
 
     auto events = eventsForDelta(prev_tids, tids);
-    for (auto& evt: events) {
+    for (auto& evt : events) {
       try {
         evt.open();
       } catch (std::system_error& ex) {
@@ -133,18 +132,18 @@ EventList PerCoreAttachmentStrategy::attach() {
     }
   }
 
-
   if (success) {
     // mmap the cpu leaders and redirect all other events to them.
     for (int cpu = 0; cpu < getCoreCount(); ++cpu) {
-      if (!perf_events.empty() && !has_cpu_output[cpu]){
-        throw std::logic_error("Succeeded but did not assign a CPU output event for all cores");
+      if (!perf_events.empty() && !has_cpu_output[cpu]) {
+        throw std::logic_error(
+            "Succeeded but did not assign a CPU output event for all cores");
       }
 
       // TODO: figure out buffer size
       perf_events.at(cpu_output_idxs[cpu]).mmap(4096 * 5);
     }
-    for (auto& evt: perf_events) {
+    for (auto& evt : perf_events) {
       // skip the cpu leaders
       if (evt.buffer() != nullptr) {
         continue;
@@ -160,15 +159,14 @@ EventList PerCoreAttachmentStrategy::attach() {
 }
 
 static ThreadList computeDelta(
-  const ThreadList& prev_tids,
-  const ThreadList& tids
-) {
+    const ThreadList& prev_tids,
+    const ThreadList& tids) {
   if (prev_tids.empty()) {
     return tids;
   } else {
     auto delta = ThreadList();
     auto no_result = prev_tids.end();
-    for (auto& tid: tids) {
+    for (auto& tid : tids) {
       if (prev_tids.find(tid) == no_result) {
         delta.emplace(tid);
       }
@@ -178,21 +176,20 @@ static ThreadList computeDelta(
 }
 
 //
-// Build a list of Event objects for all threads in `tids` but not in `prev_tids`.
-// If `prev_tids` is nullptr or empty, this will build a list of events for
-// every thread in `tids`.
+// Build a list of Event objects for all threads in `tids` but not in
+// `prev_tids`. If `prev_tids` is nullptr or empty, this will build a list of
+// events for every thread in `tids`.
 //
 EventList PerCoreAttachmentStrategy::eventsForDelta(
-  const ThreadList& prev_tids,
-  const ThreadList& tids
-) const {
+    const ThreadList& prev_tids,
+    const ThreadList& tids) const {
   auto delta = computeDelta(prev_tids, tids);
   auto events = EventList();
-  for (auto& spec: specs_) {
+  for (auto& spec : specs_) {
     for (int32_t cpu = 0; cpu < getCoreCount(); cpu++) {
       // one event per core
       if (spec.isProcessWide()) {
-        for (auto& tid: delta) {
+        for (auto& tid : delta) {
           // per thread we know about too
           events.emplace_back(spec.type, tid, cpu, true /*inherit*/);
         }
@@ -216,8 +213,8 @@ bool PerCoreAttachmentStrategy::isWithinLimits(size_t tids_count) {
 
   // number of fds we'll add
   auto estimate_new_fds =
-    tids_count * coreCount * global_specs_ + // process-global
-    coreCount * specific_specs; // specific threads
+      tids_count * coreCount * global_specs_ + // process-global
+      coreCount * specific_specs; // specific threads
 
   // estimated final count
   auto estimate_fds_count = fds_count + estimate_new_fds;
@@ -229,10 +226,8 @@ bool PerCoreAttachmentStrategy::isWithinLimits(size_t tids_count) {
 }
 
 bool PerCoreAttachmentStrategy::tryFallbacks() {
-  if ((fallbacks_ & FALLBACK_RAISE_RLIMIT)
-      && ((used_fallbacks_ & FALLBACK_RAISE_RLIMIT) == 0)
-      && tryRaiseFdLimit()) {
-
+  if ((fallbacks_ & FALLBACK_RAISE_RLIMIT) &&
+      ((used_fallbacks_ & FALLBACK_RAISE_RLIMIT) == 0) && tryRaiseFdLimit()) {
     used_fallbacks_ |= FALLBACK_RAISE_RLIMIT;
     return true;
   }
@@ -251,7 +246,7 @@ static bool tryRaiseFdLimit() {
     }
 
     // Raise the soft limit up to the hard limit
-    auto new_limits = rlimit {limits.rlim_max, limits.rlim_max};
+    auto new_limits = rlimit{limits.rlim_max, limits.rlim_max};
     setrlimit(RLIMIT_NOFILE, new_limits);
 
     // Check if we actually succeeded. If we didn't, we'd keep trying on every
@@ -263,6 +258,6 @@ static bool tryRaiseFdLimit() {
   }
 }
 
-} // detail
-} // yarn
-} // facebook
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

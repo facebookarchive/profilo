@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-#include <atomic>
 #include <dlfcn.h>
+#include <libgen.h>
 #include <stdarg.h>
-#include <system_error>
 #include <sys/mman.h>
 #include <sys/syscall.h>
 #include <unistd.h>
-#include <unordered_set>
+#include <atomic>
 #include <sstream>
-#include <libgen.h>
+#include <system_error>
+#include <unordered_set>
 
 #include <fb/Build.h>
-#include <fbjni/fbjni.h>
 #include <fb/log.h>
 #include <fb/xplat_init.h>
+#include <fbjni/fbjni.h>
 #include <linker/linker.h>
 #include <util/hooks.h>
 
-#include <profilo/Logger.h>
 #include <profilo/LogEntry.h>
+#include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
 
 #include <unordered_set>
@@ -46,8 +46,8 @@ namespace atrace {
 
 namespace {
 
-int *atrace_marker_fd = nullptr;
-std::atomic<uint64_t> *atrace_enabled_tags = nullptr;
+int* atrace_marker_fd = nullptr;
+std::atomic<uint64_t>* atrace_enabled_tags = nullptr;
 std::atomic<uint64_t> original_tags(UINT64_MAX);
 std::atomic<bool> systrace_installed;
 std::atomic<uint32_t> provider_mask;
@@ -58,13 +58,10 @@ namespace {
 
 ssize_t const kAtraceMessageLength = 1024;
 
-void log_systrace(int fd, const void *buf, size_t count) {
-  if (systrace_installed &&
-      fd == *atrace_marker_fd &&
-      count > 0 &&
+void log_systrace(int fd, const void* buf, size_t count) {
+  if (systrace_installed && fd == *atrace_marker_fd && count > 0 &&
       TraceProviders::get().isEnabled(provider_mask.load())) {
-
-    const char *msg = reinterpret_cast<const char *>(buf);
+    const char* msg = reinterpret_cast<const char*>(buf);
 
     EntryType type;
     switch (msg[0]) {
@@ -95,10 +92,10 @@ void log_systrace(int fd, const void *buf, size_t count) {
       // Format is B|<pid>|<name>.
       // Skip "B|" trivially, find next '|' with memchr. We cannot use strchr
       // since we can't trust the message to have a null terminator.
-      constexpr auto kPrefixLength = 2; //length of "B|";
+      constexpr auto kPrefixLength = 2; // length of "B|";
 
       const char* name = reinterpret_cast<const char*>(
-        memchr(msg + kPrefixLength, '|', count - kPrefixLength));
+          memchr(msg + kPrefixLength, '|', count - kPrefixLength));
       if (name == nullptr) {
         return;
       }
@@ -106,10 +103,10 @@ void log_systrace(int fd, const void *buf, size_t count) {
       ssize_t len = msg + count - name;
       if (len > 0) {
         logger.writeBytes(
-          entries::STRING_NAME,
-          id,
-          (const uint8_t *)name,
-          std::min(len, kAtraceMessageLength));
+            entries::STRING_NAME,
+            id,
+            (const uint8_t*)name,
+            std::min(len, kAtraceMessageLength));
 
         FBLOGV("systrace event: %s", name);
       }
@@ -117,12 +114,13 @@ void log_systrace(int fd, const void *buf, size_t count) {
   }
 }
 
-ssize_t write_hook(int fd, const void *buf, size_t count) {
+ssize_t write_hook(int fd, const void* buf, size_t count) {
   log_systrace(fd, buf, count);
   return CALL_PREV(write_hook, fd, buf, count);
 }
 
-ssize_t __write_chk_hook(int fd, const void *buf, size_t count, size_t buf_size) {
+ssize_t
+__write_chk_hook(int fd, const void* buf, size_t count, size_t buf_size) {
   log_systrace(fd, buf, count);
   return CALL_PREV(__write_chk_hook, fd, buf, count, buf_size);
 }
@@ -131,8 +129,8 @@ ssize_t __write_chk_hook(int fd, const void *buf, size_t count, size_t buf_size)
 
 std::vector<std::pair<char const*, void*>>& getFunctionHooks() {
   static std::vector<std::pair<char const*, void*>> functionHooks = {
-    {"write", reinterpret_cast<void*>(&write_hook)},
-    {"__write_chk", reinterpret_cast<void*>(__write_chk_hook)},
+      {"write", reinterpret_cast<void*>(&write_hook)},
+      {"__write_chk", reinterpret_cast<void*>(__write_chk_hook)},
   };
   return functionHooks;
 }
@@ -144,11 +142,10 @@ std::unordered_set<std::string>& getSeenLibs() {
 
   // Add this library's name to the set that we won't hook
   if (!init) {
-
     seenLibs.insert("libc.so");
 
     Dl_info info;
-    if (!dladdr((void *)&getSeenLibs, &info)) {
+    if (!dladdr((void*)&getSeenLibs, &info)) {
       FBLOGV("Failed to find module name");
     }
     if (info.dli_fname == nullptr) {
@@ -192,16 +189,14 @@ void installSystraceSnooper(int providerMask) {
       handle = dlopen(nullptr, RTLD_GLOBAL);
     }
 
-    atrace_enabled_tags =
-      reinterpret_cast<std::atomic<uint64_t> *>(
-          dlsym(handle, enabled_tags_sym.c_str()));
+    atrace_enabled_tags = reinterpret_cast<std::atomic<uint64_t>*>(
+        dlsym(handle, enabled_tags_sym.c_str()));
 
     if (atrace_enabled_tags == nullptr) {
       throw std::runtime_error("Enabled Tags not defined");
     }
 
-    atrace_marker_fd =
-      reinterpret_cast<int*>(dlsym(handle, fd_sym.c_str()));
+    atrace_marker_fd = reinterpret_cast<int*>(dlsym(handle, fd_sym.c_str()));
 
     if (atrace_marker_fd == nullptr) {
       throw std::runtime_error("Trace FD not defined");
@@ -238,7 +233,8 @@ void enableSystrace() {
   first_enable = false;
 
   auto prev = atrace_enabled_tags->exchange(UINT64_MAX);
-  if (prev != UINT64_MAX) { // if we somehow call this twice in a row, don't overwrite the real tags
+  if (prev != UINT64_MAX) { // if we somehow call this twice in a row, don't
+                            // overwrite the real tags
     original_tags = prev;
   }
 
@@ -252,7 +248,8 @@ void restoreSystrace() {
   }
 
   uint64_t tags = original_tags;
-  if (tags != UINT64_MAX) { // if we somehow call this before enableSystrace, don't screw it up
+  if (tags != UINT64_MAX) { // if we somehow call this before enableSystrace,
+                            // don't screw it up
     atrace_enabled_tags->store(tags);
   }
 }
@@ -268,7 +265,7 @@ bool installSystraceHook(int mask) {
   }
 }
 
-} // anonymous
+} // namespace
 
 bool JNI_installSystraceHook(JNIEnv*, jobject, jint mask) {
   return installSystraceHook(mask);
@@ -290,15 +287,18 @@ namespace fbjni = facebook::jni;
 
 void registerNatives() {
   fbjni::registerNatives(
-    "com/facebook/profilo/provider/atrace/Atrace",
-    {
-      makeNativeMethod("installSystraceHook", "(I)Z", JNI_installSystraceHook),
-      makeNativeMethod("enableSystraceNative", "()V", JNI_enableSystraceNative),
-      makeNativeMethod("restoreSystraceNative", "()V", JNI_restoreSystraceNative),
-      makeNativeMethod("isEnabled", "()Z", JNI_isEnabled),
-    });
+      "com/facebook/profilo/provider/atrace/Atrace",
+      {
+          makeNativeMethod(
+              "installSystraceHook", "(I)Z", JNI_installSystraceHook),
+          makeNativeMethod(
+              "enableSystraceNative", "()V", JNI_enableSystraceNative),
+          makeNativeMethod(
+              "restoreSystraceNative", "()V", JNI_restoreSystraceNative),
+          makeNativeMethod("isEnabled", "()Z", JNI_isEnabled),
+      });
 }
 
-} // atrace
-} // profilo
-} // facebook
+} // namespace atrace
+} // namespace profilo
+} // namespace facebook

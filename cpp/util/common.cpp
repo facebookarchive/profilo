@@ -16,13 +16,13 @@
 
 #include "common.h"
 
-#include <chrono>
 #include <algorithm>
+#include <chrono>
 
 #if defined(__linux__) || defined(ANDROID)
-# include <sys/syscall.h> // __NR_gettid, __NR_clock_gettime
+#include <sys/syscall.h> // __NR_gettid, __NR_clock_gettime
 #else
-# include <pthread.h> // pthread_self()
+#include <pthread.h> // pthread_self()
 #endif
 
 namespace facebook {
@@ -71,5 +71,5 @@ int32_t systemClockTickIntervalMs() {
 #error "Do not have systemClockTickIntervalMs implementation for this platform"
 #endif
 
-} // profilo
-} // facebook
+} // namespace profilo
+} // namespace facebook

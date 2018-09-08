@@ -16,17 +16,17 @@
 
 #pragma once
 
+#include <unistd.h>
 #include <algorithm>
 #include <functional>
 #include <memory>
-#include <unistd.h>
 #include <system_error>
 #include <vector>
 
 #include <yarn/Event.h>
 #include <yarn/Session.h>
-#include <yarn/detail/make_unique.h>
 #include <yarn/detail/RLimits.h>
+#include <yarn/detail/make_unique.h>
 
 #include <util/ProcFs.h>
 
@@ -43,8 +43,7 @@ using EventList = std::vector<Event>;
 // actual Events.
 //
 class AttachmentStrategy {
-public:
-
+ public:
   //
   // Returns a list of open (and potentially mapped) Events or an
   // empty list if attachment failed.
@@ -74,8 +73,8 @@ public:
 // every core and redirects all other events on that core to this
 // first buffer.
 //
-class PerCoreAttachmentStrategy: public AttachmentStrategy {
-public:
+class PerCoreAttachmentStrategy : public AttachmentStrategy {
+ public:
   PerCoreAttachmentStrategy(
       const EventSpecList& specs,
       uint32_t fallbacks = 0,
@@ -84,7 +83,7 @@ public:
 
   virtual EventList attach();
 
-private:
+ private:
   EventSpecList specs_;
   size_t global_specs_;
   uint32_t fallbacks_;
@@ -95,12 +94,10 @@ private:
   bool isWithinLimits(size_t tids_count);
   bool tryFallbacks();
 
-  EventList eventsForDelta(
-    const ThreadList& prev_tids,
-    const ThreadList& tids
-  ) const;
+  EventList eventsForDelta(const ThreadList& prev_tids, const ThreadList& tids)
+      const;
 };
 
-} // detail
-} // yarn
-} // facebook
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

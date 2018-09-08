@@ -6,9 +6,9 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <cerrno>
 #include <string>
 #include <system_error>
-#include <cerrno>
 
 namespace facebook {
 namespace profilo {
@@ -30,11 +30,11 @@ enum StatType : int32_t {
   KERNEL_CPU_TIME = 1 << 12,
 };
 
-template<class StatInfo>
+template <class StatInfo>
 class BaseStatFile {
-public:
-  explicit BaseStatFile(std::string path):
-    path_(path), fd_(-1), last_info_() {}
+ public:
+  explicit BaseStatFile(std::string path)
+      : path_(path), fd_(-1), last_info_() {}
 
   BaseStatFile() = delete;
   BaseStatFile(const BaseStatFile&) = delete;
@@ -66,9 +66,7 @@ public:
 
     if (lseek(fd_, 0, SEEK_SET)) {
       throw std::system_error(
-        errno,
-        std::system_category(),
-        "Could not rewind file");
+          errno, std::system_category(), "Could not rewind file");
     }
 
     last_info_ = doRead(fd_, requested_stats_mask);
@@ -76,26 +74,24 @@ public:
   }
 
   int doOpen(const std::string& path) {
-    int statFile = open(path.c_str(), O_SYNC|O_RDONLY);
+    int statFile = open(path.c_str(), O_SYNC | O_RDONLY);
 
     if (statFile == -1) {
       throw std::system_error(
-        errno,
-        std::system_category(),
-        "Could not open stat file");
+          errno, std::system_category(), "Could not open stat file");
     }
     return statFile;
   }
 
-protected:
+ protected:
   virtual StatInfo doRead(int fd, uint32_t requested_stats_mask) = 0;
 
-private:
+ private:
   std::string path_;
   int fd_;
   StatInfo last_info_;
 };
 
-} // util
-} // profilo
-} // facebook
+} // namespace util
+} // namespace profilo
+} // namespace facebook

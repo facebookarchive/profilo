@@ -28,11 +28,13 @@ TraceProviders& TraceProviders::get() {
 
 bool TraceProviders::isEnabled(const std::string& provider) {
   // The native side doesn't have the full name -> int mapping.
-  // This function retrieves the mapping for a single provider and caches it, so future
-  // accesses don't have to cross the JNI boundary.
+  // This function retrieves the mapping for a single provider and caches it, so
+  // future accesses don't have to cross the JNI boundary.
 
-  static auto cls = jni::findClassStatic("com/facebook/profilo/core/ProvidersRegistry");
-  static auto getBitMaskMethod = cls->getStaticMethod<jint(std::string)>("getBitMaskFor");
+  static auto cls =
+      jni::findClassStatic("com/facebook/profilo/core/ProvidersRegistry");
+  static auto getBitMaskMethod =
+      cls->getStaticMethod<jint(std::string)>("getBitMaskFor");
 
   {
     // Reader side of the lock only, this is the fast path.
@@ -57,7 +59,7 @@ void TraceProviders::enableProviders(uint32_t providers) {
   std::lock_guard<std::mutex> lock(mutex_);
   auto p = providers;
   int lsb_index;
-  while ((lsb_index = __builtin_ffs(p) -1) != -1) {
+  while ((lsb_index = __builtin_ffs(p) - 1) != -1) {
     provider_counts_[lsb_index]++;
     p ^= static_cast<unsigned int>(1) << lsb_index;
   }
@@ -69,7 +71,7 @@ void TraceProviders::disableProviders(uint32_t providers) {
   uint32_t disable_providers = 0;
   auto p = providers;
   int lsb_index;
-  while ((lsb_index = __builtin_ffs(p) -1) != -1) {
+  while ((lsb_index = __builtin_ffs(p) - 1) != -1) {
     if (provider_counts_[lsb_index] > 0) {
       provider_counts_[lsb_index]--;
       if (provider_counts_[lsb_index] == 0) {

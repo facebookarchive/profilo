@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/LogEntry.h>
+#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 
 #include "Packet.h"
 
@@ -29,10 +29,9 @@ namespace profilo {
 using TraceBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
 
 class RingBuffer {
-
   static const size_t DEFAULT_SLOT_COUNT = 1000;
 
-  public:
+ public:
   PROFILOEXPORT static TraceBuffer& init(size_t sz = DEFAULT_SLOT_COUNT);
   PROFILOEXPORT static TraceBuffer& get();
 };

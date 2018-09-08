@@ -25,6 +25,6 @@ namespace threadmetadata {
 
 void logThreadMetadata(JNIEnv*, jobject);
 
-} // threadmetadata
-} // profilo
-} // facebook
+} // namespace threadmetadata
+} // namespace profilo
+} // namespace facebook

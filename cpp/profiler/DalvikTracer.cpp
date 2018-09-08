@@ -25,7 +25,8 @@
 #include "DalvikUtils.h"
 
 #define STACK_SAVE_AREA_OFFSET 5
-#define SAVEAREA_FROM_FP(fp) ((StackSaveArea*)(((u4*)(fp)) - STACK_SAVE_AREA_OFFSET))
+#define SAVEAREA_FROM_FP(fp) \
+  ((StackSaveArea*)(((u4*)(fp)) - STACK_SAVE_AREA_OFFSET))
 
 namespace facebook {
 namespace profilo {
@@ -35,7 +36,7 @@ namespace {
 
 void* getDvmThreadSelf() {
   struct lib {
-    lib(): handle(dlopen("libdvm.so", RTLD_LOCAL)) {
+    lib() : handle(dlopen("libdvm.so", RTLD_LOCAL)) {
       if (handle == nullptr) {
         throw std::runtime_error(dlerror());
       }
@@ -63,17 +64,15 @@ void* getDvmThreadSelf() {
 
 } // namespace
 
-
-DalvikTracer::DalvikTracer():
-  dvmThreadSelf_(reinterpret_cast<decltype(dvmThreadSelf_)>(getDvmThreadSelf()))
-{}
+DalvikTracer::DalvikTracer()
+    : dvmThreadSelf_(
+          reinterpret_cast<decltype(dvmThreadSelf_)>(getDvmThreadSelf())) {}
 
 bool DalvikTracer::collectStack(
-  ucontext_t*,
-  int64_t* frames,
-  uint8_t& depth,
-  uint8_t max_depth) {
-
+    ucontext_t*,
+    int64_t* frames,
+    uint8_t& depth,
+    uint8_t max_depth) {
   Thread* thread = dvmThreadSelf_();
   if (thread == nullptr) {
     return false;
@@ -83,7 +82,6 @@ bool DalvikTracer::collectStack(
   depth = 0;
 
   while (fp != nullptr) {
-
     if (depth == max_depth) {
       return false;
     }
@@ -103,26 +101,19 @@ bool DalvikTracer::collectStack(
 }
 
 void DalvikTracer::flushStack(
-  int64_t* frames,
-  uint8_t depth,
-  int tid,
-  int64_t time_) {
-
+    int64_t* frames,
+    uint8_t depth,
+    int tid,
+    int64_t time_) {
   Logger::get().writeStackFrames(
-    tid,
-    static_cast<int64_t>(time_),
-    frames,
-    depth);
+      tid, static_cast<int64_t>(time_), frames, depth);
 }
 
-void DalvikTracer::prepare() {
-}
+void DalvikTracer::prepare() {}
 
-void DalvikTracer::startTracing() {
-}
+void DalvikTracer::startTracing() {}
 
-void DalvikTracer::stopTracing() {
-}
+void DalvikTracer::stopTracing() {}
 
 } // namespace profiler
 } // namespace profilo

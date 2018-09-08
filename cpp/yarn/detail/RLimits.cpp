@@ -34,6 +34,6 @@ void setrlimit(int resource, const rlimit& limits) {
   }
 }
 
-} // detail
-} // yarn
-} // facebook
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

@@ -24,29 +24,31 @@
 #include <sstream>
 #include <system_error>
 
-#include <profilo/writer/TraceLifecycleVisitor.h>
 #include <profilo/writer/PacketReassembler.h>
+#include <profilo/writer/TraceLifecycleVisitor.h>
 
-namespace facebook { namespace profilo { namespace writer {
+namespace facebook {
+namespace profilo {
+namespace writer {
 
 using namespace facebook::profilo::entries;
 
 MultiTraceLifecycleVisitor::MultiTraceLifecycleVisitor(
-  const std::string& folder,
-  const std::string& trace_prefix,
-  std::shared_ptr<TraceCallbacks> callbacks,
-  const std::vector<std::pair<std::string, std::string>>& headers,
-  std::function<void(TraceLifecycleVisitor& visitor)> trace_backward_callback):
+    const std::string& folder,
+    const std::string& trace_prefix,
+    std::shared_ptr<TraceCallbacks> callbacks,
+    const std::vector<std::pair<std::string, std::string>>& headers,
+    std::function<void(TraceLifecycleVisitor& visitor)> trace_backward_callback)
+    :
 
-  folder_(folder),
-  trace_prefix_(trace_prefix),
-  callbacks_(callbacks),
-  trace_headers_(headers),
-  visitors_(),
-  consumed_traces_(),
-  trace_backward_callback_(trace_backward_callback),
-  done_(false)
-{}
+      folder_(folder),
+      trace_prefix_(trace_prefix),
+      callbacks_(callbacks),
+      trace_headers_(headers),
+      visitors_(),
+      consumed_traces_(),
+      trace_backward_callback_(trace_backward_callback),
+      done_(false) {}
 
 void MultiTraceLifecycleVisitor::visit(const StandardEntry& entry) {
   switch (entry.type) {
@@ -54,9 +56,9 @@ void MultiTraceLifecycleVisitor::visit(const StandardEntry& entry) {
     case entries::TRACE_START: {
       int64_t trace_id = entry.extra;
       visitors_.emplace(
-        trace_id,
-        TraceLifecycleVisitor(
-          folder_, trace_prefix_, callbacks_, trace_headers_, trace_id));
+          trace_id,
+          TraceLifecycleVisitor(
+              folder_, trace_prefix_, callbacks_, trace_headers_, trace_id));
 
       visitors_.at(trace_id).visit(entry);
       consumed_traces_.insert(trace_id);

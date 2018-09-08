@@ -44,7 +44,8 @@ const char* dexStringById(const DexFile* pDexFile, u4 idx) {
   const u1* str = pDexFile->baseAddr + pStringId->stringDataOff;
 
   // Skip the uleb128 length.
-  while (*(str++) > 0x7f); /* empty */
+  while (*(str++) > 0x7f)
+    ; /* empty */
 
   return (const char*)str;
 }
@@ -106,11 +107,7 @@ int dexProtoCompare(const DexProto* pProto1, const DexProto* pProto2) {
   }
 }
 
-int compareMethodStr(
-  DexFile* pDexFile,
-  u4 methodIdx,
-  const Method* method) {
-
+int compareMethodStr(DexFile* pDexFile, u4 methodIdx, const Method* method) {
   const DexMethodId* pMethodId = &pDexFile->pMethodIds[methodIdx];
   const char* str = dexStringByTypeIdx(pDexFile, pMethodId->classIdx);
   int result = strcmp(str, method->clazz->descriptor);
@@ -162,7 +159,7 @@ u4 getDexSignatureFromMethod(const Method* method) {
   if (dvmDex == nullptr) {
     return 0;
   }
-  return *((u4*) dvmDex->pHeader->signature);
+  return *((u4*)dvmDex->pHeader->signature);
 }
 
 int64_t dalvikGetMethodIdForSymbolication(const Method* method) {

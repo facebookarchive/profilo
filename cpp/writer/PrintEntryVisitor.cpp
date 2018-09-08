@@ -16,15 +16,16 @@
 
 #include <profilo/writer/PrintEntryVisitor.h>
 
-namespace facebook { namespace profilo { namespace writer {
+namespace facebook {
+namespace profilo {
+namespace writer {
 
-PrintEntryVisitor::PrintEntryVisitor(std::ostream& stream):
-  stream_(stream) {}
+PrintEntryVisitor::PrintEntryVisitor(std::ostream& stream) : stream_(stream) {}
 
 void PrintEntryVisitor::visit(const StandardEntry& data) {
   stream_ << data.id;
   stream_ << '|';
-  stream_ << entries::to_string((EntryType) data.type);
+  stream_ << entries::to_string((EntryType)data.type);
   stream_ << '|';
   stream_ << data.timestamp;
   stream_ << '|';
@@ -42,7 +43,7 @@ void PrintEntryVisitor::visit(const FramesEntry& data) {
   for (size_t idx = 0; idx < data.frames.size; ++idx) {
     stream_ << data.id;
     stream_ << '|';
-    stream_ << entries::to_string((EntryType) data.type);
+    stream_ << entries::to_string((EntryType)data.type);
     stream_ << '|';
     stream_ << data.timestamp;
     stream_ << '|';
@@ -51,13 +52,12 @@ void PrintEntryVisitor::visit(const FramesEntry& data) {
     stream_ << data.frames.values[idx];
     stream_ << '\n';
   }
-
 }
 
 void PrintEntryVisitor::visit(const BytesEntry& data) {
   stream_ << data.id;
   stream_ << '|';
-  stream_ << entries::to_string((EntryType) data.type);
+  stream_ << entries::to_string((EntryType)data.type);
   stream_ << '|';
   stream_ << data.matchid;
   stream_ << '|';
@@ -70,4 +70,6 @@ void PrintEntryVisitor::visit(const BytesEntry& data) {
   stream_ << '\n';
 }
 
-} } } // facebook::profilo::writer
+} // namespace writer
+} // namespace profilo
+} // namespace facebook

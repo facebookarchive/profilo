@@ -16,14 +16,14 @@
 
 #pragma once
 
+#include <poll.h>
+#include <sys/eventfd.h>
 #include <condition_variable>
 #include <memory>
 #include <mutex>
-#include <poll.h>
-#include <sys/eventfd.h>
 #include <system_error>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 #include <yarn/Event.h>
 #include <yarn/Records.h>
@@ -35,11 +35,11 @@ namespace yarn {
 namespace detail {
 
 class Reader {
-public:
+ public:
   // Enter the run loop. This function will return only after a call to stop().
   virtual void run() = 0;
 
-  // Request that the current run() execution. Callable from any thread. 
+  // Request that the current run() execution. Callable from any thread.
   //
   // Calling this has no effect if read() is not concurrently running.
   // This call returns when run() is no longer reading events.
@@ -51,13 +51,11 @@ public:
 // them in a poll(2) set, along with a special eventfd (see eventfd(2)) used
 // for safe cross-thread signalling that the Reader should stop.
 //
-class FdPollReader: public Reader {
-public:
-  // Construct a new reader. Will only poll events that 
+class FdPollReader : public Reader {
+ public:
+  // Construct a new reader. Will only poll events that
   // already have a mapped buffer.
-  FdPollReader(
-    EventList& events, 
-    RecordListener* listener = nullptr);
+  FdPollReader(EventList& events, RecordListener* listener = nullptr);
 
   FdPollReader(FdPollReader& other) = delete;
   virtual ~FdPollReader();
@@ -65,7 +63,7 @@ public:
   virtual void run();
   virtual void stop();
 
-private:
+ private:
   int stop_fd_;
   EventList& events_;
   std::unordered_map<uint64_t, const Event&> id_event_map_;
@@ -79,6 +77,6 @@ private:
   uint64_t stopValue() const;
 };
 
-} // detail
-} // yarn
-} // facebook
+} // namespace detail
+} // namespace yarn
+} // namespace facebook

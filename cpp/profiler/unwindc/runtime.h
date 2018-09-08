@@ -16,12 +16,12 @@
 
 #pragma once
 
-#include <cstddef>
-#include <fb/log.h>
-#include <stdint.h>
-#include <pthread.h>
 #include <dlfcn.h>
+#include <fb/log.h>
 #include <fbjni/fbjni.h>
+#include <pthread.h>
+#include <stdint.h>
+#include <cstddef>
 
 namespace facebook {
 namespace profilo {
@@ -41,8 +41,8 @@ typedef bool (*unwind_callback_t)(uintptr_t, void*);
 pthread_key_t determineThreadInstanceTLSKey() {
   auto jlThread_class = fbjni::findClassLocal("java/lang/Thread");
   auto jlThread_nativePeer = jlThread_class->getField<jlong>("nativePeer");
-  auto jlThread_currentThread =
-    jlThread_class->getStaticMethod<jobject()>("currentThread", "()Ljava/lang/Thread;");
+  auto jlThread_currentThread = jlThread_class->getStaticMethod<jobject()>(
+      "currentThread", "()Ljava/lang/Thread;");
   auto jlThread = jlThread_currentThread(jlThread_class);
 
   auto nativePeer = jlThread->getFieldValue(jlThread_nativePeer);
@@ -50,7 +50,8 @@ pthread_key_t determineThreadInstanceTLSKey() {
 
   constexpr int32_t kMaxPthreadKey = 128;
   constexpr int32_t kUserPthreadKeyStart = 0;
-  constexpr int32_t kKeyValidFlag = 1 << 31; // bionic tags keys by setting the MSB
+  constexpr int32_t kKeyValidFlag = 1
+      << 31; // bionic tags keys by setting the MSB
 
   for (pthread_key_t i = kUserPthreadKeyStart; i < kMaxPthreadKey; i++) {
     pthread_key_t tagged = i | kKeyValidFlag;
@@ -68,22 +69,47 @@ pthread_key_t getThreadInstanceTLSKey() {
 #elif ANDROID_VERSION_NUM >= 700
 
 #if defined(__aarch64__)
-# define __get_tls() ({ void** __val; __asm__("mrs %0, tpidr_el0" : "=r"(__val)); __val; })
+#define __get_tls()                             \
+  ({                                            \
+    void** __val;                               \
+    __asm__("mrs %0, tpidr_el0" : "=r"(__val)); \
+    __val;                                      \
+  })
 #elif defined(__arm__)
-# define __get_tls() ({ void** __val; __asm__("mrc p15, 0, %0, c13, c0, 3" : "=r"(__val)); __val; })
+#define __get_tls()                                      \
+  ({                                                     \
+    void** __val;                                        \
+    __asm__("mrc p15, 0, %0, c13, c0, 3" : "=r"(__val)); \
+    __val;                                               \
+  })
 #elif defined(__mips__)
-# define __get_tls() \
-    /* On mips32r1, this goes via a kernel illegal instruction trap that's optimized for v1. */ \
-    ({ register void** __val asm("v1"); \
-       __asm__(".set    push\n" \
-               ".set    mips32r2\n" \
-               "rdhwr   %0,$29\n" \
-               ".set    pop\n" : "=r"(__val)); \
-       __val; })
+#define __get_tls()                                                      \
+  /* On mips32r1, this goes via a kernel illegal instruction trap that's \
+   * optimized for v1. */                                                \
+  ({                                                                     \
+    register void** __val asm("v1");                                     \
+    __asm__(                                                             \
+        ".set    push\n"                                                 \
+        ".set    mips32r2\n"                                             \
+        "rdhwr   %0,$29\n"                                               \
+        ".set    pop\n"                                                  \
+        : "=r"(__val));                                                  \
+    __val;                                                               \
+  })
 #elif defined(__i386__)
-# define __get_tls() ({ void** __val; __asm__("movl %%gs:0, %0" : "=r"(__val)); __val; })
+#define __get_tls()                           \
+  ({                                          \
+    void** __val;                             \
+    __asm__("movl %%gs:0, %0" : "=r"(__val)); \
+    __val;                                    \
+  })
 #elif defined(__x86_64__)
-# define __get_tls() ({ void** __val; __asm__("mov %%fs:0, %0" : "=r"(__val)); __val; })
+#define __get_tls()                          \
+  ({                                         \
+    void** __val;                            \
+    __asm__("mov %%fs:0, %0" : "=r"(__val)); \
+    __val;                                   \
+  })
 #else
 #error unsupported architecture
 #endif
@@ -103,8 +129,8 @@ uintptr_t get_art_thread() {
   return reinterpret_cast<uintptr_t>(getThreadInstance());
 }
 
-__attribute__((always_inline))
-inline uint32_t CountShortyRefs(string_t shorty) {
+__attribute__((always_inline)) inline uint32_t CountShortyRefs(
+    string_t shorty) {
   uint32_t result = 0;
   for (size_t i = 0; i < shorty.length; i++) {
     if (shorty.data[i] == 'L') {
@@ -114,55 +140,49 @@ inline uint32_t CountShortyRefs(string_t shorty) {
   return result;
 }
 
-__attribute__((always_inline))
-inline string_t String(string_t data) {
+__attribute__((always_inline)) inline string_t String(string_t data) {
   return data;
 }
 
-__attribute__((always_inline))
-inline string_t String(uintptr_t ptr, const char*, const char*, uint32_t length) {
-  return string_t{
-    .data = (const char*) ptr,
-    .length = length
-  };
+__attribute__((always_inline)) inline string_t
+String(uintptr_t ptr, const char*, const char*, uint32_t length) {
+  return string_t{.data = (const char*)ptr, .length = length};
 }
 
-__attribute__((always_inline))
-inline uint64_t GetMethodTraceId(uint32_t dex_id, uint32_t method_id) {
+__attribute__((always_inline)) inline uint64_t GetMethodTraceId(
+    uint32_t dex_id,
+    uint32_t method_id) {
   return (static_cast<uint64_t>(method_id) << 32) | dex_id;
 }
 
-__attribute__((always_inline))
-inline uint8_t Read1(uintptr_t addr) {
+__attribute__((always_inline)) inline uint8_t Read1(uintptr_t addr) {
   return *reinterpret_cast<uint8_t*>(addr);
 }
 
-__attribute__((always_inline))
-inline uint16_t Read2(uintptr_t addr) {
+__attribute__((always_inline)) inline uint16_t Read2(uintptr_t addr) {
   return *reinterpret_cast<uint16_t*>(addr);
 }
 
-__attribute__((always_inline))
-inline uint32_t Read4(uintptr_t addr) {
+__attribute__((always_inline)) inline uint32_t Read4(uintptr_t addr) {
   return *reinterpret_cast<uint32_t*>(addr);
 }
 
-__attribute__((always_inline))
-inline uint64_t Read8(uintptr_t addr) {
+__attribute__((always_inline)) inline uint64_t Read8(uintptr_t addr) {
   return *reinterpret_cast<uint64_t*>(addr);
 }
 
-__attribute__((always_inline))
-inline uintptr_t AccessField(uintptr_t addr, uint32_t offset) {
+__attribute__((always_inline)) inline uintptr_t AccessField(
+    uintptr_t addr,
+    uint32_t offset) {
   return addr + offset;
 }
 
-__attribute__((always_inline))
-inline uintptr_t AccessArrayItem(uintptr_t addr, uint32_t item_size, uint32_t item) {
+__attribute__((always_inline)) inline uintptr_t
+AccessArrayItem(uintptr_t addr, uint32_t item_size, uint32_t item) {
   return addr + (item_size * item);
 }
 
-} // namespace android_*
+} // namespace ANDROID_NAMESPACE
 } // namespace profiler
 } // namespace profilo
 } // namespace facebook

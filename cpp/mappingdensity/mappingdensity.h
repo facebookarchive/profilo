@@ -9,8 +9,9 @@ namespace profilo {
 namespace mappingdensity {
 
 void dumpMappingDensities(
-  std::string const& mapRegexStr,
-  std::string const& outFile,
-  std::string const& dumpName);
-
-} } } // namespace facebook::profilo::mappingdensity
+    std::string const& mapRegexStr,
+    std::string const& outFile,
+    std::string const& dumpName);
+}
+} // namespace profilo
+} // namespace facebook

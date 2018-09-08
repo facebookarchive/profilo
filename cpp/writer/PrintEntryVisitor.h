@@ -18,13 +18,14 @@
 
 #include <profilo/entries/EntryParser.h>
 
-namespace facebook { namespace profilo { namespace writer {
+namespace facebook {
+namespace profilo {
+namespace writer {
 
 using namespace entries;
 
-class PrintEntryVisitor: public EntryVisitor {
-public:
-
+class PrintEntryVisitor : public EntryVisitor {
+ public:
   PrintEntryVisitor() = delete;
   PrintEntryVisitor(const PrintEntryVisitor&) = delete;
 
@@ -34,8 +35,10 @@ public:
   virtual void visit(const FramesEntry& data);
   virtual void visit(const BytesEntry& data);
 
-private:
+ private:
   std::ostream& stream_;
 };
 
-} } } // facebook::profilo::writer
+} // namespace writer
+} // namespace profilo
+} // namespace facebook

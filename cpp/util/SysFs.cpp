@@ -67,7 +67,7 @@ long readMaxCpuFrequency(int cpu) {
   return strtol(buffer, nullptr, 10);
 }
 
-} // namespace anonymous
+} // namespace
 
 CpuCurrentFrequencyStatFile::CpuCurrentFrequencyStatFile(int cpu)
     : BaseStatFile(getScalingCurrentCpuFrequencyPath(cpu)) {}

@@ -14,34 +14,36 @@
  * limitations under the License.
  */
 
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <ctime>
+#include <memory>
 #include <ostream>
 #include <sstream>
-#include <memory>
-#include <unistd.h>
-#include <unordered_set>
 #include <stdexcept>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <system_error>
+#include <unordered_set>
 
 #include <profilo/entries/EntryParser.h>
 #include <profilo/writer/DeltaEncodingVisitor.h>
-#include <profilo/writer/PacketReassembler.h>
-#include <profilo/writer/TraceWriter.h>
-#include <profilo/writer/TraceLifecycleVisitor.h>
 #include <profilo/writer/MultiTraceLifecycleVisitor.h>
+#include <profilo/writer/PacketReassembler.h>
+#include <profilo/writer/TraceLifecycleVisitor.h>
+#include <profilo/writer/TraceWriter.h>
 
 #include <profilo/LogEntry.h>
 
-namespace facebook { namespace profilo { namespace writer {
+namespace facebook {
+namespace profilo {
+namespace writer {
 
 namespace {
 
 void traceBackward(
-  TraceLifecycleVisitor& visitor,
-  TraceBuffer& buffer,
-  TraceBuffer::Cursor& cursor) {
+    TraceLifecycleVisitor& visitor,
+    TraceBuffer& buffer,
+    TraceBuffer::Cursor& cursor) {
   PacketReassembler reassembler([&visitor](const void* data, size_t size) {
     EntryParser::parse(data, size, visitor);
   });
@@ -58,24 +60,22 @@ void traceBackward(
     }
   }
 }
-}
+} // namespace
 
 TraceWriter::TraceWriter(
-  const std::string&& folder,
-  const std::string&& trace_prefix,
-  TraceBuffer& buffer,
-  std::shared_ptr<TraceCallbacks> callbacks,
-  std::vector<std::pair<std::string, std::string>>&& headers
-):
-  wakeup_mutex_(),
-  wakeup_cv_(),
-  wakeup_trace_ids_(),
-  trace_folder_(std::move(folder)),
-  trace_prefix_(std::move(trace_prefix)),
-  buffer_(buffer),
-  trace_headers_(std::move(headers)),
-  callbacks_(callbacks)
-{}
+    const std::string&& folder,
+    const std::string&& trace_prefix,
+    TraceBuffer& buffer,
+    std::shared_ptr<TraceCallbacks> callbacks,
+    std::vector<std::pair<std::string, std::string>>&& headers)
+    : wakeup_mutex_(),
+      wakeup_cv_(),
+      wakeup_trace_ids_(),
+      trace_folder_(std::move(folder)),
+      trace_prefix_(std::move(trace_prefix)),
+      buffer_(buffer),
+      trace_headers_(std::move(headers)),
+      callbacks_(callbacks) {}
 
 void TraceWriter::loop() {
   while (true) {
@@ -110,11 +110,9 @@ void TraceWriter::loop() {
             traceBackward(visitor, buffer_, cursor);
           });
 
-      PacketReassembler reassembler(
-        [&visitor](const void* data, size_t size) {
-          EntryParser::parse(data, size, visitor);
-        }
-      );
+      PacketReassembler reassembler([&visitor](const void* data, size_t size) {
+        EntryParser::parse(data, size, visitor);
+      });
 
       while (!visitor.done()) {
         alignas(4) Packet packet;

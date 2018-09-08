@@ -19,69 +19,60 @@
 namespace facebook {
 namespace yarn {
 
-static perf_event_attr createEventAttr(EventType type, int32_t tid, int32_t cpu, bool inherit) {
+static perf_event_attr
+createEventAttr(EventType type, int32_t tid, int32_t cpu, bool inherit) {
   perf_event_attr attr{};
   attr.size = sizeof(struct perf_event_attr);
 
   attr.wakeup_events = 1; // TODO tune this value
-  attr.watermark = 0; // 0 == count in wakeup_events, 1 == count in wakeup_watermark (in bytes)
+  attr.watermark = 0; // 0 == count in wakeup_events, 1 == count in
+                      // wakeup_watermark (in bytes)
 
   switch (type) {
-    case EventType::EVENT_TYPE_MAJOR_FAULTS:
-    {
+    case EventType::EVENT_TYPE_MAJOR_FAULTS: {
       attr.type = PERF_TYPE_SOFTWARE;
       attr.config = PERF_COUNT_SW_PAGE_FAULTS_MAJ;
       attr.sample_period = 1;
       break;
     }
-    case EventType::EVENT_TYPE_CONTEXT_SWITCHES:
-    {
+    case EventType::EVENT_TYPE_CONTEXT_SWITCHES: {
       attr.type = PERF_TYPE_SOFTWARE;
       attr.config = PERF_COUNT_SW_CONTEXT_SWITCHES;
       attr.sample_period = 1;
       break;
     }
-    case EventType::EVENT_TYPE_CPU_MIGRATIONS:
-    {
+    case EventType::EVENT_TYPE_CPU_MIGRATIONS: {
       attr.type = PERF_TYPE_SOFTWARE;
       attr.config = PERF_COUNT_SW_CPU_MIGRATIONS;
       attr.sample_period = 1;
       break;
     }
-    case EventType::EVENT_TYPE_TASK_CLOCK:
-    {
+    case EventType::EVENT_TYPE_TASK_CLOCK: {
       attr.type = PERF_TYPE_SOFTWARE;
       attr.config = PERF_COUNT_SW_TASK_CLOCK;
       attr.sample_freq = 1000; // 1000 Hz == 1ms
       attr.freq = 1;
       break;
     }
-    case EventType::EVENT_TYPE_CPU_CLOCK:
-    {
+    case EventType::EVENT_TYPE_CPU_CLOCK: {
       attr.type = PERF_TYPE_SOFTWARE;
       attr.config = PERF_COUNT_SW_CPU_CLOCK;
       attr.sample_freq = 1000;
       attr.freq = 1;
       break;
     }
-    default: throw std::invalid_argument("Unknown event type");
+    default:
+      throw std::invalid_argument("Unknown event type");
   }
 
-  attr.sample_type =
-   PERF_SAMPLE_TID |
-   PERF_SAMPLE_TIME |
-   PERF_SAMPLE_ADDR |
-   PERF_SAMPLE_ID |
-   PERF_SAMPLE_STREAM_ID |
-   PERF_SAMPLE_CPU |
-   PERF_SAMPLE_READ;
+  attr.sample_type = PERF_SAMPLE_TID | PERF_SAMPLE_TIME | PERF_SAMPLE_ADDR |
+      PERF_SAMPLE_ID | PERF_SAMPLE_STREAM_ID | PERF_SAMPLE_CPU |
+      PERF_SAMPLE_READ;
 
   // If you change this, update the struct in open() as well
-  attr.read_format =
-    PERF_FORMAT_TOTAL_TIME_ENABLED |
-    PERF_FORMAT_TOTAL_TIME_RUNNING |
-    PERF_FORMAT_ID; // needed to read the group leader id
-
+  attr.read_format = PERF_FORMAT_TOTAL_TIME_ENABLED |
+      PERF_FORMAT_TOTAL_TIME_RUNNING |
+      PERF_FORMAT_ID; // needed to read the group leader id
 
   attr.disabled = 1;
 
@@ -91,42 +82,44 @@ static perf_event_attr createEventAttr(EventType type, int32_t tid, int32_t cpu,
   return attr;
 }
 
-static int perf_event_open(perf_event_attr* attr, pid_t pid, int cpu, int group_fd, unsigned long flags) {
+static int perf_event_open(
+    perf_event_attr* attr,
+    pid_t pid,
+    int cpu,
+    int group_fd,
+    unsigned long flags) {
   return syscall(__NR_perf_event_open, attr, pid, cpu, group_fd, flags);
 }
 
-Event::Event(EventType type, int32_t tid, int32_t cpu, bool inherit):
-  type_(type),
-  tid_(tid),
-  cpu_(cpu),
-  fd_(-1),
-  buffer_(nullptr),
-  buffer_size_(0),
-  id_(0),
-  event_attr_(createEventAttr(type, tid, cpu, inherit))
-{}
+Event::Event(EventType type, int32_t tid, int32_t cpu, bool inherit)
+    : type_(type),
+      tid_(tid),
+      cpu_(cpu),
+      fd_(-1),
+      buffer_(nullptr),
+      buffer_size_(0),
+      id_(0),
+      event_attr_(createEventAttr(type, tid, cpu, inherit)) {}
 
-Event::Event():
-  type_(EVENT_TYPE_NONE),
-  tid_(-1),
-  cpu_(-1),
-  fd_(-1),
-  buffer_(nullptr),
-  buffer_size_(0),
-  id_(0),
-  event_attr_()
-{}
+Event::Event()
+    : type_(EVENT_TYPE_NONE),
+      tid_(-1),
+      cpu_(-1),
+      fd_(-1),
+      buffer_(nullptr),
+      buffer_size_(0),
+      id_(0),
+      event_attr_() {}
 
-Event::Event(Event&& other):
-  type_(std::move(other.type_)),
-  tid_(std::move(other.tid_)),
-  cpu_(std::move(other.cpu_)),
-  fd_(std::move(other.fd_)),
-  buffer_(std::move(other.buffer_)),
-  buffer_size_(std::move(other.buffer_size_)),
-  id_(std::move(other.id_)),
-  event_attr_(std::move(other.event_attr_))
-{
+Event::Event(Event&& other)
+    : type_(std::move(other.type_)),
+      tid_(std::move(other.tid_)),
+      cpu_(std::move(other.cpu_)),
+      fd_(std::move(other.fd_)),
+      buffer_(std::move(other.buffer_)),
+      buffer_size_(std::move(other.buffer_size_)),
+      id_(std::move(other.id_)),
+      event_attr_(std::move(other.event_attr_)) {
   other.fd_ = -1;
   other.buffer_ = nullptr;
   other.buffer_size_ = 0;
@@ -137,25 +130,24 @@ Event::~Event() {
   if (buffer_ != nullptr) {
     try {
       munmap();
-    } catch(std::system_error& ex) {
+    } catch (std::system_error& ex) {
       // Intentionally ignored
     }
   }
   if (fd_ != -1) {
     try {
       disable();
-    } catch(std::system_error& ex) {
+    } catch (std::system_error& ex) {
       // Intentionally ignored
     }
     // Regardless of whether disable() threw an exception,
     // still try to close the fd.
     try {
       close();
-    } catch(std::system_error& ex) {
+    } catch (std::system_error& ex) {
       // Intentionally ignored
     }
   }
-
 }
 
 struct read_format {
@@ -166,8 +158,8 @@ struct read_format {
 };
 
 static read_format readFromFd(int fd, const perf_event_attr& attr) {
-  const int32_t expected_read_format =
-    PERF_FORMAT_TOTAL_TIME_ENABLED | PERF_FORMAT_TOTAL_TIME_RUNNING | PERF_FORMAT_ID;
+  const int32_t expected_read_format = PERF_FORMAT_TOTAL_TIME_ENABLED |
+      PERF_FORMAT_TOTAL_TIME_RUNNING | PERF_FORMAT_ID;
 
   if ((attr.read_format & expected_read_format) != expected_read_format) {
     throw std::logic_error("read_format does not have expected struct fields");
@@ -181,7 +173,8 @@ static read_format readFromFd(int fd, const perf_event_attr& attr) {
 }
 
 void Event::open() {
-  int fd = perf_event_open(&event_attr_, tid_, cpu_, /*group_fd*/-1, /*flags*/0);
+  int fd =
+      perf_event_open(&event_attr_, tid_, cpu_, /*group_fd*/ -1, /*flags*/ 0);
   if (fd == -1) {
     throw std::system_error(errno, std::system_category());
   }
@@ -220,11 +213,11 @@ void Event::mmap(size_t sz) {
     throw std::invalid_argument("Cannot mmap an unopened event");
   }
 
-  void* buffer = ::mmap(0, sz, PROT_READ|PROT_WRITE, MAP_SHARED, fd_, 0);
+  void* buffer = ::mmap(0, sz, PROT_READ | PROT_WRITE, MAP_SHARED, fd_, 0);
   if (buffer == MAP_FAILED) {
     throw std::system_error(errno, std::system_category());
   }
-  buffer_ =  buffer;
+  buffer_ = buffer;
   buffer_size_ = sz;
 }
 
@@ -279,7 +272,8 @@ void Event::setOutput(const Event& event) {
     // issue but we can't rely on that on all the devices we want to support.
     //
     // c.f. the section on PERF_SAMPLE_IDENTIFIER in perf_event_open(2)
-    throw std::invalid_argument("Parent and child must agree on perf_event_attr.sample_type");
+    throw std::invalid_argument(
+        "Parent and child must agree on perf_event_attr.sample_type");
   }
   if (ioctl(fd_, PERF_EVENT_IOC_SET_OUTPUT, event.fd_) == -1) {
     throw std::system_error(errno, std::system_category());
@@ -318,5 +312,5 @@ EventType Event::type() const {
   return type_;
 }
 
-} // yarn
-} // facebook
+} // namespace yarn
+} // namespace facebook

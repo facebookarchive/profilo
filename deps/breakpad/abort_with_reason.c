@@ -15,8 +15,8 @@
  */
 
 #include "abort_with_reason.h"
-#include <stdlib.h>
 #include <fb/log.h>
+#include <stdlib.h>
 
 void abortWithReasonImpl(const char* reason) {
   FBLOGE(reason);

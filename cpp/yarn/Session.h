@@ -16,9 +16,9 @@
 
 #pragma once
 
+#include <time.h>
 #include <unistd.h>
 #include <memory>
-#include <time.h>
 #include <unordered_map>
 #include <vector>
 
@@ -32,7 +32,7 @@ namespace yarn {
 
 enum FallbackMode {
   FALLBACK_RAISE_RLIMIT = 1
-  //FALLBACK_NO_FDS = 2 // planned support for memory polling and releasing fds
+  // FALLBACK_NO_FDS = 2 // planned support for memory polling and releasing fds
 };
 
 struct SessionSpec {
@@ -47,13 +47,11 @@ struct SessionSpec {
 };
 
 class Session {
-public:
-
+ public:
   explicit Session(
-    const std::vector<EventSpec>& events, 
-    const SessionSpec& spec,
-    std::unique_ptr<RecordListener> listener = nullptr
-  );
+      const std::vector<EventSpec>& events,
+      const SessionSpec& spec,
+      std::unique_ptr<RecordListener> listener = nullptr);
 
   Session(Session& session) = delete;
   void operator=(Session& session) = delete;
@@ -62,7 +60,7 @@ public:
   // Attach the specified events to the current process, obeying the
   // SessionSpec from the constructor parameters.
   //
-  // Returns true if the session attached *fully*, false otherwise (and 
+  // Returns true if the session attached *fully*, false otherwise (and
   // partial attachment is reverted).
   //
   bool attach();
@@ -71,15 +69,16 @@ public:
   // not safe to call this if another thread is currently in a read() call.
   void detach();
 
-  // Enter the reading loop. This function will return only after a call to stopRead().
+  // Enter the reading loop. This function will return only after a call to
+  // stopRead().
   void read();
 
-  // Request that the current read() execution is stopped. Callable from any thread.
-  // Calling this has no effect if read() is not concurrently running.
+  // Request that the current read() execution is stopped. Callable from any
+  // thread. Calling this has no effect if read() is not concurrently running.
   // This call returns when read() is no longer reading any events.
   void stopRead();
 
-private:
+ private:
   const std::vector<EventSpec> events_;
   const SessionSpec spec_;
 
@@ -87,5 +86,5 @@ private:
   std::unique_ptr<detail::Reader> reader_;
   std::unique_ptr<RecordListener> listener_;
 };
-} // yarn
-} // facebook
+} // namespace yarn
+} // namespace facebook

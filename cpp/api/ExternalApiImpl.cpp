@@ -18,8 +18,8 @@
 
 #include <unistd.h>
 
-#include <profilo/Logger.h>
 #include <profilo/LogEntry.h>
+#include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
 
 using namespace facebook::profilo;
@@ -99,8 +99,7 @@ void internal_log_classload_failed(const char* provider) {
 
 } // namespace
 
-__attribute__((constructor))
-void init_external_api() {
+__attribute__((constructor)) void init_external_api() {
   profilo_api_int.mark_start = &internal_mark_start;
   profilo_api_int.mark_end = &internal_mark_end;
   profilo_api_int.log_classload_start = &internal_log_classload_start;

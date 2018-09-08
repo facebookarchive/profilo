@@ -16,27 +16,26 @@
 
 #pragma once
 
+#include <unistd.h>
 #include <condition_variable>
 #include <memory>
 #include <mutex>
 #include <queue>
-#include <vector>
 #include <utility>
-#include <unistd.h>
+#include <vector>
 
-#include <profilo/writer/TraceCallbacks.h>
-#include <profilo/RingBuffer.h>
 #include <profilo/LogEntry.h>
+#include <profilo/RingBuffer.h>
 #include <profilo/entries/EntryParser.h>
 #include <profilo/writer/PacketReassembler.h>
+#include <profilo/writer/TraceCallbacks.h>
 
 namespace facebook {
 namespace profilo {
 namespace writer {
 
 class TraceWriter {
-public:
-
+ public:
   static const int64_t kStopLoopTraceID = 0;
 
   //
@@ -47,13 +46,12 @@ public:
   //          the beginning of the trace
   //
   TraceWriter(
-    const std::string&& folder,
-    const std::string&& trace_prefix,
-    TraceBuffer& buffer,
-    std::shared_ptr<TraceCallbacks> callbacks = nullptr,
-    std::vector<std::pair<std::string, std::string>>&& headers =
-      std::vector<std::pair<std::string, std::string>>()
-  );
+      const std::string&& folder,
+      const std::string&& trace_prefix,
+      TraceBuffer& buffer,
+      std::shared_ptr<TraceCallbacks> callbacks = nullptr,
+      std::vector<std::pair<std::string, std::string>>&& headers =
+          std::vector<std::pair<std::string, std::string>>());
 
   //
   // Wait until a submit() call and then process a submitted trace ID.
@@ -76,7 +74,7 @@ public:
   //
   void submit(int64_t trace_id);
 
-private:
+ private:
   std::mutex wakeup_mutex_;
   std::condition_variable wakeup_cv_;
   std::queue<std::pair<TraceBuffer::Cursor, int64_t>> wakeup_trace_ids_;

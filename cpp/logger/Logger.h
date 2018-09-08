@@ -17,8 +17,8 @@
 #pragma once
 
 #include <profilo/LogEntry.h>
-#include <profilo/entries/EntryType.h>
 #include <profilo/entries/Entry.h>
+#include <profilo/entries/EntryType.h>
 
 #include "PacketLogger.h"
 #include "RingBuffer.h"
@@ -33,12 +33,13 @@ using namespace entries;
 class Logger {
   const int32_t TRACING_DISABLED = -1;
   const int32_t NO_MATCH = 0;
-public:
+
+ public:
   const size_t kMaxVariableLengthEntry = 1024;
 
   PROFILOEXPORT static Logger& get();
 
-  template<class T>
+  template <class T>
   int32_t write(T&& entry, uint16_t id_step = 1) {
     entry.id = nextID(id_step);
 
@@ -50,10 +51,8 @@ public:
     return entry.id;
   }
 
-  template<class T>
-  int32_t writeAndGetCursor(
-    T&& entry,
-    TraceBuffer::Cursor& cursor) {
+  template <class T>
+  int32_t writeAndGetCursor(T&& entry, TraceBuffer::Cursor& cursor) {
     entry.id = nextID();
 
     auto size = T::calculateSize(entry);
@@ -64,11 +63,8 @@ public:
     return entry.id;
   }
 
-  PROFILOEXPORT int32_t writeBytes(
-    EntryType type,
-    int32_t arg1,
-    const uint8_t* arg2,
-    size_t len);
+  PROFILOEXPORT int32_t
+  writeBytes(EntryType type, int32_t arg1, const uint8_t* arg2, size_t len);
 
   PROFILOEXPORT void writeStackFrames(
       int32_t tid,
@@ -77,16 +73,14 @@ public:
       uint8_t depth,
       EntryType entry_type = entries::STACK_FRAME);
 
-
   PROFILOEXPORT void writeTraceAnnotation(int32_t key, int64_t value);
-
 
  private:
   std::atomic<int32_t> entryID_;
   logger::PacketLogger logger_;
 
-  Logger(logger::PacketBufferProvider provider):
-    entryID_(0), logger_(provider) {}
+  Logger(logger::PacketBufferProvider provider)
+      : entryID_(0), logger_(provider) {}
   Logger(const Logger& other) = delete;
 
   inline int32_t nextID(uint16_t step = 1) {

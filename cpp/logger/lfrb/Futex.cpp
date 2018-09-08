@@ -21,12 +21,12 @@
 
 #ifdef __linux__
 #include <linux/futex.h>
-#include <unistd.h>
 #include <sys/syscall.h>
+#include <unistd.h>
 #else
-#include <list>
-#include <functional>
 #include <condition_variable>
+#include <functional>
+#include <list>
 #include <mutex>
 #endif
 
@@ -48,26 +48,27 @@ namespace {
 /// their headers even though they support it. Make sure we have our constants
 /// even if the headers don't have them.
 #ifndef FUTEX_WAIT_BITSET
-# define FUTEX_WAIT_BITSET 9
+#define FUTEX_WAIT_BITSET 9
 #endif
 #ifndef FUTEX_WAKE_BITSET
-# define FUTEX_WAKE_BITSET 10
+#define FUTEX_WAKE_BITSET 10
 #endif
 #ifndef FUTEX_PRIVATE_FLAG
-# define FUTEX_PRIVATE_FLAG 128
+#define FUTEX_PRIVATE_FLAG 128
 #endif
 #ifndef FUTEX_CLOCK_REALTIME
-# define FUTEX_CLOCK_REALTIME 256
+#define FUTEX_CLOCK_REALTIME 256
 #endif
 
 int nativeFutexWake(void* addr, int count, uint32_t wakeMask) {
-  int rv = syscall(__NR_futex,
-                   addr, /* addr1 */
-                   FUTEX_WAKE_BITSET | FUTEX_PRIVATE_FLAG, /* op */
-                   count, /* val */
-                   nullptr, /* timeout */
-                   nullptr, /* addr2 */
-                   wakeMask); /* val3 */
+  int rv = syscall(
+      __NR_futex,
+      addr, /* addr1 */
+      FUTEX_WAKE_BITSET | FUTEX_PRIVATE_FLAG, /* op */
+      count, /* val */
+      nullptr, /* timeout */
+      nullptr, /* addr2 */
+      wakeMask); /* val3 */
 
   /* NOTE: we ignore errors on wake for the case of a futex
      guarding its own destruction, similar to this
@@ -80,9 +81,7 @@ int nativeFutexWake(void* addr, int count, uint32_t wakeMask) {
 }
 
 template <class Clock>
-struct timespec
-timeSpecFromTimePoint(time_point<Clock> absTime)
-{
+struct timespec timeSpecFromTimePoint(time_point<Clock> absTime) {
   auto epoch = absTime.time_since_epoch();
   if (epoch.count() < 0) {
     // kernel timespec_valid requires non-negative seconds and nanos in [0,1G)
@@ -97,15 +96,16 @@ timeSpecFromTimePoint(time_point<Clock> absTime)
 
   auto secs = duration_cast<time_t_seconds>(epoch);
   auto nanos = duration_cast<long_nanos>(epoch - secs);
-  struct timespec result = { secs.count(), nanos.count() };
+  struct timespec result = {secs.count(), nanos.count()};
   return result;
 }
 
-FutexResult nativeFutexWaitImpl(void* addr,
-                                uint32_t expected,
-                                time_point<system_clock>* absSystemTime,
-                                time_point<steady_clock>* absSteadyTime,
-                                uint32_t waitMask) {
+FutexResult nativeFutexWaitImpl(
+    void* addr,
+    uint32_t expected,
+    time_point<system_clock>* absSystemTime,
+    time_point<steady_clock>* absSteadyTime,
+    uint32_t waitMask) {
   assert(absSystemTime == nullptr || absSteadyTime == nullptr);
 
   int op = FUTEX_WAIT_BITSET | FUTEX_PRIVATE_FLAG;
@@ -123,18 +123,19 @@ FutexResult nativeFutexWaitImpl(void* addr,
 
   // Unlike FUTEX_WAIT, FUTEX_WAIT_BITSET requires an absolute timeout
   // value - http://locklessinc.com/articles/futex_cheat_sheet/
-  int rv = syscall(__NR_futex,
-                   addr, /* addr1 */
-                   op, /* op */
-                   expected, /* val */
-                   timeout, /* timeout */
-                   nullptr, /* addr2 */
-                   waitMask); /* val3 */
+  int rv = syscall(
+      __NR_futex,
+      addr, /* addr1 */
+      op, /* op */
+      expected, /* val */
+      timeout, /* timeout */
+      nullptr, /* addr2 */
+      waitMask); /* val3 */
 
   if (rv == 0) {
     return FutexResult::AWOKEN;
   } else {
-    switch(errno) {
+    switch (errno) {
       case ETIMEDOUT:
         assert(timeout != nullptr);
         return FutexResult::TIMEDOUT;
@@ -179,10 +180,7 @@ struct EmulatedFutexWaitNode {
   std::condition_variable cond_;
 
   EmulatedFutexWaitNode(void* addr, uint32_t waitMask)
-    : addr_(addr)
-    , waitMask_(waitMask)
-    , signaled_(false)
-  {}
+      : addr_(addr), waitMask_(waitMask), signaled_(false) {}
 };
 
 struct EmulatedFutexBucket {
@@ -193,8 +191,8 @@ struct EmulatedFutexBucket {
 
   static EmulatedFutexBucket& bucketFor(void* addr) {
     static auto gBuckets = new EmulatedFutexBucket[kNumBuckets];
-    uint64_t mixedBits = std::hash<uintptr_t>{}(
-        reinterpret_cast<uintptr_t>(addr));
+    uint64_t mixedBits =
+        std::hash<uintptr_t>{}(reinterpret_cast<uintptr_t>(addr));
     return gBuckets[mixedBits % kNumBuckets];
   }
 };
@@ -205,7 +203,7 @@ int emulatedFutexWake(void* addr, int count, uint32_t waitMask) {
 
   int numAwoken = 0;
   for (auto iter = bucket.waiters_.begin();
-       numAwoken < count && iter != bucket.waiters_.end(); ) {
+       numAwoken < count && iter != bucket.waiters_.end();) {
     auto current = iter;
     auto& node = *iter++;
     if (node->addr_ == addr && (node->waitMask_ & waitMask) != 0) {
@@ -279,8 +277,7 @@ FutexResult emulatedFutexWaitImpl(
 // Futex<> specializations
 
 template <>
-int
-Futex<std::atomic>::futexWake(int count, uint32_t wakeMask) {
+int Futex<std::atomic>::futexWake(int count, uint32_t wakeMask) {
 #ifdef __linux__
   return nativeFutexWake(this, count, wakeMask);
 #else
@@ -290,18 +287,17 @@ Futex<std::atomic>::futexWake(int count, uint32_t wakeMask) {
 
 #if !defined(__linux__)
 template <>
-int
-Futex<EmulatedFutexAtomic>::futexWake(int count, uint32_t wakeMask) {
+int Futex<EmulatedFutexAtomic>::futexWake(int count, uint32_t wakeMask) {
   return emulatedFutexWake(this, count, wakeMask);
 }
 #endif
 
 template <>
-FutexResult
-Futex<std::atomic>::futexWaitImpl(uint32_t expected,
-                                  time_point<system_clock>* absSystemTime,
-                                  time_point<steady_clock>* absSteadyTime,
-                                  uint32_t waitMask) {
+FutexResult Futex<std::atomic>::futexWaitImpl(
+    uint32_t expected,
+    time_point<system_clock>* absSystemTime,
+    time_point<steady_clock>* absSteadyTime,
+    uint32_t waitMask) {
 #ifdef __linux__
   return nativeFutexWaitImpl(
       this, expected, absSystemTime, absSteadyTime, waitMask);
@@ -313,12 +309,11 @@ Futex<std::atomic>::futexWaitImpl(uint32_t expected,
 
 #if !defined(__linux__)
 template <>
-FutexResult
-Futex<EmulatedFutexAtomic>::futexWaitImpl(
-        uint32_t expected,
-        time_point<system_clock>* absSystemTime,
-        time_point<steady_clock>* absSteadyTime,
-        uint32_t waitMask) {
+FutexResult Futex<EmulatedFutexAtomic>::futexWaitImpl(
+    uint32_t expected,
+    time_point<system_clock>* absSystemTime,
+    time_point<steady_clock>* absSteadyTime,
+    uint32_t waitMask) {
   return emulatedFutexWaitImpl(
       this, expected, absSystemTime, absSteadyTime, waitMask);
 }

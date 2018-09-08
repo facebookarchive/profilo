@@ -21,12 +21,15 @@
 #include <chrono>
 #include <limits>
 
-namespace facebook { namespace profilo { namespace logger { namespace lfrb {
+namespace facebook {
+namespace profilo {
+namespace logger {
+namespace lfrb {
 
 enum class FutexResult {
   VALUE_CHANGED, /* Futex value didn't match expected */
-  AWOKEN,        /* futex wait matched with a futex wake */
-  INTERRUPTED,   /* Spurious wake-up or signal caused futex wait failure */
+  AWOKEN, /* futex wait matched with a futex wake */
+  INTERRUPTED, /* Spurious wake-up or signal caused futex wait failure */
   TIMEDOUT
 };
 
@@ -41,7 +44,6 @@ enum class FutexResult {
  */
 template <template <typename> class Atom = std::atomic>
 struct Futex : Atom<uint32_t> {
-
   explicit constexpr Futex(uint32_t init = 0) : Atom<uint32_t>(init) {}
   Futex(Futex const&) = delete;
   Futex& operator=(Futex const&) = delete;
@@ -64,9 +66,9 @@ struct Futex : Atom<uint32_t> {
    *  and is not actually steady.*/
   template <class Clock, class Duration = typename Clock::duration>
   FutexResult futexWaitUntil(
-          uint32_t expected,
-          const std::chrono::time_point<Clock, Duration>& absTime,
-          uint32_t waitMask = -1) {
+      uint32_t expected,
+      const std::chrono::time_point<Clock, Duration>& absTime,
+      uint32_t waitMask = -1) {
     using std::chrono::duration_cast;
     using std::chrono::nanoseconds;
     using std::chrono::seconds;
@@ -110,11 +112,11 @@ struct Futex : Atom<uint32_t> {
    *  never touch the object after performing the memory store that
    *  is the linearization point for unlock or control handoff).
    *  See https://sourceware.org/bugzilla/show_bug.cgi?id=13690 */
-  int futexWake(int count = std::numeric_limits<int>::max(),
-                uint32_t wakeMask = -1);
+  int futexWake(
+      int count = std::numeric_limits<int>::max(),
+      uint32_t wakeMask = -1);
 
  private:
-
   /** Underlying implementation of futexWait and futexWaitUntil.
    *  At most one of absSystemTime and absSteadyTime should be non-null.
    *  Timeouts are separated into separate parameters to allow the
@@ -147,20 +149,20 @@ int Futex<std::atomic>::futexWake(int count, uint32_t wakeMask);
 
 template <>
 FutexResult Futex<std::atomic>::futexWaitImpl(
-      uint32_t expected,
-      std::chrono::time_point<std::chrono::system_clock>* absSystemTime,
-      std::chrono::time_point<std::chrono::steady_clock>* absSteadyTime,
-      uint32_t waitMask);
+    uint32_t expected,
+    std::chrono::time_point<std::chrono::system_clock>* absSystemTime,
+    std::chrono::time_point<std::chrono::steady_clock>* absSteadyTime,
+    uint32_t waitMask);
 
 template <>
 int Futex<EmulatedFutexAtomic>::futexWake(int count, uint32_t wakeMask);
 
 template <>
 FutexResult Futex<EmulatedFutexAtomic>::futexWaitImpl(
-      uint32_t expected,
-      std::chrono::time_point<std::chrono::system_clock>* absSystemTime,
-      std::chrono::time_point<std::chrono::steady_clock>* absSteadyTime,
-      uint32_t waitMask);
+    uint32_t expected,
+    std::chrono::time_point<std::chrono::system_clock>* absSystemTime,
+    std::chrono::time_point<std::chrono::steady_clock>* absSteadyTime,
+    uint32_t waitMask);
 
 } // namespace lfrb
 } // namespace logger

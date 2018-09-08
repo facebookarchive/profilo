@@ -25,12 +25,10 @@ namespace writer {
 using detail::PacketStream;
 
 PacketReassembler::PacketReassembler(
-  PacketReassembler::PayloadCallback callback
-):
-  active_streams_(),
-  pooled_streams_(kStreamPoolSize),
-  callback_(std::move(callback))
-{}
+    PacketReassembler::PayloadCallback callback)
+    : active_streams_(),
+      pooled_streams_(kStreamPoolSize),
+      callback_(std::move(callback)) {}
 
 namespace {
 
@@ -87,7 +85,8 @@ void PacketReassembler::process(Packet const& packet) {
   // Is this part of an existing stream?
   if (active_streams_.size() > 0) {
     for (auto it = active_streams_.begin(), end = active_streams_.end();
-         it != end; ++it) {
+         it != end;
+         ++it) {
       auto& stream = *it;
 
       if (stream.stream == packet.stream) {
@@ -109,7 +108,8 @@ void PacketReassembler::process(Packet const& packet) {
 
   if (packet.start && !packet.next) {
     callback_(packet.data, packet.size);
-  } else if (packet.start) { // Ignore if we only started from the middle of the packet
+  } else if (packet.start) { // Ignore if we only started from the middle of the
+                             // packet
     PacketStream stream = newStream();
     stream.stream = packet.stream;
     appendToStream(stream, packet);
@@ -128,7 +128,8 @@ void PacketReassembler::processBackwards(Packet const& packet) {
   // Is this part of an existing stream?
   if (active_streams_.size() > 0) {
     for (auto it = active_streams_.begin(), end = active_streams_.end();
-         it != end; ++it) {
+         it != end;
+         ++it) {
       auto& stream = *it;
 
       if (stream.stream == packet.stream) {
@@ -151,7 +152,8 @@ void PacketReassembler::processBackwards(Packet const& packet) {
 
   if (packet.start && !packet.next) {
     callback_(packet.data, packet.size);
-  } else if (!packet.next) { // Ignore if we only started from the middle of the packet
+  } else if (!packet.next) { // Ignore if we only started from the middle of the
+                             // packet
     PacketStream stream = newStream();
     stream.stream = packet.stream;
     appendToStreamReverse(stream, packet);
@@ -159,4 +161,6 @@ void PacketReassembler::processBackwards(Packet const& packet) {
   }
 }
 
-} } } // facebook::profilo::writer
+} // namespace writer
+} // namespace profilo
+} // namespace facebook

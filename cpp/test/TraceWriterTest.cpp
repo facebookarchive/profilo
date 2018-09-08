@@ -16,24 +16,24 @@
 
 #include <algorithm>
 #include <iostream>
-#include <sstream>
 #include <limits>
+#include <sstream>
 #include <thread>
 
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include <folly/experimental/TestUtil.h>
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
-#include <zstr/zstr.hpp>
 #include <zlib.h>
+#include <zstr/zstr.hpp>
 
 #include <profilo/LogEntry.h>
-#include <profilo/entries/Entry.h>
-#include <profilo/entries/EntryType.h>
-#include <profilo/writer/TraceWriter.h>
-#include <profilo/writer/TraceCallbacks.h>
 #include <profilo/PacketLogger.h>
 #include <profilo/RingBuffer.h>
+#include <profilo/entries/Entry.h>
+#include <profilo/entries/EntryType.h>
+#include <profilo/writer/TraceCallbacks.h>
+#include <profilo/writer/TraceWriter.h>
 
 using namespace facebook::profilo::logger;
 using namespace facebook::profilo::writer;
@@ -41,24 +41,23 @@ using namespace facebook::profilo::entries;
 namespace test = folly::test;
 namespace fs = boost::filesystem;
 
-namespace facebook { namespace profilo {
+namespace facebook {
+namespace profilo {
 
 const int64_t kTraceID = 1;
 const int64_t kSecondTraceID = 2;
 const char* kTraceIDString = "AAAAAAAAAAB";
 const char* kTracePrefix = "test-prefix";
 
-class MockCallbacks: public TraceCallbacks {
-public:
-
+class MockCallbacks : public TraceCallbacks {
+ public:
   MOCK_METHOD3(onTraceStart, void(int64_t, int32_t, std::string));
   MOCK_METHOD2(onTraceEnd, void(int64_t, uint32_t));
   MOCK_METHOD2(onTraceAbort, void(int64_t, AbortReason));
 };
 
-class TraceWriterTest: public ::testing::Test {
-protected:
-
+class TraceWriterTest : public ::testing::Test {
+ protected:
   const size_t kBufferSize = 5;
 
   static std::vector<std::pair<std::string, std::string>> generateHeaders() {
@@ -68,23 +67,18 @@ protected:
     return headers;
   }
 
-  TraceWriterTest():
-    ::testing::Test(),
-    trace_dir_("trace-folder-"),
-    buffer_(kBufferSize),
-    logger_([this]() -> PacketBuffer& {
-      return this->buffer_;
-    }),
-    callbacks_(
-      std::make_shared<::testing::NiceMock<MockCallbacks>>()
-    ),
-    writer_(
-      std::move(trace_dir_.path().generic_string()),
-      "test-prefix",
-      buffer_,
-      callbacks_,
-      generateHeaders())
-    {}
+  TraceWriterTest()
+      : ::testing::Test(),
+        trace_dir_("trace-folder-"),
+        buffer_(kBufferSize),
+        logger_([this]() -> PacketBuffer& { return this->buffer_; }),
+        callbacks_(std::make_shared<::testing::NiceMock<MockCallbacks>>()),
+        writer_(
+            std::move(trace_dir_.path().generic_string()),
+            "test-prefix",
+            buffer_,
+            callbacks_,
+            generateHeaders()) {}
 
   test::TemporaryDirectory trace_dir_;
   TraceBuffer buffer_;
@@ -95,13 +89,13 @@ protected:
   void writeTraceStart(int64_t trace_id = kTraceID) {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
-      .id = 1,
-      .type = entries::TRACE_START,
-      .timestamp = 123,
-      .tid = 0,
-      .callid = 0,
-      .matchid = 0,
-      .extra = trace_id,
+        .id = 1,
+        .type = entries::TRACE_START,
+        .timestamp = 123,
+        .tid = 0,
+        .callid = 0,
+        .matchid = 0,
+        .extra = trace_id,
     };
     StandardEntry::pack(start, payload, sizeof(payload));
     logger_.write(payload, sizeof(payload));
@@ -110,13 +104,13 @@ protected:
   void writeTraceEnd(int64_t trace_id = kTraceID) {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
-      .id = 2,
-      .type = entries::TRACE_END,
-      .timestamp = 124,
-      .tid = 0,
-      .callid = 0,
-      .matchid = 0,
-      .extra = trace_id,
+        .id = 2,
+        .type = entries::TRACE_END,
+        .timestamp = 124,
+        .tid = 0,
+        .callid = 0,
+        .matchid = 0,
+        .extra = trace_id,
     };
     StandardEntry::pack(start, payload, sizeof(payload));
     logger_.write(payload, sizeof(payload));
@@ -125,13 +119,13 @@ protected:
   void writeTraceAbort(int64_t trace_id = kTraceID) {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
-      .id = 2,
-      .type = entries::TRACE_ABORT,
-      .timestamp = 125,
-      .tid = 0,
-      .callid = 0,
-      .matchid = 0,
-      .extra = trace_id,
+        .id = 2,
+        .type = entries::TRACE_ABORT,
+        .timestamp = 125,
+        .tid = 0,
+        .callid = 0,
+        .matchid = 0,
+        .extra = trace_id,
     };
     StandardEntry::pack(start, payload, sizeof(payload));
     logger_.write(payload, sizeof(payload));
@@ -140,13 +134,13 @@ protected:
   void writeFillerEvent() {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
-      .id = 2,
-      .type = entries::MARK_PUSH,
-      .timestamp = 125,
-      .tid = 0,
-      .callid = 0,
-      .matchid = 0,
-      .extra = 0,
+        .id = 2,
+        .type = entries::MARK_PUSH,
+        .timestamp = 125,
+        .tid = 0,
+        .callid = 0,
+        .matchid = 0,
+        .extra = 0,
     };
     StandardEntry::pack(start, payload, sizeof(payload));
     logger_.write(payload, sizeof(payload));
@@ -154,15 +148,12 @@ protected:
 
   size_t getFileCount() {
     auto dir_iter = fs::recursive_directory_iterator(trace_dir_.path());
-    auto is_file = [](const fs::directory_entry& x){
+    auto is_file = [](const fs::directory_entry& x) {
       return fs::is_regular_file(x.path());
     };
 
-    auto file_count = std::count_if(
-      dir_iter,
-      fs::recursive_directory_iterator(),
-      is_file
-    );
+    auto file_count =
+        std::count_if(dir_iter, fs::recursive_directory_iterator(), is_file);
     return file_count;
   }
 
@@ -170,14 +161,14 @@ protected:
     EXPECT_EQ(getFileCount(), 1);
 
     auto dir_iter = fs::recursive_directory_iterator(trace_dir_.path());
-    auto is_file = [](const fs::directory_entry& x){
+    auto is_file = [](const fs::directory_entry& x) {
       return fs::is_regular_file(x.path());
     };
     auto file = (*std::find_if(
-      fs::recursive_directory_iterator(trace_dir_.path()),
-      fs::recursive_directory_iterator(),
-      is_file
-    )).path();
+                     fs::recursive_directory_iterator(trace_dir_.path()),
+                     fs::recursive_directory_iterator(),
+                     is_file))
+                    .path();
 
     return file;
   }
@@ -197,9 +188,7 @@ protected:
 };
 
 TEST_F(TraceWriterTest, testLoopStop) {
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(buffer_.currentTail(), TraceWriter::kStopLoopTraceID);
   thread.join();
@@ -209,9 +198,7 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
   writeTraceStart();
   writeTraceEnd();
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(kTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);
@@ -222,20 +209,20 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
   auto file = getOnlyTraceFile();
   auto folder_name = file.parent_path().filename().generic_string();
   EXPECT_EQ(folder_name, kTraceIDString)
-    << "Containing folder must be called " << kTraceIDString;
+      << "Containing folder must be called " << kTraceIDString;
 
   auto filename = file.filename().generic_string();
   auto expected = std::string("-") + kTraceIDString + ".";
   EXPECT_NE(filename.find(expected), std::string::npos)
-    << "Filename " << filename << " does not contain correct trace ID";
+      << "Filename " << filename << " does not contain correct trace ID";
 
   EXPECT_EQ(filename.find(kTracePrefix), 0)
-    << "Filename " << filename << " does not start with prefix";
+      << "Filename " << filename << " does not start with prefix";
 
   std::stringstream pid_str;
   pid_str << "-" << getpid() << "-";
   EXPECT_NE(filename.find(pid_str.str()), std::string::npos)
-    << "Filename " << filename << " does not contain pid";
+      << "Filename " << filename << " does not contain pid";
 }
 
 TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
@@ -243,9 +230,7 @@ TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
   auto cursorPastStart = buffer_.currentHead();
   writeTraceEnd();
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorPastStart, kTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);
@@ -263,9 +248,7 @@ TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
     writeTraceEnd();
   }
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorAtTraceStart, kTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);
@@ -275,15 +258,12 @@ TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
 }
 
 void TraceWriterTest::testNoTraceStartCursorAtTail(
-  std::function<void()> end_event_fn
-) {
+    std::function<void()> end_event_fn) {
   auto cursorAtBeginning = buffer_.currentTail();
 
   end_event_fn();
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorAtBeginning, kTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);
@@ -300,24 +280,18 @@ void TraceWriterTest::testNoTraceStartCursorAtTail(
 }
 
 TEST_F(TraceWriterTest, testNoTraceStartCursorAtTailWithTraceEnd) {
-  testNoTraceStartCursorAtTail([&]{
-    writeTraceEnd();
-  });
+  testNoTraceStartCursorAtTail([&] { writeTraceEnd(); });
 }
 
 TEST_F(TraceWriterTest, testNoTraceStartCursorAtTailWithTraceAbort) {
-  testNoTraceStartCursorAtTail([&]{
-    writeTraceAbort();
-  });
+  testNoTraceStartCursorAtTail([&] { writeTraceAbort(); });
 }
 
 TEST_F(TraceWriterTest, testHeadersPropagateToFile) {
   writeTraceStart();
   writeTraceEnd();
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(kTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);
@@ -336,9 +310,7 @@ void TraceWriterTest::testCallbackCalls(std::function<void()> expectations) {
 
   expectations();
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(buffer_start, kTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);
@@ -363,9 +335,7 @@ TEST_F(TraceWriterTest, testCallbacksInOrderAbort) {
     EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, 0, _));
     EXPECT_CALL(*callbacks_, onTraceEnd(_, _)).Times(0);
     EXPECT_CALL(
-      *callbacks_,
-      onTraceAbort(kTraceID, AbortReason::CONTROLLER_INITIATED)
-    );
+        *callbacks_, onTraceAbort(kTraceID, AbortReason::CONTROLLER_INITIATED));
 
     writeTraceStart();
     writeTraceAbort();
@@ -397,9 +367,7 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing) {
   EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writeTraceStart(kTraceID);
   writer_.submit(buffer_start, kTraceID);
@@ -425,9 +393,7 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing2) {
   EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writeTraceStart(kTraceID);
   writeTraceEnd(kTraceID);
@@ -453,9 +419,7 @@ TEST_F(TraceWriterTest, testCallbacksMultiTracingAbort) {
   EXPECT_CALL(*callbacks_, onTraceAbort(kSecondTraceID, _)).Times(0);
   EXPECT_CALL(*callbacks_, onTraceAbort(kTraceID, _)).Times(1);
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writeTraceStart(kTraceID);
   writer_.submit(buffer_start, kTraceID);
@@ -476,11 +440,9 @@ TEST_F(TraceWriterTest, testTraceCRC32Checksum) {
 
   uint32_t crc;
   EXPECT_CALL(*callbacks_, onTraceEnd(_, _))
-    .WillOnce(testing::SaveArg<1>(&crc));
+      .WillOnce(testing::SaveArg<1>(&crc));
 
-  auto thread = std::thread([&]{
-    writer_.loop();
-  });
+  auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(kTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);

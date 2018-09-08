@@ -17,34 +17,34 @@
 #include "SamplingProfiler.h"
 
 #include <errno.h>
-#include <random>
+#include <pthread.h>
 #include <semaphore.h>
 #include <setjmp.h>
-#include <pthread.h>
 #include <sys/syscall.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <chrono>
+#include <random>
 
 #include <fb/Build.h>
-#include <fbjni/fbjni.h>
 #include <fb/log.h>
+#include <fbjni/fbjni.h>
 #include <sigmux.h>
 
+#include "DalvikTracer.h"
 #include "profiler/ArtUnwindcTracer_600.h"
 #include "profiler/ArtUnwindcTracer_700.h"
 #include "profiler/ArtUnwindcTracer_710.h"
 #include "profiler/ArtUnwindcTracer_711.h"
 #include "profiler/ArtUnwindcTracer_712.h"
-#include "DalvikTracer.h"
 
 #if HAS_NATIVE_TRACER
-#  include <profiler/NativeTracer.h>
+#include <profiler/NativeTracer.h>
 #endif
 
-#include "profilo/Logger.h"
 #include "profilo/LogEntry.h"
+#include "profilo/Logger.h"
 #include "profilo/TraceProviders.h"
 
 #include "util/common.h"
@@ -64,8 +64,8 @@ ProfileState& getProfileState() {
   //
   // Despite the fact that this is accessed from a signal handler (this routine
   // is not async-signal safe due to the initialization lock for this variable),
-  // this is safe. The first access will always be before the first access from a
-  // signal context, so the variable is guaranteed to be initialized by then.
+  // this is safe. The first access will always be before the first access from
+  // a signal context, so the variable is guaranteed to be initialized by then.
   //
   static ProfileState state;
   return state;
@@ -79,7 +79,9 @@ static bool threadIsUnwinding(ProfileState const& profileState) {
   return pthread_getspecific(profileState.threadIsProfilingKey) != nullptr;
 }
 
-sigmux_action sigcatch_handler(struct sigmux_siginfo* siginfo, void* handler_data) {
+sigmux_action sigcatch_handler(
+    struct sigmux_siginfo* siginfo,
+    void* handler_data) {
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
   if (!threadIsUnwinding(profileState)) {
     return SIGMUX_CONTINUE_SEARCH;
@@ -95,8 +97,7 @@ sigmux_action sigcatch_handler(struct sigmux_siginfo* siginfo, void* handler_dat
     uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
     // If slot matches free it, increase error count and jump out
     if (slot.state.compare_exchange_strong(
-        targetBusyState,
-        StackSlotState::FREE)) {
+            targetBusyState, StackSlotState::FREE)) {
       profileState.errSigCrashes.fetch_add(1);
       sigmux_longjmp(siginfo, slot.sig_jmp_buf, 1);
     }
@@ -116,8 +117,7 @@ void maybeSignalReader(bool stackCollected) {
   if ((prevSlotCounter + 1) % FLUSH_STACKS_COUNT == 0) {
     if (profileState.wallClockModeEnabled) {
       profileState.enoughStacks.store(true);
-    }
-    else {
+    } else {
       int res = sem_post(&profileState.slotsCounterSem);
       if (res != 0) {
         abort(); // Something went wrong
@@ -126,7 +126,9 @@ void maybeSignalReader(bool stackCollected) {
   }
 }
 
-sigmux_action sigprof_handler(struct sigmux_siginfo* siginfo, void* handler_data) {
+sigmux_action sigprof_handler(
+    struct sigmux_siginfo* siginfo,
+    void* handler_data) {
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
 
   if (threadIsUnwinding(profileState)) {
@@ -134,7 +136,7 @@ sigmux_action sigprof_handler(struct sigmux_siginfo* siginfo, void* handler_data
     return SIGMUX_CONTINUE_EXECUTION;
   }
 
-  pthread_setspecific(profileState.threadIsProfilingKey, (void*) 1);
+  pthread_setspecific(profileState.threadIsProfilingKey, (void*)1);
 
   auto tid = threadID();
   for (const auto& tracerEntry : profileState.tracersMap) {
@@ -173,10 +175,10 @@ sigmux_action sigprof_handler(struct sigmux_siginfo* siginfo, void* handler_data
     // Can finally occupy the slot
     if (sigsetjmp(slot.sig_jmp_buf, 1) == 0) {
       bool success = tracerEntry.second->collectStack(
-        (ucontext_t*) siginfo->context,
-        slot.frames,
-        slot.depth,
-        (uint8_t)MAX_STACK_DEPTH);
+          (ucontext_t*)siginfo->context,
+          slot.frames,
+          slot.depth,
+          (uint8_t)MAX_STACK_DEPTH);
 
       if (success) {
         slot.time = monotonicTime();
@@ -187,9 +189,8 @@ sigmux_action sigprof_handler(struct sigmux_siginfo* siginfo, void* handler_data
 
       if (!slot.state.compare_exchange_strong(
               busyState,
-              success ?
-                ((tid << 16) | StackSlotState::FULL) :
-                StackSlotState::FREE)) {
+              success ? ((tid << 16) | StackSlotState::FULL)
+                      : StackSlotState::FREE)) {
         // Slot was overwritten by another thread.
         // This is an ordering violation, so abort.
         abort();
@@ -205,10 +206,9 @@ sigmux_action sigprof_handler(struct sigmux_siginfo* siginfo, void* handler_data
     }
   }
 
-  pthread_setspecific(profileState.threadIsProfilingKey, (void*) 0);
+  pthread_setspecific(profileState.threadIsProfilingKey, (void*)0);
   return SIGMUX_CONTINUE_EXECUTION;
 }
-
 
 void initSignalHandlers() {
   //
@@ -220,13 +220,13 @@ void initSignalHandlers() {
   //
 
   // Signal to be be handled when collecting stack traces
-  static constexpr const int kAccessSignals[] = { SIGSEGV, SIGBUS };
+  static constexpr const int kAccessSignals[] = {SIGSEGV, SIGBUS};
   static constexpr auto kNumAccessSignals =
-    sizeof(kAccessSignals)/sizeof(*kAccessSignals);
+      sizeof(kAccessSignals) / sizeof(*kAccessSignals);
 
   // Block everything but kAccessSignals
   sigset_t sigset;
-  if(sigfillset(&sigset)) {
+  if (sigfillset(&sigset)) {
     throw_errno("Couldn't sigfillset");
   }
 
@@ -239,7 +239,7 @@ void initSignalHandlers() {
 
   auto& state = getProfileState();
 
-  if(sigmux_init(SIGPROF)) {
+  if (sigmux_init(SIGPROF)) {
     throw_errno("Couldn't init sigmux for SIGPROF");
   }
 
@@ -269,7 +269,8 @@ void initSignalHandlers() {
     }
 
     if (sigmux_init(signum)) {
-      FBLOGE("Failed to init sigmux with signal %d: %s", signum, strerror(errno));
+      FBLOGE(
+          "Failed to init sigmux with signal %d: %s", signum, strerror(errno));
       throw_errno("Couldn't init sigmux for SIGSEGV/SIGBUS");
     }
   }
@@ -321,33 +322,28 @@ void logProfilingErrAnnotation(int32_t key, uint16_t value) {
 } // namespace
 
 /**
-  * Initializes the profiler. Registers handler for custom defined SIGPROF
-  * symbol which will collect traces and inits thread/process ids
-  */
-bool initialize(
-  alias_ref<jobject> ref,
-  jint available_tracers) {
-
+ * Initializes the profiler. Registers handler for custom defined SIGPROF
+ * symbol which will collect traces and inits thread/process ids
+ */
+bool initialize(alias_ref<jobject> ref, jint available_tracers) {
   auto& profileState = getProfileState();
 
   profileState.processId = getpid();
   profileState.availableTracers = available_tracers;
 
   if (available_tracers & tracers::DALVIK) {
-    profileState.tracersMap[tracers::DALVIK] =
-      std::make_unique<DalvikTracer>();
+    profileState.tracersMap[tracers::DALVIK] = std::make_unique<DalvikTracer>();
   }
 
 #if HAS_NATIVE_TRACER && __arm__
   if (available_tracers & tracers::NATIVE) {
-    profileState.tracersMap[tracers::NATIVE] =
-      std::make_unique<NativeTracer>();
+    profileState.tracersMap[tracers::NATIVE] = std::make_unique<NativeTracer>();
   }
 #endif
 
   if (available_tracers & tracers::ART_UNWINDC_6_0) {
     profileState.tracersMap[tracers::ART_UNWINDC_6_0] =
-      std::make_unique<ArtUnwindcTracer60>();
+        std::make_unique<ArtUnwindcTracer60>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
@@ -384,11 +380,11 @@ bool initialize(
 }
 
 /**
-  * Called via JNI from CPUProfiler
-  *
-  * Waits in a loop for semaphore wakeup and then flushes the current profiling
-  * stacks.
-  */
+ * Called via JNI from CPUProfiler
+ *
+ * Waits in a loop for semaphore wakeup and then flushes the current profiling
+ * stacks.
+ */
 void loggerLoop(alias_ref<jobject> obj) {
   FBLOGV("Logger thread is going into the loop...");
   auto& profileState = getProfileState();
@@ -433,17 +429,16 @@ void loggerLoop(alias_ref<jobject> obj) {
 }
 
 bool startProfiling(
-  fbjni::alias_ref<jobject> obj,
-  int requested_tracers,
-  int sampling_rate_ms,
-  bool wall_clock_mode_enabled) {
-
+    fbjni::alias_ref<jobject> obj,
+    int requested_tracers,
+    int sampling_rate_ms,
+    bool wall_clock_mode_enabled) {
   FBLOGV("Start profiling");
   auto& profileState = getProfileState();
 
   profileState.profileStartTime = monotonicTime();
   profileState.currentTracers =
-    profileState.availableTracers & requested_tracers;
+      profileState.availableTracers & requested_tracers;
 
   if (profileState.currentTracers == 0) {
     return false;
@@ -452,7 +447,7 @@ bool startProfiling(
   profileState.samplingRateUs = sampling_rate_ms * 1000;
   profileState.wallClockModeEnabled = wall_clock_mode_enabled;
 
-  for(const auto& tracerEntry : profileState.tracersMap) {
+  for (const auto& tracerEntry : profileState.tracersMap) {
     if (tracerEntry.first & profileState.currentTracers) {
       tracerEntry.second->startTracing();
     }
@@ -486,12 +481,12 @@ bool startProfiling(
 }
 
 /**
-  * Stop the profiler. Write collected stack traces to profilo
-  * The value to write will be a 64 bit <method_id, dex_number>.
-  * Unfortunately, DvmDex or DvmHeader doesn't contain a unique dex number that we could reuse.
-  * Until this is possibly written custom by redex, we'll use checksum for the dex identification
-  * which should collide rare.
-  */
+ * Stop the profiler. Write collected stack traces to profilo
+ * The value to write will be a 64 bit <method_id, dex_number>.
+ * Unfortunately, DvmDex or DvmHeader doesn't contain a unique dex number that
+ * we could reuse. Until this is possibly written custom by redex, we'll use
+ * checksum for the dex identification which should collide rare.
+ */
 void stopProfiling(fbjni::alias_ref<jobject> obj) {
   auto& profileState = getProfileState();
 
@@ -523,26 +518,25 @@ void stopProfiling(fbjni::alias_ref<jobject> obj) {
 
   // Logging errors
   logProfilingErrAnnotation(
-    QuickLogConstants::PROF_ERR_SIG_CRASHES,
-    profileState.errSigCrashes);
+      QuickLogConstants::PROF_ERR_SIG_CRASHES, profileState.errSigCrashes);
   logProfilingErrAnnotation(
-    QuickLogConstants::PROF_ERR_SLOT_MISSES,
-    profileState.errSlotMisses);
+      QuickLogConstants::PROF_ERR_SLOT_MISSES, profileState.errSlotMisses);
   logProfilingErrAnnotation(
-    QuickLogConstants::PROF_ERR_STACK_OVERFLOWS,
-    profileState.errStackOverflows);
+      QuickLogConstants::PROF_ERR_STACK_OVERFLOWS,
+      profileState.errStackOverflows);
 
-  FBLOGV("Stack overflows = %d, Sig crashes = %d, Slot misses = %d",
-    profileState.errStackOverflows.load(),
-    profileState.errSigCrashes.load(),
-    profileState.errSlotMisses.load());
+  FBLOGV(
+      "Stack overflows = %d, Sig crashes = %d, Slot misses = %d",
+      profileState.errStackOverflows.load(),
+      profileState.errSigCrashes.load(),
+      profileState.errSlotMisses.load());
 
   profileState.currentSlot = 0;
   profileState.errSigCrashes = 0;
   profileState.errSlotMisses = 0;
   profileState.errStackOverflows = 0;
 
-  for(const auto& tracerEntry : profileState.tracersMap) {
+  for (const auto& tracerEntry : profileState.tracersMap) {
     if (tracerEntry.first & profileState.currentTracers) {
       tracerEntry.second->stopTracing();
     }

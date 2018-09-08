@@ -19,28 +19,38 @@
 namespace facebook {
 namespace yarn {
 
-RecordSample::RecordSample(void* data, size_t len, uint64_t sample_type, uint64_t read_format):
-  data_((uint8_t*) data), len_(len), sample_type_(sample_type), read_format_(read_format)
-  {}
+RecordSample::RecordSample(
+    void* data,
+    size_t len,
+    uint64_t sample_type,
+    uint64_t read_format)
+    : data_((uint8_t*)data),
+      len_(len),
+      sample_type_(sample_type),
+      read_format_(read_format) {}
 
 uint64_t RecordSample::ip() const {
   return *(reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_SAMPLE_IP)));
 }
 
 uint32_t RecordSample::pid() const {
-  return *(reinterpret_cast<uint32_t*>(data_ + offsetForField(PERF_SAMPLE_TID)));
+  return *(
+      reinterpret_cast<uint32_t*>(data_ + offsetForField(PERF_SAMPLE_TID)));
 }
 
 uint32_t RecordSample::tid() const {
-  return *(reinterpret_cast<uint32_t*>(data_ + offsetForField(PERF_SAMPLE_TID) + 4 /* skip pid */));
+  return *(reinterpret_cast<uint32_t*>(
+      data_ + offsetForField(PERF_SAMPLE_TID) + 4 /* skip pid */));
 }
 
 uint64_t RecordSample::time() const {
-  return *(reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_SAMPLE_TIME)));
+  return *(
+      reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_SAMPLE_TIME)));
 }
 
 uint64_t RecordSample::addr() const {
-  return *(reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_SAMPLE_ADDR)));
+  return *(
+      reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_SAMPLE_ADDR)));
 }
 
 uint64_t RecordSample::groupLeaderId() const {
@@ -48,19 +58,23 @@ uint64_t RecordSample::groupLeaderId() const {
 }
 
 uint64_t RecordSample::id() const {
-  return *(reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_SAMPLE_STREAM_ID)));
+  return *(reinterpret_cast<uint64_t*>(
+      data_ + offsetForField(PERF_SAMPLE_STREAM_ID)));
 }
 
 uint32_t RecordSample::cpu() const {
-  return *(reinterpret_cast<uint32_t*>(data_ + offsetForField(PERF_SAMPLE_CPU)));
+  return *(
+      reinterpret_cast<uint32_t*>(data_ + offsetForField(PERF_SAMPLE_CPU)));
 }
 
 uint64_t RecordSample::timeRunning() const {
-  return *(reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_FORMAT_TOTAL_TIME_RUNNING)));
+  return *(reinterpret_cast<uint64_t*>(
+      data_ + offsetForField(PERF_FORMAT_TOTAL_TIME_RUNNING)));
 }
 
 uint64_t RecordSample::timeEnabled() const {
-  return *(reinterpret_cast<uint64_t*>(data_ + offsetForField(PERF_FORMAT_TOTAL_TIME_ENABLED)));
+  return *(reinterpret_cast<uint64_t*>(
+      data_ + offsetForField(PERF_FORMAT_TOTAL_TIME_ENABLED)));
 }
 
 size_t RecordSample::size() const {
@@ -133,10 +147,9 @@ size_t RecordSample::offsetForField(uint64_t field) const {
     offset += sizeof(uint64_t);
   }
 
-  bool field_in_read_format =
-    field == PERF_FORMAT_ID ||
-    field == PERF_FORMAT_TOTAL_TIME_RUNNING ||
-    field == PERF_FORMAT_TOTAL_TIME_ENABLED;
+  bool field_in_read_format = field == PERF_FORMAT_ID ||
+      field == PERF_FORMAT_TOTAL_TIME_RUNNING ||
+      field == PERF_FORMAT_TOTAL_TIME_ENABLED;
 
   if ((sample_type_ & PERF_SAMPLE_READ) != 0) {
     if (field_in_read_format) {
@@ -144,18 +157,22 @@ size_t RecordSample::offsetForField(uint64_t field) const {
     }
 
     // Skip the entire read_format struct.
-    // Every field in read_format is a u64, +1 because `value` is always present.
-    size_t bytes_in_read_format = (__builtin_popcountll(read_format_) + 1) * sizeof(uint64_t);
+    // Every field in read_format is a u64, +1 because `value` is always
+    // present.
+    size_t bytes_in_read_format =
+        (__builtin_popcountll(read_format_) + 1) * sizeof(uint64_t);
     offset += bytes_in_read_format;
   } else if (field_in_read_format) {
-    throw std::logic_error("Attempting to access field in read_format without PERF_SAMPLE_READ in sample_type");
+    throw std::logic_error(
+        "Attempting to access field in read_format without PERF_SAMPLE_READ in sample_type");
   }
 
   throw std::invalid_argument("Unknown field for sample_type");
 }
 
 size_t RecordSample::offsetForReadFormat(uint64_t field) const {
-  size_t offset = sizeof(uint64_t); // skip initial `value` field, no `field` value corresponds to it.
+  size_t offset = sizeof(uint64_t); // skip initial `value` field, no `field`
+                                    // value corresponds to it.
 
   if ((read_format_ & PERF_FORMAT_TOTAL_TIME_ENABLED) != 0) {
     if (field == PERF_FORMAT_TOTAL_TIME_ENABLED) {
@@ -180,5 +197,5 @@ size_t RecordSample::offsetForReadFormat(uint64_t field) const {
   throw std::invalid_argument("Unknown field for read_format");
 }
 
-} // yarn
-} // facebook
+} // namespace yarn
+} // namespace facebook

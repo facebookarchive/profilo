@@ -25,7 +25,7 @@
 #include <unistd.h>
 
 #ifndef __NR_perf_event_open
-# define __NR_perf_event_open 241
+#define __NR_perf_event_open 241
 #endif
 
 namespace facebook {
@@ -59,8 +59,7 @@ struct EventSpec {
 };
 
 class Event {
-
-public:
+ public:
   explicit Event(EventType type, int32_t tid, int32_t cpu, bool inherit = true);
   Event();
   Event(Event& evt) = delete;
@@ -94,7 +93,7 @@ public:
 
   virtual ~Event();
 
-private:
+ private:
   EventType type_;
   int32_t tid_;
   int32_t cpu_;
@@ -107,5 +106,5 @@ private:
   perf_event_attr event_attr_;
 };
 
-} // yarn
-} // facebook
+} // namespace yarn
+} // namespace facebook
