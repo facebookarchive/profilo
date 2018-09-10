@@ -28,31 +28,19 @@ TraceProviders& TraceProviders::get() {
 
 bool TraceProviders::isEnabled(const std::string& provider) {
   // The native side doesn't have the full name -> int mapping.
-  // This function retrieves the mapping for a single provider and caches it, so
-  // future accesses don't have to cross the JNI boundary.
+  // This function retrieves the mapping for a single provider from
+  // pre-initialized cache.
 
-  static auto cls =
-      jni::findClassStatic("com/facebook/profilo/core/ProvidersRegistry");
-  static auto getBitMaskMethod =
-      cls->getStaticMethod<jint(std::string)>("getBitMaskFor");
-
-  {
-    // Reader side of the lock only, this is the fast path.
-    std::shared_lock<std::shared_timed_mutex> lock(name_lookup_mutex_);
-    auto iter = name_lookup_cache_.find(provider);
-    if (iter != name_lookup_cache_.end()) {
-      return isEnabled(iter->second);
-    }
+  // Reader side of the lock only, this is the fast path.
+  std::shared_lock<std::shared_timed_mutex> lock(name_lookup_mutex_);
+  if (name_lookup_cache_.empty()) {
+    return false;
   }
-
-  {
-    // Cache miss, need to ask Java and cache here.
-    auto bitmask = getBitMaskMethod(cls, provider);
-
-    std::unique_lock<std::shared_timed_mutex> lock(name_lookup_mutex_);
-    name_lookup_cache_.emplace(provider, bitmask);
-    return isEnabled(bitmask);
+  auto iter = name_lookup_cache_.find(provider);
+  if (iter != name_lookup_cache_.end()) {
+    return isEnabled(iter->second);
   }
+  return false;
 }
 
 void TraceProviders::enableProviders(uint32_t providers) {
@@ -87,6 +75,12 @@ void TraceProviders::clearAllProviders() {
   std::lock_guard<std::mutex> lock(mutex_);
   provider_counts_.fill(0);
   providers_ = 0;
+}
+
+void TraceProviders::initProviderNames(
+    std::unordered_map<std::string, uint32_t>&& provider_names) {
+  std::unique_lock<std::shared_timed_mutex> lock(name_lookup_mutex_);
+  name_lookup_cache_ = std::move(provider_names);
 }
 
 } // namespace profilo

@@ -22,12 +22,14 @@
 extern "C" {
 #endif
 
-typedef void (*profilo_int_mark_start)(const char* provider, const char* msg);
+typedef void (
+    *profilo_int_mark_start)(const char* provider, const char* msg, size_t len);
 typedef void (*profilo_int_mark_end)(const char* provider);
 typedef void (*profilo_int_log_classload_start)(const char* provider);
 typedef void (
     *profilo_int_log_classload_end)(const char* provider, int64_t classid);
 typedef void (*profilo_int_log_classload_failed)(const char* provider);
+typedef bool (*profilo_int_is_enabled)(const char* provider);
 
 typedef struct ProfiloApi {
   profilo_int_mark_start mark_start;
@@ -35,6 +37,8 @@ typedef struct ProfiloApi {
   profilo_int_log_classload_start log_classload_start;
   profilo_int_log_classload_end log_classload_end;
   profilo_int_log_classload_failed log_classload_failed;
+  profilo_int_is_enabled is_enabled;
+
 } ProfiloApi;
 
 extern ProfiloApi profilo_api_int;

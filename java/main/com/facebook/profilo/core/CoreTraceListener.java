@@ -3,10 +3,13 @@
 package com.facebook.profilo.core;
 
 import com.facebook.profilo.entries.EntryType;
+import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
-class CoreTraceAnnotationsListener extends DefaultTraceOrchestratorListener {
+class CoreTraceListener extends DefaultTraceOrchestratorListener {
 
   private static void addTraceAnnotation(int key, String stringKey, String stringValue) {
     Logger.writeEntryWithString(
@@ -47,5 +50,19 @@ class CoreTraceAnnotationsListener extends DefaultTraceOrchestratorListener {
 
     addTraceAnnotation(
         Identifiers.ACTIVE_PROVIDERS, "Active providers", activeProvidersStr.toString());
+  }
+
+  @Override
+  public void onTraceStart(TraceContext context) {
+    if (TraceEvents.isProviderNamesInitialized()) {
+      return;
+    }
+    // Initialize provider names
+    List<String> registeredProviders = ProvidersRegistry.getRegisteredProviders();
+    HashMap<String, Integer> providerNamesMap = new HashMap<>(registeredProviders.size());
+    for (String providerName : registeredProviders) {
+      providerNamesMap.put(providerName, ProvidersRegistry.getBitMaskFor(providerName));
+    }
+    TraceEvents.initProviderNames(providerNamesMap);
   }
 }

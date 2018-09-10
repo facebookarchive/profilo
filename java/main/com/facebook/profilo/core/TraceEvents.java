@@ -16,6 +16,8 @@
 
 package com.facebook.profilo.core;
 
+import java.util.Map;
+
 /**
  * Responsible for managing the currently allowed trace providers.
  */
@@ -26,6 +28,8 @@ final public class TraceEvents {
    * libraries.
    */
   public static boolean sInitialized;
+
+  private static volatile boolean sProviderNamesInitialized;
 
   public static boolean isEnabled(int provider) {
     return sInitialized && nativeIsEnabled(provider);
@@ -38,6 +42,29 @@ final public class TraceEvents {
     return nativeEnabledMask(providers);
   }
 
+  public static boolean isProviderNamesInitialized() {
+    return sProviderNamesInitialized;
+  }
+
+  public static void initProviderNames(Map<String, Integer> providerNamesMap) {
+    if (!sInitialized) {
+      throw new IllegalStateException("Native library is not initialized.");
+    }
+    if (sProviderNamesInitialized) {
+      return;
+    }
+    int size = providerNamesMap.size();
+    int[] providerIds = new int[size];
+    String[] providerNames = new String[size];
+    int i = 0;
+    for (Map.Entry<String, Integer> nextProvider : providerNamesMap.entrySet()) {
+      providerNames[i] = nextProvider.getKey();
+      providerIds[i++] = nextProvider.getValue();
+    }
+    nativeInitProviderNames(providerIds, providerNames);
+    sProviderNamesInitialized = true;
+  }
+
   static native boolean nativeIsEnabled(int provider);
 
   static native int nativeEnabledMask(int providers);
@@ -47,4 +74,6 @@ final public class TraceEvents {
   static native void disableProviders(int providers);
 
   static native void clearAllProviders();
+
+  static native void nativeInitProviderNames(int[] providerIds, String[] providerNames);
 }

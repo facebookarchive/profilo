@@ -26,7 +26,10 @@ using namespace facebook::profilo;
 
 namespace {
 
-void internal_mark_start(const char* provider, const char* msg) {
+void internal_mark_start(
+    const char* provider,
+    const char* msg,
+    size_t len = 0) {
   if (!TraceProviders::get().isEnabled(provider) || msg == nullptr) {
     return;
   }
@@ -36,7 +39,7 @@ void internal_mark_start(const char* provider, const char* msg) {
   entry.timestamp = monotonicTime();
   entry.type = entries::MARK_PUSH;
   int32_t id = logger.write(std::move(entry));
-  size_t msg_len = strlen(msg);
+  size_t msg_len = len == 0 ? strlen(msg) : len;
 
   if (msg_len > 0) {
     logger.writeBytes(entries::STRING_NAME, id, (const uint8_t*)msg, msg_len);
@@ -97,6 +100,10 @@ void internal_log_classload_failed(const char* provider) {
   logger.write(std::move(entry));
 }
 
+bool is_enabled(const char* provider) {
+  return TraceProviders::get().isEnabled(provider);
+}
+
 } // namespace
 
 __attribute__((constructor)) void init_external_api() {
@@ -105,4 +112,5 @@ __attribute__((constructor)) void init_external_api() {
   profilo_api_int.log_classload_start = &internal_log_classload_start;
   profilo_api_int.log_classload_end = &internal_log_classload_end;
   profilo_api_int.log_classload_failed = &internal_log_classload_failed;
+  profilo_api_int.is_enabled = &is_enabled;
 }

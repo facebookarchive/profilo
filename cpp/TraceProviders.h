@@ -46,6 +46,8 @@ class TraceProviders {
   void enableProviders(uint32_t providers);
   void disableProviders(uint32_t providers);
   void clearAllProviders();
+  void initProviderNames(
+      std::unordered_map<std::string, uint32_t>&& provider_names);
 
  private:
   TraceProviders() : mutex_(), providers_(0), provider_counts_({}) {}

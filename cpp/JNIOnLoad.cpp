@@ -21,6 +21,7 @@
 #include <jni.h>
 
 #include <cstring>
+#include <unordered_map>
 
 #include <profilo/Logger.h>
 #include <profilo/RingBuffer.h>
@@ -195,6 +196,20 @@ static void clearAllProviders(JNIEnv* env, jobject cls) {
   TraceProviders::get().clearAllProviders();
 }
 
+static void initProviderNames(
+    fbjni::alias_ref<jobject> cls,
+    fbjni::alias_ref<fbjni::JArrayInt> provider_ids,
+    fbjni::alias_ref<fbjni::jtypeArray<jstring>> provider_names) {
+  auto provider_ids_array = provider_ids->pin();
+  auto size = provider_ids_array.size();
+  std::unordered_map<std::string, uint32_t> provider_names_map;
+  for (int i = 0; i < size; i++) {
+    provider_names_map.emplace(
+        provider_names->getElement(i)->toStdString(), provider_ids_array[i]);
+  }
+  TraceProviders::get().initProviderNames(std::move(provider_names_map));
+}
+
 static void initRingBuffer(JNIEnv* env, jobject cls, jint size) {
   RingBuffer::init(size);
 }
@@ -215,6 +230,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
             makeNativeMethod("enableProviders", profilo::enableProviders),
             makeNativeMethod("disableProviders", profilo::disableProviders),
             makeNativeMethod("clearAllProviders", profilo::clearAllProviders),
+            makeNativeMethod(
+                "nativeInitProviderNames", profilo::initProviderNames),
         });
 
     fbjni::registerNatives(

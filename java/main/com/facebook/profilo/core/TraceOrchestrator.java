@@ -231,7 +231,7 @@ public final class TraceOrchestrator
       mFileManager.setMaxScheduledAge(TimeUnit.DAYS.toSeconds(1));
       mFileManager.setTrimThreshold(10);
 
-      mListenerManager.addEventListener(new CoreTraceAnnotationsListener());
+      mListenerManager.addEventListener(new CoreTraceListener());
     }
   }
 

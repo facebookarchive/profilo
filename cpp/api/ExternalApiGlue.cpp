@@ -28,6 +28,7 @@ PROFILO_EXPORT ProfiloApi profilo_api_int{
     .log_classload_start = nullptr,
     .log_classload_end = nullptr,
     .log_classload_failed = nullptr,
+    .is_enabled = nullptr,
 };
 
 #ifdef __cplusplus
