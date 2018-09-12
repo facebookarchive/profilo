@@ -13,6 +13,16 @@ def museum_tracer_library(version):
         srcs = [
             "ArtTracer.cpp",
         ],
+        headers = native.glob(
+            ["*.h"],
+            exclude = exported_headers,
+        ),
+        header_namespace = "profiler",
+        exported_headers = {
+            header.replace(".h", "_" + version_num + ".h"): header
+            for header in exported_headers
+        },
+        allow_jni_merging = False,
         compiler_flags = [
             "-fvisibility=hidden",
             "-fexceptions",
@@ -22,20 +32,10 @@ def museum_tracer_library(version):
             "-DMUSEUM_VERSION=v{}_readonly".format(version_),
             #'-DFBLOG_NDEBUG=0', # extra logging
         ],
-        exported_headers = {
-            header.replace(".h", "_" + version_num + ".h"): header
-            for header in exported_headers
-        },
         exported_preprocessor_flags = [
             "-DMUSEUM_VERSION_{}".format(version_),
         ],
-        allow_jni_merging = False,
         force_static = True,
-        header_namespace = "profiler",
-        headers = native.glob(
-            ["*.h"],
-            exclude = exported_headers,
-        ),
         reexport_all_header_dependencies = False,
         soname = "libprofiloprofiler{version_num}.$(ext)".format(version_num = version_num),
         visibility = [
@@ -59,6 +59,14 @@ def unwindc_tracer_library(version):
         srcs = [
             "ArtUnwindcTracer.cpp",
         ],
+        headers = [
+            "ArtUnwindcTracer.h",
+            "unwindc/runtime.h",
+        ],
+        header_namespace = "profiler",
+        exported_headers = {
+            "ArtUnwindcTracer_{}.h".format(version_num): "ArtUnwindcTracer.h",
+        },
         compiler_flags = [
             "-fvisibility=hidden",
             "-fexceptions",
@@ -72,31 +80,20 @@ def unwindc_tracer_library(version):
         exported_preprocessor_flags = [
             "-DANDROID_VERSION_{}".format(version_num),
         ],
+        force_static = True,
+        platform_headers = [
+            (".*x86", {
+                "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),
+            }),
+            (".*armv7", {
+                "unwindc/unwinder.h": "unwindc/{}/arm/unwinder.h".format(android_version),
+            }),
+        ],
         preprocessor_flags = [
             "-DANDROID_NAMESPACE=android_{}".format(version_num),
             "-DANDROID_VERSION_NUM={}".format(version_num),
         ],
-        force_static = True,
-        header_namespace = "profiler",
-        headers = [
-            "ArtUnwindcTracer.h",
-            "unwindc/runtime.h",
-        ],
-        exported_headers = {
-            "ArtUnwindcTracer_{}.h".format(version_num):
-                "ArtUnwindcTracer.h",
-        },
-        platform_headers = [
-            (".*x86", {
-                "unwindc/unwinder.h":
-                "unwindc/{}/x86/unwinder.h".format(android_version),
-            }),
-            (".*armv7", {
-                "unwindc/unwinder.h":
-                "unwindc/{}/arm/unwinder.h".format(android_version),
-            }),
-        ],
-        soname = "libprofiloprofilerunwindc{version_num}.$(ext)".format(version_num=version_num),
+        soname = "libprofiloprofilerunwindc{version_num}.$(ext)".format(version_num = version_num),
         visibility = [
             profilo_path("..."),
         ],

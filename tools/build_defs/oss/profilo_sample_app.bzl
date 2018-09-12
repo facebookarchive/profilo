@@ -21,7 +21,7 @@ PROVIDER_TO_RULE = {
     "yarn": profilo_path("java/main/com/facebook/profilo/provider/yarn:yarn"),
 }
 
-def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], provider_to_rule=PROVIDER_TO_RULE):
+def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], provider_to_rule = PROVIDER_TO_RULE):
     """
     Defines a sample app based on a list of provider short names.
 
@@ -72,24 +72,24 @@ def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], p
 
     fb_core_android_library(
         name = "sample-providers-{}".format(providers_string),
-        exported_deps = [
-            profilo_path("java/main/com/facebook/profilo/core:core"),
-        ] + provider_deps + deps,
         visibility = [
             profilo_path("..."),
         ],
+        exported_deps = [
+            profilo_path("java/main/com/facebook/profilo/core:core"),
+        ] + provider_deps + deps,
     )
 
     fb_core_android_library(
         name = "sample-activity-{}".format(providers_string),
         srcs = srcs,
         provided_deps = provided_deps,
+        visibility = [
+            profilo_path("..."),
+        ],
         deps = [
             ":sample-providers-{}".format(providers_string),
             profilo_path("java/main/com/facebook/profilo/sample:sample-lib"),
-        ],
-        visibility = [
-            profilo_path("..."),
         ],
     )
 

@@ -38,8 +38,8 @@ def profilo_oss_maven_library(
     remote_file(
         name = remote_file_name,
         out = "{}-{}.{}".format(name, version, packaging),
-        url = ":".join(["mvn", group, artifact, packaging, version]),
         sha1 = sha1,
+        url = ":".join(["mvn", group, artifact, packaging, version]),
     )
 
     if packaging == "jar":
@@ -186,10 +186,6 @@ def museum_library(
             "**/*.h",
         ]),
         exported_platform_headers = exported_platform_headers,
-        exported_deps = [
-            profilo_path("deps/museum/{}/{}:headers".format(museum_version, museum_dep))
-            for museum_dep in museum_deps
-        ],
         exported_preprocessor_flags = [
             "-D__STDC_FORMAT_MACROS",
             "-DMUSEUM_VERSION=v" + museum_version.replace(".", "_"),
@@ -202,12 +198,16 @@ def museum_library(
         visibility = [
             profilo_path("..."),
         ] + extra_visibility,
+        exported_deps = [
+            profilo_path("deps/museum/{}/{}:headers".format(museum_version, museum_dep))
+            for museum_dep in museum_deps
+        ],
     )
 
     fb_xplat_cxx_library(
         name = name,
-        header_namespace = "museum/{}/{}".format(museum_version, name),
         srcs = native.glob(["**/*.c", "**/*.cc", "**/*.cpp"]),
+        header_namespace = "museum/{}/{}".format(museum_version, name),
         compiler_flags = [
             "-std=c++11",
             "-fvisibility=hidden",
@@ -224,6 +224,10 @@ def museum_library(
             "-Wno-pmf-conversions",
             "-Wno-unknown-warning-option",
         ] + compiler_flags,
+        force_static = True,  # TODO: how to get rid of this?
+        visibility = [
+            profilo_path("deps/museum/..."),
+        ] + extra_visibility,
         deps = [
             profilo_path("deps/museum/{}/{}:{}".format(museum_version, museum_dep, museum_dep.split("/")[-1]))
             for museum_dep in museum_deps
@@ -231,8 +235,4 @@ def museum_library(
         exported_deps = [
             ":headers",
         ],
-        force_static = True,  # TODO: how to get rid of this?
-        visibility = [
-            profilo_path("deps/museum/..."),
-        ] + extra_visibility,
     )
