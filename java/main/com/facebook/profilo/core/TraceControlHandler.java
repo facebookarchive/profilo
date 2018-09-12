@@ -27,7 +27,6 @@ import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import java.util.HashSet;
-import java.util.Locale;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -36,7 +35,6 @@ import javax.annotation.concurrent.GuardedBy;
  * the trace.
  */
 @SuppressLint({
-  "StringFormatUse",
   "BadMethodUse-android.util.Log.d",
 })
 public class TraceControlHandler extends Handler {
@@ -112,12 +110,7 @@ public class TraceControlHandler extends Handler {
 
   protected static void timeoutTrace(long traceId) {
     if (LogLevel.LOG_DEBUG_MESSAGE) {
-      Log.d(
-          LOG_TAG,
-          String.format(
-            Locale.US,
-            "Timing out trace %s",
-            traceId));
+      Log.d(LOG_TAG, "Timing out trace " + traceId);
     }
     TraceControl control = TraceControl.get();
     control.timeoutTrace(traceId);
@@ -134,11 +127,7 @@ public class TraceControlHandler extends Handler {
     if (LogLevel.LOG_DEBUG_MESSAGE) {
       Log.d(
           LOG_TAG,
-          String.format(
-            Locale.US,
-            "Started trace %s for controller %d",
-            context.encodedTraceId,
-            context.controller));
+          "Started trace " + context.encodedTraceId + "  for controller " + context.controller);
     }
 
     Message timeoutMessage = obtainMessage(MSG_TIMEOUT_TRACE, context);
@@ -152,9 +141,7 @@ public class TraceControlHandler extends Handler {
       mTraceContexts.remove(context.traceId);
     }
     if (LogLevel.LOG_DEBUG_MESSAGE) {
-      Log.d(
-        LOG_TAG,
-        String.format(Locale.US, "Stopped trace %s", context.encodedTraceId));
+      Log.d(LOG_TAG, "Stopped trace " + context.encodedTraceId);
     }
   }
 
@@ -167,12 +154,11 @@ public class TraceControlHandler extends Handler {
     if (LogLevel.LOG_DEBUG_MESSAGE) {
       Log.d(
           LOG_TAG,
-          String.format(
-              Locale.US,
-              "Aborted trace %s for reason %d%s",
-              context.encodedTraceId,
-              ProfiloConstants.unpackRemoteAbortReason(context.abortReason),
-              ProfiloConstants.isRemoteAbort(context.abortReason) ? " (remote process)" : ""));
+          "Aborted trace "
+              + context.encodedTraceId
+              + " for reason "
+              + ProfiloConstants.unpackRemoteAbortReason(context.abortReason)
+              + (ProfiloConstants.isRemoteAbort(context.abortReason) ? " (remote process)" : ""));
     }
   }
 }
