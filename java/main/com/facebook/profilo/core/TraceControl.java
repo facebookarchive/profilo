@@ -180,7 +180,7 @@ final public class TraceControl {
   // Notion of a trigger with a unique identifier would help a lot.
   @Nullable
   private TraceContext findCurrentTraceByContext(
-      int controllerMask, int intContext, Object context) {
+      int controllerMask, int intContext, @Nullable Object context) {
     if (mCurrentTracesMask.get() == 0) {
       return null;
     }
@@ -458,7 +458,8 @@ final public class TraceControl {
   }
 
   @Nullable
-  public String getCurrentTraceEncodedIdByTrigger(int controller, int intContext, Object context) {
+  public String getCurrentTraceEncodedIdByTrigger(
+      int controller, int intContext, @Nullable Object context) {
     TraceContext ctx = findCurrentTraceByContext(controller, intContext, context);
     if (ctx == null) {
       return null;
@@ -467,7 +468,7 @@ final public class TraceControl {
   }
 
   @Nullable
-  public long getCurrentTraceIdByTrigger(int controller, int intContext, Object context) {
+  public long getCurrentTraceIdByTrigger(int controller, int intContext, @Nullable Object context) {
     TraceContext ctx = findCurrentTraceByContext(controller, intContext, context);
     if (ctx == null) {
       return 0;
