@@ -57,71 +57,82 @@ bool atrace_enabled;
 namespace {
 
 ssize_t const kAtraceMessageLength = 1024;
+// Magic FD to simply write to tracer logger and bypassing real write
+int const kTracerMagicFd = -100;
 
-void log_systrace(int fd, const void* buf, size_t count) {
-  if (systrace_installed && fd == *atrace_marker_fd && count > 0 &&
-      TraceProviders::get().isEnabled(provider_mask.load())) {
-    const char* msg = reinterpret_cast<const char*>(buf);
+void log_systrace(const void* buf, size_t count) {
+  const char* msg = reinterpret_cast<const char*>(buf);
 
-    EntryType type;
-    switch (msg[0]) {
-      case 'B': { // begin synchronous event. format: "B|<pid>|<name>"
-        type = entries::MARK_PUSH;
-        break;
-      }
-      case 'E': { // end synchronous event. format: "E"
-        type = entries::MARK_POP;
-        break;
-      }
-      // the following events we don't currently log.
-      case 'S': // start async event. format: "S|<pid>|<name>|<cookie>"
-      case 'F': // finish async event. format: "F|<pid>|<name>|<cookie>"
-      case 'C': // counter. format: "C|<pid>|<name>|<value>"
-      default:
-        return;
+  EntryType type;
+  switch (msg[0]) {
+    case 'B': { // begin synchronous event. format: "B|<pid>|<name>"
+      type = entries::MARK_PUSH;
+      break;
     }
+    case 'E': { // end synchronous event. format: "E"
+      type = entries::MARK_POP;
+      break;
+    }
+    // the following events we don't currently log.
+    case 'S': // start async event. format: "S|<pid>|<name>|<cookie>"
+    case 'F': // finish async event. format: "F|<pid>|<name>|<cookie>"
+    case 'C': // counter. format: "C|<pid>|<name>|<value>"
+    default:
+      return;
+  }
 
-    auto& logger = Logger::get();
-    StandardEntry entry{};
-    entry.tid = threadID();
-    entry.timestamp = monotonicTime();
-    entry.type = type;
+  auto& logger = Logger::get();
+  StandardEntry entry{};
+  entry.tid = threadID();
+  entry.timestamp = monotonicTime();
+  entry.type = type;
 
-    int32_t id = logger.write(std::move(entry));
-    if (type != entries::MARK_POP) {
-      // Format is B|<pid>|<name>.
-      // Skip "B|" trivially, find next '|' with memchr. We cannot use strchr
-      // since we can't trust the message to have a null terminator.
-      constexpr auto kPrefixLength = 2; // length of "B|";
+  int32_t id = logger.write(std::move(entry));
+  if (type != entries::MARK_POP) {
+    // Format is B|<pid>|<name>.
+    // Skip "B|" trivially, find next '|' with memchr. We cannot use strchr
+    // since we can't trust the message to have a null terminator.
+    constexpr auto kPrefixLength = 2; // length of "B|";
 
-      const char* name = reinterpret_cast<const char*>(
-          memchr(msg + kPrefixLength, '|', count - kPrefixLength));
-      if (name == nullptr) {
-        return;
-      }
-      name++; // skip '|' to the next character
-      ssize_t len = msg + count - name;
-      if (len > 0) {
-        logger.writeBytes(
-            entries::STRING_NAME,
-            id,
-            (const uint8_t*)name,
-            std::min(len, kAtraceMessageLength));
+    const char* name = reinterpret_cast<const char*>(
+        memchr(msg + kPrefixLength, '|', count - kPrefixLength));
+    if (name == nullptr) {
+      return;
+    }
+    name++; // skip '|' to the next character
+    ssize_t len = msg + count - name;
+    if (len > 0) {
+      logger.writeBytes(
+          entries::STRING_NAME,
+          id,
+          (const uint8_t*)name,
+          std::min(len, kAtraceMessageLength));
 
-        FBLOGV("systrace event: %s", name);
-      }
+      FBLOGV("systrace event: %s", name);
     }
   }
 }
 
+bool should_log_systrace(int fd, size_t count) {
+  return (
+      systrace_installed && fd == *atrace_marker_fd &&
+      TraceProviders::get().isEnabled(provider_mask.load()) && count > 0);
+}
+
 ssize_t write_hook(int fd, const void* buf, size_t count) {
-  log_systrace(fd, buf, count);
+  if (should_log_systrace(fd, count)) {
+    log_systrace(buf, count);
+    return count;
+  }
   return CALL_PREV(write_hook, fd, buf, count);
 }
 
 ssize_t
 __write_chk_hook(int fd, const void* buf, size_t count, size_t buf_size) {
-  log_systrace(fd, buf, count);
+  if (should_log_systrace(fd, count)) {
+    log_systrace(buf, count);
+    return count;
+  }
   return CALL_PREV(__write_chk_hook, fd, buf, count, buf_size);
 }
 
@@ -202,7 +213,13 @@ void installSystraceSnooper(int providerMask) {
       throw std::runtime_error("Trace FD not defined");
     }
     if (*atrace_marker_fd == -1) {
-      throw std::runtime_error("Trace FD not valid");
+      // This is a case that can happen for older Android version i.e. 4.4
+      // in which scenario the marker fd is not initialized/opened  by Zygote.
+      // Nevertheless for Profilo trace it is not necessary to have an open fd,
+      // since all we really need is to ensure that we 'know' it is marker
+      // fd to continue writing Profilo logs, thus the usage of marker fd
+      // acting really as a placeholder for magic id.
+      *atrace_marker_fd = kTracerMagicFd;
     }
   }
 
