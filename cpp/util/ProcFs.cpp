@@ -113,7 +113,8 @@ TaskStatInfo getStatInfo(uint32_t tid) {
 }
 
 ThreadStatInfo::ThreadStatInfo()
-    : cpuTimeMs(),
+    : monotonicStatTime(0),
+      cpuTimeMs(),
       state(ThreadState::TS_UNKNOWN),
       majorFaults(),
       cpuNum(-1),
@@ -713,6 +714,7 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     }
   }
   last_info_.availableStatsMask = availableStatsMask_;
+  last_info_.monotonicStatTime = monotonicTime();
   return last_info_;
 }
 

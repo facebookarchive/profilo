@@ -101,6 +101,9 @@ struct VmStatInfo {
 
 // Consolidated stats from different stat files
 struct ThreadStatInfo {
+  // monotonic clock value when this was captured
+  uint64_t monotonicStatTime;
+
   // STAT
   long cpuTimeMs;
   ThreadState state;

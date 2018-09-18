@@ -51,11 +51,12 @@ inline void logCounter(
     Logger& logger,
     int32_t counter_name,
     int64_t value,
-    int32_t thread_id = threadID()) {
+    int32_t thread_id,
+    int64_t time) {
   logger.write(StandardEntry{
       .id = 0,
       .type = entries::COUNTER,
-      .timestamp = monotonicTime(),
+      .timestamp = time,
       .tid = thread_id,
       .callid = counter_name,
       .matchid = 0,
@@ -68,11 +69,12 @@ inline void logCpuCoreCounter(
     int32_t counter_name,
     int64_t value,
     int32_t core,
-    int32_t thread_id = threadID()) {
+    int32_t thread_id,
+    int64_t time) {
   logger.write(StandardEntry{
       .id = 0,
       .type = entries::CPU_COUNTER,
-      .timestamp = monotonicTime(),
+      .timestamp = time,
       .tid = thread_id,
       .callid = counter_name,
       .matchid = core,
@@ -84,52 +86,49 @@ inline void logNonMonotonicCounter(
     int64_t prev_value,
     int64_t value,
     int32_t thread_id,
+    int64_t time,
     int32_t quicklog_id) {
   if (prev_value == value) {
     return;
   }
-  logCounter(Logger::get(), quicklog_id, value, thread_id);
+  logCounter(Logger::get(), quicklog_id, value, thread_id, time);
 }
 
 inline void logMonotonicCounter(
     long prev,
     long curr,
     int tid,
+    int64_t time,
     uint32_t quicklog_id,
     int threshold = 0) {
-  auto& logger = Logger::get();
-
   if (curr > prev + threshold) {
-    logCounter(logger, quicklog_id, curr, tid);
+    logCounter(Logger::get(), quicklog_id, curr, tid, time);
   }
 }
 
-inline void logCPUTimeCounter(long prevCpuTime, long currCpuTime, int tid) {
+inline void
+logCPUTimeCounter(long prevCpuTime, long currCpuTime, int tid, int64_t time) {
   const auto kThresholdMs = 1;
   logMonotonicCounter(
       prevCpuTime,
       currCpuTime,
       tid,
+      time,
       QuickLogConstants::THREAD_CPU_TIME,
       kThresholdMs);
 }
 
-inline void
-logThreadMajorFaults(long prev_mfaults, long curr_mfaults, int tid) {
-  logMonotonicCounter(
-      prev_mfaults,
-      curr_mfaults,
-      tid,
-      QuickLogConstants::QL_THREAD_FAULTS_MAJOR);
-}
-
-inline void
-logCPUWaitTimeCounter(long prevCpuWaitTime, long currCpuWaitTime, int tid) {
+inline void logCPUWaitTimeCounter(
+    long prevCpuWaitTime,
+    long currCpuWaitTime,
+    int tid,
+    int64_t time) {
   const auto kThresholdMs = 1;
   logMonotonicCounter(
       prevCpuWaitTime,
       currCpuWaitTime,
       tid,
+      time,
       QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
       kThresholdMs);
 }
@@ -147,38 +146,68 @@ void logSysinfo() {
     FBLOGE("Couldn't get sysinfo!");
     return;
   }
+  auto time = monotonicTime();
+  auto tid = threadID();
 
-  logCounter(logger, QuickLogConstants::LOADAVG_1M, loadDecimal(info.loads[0]));
-  logCounter(logger, QuickLogConstants::LOADAVG_5M, loadDecimal(info.loads[1]));
   logCounter(
-      logger, QuickLogConstants::LOADAVG_15M, loadDecimal(info.loads[2]));
-  logCounter(logger, QuickLogConstants::NUM_PROCS, info.procs);
+      logger,
+      QuickLogConstants::LOADAVG_1M,
+      loadDecimal(info.loads[0]),
+      tid,
+      time);
+  logCounter(
+      logger,
+      QuickLogConstants::LOADAVG_5M,
+      loadDecimal(info.loads[1]),
+      tid,
+      time);
+  logCounter(
+      logger,
+      QuickLogConstants::LOADAVG_15M,
+      loadDecimal(info.loads[2]),
+      tid,
+      time);
+  logCounter(logger, QuickLogConstants::NUM_PROCS, info.procs, tid, time);
   logCounter(
       logger,
       QuickLogConstants::TOTAL_MEM,
-      (int64_t)info.totalram * (int64_t)info.mem_unit);
+      (int64_t)info.totalram * (int64_t)info.mem_unit,
+      tid,
+      time);
   logCounter(
       logger,
       QuickLogConstants::FREE_MEM,
-      (int64_t)info.freeram * (int64_t)info.mem_unit);
+      (int64_t)info.freeram * (int64_t)info.mem_unit,
+      tid,
+      time);
   logCounter(
       logger,
       QuickLogConstants::SHARED_MEM,
-      (int64_t)info.sharedram * (int64_t)info.mem_unit);
+      (int64_t)info.sharedram * (int64_t)info.mem_unit,
+      tid,
+      time);
   logCounter(
       logger,
       QuickLogConstants::BUFFER_MEM,
-      (int64_t)info.bufferram * (int64_t)info.mem_unit);
+      (int64_t)info.bufferram * (int64_t)info.mem_unit,
+      tid,
+      time);
 }
 
 void logMallinfo() {
   auto& logger = Logger::get();
   struct mallinfo info = mallinfo();
+  auto time = monotonicTime();
+  auto tid = threadID();
 
-  logCounter(logger, QuickLogConstants::ALLOC_MMAP_BYTES, info.hblkhd);
-  logCounter(logger, QuickLogConstants::ALLOC_MAX_BYTES, info.usmblks);
-  logCounter(logger, QuickLogConstants::ALLOC_TOTAL_BYTES, info.uordblks);
-  logCounter(logger, QuickLogConstants::ALLOC_FREE_BYTES, info.fordblks);
+  logCounter(
+      logger, QuickLogConstants::ALLOC_MMAP_BYTES, info.hblkhd, tid, time);
+  logCounter(
+      logger, QuickLogConstants::ALLOC_MAX_BYTES, info.usmblks, tid, time);
+  logCounter(
+      logger, QuickLogConstants::ALLOC_TOTAL_BYTES, info.uordblks, tid, time);
+  logCounter(
+      logger, QuickLogConstants::ALLOC_FREE_BYTES, info.fordblks, tid, time);
 }
 
 void threadCountersCallback(
@@ -189,26 +218,42 @@ void threadCountersCallback(
       (currInfo.availableStatsMask & StatType::HIGH_PRECISION_CPU_TIME)) {
     // Don't log the initial value
     logCPUTimeCounter(
-        prevInfo.highPrecisionCpuTimeMs, currInfo.highPrecisionCpuTimeMs, tid);
+        prevInfo.highPrecisionCpuTimeMs,
+        currInfo.highPrecisionCpuTimeMs,
+        tid,
+        currInfo.monotonicStatTime);
   } else if (
       prevInfo.cpuTimeMs != 0 &&
       (currInfo.availableStatsMask & StatType::CPU_TIME)) {
     // Don't log the initial value
-    logCPUTimeCounter(prevInfo.cpuTimeMs, currInfo.cpuTimeMs, tid);
+    logCPUTimeCounter(
+        prevInfo.cpuTimeMs,
+        currInfo.cpuTimeMs,
+        tid,
+        currInfo.monotonicStatTime);
   }
   if (prevInfo.waitToRunTimeMs != 0 &&
       (currInfo.availableStatsMask & StatType::WAIT_TO_RUN_TIME)) {
     logCPUWaitTimeCounter(
-        prevInfo.waitToRunTimeMs, currInfo.waitToRunTimeMs, tid);
+        prevInfo.waitToRunTimeMs,
+        currInfo.waitToRunTimeMs,
+        tid,
+        currInfo.monotonicStatTime);
   }
   if (currInfo.availableStatsMask & StatType::MAJOR_FAULTS) {
-    logThreadMajorFaults(prevInfo.majorFaults, currInfo.majorFaults, tid);
+    logMonotonicCounter(
+        prevInfo.majorFaults,
+        currInfo.majorFaults,
+        tid,
+        currInfo.monotonicStatTime,
+        QuickLogConstants::QL_THREAD_FAULTS_MAJOR);
   }
   if (currInfo.availableStatsMask & StatType::NR_VOLUNTARY_SWITCHES) {
     logMonotonicCounter(
         prevInfo.nrVoluntarySwitches,
         currInfo.nrVoluntarySwitches,
         tid,
+        currInfo.monotonicStatTime,
         QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY);
   }
   if (currInfo.availableStatsMask & StatType::NR_INVOLUNTARY_SWITCHES) {
@@ -216,6 +261,7 @@ void threadCountersCallback(
         prevInfo.nrInvoluntarySwitches,
         currInfo.nrInvoluntarySwitches,
         tid,
+        currInfo.monotonicStatTime,
         QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY);
   }
   if (currInfo.availableStatsMask & StatType::IOWAIT_SUM) {
@@ -223,6 +269,7 @@ void threadCountersCallback(
         prevInfo.iowaitSum,
         currInfo.iowaitSum,
         tid,
+        currInfo.monotonicStatTime,
         QuickLogConstants::IOWAIT_TIME);
   }
   if (currInfo.availableStatsMask & StatType::IOWAIT_COUNT) {
@@ -230,6 +277,7 @@ void threadCountersCallback(
         prevInfo.iowaitCount,
         currInfo.iowaitCount,
         tid,
+        currInfo.monotonicStatTime,
         QuickLogConstants::IOWAIT_COUNT);
   }
   if (currInfo.availableStatsMask & StatType::CPU_NUM) {
@@ -237,6 +285,7 @@ void threadCountersCallback(
         prevInfo.cpuNum,
         currInfo.cpuNum,
         tid,
+        currInfo.monotonicStatTime,
         QuickLogConstants::THREAD_CPU_NUM);
   }
   if (currInfo.availableStatsMask & StatType::KERNEL_CPU_TIME) {
@@ -244,6 +293,7 @@ void threadCountersCallback(
         prevInfo.kernelCpuTimeMs,
         currInfo.kernelCpuTimeMs,
         tid,
+        currInfo.monotonicStatTime,
         QuickLogConstants::THREAD_KERNEL_CPU_TIME);
   }
   if (currInfo.availableStatsMask & StatType::MINOR_FAULTS) {
@@ -251,6 +301,7 @@ void threadCountersCallback(
         prevInfo.minorFaults,
         currInfo.minorFaults,
         tid,
+        currInfo.monotonicStatTime,
         QuickLogConstants::THREAD_SW_FAULTS_MINOR);
   }
 }
@@ -313,7 +364,8 @@ void SystemCounterThread::logCpuFrequencyInfo() {
             QuickLogConstants::MAX_CPU_CORE_FREQUENCY,
             maxFrequency,
             core,
-            tid);
+            tid,
+            monotonicTime());
       }
     }
     for (int core = 0; core < cpu_cores; ++core) {
@@ -322,8 +374,14 @@ void SystemCounterThread::logCpuFrequencyInfo() {
       if (prev == curr) {
         continue;
       }
+
       logCpuCoreCounter(
-          logger, QuickLogConstants::CPU_CORE_FREQUENCY, curr, core, tid);
+          logger,
+          QuickLogConstants::CPU_CORE_FREQUENCY,
+          curr,
+          core,
+          tid,
+          monotonicTime());
     }
     extraAvailableCounters_ |= StatType::CPU_FREQ;
   } catch (std::exception const& e) {
@@ -355,6 +413,7 @@ void SystemCounterThread::logProcessCounters() {
     return;
   }
 
+  auto time = monotonicTime();
   auto tid = threadID();
 
   if (prevInfo.cpuTime != 0) {
@@ -365,6 +424,7 @@ void SystemCounterThread::logProcessCounters() {
         prevInfo.cpuTime,
         currInfo.cpuTime,
         tid,
+        time,
         QuickLogConstants::PROC_CPU_TIME,
         kThresholdMs);
 
@@ -372,6 +432,7 @@ void SystemCounterThread::logProcessCounters() {
         prevInfo.kernelCpuTimeMs,
         currInfo.kernelCpuTimeMs,
         tid,
+        time,
         QuickLogConstants::PROC_KERNEL_CPU_TIME);
   }
 
@@ -379,12 +440,14 @@ void SystemCounterThread::logProcessCounters() {
       prevInfo.majorFaults,
       currInfo.majorFaults,
       tid,
+      time,
       QuickLogConstants::PROC_SW_FAULTS_MAJOR);
 
   logMonotonicCounter(
       prevInfo.minorFaults,
       currInfo.minorFaults,
       tid,
+      time,
       QuickLogConstants::PROC_SW_FAULTS_MINOR);
 }
 
@@ -403,49 +466,62 @@ void SystemCounterThread::logVmStatCounters() {
     return;
   }
 
+  auto time = monotonicTime();
   auto tid = threadID();
 
   logNonMonotonicCounter(
       prevInfo.nrFreePages,
       currInfo.nrFreePages,
       tid,
+      time,
       QuickLogConstants::VMSTAT_NR_FREE_PAGES);
   logNonMonotonicCounter(
       prevInfo.nrDirty,
       currInfo.nrDirty,
       tid,
+      time,
       QuickLogConstants::VMSTAT_NR_DIRTY);
   logNonMonotonicCounter(
       prevInfo.nrWriteback,
       currInfo.nrWriteback,
       tid,
+      time,
       QuickLogConstants::VMSTAT_NR_WRITEBACK);
   logMonotonicCounter(
-      prevInfo.pgPgIn, currInfo.pgPgIn, tid, QuickLogConstants::VMSTAT_PGPGIN);
+      prevInfo.pgPgIn,
+      currInfo.pgPgIn,
+      tid,
+      time,
+      QuickLogConstants::VMSTAT_PGPGIN);
   logMonotonicCounter(
       prevInfo.pgPgOut,
       currInfo.pgPgOut,
       tid,
+      time,
       QuickLogConstants::VMSTAT_PGPGOUT);
   logMonotonicCounter(
       prevInfo.pgMajFault,
       currInfo.pgMajFault,
       tid,
+      time,
       QuickLogConstants::VMSTAT_PGMAJFAULT);
   logMonotonicCounter(
       prevInfo.allocStall,
       currInfo.allocStall,
       tid,
+      time,
       QuickLogConstants::VMSTAT_ALLOCSTALL);
   logMonotonicCounter(
       prevInfo.pageOutrun,
       currInfo.pageOutrun,
       tid,
+      time,
       QuickLogConstants::VMSTAT_PAGEOUTRUN);
   logMonotonicCounter(
       prevInfo.kswapdSteal,
       currInfo.kswapdSteal,
       tid,
+      time,
       QuickLogConstants::VMSTAT_KSWAPD_STEAL);
 }
 
