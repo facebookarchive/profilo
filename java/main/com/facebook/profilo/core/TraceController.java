@@ -35,14 +35,14 @@ public interface TraceController {
   /**
    * Determine current profiler sample rate in milliseconds for a starting trace.
    *
-   * @param context the trace context object passed to
-   *                {@link TraceControl#startTrace(int, int, Object, int)}
+   * @param context the trace context object passed to {@link TraceControl#startTrace(long, Object,
+   *     long, Object)}
    * @param config the current config for this controller
    * @return sampling rate in milliseconds, 0 if not configured
    */
   int getCpuSamplingRateMs(Object context, ControllerConfig config);
 
-  boolean contextsEqual(int fstInt, @Nullable Object fst, int sndInt, @Nullable Object snd);
+  boolean contextsEqual(long fstLong, @Nullable Object fst, long sndLong, @Nullable Object snd);
 
   /**
    * Returns true if the controller is based on a config, and false otherwise which means hardcoded

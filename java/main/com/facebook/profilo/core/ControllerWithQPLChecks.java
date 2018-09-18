@@ -24,5 +24,5 @@ import javax.annotation.Nullable;
  */
 public interface ControllerWithQPLChecks {
 
-  boolean isInsideQPLTrace(int intContext, @Nullable Object context, int marker);
+  boolean isInsideQPLTrace(long longContext, @Nullable Object context, int marker);
 }
