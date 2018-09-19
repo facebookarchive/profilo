@@ -50,8 +50,7 @@ public class ExternalController implements TraceController {
   }
 
   @Override
-  public boolean contextsEqual(
-      long fstLong, @Nullable Object fst, long sndLong, @Nullable Object snd) {
+  public boolean contextsEqual(int fstInt, @Nullable Object fst, int sndInt, @Nullable Object snd) {
     // Always honor stop requests.
 
     return true;

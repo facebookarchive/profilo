@@ -125,7 +125,7 @@ public class TraceControlTest {
     assertThat(currContext.controller).isEqualTo(TRACE_CONTROLLER_ID);
     assertThat(currContext.controllerObject).isEqualTo(mController);
     assertThat(currContext.context).isEqualTo(mTraceContext.context);
-    assertThat(currContext.longContext).isEqualTo(mTraceContext.longContext);
+    assertThat(currContext.intContext).isEqualTo(mTraceContext.intContext);
     assertThat(currContext.enabledProviders).isEqualTo(mTraceContext.enabledProviders);
     assertThat(currContext.cpuSamplingRateMs).isEqualTo(mTraceContext.cpuSamplingRateMs);
   }
@@ -267,8 +267,8 @@ public class TraceControlTest {
 
   @Test
   public void testMultipleTracesStartStop() {
-    long flag1 = 1;
-    long flag2 = 2;
+    int flag1 = 1;
+    int flag2 = 2;
     when(mController.contextsEqual(eq(flag1), any(), eq(flag2), any())).thenReturn(false);
     when(mController.contextsEqual(eq(flag2), any(), eq(flag1), any())).thenReturn(false);
 
@@ -282,8 +282,8 @@ public class TraceControlTest {
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, null, flag2);
     ArgumentCaptor<TraceContext> contextCaptor = ArgumentCaptor.forClass(TraceContext.class);
     verify(mTraceControlHandler, times(2)).onTraceStop(contextCaptor.capture());
-    assertThat(contextCaptor.getAllValues().get(0).longContext).isEqualTo(flag1);
-    assertThat(contextCaptor.getAllValues().get(1).longContext).isEqualTo(flag2);
+    assertThat(contextCaptor.getAllValues().get(0).intContext).isEqualTo(flag1);
+    assertThat(contextCaptor.getAllValues().get(1).intContext).isEqualTo(flag2);
     assertNotTracing();
   }
 
