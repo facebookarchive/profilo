@@ -28,8 +28,7 @@ profilo_oss_cxx_library(
         "PUBLIC",
     ],
     deps = [
-        ":trampoline_arm",
-        ":trampoline_thumb",
+        ":trampoline",
         profilo_path("deps/cjni:cjni"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/sig_safe_write:sig_safe_write"),
@@ -38,30 +37,11 @@ profilo_oss_cxx_library(
 )
 
 profilo_oss_cxx_library(
-    name = "trampoline_arm",
+    name = "trampoline",
     platform_compiler_flags = [(
         "armv7",
         [
             "-marm",
-            "-DTRAMP_ARM",
-        ],
-    )],
-    platform_srcs = [
-        (
-            "armv7",
-            ["trampoline_arm.c"],
-        ),
-    ],
-    preferred_linkage = "static",
-)
-
-profilo_oss_cxx_library(
-    name = "trampoline_thumb",
-    platform_compiler_flags = [(
-        "armv7",
-        [
-            "-mthumb",
-            "-DTRAMP_THUMB",
         ],
     )],
     platform_srcs = [

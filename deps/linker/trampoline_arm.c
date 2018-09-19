@@ -15,11 +15,7 @@
  */
 
 __attribute__((naked))
-#if defined(TRAMP_ARM)
-void trampoline_template_arm() {
-#elif defined(TRAMP_THUMB)
-void trampoline_template_thumb() {
-#endif
+void trampoline_template() {
   // save registers we clobber (lr, ip) and this particular hook's chained function
   // onto a TLS stack so that we can easily look up who CALL_PREV should jump to, and
   // clean up after ourselves register-wise, all while ensuring that we don't alter
@@ -50,13 +46,8 @@ void trampoline_template_thumb() {
 
     "bx    lr;" // finally, return to our caller
 
-#if defined(TRAMP_ARM)
-    "trampoline_data_arm:"
-    ".global trampoline_data_arm;"
-#elif defined(TRAMP_THUMB)
-    "trampoline_data_thumb:"
-    ".global trampoline_data_thumb;"
-#endif
+    "trampoline_data:"
+    ".global trampoline_data;"
     ".L_push_hook_stack:"
     ".word 0;"
     ".L_pop_hook_stack:"

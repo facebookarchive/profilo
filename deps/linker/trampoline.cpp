@@ -29,10 +29,8 @@
 
 #if defined(__arm__)
 extern "C" {
-extern void (*trampoline_template_thumb)();
-extern void (*trampoline_template_arm)();
-extern void* trampoline_data_thumb;
-extern void* trampoline_data_arm;
+extern void (*trampoline_template)();
+extern void* trampoline_data;
 }
 #endif
 
@@ -167,11 +165,11 @@ uint64_t pop_hook_stack() {
 class trampoline {
 public:
   trampoline(void* hook, void* chained)
-      : code_size_(reinterpret_cast<uintptr_t>(trampoline_data(chained)) -
-                   reinterpret_cast<uintptr_t>(trampoline_template(chained))),
+      : code_size_(reinterpret_cast<uintptr_t>(trampoline_data_pointer()) -
+                   reinterpret_cast<uintptr_t>(trampoline_template_pointer())),
         code_(allocate(code_size_ + trampoline_data_size())) {
 #if defined (__arm__)
-    std::memcpy(code_, trampoline_template(chained), code_size_);
+    std::memcpy(code_, trampoline_template_pointer(), code_size_);
 
     auto* data = reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(code_) + code_size_);
 
@@ -198,41 +196,21 @@ public:
   }
 
   void* code() const {
-    // when constructing this trampoline we chose either an ARM or a Thumb template
-    // to build from, so when creating our function pointer, set the Thumb bit on
-    // it accordingly.
-    // whoever is calling us will alllllmost certainly be using an exchange-capable
-    // instruction (bx, blx) - so matching trampoline ISA to chained-func ISA might
-    // be overkill - but on the off chance that they didn't, we want to be compatible.
-    return reinterpret_cast<void*>(
-      reinterpret_cast<uintptr_t>(code_) |
-      (reinterpret_cast<uintptr_t>(chained()) & 1));
+    return reinterpret_cast<void*>(code_);
   }
 
 private:
-  static void* trampoline_template(void* chained) {
+  static void* trampoline_template_pointer() {
 #if defined(__arm__)
-    uintptr_t ret;
-    if (reinterpret_cast<uintptr_t>(chained) & 0x1) {
-      ret = reinterpret_cast<uintptr_t>(&trampoline_template_thumb);
-    } else {
-      ret = reinterpret_cast<uintptr_t>(&trampoline_template_arm);
-    }
-    asm("" : "=rm"(ret)); // force compiler to abandon its assumption that ret is aligned
-    ret &= ~1;
-    return reinterpret_cast<void*>(ret);
+    return reinterpret_cast<void*>(&trampoline_template);
 #else
     return 0;
 #endif
   }
 
-  static void* trampoline_data(void* chained) {
+  static void* trampoline_data_pointer() {
 #if defined(__arm__)
-    if (reinterpret_cast<uintptr_t>(chained) & 0x1) {
-      return &trampoline_data_thumb;
-    } else {
-      return &trampoline_data_arm;
-    }
+    return &trampoline_data;
 #else
     return 0;
 #endif
