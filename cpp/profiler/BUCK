@@ -1,10 +1,6 @@
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
-load(":build_defs.bzl", "museum_tracer_library", "unwindc_tracer_library")
-
-museum_tracer_library(version = "6.0.1")
-
-museum_tracer_library(version = "7.0.0")
+load(":build_defs.bzl", "unwindc_tracer_library")
 
 unwindc_tracer_library("6.0.0")
 
@@ -146,7 +142,6 @@ fb_xplat_cxx_library(
         profilo_path("deps/dalvik:dalvik-subset-headers"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
-        profilo_path("deps/museum:museum"),
         profilo_path("deps/sigmux:sigmux"),
     ],
 )

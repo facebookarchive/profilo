@@ -1,7 +1,0 @@
-load("//tools/build_defs/oss:profilo_defs.bzl", "museum_library")
-
-museum_library(
-    museum_deps = [
-        "bionic/libc",
-    ],
-)
