@@ -17,36 +17,54 @@
 #include <linker/trampoline.h>
 #include <linker/locks.h>
 
+#include <sys/mman.h>
 #include <cstring>
 #include <list>
 #include <memory>
 #include <ostream>
 #include <set>
 #include <sstream>
-#include <stdio.h>
-#include <sys/mman.h>
 #include <system_error>
 #include <vector>
 
+#ifdef ANDROID
+#include <sys/prctl.h>
+#ifndef PR_SET_VMA
+#define PR_SET_VMA 0x53564d41
+#define PR_SET_VMA_ANON_NAME 0
+#endif // PR_SET_VMA
+#endif // ANDROID
 
-namespace facebook { namespace linker {
+namespace facebook {
+namespace linker {
 
 namespace {
 
 class allocator_block {
-public:
+ public:
   allocator_block()
-    : map_(mmap(
-        nullptr,
-        kSize,
-        PROT_READ | PROT_WRITE | PROT_EXEC,
-        MAP_PRIVATE | MAP_ANONYMOUS,
-        -1, /* invalid fd */
-        0)
-      ) {
+      : map_(mmap(
+            nullptr,
+            kSize,
+            PROT_READ | PROT_WRITE | PROT_EXEC,
+            MAP_PRIVATE | MAP_ANONYMOUS,
+            -1, /* invalid fd */
+            0)) {
     if (map_ == MAP_FAILED) {
       throw std::system_error(errno, std::system_category());
     }
+
+#ifdef ANDROID
+    if (prctl(
+            PR_SET_VMA,
+            PR_SET_VMA_ANON_NAME,
+            map_,
+            kSize,
+            "linker plt trampolines")) {
+      throw std::system_error(
+          errno, std::system_category(), "could not set VMA name");
+    }
+#endif // ANDROID
     top_ = reinterpret_cast<uint8_t*>(map_);
   }
 
@@ -69,7 +87,7 @@ public:
     return old;
   }
 
-private:
+ private:
   static constexpr size_t kPageSize = 4096;
   static constexpr size_t kPagesPerBlock = 1;
   static constexpr size_t kSize = kPageSize * kPagesPerBlock;
@@ -80,7 +98,8 @@ private:
 
 static void* allocate(size_t sz) {
   static constexpr size_t kAlignment = 4;
-  static_assert((kAlignment & (kAlignment - 1)) == 0, "kAlignment must be power of 2");
+  static_assert(
+      (kAlignment & (kAlignment - 1)) == 0, "kAlignment must be power of 2");
   static std::list<allocator_block> blocks_;
   static pthread_rwlock_t lock_ = PTHREAD_RWLOCK_INITIALIZER;
 
@@ -103,7 +122,8 @@ static pthread_key_t get_hook_stack_key() {
   static pthread_key_t tls_key_ = ({
     pthread_key_t key;
     if (pthread_key_create(&key, +[](void* obj) {
-          auto vec = reinterpret_cast<std::vector<trampoline_stack_entry>*>(obj);
+          auto vec =
+              reinterpret_cast<std::vector<trampoline_stack_entry>*>(obj);
           delete vec;
         }) != 0) {
       log_assert("failed to create trampoline TLS key");
@@ -116,7 +136,7 @@ static pthread_key_t get_hook_stack_key() {
 static std::vector<trampoline_stack_entry>& get_hook_stack() {
   auto key = get_hook_stack_key();
   auto vec = reinterpret_cast<std::vector<trampoline_stack_entry>*>(
-    pthread_getspecific(key));
+      pthread_getspecific(key));
   if (vec == nullptr) {
     vec = new std::vector<trampoline_stack_entry>();
     pthread_setspecific(key, vec);
@@ -137,7 +157,7 @@ static void delete_hook_stack() {
 }
 
 void push_hook_stack(void* chained, void* return_address) {
-  trampoline_stack_entry entry = { chained, return_address};
+  trampoline_stack_entry entry = {chained, return_address};
   get_hook_stack().push_back(entry);
 }
 
@@ -152,20 +172,22 @@ uint32_t pop_hook_stack() {
 }
 #endif
 
-} // namespace anonymous
+} // namespace
 
 namespace trampoline {
 
 class trampoline {
-public:
+ public:
   trampoline(void* hook, void* chained)
-      : code_size_(reinterpret_cast<uintptr_t>(trampoline_data_pointer()) -
-                   reinterpret_cast<uintptr_t>(trampoline_template_pointer())),
+      : code_size_(
+            reinterpret_cast<uintptr_t>(trampoline_data_pointer()) -
+            reinterpret_cast<uintptr_t>(trampoline_template_pointer())),
         code_(allocate(code_size_ + trampoline_data_size())) {
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
     std::memcpy(code_, trampoline_template_pointer(), code_size_);
 
-    auto* data = reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(code_) + code_size_);
+    auto* data = reinterpret_cast<uint32_t*>(
+        reinterpret_cast<uintptr_t>(code_) + code_size_);
 
     *data++ = reinterpret_cast<uint32_t>(push_hook_stack);
     *data++ = reinterpret_cast<uint32_t>(pop_hook_stack);
@@ -181,11 +203,11 @@ public:
   trampoline& operator=(trampoline&&) = delete;
 
   trampoline(void* existing_trampoline)
-    : code_size_(0), code_(existing_trampoline) { }
+      : code_size_(0), code_(existing_trampoline) {}
 
   void* chained() const {
     auto* data = reinterpret_cast<uint32_t*>(
-      reinterpret_cast<uintptr_t>(code_) + code_size_);
+        reinterpret_cast<uintptr_t>(code_) + code_size_);
     return reinterpret_cast<void*>(data[3]);
   }
 
@@ -193,12 +215,10 @@ public:
     return reinterpret_cast<void*>(code_);
   }
 
-private:
-
+ private:
   size_t const code_size_; // does NOT include data
   void* const code_;
 };
-
 
 } // namespace trampoline
 
@@ -215,7 +235,8 @@ void* create_trampoline(void* hook, void* chained) {
 #endif
 }
 
-} } // namespace facebook::linker
+} // namespace linker
+} // namespace facebook
 
 extern "C" {
 
