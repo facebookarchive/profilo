@@ -4,7 +4,6 @@ profilo_oss_cxx_library(
     name = "linker",
     srcs = glob(
         ["*.cpp"],
-        exclude = ["trampoline_arm.c"],
     ),
     header_namespace = "linker",
     exported_headers = glob(["*.h"]),
@@ -48,6 +47,10 @@ profilo_oss_cxx_library(
         (
             "armv7",
             ["trampoline_arm.c"],
+        ),
+        (
+            "x86",
+            ["trampoline_x86.c"],
         ),
     ],
     preferred_linkage = "static",

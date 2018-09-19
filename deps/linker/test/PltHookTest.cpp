@@ -32,7 +32,7 @@
 #include <plthooktests/test.h>
 #include <plthooktestdata/meaningoflife.h>
 
-#if defined(__arm__)
+#if defined(__arm__) || defined(__i386__)
 
 static clock_t hook_clock() {
   if (CALL_PREV(hook_clock) == 0) {
@@ -116,6 +116,7 @@ TEST_F(Nice2Test, nice2Test) {
   auto call_nice2 = libtarget.get_symbol<int(int, double)>("call_nice2");
   ASSERT_EQ(1764.0, call_nice2(70, 4.2));
 }
+
 
 #define MUNGE_TRIPLE(x)                       ((x) * 3)
 #define MUNGE_MUL17(x)                        ((x) * 17)
@@ -337,7 +338,7 @@ TEST_F(Evil3Test, evil3Test) {
 
 // TODO: write a varargs test
 
-#else // defined (__arm__)
+#else
 
 TEST(UnsupportedArch, unsupportedArch) {
   facebook::cppdistract::dso const libtarget(LIBDIR("libtarget.so"));

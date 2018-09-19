@@ -20,6 +20,42 @@
 
 namespace facebook { namespace linker {
 
+// Testing only
+namespace trampoline {
+
+#if defined(__arm__) || defined(__i386__)
+#define LINKER_TRAMPOLINE_SUPPORTED_ARCH
+#endif
+
+#ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
+extern "C" {
+extern void (*trampoline_template)();
+extern void* trampoline_data;
+}
+#endif
+
+inline void* trampoline_template_pointer() {
+#ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
+  return reinterpret_cast<void*>(&trampoline_template);
+#else
+  return 0;
+#endif
+}
+
+inline void* trampoline_data_pointer() {
+#ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
+  return &trampoline_data;
+#else
+  return 0;
+#endif
+}
+
+constexpr inline size_t trampoline_data_size() {
+  return sizeof(uint32_t) * 4;
+}
+
+} // namespace trampoline
+
 void* create_trampoline(void* hook, void* chained);
 
 } } // namespace facebook::linker

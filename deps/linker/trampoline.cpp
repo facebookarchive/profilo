@@ -23,16 +23,11 @@
 #include <ostream>
 #include <set>
 #include <sstream>
+#include <stdio.h>
 #include <sys/mman.h>
 #include <system_error>
 #include <vector>
 
-#if defined(__arm__)
-extern "C" {
-extern void (*trampoline_template)();
-extern void* trampoline_data;
-}
-#endif
 
 namespace facebook { namespace linker {
 
@@ -101,7 +96,7 @@ static void* allocate(size_t sz) {
 
 struct trampoline_stack_entry {
   void* const chained;
-  void* const lr;
+  void* const return_address;
 };
 
 static pthread_key_t get_hook_stack_key() {
@@ -129,7 +124,7 @@ static std::vector<trampoline_stack_entry>& get_hook_stack() {
   return *vec;
 }
 
-#if defined (__arm__)
+#ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
 static void delete_hook_stack() {
   auto key = get_hook_stack_key();
   auto vec = reinterpret_cast<std::vector<trampoline_stack_entry>*>(
@@ -141,8 +136,8 @@ static void delete_hook_stack() {
   pthread_setspecific(key, nullptr);
 }
 
-void push_hook_stack(void* chained, void* lr) {
-  trampoline_stack_entry entry = { chained, lr};
+void push_hook_stack(void* chained, void* return_address) {
+  trampoline_stack_entry entry = { chained, return_address};
   get_hook_stack().push_back(entry);
 }
 
@@ -153,9 +148,13 @@ uint32_t pop_hook_stack() {
   if (stack.empty()) {
     delete_hook_stack();
   }
-  return reinterpret_cast<uint32_t>(back.lr);
+  return reinterpret_cast<uint32_t>(back.return_address);
 }
 #endif
+
+} // namespace anonymous
+
+namespace trampoline {
 
 class trampoline {
 public:
@@ -163,7 +162,7 @@ public:
       : code_size_(reinterpret_cast<uintptr_t>(trampoline_data_pointer()) -
                    reinterpret_cast<uintptr_t>(trampoline_template_pointer())),
         code_(allocate(code_size_ + trampoline_data_size())) {
-#if defined (__arm__)
+#ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
     std::memcpy(code_, trampoline_template_pointer(), code_size_);
 
     auto* data = reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t>(code_) + code_size_);
@@ -195,35 +194,17 @@ public:
   }
 
 private:
-  static void* trampoline_template_pointer() {
-#if defined(__arm__)
-    return reinterpret_cast<void*>(&trampoline_template);
-#else
-    return 0;
-#endif
-  }
-
-  static void* trampoline_data_pointer() {
-#if defined(__arm__)
-    return &trampoline_data;
-#else
-    return 0;
-#endif
-  }
-
-  static size_t trampoline_data_size() {
-    return sizeof(uint32_t) * 4;
-  }
 
   size_t const code_size_; // does NOT include data
   void* const code_;
 };
 
-} // namespace (anonymous)
+
+} // namespace trampoline
 
 void* create_trampoline(void* hook, void* chained) {
-#if defined(__arm__)
-  static std::list<trampoline> trampolines_;
+#ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
+  static std::list<trampoline::trampoline> trampolines_;
   static pthread_rwlock_t lock_ = PTHREAD_RWLOCK_INITIALIZER;
 
   WriterLock wl(&lock_);
