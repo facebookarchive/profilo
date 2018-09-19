@@ -56,7 +56,7 @@ namespace entries {
 
 class EntryVisitor {
 public:
-
+  virtual ~EntryVisitor() = default;
 %%ENTRY_VISITOR_METHODS%%
 };
 

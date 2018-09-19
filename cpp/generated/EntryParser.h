@@ -1,4 +1,4 @@
-// @generated SignedSource<<0d8462c3167e514410dfe9924dc1670a>>
+// @generated SignedSource<<d642034c7e1830efd4a46871d51c5ac6>>
 
 #pragma once
 
@@ -18,7 +18,7 @@ namespace entries {
 
 class EntryVisitor {
 public:
-
+  virtual ~EntryVisitor() = default;
   virtual void visit(const StandardEntry& entry) = 0;
   virtual void visit(const FramesEntry& entry) = 0;
   virtual void visit(const BytesEntry& entry) = 0;

@@ -29,6 +29,8 @@ class PrintEntryVisitor : public EntryVisitor {
   PrintEntryVisitor() = delete;
   PrintEntryVisitor(const PrintEntryVisitor&) = delete;
 
+  virtual ~PrintEntryVisitor() = default;
+
   explicit PrintEntryVisitor(std::ostream& stream);
 
   virtual void visit(const StandardEntry& data);
