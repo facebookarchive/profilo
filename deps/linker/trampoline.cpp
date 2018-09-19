@@ -102,7 +102,6 @@ static void* allocate(size_t sz) {
 struct trampoline_stack_entry {
   void* const chained;
   void* const lr;
-  void* const ip;
 };
 
 static pthread_key_t get_hook_stack_key() {
@@ -142,23 +141,19 @@ static void delete_hook_stack() {
   pthread_setspecific(key, nullptr);
 }
 
-void push_hook_stack(void* chained, void* lr, void* ip) {
-  trampoline_stack_entry entry = { chained, lr, ip };
+void push_hook_stack(void* chained, void* lr) {
+  trampoline_stack_entry entry = { chained, lr};
   get_hook_stack().push_back(entry);
 }
 
-uint64_t pop_hook_stack() {
+uint32_t pop_hook_stack() {
   auto& stack = get_hook_stack();
   auto back = stack.back();
   stack.pop_back();
   if (stack.empty()) {
     delete_hook_stack();
   }
-  // this bitshift-and-return is a bit wonky, but it's taking advantage of the ARM
-  // procedure call standard for returning a 64-bit fundamental type as simply two
-  // paired registers. if we were to return a struct of some sort, it would get
-  // stored and fetched from memory: more complicated, and more slower.
-  return reinterpret_cast<uint64_t>(back.ip) << 32 | reinterpret_cast<uint64_t>(back.lr);
+  return reinterpret_cast<uint32_t>(back.lr);
 }
 #endif
 

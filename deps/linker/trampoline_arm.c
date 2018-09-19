@@ -16,17 +16,17 @@
 
 __attribute__((naked))
 void trampoline_template() {
-  // save registers we clobber (lr, ip) and this particular hook's chained function
+  // save registers we clobber (lr) and this particular hook's chained function
   // onto a TLS stack so that we can easily look up who CALL_PREV should jump to, and
   // clean up after ourselves register-wise, all while ensuring that we don't alter
   // the actual thread stack at all in order to make sure the hook function sees exactly
   // the parameters it's supposed to.
+  // We intentionally clobber ip, it's an inter-procedure scratch register anyway.
   asm(
     "push  { r0 - r3 };" // AAPCS doesn't require preservation of r0 - r3 across calls, so save em temporarily
     "ldr   r0, .L_chained;" // store chained function for easy lookup
-    "mov   r2, ip;" // save ip so we can use it as our scratch register
-    "ldr   ip, .L_push_hook_stack;"
     "mov   r1, lr;" // save lr so we know where to go back to once this is all done
+    "ldr   ip, .L_push_hook_stack;"
     "blx   ip;"
     "pop   { r0 - r3 };" // bring the hook's original parameters back
 
@@ -34,14 +34,10 @@ void trampoline_template() {
     "blx   ip;" // switches to ARM or Thumb mode appropriately since target is a register
 
     // now restore what we saved above
-    // NOTE: pop_hook_stack returns a uint64 that is actually two uint32's packed together.
-    // the AAPCS specifies that double-word fundamental types (aka, uint64_t) are placed in
-    // r0 and r1, so we can simply pack our values, grab the registers, and be on our way
     "push  { r0 - r3 };"
     "ldr   ip, .L_pop_hook_stack;"
     "blx   ip;"
-    "mov   lr, r0;"
-    "mov   ip, r1;"
+    "mov   lr, r0;" // return value from pop_hook_stack
     "pop   { r0 - r3 };"
 
     "bx    lr;" // finally, return to our caller
