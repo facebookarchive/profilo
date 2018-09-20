@@ -5,7 +5,7 @@ services:
 - docker
 
 install:
-- docker build -t profilo:17.10 -f build/Dockerfile .
+- travis_wait 20 docker build -t profilo:17.10 -f build/Dockerfile .
 
 script:
 - set -e
