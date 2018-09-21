@@ -13,5 +13,5 @@ APK=$(buck targets --show-output sample |& tail -n 1 | cut -f2 -d' ')
 
 OUT="/out"
 mkdir -p "$OUT"
-cp "$AAR" "$OUT"/build.aar
+cp "$AAR" "$OUT"/profilo.aar
 cp "$APK" "$OUT"/sample.apk
