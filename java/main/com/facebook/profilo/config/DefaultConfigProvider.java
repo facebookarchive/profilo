@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 public class DefaultConfigProvider implements ConfigProvider {
 
+  public static final int DEFAULT_TIMED_OUT_UPLOAD_SAMPLE_RATE = 0;
   public static final int DEFAULT_TRACE_TIMEOUT_MS = 30000;
   public static final int DEFAULT_MAX_BYTES = 10000;
   public static final long DEFAULT_UPLOAD_PERIOD_SEC = TimeUnit.HOURS.toSeconds(1);
@@ -48,7 +49,7 @@ public class DefaultConfigProvider implements ConfigProvider {
 
             @Override
             public int getTimedOutUploadSampleRate() {
-              return 0;
+              return DEFAULT_TIMED_OUT_UPLOAD_SAMPLE_RATE;
             }
           };
         }
