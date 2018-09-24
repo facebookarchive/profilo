@@ -180,7 +180,7 @@ final public class TraceControl {
   // Notion of a trigger with a unique identifier would help a lot.
   @Nullable
   private TraceContext findCurrentTraceByContext(
-      int controllerMask, int intContext, @Nullable Object context) {
+      int controllerMask, long longContext, @Nullable Object context) {
     if (mCurrentTracesMask.get() == 0) {
       return null;
     }
@@ -196,7 +196,7 @@ final public class TraceControl {
 
       Object controllerObject = ctx.controllerObject;
       if (((TraceController) controllerObject)
-          .contextsEqual(ctx.intContext, ctx.context, intContext, context)) {
+          .contextsEqual(ctx.longContext, ctx.context, longContext, context)) {
         return ctx;
       }
     }
@@ -240,7 +240,7 @@ final public class TraceControl {
     return traces;
   }
 
-  public boolean startTrace(int controller, int flags, @Nullable Object context, int intContext) {
+  public boolean startTrace(int controller, int flags, @Nullable Object context, long longContext) {
     if (findLowestFreeBit(mCurrentTracesMask.get(), MAX_TRACES) == 0) {
       // Reached max traces
       return false;
@@ -265,7 +265,7 @@ final public class TraceControl {
       }
     }
 
-    TraceContext traceContext = findCurrentTraceByContext(controller, intContext, context);
+    TraceContext traceContext = findCurrentTraceByContext(controller, longContext, context);
     if (traceContext != null) {
       // Attempted start during a trace with the same Id
       return false;
@@ -285,7 +285,7 @@ final public class TraceControl {
             controller,
             traceController,
             context,
-            intContext,
+            longContext,
             providers,
             traceController.getCpuSamplingRateMs(context, controllerConfig),
             flags);
@@ -344,27 +344,27 @@ final public class TraceControl {
     return true;
   }
 
-  public boolean stopTrace(int controllerMask, @Nullable Object context, int intContext) {
-    return stopTrace(controllerMask, context, TraceStopReason.STOP, intContext, /*abortReason*/ 0);
+  public boolean stopTrace(int controllerMask, @Nullable Object context, long longContext) {
+    return stopTrace(controllerMask, context, TraceStopReason.STOP, longContext, /*abortReason*/ 0);
   }
 
-  public void abortTrace(int controllerMask, @Nullable Object context, int intContext) {
+  public void abortTrace(int controllerMask, @Nullable Object context, long longContext) {
     stopTrace(
         controllerMask,
         context,
         TraceStopReason.ABORT,
-        intContext,
+        longContext,
         ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
   }
 
   public void abortTraceWithReason(
-      String trigger, @Nullable Object context, int intContext, int abortReason) {
-    abortTraceWithReason(TriggerRegistry.getBitMaskFor(trigger), context, intContext, abortReason);
+      String trigger, @Nullable Object context, long longContext, int abortReason) {
+    abortTraceWithReason(TriggerRegistry.getBitMaskFor(trigger), context, longContext, abortReason);
   }
 
   public void abortTraceWithReason(
-      int controllerMask, @Nullable Object context, int intContext, int abortReason) {
-    stopTrace(controllerMask, context, TraceStopReason.ABORT, intContext, abortReason);
+      int controllerMask, @Nullable Object context, long longContext, int abortReason) {
+    stopTrace(controllerMask, context, TraceStopReason.ABORT, longContext, abortReason);
   }
 
   /**
@@ -384,9 +384,9 @@ final public class TraceControl {
       int controllerMask,
       @Nullable Object context,
       @TraceStopReason int stopReason,
-      int intContext,
+      long longContext,
       int abortReason) {
-    TraceContext traceContext = findCurrentTraceByContext(controllerMask, intContext, context);
+    TraceContext traceContext = findCurrentTraceByContext(controllerMask, longContext, context);
     if (traceContext == null) {
       // no trace, nothing to do
       return false;
@@ -450,7 +450,7 @@ final public class TraceControl {
       }
       if (ctx.controllerObject instanceof ControllerWithQPLChecks
           && ((ControllerWithQPLChecks) ctx.controllerObject)
-              .isInsideQPLTrace(ctx.intContext, ctx.context, markerId)) {
+              .isInsideQPLTrace(ctx.longContext, ctx.context, markerId)) {
         return ctx.encodedTraceId;
       }
     }
@@ -459,8 +459,8 @@ final public class TraceControl {
 
   @Nullable
   public String getCurrentTraceEncodedIdByTrigger(
-      int controller, int intContext, @Nullable Object context) {
-    TraceContext ctx = findCurrentTraceByContext(controller, intContext, context);
+      int controller, long longContext, @Nullable Object context) {
+    TraceContext ctx = findCurrentTraceByContext(controller, longContext, context);
     if (ctx == null) {
       return null;
     }
@@ -468,8 +468,9 @@ final public class TraceControl {
   }
 
   @Nullable
-  public long getCurrentTraceIdByTrigger(int controller, int intContext, @Nullable Object context) {
-    TraceContext ctx = findCurrentTraceByContext(controller, intContext, context);
+  public long getCurrentTraceIdByTrigger(
+      int controller, long longContext, @Nullable Object context) {
+    TraceContext ctx = findCurrentTraceByContext(controller, longContext, context);
     if (ctx == null) {
       return 0;
     }
@@ -494,8 +495,8 @@ final public class TraceControl {
               + ctx.toString()
               + " ControllerObject: "
               + ctx.controllerObject.toString()
-              + " IntContext: "
-              + Integer.toString(ctx.intContext);
+              + " LongContext: "
+              + Long.toString(ctx.longContext);
     }
     if (index == 0) {
       return null;

@@ -26,7 +26,7 @@ public final class TraceContext implements Parcelable {
   public int controller;
   public Object controllerObject;
   public Object context;
-  public int intContext;
+  public long longContext;
   public int enabledProviders;
   public int cpuSamplingRateMs;
   public int flags;
@@ -52,7 +52,7 @@ public final class TraceContext implements Parcelable {
       int controller,
       Object controllerObject,
       Object context,
-      int intContext,
+      long longContext,
       int enabledProviders,
       int cpuSamplingRateMs,
       int flags,
@@ -62,7 +62,7 @@ public final class TraceContext implements Parcelable {
     this.controller = controller;
     this.controllerObject = controllerObject;
     this.context = context;
-    this.intContext = intContext;
+    this.longContext = longContext;
     this.enabledProviders = enabledProviders;
     this.cpuSamplingRateMs = cpuSamplingRateMs;
     this.flags = flags;
@@ -75,21 +75,21 @@ public final class TraceContext implements Parcelable {
       int controller,
       Object controllerObject,
       Object context,
-      int intContext,
+      long longContext,
       int enabledProviders,
       int cpuSamplingRateMs,
       int flags) {
     this(
-      traceId,
-      encodedTraceId,
-      controller,
-      controllerObject,
-      context,
-      intContext,
-      enabledProviders,
-      cpuSamplingRateMs,
-      flags,
-      (short) 0);
+        traceId,
+        encodedTraceId,
+        controller,
+        controllerObject,
+        context,
+        longContext,
+        enabledProviders,
+        cpuSamplingRateMs,
+        flags,
+        (short) 0);
   }
 
   public TraceContext(TraceContext traceContext) {
@@ -99,7 +99,7 @@ public final class TraceContext implements Parcelable {
         traceContext.controller,
         traceContext.controllerObject,
         traceContext.context,
-        traceContext.intContext,
+        traceContext.longContext,
         traceContext.enabledProviders,
         traceContext.cpuSamplingRateMs,
         traceContext.flags,
@@ -108,16 +108,16 @@ public final class TraceContext implements Parcelable {
 
   public TraceContext(TraceContext traceContext, int abortReason) {
     this(
-      traceContext.traceId,
-      traceContext.encodedTraceId,
-      traceContext.controller,
-      traceContext.controllerObject,
-      traceContext.context,
-      traceContext.intContext,
-      traceContext.enabledProviders,
-      traceContext.cpuSamplingRateMs,
-      traceContext.flags,
-      abortReason);
+        traceContext.traceId,
+        traceContext.encodedTraceId,
+        traceContext.controller,
+        traceContext.controllerObject,
+        traceContext.context,
+        traceContext.longContext,
+        traceContext.enabledProviders,
+        traceContext.cpuSamplingRateMs,
+        traceContext.flags,
+        abortReason);
   }
 
   public TraceContext(TraceContext traceContext, int controller, Object controllerObject) {
@@ -127,7 +127,7 @@ public final class TraceContext implements Parcelable {
         controller,
         controllerObject,
         traceContext.context,
-        traceContext.intContext,
+        traceContext.longContext,
         traceContext.enabledProviders,
         traceContext.cpuSamplingRateMs,
         traceContext.flags,
@@ -144,7 +144,7 @@ public final class TraceContext implements Parcelable {
     this.controller = src.readInt();
     this.controllerObject = null;
     this.context = null;
-    this.intContext= src.readInt();
+    this.longContext = src.readLong();
     this.enabledProviders = src.readInt();
     this.cpuSamplingRateMs = src.readInt();
     this.flags = src.readInt();
@@ -161,7 +161,7 @@ public final class TraceContext implements Parcelable {
     dest.writeLong(traceId);
     dest.writeString(encodedTraceId);
     dest.writeInt(controller);
-    dest.writeInt(intContext);
+    dest.writeLong(longContext);
     dest.writeInt(enabledProviders);
     dest.writeInt(cpuSamplingRateMs);
     dest.writeInt(this.flags);

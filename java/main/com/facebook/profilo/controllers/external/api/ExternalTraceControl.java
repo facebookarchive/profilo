@@ -38,7 +38,7 @@ public class ExternalTraceControl {
     // config in DefaultConfigProvider.
     //
     final int flags = Trace.FLAG_MANUAL;
-    return control.startTrace(ExternalController.TRIGGER_EXTERNAL, flags, config, 0);
+    return control.startTrace(ExternalController.TRIGGER_EXTERNAL, flags, config, 0L);
   }
 
   public static void stopTrace() {
@@ -46,6 +46,6 @@ public class ExternalTraceControl {
     if (control == null) {
       return;
     }
-    control.stopTrace(ExternalController.TRIGGER_EXTERNAL, null, 0);
+    control.stopTrace(ExternalController.TRIGGER_EXTERNAL, null, 0L);
   }
 }

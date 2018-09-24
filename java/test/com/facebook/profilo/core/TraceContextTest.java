@@ -63,7 +63,7 @@ public class TraceContextTest {
     assertThat(mContext.controller).isEqualTo(CONTROLLER);
     assertThat(mContext.controllerObject).isEqualTo(CONTROLLER_OBJECT);
     assertThat(mContext.context).isEqualTo(CONTEXT);
-    assertThat(mContext.intContext).isEqualTo(INT_CONTEXT);
+    assertThat(mContext.longContext).isEqualTo(INT_CONTEXT);
     assertThat(mContext.enabledProviders).isEqualTo(ENABLED_PROVIDERS);
     assertThat(mContext.cpuSamplingRateMs).isEqualTo(CPU_SAMPLING_RATE_MS);
     assertThat(mContext.flags).isEqualTo(FLAGS);
@@ -82,7 +82,7 @@ public class TraceContextTest {
     assertThat(createdFromParcel.controller).isEqualTo(CONTROLLER);
     assertThat(createdFromParcel.controllerObject).isNull();
     assertThat(createdFromParcel.context).isNull();
-    assertThat(createdFromParcel.intContext).isEqualTo(INT_CONTEXT);
+    assertThat(createdFromParcel.longContext).isEqualTo(INT_CONTEXT);
     assertThat(createdFromParcel.enabledProviders).isEqualTo(ENABLED_PROVIDERS);
     assertThat(createdFromParcel.cpuSamplingRateMs).isEqualTo(CPU_SAMPLING_RATE_MS);
     assertThat(createdFromParcel.abortReason).isEqualTo(ABORT_REASON);
