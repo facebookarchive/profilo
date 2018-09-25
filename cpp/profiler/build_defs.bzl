@@ -1,5 +1,5 @@
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
-load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
 def unwindc_tracer_library(version):
     version_num = version.replace(".", "")

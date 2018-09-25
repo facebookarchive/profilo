@@ -1,6 +1,6 @@
 load("//tools/build_defs:glob_defs.bzl", "subdir_glob")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
-load("//build_defs:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 
 fb_xplat_cxx_library(
     name = "headers_linux",
