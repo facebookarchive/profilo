@@ -45,7 +45,7 @@
 
 #define DT_GNU_HASH	0x6ffffef5	/* GNU-style hash table.  */
 
-#if defined(__x86__64__) || defined(__aarch64__)
+#if defined(__x86_64__) || defined(__aarch64__)
 # define ELF_RELOC_TYPE ELF64_R_TYPE
 # define ELF_RELOC_SYM  ELF64_R_SYM
 #else
