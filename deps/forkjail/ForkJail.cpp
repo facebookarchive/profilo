@@ -38,7 +38,7 @@ public:
     }
   }
 
-  ~SignalMask() {
+  ~SignalMask() noexcept(false) {
     if (pthread_sigmask(SIG_SETMASK, &old_, NULL)) {
       throw std::system_error(errno, std::system_category(), "sigprocmask restore");
     }
