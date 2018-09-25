@@ -76,6 +76,25 @@ struct Convert<bool> {
   }
 };
 
+// Sometimes (64-bit Android) jlong is "long long", but int64_t is "long".
+// Allow int64_t to work as jlong.
+template<typename T>
+struct Convert<T,
+    typename std::enable_if<
+      std::is_same<T, int64_t>::value && !std::is_same<T, jlong>::value
+    >::type> {
+  typedef jlong jniType;
+  static int64_t fromJni(jniType t) {
+    return t;
+  }
+  static jniType toJniRet(int64_t t) {
+    return t;
+  }
+  static jniType toCall(int64_t t) {
+    return t;
+  }
+};
+
 // convert to alias_ref<T> from T
 template <typename T>
 struct Convert<alias_ref<T>> {
