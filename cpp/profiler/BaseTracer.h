@@ -39,6 +39,8 @@ enum Tracer : uint32_t {
 
 class BaseTracer {
  public:
+  virtual ~BaseTracer() = default;
+
   virtual bool collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
