@@ -154,7 +154,7 @@ inline std::string makeDescriptor(R (C::*)(Args... args)) {
 
 template<typename R, typename ...Args>
 template<R(*func)(Args...)>
-R CriticalMethod<R(*)(Args...)>::call(alias_ref<jclass>, Args... args) noexcept {
+JNI_ENTRY_POINT R CriticalMethod<R(*)(Args...)>::call(alias_ref<jclass>, Args... args) noexcept {
   static_assert(
     IsJniPrimitive<R>() || std::is_void<R>(),
     "Critical Native Methods may only return primitive JNI types, or void.");
