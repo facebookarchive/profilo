@@ -26,14 +26,12 @@ namespace cppdistract {
 
 dso::dso(char const* name) : handle_(dlopen(name, RTLD_LOCAL)) {
   if (!handle_) {
-    throw std::runtime_error("Failed to open " + std::string(name));
+    throw std::runtime_error(dlerror());
   }
 }
 
 dso::~dso() {
-  if (dlclose(handle_) == -1) {
-    throw std::runtime_error(dlerror());
-  }
+  dlclose(handle_);
 }
 
 void* dso::get_handle() const {
