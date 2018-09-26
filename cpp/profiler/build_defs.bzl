@@ -7,8 +7,9 @@ def unwindc_tracer_library(version):
 
     fb_xplat_cxx_library(
         name = "unwindc-tracer-{}".format(version),
-        srcs = [
-            "ArtUnwindcTracer.cpp",
+        # TODO(delyank): Port to 64-bit.
+        platform_srcs = [
+            ("^android-(armv7|x86)", ["ArtUnwindcTracer.cpp"]),
         ],
         headers = [
             "ArtUnwindcTracer.h",
