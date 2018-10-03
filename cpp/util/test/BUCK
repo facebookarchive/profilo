@@ -29,6 +29,7 @@ cxx_test(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
+    labels = ["asan-ubsan"],
     linker_flags = [
         "-pthread",
         "-ldl",
