@@ -116,6 +116,7 @@ refresh_shared_libs() {
       return 0;
     }, nullptr);
   } else {
+#ifndef __LP64__ 
     soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
 
     if (si == nullptr) {
@@ -127,6 +128,7 @@ refresh_shared_libs() {
         addSharedLib(si->link_map.l_name, si);
       }
     }
+#endif
   }
   return 0;
 }

@@ -193,7 +193,7 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
   }
 }
 
-#if !defined(__aarch64__)
+#ifndef __LP64__
 elfSharedLibData::elfSharedLibData(soinfo const* si) {
   pltRelocationsLen = si->plt_rel_count;
   pltRelocations = si->plt_rel;
