@@ -18,9 +18,6 @@ package com.facebook.profilo.core;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.file.zip.ZipHelper;
@@ -62,8 +59,14 @@ public final class TraceOrchestrator
   public interface TraceListener
       extends NativeTraceWriterCallbacks,
           BackgroundUploadService.BackgroundUploadListener,
-          TraceControl.TraceControlListener,
           LoggerCallbacks {
+
+    void onTraceStart(TraceContext context);
+
+    void onTraceStop(TraceContext context);
+
+    void onTraceAbort(TraceContext context);
+
     void onTraceFlushed(File trace, long traceId);
 
     void onTraceFlushedDoFileAnalytics(
@@ -86,25 +89,6 @@ public final class TraceOrchestrator
     ConfigProvider getProvider();
 
     TraceListener[] getListeners();
-  }
-
-  class TraceEventsHandler extends Handler {
-    static final int MSG_TRACE_START = 0;
-
-    TraceEventsHandler(Looper looper) {
-      super(looper);
-    }
-
-    @Override
-    public void handleMessage(Message msg) {
-      switch (msg.what) {
-        case MSG_TRACE_START:
-          traceStart((TraceContext) msg.obj);
-          break;
-        default:
-          throw new IllegalArgumentException("Not supported message.");
-      }
-    }
   }
 
   public static final String MAIN_PROCESS_NAME = "main";
@@ -175,8 +159,6 @@ public final class TraceOrchestrator
   private final boolean mIsMainProcess;
 
   private final Random mRandom;
-
-  private @Nullable TraceEventsHandler mHandler;
 
   // VisibleForTesting
   /*package*/ TraceOrchestrator(
@@ -351,12 +333,6 @@ public final class TraceOrchestrator
     }
   }
 
-  private void ensureHandlerInitialized() {
-    if (mHandler == null) {
-      mHandler = new TraceEventsHandler(TraceControlThreadHolder.getInstance().getLooper());
-    }
-  }
-
   private File getSanitizedTraceFolder(TraceContext context) {
     File folder;
     synchronized (this) {
@@ -373,18 +349,19 @@ public final class TraceOrchestrator
    * @param context
    */
   @Override
-  public void onTraceStart(TraceContext context) {
+  public void onTraceStartSync(TraceContext context) {
     // Increment the providers
     TraceEvents.enableProviders(context.enabledProviders);
 
-    mListenerManager.onTraceStart(context);
-
-    ensureHandlerInitialized();
-    mHandler.obtainMessage(TraceEventsHandler.MSG_TRACE_START, context).sendToTarget();
+    // We want all the in-line providers to know that they're on.
+    // However, don't do anything else blockingly.
   }
 
   /** Asynchronous portion of trace start. Should include non-critical code for Trace startup. */
-  void traceStart(TraceContext context) {
+  @Override
+  public void onTraceStartAsync(TraceContext context) {
+    mListenerManager.onTraceStart(context);
+
     BaseTraceProvider[] providers;
     synchronized (this) {
       providers = mBaseTraceProviders;

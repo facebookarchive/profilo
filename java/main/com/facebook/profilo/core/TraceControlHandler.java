@@ -41,6 +41,7 @@ public class TraceControlHandler extends Handler {
 
   private static final String LOG_TAG = "Profilo/TraceControlThread";
   private static final int MSG_TIMEOUT_TRACE = 0;
+  private static final int MSG_START_TRACE = 1;
   private static final int MSG_STOP_TRACE = 2;
   private static final int MSG_ABORT_TRACE = 3;
   // Set this system property to enable logs.
@@ -70,6 +71,9 @@ public class TraceControlHandler extends Handler {
     switch (msg.what) {
       case MSG_TIMEOUT_TRACE:
         timeoutTrace(traceContext.traceId);
+        break;
+      case MSG_START_TRACE:
+        startTraceAsync(traceContext);
         break;
       case MSG_STOP_TRACE:
         stopTrace(traceContext);
@@ -116,19 +120,27 @@ public class TraceControlHandler extends Handler {
     control.timeoutTrace(traceId);
   }
 
+  protected synchronized void startTraceAsync(TraceContext context) {
+    if (LogLevel.LOG_DEBUG_MESSAGE) {
+      Log.d(
+          LOG_TAG,
+          "Started trace " + context.encodedTraceId + "  for controller " + context.controller);
+    }
+    if (mListener != null) {
+      mListener.onTraceStartAsync(context);
+    }
+  }
+
   public synchronized void onTraceStart(
       TraceContext context,
       final int timeoutMillis) {
 
     mTraceContexts.add(context.traceId);
     if (mListener != null) {
-      mListener.onTraceStart(context);
+      mListener.onTraceStartSync(context);
     }
-    if (LogLevel.LOG_DEBUG_MESSAGE) {
-      Log.d(
-          LOG_TAG,
-          "Started trace " + context.encodedTraceId + "  for controller " + context.controller);
-    }
+    Message startMessage = obtainMessage(MSG_START_TRACE, context);
+    sendMessage(startMessage);
 
     Message timeoutMessage = obtainMessage(MSG_TIMEOUT_TRACE, context);
     sendMessageDelayed(timeoutMessage, timeoutMillis);

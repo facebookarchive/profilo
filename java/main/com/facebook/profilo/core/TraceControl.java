@@ -53,7 +53,9 @@ final public class TraceControl {
   @NotThreadSafe
   public interface TraceControlListener {
 
-    void onTraceStart(TraceContext context);
+    void onTraceStartSync(TraceContext context);
+
+    void onTraceStartAsync(TraceContext context);
 
     void onTraceStop(TraceContext context);
 
