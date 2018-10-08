@@ -19,9 +19,9 @@
 #include <fbjni/fbjni.h>
 #include <util/ProcFs.h>
 #include <util/SysFs.h>
-
 #include <mutex>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace facebook {
 namespace profilo {
@@ -38,8 +38,9 @@ class SystemCounterThread
   static void registerNatives();
 
   void logCounters();
-  void logThreadCounters(int tid);
-  void logTraceAnnotations(int tid);
+  void logThreadCounters();
+  void logHighFrequencyThreadCounters();
+  void logTraceAnnotations();
 
  private:
   friend HybridBase;
