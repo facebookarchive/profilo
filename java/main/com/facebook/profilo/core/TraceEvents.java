@@ -30,16 +30,14 @@ final public class TraceEvents {
   public static boolean sInitialized;
 
   private static volatile boolean sProviderNamesInitialized;
+  private static volatile int sProviders = 0;
 
   public static boolean isEnabled(int provider) {
-    return sInitialized && nativeIsEnabled(provider);
+    return enabledMask(provider) == provider;
   }
 
   public static int enabledMask(int providers) {
-    if (!sInitialized) {
-      return 0;
-    }
-    return nativeEnabledMask(providers);
+    return sProviders & providers;
   }
 
   public static boolean isProviderNamesInitialized() {
@@ -65,15 +63,24 @@ final public class TraceEvents {
     sProviderNamesInitialized = true;
   }
 
-  static native boolean nativeIsEnabled(int provider);
+  public static synchronized void enableProviders(int providers) {
+    sProviders = nativeEnableProviders(providers);
+  }
 
-  static native int nativeEnabledMask(int providers);
+  public static synchronized void disableProviders(int providers) {
+    sProviders = nativeDisableProviders(providers);
+  }
 
-  static native void enableProviders(int providers);
+  public static synchronized void clearAllProviders() {
+    nativeClearAllProviders();
+    sProviders = 0;
+  }
 
-  static native void disableProviders(int providers);
+  static native int nativeEnableProviders(int providers);
 
-  static native void clearAllProviders();
+  static native int nativeDisableProviders(int providers);
+
+  static native void nativeClearAllProviders();
 
   static native void nativeInitProviderNames(int[] providerIds, String[] providerNames);
 }

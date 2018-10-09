@@ -43,7 +43,7 @@ bool TraceProviders::isEnabled(const std::string& provider) {
   return false;
 }
 
-void TraceProviders::enableProviders(uint32_t providers) {
+uint32_t TraceProviders::enableProviders(uint32_t providers) {
   std::lock_guard<std::mutex> lock(mutex_);
   auto p = providers;
   int lsb_index;
@@ -52,9 +52,11 @@ void TraceProviders::enableProviders(uint32_t providers) {
     p ^= static_cast<unsigned int>(1) << lsb_index;
   }
   providers_ |= providers;
+
+  return providers_;
 }
 
-void TraceProviders::disableProviders(uint32_t providers) {
+uint32_t TraceProviders::disableProviders(uint32_t providers) {
   std::lock_guard<std::mutex> lock(mutex_);
   uint32_t disable_providers = 0;
   auto p = providers;
@@ -69,6 +71,7 @@ void TraceProviders::disableProviders(uint32_t providers) {
     p ^= static_cast<unsigned int>(1) << lsb_index;
   }
   providers_ ^= disable_providers;
+  return providers_;
 }
 
 void TraceProviders::clearAllProviders() {

@@ -176,20 +176,14 @@ static jint loggerWriteString(
       static_cast<EntryType>(type), arg1, bytes, len);
 }
 
-static jboolean isProviderEnabled(JNIEnv* env, jobject cls, jint provider) {
-  return TraceProviders::get().isEnabled(static_cast<uint32_t>(provider));
+static jint enableProviders(JNIEnv* env, jobject cls, jint providers) {
+  return TraceProviders::get().enableProviders(
+      static_cast<uint32_t>(providers));
 }
 
-static jint enabledProvidersMask(JNIEnv* env, jobject cls, jint providers) {
-  return TraceProviders::get().enabledMask(static_cast<uint32_t>(providers));
-}
-
-static void enableProviders(JNIEnv* env, jobject cls, jint providers) {
-  TraceProviders::get().enableProviders(static_cast<uint32_t>(providers));
-}
-
-static void disableProviders(JNIEnv* env, jobject cls, jint providers) {
-  TraceProviders::get().disableProviders(static_cast<uint32_t>(providers));
+static jint disableProviders(JNIEnv* env, jobject cls, jint providers) {
+  return TraceProviders::get().disableProviders(
+      static_cast<uint32_t>(providers));
 }
 
 static void clearAllProviders(JNIEnv* env, jobject cls) {
@@ -224,12 +218,11 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
     fbjni::registerNatives(
         profilo::TraceEventsType,
         {
-            makeNativeMethod("nativeIsEnabled", profilo::isProviderEnabled),
+            makeNativeMethod("nativeEnableProviders", profilo::enableProviders),
             makeNativeMethod(
-                "nativeEnabledMask", profilo::enabledProvidersMask),
-            makeNativeMethod("enableProviders", profilo::enableProviders),
-            makeNativeMethod("disableProviders", profilo::disableProviders),
-            makeNativeMethod("clearAllProviders", profilo::clearAllProviders),
+                "nativeDisableProviders", profilo::disableProviders),
+            makeNativeMethod(
+                "nativeClearAllProviders", profilo::clearAllProviders),
             makeNativeMethod(
                 "nativeInitProviderNames", profilo::initProviderNames),
         });

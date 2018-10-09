@@ -30,21 +30,21 @@ class TraceProviders {
  public:
   static TraceProviders& get();
 
-  inline bool isEnabled(uint32_t provider) {
+  bool isEnabled(const std::string& provider);
+
+  inline bool isEnabled(uint32_t providers) {
+    return enabledMask(providers) == providers;
+  }
+
+  inline uint32_t enabledMask(uint32_t providers) {
     // memory_order_relaxed because we have a time-of-check-time-of-use race
     // anyway (between the isEnabled call and the actual work the writer
     // wants to do), so might as well be gentle with the memory barriers.
-    return (providers_.load(std::memory_order_relaxed) & provider) == provider;
-  }
-
-  bool isEnabled(const std::string& provider);
-
-  inline uint32_t enabledMask(uint32_t providers) {
     return providers_.load(std::memory_order_relaxed) & providers;
   }
 
-  void enableProviders(uint32_t providers);
-  void disableProviders(uint32_t providers);
+  uint32_t enableProviders(uint32_t providers);
+  uint32_t disableProviders(uint32_t providers);
   void clearAllProviders();
   void initProviderNames(
       std::unordered_map<std::string, uint32_t>&& provider_names);
