@@ -21,13 +21,11 @@ import android.os.Debug;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.os.Process;
 import com.facebook.jni.HybridData;
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceEvents;
 import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -40,11 +38,11 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   public static final int PROVIDER_SYSTEM_COUNTERS =
       ProvidersRegistry.newProvider("system_counters");
-  public static final int PROVIDER_HIGH_FREQ_THREAD_COUNTERS =
+  public static final int PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS =
       ProvidersRegistry.newProvider("high_freq_main_thread_counters");
 
   private static final int MSG_SYSTEM_COUNTERS = 1;
-  private static final int MSG_HIGH_FREQ_THREAD_COUNTERS = 2;
+  private static final int MSG_MAIN_THREAD_COUNTERS = 2;
 
   @DoNotStrip
   private HybridData mHybridData;
@@ -52,16 +50,14 @@ public final class SystemCounterThread extends BaseTraceProvider {
   private static final String LOG_TAG = "SystemCounterThread";
 
   private static final int DEFAULT_COUNTER_PERIODIC_TIME_MS = 50;
-  private static final int HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS = 7;
+  private static final int MAIN_THREAD_COUNTER_PERIODIC_TIME_MS = 7;
 
   @GuardedBy("this") private boolean mEnabled;
   @GuardedBy("this") private HandlerThread mHandlerThread;
   @GuardedBy("this") private Handler mHandler;
   @GuardedBy("this") @Nullable private final Runnable mExtraRunnable;
   @GuardedBy("this") private boolean mAllThreadsMode;
-
-  @GuardedBy("this")
-  private volatile boolean mHighFrequencyMode;
+  @GuardedBy("this") private int mHighFrequencyTid;
 
   public SystemCounterThread() {
     this(null);
@@ -79,23 +75,14 @@ public final class SystemCounterThread extends BaseTraceProvider {
   private static native HybridData initHybrid();
 
   native void logCounters();
-
-  native void logThreadCounters();
-
-  native void logHighFrequencyThreadCounters();
-
-  native void logTraceAnnotations();
-
-  @DoNotStrip
-  static native void nativeAddToWhitelist(int targetThread);
-
-  @DoNotStrip
-  static native void nativeRemoveFromWhitelist(int targetThread);
+  native void logThreadCounters(int tid);
+  native void logTraceAnnotations(int tid);
 
   @SuppressLint({
-    "BadMethodUse-android.os.HandlerThread._Constructor",
-    "BadMethodUse-java.lang.Thread.start",
+      "BadMethodUse-android.os.HandlerThread._Constructor",
+      "BadMethodUse-java.lang.Thread.start",
   })
+
   private synchronized void initHandler() {
     if (mHandler != null) {
       return;
@@ -107,7 +94,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
         new Handler(mHandlerThread.getLooper()) {
           @Override
           public void handleMessage(Message msg) {
-            postThreadWork(msg.what, msg.arg1 /* delay */);
+            postThreadWork(msg.what, msg.arg1 /* delay */, msg.arg2 /* tid */);
           }
         };
   }
@@ -116,7 +103,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
     return mEnabled;
   }
 
-  synchronized void postThreadWork(int what, int delay) {
+  synchronized void postThreadWork(int what, int delay, int tid) {
     if (!shouldRun()) {
       return;
     }
@@ -129,14 +116,14 @@ public final class SystemCounterThread extends BaseTraceProvider {
           mExtraRunnable.run();
         }
         break;
-      case MSG_HIGH_FREQ_THREAD_COUNTERS:
-        logHighFrequencyThreadCounters();
+      case MSG_MAIN_THREAD_COUNTERS:
+        logThreadCounters(tid);
         break;
       default:
         throw new IllegalArgumentException("Unknown message type");
     }
 
-    Message nextMessage = mHandler.obtainMessage(what, delay);
+    Message nextMessage = mHandler.obtainMessage(what, delay, tid);
     mHandler.sendMessageDelayed(nextMessage, delay);
   }
 
@@ -146,17 +133,17 @@ public final class SystemCounterThread extends BaseTraceProvider {
     mEnabled = true;
     initHandler();
     if (TraceEvents.isEnabled(PROVIDER_SYSTEM_COUNTERS)) {
-      mHighFrequencyMode = false;
       mAllThreadsMode = true;
       Debug.startAllocCounting();
-      mHandler.obtainMessage(MSG_SYSTEM_COUNTERS, DEFAULT_COUNTER_PERIODIC_TIME_MS).sendToTarget();
-    }
-    if (TraceEvents.isEnabled(PROVIDER_HIGH_FREQ_THREAD_COUNTERS)) {
-      // Add Main Thread to the whitelist
-      WhitelistApi.add(Process.myPid());
-      mHighFrequencyMode = true;
       mHandler
-          .obtainMessage(MSG_HIGH_FREQ_THREAD_COUNTERS, HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS)
+          .obtainMessage(MSG_SYSTEM_COUNTERS, DEFAULT_COUNTER_PERIODIC_TIME_MS, -1)
+          .sendToTarget();
+    }
+    if (TraceEvents.isEnabled(PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS)) {
+      int mainTid = android.os.Process.myPid();
+      mHighFrequencyTid = mainTid;
+      mHandler
+          .obtainMessage(MSG_MAIN_THREAD_COUNTERS, MAIN_THREAD_COUNTER_PERIODIC_TIME_MS, mainTid)
           .sendToTarget();
     }
   }
@@ -169,14 +156,14 @@ public final class SystemCounterThread extends BaseTraceProvider {
       if (mAllThreadsMode) {
         logCounters();
       }
-      if (mHighFrequencyMode) {
-        logHighFrequencyThreadCounters();
-        logTraceAnnotations();
+      if (mHighFrequencyTid > 0) {
+        logThreadCounters(mHighFrequencyTid);
+        logTraceAnnotations(mHighFrequencyTid);
       }
     }
     mEnabled = false;
     mAllThreadsMode = false;
-    mHighFrequencyMode = false;
+    mHighFrequencyTid = 0;
     if (mHybridData != null) {
       mHybridData.resetNative();
       mHybridData = null;
@@ -192,7 +179,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   @Override
   protected int getSupportedProviders() {
-    return PROVIDER_SYSTEM_COUNTERS | PROVIDER_HIGH_FREQ_THREAD_COUNTERS;
+    return PROVIDER_SYSTEM_COUNTERS | PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS;
   }
 
   @Override
@@ -204,25 +191,9 @@ public final class SystemCounterThread extends BaseTraceProvider {
     if (mAllThreadsMode) {
       tracingProviders |= PROVIDER_SYSTEM_COUNTERS;
     }
-    if (mHighFrequencyMode) {
-      tracingProviders |= PROVIDER_HIGH_FREQ_THREAD_COUNTERS;
+    if (mHighFrequencyTid > 0) {
+      tracingProviders |= PROVIDER_HIGH_FREQ_MAIN_THREAD_COUNTERS;
     }
     return tracingProviders;
-  }
-
-  public static class WhitelistApi {
-    // Allow lazy loading of native lib whenever any Whitelist
-    // API (add/remove) is called
-    static {
-      SoLoader.loadLibrary("profilo_systemcounters");
-    }
-
-    public static void add(int threadId) {
-      nativeAddToWhitelist(threadId);
-    }
-
-    public static void remove(int threadId) {
-      nativeRemoveFromWhitelist(threadId);
-    }
   }
 }
