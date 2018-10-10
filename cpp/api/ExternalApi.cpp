@@ -66,6 +66,16 @@ bool api_is_enabled(const char* provider) {
   return profilo_api_int.is_enabled(provider);
 }
 
+bool api_register_external_tracer_callback(
+    int tracerType,
+    profilo_int_collect_stack_fn callback) {
+  if (profilo_api_int.register_external_tracer_callback == nullptr) {
+    return false;
+  }
+  return profilo_api_int.register_external_tracer_callback(
+      tracerType, callback);
+}
+
 } // namespace
 
 ProfiloApi* profilo_api() {
@@ -76,6 +86,8 @@ ProfiloApi* profilo_api() {
       .log_classload_end = &api_log_classload_end,
       .log_classload_failed = &api_log_classload_failed,
       .is_enabled = &api_is_enabled,
+      .register_external_tracer_callback =
+          &api_register_external_tracer_callback,
   };
   return &api;
 }

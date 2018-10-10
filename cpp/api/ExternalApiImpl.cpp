@@ -18,6 +18,7 @@
 
 #include <unistd.h>
 
+#include <profiler/ExternalTracer.h>
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
@@ -104,6 +105,12 @@ bool is_enabled(const char* provider) {
   return TraceProviders::get().isEnabled(provider);
 }
 
+bool internal_register_external_tracer_callback(
+    int tracerType,
+    profilo_int_collect_stack_fn callback) {
+  return profiler::ExternalTracer::registerCallback(tracerType, callback);
+}
+
 } // namespace
 
 __attribute__((constructor)) void init_external_api() {
@@ -113,4 +120,6 @@ __attribute__((constructor)) void init_external_api() {
   profilo_api_int.log_classload_end = &internal_log_classload_end;
   profilo_api_int.log_classload_failed = &internal_log_classload_failed;
   profilo_api_int.is_enabled = &is_enabled;
+  profilo_api_int.register_external_tracer_callback =
+      &internal_register_external_tracer_callback;
 }

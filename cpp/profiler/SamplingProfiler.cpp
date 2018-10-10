@@ -38,6 +38,7 @@
 #include "profiler/ArtUnwindcTracer_710.h"
 #include "profiler/ArtUnwindcTracer_711.h"
 #include "profiler/ArtUnwindcTracer_712.h"
+#include "profiler/JSTracer.h"
 
 #if HAS_NATIVE_TRACER
 #include <profiler/NativeTracer.h>
@@ -332,38 +333,42 @@ bool initialize(alias_ref<jobject> ref, jint available_tracers) {
   profileState.availableTracers = available_tracers;
 
   if (available_tracers & tracers::DALVIK) {
-    profileState.tracersMap[tracers::DALVIK] = std::make_unique<DalvikTracer>();
+    profileState.tracersMap[tracers::DALVIK] = std::make_shared<DalvikTracer>();
   }
 
 #if HAS_NATIVE_TRACER && __arm__
   if (available_tracers & tracers::NATIVE) {
-    profileState.tracersMap[tracers::NATIVE] = std::make_unique<NativeTracer>();
+    profileState.tracersMap[tracers::NATIVE] = std::make_shared<NativeTracer>();
   }
 #endif
 
   if (available_tracers & tracers::ART_UNWINDC_6_0) {
     profileState.tracersMap[tracers::ART_UNWINDC_6_0] =
-        std::make_unique<ArtUnwindcTracer60>();
+        std::make_shared<ArtUnwindcTracer60>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
     profileState.tracersMap[tracers::ART_UNWINDC_7_0_0] =
-        std::make_unique<ArtUnwindcTracer700>();
+        std::make_shared<ArtUnwindcTracer700>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_1_0) {
     profileState.tracersMap[tracers::ART_UNWINDC_7_1_0] =
-        std::make_unique<ArtUnwindcTracer710>();
+        std::make_shared<ArtUnwindcTracer710>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_1_1) {
     profileState.tracersMap[tracers::ART_UNWINDC_7_1_1] =
-        std::make_unique<ArtUnwindcTracer711>();
+        std::make_shared<ArtUnwindcTracer711>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
     profileState.tracersMap[tracers::ART_UNWINDC_7_1_2] =
-        std::make_unique<ArtUnwindcTracer712>();
+        std::make_shared<ArtUnwindcTracer712>();
+  }
+
+  if (available_tracers & tracers::JAVASCRIPT) {
+    profileState.tracersMap[tracers::JAVASCRIPT] = std::make_shared<JSTracer>();
   }
 
   initSignalHandlers();

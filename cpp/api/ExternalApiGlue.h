@@ -22,6 +22,10 @@
 extern "C" {
 #endif
 
+// A list of available external tracer types.
+// Must match the value in tracers::Tracer enumeration in BaseTracer.h.
+const int TRACER_TYPE_JAVASCRIPT = 1 << 9;
+
 typedef void (
     *profilo_int_mark_start)(const char* provider, const char* msg, size_t len);
 typedef void (*profilo_int_mark_end)(const char* provider);
@@ -30,6 +34,17 @@ typedef void (
     *profilo_int_log_classload_end)(const char* provider, int64_t classid);
 typedef void (*profilo_int_log_classload_failed)(const char* provider);
 typedef bool (*profilo_int_is_enabled)(const char* provider);
+// This callback type is of similar signature as BaseTracer::collectStack()
+// function. However, depth parameter is pointer type instead of reference
+// so that this interface can be used with C language.
+typedef bool (*profilo_int_collect_stack_fn)(
+    ucontext_t* ucontext,
+    int64_t* frames,
+    uint8_t* depth,
+    uint8_t max_depth);
+typedef bool (*profilo_int_register_external_tracer_callback)(
+    int tracerType,
+    profilo_int_collect_stack_fn callback);
 
 typedef struct ProfiloApi {
   profilo_int_mark_start mark_start;
@@ -38,6 +53,8 @@ typedef struct ProfiloApi {
   profilo_int_log_classload_end log_classload_end;
   profilo_int_log_classload_failed log_classload_failed;
   profilo_int_is_enabled is_enabled;
+  profilo_int_register_external_tracer_callback
+      register_external_tracer_callback;
 
 } ProfiloApi;
 

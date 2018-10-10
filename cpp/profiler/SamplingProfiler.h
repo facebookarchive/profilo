@@ -65,7 +65,7 @@ struct ProfileState {
   pid_t processId;
   int availableTracers;
   int currentTracers;
-  std::unordered_map<int32_t, std::unique_ptr<BaseTracer>> tracersMap;
+  std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracersMap;
   StackSlot stacks[MAX_STACKS_COUNT];
   std::atomic<uint32_t> currentSlot;
   // Error stats

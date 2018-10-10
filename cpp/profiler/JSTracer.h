@@ -16,47 +16,33 @@
 
 #pragma once
 
-#include <ucontext.h>
-#include <unistd.h>
+#include "ExternalTracer.h"
 
-static constexpr const uint32_t kSystemDexId = 0xFFFFFFFF;
+#include <unistd.h>
+#include <unordered_map>
 
 namespace facebook {
 namespace profilo {
 namespace profiler {
 
-namespace tracers {
-enum Tracer : uint32_t {
-  DALVIK = 1,
-  NATIVE = 1 << 2,
-  ART_UNWINDC_6_0 = 1 << 4,
-  ART_UNWINDC_7_0_0 = 1 << 5,
-  ART_UNWINDC_7_1_0 = 1 << 6,
-  ART_UNWINDC_7_1_1 = 1 << 7,
-  ART_UNWINDC_7_1_2 = 1 << 8,
-  JAVASCRIPT = 1 << 9,
-};
-}
-
-class BaseTracer {
+class JSTracer : public ExternalTracer {
  public:
-  virtual ~BaseTracer() = default;
+  explicit JSTracer() : ExternalTracer(tracers::JAVASCRIPT) {}
 
-  virtual bool collectStack(
+  bool collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
       uint8_t& depth,
-      uint8_t max_depth) = 0;
+      uint8_t max_depth) override;
 
-  virtual void
-  flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_) = 0;
+  void flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_)
+      override;
 
-  virtual void startTracing() = 0;
+  void prepare() override;
 
-  virtual void stopTracing() = 0;
+  void startTracing() override;
 
-  // May be called to initialize static state. Must be always safe.
-  virtual void prepare() = 0;
+  void stopTracing() override;
 };
 
 } // namespace profiler

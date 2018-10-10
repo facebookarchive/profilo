@@ -23,6 +23,16 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "external_api_header",
+    header_namespace = "profilo",
+    exported_headers = ["ExternalApi.h"],
+    force_static = True,
+    visibility = [
+        profilo_path("..."),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "external_api_glue",
     srcs = [
         "ExternalApiGlue.cpp",
@@ -53,6 +63,7 @@ fb_xplat_cxx_library(
         ":external_api_glue",
         profilo_path("cpp:constants"),
         profilo_path("cpp:providers"),
+        profilo_path("cpp/profiler:external_tracer"),
         profilo_path("cpp/logger:logger"),
         profilo_path("deps/fbjni:fbjni"),
     ],

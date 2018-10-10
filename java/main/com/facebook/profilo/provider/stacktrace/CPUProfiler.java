@@ -39,6 +39,7 @@ public class CPUProfiler {
   public static final int TRACER_ART_UNWINDC_7_1_0 = 1 << 6;
   public static final int TRACER_ART_UNWINDC_7_1_1 = 1 << 7;
   public static final int TRACER_ART_UNWINDC_7_1_2 = 1 << 8;
+  public static final int TRACER_JAVASCRIPT = 1 << 9;
 
   private static int calculateTracers(Context context) {
     int tracers = 0;
@@ -66,6 +67,7 @@ public class CPUProfiler {
           break;
       }
     }
+    tracers |= TRACER_JAVASCRIPT;
 
     String arch = System.getProperty("os.arch");
     // Native tracing is only available on ARM. Assuming ARM by default.
