@@ -96,6 +96,24 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "external_tracer_manager",
+    srcs = [
+        "ExternalTracerManager.cpp",
+    ],
+    header_namespace = "profiler",
+    exported_headers = [
+        "ExternalTracerManager.h",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        ":external_tracer",
+        profilo_path("cpp/api:external_api"),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "js_tracer",
     srcs = [
         "JSTracer.cpp",
@@ -165,6 +183,7 @@ fb_xplat_cxx_library(
         ":base_tracer",
         ":constants",
         ":external_tracer",
+        ":external_tracer_manager",
         ":js_tracer",
         ":tracer_utils",
         ":unwindc-tracer-6.0.0",

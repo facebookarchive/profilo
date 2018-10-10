@@ -63,7 +63,7 @@ fb_xplat_cxx_library(
         ":external_api_glue",
         profilo_path("cpp:constants"),
         profilo_path("cpp:providers"),
-        profilo_path("cpp/profiler:external_tracer"),
+        profilo_path("cpp/profiler:external_tracer_manager"),
         profilo_path("cpp/logger:logger"),
         profilo_path("deps/fbjni:fbjni"),
     ],

@@ -34,38 +34,24 @@ namespace profiler {
 /// Base class for all external tracers.
 /// External tracer allows an external component to register its own
 /// collect stack callback.
-class ExternalTracer : public std::enable_shared_from_this<ExternalTracer>,
-                       public BaseTracer {
+/// All sub-class should register itself with ExternalTracerManager after
+/// creation to participate in the callback registration.
+class ExternalTracer : public BaseTracer {
  private:
   /// External callback for this tracer.
   std::atomic<profilo_int_collect_stack_fn> callback_{nullptr};
-
- private:
-  /// Protect externalTracers and pendingRegistrations.
-  static std::mutex& getLock();
-
-  /// Return a map of available external tracers keyed by its tracer type.
-  static std::unordered_map<int32_t, std::shared_ptr<ExternalTracer>>&
-  getExternalTracers();
-
-  /// Return a map of pending external tracer callbacks keyed by its tracer
-  /// type. This is needed because client may register its callback before
-  /// profiler initialized so we need to keep all the callbacks and register
-  /// when all tracers are available.
-  static std::unordered_map<int32_t, profilo_int_collect_stack_fn>&
-  getPendingRegistrations();
-
-  /// Register any pending external callback of \p tracerType.
-  /// Caller should have taken the lock before calling.
-  void registerPendingCallbackLocked(int32_t tracerType);
+  /// Type of the tracer.
+  int32_t tracerType_;
 
  public:
-  explicit ExternalTracer(int32_t tracerType);
+  explicit ExternalTracer(int32_t tracerType) : tracerType_(tracerType) {}
 
-  /// Register external \p callback for \p tracerType.
-  static bool registerCallback(
-      int32_t tracerType,
-      profilo_int_collect_stack_fn callback);
+  int32_t getType() const {
+    return tracerType_;
+  }
+
+  /// Register external \p callback for this external tracer.
+  void registerCallback(profilo_int_collect_stack_fn callback);
 
   bool collectStack(
       ucontext_t* ucontext,

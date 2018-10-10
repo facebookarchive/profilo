@@ -18,7 +18,7 @@
 
 #include <unistd.h>
 
-#include <profiler/ExternalTracer.h>
+#include <profiler/ExternalTracerManager.h>
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
@@ -108,7 +108,8 @@ bool is_enabled(const char* provider) {
 bool internal_register_external_tracer_callback(
     int tracerType,
     profilo_int_collect_stack_fn callback) {
-  return profiler::ExternalTracer::registerCallback(tracerType, callback);
+  return profiler::ExternalTracerManager::getInstance().registerCallback(
+      tracerType, callback);
 }
 
 } // namespace

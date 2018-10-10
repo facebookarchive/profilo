@@ -38,6 +38,7 @@
 #include "profiler/ArtUnwindcTracer_710.h"
 #include "profiler/ArtUnwindcTracer_711.h"
 #include "profiler/ArtUnwindcTracer_712.h"
+#include "profiler/ExternalTracerManager.h"
 #include "profiler/JSTracer.h"
 
 #if HAS_NATIVE_TRACER
@@ -368,7 +369,9 @@ bool initialize(alias_ref<jobject> ref, jint available_tracers) {
   }
 
   if (available_tracers & tracers::JAVASCRIPT) {
-    profileState.tracersMap[tracers::JAVASCRIPT] = std::make_shared<JSTracer>();
+    auto jsTracer = std::make_shared<JSTracer>();
+    profileState.tracersMap[tracers::JAVASCRIPT] = jsTracer;
+    ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
   }
 
   initSignalHandlers();
