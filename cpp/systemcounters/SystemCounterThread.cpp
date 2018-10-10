@@ -36,7 +36,22 @@ namespace profilo {
 
 namespace {
 
-constexpr auto kTidAllThreads = 0;
+struct Whitelist {
+  // When in high freq counter tracing mode, we can optionally whitelist
+  // additional threads to profile as well. This list maintains current
+  // list of threads that are candidates to be profiled in high freq mode.
+  std::unordered_set<int32_t> whitelistedThreads;
+  // Since this list is subject to updates by multiple threads, thread
+  // safety is important, this following guards whitelistedThreads.
+  std::mutex whitelistMtx;
+};
+
+// Function wrapper around the static profile state to avoid
+// using a DSO constructor.
+Whitelist& getWhitelistState() {
+  static Whitelist state;
+  return state;
+}
 
 const auto kAllThreadsStatsMask = StatType::CPU_TIME | StatType::STATE |
     StatType::MAJOR_FAULTS | StatType::MINOR_FAULTS | StatType::KERNEL_CPU_TIME;
@@ -305,6 +320,24 @@ void threadCountersCallback(
         QuickLogConstants::THREAD_SW_FAULTS_MINOR);
   }
 }
+
+void addToWhitelist(alias_ref<jclass>, int targetThread) {
+  auto& whitelistState = getWhitelistState();
+  std::unique_lock<std::mutex> lock(whitelistState.whitelistMtx);
+  whitelistState.whitelistedThreads.insert(static_cast<int32_t>(targetThread));
+}
+
+void removeFromWhitelist(alias_ref<jclass>, int targetThread) {
+  // Don't remove the thread from whitelist if it is the main thread
+  static auto pid = getpid();
+  if (targetThread == pid) {
+    return;
+  }
+  auto& whitelistState = getWhitelistState();
+  std::unique_lock<std::mutex> lock(whitelistState.whitelistMtx);
+  whitelistState.whitelistedThreads.erase(targetThread);
+}
+
 } // namespace
 
 local_ref<SystemCounterThread::jhybriddata> SystemCounterThread::initHybrid(
@@ -319,26 +352,37 @@ void SystemCounterThread::registerNatives() {
       makeNativeMethod(
           "logThreadCounters", SystemCounterThread::logThreadCounters),
       makeNativeMethod(
+          "logHighFrequencyThreadCounters",
+          SystemCounterThread::logHighFrequencyThreadCounters),
+      makeNativeMethod(
           "logTraceAnnotations", SystemCounterThread::logTraceAnnotations),
+      makeNativeMethod("nativeAddToWhitelist", addToWhitelist),
+      makeNativeMethod("nativeRemoveFromWhitelist", removeFromWhitelist),
   });
 }
 
 void SystemCounterThread::logCounters() {
   logProcessCounters();
-  logThreadCounters(kTidAllThreads);
+  logThreadCounters();
   logSysinfo();
   logMallinfo();
   logVmStatCounters();
 }
 
-void SystemCounterThread::logThreadCounters(int tid) {
+void SystemCounterThread::logThreadCounters() {
   std::lock_guard<std::mutex> lock(mtx_);
-  if (tid == kTidAllThreads) {
-    cache_.forEach(&threadCountersCallback, kAllThreadsStatsMask);
-  } else {
+  cache_.forEach(&threadCountersCallback, kAllThreadsStatsMask);
+}
+
+void SystemCounterThread::logHighFrequencyThreadCounters() {
+  // Whitelist thread profiling mode
+  auto& whitelistState = getWhitelistState();
+  std::lock_guard<std::mutex> lockC(mtx_);
+  std::unique_lock<std::mutex> lockT(whitelistState.whitelistMtx);
+  for (int32_t tid : whitelistState.whitelistedThreads) {
     cache_.forThread(tid, &threadCountersCallback, kHighFreqStatsMask);
-    logCpuFrequencyInfo();
   }
+  logCpuFrequencyInfo();
 }
 
 void SystemCounterThread::logCpuFrequencyInfo() {
@@ -389,11 +433,11 @@ void SystemCounterThread::logCpuFrequencyInfo() {
   }
 }
 
-void SystemCounterThread::logTraceAnnotations(int tid) {
+void SystemCounterThread::logTraceAnnotations() {
   std::lock_guard<std::mutex> lock(mtx_);
   Logger::get().writeTraceAnnotation(
       QuickLogConstants::AVAILABLE_COUNTERS,
-      cache_.getStatsAvailabililty(tid) | extraAvailableCounters_);
+      cache_.getStatsAvailabililty(getpid()) | extraAvailableCounters_);
 }
 
 // Log CPU time and major faults via /proc/self/stat
