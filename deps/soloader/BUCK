@@ -6,8 +6,8 @@ profilo_oss_maven_library(
     group = "com.facebook.soloader",
     packaging = "aar",
     scope = "compile",
-    sha1 = "2f27b33862c38f8197536a189f7a8f0be0839561",
-    version = "0.2.0",
+    sha1 = "042357559a6c9313bdb9b1ba137a9df3b5365f35",
+    version = "0.5.1",
     visibility = [
         "PUBLIC",
     ],
