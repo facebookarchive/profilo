@@ -102,7 +102,7 @@ public final class TraceOrchestrator
 
   // This field is expected to be infrequently accessed (just once for the Dummy -> DI dependency
   // shift, ideally), so using AtomicReference (and suffering the virtual get() call) is acceptable.
-  private static final AtomicReference<TraceOrchestrator> sInstance = new AtomicReference<>(null);
+  private static AtomicReference<TraceOrchestrator> sInstance = new AtomicReference<>(null);
 
   public static void initialize(
       Context context,

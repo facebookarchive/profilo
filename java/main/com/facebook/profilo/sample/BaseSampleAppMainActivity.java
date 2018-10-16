@@ -81,9 +81,9 @@ public abstract class BaseSampleAppMainActivity extends Activity {
 
     TraceOrchestrator.initialize(
         this.getApplicationContext(),
-        null,
+        null, /* ConfigProvider */
         TraceOrchestrator.MAIN_PROCESS_NAME,
-        /* isMainProcess */ true,
+        true, /* isMainProcess */
         calculateProviders(),
         controllers);
   }
