@@ -47,8 +47,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 final public class TraceControl {
 
   public static final String LOG_TAG = "Profilo/TraceControl";
+  public static final int MAX_TRACES = 2;
   private static final int TRACE_TIMEOUT_MS = 30000; // 30s
-  private static final int MAX_TRACES = 2;
 
   @NotThreadSafe
   public interface TraceControlListener {
@@ -273,7 +273,7 @@ final public class TraceControl {
       return false;
     }
 
-    int providers = traceController.evaluateConfig(context, controllerConfig);
+    int providers = traceController.evaluateConfig(longContext, context, controllerConfig);
     if (providers == 0) {
       return false;
     }
@@ -289,7 +289,7 @@ final public class TraceControl {
             context,
             longContext,
             providers,
-            traceController.getCpuSamplingRateMs(context, controllerConfig),
+            traceController.getCpuSamplingRateMs(longContext, context, controllerConfig),
             flags);
 
     return startTraceInternal(flags, nextContext);
