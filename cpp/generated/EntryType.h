@@ -1,4 +1,4 @@
-// @generated SignedSource<<f950ac61ee8a0e40f9f65c03d260b0f9>>
+// @generated SignedSource<<426dda3d993d693d30891ff331f03ab3>>
 
 #pragma once
 
@@ -90,14 +90,15 @@ enum EntryType {
   HTTP2_FRAME_HEADER = 81,
   HTTP2_WINDOW_UPDATE = 82,
   HTTP2_PRIORITY = 83,
-  PROCESS_LIST = 84,
-  IO_START = 85,
-  IO_END = 86,
-  CPU_COUNTER = 87,
-  CLASS_LOAD_START = 88,
-  CLASS_LOAD_END = 89,
-  CLASS_LOAD_FAILED = 90,
-  STRING_NAME = 91,
+  HTTP2_EGRESS_FRAME_HEADER = 84,
+  PROCESS_LIST = 85,
+  IO_START = 86,
+  IO_END = 87,
+  CPU_COUNTER = 88,
+  CLASS_LOAD_START = 89,
+  CLASS_LOAD_END = 90,
+  CLASS_LOAD_FAILED = 91,
+  STRING_NAME = 92,
 };
 
 

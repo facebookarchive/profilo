@@ -1,4 +1,4 @@
-// @generated SignedSource<<430a00134b4ba420c4922bd3ceb2eb9f>>
+// @generated SignedSource<<ad78534f697f08d23b0bf10a286d1895>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -93,6 +93,7 @@ const char* to_string(EntryType type) {
     case HTTP2_FRAME_HEADER: return "HTTP2_FRAME_HEADER";
     case HTTP2_WINDOW_UPDATE: return "HTTP2_WINDOW_UPDATE";
     case HTTP2_PRIORITY: return "HTTP2_PRIORITY";
+    case HTTP2_EGRESS_FRAME_HEADER: return "HTTP2_EGRESS_FRAME_HEADER";
     case PROCESS_LIST: return "PROCESS_LIST";
     case IO_START: return "IO_START";
     case IO_END: return "IO_END";

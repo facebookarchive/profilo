@@ -1,4 +1,4 @@
-// @generated SignedSource<<7c8dbe96e82514bb6f477836c4c9b3ca>>
+// @generated SignedSource<<7146d47849c437b4b0e929f69779b373>>
 
 package com.facebook.profilo.entries;
 
@@ -88,14 +88,15 @@ public class EntryType {
   public static final int HTTP2_FRAME_HEADER = 81;
   public static final int HTTP2_WINDOW_UPDATE = 82;
   public static final int HTTP2_PRIORITY = 83;
-  public static final int PROCESS_LIST = 84;
-  public static final int IO_START = 85;
-  public static final int IO_END = 86;
-  public static final int CPU_COUNTER = 87;
-  public static final int CLASS_LOAD_START = 88;
-  public static final int CLASS_LOAD_END = 89;
-  public static final int CLASS_LOAD_FAILED = 90;
-  public static final int STRING_NAME = 91;
+  public static final int HTTP2_EGRESS_FRAME_HEADER = 84;
+  public static final int PROCESS_LIST = 85;
+  public static final int IO_START = 86;
+  public static final int IO_END = 87;
+  public static final int CPU_COUNTER = 88;
+  public static final int CLASS_LOAD_START = 89;
+  public static final int CLASS_LOAD_END = 90;
+  public static final int CLASS_LOAD_FAILED = 91;
+  public static final int STRING_NAME = 92;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -182,6 +183,7 @@ public class EntryType {
     "HTTP2_FRAME_HEADER",
     "HTTP2_WINDOW_UPDATE",
     "HTTP2_PRIORITY",
+    "HTTP2_EGRESS_FRAME_HEADER",
     "PROCESS_LIST",
     "IO_START",
     "IO_END",
