@@ -7,10 +7,6 @@ def unwindc_tracer_library(version):
 
     fb_xplat_cxx_library(
         name = "unwindc-tracer-{}".format(version),
-        # TODO(delyank): Port to 64-bit.
-        platform_srcs = [
-            ("^android-(armv7|x86)", ["ArtUnwindcTracer.cpp"]),
-        ],
         headers = [
             "ArtUnwindcTracer.h",
             "unwindc/runtime.h",
@@ -20,7 +16,6 @@ def unwindc_tracer_library(version):
             "ArtUnwindcTracer_{}.h".format(version_num): "ArtUnwindcTracer.h",
         },
         compiler_flags = [
-            "-fvisibility=hidden",
             "-fexceptions",
             "-std=gnu++14",
             '-DLOG_TAG="Profilo/Unwindc"',
@@ -40,6 +35,10 @@ def unwindc_tracer_library(version):
             (".*armv7", {
                 "unwindc/unwinder.h": "unwindc/{}/arm/unwinder.h".format(android_version),
             }),
+        ],
+        # TODO(delyank): Port to 64-bit.
+        platform_srcs = [
+            ("^android-(armv7|x86)", ["ArtUnwindcTracer.cpp"]),
         ],
         preprocessor_flags = [
             "-DANDROID_NAMESPACE=android_{}".format(version_num),

@@ -58,6 +58,9 @@ def profilo_oss_maven_library(
 def profilo_oss_xplat_cxx_library(**kwargs):
     fb_xplat_cxx_library(**kwargs)
 
+def profilo_maybe_hidden_visibility():
+    return ["-fvisibility=hidden"]
+
 def setup_profilo_oss_xplat_cxx_library():
     profilo_oss_xplat_cxx_library(
         name = "fbjni",
