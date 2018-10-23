@@ -33,7 +33,7 @@ final public class TraceEvents {
   private static volatile int sProviders = 0;
 
   public static boolean isEnabled(int provider) {
-    return enabledMask(provider) == provider;
+    return (sProviders & provider) != 0;
   }
 
   public static int enabledMask(int providers) {
