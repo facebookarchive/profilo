@@ -486,12 +486,17 @@ public final class TraceOrchestrator
     File parent = logFile.getParentFile();
     File uploadFile;
     if (ZipHelper.shouldZipDirectory(parent)) {
-      File parentWithNameUsingConvention =
-          new File(parent.getParent(), getTimestamp() + "-" + traceId);
-      if (parent.renameTo(parentWithNameUsingConvention)) {
-        parent = parentWithNameUsingConvention;
-      }
       uploadFile = ZipHelper.getCompressedFile(parent, ZipHelper.ZIP_SUFFIX + ZipHelper.TMP_SUFFIX);
+
+      // Add a timestamp to the file so that the FileManager's trimming rules
+      // work fine (see trimFolderByFileCount)
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", Locale.US);
+      String timestamp = dateFormat.format(new Date());
+      File fileWithTimestamp =
+          new File(uploadFile.getParentFile(), timestamp + "-" + uploadFile.getName());
+      if (uploadFile.renameTo(fileWithTimestamp)) {
+        uploadFile = fileWithTimestamp;
+      }
       ZipHelper.deleteDirectory(parent);
     } else {
       uploadFile = logFile;
@@ -574,12 +579,6 @@ public final class TraceOrchestrator
         fStats.getTrimmedDueToCount(),
         fStats.getTrimmedDueToAge(),
         fStats.getAddedFilesToUpload());
-  }
-
-  private static String getTimestamp() {
-    Date date = new Date();
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", Locale.getDefault());
-    return dateFormat.format(date);
   }
 
   @Override
