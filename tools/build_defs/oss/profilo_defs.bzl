@@ -6,6 +6,14 @@ load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_librar
 def profilo_path(dep):
     return "//" + dep
 
+def profilo_cxx_binary(**kwargs):
+    """Delegates to the native cxx_test rule."""
+    native.cxx_binary(**kwargs)
+
+def profilo_cxx_test(**kwargs):
+    """Delegates to the native cxx_test rule."""
+    native.cxx_test(**kwargs)
+
 def profilo_oss_android_library(**kwargs):
     """Delegates to the native android_library rule."""
     native.android_library(**kwargs)

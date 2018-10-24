@@ -1,6 +1,6 @@
-load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_binary", "profilo_path")
 
-cxx_binary(
+profilo_cxx_binary(
     name = "stress_test",
     srcs = [
         "stress_test.cpp",

@@ -1,6 +1,6 @@
-load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
 
-cxx_test(
+profilo_cxx_test(
     name = "providers",
     srcs = [
         "TraceProvidersTest.cpp",
@@ -20,7 +20,7 @@ cxx_test(
     ],
 )
 
-cxx_test(
+profilo_cxx_test(
     name = "codegen",
     srcs = [
         "EntryCodegenTest.cpp",
@@ -40,7 +40,7 @@ cxx_test(
     ],
 )
 
-cxx_test(
+profilo_cxx_test(
     name = "delta_visitor",
     srcs = [
         "DeltaEncodingVisitorTest.cpp",
@@ -60,7 +60,7 @@ cxx_test(
     ],
 )
 
-cxx_test(
+profilo_cxx_test(
     name = "stack_visitor",
     srcs = [
         "StackTraceInvertingVisitorTest.cpp",
@@ -80,7 +80,7 @@ cxx_test(
     ],
 )
 
-cxx_test(
+profilo_cxx_test(
     name = "packet_logger",
     srcs = [
         "PacketLoggerTest.cpp",
@@ -102,7 +102,7 @@ cxx_test(
     ],
 )
 
-cxx_test(
+profilo_cxx_test(
     name = "trace_writer",
     srcs = [
         "TraceWriterTest.cpp",
