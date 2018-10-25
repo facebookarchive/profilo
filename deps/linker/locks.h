@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sstream>
+#include <string.h>
 
 class ReaderLock {
 private:
