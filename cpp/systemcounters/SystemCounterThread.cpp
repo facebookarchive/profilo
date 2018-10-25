@@ -62,6 +62,12 @@ const auto kHighFreqStatsMask = StatType::CPU_TIME | StatType::STATE |
     StatType::NR_VOLUNTARY_SWITCHES | StatType::NR_INVOLUNTARY_SWITCHES |
     StatType::IOWAIT_SUM | StatType::IOWAIT_COUNT;
 
+const auto kVmStatCountersMask = StatType::VMSTAT_NR_FREE_PAGES |
+    StatType::VMSTAT_NR_DIRTY | StatType::VMSTAT_NR_WRITEBACK |
+    StatType::VMSTAT_PGPGIN | StatType::VMSTAT_PGPGOUT |
+    StatType::VMSTAT_PGMAJFAULT | StatType::VMSTAT_ALLOCSTALL |
+    StatType::VMSTAT_PAGEOUTRUN | StatType::VMSTAT_KSWAPD_STEAL;
+
 inline void logCounter(
     Logger& logger,
     int32_t counter_name,
@@ -496,6 +502,9 @@ void SystemCounterThread::logProcessCounters() {
 }
 
 void SystemCounterThread::logVmStatCounters() {
+  if (vmStatsTracingDisabled_) {
+    return;
+  }
   if (!vmStats_) {
     vmStats_.reset(new util::VmStatFile());
   }
@@ -504,9 +513,10 @@ void SystemCounterThread::logVmStatCounters() {
   util::VmStatInfo currInfo;
   try {
     currInfo = vmStats_->refresh();
-  } catch (const std::system_error& e) {
-    return;
-  } catch (const std::runtime_error& e) {
+    extraAvailableCounters_ |= kVmStatCountersMask;
+  } catch (...) {
+    vmStatsTracingDisabled_ = true;
+    vmStats_.reset(nullptr);
     return;
   }
 

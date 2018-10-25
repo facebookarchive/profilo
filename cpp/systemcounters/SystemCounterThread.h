@@ -51,6 +51,7 @@ class SystemCounterThread
   std::unique_ptr<util::TaskStatFile> processStatFile_;
   std::unique_ptr<util::CpuFrequencyStats> cpuFrequencyStats_;
   std::unique_ptr<util::VmStatFile> vmStats_;
+  bool vmStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
 
   void logProcessCounters();

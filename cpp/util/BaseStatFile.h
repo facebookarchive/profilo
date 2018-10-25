@@ -28,6 +28,15 @@ enum StatType : int32_t {
   CPU_FREQ = 1 << 10,
   MINOR_FAULTS = 1 << 11,
   KERNEL_CPU_TIME = 1 << 12,
+  VMSTAT_NR_FREE_PAGES = 1 << 13,
+  VMSTAT_NR_DIRTY = 1 << 14,
+  VMSTAT_NR_WRITEBACK = 1 << 15,
+  VMSTAT_PGPGIN = 1 << 16,
+  VMSTAT_PGPGOUT = 1 << 17,
+  VMSTAT_PGMAJFAULT = 1 << 18,
+  VMSTAT_ALLOCSTALL = 1 << 19,
+  VMSTAT_PAGEOUTRUN = 1 << 20,
+  VMSTAT_KSWAPD_STEAL = 1 << 21,
 };
 
 template <class StatInfo>
