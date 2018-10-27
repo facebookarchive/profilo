@@ -17,7 +17,7 @@ profilo_oss_cxx_library(
             ["-D__ARM__"],
         ),
         (
-            "android-x86",
+            "android-x86$",
             ["-D__X86__"],
         ),
     ],
@@ -38,18 +38,18 @@ profilo_oss_cxx_library(
 profilo_oss_cxx_library(
     name = "trampoline",
     platform_compiler_flags = [(
-        "armv7",
+        "armv7$",
         [
             "-marm",
         ],
     )],
     platform_srcs = [
         (
-            "armv7",
+            "armv7$",
             ["trampoline_arm.c"],
         ),
         (
-            "x86",
+            "x86$",
             ["trampoline_x86.c"],
         ),
     ],
