@@ -579,5 +579,66 @@ void SystemCounterThread::logVmStatCounters() {
       QuickLogConstants::VMSTAT_KSWAPD_STEAL);
 }
 
+void SystemCounterThread::logProcessSchedCounters() {
+  if (schedStatsTracingDisabled_) {
+    return;
+  }
+  if (!schedStats_) {
+    schedStats_.reset(new util::TaskSchedFile("/proc/self/sched"));
+  }
+
+  auto prevInfo = schedStats_->getInfo();
+  util::SchedInfo currInfo;
+  try {
+    currInfo = schedStats_->refresh();
+    extraAvailableCounters_ |= schedStats_->availableStatsMask;
+    if (schedStats_->availableStatsMask == 0) {
+      schedStatsTracingDisabled_ = true;
+      schedStats_.reset(nullptr);
+      return;
+    }
+  } catch (...) {
+    schedStatsTracingDisabled_ = true;
+    schedStats_.reset(nullptr);
+    return;
+  }
+
+  auto time = monotonicTime();
+  auto tid = threadID();
+
+  if (schedStats_->availableStatsMask & StatType::IOWAIT_SUM) {
+    logMonotonicCounter(
+        prevInfo.iowaitSum,
+        currInfo.iowaitSum,
+        tid,
+        time,
+        QuickLogConstants::PROC_IOWAIT_TIME);
+  }
+  if (schedStats_->availableStatsMask & StatType::IOWAIT_COUNT) {
+    logMonotonicCounter(
+        prevInfo.iowaitCount,
+        currInfo.iowaitCount,
+        tid,
+        time,
+        QuickLogConstants::PROC_IOWAIT_COUNT);
+  }
+  if (schedStats_->availableStatsMask & StatType::NR_VOLUNTARY_SWITCHES) {
+    logMonotonicCounter(
+        prevInfo.nrVoluntarySwitches,
+        currInfo.nrVoluntarySwitches,
+        tid,
+        time,
+        QuickLogConstants::PROC_CONTEXT_SWITCHES_VOLUNTARY);
+  }
+  if (schedStats_->availableStatsMask & StatType::NR_INVOLUNTARY_SWITCHES) {
+    logMonotonicCounter(
+        prevInfo.nrInvoluntarySwitches,
+        currInfo.nrInvoluntarySwitches,
+        tid,
+        time,
+        QuickLogConstants::PROC_CONTEXT_SWITCHES_INVOLUNTARY);
+  }
+}
+
 } // namespace profilo
 } // namespace facebook

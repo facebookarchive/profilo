@@ -52,11 +52,14 @@ class SystemCounterThread
   std::unique_ptr<util::CpuFrequencyStats> cpuFrequencyStats_;
   std::unique_ptr<util::VmStatFile> vmStats_;
   bool vmStatsTracingDisabled_;
+  std::unique_ptr<util::TaskSchedFile> schedStats_;
+  bool schedStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
 
   void logProcessCounters();
   void logCpuFrequencyInfo();
   void logVmStatCounters();
+  void logProcessSchedCounters();
 };
 
 } // namespace profilo
