@@ -114,18 +114,20 @@ TaskStatInfo getStatInfo(uint32_t tid) {
 
 ThreadStatInfo::ThreadStatInfo()
     : monotonicStatTime(0),
-      cpuTimeMs(),
+      cpuTimeMs(0),
       state(ThreadState::TS_UNKNOWN),
-      majorFaults(),
+      majorFaults(0),
       cpuNum(-1),
-      kernelCpuTimeMs(),
-      minorFaults(),
-      highPrecisionCpuTimeMs(),
-      waitToRunTimeMs(),
-      nrVoluntarySwitches(),
-      nrInvoluntarySwitches(),
-      iowaitSum(),
-      iowaitCount(),
+      kernelCpuTimeMs(0),
+      minorFaults(0),
+      highPrecisionCpuTimeMs(0),
+      waitToRunTimeMs(0),
+      nrVoluntarySwitches(0),
+      nrInvoluntarySwitches(0),
+      iowaitSum(0),
+      iowaitCount(0),
+      readBytes(0),
+      writeBytes(0),
       availableStatsMask(0) {}
 
 SchedstatInfo::SchedstatInfo() : cpuTimeMs(0), waitToRunTimeMs(0) {}
@@ -155,15 +157,18 @@ VmStatInfo::VmStatInfo()
       pageOutrun(0),
       kswapdSteal(0) {}
 
+DiskIoInfo::DiskIoInfo() : readBytes(0), writeBytes(0) {}
+
 namespace {
 
 enum StatFileType : int8_t {
   STAT = 0,
   SCHEDSTAT = 1,
   SCHED = 2,
+  IO = 3,
 };
 
-static const std::array<int32_t, 3> kFileStats = {
+static const std::array<int32_t, 4> kFileStats = {
     /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS |
         StatType::CPU_NUM | StatType::KERNEL_CPU_TIME | StatType::MINOR_FAULTS,
     /*SCHEDSTAT*/ StatType::HIGH_PRECISION_CPU_TIME |
@@ -171,6 +176,7 @@ static const std::array<int32_t, 3> kFileStats = {
     /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
         StatType::NR_INVOLUNTARY_SWITCHES | StatType::IOWAIT_SUM |
         StatType::IOWAIT_COUNT,
+    /*IO*/ StatType::READ_BYTES | StatType::WRITE_BYTES,
 };
 
 inline ThreadState convertCharToStateEnum(char stateChar) {
@@ -320,6 +326,45 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   info.majorFaults = majflt;
   info.minorFaults = minflt;
   info.cpuNum = cpuNum;
+
+  return info;
+}
+
+DiskIoInfo
+parseIoStatFile(char* data, size_t size, uint32_t requested_stats_mask) {
+  const char* end = (data + size);
+
+  DiskIoInfo info{};
+
+  data = skipUntil(data, end, '\n');
+  data = skipUntil(data, end, '\n');
+  data = skipUntil(data, end, '\n');
+  data = skipUntil(data, end, '\n');
+
+  auto keyEnd = skipUntil(data, end, ' ');
+  if (!std::memcmp("read_bytes", data, keyEnd - data - 1)) {
+    throw std::runtime_error("Unexpected position for read_bytes");
+  }
+  data = keyEnd;
+  char* endptr = nullptr;
+  auto readBytes = strtol(data, &endptr, 10);
+  if (errno == ERANGE || data == endptr || endptr > end) {
+    throw std::runtime_error("Could not parse read_bytes");
+  }
+  info.readBytes = readBytes;
+
+  data = skipUntil(endptr, end, '\n');
+  keyEnd = skipUntil(data, end, ' ');
+  if (!std::memcmp("write_bytes", data, keyEnd - data - 1)) {
+    throw std::runtime_error("Unexpected position for write_bytes");
+  }
+  data = keyEnd;
+  endptr = nullptr;
+  auto writeBytes = strtol(data, &endptr, 10);
+  if (errno == ERANGE || data == endptr || endptr > end) {
+    throw std::runtime_error("Could not parse write_bytes");
+  }
+  info.writeBytes = writeBytes;
 
   return info;
 }
@@ -648,6 +693,18 @@ VmStatInfo VmStatFile::doRead(int fd, uint32_t ignored) {
   return stat_info_;
 }
 
+TaskIoFile::TaskIoFile(uint32_t tid)
+    : BaseStatFile<DiskIoInfo>(tidToStatPath(tid, "io")), buffer_() {}
+
+DiskIoInfo TaskIoFile::doRead(int fd, uint32_t requested_stats_mask) {
+  int bytes_read = read(fd, buffer_, (sizeof(buffer_) - 1));
+  if (bytes_read < 0) {
+    throw std::system_error(
+        errno, std::system_category(), "Could not read io stat file");
+  }
+  return parseIoStatFile(buffer_, bytes_read, requested_stats_mask);
+}
+
 ThreadStatHolder::ThreadStatHolder(uint32_t tid)
     : stat_file_(),
       schedstat_file_(),
@@ -689,7 +746,7 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     } catch (const std::system_error& e) {
       // If 'schedstat' file is absent do not attempt the second time
       availableStatFilesMask_ ^= StatFileType::SCHEDSTAT;
-      schedstat_file_.release();
+      schedstat_file_.reset(nullptr);
     }
   }
   // If /proc/self/<tid>/sched is requested, we will try to read it.
@@ -710,7 +767,26 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     } catch (const std::exception& e) {
       // If 'schedstat' file is absent do not attempt the second time
       availableStatFilesMask_ ^= StatFileType::SCHED;
-      schedstat_file_.release();
+      sched_file_.reset(nullptr);
+    }
+  }
+  // If /proc/self/<tid>/io is requested, we will try to read it.
+  // If we get exception on first read the availableStatFilesMask will be
+  // updated respectively. The second time this stat file will be ignored.
+  if ((availableStatFilesMask_ & StatFileType::IO) &&
+      (kFileStats[StatFileType::IO] & requested_stats_mask)) {
+    if (io_file_.get() == nullptr) {
+      io_file_ = std::make_unique<TaskIoFile>(tid_);
+    }
+    try {
+      auto ioInfo = io_file_->refresh(requested_stats_mask);
+      last_info_.readBytes = ioInfo.readBytes;
+      last_info_.writeBytes = ioInfo.writeBytes;
+      availableStatsMask_ |= kFileStats[StatFileType::IO];
+    } catch (const std::exception& e) {
+      // If 'io' file is absent do not attempt the second time
+      availableStatFilesMask_ ^= StatFileType::IO;
+      io_file_.reset(nullptr);
     }
   }
   last_info_.availableStatsMask = availableStatsMask_;

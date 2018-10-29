@@ -99,6 +99,14 @@ struct VmStatInfo {
   VmStatInfo();
 };
 
+// Struct for data from /proc/self/task/<pid>/io
+struct DiskIoInfo {
+  uint32_t readBytes;
+  uint32_t writeBytes;
+
+  DiskIoInfo();
+};
+
 // Consolidated stats from different stat files
 struct ThreadStatInfo {
   // monotonic clock value when this was captured
@@ -119,6 +127,9 @@ struct ThreadStatInfo {
   long nrInvoluntarySwitches;
   long iowaitSum;
   long iowaitCount;
+  // IO
+  long readBytes;
+  long writeBytes;
 
   uint32_t availableStatsMask;
 
@@ -204,6 +215,19 @@ class VmStatFile : public BaseStatFile<VmStatInfo> {
   std::vector<Key> keys_;
 };
 
+class TaskIoFile : public BaseStatFile<DiskIoInfo> {
+ public:
+  explicit TaskIoFile(uint32_t tid);
+  explicit TaskIoFile(std::string path) : BaseStatFile(path) {}
+
+  DiskIoInfo doRead(int fd, uint32_t requested_stats_mask) override;
+
+ private:
+  static const size_t kMaxIoStatFileLength = 192;
+
+  char buffer_[kMaxIoStatFileLength];
+};
+
 // Consolidated stat files manager class
 class ThreadStatHolder {
  public:
@@ -216,6 +240,7 @@ class ThreadStatHolder {
   std::unique_ptr<TaskStatFile> stat_file_;
   std::unique_ptr<TaskSchedstatFile> schedstat_file_;
   std::unique_ptr<TaskSchedFile> sched_file_;
+  std::unique_ptr<TaskIoFile> io_file_;
   ThreadStatInfo last_info_;
   uint8_t availableStatFilesMask_;
   uint32_t availableStatsMask_;

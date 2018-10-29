@@ -60,7 +60,8 @@ const auto kHighFreqStatsMask = StatType::CPU_TIME | StatType::STATE |
     StatType::MAJOR_FAULTS | StatType::CPU_NUM |
     StatType::HIGH_PRECISION_CPU_TIME | StatType::WAIT_TO_RUN_TIME |
     StatType::NR_VOLUNTARY_SWITCHES | StatType::NR_INVOLUNTARY_SWITCHES |
-    StatType::IOWAIT_SUM | StatType::IOWAIT_COUNT;
+    StatType::IOWAIT_SUM | StatType::IOWAIT_COUNT | StatType::READ_BYTES |
+    StatType::WRITE_BYTES;
 
 const auto kVmStatCountersMask = StatType::VMSTAT_NR_FREE_PAGES |
     StatType::VMSTAT_NR_DIRTY | StatType::VMSTAT_NR_WRITEBACK |
@@ -325,6 +326,22 @@ void threadCountersCallback(
         currInfo.monotonicStatTime,
         QuickLogConstants::THREAD_SW_FAULTS_MINOR);
   }
+  if (currInfo.availableStatsMask & StatType::READ_BYTES) {
+    logMonotonicCounter(
+        prevInfo.readBytes,
+        currInfo.readBytes,
+        tid,
+        currInfo.monotonicStatTime,
+        QuickLogConstants::THREAD_READ_BYTES);
+  }
+  if (currInfo.availableStatsMask & StatType::WRITE_BYTES) {
+    logMonotonicCounter(
+        prevInfo.writeBytes,
+        currInfo.writeBytes,
+        tid,
+        currInfo.monotonicStatTime,
+        QuickLogConstants::THREAD_WRITE_BYTES);
+  }
 }
 
 void addToWhitelist(alias_ref<jclass>, int targetThread) {
@@ -373,6 +390,7 @@ void SystemCounterThread::logCounters() {
   logSysinfo();
   logMallinfo();
   logVmStatCounters();
+  logIoStatCounters();
 }
 
 void SystemCounterThread::logThreadCounters() {
@@ -638,6 +656,42 @@ void SystemCounterThread::logProcessSchedCounters() {
         time,
         QuickLogConstants::PROC_CONTEXT_SWITCHES_INVOLUNTARY);
   }
+}
+
+void SystemCounterThread::logIoStatCounters() {
+  if (ioStatsTracingDisabled_) {
+    return;
+  }
+  if (!ioStats_) {
+    ioStats_.reset(new util::TaskIoFile("/proc/self/io"));
+  }
+
+  auto prevInfo = ioStats_->getInfo();
+  util::DiskIoInfo currInfo;
+  try {
+    currInfo = ioStats_->refresh();
+    extraAvailableCounters_ |= StatType::READ_BYTES | StatType::WRITE_BYTES;
+  } catch (...) {
+    ioStatsTracingDisabled_ = true;
+    ioStats_.reset(nullptr);
+    return;
+  }
+
+  auto time = monotonicTime();
+  auto tid = threadID();
+
+  logMonotonicCounter(
+      prevInfo.readBytes,
+      currInfo.readBytes,
+      tid,
+      time,
+      QuickLogConstants::PROC_READ_BYTES);
+  logMonotonicCounter(
+      prevInfo.writeBytes,
+      currInfo.writeBytes,
+      tid,
+      time,
+      QuickLogConstants::PROC_WRITE_BYTES);
 }
 
 } // namespace profilo
