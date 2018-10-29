@@ -86,6 +86,7 @@ fb_xplat_cxx_library(
     exported_headers = [
         "ExternalTracer.h",
     ],
+    force_static = True,
     visibility = [
         "PUBLIC",
     ],
@@ -104,6 +105,7 @@ fb_xplat_cxx_library(
     exported_headers = [
         "ExternalTracerManager.h",
     ],
+    force_static = True,
     visibility = [
         "PUBLIC",
     ],
@@ -122,13 +124,17 @@ fb_xplat_cxx_library(
     exported_headers = [
         "JSTracer.h",
     ],
+    force_static = True,
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/JS\"",
+    ],
     visibility = [
         "PUBLIC",
     ],
     deps = [
         ":external_tracer",
         profilo_path("deps/atomic:atomic"),
-        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/logger:logger"),
     ],
 )
 
