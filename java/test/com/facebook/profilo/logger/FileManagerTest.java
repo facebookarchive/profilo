@@ -18,7 +18,10 @@ package com.facebook.profilo.logger;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.fail;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.when;
 
+import android.content.Context;
 import com.google.common.base.Function;
 import com.google.common.io.Files;
 import java.io.File;
@@ -29,21 +32,25 @@ import javax.annotation.Nullable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 public class FileManagerTest {
 
   private File mFolder;
   private FileManager mFileManager;
   private File mTempFile;
+  private Context mContext;
 
   @Before
   public void setup() throws IOException {
     mFolder = Files.createTempDir();
+    mContext = mock(Context.class);
     mTempFile = File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, mFolder);
     Files.touch(mTempFile);
 
-    mFileManager = new FileManager(mFolder);
+    when(mContext.getCacheDir()).thenReturn(mFolder);
+    when(mContext.getFilesDir()).thenReturn(mFolder);
+    when(mContext.getApplicationContext()).thenReturn(mContext);
+    mFileManager = new FileManager(mContext, mFolder);
     mFileManager.setTrimThreshold(Integer.MAX_VALUE);
     // Age out after a day
     mFileManager.setMaxScheduledAge(TimeUnit.DAYS.toSeconds(1));
@@ -52,6 +59,70 @@ public class FileManagerTest {
   @After
   public void teardown() {
     deleteDir(mFolder);
+  }
+
+  private void setupMigrationTest(File folder, boolean useNullConstructor) {
+    // Create the directories that should exist after Profilo has done its job
+    // for a while.
+    File oldUploadFolder = new File(mFolder, FileManager.UPLOAD_FOLDER);
+    oldUploadFolder.mkdirs();
+
+    File uploadFolder = new File(folder, FileManager.UPLOAD_FOLDER);
+    uploadFolder.mkdirs();
+
+    // Make sure we have everything set up correctly
+    assertThat(oldUploadFolder).isDirectory();
+    assertThat(folder).isDirectory();
+    assertThat(uploadFolder).isDirectory();
+
+    // Rename the existing "trace" so that it won't be trimmed, and move it to
+    // the "old" upload directory
+    String fileName = FileManager.UNTRIMMABLE_PREFIX + mTempFile.getName() + FileManager.LOG_SUFFIX;
+    File fileInOldUpload = new File(oldUploadFolder, fileName);
+    assertThat(mTempFile.renameTo(fileInOldUpload)).isTrue();
+
+    // The old file manager doesn't know about the new directories, so create
+    // a new one.
+    FileManager fileManager;
+    if (useNullConstructor) {
+      fileManager = new FileManager(mContext, null);
+    } else {
+      fileManager = new FileManager(mContext, folder);
+    }
+
+    // Trigger migration by adding a dummy file to the upload directory
+    try {
+      fileManager.addFileToUploads(
+          File.createTempFile("fake-trace-to-upload", FileManager.TMP_SUFFIX, folder), false);
+    } catch (IOException e) {
+      fail("Could not create temporary file");
+    }
+
+    // We should have moved the file from the old trace directory (and deleted
+    // the old upload directory in the process)...
+    assertThat(fileInOldUpload).doesNotExist();
+    assertThat(oldUploadFolder).doesNotExist();
+
+    // ... into the new upload directory
+    File fileInUpload = new File(uploadFolder, fileName);
+    assertThat(fileInUpload).exists();
+  }
+
+  @Test
+  public void testFileMigrationDefaultLocation() {
+    File folder = new File(mFolder, FileManager.PROFILO_FOLDER);
+    folder.mkdirs();
+
+    setupMigrationTest(folder, true);
+  }
+
+  @Test
+  public void testFileMigrationNonDefaultLocation() {
+    // Create a non-default location for the traces
+    File nonDefaultFolder = new File(mFolder, "foo/bar/baz");
+    nonDefaultFolder.mkdirs();
+
+    setupMigrationTest(nonDefaultFolder, false);
   }
 
   @Test

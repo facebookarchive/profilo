@@ -85,7 +85,8 @@ public abstract class BaseSampleAppMainActivity extends Activity {
         TraceOrchestrator.MAIN_PROCESS_NAME,
         true, /* isMainProcess */
         calculateProviders(),
-        controllers);
+        controllers,
+        null /* traceFolder */);
   }
 
   private void createLayout() {

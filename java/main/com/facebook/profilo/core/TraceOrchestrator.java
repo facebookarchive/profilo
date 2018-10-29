@@ -110,16 +110,14 @@ public final class TraceOrchestrator
       String processName,
       boolean isMainProcess,
       BaseTraceProvider[] providers,
-      SparseArray<TraceController> controllers) {
+      SparseArray<TraceController> controllers,
+      @Nullable File traceFolder) {
     if (configProvider == null) {
       configProvider = new DefaultConfigProvider();
     }
 
-    TraceOrchestrator orchestrator = new TraceOrchestrator(
-        context,
-        configProvider,
-        providers,
-        isMainProcess);
+    TraceOrchestrator orchestrator =
+        new TraceOrchestrator(context, configProvider, providers, isMainProcess, traceFolder);
 
     if (sInstance.compareAndSet(null, orchestrator)) {
       orchestrator.bind(context, controllers, processName);
@@ -165,11 +163,12 @@ public final class TraceOrchestrator
       Context context,
       ConfigProvider configProvider,
       BaseTraceProvider[] BaseTraceProviders,
-      boolean isMainProcess) {
+      boolean isMainProcess,
+      @Nullable File traceFolder) {
     mConfigProvider = configProvider;
     mBaseTraceProviders = BaseTraceProviders;
     mConfig = null;
-    mFileManager = new FileManager(context);
+    mFileManager = new FileManager(context, traceFolder);
     mBackgroundUploadService = null;
     mRandom = new Random();
     mListenerManager = new TraceListenerManager();
