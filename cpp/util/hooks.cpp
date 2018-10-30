@@ -1,6 +1,5 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include <linker/bionic_linker.h>
 #include <linker/linker.h>
 
 #include <dlfcn.h>
@@ -60,6 +59,24 @@ void hookLoadedLibs(
 
   if (ret) {
     throw std::runtime_error("Could not hook libraries");
+  }
+}
+
+void unhookLoadedLibs(
+    const std::vector<std::pair<char const*, void*>>& functionHooks) {
+  std::vector<plt_hook_spec> specs{};
+  specs.reserve(functionHooks.size());
+
+  for (auto const& hookPair : functionHooks) {
+    char const* functionName = hookPair.first;
+    void* hook = hookPair.second;
+    specs.emplace_back(nullptr, functionName, hook);
+  }
+
+  int ret = unhook_all_libs(specs.data(), specs.size());
+
+  if (ret) {
+    throw std::runtime_error("Could not unhook libraries");
   }
 }
 

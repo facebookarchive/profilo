@@ -24,6 +24,9 @@ namespace hooks {
 void hookLoadedLibs(
     const std::vector<std::pair<char const*, void*>>& functionHooks,
     std::unordered_set<std::string>& seenLibs);
+
+void unhookLoadedLibs(
+    const std::vector<std::pair<char const*, void*>>& functionHooks);
 } // namespace hooks
 } // namespace profilo
 } // namespace facebook

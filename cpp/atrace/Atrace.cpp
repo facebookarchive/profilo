@@ -148,11 +148,10 @@ std::vector<std::pair<char const*, void*>>& getFunctionHooks() {
 
 // Returns the set of libraries that we don't want to hook.
 std::unordered_set<std::string>& getSeenLibs() {
-  static bool init = false;
   static std::unordered_set<std::string> seenLibs;
 
   // Add this library's name to the set that we won't hook
-  if (!init) {
+  if (seenLibs.size() == 0) {
     seenLibs.insert("libc.so");
 
     Dl_info info;
@@ -166,7 +165,6 @@ std::unordered_set<std::string>& getSeenLibs() {
     }
 
     seenLibs.insert(basename(info.dli_fname));
-    init = true;
   }
   return seenLibs;
 }
@@ -176,6 +174,13 @@ void hookLoadedLibs() {
   auto& seenLibs = getSeenLibs();
 
   facebook::profilo::hooks::hookLoadedLibs(functionHooks, seenLibs);
+}
+
+void unhookLoadedLibs() {
+  auto& functionHooks = getFunctionHooks();
+
+  facebook::profilo::hooks::unhookLoadedLibs(functionHooks);
+  getSeenLibs().clear();
 }
 
 void installSystraceSnooper(int providerMask) {
@@ -263,6 +268,10 @@ void restoreSystrace() {
   if (!systrace_installed) {
     return;
   }
+
+  try {
+    unhookLoadedLibs();
+  } catch (...) {}
 
   uint64_t tags = original_tags;
   if (tags != UINT64_MAX) { // if we somehow call this before enableSystrace,
