@@ -194,6 +194,32 @@ patch_relocation_address_for_hook(prev_func* plt_got_entry, plt_hook_spec* spec)
   return unsafe_patch_relocation_address(plt_got_entry, trampoline);
 }
 
+static bool
+verify_got_entry_for_spec(prev_func* got_addr, plt_hook_spec* spec) {
+  if (hooks::is_hooked(reinterpret_cast<uintptr_t>(got_addr))) {
+    // We've done this already, stop checking.
+    return true;
+  }
+
+  Dl_info info;
+  if (!dladdr(got_addr, &info)) {
+    LOGE("GOT entry not part of a DSO: %p", got_addr);
+    return false;
+  }
+  if (!dladdr(*got_addr, &info)) {
+    LOGE("GOT entry does not point to a DSO: %p", *got_addr);
+    return false;
+  }
+  if (strcmp(info.dli_sname, spec->fn_name)) {
+    LOGE(
+        "GOT entry does not point to symbol we need: %s vs %s",
+        info.dli_sname,
+        spec->fn_name);
+    return false;
+  }
+  return true;
+}
+
 int hook_plt_method(const char* libname, const char* name, hook_func hook) {
   plt_hook_spec spec(name, hook);
   auto ret = hook_single_lib(libname, &spec, 1);
@@ -217,16 +243,29 @@ int hook_single_lib(char const* libname, plt_hook_spec* specs, size_t num_specs)
   try {
     auto elfData = sharedLib(libname);
     for (unsigned int specCnt = 0; specCnt < num_specs; ++specCnt) {
-      plt_hook_spec& spec = specs[specCnt];
+      plt_hook_spec* spec = &specs[specCnt];
 
-      ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec.fn_name);
+      if (!spec->hook_fn || !spec->fn_name) {
+        // Invalid spec.
+        failures++;
+        continue;
+      }
+
+      ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec->fn_name);
       if (!sym) {
         continue; // Did not find symbol in the hash table, so go to next spec
       }
 
       for (prev_func* plt_got_entry : elfData.get_plt_relocations(sym)) {
-        if (patch_relocation_address_for_hook(plt_got_entry, &spec) == 0) {
-          spec.hook_result++;
+
+        // Run sanity checks on what we parsed as the GOT slot.
+        if (!verify_got_entry_for_spec(plt_got_entry, spec)) {
+           failures++;
+           continue;
+        }
+
+        if (patch_relocation_address_for_hook(plt_got_entry, spec) == 0) {
+          spec->hook_result++;
         } else {
           failures++;
         }

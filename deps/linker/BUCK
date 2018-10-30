@@ -22,6 +22,9 @@ profilo_oss_cxx_library(
         ),
     ],
     preferred_linkage = "shared",
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/linker\"",
+    ],
     soname = "libprofilo_linker.$(ext)",
     visibility = [
         "PUBLIC",
@@ -55,6 +58,9 @@ profilo_oss_cxx_library(
         ),
     ],
     preferred_linkage = "static",
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/linker\"",
+    ],
     deps = [
         profilo_path("deps/breakpad:abort-with-reason"),
     ],
