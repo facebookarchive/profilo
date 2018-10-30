@@ -28,6 +28,7 @@ profilo_oss_cxx_library(
     ],
     deps = [
         ":trampoline",
+        profilo_path("deps/breakpad:abort-with-reason"),
         profilo_path("deps/cjni:cjni"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/sig_safe_write:sig_safe_write"),
@@ -54,4 +55,7 @@ profilo_oss_cxx_library(
         ),
     ],
     preferred_linkage = "static",
+    deps = [
+        profilo_path("deps/breakpad:abort-with-reason"),
+    ],
 )

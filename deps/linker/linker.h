@@ -117,6 +117,17 @@ int
 hook_all_libs(plt_hook_spec* specs, size_t num_specs,
     bool (*allowHookingLib)(char const* libname, void* data), void* data);
 
+// Counterparts to the all hook_* routines:
+
+int
+unhook_plt_method(const char* libname, const char* name, hook_func hook);
+
+int
+unhook_single_lib(char const* libname, plt_hook_spec* specs, size_t num_specs);
+
+int
+unhook_all_libs(plt_hook_spec* specs, size_t num_specs);
+
 /**
  * Calls the original (or at least, previous) method pointed to by the PLT.
  * Looks up PLT entries by hook *and* by library, since each library has its

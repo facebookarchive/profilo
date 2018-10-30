@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <memory>
 #include <stdexcept>
 
 #include <cppdistract/dso.h>
@@ -57,7 +58,7 @@ struct OneHookTest : public BaseTest {
   }
 
   virtual void TearDown() {
-    facebook::linker::hooks::forget_all();
+    ASSERT_EQ(0, unhook_plt_method("libtarget.so", method_name, hook));
   }
 
   facebook::cppdistract::dso const libtarget;
@@ -81,13 +82,14 @@ struct TwoHookTest : public CallClockHookTest {
         perform_hook(libsecond_hook.get_symbol<int()>("perform_hook")),
         cleanup(libsecond_hook.get_symbol<int()>("cleanup")) {}
 
-  ~TwoHookTest() {
-    cleanup();
-  }
-
   virtual void SetUp() {
     OneHookTest::SetUp();
     ASSERT_EQ(1, perform_hook());
+  }
+
+  virtual void TearDown() {
+    ASSERT_EQ(1, cleanup());
+    OneHookTest::TearDown();
   }
 
   facebook::cppdistract::dso const libsecond_hook;
@@ -98,6 +100,148 @@ struct TwoHookTest : public CallClockHookTest {
 TEST_F(TwoHookTest, testDoubleHook) {
   auto call_clock = libtarget.get_symbol<int()>("call_clock");
   ASSERT_EQ(0xfaceb00c, call_clock());
+}
+
+struct HookUnhookTest : public BaseTest {
+  struct Hook {
+    Hook(const char* sym, void* hook) : symbol(sym), fn(hook) {
+      EXPECT_EQ(hook_plt_method("libtarget.so", symbol, fn), 0)
+        << "symbol: " << symbol << " hook:" << fn;
+    }
+
+    ~Hook() {
+      EXPECT_EQ(unhook_plt_method("libtarget.so", symbol, fn), 0)
+        << "symbol: " << symbol << " hook:" << fn;
+    }
+
+    const char* symbol;
+    void* fn;
+  };
+
+  HookUnhookTest() : libtarget(LIBDIR("libtarget.so")) {}
+
+  virtual ~HookUnhookTest() {}
+
+  virtual void SetUp() {
+    BaseTest::SetUp();
+  }
+
+  static clock_t clock1() {
+    return kOne;
+  }
+
+  static clock_t clock2() {
+    return CALL_PREV(clock2) * kTwo;
+  }
+
+  static clock_t clock3() {
+    return CALL_PREV(clock3) * kThree;
+  }
+
+  static int kOne;
+  static int kTwo;
+  static int kThree;
+
+  facebook::cppdistract::dso const libtarget;
+};
+
+int HookUnhookTest::kOne = 11;
+int HookUnhookTest::kTwo = 13;
+int HookUnhookTest::kThree = 17;
+
+TEST_F(HookUnhookTest, testProperStackHookUnhook) {
+  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  {
+    Hook fst{"clock", (void*) &clock1};
+    EXPECT_EQ(call_clock(), kOne);
+    {
+      Hook snd{"clock", (void*) &clock2};
+      EXPECT_EQ(call_clock(), kOne * kTwo);
+      {
+        Hook trd{"clock", (void*)&clock3};
+        EXPECT_EQ(call_clock(), kOne * kTwo * kThree);
+      }
+      EXPECT_EQ(call_clock(), kOne * kTwo);
+    }
+    EXPECT_EQ(call_clock(), kOne);
+  }
+  EXPECT_NE(call_clock(), kOne);
+}
+
+TEST_F(HookUnhookTest, testUnhookAllWithUnhookedLib) {
+  // This test ensures that unhook_all_libs does not trip up on
+  // libraries with symbols that match the hook spec but are not hooked.
+  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+
+  plt_hook_spec spec("clock", (void*)&clock1);
+
+  auto hook_return = hook_all_libs(
+      &spec, 1, [](const char* name, void*) {
+        // Avoid accidental matches on system libraries by hardcoding our target
+        return strcmp(name, "libtarget.so") == 0;
+      }, nullptr);
+
+  EXPECT_EQ(hook_return, 0) << "hook_all failed";
+  EXPECT_EQ(spec.hook_result, 1) << "must hook exactly 1 library";
+  EXPECT_EQ(call_clock(), kOne);
+
+  // Load a second library that has a PLT slot for clock()
+  facebook::cppdistract::dso other_lib(LIBDIR("libmeaningoflife.so"));
+
+  spec.hook_result = 0; // reset after the hook_all operation
+  EXPECT_EQ(unhook_all_libs(&spec, 1), 0) << "unhook_all failed";
+  EXPECT_EQ(spec.hook_result, 1) << "must unhook exactly 1 library";
+}
+
+TEST_F(HookUnhookTest, testOutOfOrderHookUnhook) {
+  // Test out of order unhooking.
+  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  auto fst = std::make_unique<Hook>("clock", (void*) &clock1);
+  auto snd = std::make_unique<Hook>("clock", (void*) &clock2);
+  auto trd = std::make_unique<Hook>("clock", (void*) &clock3);
+
+  EXPECT_EQ(call_clock(), kOne * kTwo * kThree);
+
+  snd.reset();
+  EXPECT_EQ(call_clock(), kOne * kThree);
+
+  trd.reset();
+  EXPECT_EQ(call_clock(), kOne);
+
+  fst.reset();
+  EXPECT_NE(call_clock(), kOne);
+}
+
+TEST_F(HookUnhookTest, testOutOfOrderHookUnhook2) {
+  // Test out of order unhooking and hooking sequences.
+  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  auto fst = std::make_unique<Hook>("clock", (void*) &clock1);
+  auto snd = std::make_unique<Hook>("clock", (void*) &clock2);
+
+  EXPECT_EQ(call_clock(), kOne * kTwo);
+
+  snd.reset();
+  EXPECT_EQ(call_clock(), kOne);
+
+  auto trd = std::make_unique<Hook>("clock", (void*) &clock3);
+  EXPECT_EQ(call_clock(), kOne * kThree);
+
+  snd = std::make_unique<Hook>("clock", (void*) &clock2);
+  EXPECT_EQ(call_clock(), kOne * kTwo * kThree);
+
+  trd.reset();
+  EXPECT_EQ(call_clock(), kOne * kTwo);
+
+  auto frt = std::make_unique<Hook>("clock", (void*) &hook_clock);
+  EXPECT_EQ(call_clock(), 0xface); // hook_clock overwrites the value
+
+  trd = std::make_unique<Hook>("clock", (void*) &clock3);
+  EXPECT_EQ(call_clock(), 0xface * kThree);
+
+  frt.reset();
+  snd.reset();
+  trd.reset();
+  EXPECT_EQ(call_clock(), kOne);
 }
 
 static double hook_nice1(int one) {

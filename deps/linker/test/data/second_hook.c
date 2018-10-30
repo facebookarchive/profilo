@@ -41,6 +41,10 @@ int perform_hook() {
 }
 
 int cleanup() {
+  if (unhook_plt_method("libtarget.so", "clock", (void*)second_hook_clock) != 0) {
+    return 0;
+  }
+
   if (dlclose(handle) != 0) {
     return 0;
   }

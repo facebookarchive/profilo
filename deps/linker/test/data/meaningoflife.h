@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include <time.h>
+
 extern int meaning_of_life;
 
 struct large {
@@ -25,6 +27,8 @@ struct large {
   char const* d;
   char e, f, g;
 };
+
+clock_t call_clock();
 
 double nice1(int one);
 int nice2(int one, double two);

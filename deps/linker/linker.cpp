@@ -22,6 +22,8 @@
 #include <linker/log_assert.h>
 #include <linker/trampoline.h>
 
+#include <abort_with_reason.h>
+
 #include <assert.h>
 #include <dlfcn.h>
 #include <elf.h>
@@ -114,14 +116,44 @@ get_relocations(symbol sym, reloc* relocs_out, size_t relocs_out_len) {
   }
 }
 
-int
-patch_relocation_address(prev_func* plt_got_entry, hook_func hook) {
-  // We've never hooked this GOT slot before.
-  Dl_info info;
-  if (!hook || !dladdr(plt_got_entry, &info)) {
-    return 1;
-  }
+int unsafe_patch_relocation_address(
+    prev_func* plt_got_entry,
+    hook_func new_value) {
+  try {
+    int rc =
+        sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(new_value));
 
+    if (rc && errno == EFAULT) {
+      // if we need to mprotect, it must be done under lock - don't want to
+      // set +w, then have somebody else finish and set -w, before we're done
+      // with our write
+      static pthread_rwlock_t mprotect_mutex_ = PTHREAD_RWLOCK_INITIALIZER;
+      WriterLock wl(&mprotect_mutex_);
+
+      int pagesize = getpagesize();
+      void* page = PAGE_ALIGN(plt_got_entry, pagesize);
+
+      if (mprotect(page, pagesize, PROT_READ | PROT_WRITE)) {
+        return 5;
+      }
+
+      rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(new_value));
+
+      int old_errno = errno;
+      if (mprotect(page, pagesize, PROT_READ)) {
+        abort();
+      };
+      errno = old_errno;
+    }
+
+    return rc;
+  } catch (std::runtime_error const&) {
+    return 6;
+  }
+}
+
+int
+patch_relocation_address_for_hook(prev_func* plt_got_entry, plt_hook_spec* spec) {
   auto got_addr = reinterpret_cast<uintptr_t>(plt_got_entry);
 
   // Take the pessimistic writer lock. This enforces a global serial order
@@ -135,7 +167,7 @@ patch_relocation_address(prev_func* plt_got_entry, hook_func hook) {
     hooks::HookInfo info {
       .out_id = 0,
       .got_address = got_addr,
-      .new_function = hook,
+      .new_function = spec->hook_fn,
       .previous_function = *plt_got_entry,
     };
     auto ret = hooks::add(info);
@@ -147,53 +179,33 @@ patch_relocation_address(prev_func* plt_got_entry, hook_func hook) {
   }
 
   // We haven't hooked this slot yet. We also need to make a trampoline.
-  try {
-    hooks::HookInfo info {
-      .out_id = 0,
-      .got_address = got_addr,
-      .new_function = hook,
-      .previous_function = *plt_got_entry,
-    };
-    auto ret = hooks::add(info);
-    if (ret != hooks::NEW_HOOK) {
-      return 1;
-    }
-    hook_func trampoline = create_trampoline(info.out_id);
-
-    int rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(trampoline));
-
-    if (rc && errno == EFAULT) {
-      // if we need to mprotect, it must be done under lock - don't want to set +w,
-      // then have somebody else finish and set -w, before we're done with our write
-      static pthread_rwlock_t mprotect_mutex_ = PTHREAD_RWLOCK_INITIALIZER;
-      WriterLock wl(&mprotect_mutex_);
-
-      int pagesize = getpagesize();
-      void* page = PAGE_ALIGN(plt_got_entry, pagesize);
-
-      if (mprotect(page, pagesize, PROT_READ | PROT_WRITE)) {
-        return 2;
-      }
-
-      rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(trampoline));
-
-      int old_errno = errno;
-      if (mprotect(page, pagesize, PROT_READ)) {
-        abort();
-      };
-      errno = old_errno;
-    }
-
-    return rc;
-  } catch (std::runtime_error const&) {
-    return 3;
+  hooks::HookInfo hook_info {
+    .out_id = 0,
+    .got_address = got_addr,
+    .new_function = spec->hook_fn,
+    .previous_function = *plt_got_entry,
+  };
+  auto ret = hooks::add(hook_info);
+  if (ret != hooks::NEW_HOOK) {
+    return 1;
   }
+  hook_func trampoline = create_trampoline(hook_info.out_id);
+
+  return unsafe_patch_relocation_address(plt_got_entry, trampoline);
 }
 
-int
-hook_plt_method(const char* libname, const char* name, hook_func hook) {
+int hook_plt_method(const char* libname, const char* name, hook_func hook) {
   plt_hook_spec spec(name, hook);
-  if (hook_single_lib(libname, &spec, 1) == 0 && spec.hook_result == 1) {
+  auto ret = hook_single_lib(libname, &spec, 1);
+  if (ret == 0 && spec.hook_result == 1) {
+    return 0;
+  }
+  return 1;
+}
+
+int unhook_plt_method(const char* libname, const char* name, hook_func hook) {
+  plt_hook_spec spec(name, hook);
+  if (unhook_single_lib(libname, &spec, 1) == 0 && spec.hook_result == 1) {
     return 0;
   }
   return 1;
@@ -213,7 +225,7 @@ int hook_single_lib(char const* libname, plt_hook_spec* specs, size_t num_specs)
       }
 
       for (prev_func* plt_got_entry : elfData.get_plt_relocations(sym)) {
-        if (patch_relocation_address(plt_got_entry, spec.hook_fn) == 0) {
+        if (patch_relocation_address_for_hook(plt_got_entry, &spec) == 0) {
           spec.hook_result++;
         } else {
           failures++;
@@ -225,9 +237,74 @@ int hook_single_lib(char const* libname, plt_hook_spec* specs, size_t num_specs)
   return failures;
 }
 
-int
-hook_all_libs(plt_hook_spec* specs, size_t num_specs,
-    bool (*allowHookingLib)(char const* libname, void* data), void* data) {
+int unhook_single_lib(
+    char const* libname,
+    plt_hook_spec* specs,
+    size_t num_specs) {
+  int failures = 0;
+
+  try {
+    auto elfData = sharedLib(libname);
+
+    // Take the GOT lock to prevent other threads from modifying our state.
+    WriterLock lock(&g_got_modification_lock);
+
+    for (unsigned int specCnt = 0; specCnt < num_specs; ++specCnt) {
+      plt_hook_spec& spec = specs[specCnt];
+
+      ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec.fn_name);
+      if (!sym) {
+        continue; // Did not find symbol in the hash table, so go to next spec
+      }
+      for (prev_func* plt_got_entry : elfData.get_plt_relocations(sym)) {
+        auto addr = reinterpret_cast<uintptr_t>(plt_got_entry);
+        if (!hooks::is_hooked(addr)) {
+          continue;
+        }
+        // Remove the entry for this GOT address and this particular hook.
+        hooks::HookInfo info{
+            .got_address = addr,
+            .new_function = spec.hook_fn,
+        };
+        auto result = hooks::remove(info);
+        if (result == hooks::REMOVED_STILL_HOOKED) {
+          // There are other hooks at this slot, continue.
+          spec.hook_result++;
+          continue;
+        } else if (result == hooks::REMOVED_TRIVIAL) {
+          // Only one entry left at this slot, patch the original function
+          // to lower the overhead.
+          auto original = info.previous_function;
+          if (unsafe_patch_relocation_address(plt_got_entry, original) != 0) {
+            abortWithReason("Unable to unhook GOT slot");
+          }
+          // Restored the GOT slot, let's remove all knowledge about this
+          // hook.
+          hooks::HookInfo original_info{
+              .got_address = reinterpret_cast<uintptr_t>(plt_got_entry),
+              .new_function = original,
+          };
+          if (hooks::remove(original_info) != hooks::REMOVED_FULLY) {
+            abortWithReason("GOT slot modified while we were working on it");
+          }
+          spec.hook_result++;
+          continue;
+        } else {
+          failures++;
+        }
+      }
+    }
+  } catch (std::out_of_range& e) { /* no op */
+  }
+
+  return failures;
+}
+
+int hook_all_libs(
+    plt_hook_spec* specs,
+    size_t num_specs,
+    bool (*allowHookingLib)(char const* libname, void* data),
+    void* data) {
   if (refresh_shared_libs()) {
     // Could not properly refresh the cache of shared library data
     return -1;
@@ -239,6 +316,18 @@ hook_all_libs(plt_hook_spec* specs, size_t num_specs,
     if (allowHookingLib(lib.first.c_str(), data)) {
       failures += hook_single_lib(lib.first.c_str(), specs, num_specs);
     }
+  }
+
+  return failures;
+}
+
+int unhook_all_libs(
+    plt_hook_spec* specs,
+    size_t num_specs) {
+  int failures = 0;
+
+  for (auto const& lib : allSharedLibs()) {
+    failures += unhook_single_lib(lib.first.c_str(), specs, num_specs);
   }
 
   return failures;

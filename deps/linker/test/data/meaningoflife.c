@@ -16,6 +16,11 @@
 
 #include <plthooktestdata/meaningoflife.h>
 
+// Useful for hook/unhook_all tests, as libtarget.so also defines this.
+clock_t call_clock() {
+  return clock();
+}
+
 int meaning_of_life = 42;
 
 double nice1(int one) {

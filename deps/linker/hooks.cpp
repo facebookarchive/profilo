@@ -144,12 +144,59 @@ HookResult add(HookInfo& info) {
   return NEW_HOOK;
 }
 
-void forget_all() {
+HookResult remove(HookInfo& info) {
   auto& globals = getGlobals();
-  WriterLock lock(&globals.map_mutex);
-  globals.hooks_by_id.clear();
-  globals.hooks_by_got_address.clear();
-  globals.next_id = 1;
+  if (info.new_function == nullptr || info.got_address == 0) {
+    return WRONG_HOOK_INFO;
+  }
+
+  WriterLock map_lock(&globals.map_mutex);
+  auto& got_map = globals.hooks_by_got_address;
+  auto it = got_map.find(info.got_address);
+  if (it == got_map.end()) {
+    return WRONG_HOOK_INFO;
+  }
+  // Success, we already have an entry for this GOT address.
+  // Take a reference to the shared_ptr to keep the data around
+  // as we go about clearing the indices.
+  auto internal_info = it->second;
+  WriterLock info_lock(&internal_info->mutex);
+
+  if (internal_info->hooks.size() == 1) {
+    // Double-check the case where there's only one item left.
+    if (internal_info->hooks.at(0) != info.new_function) {
+      return WRONG_HOOK_INFO;
+    }
+    // Okay, we have one item and we want to remove it, let's
+    // clear all the data structures.
+    globals.hooks_by_got_address.erase(it);
+
+    // We cannot remove this hook from hooks_by_id because another thread
+    // may be racing with us and entering the trampoline, so it would need
+    // to be able to look things up by id.
+
+    return REMOVED_FULLY;
+  }
+
+  auto hooks_it = std::find(
+      internal_info->hooks.begin(),
+      internal_info->hooks.end(),
+      info.new_function);
+  if (hooks_it == internal_info->hooks.end()) {
+    return WRONG_HOOK_INFO;
+  }
+
+  if (hooks_it == internal_info->hooks.begin()) {
+    // Can't remove the original function if you have hooks after it.
+    return WRONG_HOOK_INFO;
+  }
+
+  internal_info->hooks.erase(hooks_it);
+  auto previous_function = internal_info->hooks.at(0); // original function
+  info.previous_function = previous_function;
+
+  return internal_info->hooks.size() == 1 ? REMOVED_TRIVIAL
+                                          : REMOVED_STILL_HOOKED;
 }
 
 } // namespace hooks
