@@ -20,7 +20,7 @@ void trampoline_template() {
     //
     // This code implements the linker PLT hooking trampoline contract.
     // Namely:
-    //   push_hook(.L_chained, <return_address>);
+    //   hook = push_hook(.L_hook_id, <return_address>);
     //   hook(<original arguments>);
     //   ret = pop_hook();
     //   longjump(ret); // with return from hook()
@@ -77,35 +77,25 @@ void trampoline_template() {
     "pushl  4(%ebp)\n"
     // Stack alignment mod 16: 4 bytes
 
-    "addl   $(.L_chained - .L_pic_trampoline_1), %ecx\n"
-    // ecx =  address of .L_chained
+    "addl   $(.L_hook_id - .L_pic_trampoline_1), %ecx\n"
+    // ecx =  address of .L_hook_id
 
-    "movl   (%ecx), %eax\n" // eax = .L_chained
+    "movl   (%ecx), %eax\n" // eax = .L_hook_id
     "pushl  %eax\n " // first argument
     // Stack alignment mod 16: 0 bytes
 
-    // Convert the address of .L_chained into the address of .L_push_hook_stack
-    "addl  $(.L_push_hook_stack - .L_chained), %ecx\n"
+    // Convert the address of .L_hook_id into the address of .L_push_hook_stack
+    "addl  $(.L_push_hook_stack - .L_hook_id), %ecx\n"
     "movl  (%ecx), %eax\n"
 
     // Stack alignment mod 16: 0 bytes
     "call   *%eax\n"
+    // %eax now contains the hook we need to call
 
     // We're done with our frame, restore old frame before calling the hook.
     "movl   %ebp, %esp\n"
     "popl   %ebp\n"
     // Stack alignment mod 16: 12 bytes
-
-    // Actually call the hook by fetching its address in a PIC way from .L_hook.
-    // We can't reuse %ecx from above because of the function call, scratch
-    // registers are not preserved.
-    "call   .L_pic_trampoline_2\n"
-    ".L_pic_trampoline_2:\n"
-    "popl   %ecx\n"
-    // Stack alignment mod 16: 12 bytes
-
-    "addl   $(.L_hook - .L_pic_trampoline_2), %ecx\n"
-    "movl   (%ecx), %eax\n"
 
     // Remove the return address that's already on the stack, we saved it in
     // our `push_hook` call.
@@ -174,9 +164,7 @@ void trampoline_template() {
     ".word 0; .word 0;"
     ".L_pop_hook_stack:"
     ".word 0; .word 0;"
-    ".L_hook:"
-    ".word 0; .word 0;"
-    ".L_chained:"
+    ".L_hook_id:"
     ".word 0; .word 0;"
   );
 }

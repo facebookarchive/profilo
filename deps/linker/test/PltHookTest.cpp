@@ -15,28 +15,32 @@
  */
 
 #include <dlfcn.h>
-#include <link.h>
 #include <gtest/gtest.h>
-#include <time.h>
-#include <string.h>
+#include <link.h>
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
 #include <stdexcept>
 
-#include <fb/Build.h>
 #include <cppdistract/dso.h>
+#include <fb/Build.h>
 
-#include <linker/linker.h>
+#include <linker/hooks.h>
 #include <linker/link.h>
+#include <linker/linker.h>
 #include <linker/sharedlibs.h>
+#include <linker/trampoline.h>
 
-#include <plthooktests/test.h>
 #include <plthooktestdata/meaningoflife.h>
+#include <plthooktests/test.h>
 
-#if defined(__arm__) || defined(__i386__)
+#ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
 
 static clock_t hook_clock() {
-  if (CALL_PREV(hook_clock) == 0) {
-    return 0;
+  // Intentionally call CALL_PREV more than once to ensure
+  // CALL_PREV actually cares about who the caller is.
+  for (int i = 0; i < 5; i++) {
+    (void) CALL_PREV(hook_clock);
   }
   return 0xface;
 }
@@ -50,6 +54,10 @@ struct OneHookTest : public BaseTest {
   virtual void SetUp() {
     BaseTest::SetUp();
     ASSERT_EQ(0, hook_plt_method("libtarget.so", method_name, hook));
+  }
+
+  virtual void TearDown() {
+    facebook::linker::hooks::forget_all();
   }
 
   facebook::cppdistract::dso const libtarget;
@@ -68,9 +76,10 @@ TEST_F(CallClockHookTest, testHook) {
 
 struct TwoHookTest : public CallClockHookTest {
   TwoHookTest()
-    : libsecond_hook(LIBDIR("libsecond_hook.so")),
-      perform_hook(libsecond_hook.get_symbol<int()>("perform_hook")),
-      cleanup(libsecond_hook.get_symbol<int()>("cleanup")) { }
+      : CallClockHookTest(),
+        libsecond_hook(LIBDIR("libsecond_hook.so")),
+        perform_hook(libsecond_hook.get_symbol<int()>("perform_hook")),
+        cleanup(libsecond_hook.get_symbol<int()>("cleanup")) {}
 
   ~TwoHookTest() {
     cleanup();
@@ -82,8 +91,8 @@ struct TwoHookTest : public CallClockHookTest {
   }
 
   facebook::cppdistract::dso const libsecond_hook;
-  int (* const perform_hook)();
-  int (* const cleanup)();
+  int (*const perform_hook)();
+  int (*const cleanup)();
 };
 
 TEST_F(TwoHookTest, testDoubleHook) {

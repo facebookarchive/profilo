@@ -15,9 +15,11 @@
  */
 
 #include <linker/trampoline.h>
+#include <linker/hooks.h>
 #include <linker/locks.h>
 
 #include <sys/mman.h>
+#include <algorithm>
 #include <cstring>
 #include <list>
 #include <memory>
@@ -26,6 +28,8 @@
 #include <sstream>
 #include <system_error>
 #include <vector>
+
+#include <abort_with_reason.h>
 
 #ifdef ANDROID
 #include <sys/prctl.h>
@@ -113,18 +117,20 @@ static void* allocate(size_t sz) {
   return blocks_.back().allocate(sz);
 }
 
-struct trampoline_stack_entry {
-  void* const chained;
+struct trampoline_hook_info {
+  HookId id;
   void* const return_address;
+  trampoline_hook_info* previous;
+
+  std::vector<void*> run_list;
 };
 
-static pthread_key_t get_hook_stack_key() {
+static pthread_key_t get_hook_info_key() {
   static pthread_key_t tls_key_ = ({
     pthread_key_t key;
     if (pthread_key_create(&key, +[](void* obj) {
-          auto vec =
-              reinterpret_cast<std::vector<trampoline_stack_entry>*>(obj);
-          delete vec;
+          auto info = reinterpret_cast<trampoline_hook_info*>(obj);
+          delete info;
         }) != 0) {
       log_assert("failed to create trampoline TLS key");
     }
@@ -133,42 +139,35 @@ static pthread_key_t get_hook_stack_key() {
   return tls_key_;
 }
 
-static std::vector<trampoline_stack_entry>& get_hook_stack() {
-  auto key = get_hook_stack_key();
-  auto vec = reinterpret_cast<std::vector<trampoline_stack_entry>*>(
-      pthread_getspecific(key));
-  if (vec == nullptr) {
-    vec = new std::vector<trampoline_stack_entry>();
-    pthread_setspecific(key, vec);
-  }
-  return *vec;
+static trampoline_hook_info* get_hook_info() {
+  auto key = get_hook_info_key();
+  return reinterpret_cast<trampoline_hook_info*>(pthread_getspecific(key));
 }
 
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
-static void delete_hook_stack() {
-  auto key = get_hook_stack_key();
-  auto vec = reinterpret_cast<std::vector<trampoline_stack_entry>*>(
-      pthread_getspecific(key));
-  if (vec == nullptr) {
-    return;
+void* push_hook_stack(HookId hook, void* return_address) {
+  auto run_list = hooks::get_run_list(hook);
+  if (run_list.size() == 0) {
+    // No run list
+    abortWithReason("Run list for trampoline is empty");
   }
-  delete vec;
-  pthread_setspecific(key, nullptr);
+  auto* info = new trampoline_hook_info{.id = hook,
+                                        .return_address = return_address,
+                                        .previous = get_hook_info()};
+  info->run_list = std::move(run_list);
+
+  pthread_setspecific(get_hook_info_key(), info);
+
+  // return the last entry
+  return info->run_list.back();
 }
 
-void push_hook_stack(void* chained, void* return_address) {
-  trampoline_stack_entry entry = {chained, return_address};
-  get_hook_stack().push_back(entry);
-}
-
-uint32_t pop_hook_stack() {
-  auto& stack = get_hook_stack();
-  auto back = stack.back();
-  stack.pop_back();
-  if (stack.empty()) {
-    delete_hook_stack();
-  }
-  return reinterpret_cast<uint32_t>(back.return_address);
+void* pop_hook_stack() {
+  auto info = get_hook_info();
+  void* ret = info->return_address;
+  pthread_setspecific(get_hook_info_key(), info->previous);
+  delete info;
+  return ret;
 }
 #endif
 
@@ -178,7 +177,7 @@ namespace trampoline {
 
 class trampoline {
  public:
-  trampoline(void* hook, void* chained)
+  trampoline(HookId id)
       : code_size_(
             reinterpret_cast<uintptr_t>(trampoline_data_pointer()) -
             reinterpret_cast<uintptr_t>(trampoline_template_pointer())),
@@ -191,8 +190,7 @@ class trampoline {
 
     *data++ = reinterpret_cast<uint32_t>(push_hook_stack);
     *data++ = reinterpret_cast<uint32_t>(pop_hook_stack);
-    *data++ = reinterpret_cast<uint32_t>(hook);
-    *data++ = reinterpret_cast<uint32_t>(chained);
+    *data++ = reinterpret_cast<uint32_t>(id);
 #endif
   }
 
@@ -205,12 +203,6 @@ class trampoline {
   trampoline(void* existing_trampoline)
       : code_size_(0), code_(existing_trampoline) {}
 
-  void* chained() const {
-    auto* data = reinterpret_cast<uint32_t*>(
-        reinterpret_cast<uintptr_t>(code_) + code_size_);
-    return reinterpret_cast<void*>(data[3]);
-  }
-
   void* code() const {
     return reinterpret_cast<void*>(code_);
   }
@@ -222,13 +214,13 @@ class trampoline {
 
 } // namespace trampoline
 
-void* create_trampoline(void* hook, void* chained) {
+void* create_trampoline(HookId id) {
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
   static std::list<trampoline::trampoline> trampolines_;
   static pthread_rwlock_t lock_ = PTHREAD_RWLOCK_INITIALIZER;
 
   WriterLock wl(&lock_);
-  trampolines_.emplace_back(hook, chained);
+  trampolines_.emplace_back(id);
   return trampolines_.back().code();
 #else
   throw std::runtime_error("unsupported architecture");
@@ -240,8 +232,22 @@ void* create_trampoline(void* hook, void* chained) {
 
 extern "C" {
 
-void* get_chained_plt_method() {
-  return facebook::linker::get_hook_stack().back().chained;
+void* get_previous_from_hook(void* hook) {
+  auto info = facebook::linker::get_hook_info();
+  if (info == nullptr) {
+    // Not in a hook!
+    abortWithReason("CALL_PREV call outside of an active hook");
+  }
+  auto iter = std::find(info->run_list.begin(), info->run_list.end(), hook);
+  if (iter == info->run_list.begin()) {
+    abortWithReason("CALL_PREV call by original function?!");
+  }
+  if (iter == info->run_list.end()) {
+    abortWithReason("CALL_PREV call by an unknown hook? How did we get here?");
+  }
+  // Decrement means go towards the original function.
+  iter--;
+  return *iter;
 }
 
 } // extern "C"

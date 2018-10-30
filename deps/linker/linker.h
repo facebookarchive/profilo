@@ -34,7 +34,7 @@ typedef void* hook_func;
 typedef void** reloc;
 
 /**
- * Guards initialization from above. Can be used to no-op calls to 
+ * Guards initialization from above. Can be used to no-op calls to
  * linker_initialize by calling this with `false`.
  */
 void
@@ -149,7 +149,7 @@ hook_all_libs(plt_hook_spec* specs, size_t num_specs,
 
 #define __CALL_PREV_IMPL(hook, hook_sig, ...)                           \
   ({                                                                    \
-    void* _prev = get_chained_plt_method();                             \
+    void* _prev = get_previous_from_hook((void*) hook);                 \
     ((hook_sig)_prev)(__VA_ARGS__);                                     \
   })
 /**
@@ -160,7 +160,7 @@ hook_all_libs(plt_hook_spec* specs, size_t num_specs,
  *                  appropriate entry of the appropriate PLT
  */
 void*
-get_chained_plt_method();
+get_previous_from_hook(void* hook);
 
 #ifdef __cplusplus
 } // extern "C"

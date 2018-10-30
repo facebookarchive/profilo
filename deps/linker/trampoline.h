@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <linker/hooks.h>
 #include <stdint.h>
 
 namespace facebook { namespace linker {
@@ -51,12 +52,12 @@ inline void* trampoline_data_pointer() {
 }
 
 constexpr inline size_t trampoline_data_size() {
-  return sizeof(uint32_t) * 4;
+  return sizeof(void*) * 2 + sizeof(HookId);
 }
 
 } // namespace trampoline
 
-void* create_trampoline(void* hook, void* chained);
+void* create_trampoline(HookId hook);
 
 } } // namespace facebook::linker
 
@@ -64,7 +65,8 @@ void* create_trampoline(void* hook, void* chained);
 extern "C" {
 #endif
 
-void* get_chained_plt_method();
+void*
+get_previous_from_hook(void* hook);
 
 #ifdef __cplusplus
 }

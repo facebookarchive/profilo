@@ -17,6 +17,7 @@
 #include <linker/link.h>
 #include <linker/linker.h>
 #include <linker/sharedlibs.h>
+#include <linker/hooks.h>
 #include <linker/locks.h>
 #include <linker/log_assert.h>
 #include <linker/trampoline.h>
@@ -61,6 +62,9 @@ typedef void* lib_base;
 namespace {
 
 static std::atomic<bool> g_linker_enabled(true);
+
+// Global lock on any GOT slot modification.
+static pthread_rwlock_t g_got_modification_lock = PTHREAD_RWLOCK_INITIALIZER;
 
 }
 
@@ -112,13 +116,49 @@ get_relocations(symbol sym, reloc* relocs_out, size_t relocs_out_len) {
 
 int
 patch_relocation_address(prev_func* plt_got_entry, hook_func hook) {
+  // We've never hooked this GOT slot before.
   Dl_info info;
   if (!hook || !dladdr(plt_got_entry, &info)) {
     return 1;
   }
 
+  auto got_addr = reinterpret_cast<uintptr_t>(plt_got_entry);
+
+  // Take the pessimistic writer lock. This enforces a global serial order
+  // on GOT slot modifications but makes the code much easier to reason about.
+  // For slots that we've already hooked, this is overkill but is easier
+  // than tracking modification conflicts.
+
+  WriterLock lock(&g_got_modification_lock);
+  if (hooks::is_hooked(got_addr)) {
+    // No point in safety checks if we've already once hooked this GOT slot.
+    hooks::HookInfo info {
+      .out_id = 0,
+      .got_address = got_addr,
+      .new_function = hook,
+      .previous_function = *plt_got_entry,
+    };
+    auto ret = hooks::add(info);
+    if (ret != hooks::ALREADY_HOOKED_APPENDED) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  // We haven't hooked this slot yet. We also need to make a trampoline.
   try {
-    hook_func trampoline = create_trampoline(hook, *plt_got_entry);
+    hooks::HookInfo info {
+      .out_id = 0,
+      .got_address = got_addr,
+      .new_function = hook,
+      .previous_function = *plt_got_entry,
+    };
+    auto ret = hooks::add(info);
+    if (ret != hooks::NEW_HOOK) {
+      return 1;
+    }
+    hook_func trampoline = create_trampoline(info.out_id);
 
     int rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(trampoline));
 

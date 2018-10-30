@@ -17,6 +17,7 @@
 #include <plthooktests/test.h>
 
 #include <gtest/gtest.h>
+#include <linker/hooks.h>
 #include <linker/trampoline.h>
 #include <sys/mman.h>
 #include <sstream>
@@ -32,8 +33,9 @@ namespace trampoline {
  * contract.
  */
 struct TrampolineTest : public BaseTest {
-  static void test_push_stack(void* chained, void* ret) {
-    push_vals = {true, chained, ret};
+  static void* test_push_stack(HookId id, void* ret) {
+    push_vals = {true, id, ret};
+    return (void*) &test_hook;
   }
 
   static uint32_t test_pop_stack() {
@@ -54,7 +56,7 @@ struct TrampolineTest : public BaseTest {
 
   struct PushVals {
     bool called;
-    void* chained;
+    HookId id;
     void* return_address;
   };
   static PushVals push_vals;
@@ -96,8 +98,7 @@ TEST_F(TrampolineTest, testTrampoline) {
   struct __attribute__((packed)) data_fields {
     decltype(test_push_stack)* push_hook;
     decltype(test_pop_stack)* pop_hook;
-    decltype(test_hook)* hook;
-    uint32_t chained;
+    HookId id;
   };
   static_assert(
       sizeof(data_fields) == trampoline_data_size(),
@@ -106,15 +107,14 @@ TEST_F(TrampolineTest, testTrampoline) {
   auto fields = reinterpret_cast<data_fields*>(trampoline_data);
   fields->push_hook = &test_push_stack;
   fields->pop_hook = &test_pop_stack;
-  fields->hook = &test_hook;
-  fields->chained = 0xfaceb00c;
+  fields->id = 0xfaceb00c;
 
   auto trampoline_return = trampoline_code(10, 0.25, 20);
 
   EXPECT_EQ(trampoline_return, 0.50) << "return result not the same";
   EXPECT_TRUE(push_vals.called) << "push_hook not called";
-  EXPECT_EQ((uintptr_t) push_vals.chained, 0xfaceb00c)
-      << "push_hook called with wrong chained value";
+  EXPECT_EQ(push_vals.id, 0xfaceb00c)
+      << "push_hook called with wrong hook id value";
   EXPECT_TRUE(hook_vals.called) << "hook not called";
   EXPECT_EQ(hook_vals.a, 10) << "hook_a is wrong";
   EXPECT_EQ(hook_vals.b, 0.25) << "hook_b is wrong";
