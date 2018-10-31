@@ -8,6 +8,7 @@ PROVIDER_TO_RULE - Map that links provider "short names" to the provider class a
                    those files.
 """
 
+load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
@@ -47,7 +48,7 @@ def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], p
         providers_string = "none"
         provider_deps = []
 
-    native.android_build_config(
+    fb_native.android_build_config(
         name = "sample-buildconfig-{}".format(providers_string),
         package = "com.facebook.profilo",
         values = [
@@ -93,7 +94,7 @@ def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], p
         ],
     )
 
-    native.android_aar(
+    fb_native.android_aar(
         name = "sample-aar-{}".format(providers_string),
         manifest_skeleton = aar_manifest,
         deps = [
@@ -109,7 +110,7 @@ def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], p
         ],
     )
 
-    native.android_binary(
+    fb_native.android_binary(
         name = "sample-{}".format(providers_string),
         keystore = profilo_path("java/main/com/facebook/profilo/sample:keystore"),
         manifest = app_manifest,

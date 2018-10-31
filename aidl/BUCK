@@ -1,3 +1,4 @@
+load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
@@ -12,13 +13,13 @@ fb_core_android_library(
     ],
 )
 
-gen_aidl(
+fb_native.gen_aidl(
     name = "IProfiloMultiProcessTraceService",
     aidl = "java/com/facebook/profilo/ipc/IProfiloMultiProcessTraceService.aidl",
     import_path = profilo_path("aidl/java/").replace("//", ""),
 )
 
-gen_aidl(
+fb_native.gen_aidl(
     name = "IProfiloMultiProcessTraceListener",
     aidl = "java/com/facebook/profilo/ipc/IProfiloMultiProcessTraceListener.aidl",
     import_path = profilo_path("aidl/java/").replace("//", ""),
