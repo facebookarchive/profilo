@@ -154,7 +154,7 @@ HookResult remove(HookInfo& info) {
   auto& got_map = globals.hooks_by_got_address;
   auto it = got_map.find(info.got_address);
   if (it == got_map.end()) {
-    return WRONG_HOOK_INFO;
+    return UNKNOWN_HOOK;
   }
   // Success, we already have an entry for this GOT address.
   // Take a reference to the shared_ptr to keep the data around
@@ -183,7 +183,7 @@ HookResult remove(HookInfo& info) {
       internal_info->hooks.end(),
       info.new_function);
   if (hooks_it == internal_info->hooks.end()) {
-    return WRONG_HOOK_INFO;
+    return UNKNOWN_HOOK;
   }
 
   if (hooks_it == internal_info->hooks.begin()) {

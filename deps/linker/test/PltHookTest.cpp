@@ -193,6 +193,30 @@ TEST_F(HookUnhookTest, testUnhookAllWithUnhookedLib) {
   EXPECT_EQ(spec.hook_result, 1) << "must unhook exactly 1 library";
 }
 
+TEST_F(HookUnhookTest, testUnhookWithMissingHookDoesNotFail) {
+  // This test ensures that unhook_single_lib does not fail when the
+  // the spec matches an existing hooked slot but the hook function is not
+  // registered for that slot.
+  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+
+  plt_hook_spec spec("clock", (void*)&clock1);
+
+  auto hook_return = hook_single_lib("libtarget.so", &spec, 1);
+
+  EXPECT_EQ(hook_return, 0) << "hook_single_lib failed";
+  EXPECT_EQ(spec.hook_result, 1) << "must hook exactly 1 library";
+  EXPECT_EQ(call_clock(), kOne);
+
+  plt_hook_spec unhooked_spec("clock", (void*) &clock2);
+
+  spec.hook_result = 0; // reset after the hook_all operation
+  EXPECT_EQ(unhook_single_lib("libtarget.so", &unhooked_spec, 1), 0);
+  EXPECT_EQ(spec.hook_result, 0) << "must unhook exactly 0 libraries";
+
+  // Cleanup
+  EXPECT_EQ(unhook_single_lib("libtarget.so", &spec, 1), 0);
+}
+
 TEST_F(HookUnhookTest, testOutOfOrderHookUnhook) {
   // Test out of order unhooking.
   auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");

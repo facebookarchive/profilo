@@ -34,6 +34,7 @@ struct HookInfo {
 };
 
 enum HookResult {
+  UNKNOWN_HOOK = -2,
   WRONG_HOOK_INFO = -1,
   NEW_HOOK = 1,
   ALREADY_HOOKED_APPENDED = 2,

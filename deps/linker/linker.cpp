@@ -297,9 +297,6 @@ int unhook_single_lib(
       }
       for (prev_func* plt_got_entry : elfData.get_plt_relocations(sym)) {
         auto addr = reinterpret_cast<uintptr_t>(plt_got_entry);
-        if (!hooks::is_hooked(addr)) {
-          continue;
-        }
         // Remove the entry for this GOT address and this particular hook.
         hooks::HookInfo info{
             .got_address = addr,
@@ -327,6 +324,9 @@ int unhook_single_lib(
             abortWithReason("GOT slot modified while we were working on it");
           }
           spec.hook_result++;
+          continue;
+        } else if (result == hooks::UNKNOWN_HOOK) {
+          // Either unhooked or hooked but not with this hook.
           continue;
         } else {
           failures++;
