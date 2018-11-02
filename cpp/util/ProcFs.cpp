@@ -38,28 +38,17 @@ static std::unordered_set<uint32_t> numericFolderItems(const char* folder) {
     throw std::system_error(errno, std::system_category());
   }
   std::unordered_set<uint32_t> items;
-
-  // We don't want to use readdir(3) since that may use global state in a
-  // non-thread-safe manner. Instead, we need to use readdir_r(3) which only
-  // uses user-supplied buffers.
-
-  // There's a fairly convoluted POSIX-compliant way via fpathconf(3) to
-  // allocate a dirent with a big enough buffer for the filename. Or, we can
-  // exploit the fact that this is Linux and that dirent.d_name is char[255].
-
-  dirent child{};
   dirent* result = nullptr;
-
   errno = 0;
-  while (readdir_r(dir, &child, &result) == 0 && result != nullptr) {
+  while ((result = readdir(dir)) != nullptr) {
     // Skip navigation entries
-    if (strcmp(".", child.d_name) == 0 || strcmp("..", child.d_name) == 0) {
+    if (strcmp(".", result->d_name) == 0 || strcmp("..", result->d_name) == 0) {
       continue;
     }
 
     errno = 0;
     char* endptr = nullptr;
-    uint32_t item = strtoul(child.d_name, &endptr, /*base*/ 10);
+    uint32_t item = strtoul(result->d_name, &endptr, /*base*/ 10);
     if (errno != 0 || *endptr != '\0') {
       continue; // unable to parse item
     }
