@@ -70,18 +70,21 @@ The complete flow for tracing-downloading-analyzing is as follows:
 2. Download the trace on a host. This can be done in a few ways:
 
    a. Navigate to python/ and run
-      `python3 -m profilo.profilo pull_last_trace <your_application_package>`
+
+      `python3 -m profilo.profilo pull_traces --last <your_application_package>`
 
       In this case:
 
-      `python3 -m profilo.profilo pull_last_trace com.facebook.profilo.sample`
+      `python3 -m profilo.profilo pull_traces --last com.facebook.profilo.sample`
+
 
    b. Navigate to `python/profilo/device`, start an interactive Python shell, and
       use the "device" module directly:
 
       ```
-import device
-device.pull_last_trace('com.example.package.name')
+      import device
+
+      device.pull_last_trace("com.example.package.name")
       ```
 
    Both approaches will result in a file with the same name as the trace to be created in the current directory.

@@ -223,7 +223,16 @@ def list_traces(package):
     return traces
 
 
-def pull_last_trace(package):
+def copy_to_host(package, trace):
+    if _pull_trace(package, trace):
+        print(trace.file_name)
+        return(trace.file_name)
+    else:
+        print("Error pulling trace {}".format(trace.file_name))
+        return None
+
+
+def get_traces(package):
     while True:
         try:
             traces = list_traces(package)
@@ -233,18 +242,28 @@ def pull_last_trace(package):
         except Exception as e:
             print(str(e) + ". Exiting", file=sys.stderr)
             sys.exit(1)
+    return traces
 
+
+def pull_all_traces(package):
+    traces = get_traces(package)
+    for trace in traces:
+        copy_to_host(package, trace)
+
+
+def pull_n_traces(package, n):
+    traces = get_traces(package)
+    traces.sort(key=lambda x: x.modified_time, reverse=True)
+    for trace in traces[:n]:
+        copy_to_host(package, trace)
+
+
+def pull_last_trace(package):
+    traces = get_traces(package)
     if not traces:
         print("Could not find any traces for package", package, file=sys.stderr)
         return None
 
     last_trace = max(traces, key=lambda x: x.modified_time)
 
-    if _pull_trace(package, last_trace):
-        # HACK: print out trace file name so that fbsystrace can read output to find which
-        # was pulled. This should be removed after fbsystrace upgrade to python3 so that
-        # we can directly call this function from fbsystrace.
-        print(last_trace.file_name)
-        return last_trace.file_name
-    else:
-        return None
+    return copy_to_host(package, last_trace)

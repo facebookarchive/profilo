@@ -16,15 +16,25 @@ limitations under the License.
 
 
 import argparse
-from .device.device import pull_last_trace
+from .device.device import pull_last_trace, pull_all_traces, pull_n_traces
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Profilo commandline utility!")
-    parser.add_argument('command', type=str, choices=['pull_last_trace'],
-        help="Pull most recent trace file")
-    parser.add_argument('package', type=str,
-        help="Specify the package name using Profilo, e.g. com.foo.bar")
+    subparsers = parser.add_subparsers(help="Subparsers")
+
+    pull = subparsers.add_parser("pull_traces", help="Pull traces from the device")
+    group = pull.add_mutually_exclusive_group(required=True)
+    group.add_argument("--last", action="store_true", help="Pull only the last trace")
+    group.add_argument("--all", action="store_true", help="Pull all existing traces")
+    group.add_argument("--count", type=int, help="Pull the last COUNT traces")
+
+    parser.add_argument("package", type=str, help="Specify the package name using Profilo, e.g. com.foo.bar")
+
     args = parser.parse_args()
 
-    if args.command == 'pull_last_trace':
+    if args.last:
         pull_last_trace(args.package)
+    elif args.all:
+        pull_all_traces(args.package)
+    else:
+        pull_n_traces(args.package, args.count)
