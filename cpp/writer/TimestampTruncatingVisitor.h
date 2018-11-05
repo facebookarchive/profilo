@@ -40,7 +40,6 @@ class TimestampTruncatingVisitor : public EntryVisitor {
 
  private:
   EntryVisitor& delegate_;
-  int64_t denominator_;
 
   template <class T>
   T truncateTimestamp(const T& entry);
