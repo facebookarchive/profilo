@@ -58,17 +58,19 @@ pip3 install -r requirements<span class="hljs-selector-class">.txt</span>
 <ol>
 <li><p>Start and stop a trace in the app. (You can use the sample app to play with traces)</p></li>
 <li><p>Download the trace on a host. This can be done in a few ways:</p>
-<p>a. Navigate to python/ and run
-<code>python3 -m profilo.profilo pull_last_trace &lt;your_application_package&gt;</code></p>
+<p>a. Navigate to python/ and run</p>
+<p><code>python3 -m profilo.profilo pull_traces --last &lt;your_application_package&gt;</code></p>
 <p>In this case:</p>
-<p><code>python3 -m profilo.profilo pull_last_trace com.facebook.profilo.sample</code></p>
+<p><code>python3 -m profilo.profilo pull_traces --last com.facebook.profilo.sample</code></p></li>
+</ol>
 <p>b. Navigate to <code>python/profilo/device</code>, start an interactive Python shell, and
 use the &quot;device&quot; module directly:</p>
-<pre><code class="hljs"></code></pre></li>
-</ol>
-<p>import device
-device.pull_last_trace('com.example.package.name')
-```</p>
+<pre><code class="hljs">  ```
+  import device
+
+  device.pull_last_trace(&quot;com.example.package.name&quot;)
+  ```
+</code></pre>
 <p>Both approaches will result in a file with the same name as the trace to be created in the current directory.</p>
 <ol start="3">
 <li><p>Analyze the data. A sample demo script is provided in <code>python/profilo/workflow_demo.py</code>.</p>
