@@ -97,21 +97,6 @@ std::vector<std::pair<std::string, std::string>> calculateHeaders() {
   result.reserve(4);
 
   {
-    try {
-      auto rewriteInfoCls = fbjni::findClassLocal(
-          "com/facebook/tools/dextr/"
-          "runtime/rewriterinternals/RewriteInfo");
-      auto callmapField =
-          rewriteInfoCls->getStaticField<jstring>("CALLMAP_UUID");
-      auto callmapValue = rewriteInfoCls->getStaticFieldValue(callmapField);
-
-      result.push_back(std::make_pair("cmap", callmapValue->toStdString()));
-    } catch (...) {
-      // Safe to ignore.
-    }
-  }
-
-  {
     std::stringstream ss;
     ss << getpid();
     result.push_back(std::make_pair("pid", ss.str()));
