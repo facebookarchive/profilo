@@ -153,11 +153,11 @@ namespace {
 enum StatFileType : int8_t {
   STAT = 0,
   SCHEDSTAT = 1,
-  SCHED = 2,
-  IO = 3,
+  SCHED = 1 << 1,
+  IO = 1 << 2,
 };
 
-static const std::array<int32_t, 4> kFileStats = {
+static const std::array<int32_t, 5> kFileStats = {
     /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS |
         StatType::CPU_NUM | StatType::KERNEL_CPU_TIME | StatType::MINOR_FAULTS,
     /*SCHEDSTAT*/ StatType::HIGH_PRECISION_CPU_TIME |
@@ -165,6 +165,7 @@ static const std::array<int32_t, 4> kFileStats = {
     /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
         StatType::NR_INVOLUNTARY_SWITCHES | StatType::IOWAIT_SUM |
         StatType::IOWAIT_COUNT,
+    0,
     /*IO*/ StatType::READ_BYTES | StatType::WRITE_BYTES,
 };
 
