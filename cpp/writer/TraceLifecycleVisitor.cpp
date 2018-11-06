@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <util/common.h>
 #include <zlib.h>
 #include <sstream>
 #include <system_error>
@@ -153,20 +154,7 @@ void ensureFolder(const char* folder) {
     }
 
     // errno == ENOENT, folder needs creating
-    if (mkdirat(
-            0 /*dirfd, assumes trace_folder is absolute,
-                will error out otherwise*/
-            ,
-            folder,
-            S_IRWXU | S_IRWXG)) {
-      // Time of check to time of usage race between processes.
-      if (errno == EEXIST) {
-        return;
-      }
-
-      std::string error = std::string("Could not mkdirat() folder ") + folder;
-      throw std::system_error(errno, std::system_category(), error);
-    }
+    mkdirs(folder);
   }
 }
 

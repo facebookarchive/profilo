@@ -26,5 +26,9 @@ int32_t threadID();
 // Returns 0 if value was not found, and 1 if value <= 1, actual value otherwise
 int32_t systemClockTickIntervalMs();
 
+// Given a path, create the directory specified by it, along with all
+// intermediate directories
+void mkdirs(char const* dir);
+
 } // namespace profilo
 } // namespace facebook

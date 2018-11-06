@@ -230,7 +230,6 @@ public class FileManager {
     // Update the trace folder
     if (sNeedsFolderUpdate) {
       if (mTargetBaseFolder.exists() || mTargetBaseFolder.mkdirs()) {
-        mBaseFolder = mTargetBaseFolder;
         sNeedsFolderUpdate = false;
       }
     }

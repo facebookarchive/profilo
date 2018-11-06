@@ -16,8 +16,11 @@
 
 #include "common.h"
 
+#include <sys/stat.h>
 #include <algorithm>
 #include <chrono>
+#include <sstream>
+#include <system_error>
 
 #if defined(__linux__) || defined(ANDROID)
 #include <sys/syscall.h> // __NR_gettid, __NR_clock_gettime
@@ -70,6 +73,42 @@ int32_t systemClockTickIntervalMs() {
 #else
 #error "Do not have systemClockTickIntervalMs implementation for this platform"
 #endif
+
+// Creates the directory specified by a path, creating intermediate
+// directories as needed
+void mkdirs(char const* dir) {
+  auto len = strlen(dir);
+  char partial[len];
+  memset(partial, 0, len);
+  strcpy(partial, dir);
+  struct stat s {};
+  char* delim;
+
+  // Iterate our path backwards until we find a string we can stat(), which
+  // is an indicator of an existent directory
+  while (stat(partial, &s)) {
+    delim = strrchr(partial, '/');
+    *delim = 0;
+  }
+
+  // <partial> now contains a path to a directory that actually exists, so
+  // create all the intermediate directories until we finally have the
+  // file system hierarchy specified by <dir>
+  while (delim != nullptr && delim != partial + len) {
+    *delim = '/';
+    delim = strchr(delim + 1, '\0');
+    if (mkdirat(0, partial, S_IRWXU | S_IRWXG)) {
+      if (errno != EEXIST) {
+        std::stringstream ss;
+        ss << "Could not mkdirat() folder ";
+        ss << partial;
+        ss << ", errno = ";
+        ss << strerror(errno);
+        throw std::system_error(errno, std::system_category(), ss.str());
+      }
+    }
+  }
+}
 
 } // namespace profilo
 } // namespace facebook
