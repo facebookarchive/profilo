@@ -61,11 +61,21 @@ public final class ProcessMetadataProvider extends BaseTraceProvider {
   }
 
   private void logProcessList() {
-    ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-    if (am == null) {
+    List<ActivityManager.RunningAppProcessInfo> infos;
+    try {
+      ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+      if (am == null) {
+        return;
+      }
+      infos = am.getRunningAppProcesses();
+    } catch (Throwable ex) {
+      // IPC calls can fail for seemingly random reasons. Various layers in the
+      // framework end up wrapping the exceptions, so we can't look for the
+      // specific type.
+      // In any case, there's nothing we can do here.
       return;
     }
-    List<ActivityManager.RunningAppProcessInfo> infos = am.getRunningAppProcesses();
+
     String processes = null;
     if (infos != null) {
       StringBuilder sb = new StringBuilder();
