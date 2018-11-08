@@ -212,6 +212,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
     return tracingProviders;
   }
 
+  @DoNotStrip
   public static class WhitelistApi {
     // Allow lazy loading of native lib whenever any Whitelist
     // API (add/remove) is called
@@ -219,10 +220,12 @@ public final class SystemCounterThread extends BaseTraceProvider {
       SoLoader.loadLibrary("profilo_systemcounters");
     }
 
+    @DoNotStrip
     public static void add(int threadId) {
       nativeAddToWhitelist(threadId);
     }
 
+    @DoNotStrip
     public static void remove(int threadId) {
       nativeRemoveFromWhitelist(threadId);
     }
