@@ -15,6 +15,7 @@
  */
 
 #include <profilo/writer/PrintEntryVisitor.h>
+#include <fmt/format.h>
 
 namespace facebook {
 namespace profilo {
@@ -23,43 +24,43 @@ namespace writer {
 PrintEntryVisitor::PrintEntryVisitor(std::ostream& stream) : stream_(stream) {}
 
 void PrintEntryVisitor::visit(const StandardEntry& data) {
-  stream_ << data.id;
+  stream_ << fmt::format_int{data.id}.c_str();
   stream_ << '|';
   stream_ << entries::to_string((EntryType)data.type);
   stream_ << '|';
-  stream_ << data.timestamp;
+  stream_ << fmt::format_int{data.timestamp}.c_str();
   stream_ << '|';
-  stream_ << data.tid;
+  stream_ << fmt::format_int{data.tid}.c_str();
   stream_ << '|';
-  stream_ << data.callid;
+  stream_ << fmt::format_int{data.callid}.c_str();
   stream_ << '|';
-  stream_ << data.matchid;
+  stream_ << fmt::format_int{data.matchid}.c_str();
   stream_ << '|';
-  stream_ << data.extra;
+  stream_ << fmt::format_int{data.extra}.c_str();
   stream_ << '\n';
 }
 
 void PrintEntryVisitor::visit(const FramesEntry& data) {
   for (size_t idx = 0; idx < data.frames.size; ++idx) {
-    stream_ << data.id;
+    stream_ << fmt::format_int{data.id}.c_str();
     stream_ << '|';
     stream_ << entries::to_string((EntryType)data.type);
     stream_ << '|';
-    stream_ << data.timestamp;
+    stream_ << fmt::format_int{data.timestamp}.c_str();
     stream_ << '|';
-    stream_ << data.tid;
+    stream_ << fmt::format_int{data.tid}.c_str();
     stream_ << "|0|0|";
-    stream_ << data.frames.values[idx];
+    stream_ << fmt::format_int{data.frames.values[idx]}.c_str();
     stream_ << '\n';
   }
 }
 
 void PrintEntryVisitor::visit(const BytesEntry& data) {
-  stream_ << data.id;
+  stream_ << fmt::format_int{data.id}.c_str();
   stream_ << '|';
   stream_ << entries::to_string((EntryType)data.type);
   stream_ << '|';
-  stream_ << data.matchid;
+  stream_ << fmt::format_int{data.matchid}.c_str();
   stream_ << '|';
   {
     char _bytes_buf[data.bytes.size + 1];

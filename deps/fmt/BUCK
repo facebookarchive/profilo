@@ -1,0 +1,18 @@
+load("//tools/build_defs:glob_defs.bzl", "subdir_glob")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_oss_xplat_cxx_library")
+
+profilo_oss_xplat_cxx_library(
+    name = "fmt",
+    srcs = glob([
+        "fmt-5.2.0/src/*.cc",
+    ]),
+    header_namespace = "",
+    exported_headers = subdir_glob([
+        ("fmt-5.2.0/include", "fmt/*.h"),
+    ]),
+    compiler_flags = [
+        "-Wno-missing-prototypes",
+    ],
+    soname = "libfmt.$(ext)",
+    visibility = ["PUBLIC"],
+)

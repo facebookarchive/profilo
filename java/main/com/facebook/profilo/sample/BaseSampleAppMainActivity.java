@@ -128,11 +128,11 @@ public abstract class BaseSampleAppMainActivity extends Activity {
 
   private BaseTraceProvider[] calculateProviders() {
     BaseTraceProvider[] result = new BaseTraceProvider[BuildConfig.PROVIDERS.length];
-      int idx = 0;
-      for (String provider : BuildConfig.PROVIDERS) {
-        result[idx++] = createProvider(provider);
-      }
-      return result;
+    int idx = 0;
+    for (String provider : BuildConfig.PROVIDERS) {
+      result[idx++] = createProvider(provider);
+    }
+    return result;
     }
 
   protected int getProvidersToEnable() {
