@@ -61,6 +61,9 @@ public final class SystemCounterThread extends BaseTraceProvider {
   @GuardedBy("this") private boolean mAllThreadsMode;
 
   @GuardedBy("this")
+  private SystemCounterLogger mSystemCounterLogger;
+
+  @GuardedBy("this")
   private volatile boolean mHighFrequencyMode;
 
   public SystemCounterThread() {
@@ -74,6 +77,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
   public SystemCounterThread(@Nullable Runnable periodicWork) {
     super("profilo_systemcounters");
     mExtraRunnable = periodicWork;
+    mSystemCounterLogger = new SystemCounterLogger();
   }
 
   private static native HybridData initHybrid();
@@ -123,7 +127,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
     switch (what) {
       case MSG_SYSTEM_COUNTERS:
-        SystemCounterLogger.logSystemCounters();
+        mSystemCounterLogger.logProcessCounters();
         logCounters();
         if (mExtraRunnable != null) {
           mExtraRunnable.run();
@@ -149,6 +153,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
       mHighFrequencyMode = false;
       mAllThreadsMode = true;
       Debug.startAllocCounting();
+      mSystemCounterLogger.reset();
       mHandler
           .obtainMessage(MSG_SYSTEM_COUNTERS, DEFAULT_COUNTER_PERIODIC_TIME_MS, 0)
           .sendToTarget();
@@ -167,7 +172,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
   protected synchronized void disable() {
     if (mEnabled) {
       // inject one last time before shutting down.
-      SystemCounterLogger.logSystemCounters();
+      mSystemCounterLogger.logProcessCounters();
       if (mAllThreadsMode) {
         logCounters();
       }
