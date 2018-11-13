@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#pragma once
+
 #include <unistd.h>
 #include <atomic>
 #include <type_traits>

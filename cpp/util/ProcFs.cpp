@@ -445,16 +445,16 @@ TaskSchedFile::TaskSchedFile(uint32_t tid)
       value_offsets_(),
       initialized_(false),
       value_size_(),
+      buffer_(),
       availableStatsMask(0) {}
 
 SchedInfo TaskSchedFile::doRead(int fd, uint32_t requested_stats_mask) {
-  constexpr size_t kMaxStatLineLength = 4096;
-  char buffer[kMaxStatLineLength]{};
-  int size = read(fd, buffer, sizeof(buffer) - 1);
+  int size = read(fd, buffer_, kMaxStatFileLength - 1);
   if (size < 0) {
     throw std::system_error(
         errno, std::system_category(), "Could not read stat file");
   }
+  char* endfile = buffer_ + size;
 
   if (!initialized_) {
     struct KnownKey {
@@ -468,52 +468,56 @@ SchedInfo TaskSchedFile::doRead(int fd, uint32_t requested_stats_mask) {
          {"se.statistics.iowait_count", StatType::IOWAIT_COUNT},
          {"se.statistics.iowait_sum", StatType::IOWAIT_SUM}}};
 
-    auto endline = std::strchr(buffer, '\n');
+    // Skip 2 lines.
+    auto endline = std::strchr(buffer_, '\n');
     if (endline == nullptr) {
       throw std::runtime_error("Unexpected file format");
     }
-
-    auto endline_2 = std::strchr(endline + 1, '\n');
+    endline = std::strchr(endline + 1, '\n');
     if (endline == nullptr) {
       throw std::runtime_error("Unexpected file format");
     }
-
-    auto line_len = std::distance(endline, endline_2);
-    auto pos = endline_2 + 1;
 
     // The stat file line is in the form of key:value record with fixed line
-    // length. The key is aligned to the left and the value is aligned to the
+    // length per metric, but which can vary depending on a metric name.
+    // The key is aligned to the left and the value is aligned to the
     // right:  "key     :     value"
     // In the loop we parse the buffer line by line reading the key-value pairs.
     // If key is in the known keys (kKnownKeys) we calculate a global offset to
     // the value in the file and record it for fast access in the future.
-    for (; pos < buffer + size; pos += line_len) {
-      auto key_end = strchr(pos, ' ');
-      if (key_end == nullptr) {
+    for (auto pos = endline + 1; pos < endfile;) {
+      // Sometimes colon delimiter can go right after key ("key:") and we should
+      // account for this case too.
+      auto key_end = std::strchr(pos, ' ');
+      auto delim = std::strchr(pos, ':');
+      if (key_end == nullptr || delim == nullptr) {
         break;
       }
-      auto key_len = std::distance(pos, key_end);
+      auto key_len =
+          std::min(std::distance(pos, key_end), std::distance(pos, delim));
+
       auto known_key = std::find_if(
           kKnownKeys.begin(),
           kKnownKeys.end(),
           [pos, key_len](KnownKey const& key) {
             return std::strncmp(key.key, pos, key_len) == 0;
           });
-
-      if (known_key == kKnownKeys.end()) {
-        continue;
+      if (known_key != kKnownKeys.end()) {
+        int value_offset = std::distance(buffer_, delim) + 1;
+        value_offsets_.push_back(std::make_pair(known_key->type, value_offset));
+        availableStatsMask |= known_key->type;
       }
-
-      auto delim = strchr(key_end, ':');
-      if (delim == nullptr) {
+      // Switch to the next line.
+      pos = std::strchr(delim, '\n');
+      if (!pos) {
         break;
       }
-      int value_offset = std::distance(buffer, delim) + 1;
       if (!value_size_) {
-        value_size_ = line_len - 1 - std::distance(pos, delim);
+        // Saving allocated space for value (fixed size for all stats) to detect
+        // truncated values.
+        value_size_ = std::distance(delim, pos);
       }
-      value_offsets_.push_back(std::make_pair(known_key->type, value_offset));
-      availableStatsMask |= known_key->type;
+      ++pos;
     }
 
     initialized_ = true;
@@ -528,14 +532,16 @@ SchedInfo TaskSchedFile::doRead(int fd, uint32_t requested_stats_mask) {
     auto key_type = entry.first;
     auto value_offset = entry.second;
 
-    if (value_offset >= size) {
-      throw std::runtime_error(
-          "Error trying to read value by pre-defined offset");
+    if (value_offset + value_size_ > size) {
+      // Possibly truncated value, ignoring.
+      continue;
     }
     errno = 0;
-    auto value = strtoul(buffer + value_offset, nullptr, 10);
-    if (errno == ERANGE) {
-      throw std::runtime_error("Value out of range");
+    char* endptr;
+    auto value = strtoul(buffer_ + value_offset, &endptr, 10);
+    if (errno == ERANGE || (buffer_ + value_offset) == endptr ||
+        endptr > endfile) {
+      throw std::runtime_error("Could not parse value");
     }
 
     switch (key_type) {
@@ -614,7 +620,7 @@ void VmStatFile::recalculateOffsets() {
   auto nextKey = keys_.begin();
   auto keys_end = keys_.end();
   while (nextKey < keys_end && (end = std::strchr(start, '\n'))) {
-    if (end >= buffer_ + read_) {
+    if (std::distance(buffer_, end) > read_) {
       break;
     }
 

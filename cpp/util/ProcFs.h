@@ -175,14 +175,18 @@ class TaskSchedFile : public BaseStatFile<SchedInfo> {
         value_offsets_(),
         initialized_(false),
         value_size_(),
+        buffer_(),
         availableStatsMask(0) {}
 
   SchedInfo doRead(int fd, uint32_t requested_stats_mask) override;
 
  private:
+  static const size_t kMaxStatFileLength = 4096;
+
   std::vector<std::pair<int32_t, int32_t>> value_offsets_;
   bool initialized_;
   int32_t value_size_;
+  char buffer_[kMaxStatFileLength];
 
  public:
   int32_t availableStatsMask;
