@@ -239,7 +239,7 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   data = skipUntil(data, end, ' '); // flags
 
   char* endptr = nullptr;
-  long minflt = strtol(data, &endptr, 10); // minflt
+  auto minflt = strtoull(data, &endptr, 10); // minflt
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse minflt");
   }
@@ -248,7 +248,7 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   data = skipUntil(data, end, ' '); // cminflt
 
   endptr = nullptr;
-  long majflt = strtol(data, &endptr, 10); // majflt
+  auto majflt = strtoull(data, &endptr, 10); // majflt
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse majflt");
   }
@@ -257,14 +257,14 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   data = skipUntil(data, end, ' '); // cmajflt
 
   endptr = nullptr;
-  long utime = strtol(data, &endptr, 10); // utime
+  auto utime = strtoull(data, &endptr, 10); // utime
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse utime");
   }
   data = skipUntil(endptr, end, ' ');
 
   endptr = nullptr;
-  long stime = strtol(data, &endptr, 10); // stime
+  auto stime = strtoull(data, &endptr, 10); // stime
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse stime");
   }
@@ -337,7 +337,7 @@ parseIoStatFile(char* data, size_t size, uint32_t requested_stats_mask) {
   }
   data = keyEnd;
   char* endptr = nullptr;
-  auto readBytes = strtol(data, &endptr, 10);
+  auto readBytes = strtoull(data, &endptr, 10);
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse read_bytes");
   }
@@ -350,7 +350,7 @@ parseIoStatFile(char* data, size_t size, uint32_t requested_stats_mask) {
   }
   data = keyEnd;
   endptr = nullptr;
-  auto writeBytes = strtol(data, &endptr, 10);
+  auto writeBytes = strtoull(data, &endptr, 10);
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse write_bytes");
   }
@@ -380,20 +380,20 @@ SchedstatInfo parseSchedstatFile(char* data, size_t size) {
   const char* end = (data + size);
 
   char* endptr = nullptr;
-  int64_t run_time_ns = strtoll(data, &endptr, 10); // run time
+  auto run_time_ns = strtoull(data, &endptr, 10); // run time
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse run time");
   }
   data = skipUntil(endptr, end, ' ');
   endptr = nullptr;
-  long long wait_time_ns = strtoll(data, &endptr, 10); // run time
+  auto wait_time_ns = strtoull(data, &endptr, 10); // run time
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse wait time");
   }
 
   SchedstatInfo info{};
-  info.cpuTimeMs = (long)(run_time_ns / 1000000);
-  info.waitToRunTimeMs = (long)(wait_time_ns / 1000000);
+  info.cpuTimeMs = run_time_ns / 1000000;
+  info.waitToRunTimeMs = wait_time_ns / 1000000;
 
   return info;
 }
@@ -538,7 +538,7 @@ SchedInfo TaskSchedFile::doRead(int fd, uint32_t requested_stats_mask) {
     }
     errno = 0;
     char* endptr;
-    auto value = strtoul(buffer_ + value_offset, &endptr, 10);
+    auto value = strtoull(buffer_ + value_offset, &endptr, 10);
     if (errno == ERANGE || (buffer_ + value_offset) == endptr ||
         endptr > endfile) {
       throw std::runtime_error("Could not parse value");

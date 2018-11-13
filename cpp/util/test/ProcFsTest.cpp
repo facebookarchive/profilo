@@ -55,7 +55,7 @@ static const std::string SCHED_CONTENT =
     "se.statistics.iowait_count                   :                   14\n"
     "avg_per_cpu                                  :            21.523231\n"
     "nr_switches                                  :                   60\n"
-    "nr_voluntary_switches                        :                   14\n"
+    "nr_voluntary_switches                        :   572848514115728485\n"
     "nr_involuntary_switches                      :                   46\n"
     "prio                                         :                  120\n"
     "clock-delta                                  :                  573\n";
@@ -122,7 +122,7 @@ static const std::string IOSTAT_CONTENT =
     "syscr: 34\n"
     "syscw: 0\n"
     "read_bytes: 401408\n"
-    "write_bytes: 3245\n"
+    "write_bytes: 572848514115728485\n"
     "cancelled_write_bytes: 0";
 
 class ProcFsTest : public ::testing::Test {
@@ -156,7 +156,7 @@ TEST_F(ProcFsTest, testSchedFile) {
 
   EXPECT_EQ(schedInfo.iowaitCount, 14);
   EXPECT_EQ(schedInfo.iowaitSum, 21);
-  EXPECT_EQ(schedInfo.nrVoluntarySwitches, 14);
+  EXPECT_EQ(schedInfo.nrVoluntarySwitches, 572848514115728485);
   EXPECT_EQ(schedInfo.nrInvoluntarySwitches, 46);
 }
 
@@ -240,7 +240,7 @@ TEST_F(ProcFsTest, testIoStatFile) {
   DiskIoInfo statInfo = statFile.refresh(ALL_STATS_MASK);
 
   EXPECT_EQ(statInfo.readBytes, 401408);
-  EXPECT_EQ(statInfo.writeBytes, 3245);
+  EXPECT_EQ(statInfo.writeBytes, 572848514115728485);
 }
 
 } // namespace util

@@ -117,8 +117,8 @@ inline void logNonMonotonicCounter(
 }
 
 inline void logMonotonicCounter(
-    long prev,
-    long curr,
+    uint64_t prev,
+    uint64_t curr,
     int tid,
     int64_t time,
     uint32_t quicklog_id,
@@ -141,8 +141,8 @@ logCPUTimeCounter(long prevCpuTime, long currCpuTime, int tid, int64_t time) {
 }
 
 inline void logCPUWaitTimeCounter(
-    long prevCpuWaitTime,
-    long currCpuWaitTime,
+    uint64_t prevCpuWaitTime,
+    uint64_t currCpuWaitTime,
     int tid,
     int64_t time) {
   const auto kThresholdMs = 1;

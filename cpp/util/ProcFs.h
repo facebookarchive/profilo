@@ -56,30 +56,30 @@ enum ThreadState : int {
 
 // Struct for data from /proc/self/task/<pid>/stat
 struct TaskStatInfo {
-  long cpuTime;
+  uint64_t cpuTime;
   ThreadState state;
-  long majorFaults;
-  long cpuNum;
-  long kernelCpuTimeMs;
-  long minorFaults;
+  uint64_t majorFaults;
+  uint8_t cpuNum;
+  uint64_t kernelCpuTimeMs;
+  uint64_t minorFaults;
 
   TaskStatInfo();
 };
 
 // Struct for data from /proc/self/task/<pid>/schedstat
 struct SchedstatInfo {
-  uint32_t cpuTimeMs;
-  uint32_t waitToRunTimeMs;
+  uint64_t cpuTimeMs;
+  uint64_t waitToRunTimeMs;
 
   SchedstatInfo();
 };
 
 // Struct for data from /proc/self/task/<pid>/sched
 struct SchedInfo {
-  uint32_t nrVoluntarySwitches;
-  uint32_t nrInvoluntarySwitches;
-  uint32_t iowaitSum;
-  uint32_t iowaitCount;
+  uint64_t nrVoluntarySwitches;
+  uint64_t nrInvoluntarySwitches;
+  uint64_t iowaitSum;
+  uint64_t iowaitCount;
 
   SchedInfo();
 };
@@ -101,8 +101,8 @@ struct VmStatInfo {
 
 // Struct for data from /proc/self/task/<pid>/io
 struct DiskIoInfo {
-  uint32_t readBytes;
-  uint32_t writeBytes;
+  uint64_t readBytes;
+  uint64_t writeBytes;
 
   DiskIoInfo();
 };
@@ -113,23 +113,23 @@ struct ThreadStatInfo {
   uint64_t monotonicStatTime;
 
   // STAT
-  long cpuTimeMs;
+  uint64_t cpuTimeMs;
   ThreadState state;
-  long majorFaults;
-  long cpuNum;
-  long kernelCpuTimeMs;
-  long minorFaults;
+  uint64_t majorFaults;
+  uint64_t cpuNum;
+  uint64_t kernelCpuTimeMs;
+  uint64_t minorFaults;
   // SCHEDSTAT
-  long highPrecisionCpuTimeMs;
-  long waitToRunTimeMs;
+  uint64_t highPrecisionCpuTimeMs;
+  uint64_t waitToRunTimeMs;
   // SCHED
-  long nrVoluntarySwitches;
-  long nrInvoluntarySwitches;
-  long iowaitSum;
-  long iowaitCount;
+  uint64_t nrVoluntarySwitches;
+  uint64_t nrInvoluntarySwitches;
+  uint64_t iowaitSum;
+  uint64_t iowaitCount;
   // IO
-  long readBytes;
-  long writeBytes;
+  uint64_t readBytes;
+  uint64_t writeBytes;
 
   uint32_t availableStatsMask;
 
