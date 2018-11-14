@@ -44,6 +44,7 @@ class Reader {
   // Calling this has no effect if read() is not concurrently running.
   // This call returns when run() is no longer reading events.
   virtual void stop() = 0;
+  virtual ~Reader() = default;
 };
 
 //

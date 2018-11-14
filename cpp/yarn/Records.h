@@ -97,6 +97,7 @@ struct RecordListener {
   virtual void onForkExit(const RecordForkExit& record) = 0;
   virtual void onLost(const RecordLost& record) = 0;
   virtual void onReaderStop() = 0;
+  virtual ~RecordListener() = default;
 };
 
 } // namespace yarn
