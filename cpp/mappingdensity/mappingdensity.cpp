@@ -23,6 +23,7 @@
 #include <sstream>
 #include <string>
 #include <system_error>
+#include <unistd.h>
 #include <vector>
 
 #include <fb/log.h>
@@ -35,8 +36,7 @@ namespace mappingdensity {
 
 void dumpMappingDensities(
     std::string const& mapRegexStr,
-    std::string const& outFile,
-    std::string const& dumpName) {
+    std::string const& outFile) {
   struct memorymap* maps = memorymap_snapshot(getpid());
   if (maps == nullptr) {
     FBLOGE("failed to take memorymap snapshot: %s", std::strerror(errno));
@@ -61,9 +61,7 @@ void dumpMappingDensities(
 
   size_t const pageSize = sysconf(_SC_PAGESIZE);
   std::vector<uint8_t> buf(maxSize / pageSize + 1);
-  std::stringstream ss;
-  ss << outFile << "/mincore_" << dumpName << "_" << getpid();
-  std::ofstream os(ss.str());
+  std::ofstream os(outFile);
   for (struct memorymap_vma const* vma = memorymap_first_vma(maps);
        vma != nullptr;
        vma = memorymap_vma_next(vma)) {
@@ -102,6 +100,7 @@ void dumpMappingDensities(
           memorymap_vma_file(vma),
           outFile.c_str(),
           std::strerror(errno));
+      unlink(outFile.c_str());
       break;
     }
   }

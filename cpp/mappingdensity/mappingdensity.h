@@ -24,8 +24,7 @@ namespace mappingdensity {
 
 void dumpMappingDensities(
     std::string const& mapRegexStr,
-    std::string const& outFile,
-    std::string const& dumpName);
+    std::string const& outFile);
 }
 } // namespace profilo
 } // namespace facebook

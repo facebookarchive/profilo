@@ -53,7 +53,6 @@ public abstract class BaseTraceProvider {
 
   private int mSavedProviders;
   private TraceContext mEnablingContext;
-  private File mExtraFolder;
   protected static final int EVERY_PROVIDER_CHANGE = 0xFFFFFFFF;
 
   @Nullable private String mSolib;
@@ -81,19 +80,19 @@ public abstract class BaseTraceProvider {
     }
   }
 
-  public final void onEnable(TraceContext context, File extraDataFolder) {
+  public final void onEnable(TraceContext context, @Nullable File extraDataFile) {
     ensureSolibLoaded();
-    processStateChange(context, extraDataFolder);
-    onTraceStarted(context, extraDataFolder);
+    processStateChange(context);
+    onTraceStarted(context, extraDataFile);
   }
 
-  public final void onDisable(TraceContext context, File extraDataFolder) {
+  public final void onDisable(TraceContext context, @Nullable File extraDataFile) {
     ensureSolibLoaded();
-    onTraceEnded(context, extraDataFolder);
-    processStateChange(context, extraDataFolder);
+    onTraceEnded(context, extraDataFile);
+    processStateChange(context);
   }
 
-  private void processStateChange(TraceContext context, File extraDataFolder) {
+  private void processStateChange(TraceContext context) {
     int providerMask = TraceEvents.enabledMask(getSupportedProviders());
 
     // Nothing changed - keep enabled
@@ -104,12 +103,10 @@ public abstract class BaseTraceProvider {
     if (mSavedProviders != 0) {
       disable();
       mEnablingContext = null;
-      mExtraFolder = null;
     }
     // Current provider is on => enable
     if (providerMask != 0) {
       mEnablingContext = context;
-      mExtraFolder = extraDataFolder;
       enable();
     }
     mSavedProviders = providerMask;
@@ -129,12 +126,12 @@ public abstract class BaseTraceProvider {
   /**
    * Called when any trace starts, regardless of whether any supported provider is enabled or not.
    */
-  protected void onTraceStarted(TraceContext context, File extraDataFolder) {
+  protected void onTraceStarted(TraceContext context, @Nullable File extraDataFile) {
     // noop
   }
 
   /** Called when any trace ends, regardless of whether any supported provider is enabled or not. */
-  protected void onTraceEnded(TraceContext context, File extraDataFolder) {
+  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
     // noop
   }
 
@@ -142,12 +139,6 @@ public abstract class BaseTraceProvider {
   @Nullable
   protected TraceContext getEnablingTraceContext() {
     return mEnablingContext;
-  }
-
-  /** Returns the extra data folder for the trace that enabled this provider, if any. */
-  @Nullable
-  protected File getExtraDataFolder() {
-    return mExtraFolder;
   }
 
   /** @return Supported provider mask (internal API) */

@@ -18,6 +18,7 @@ package com.facebook.profilo.core;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.file.zip.ZipHelper;
@@ -39,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
@@ -117,10 +119,10 @@ public final class TraceOrchestrator
     }
 
     TraceOrchestrator orchestrator =
-        new TraceOrchestrator(context, configProvider, providers, isMainProcess, traceFolder);
+        new TraceOrchestrator(context, configProvider, providers, processName, isMainProcess, traceFolder);
 
     if (sInstance.compareAndSet(null, orchestrator)) {
-      orchestrator.bind(context, controllers, processName);
+      orchestrator.bind(context, controllers);
     } else {
       throw new IllegalStateException("Orchestrator already initialized");
     }
@@ -155,6 +157,7 @@ public final class TraceOrchestrator
 
   private final TraceListenerManager mListenerManager;
   private final boolean mIsMainProcess;
+  private final String mProcessName;
 
   private final Random mRandom;
 
@@ -163,6 +166,7 @@ public final class TraceOrchestrator
       Context context,
       ConfigProvider configProvider,
       BaseTraceProvider[] BaseTraceProviders,
+      String processName,
       boolean isMainProcess,
       @Nullable File traceFolder) {
     mConfigProvider = configProvider;
@@ -172,6 +176,7 @@ public final class TraceOrchestrator
     mBackgroundUploadService = null;
     mRandom = new Random();
     mListenerManager = new TraceListenerManager();
+    mProcessName = processName;
     mIsMainProcess = isMainProcess;
     mTraces = new HashMap<>(2);
   }
@@ -182,7 +187,7 @@ public final class TraceOrchestrator
   })
   //VisibleForTesting
   /*package*/ void bind(
-      Context context, SparseArray<TraceController> controllers, String processName) {
+      Context context, SparseArray<TraceController> controllers) {
     Config initialConfig;
     synchronized (this) {
       mConfigProvider.setConfigUpdateListener(this);
@@ -200,7 +205,7 @@ public final class TraceOrchestrator
       Logger.initialize(
           mIsMainProcess ? RING_BUFFER_SIZE_MAIN_PROCESS : RING_BUFFER_SIZE_SECONDARY_PROCESS,
           folder,
-          processName,
+          mProcessName,
           this,
           this);
 
@@ -332,16 +337,6 @@ public final class TraceOrchestrator
     }
   }
 
-  private File getSanitizedTraceFolder(TraceContext context) {
-    File folder;
-    synchronized (this) {
-      folder = mFileManager.getFolder();
-    }
-    String sanitizedTraceID = context.encodedTraceId.replaceAll("[^a-zA-Z0-9\\-_.]", "_");
-    folder = new File(folder, sanitizedTraceID);
-    return folder;
-  }
-
   /**
    * Synchronous trace start with {@link TraceControl#startTrace(int, int, Object, int)}
    *
@@ -356,6 +351,26 @@ public final class TraceOrchestrator
     // However, don't do anything else blockingly.
   }
 
+  private File buildExtraFileName(TraceContext context, int providerId) {
+    Set<String> providerNames = ProvidersRegistry.getRegisteredProvidersByBitMask(providerId);
+    if (providerNames.isEmpty()) {
+      return null;
+    }
+
+    File mainFolder;
+    synchronized (this) {
+      mainFolder = mFileManager.getFolder();
+    }
+    String sanitizedTraceID = context.encodedTraceId.replaceAll("[^a-zA-Z0-9\\-_.]", "_");
+    File extraFolder = new File(new File(mainFolder, sanitizedTraceID), EXTRA_DATA_FOLDER_NAME);
+    if (!extraFolder.isDirectory() && !extraFolder.mkdirs()) {
+      return null;
+    }
+
+    return new File(
+        extraFolder, mProcessName + "-" + Process.myPid() + "-" + providerNames.iterator().next());
+  }
+
   /** Asynchronous portion of trace start. Should include non-critical code for Trace startup. */
   @Override
   public void onTraceStartAsync(TraceContext context) {
@@ -365,9 +380,8 @@ public final class TraceOrchestrator
     synchronized (this) {
       providers = mBaseTraceProviders;
     }
-    File folder = new File(getSanitizedTraceFolder(context), EXTRA_DATA_FOLDER_NAME);
     for (BaseTraceProvider provider : providers) {
-      provider.onEnable(context, folder);
+      provider.onEnable(context, buildExtraFileName(context, provider.getSupportedProviders()));
     }
     mListenerManager.onProvidersInitialized();
   }
@@ -392,11 +406,10 @@ public final class TraceOrchestrator
     // Decrement providers for current trace
     TraceEvents.disableProviders(context.enabledProviders);
 
-    File folder = new File(getSanitizedTraceFolder(context), EXTRA_DATA_FOLDER_NAME);
     int tracingProviders = 0;
     for (BaseTraceProvider provider : providers) {
       tracingProviders |= provider.getActiveProviders();
-      provider.onDisable(context, folder);
+      provider.onDisable(context, buildExtraFileName(context, provider.getSupportedProviders()));
     }
     mListenerManager.onProvidersStop(tracingProviders);
 
@@ -418,9 +431,8 @@ public final class TraceOrchestrator
     // Decrement providers for current trace
     TraceEvents.disableProviders(context.enabledProviders);
 
-    File folder = new File(getSanitizedTraceFolder(context), EXTRA_DATA_FOLDER_NAME);
     for (BaseTraceProvider provider : providers) {
-      provider.onDisable(context, folder);
+      provider.onDisable(context, buildExtraFileName(context, provider.getSupportedProviders()));
     }
   }
 

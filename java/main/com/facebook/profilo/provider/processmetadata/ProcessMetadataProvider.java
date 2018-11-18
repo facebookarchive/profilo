@@ -25,6 +25,7 @@ import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import java.io.File;
 import java.util.List;
+import javax.annotation.Nullable;
 
 public final class ProcessMetadataProvider extends BaseTraceProvider {
 
@@ -35,12 +36,12 @@ public final class ProcessMetadataProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceStarted(TraceContext context, File extraDataFolder) {
+  protected void onTraceStarted(TraceContext context, @Nullable File extraDataFile) {
     logProcessList();
   }
 
   @Override
-  protected void onTraceEnded(TraceContext context, File extraDataFolder) {
+  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
     logProcessList();
   }
 

@@ -13,12 +13,12 @@
  */
 package com.facebook.profilo.provider.mappingdensity;
 
-import android.util.Log;
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.proguard.annotations.DoNotStrip;
 import java.io.File;
+import javax.annotation.Nullable;
 
 @DoNotStrip
 public final class MappingDensityProvider extends BaseTraceProvider {
@@ -43,13 +43,21 @@ public final class MappingDensityProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceStarted(TraceContext context, File extraDataFolder) {
-    doDump(extraDataFolder, "start");
+  protected void onTraceStarted(TraceContext context, @Nullable File extraDataFile) {
+    if (mEnabled && extraDataFile != null) {
+      dumpMappingDensities(
+          "^/data/(data|app)",
+          new File(extraDataFile.getParentFile(), extraDataFile.getName() + "-start").getPath());
+    }
   }
 
   @Override
-  protected void onTraceEnded(TraceContext context, File extraDataFolder) {
-    doDump(extraDataFolder, "end");
+  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
+    if (mEnabled && extraDataFile != null) {
+      dumpMappingDensities(
+          "^/data/(data|app)",
+          new File(extraDataFile.getParentFile(), extraDataFile.getName() + "-end").getPath());
+    }
   }
 
   @Override
@@ -57,17 +65,8 @@ public final class MappingDensityProvider extends BaseTraceProvider {
     return PROVIDER_MAPPINGDENSITY;
   }
 
-  private static void doDump(File extraDataFolder, String dumpName) {
-    extraDataFolder.mkdirs();
-    if (extraDataFolder.exists()) {
-      dumpMappingDensities("^/data/(data|app)", extraDataFolder.getPath(), dumpName);
-    } else {
-      Log.w("Profilo/MappingDensity", "nonexistent extras directory: " + extraDataFolder.getPath());
-    }
-  }
-
   private static native void dumpMappingDensities(
-      String mapRegex, String extraDataFolderPath, String dumpName);
+      String mapRegex, String extraDataFile);
 
   @Override
   protected int getTracingProviders() {

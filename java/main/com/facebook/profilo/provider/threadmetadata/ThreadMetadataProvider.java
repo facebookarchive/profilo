@@ -19,6 +19,7 @@ package com.facebook.profilo.provider.threadmetadata;
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.ipc.TraceContext;
 import java.io.File;
+import javax.annotation.Nullable;
 
 public final class ThreadMetadataProvider extends BaseTraceProvider {
 
@@ -27,7 +28,7 @@ public final class ThreadMetadataProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceEnded(TraceContext context, File extraDataFolder) {
+  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
     nativeLogThreadMetadata();
   }
 

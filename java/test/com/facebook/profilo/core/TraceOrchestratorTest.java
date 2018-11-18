@@ -175,12 +175,12 @@ public class TraceOrchestratorTest {
             mContext,
             mConfigProvider,
             new BaseTraceProvider[] {mTraceProvider, mBaseTraceProvider},
+            TraceOrchestrator.MAIN_PROCESS_NAME,
             true, // isMainProcess
             null); // Default trace location
     mOrchestrator.bind(
         mContext,
-        new SparseArray<TraceController>(1),
-        TraceOrchestrator.MAIN_PROCESS_NAME);
+        new SparseArray<TraceController>(1));
   }
 
   @Test
