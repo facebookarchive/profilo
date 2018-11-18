@@ -83,8 +83,8 @@ public abstract class BaseTraceProvider {
 
   public final void onEnable(TraceContext context, File extraDataFolder) {
     ensureSolibLoaded();
-    onTraceStarted(context, extraDataFolder);
     processStateChange(context, extraDataFolder);
+    onTraceStarted(context, extraDataFolder);
   }
 
   public final void onDisable(TraceContext context, File extraDataFolder) {
