@@ -27,6 +27,7 @@ import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceEvents;
 import com.facebook.proguard.annotations.DoNotStrip;
+import com.facebook.soloader.DoNotOptimize;
 import com.facebook.soloader.SoLoader;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -217,7 +218,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
     return tracingProviders;
   }
 
-  @DoNotStrip
+  @DoNotOptimize
   public static class WhitelistApi {
     // Allow lazy loading of native lib whenever any Whitelist
     // API (add/remove) is called
@@ -225,12 +226,12 @@ public final class SystemCounterThread extends BaseTraceProvider {
       SoLoader.loadLibrary("profilo_systemcounters");
     }
 
-    @DoNotStrip
+    @DoNotOptimize
     public static void add(int threadId) {
       nativeAddToWhitelist(threadId);
     }
 
-    @DoNotStrip
+    @DoNotOptimize
     public static void remove(int threadId) {
       nativeRemoveFromWhitelist(threadId);
     }
