@@ -37,7 +37,7 @@ extern void* trampoline_data;
 
 inline void* trampoline_template_pointer() {
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
-  return reinterpret_cast<void*>(&trampoline_template);
+  return &trampoline_template;
 #else
   return 0;
 #endif

@@ -177,7 +177,7 @@ namespace trampoline {
 
 class trampoline {
  public:
-  trampoline(HookId id)
+  explicit trampoline(HookId id)
       : code_size_(
             reinterpret_cast<uintptr_t>(trampoline_data_pointer()) -
             reinterpret_cast<uintptr_t>(trampoline_template_pointer())),
@@ -191,6 +191,8 @@ class trampoline {
     *data++ = reinterpret_cast<uint32_t>(push_hook_stack);
     *data++ = reinterpret_cast<uint32_t>(pop_hook_stack);
     *data++ = reinterpret_cast<uint32_t>(id);
+
+     __builtin___clear_cache((char*) code_, (char*) code_ + code_size_ + trampoline_data_size());
 #endif
   }
 
@@ -199,9 +201,6 @@ class trampoline {
 
   trampoline& operator=(trampoline const&) = delete;
   trampoline& operator=(trampoline&&) = delete;
-
-  trampoline(void* existing_trampoline)
-      : code_size_(0), code_(existing_trampoline) {}
 
   void* code() const {
     return reinterpret_cast<void*>(code_);
