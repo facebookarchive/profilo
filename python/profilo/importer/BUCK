@@ -1,5 +1,5 @@
-load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 
 fb_native.python_library(
     name = "importer",
