@@ -140,7 +140,7 @@ public final class TraceInternal {
     invoke(sSetAppTracingAllowed, allowed);
   }
 
-  private static Object invoke(final Method method, final Object... args) {
+  private static @Nullable Object invoke(final Method method, final Object... args) {
     try {
       return method.invoke(null, (Object[]) args);
     } catch (IllegalAccessException e) {

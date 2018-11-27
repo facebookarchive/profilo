@@ -44,7 +44,7 @@ public final class SystemPropertiesInternal {
     public final Method getLong;
     public final Method set;
 
-    public static SystemPropertiesHiddenMembers newInstance() {
+    public static @Nullable SystemPropertiesHiddenMembers newInstance() {
       try {
         final Class systemProperties = Class.forName("android.os.SystemProperties");
 
