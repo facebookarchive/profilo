@@ -8,9 +8,9 @@ PROVIDER_TO_RULE - Map that links provider "short names" to the provider class a
                    those files.
 """
 
-load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
 
 PROVIDER_TO_RULE = {
     "atrace": profilo_path("java/main/com/facebook/profilo/provider/atrace:atrace"),
