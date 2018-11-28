@@ -1,4 +1,4 @@
-// @generated SignedSource<<77f56f4f12c62c0ba142dbf007a439b7>>
+// @generated SignedSource<<453f4c8decdfe20125e3f0e75c8100e6>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -85,8 +85,6 @@ const char* to_string(EntryType type) {
     case MAJOR_FAULT: return "MAJOR_FAULT";
     case YARN_LOST_RECORDS: return "YARN_LOST_RECORDS";
     case CLASS_LOAD: return "CLASS_LOAD";
-    case NATIVE_STACK_FRAME: return "NATIVE_STACK_FRAME";
-    case NATIVE_LIB_MAPPING: return "NATIVE_LIB_MAPPING";
     case JAVASCRIPT_STACK_FRAME: return "JAVASCRIPT_STACK_FRAME";
     case MESSAGE_START: return "MESSAGE_START";
     case MESSAGE_END: return "MESSAGE_END";

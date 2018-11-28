@@ -1,4 +1,4 @@
-// @generated SignedSource<<48e5b33f6e23857498abcd4546d4db72>>
+// @generated SignedSource<<799ec679189480c3e3299fad0fb92583>>
 
 package com.facebook.profilo.entries;
 
@@ -80,25 +80,23 @@ public class EntryType {
   public static final int MAJOR_FAULT = 73;
   public static final int YARN_LOST_RECORDS = 74;
   public static final int CLASS_LOAD = 75;
-  public static final int NATIVE_STACK_FRAME = 76;
-  public static final int NATIVE_LIB_MAPPING = 77;
-  public static final int JAVASCRIPT_STACK_FRAME = 78;
-  public static final int MESSAGE_START = 79;
-  public static final int MESSAGE_END = 80;
-  public static final int CLASS_VALUE = 81;
-  public static final int HTTP2_REQUEST_INITIATED = 82;
-  public static final int HTTP2_FRAME_HEADER = 83;
-  public static final int HTTP2_WINDOW_UPDATE = 84;
-  public static final int HTTP2_PRIORITY = 85;
-  public static final int HTTP2_EGRESS_FRAME_HEADER = 86;
-  public static final int PROCESS_LIST = 87;
-  public static final int IO_START = 88;
-  public static final int IO_END = 89;
-  public static final int CPU_COUNTER = 90;
-  public static final int CLASS_LOAD_START = 91;
-  public static final int CLASS_LOAD_END = 92;
-  public static final int CLASS_LOAD_FAILED = 93;
-  public static final int STRING_NAME = 94;
+  public static final int JAVASCRIPT_STACK_FRAME = 76;
+  public static final int MESSAGE_START = 77;
+  public static final int MESSAGE_END = 78;
+  public static final int CLASS_VALUE = 79;
+  public static final int HTTP2_REQUEST_INITIATED = 80;
+  public static final int HTTP2_FRAME_HEADER = 81;
+  public static final int HTTP2_WINDOW_UPDATE = 82;
+  public static final int HTTP2_PRIORITY = 83;
+  public static final int HTTP2_EGRESS_FRAME_HEADER = 84;
+  public static final int PROCESS_LIST = 85;
+  public static final int IO_START = 86;
+  public static final int IO_END = 87;
+  public static final int CPU_COUNTER = 88;
+  public static final int CLASS_LOAD_START = 89;
+  public static final int CLASS_LOAD_END = 90;
+  public static final int CLASS_LOAD_FAILED = 91;
+  public static final int STRING_NAME = 92;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -177,8 +175,6 @@ public class EntryType {
     "MAJOR_FAULT",
     "YARN_LOST_RECORDS",
     "CLASS_LOAD",
-    "NATIVE_STACK_FRAME",
-    "NATIVE_LIB_MAPPING",
     "JAVASCRIPT_STACK_FRAME",
     "MESSAGE_START",
     "MESSAGE_END",
