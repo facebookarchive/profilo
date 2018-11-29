@@ -128,6 +128,10 @@ public final class TraceOrchestrator
     }
   }
 
+  public FileManager getFileManager() {
+    return mFileManager;
+  }
+
   public static boolean isInitialized() {
     return (sInstance.get() != null);
   }

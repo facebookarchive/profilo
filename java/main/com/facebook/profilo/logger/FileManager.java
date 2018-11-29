@@ -315,7 +315,7 @@ public class FileManager {
     return mBaseFolder;
   }
 
-  private File getUploadFolder() {
+  public File getUploadFolder() {
     return mUploadFolder;
   }
 
