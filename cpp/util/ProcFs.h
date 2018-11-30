@@ -256,7 +256,10 @@ class ThreadCache {
   ThreadCache() = default;
 
   // Execute `function` for all currently existing threads.
-  void forEach(stats_callback_fn callback, uint32_t requested_stats_mask);
+  void forEach(
+      stats_callback_fn callback,
+      uint32_t requested_stats_mask,
+      const std::unordered_set<int32_t>* black_list = nullptr);
 
   void forThread(
       uint32_t tid,

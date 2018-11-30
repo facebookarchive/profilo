@@ -57,12 +57,16 @@ class SystemCounterThread
   std::unique_ptr<util::TaskIoFile> ioStats_;
   bool ioStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
+  bool highFrequencyMode_;
 
   void logProcessCounters();
   void logCpuFrequencyInfo();
   void logVmStatCounters();
   void logProcessSchedCounters();
   void logIoStatCounters();
+  void setHighFrequencyMode(bool enabled) {
+    highFrequencyMode_ = enabled;
+  }
 };
 
 } // namespace profilo

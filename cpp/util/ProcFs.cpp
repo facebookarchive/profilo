@@ -796,7 +796,8 @@ ThreadStatInfo ThreadStatHolder::getInfo() {
 
 void ThreadCache::forEach(
     stats_callback_fn callback,
-    uint32_t requested_stats_mask) {
+    uint32_t requested_stats_mask,
+    const std::unordered_set<int32_t>* black_list) {
   try {
     const auto& threads = util::threadListFromProcFs();
 
@@ -810,6 +811,9 @@ void ThreadCache::forEach(
     }
 
     for (auto tid : threads) {
+      if (black_list != nullptr && black_list->find(tid) != black_list->end()) {
+        continue;
+      }
       forThread(tid, callback, requested_stats_mask);
     }
   } catch (const std::system_error& e) {

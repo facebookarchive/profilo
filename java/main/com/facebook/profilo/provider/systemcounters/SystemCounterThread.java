@@ -91,6 +91,13 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   native void logTraceAnnotations();
 
+  native void nativeSetHighFrequencyMode(boolean enabled);
+
+  public void setHighFrequencyMode(boolean enabled) {
+    mHighFrequencyMode = enabled;
+    nativeSetHighFrequencyMode(enabled);
+  }
+
   @DoNotStrip
   static native void nativeAddToWhitelist(int targetThread);
 
@@ -151,7 +158,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
     mEnabled = true;
     initHandler();
     if (TraceEvents.isEnabled(PROVIDER_SYSTEM_COUNTERS)) {
-      mHighFrequencyMode = false;
+      setHighFrequencyMode(false);
       mAllThreadsMode = true;
       Debug.startAllocCounting();
       mSystemCounterLogger.reset();
@@ -162,7 +169,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
     if (TraceEvents.isEnabled(PROVIDER_HIGH_FREQ_THREAD_COUNTERS)) {
       // Add Main Thread to the whitelist
       WhitelistApi.add(Process.myPid());
-      mHighFrequencyMode = true;
+      setHighFrequencyMode(true);
       mHandler
           .obtainMessage(MSG_HIGH_FREQ_THREAD_COUNTERS, HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS, 0)
           .sendToTarget();
@@ -184,7 +191,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
     }
     mEnabled = false;
     mAllThreadsMode = false;
-    mHighFrequencyMode = false;
+    setHighFrequencyMode(false);
     if (mHybridData != null) {
       mHybridData.resetNative();
       mHybridData = null;

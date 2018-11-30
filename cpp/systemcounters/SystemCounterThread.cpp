@@ -128,33 +128,6 @@ inline void logMonotonicCounter(
   }
 }
 
-inline void
-logCPUTimeCounter(long prevCpuTime, long currCpuTime, int tid, int64_t time) {
-  const auto kThresholdMs = 1;
-  logMonotonicCounter(
-      prevCpuTime,
-      currCpuTime,
-      tid,
-      time,
-      QuickLogConstants::THREAD_CPU_TIME,
-      kThresholdMs);
-}
-
-inline void logCPUWaitTimeCounter(
-    uint64_t prevCpuWaitTime,
-    uint64_t currCpuWaitTime,
-    int tid,
-    int64_t time) {
-  const auto kThresholdMs = 1;
-  logMonotonicCounter(
-      prevCpuWaitTime,
-      currCpuWaitTime,
-      tid,
-      time,
-      QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
-      kThresholdMs);
-}
-
 static int64_t loadDecimal(int64_t load) {
   constexpr int64_t kLoadShift = 1 << SI_LOAD_SHIFT;
   return (load / kLoadShift) * 1000 + (load % kLoadShift) * 1000 / kLoadShift;
@@ -239,28 +212,31 @@ void threadCountersCallback(
   if (prevInfo.highPrecisionCpuTimeMs != 0 &&
       (currInfo.availableStatsMask & StatType::HIGH_PRECISION_CPU_TIME)) {
     // Don't log the initial value
-    logCPUTimeCounter(
+    logMonotonicCounter(
         prevInfo.highPrecisionCpuTimeMs,
         currInfo.highPrecisionCpuTimeMs,
         tid,
-        currInfo.monotonicStatTime);
+        currInfo.monotonicStatTime,
+        QuickLogConstants::THREAD_CPU_TIME);
   } else if (
       prevInfo.cpuTimeMs != 0 &&
       (currInfo.availableStatsMask & StatType::CPU_TIME)) {
     // Don't log the initial value
-    logCPUTimeCounter(
+    logMonotonicCounter(
         prevInfo.cpuTimeMs,
         currInfo.cpuTimeMs,
         tid,
-        currInfo.monotonicStatTime);
+        currInfo.monotonicStatTime,
+        QuickLogConstants::THREAD_CPU_TIME);
   }
   if (prevInfo.waitToRunTimeMs != 0 &&
       (currInfo.availableStatsMask & StatType::WAIT_TO_RUN_TIME)) {
-    logCPUWaitTimeCounter(
+    logMonotonicCounter(
         prevInfo.waitToRunTimeMs,
         currInfo.waitToRunTimeMs,
         tid,
-        currInfo.monotonicStatTime);
+        currInfo.monotonicStatTime,
+        QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME);
   }
   if (currInfo.availableStatsMask & StatType::MAJOR_FAULTS) {
     logMonotonicCounter(
@@ -381,6 +357,9 @@ void SystemCounterThread::registerNatives() {
           "logTraceAnnotations", SystemCounterThread::logTraceAnnotations),
       makeNativeMethod("nativeAddToWhitelist", addToWhitelist),
       makeNativeMethod("nativeRemoveFromWhitelist", removeFromWhitelist),
+      makeNativeMethod(
+          "nativeSetHighFrequencyMode",
+          SystemCounterThread::setHighFrequencyMode),
   });
 }
 
@@ -394,16 +373,35 @@ void SystemCounterThread::logCounters() {
 }
 
 void SystemCounterThread::logThreadCounters() {
+  // When collecting counters for all threads and in high frequency mode then
+  // thread ids from the high frequency whitelist should be ignored.
+  // Making a copy of whitelist here to avoid holding the whitelist lock while
+  // collecting counter data.
+  std::unordered_set<int32_t> ignoredTids;
+  if (highFrequencyMode_) {
+    auto& whitelistState = getWhitelistState();
+    std::unique_lock<std::mutex> lockT(whitelistState.whitelistMtx);
+    ignoredTids = whitelistState.whitelistedThreads;
+  }
+
   std::lock_guard<std::mutex> lock(mtx_);
-  cache_.forEach(&threadCountersCallback, kAllThreadsStatsMask);
+  cache_.forEach(
+      &threadCountersCallback,
+      kAllThreadsStatsMask,
+      highFrequencyMode_ ? &ignoredTids : nullptr);
 }
 
 void SystemCounterThread::logHighFrequencyThreadCounters() {
-  // Whitelist thread profiling mode
+  std::unordered_set<int32_t> whitelist;
   auto& whitelistState = getWhitelistState();
+  {
+    std::unique_lock<std::mutex> lockT(whitelistState.whitelistMtx);
+    whitelist = whitelistState.whitelistedThreads;
+  }
+
+  // Whitelist thread profiling mode
   std::lock_guard<std::mutex> lockC(mtx_);
-  std::unique_lock<std::mutex> lockT(whitelistState.whitelistMtx);
-  for (int32_t tid : whitelistState.whitelistedThreads) {
+  for (int32_t tid : whitelist) {
     cache_.forThread(tid, &threadCountersCallback, kHighFreqStatsMask);
   }
   logCpuFrequencyInfo();
