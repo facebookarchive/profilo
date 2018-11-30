@@ -79,9 +79,9 @@ int32_t systemClockTickIntervalMs() {
 // directories as needed
 void mkdirs(char const* dir) {
   auto len = strlen(dir);
-  char partial[len];
-  memset(partial, 0, len);
-  strcpy(partial, dir);
+  char partial[len + 1];
+  memset(partial, 0, len + 1);
+  strncpy(partial, dir, len);
   struct stat s {};
   char* delim;
 
