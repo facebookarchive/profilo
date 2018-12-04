@@ -30,7 +30,5 @@ public final class Identifiers {
   public static final int JAVA_MAX_BYTES = 9240576 | 59; // = 9240635
   public static final int JAVA_ALLOC_BYTES = 9240576 | 60; // = 9240636
   public static final int JAVA_TOTAL_BYTES = 9240576 | 61; // = 9240637
-  public static final int ACTIVE_PROVIDERS = 8126464 | 50; // = 8126514
-  public static final int APP_VERSION_CODE = 8126464 | 54; // = 8126518
-  public static final int APP_VERSION_NAME = 8126464 | 55; // = 8126519
+  public static final int ACTIVE_PROVIDERS = 8126464 | 50; // = 8126514;
 }
