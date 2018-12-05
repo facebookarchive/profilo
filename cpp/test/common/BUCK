@@ -1,0 +1,20 @@
+load("@fbsource//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+
+fb_native.cxx_test(
+    name = "common",
+    srcs = [
+        "CommonTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    linker_flags = [
+        "-lpthread",
+    ],
+    deps = [
+        profilo_path("cpp/util:util"),
+    ],
+)

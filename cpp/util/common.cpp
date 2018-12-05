@@ -83,7 +83,7 @@ void mkdirs(char const* dir) {
   memset(partial, 0, len + 1);
   strncpy(partial, dir, len);
   struct stat s {};
-  char* delim;
+  char* delim{};
 
   // Iterate our path backwards until we find a string we can stat(), which
   // is an indicator of an existent directory
@@ -95,7 +95,7 @@ void mkdirs(char const* dir) {
   // <partial> now contains a path to a directory that actually exists, so
   // create all the intermediate directories until we finally have the
   // file system hierarchy specified by <dir>
-  while (delim != nullptr && delim != partial + len) {
+  while (delim != nullptr && delim < partial + len) {
     *delim = '/';
     delim = strchr(delim + 1, '\0');
     if (mkdirat(0, partial, S_IRWXU | S_IRWXG)) {
