@@ -1,5 +1,5 @@
-load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 load("@fbsource//tools/build_defs/android:robolectric3_test.bzl", "robolectric3_test")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 robolectric3_test(
     name = "core",

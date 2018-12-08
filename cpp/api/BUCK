@@ -2,8 +2,8 @@ load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_librar
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 APP_SPECIFIC_IS_ASSET_FLAG = {
-    "instagram": True,
     "default": True,
+    "instagram": True,
 }
 
 fb_xplat_cxx_library(
