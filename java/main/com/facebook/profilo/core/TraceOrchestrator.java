@@ -355,7 +355,14 @@ public final class TraceOrchestrator
     // However, don't do anything else blockingly.
   }
 
+  @Nullable
   private File buildExtraFileName(TraceContext context, int providerId) {
+    if ((context.flags & Trace.FLAG_MEMORY_ONLY) != 0) {
+      // Memory-only traces are not allowed to write to file system, hence skipping extra folder
+      // creation.
+      return null;
+    }
+
     Set<String> providerNames = ProvidersRegistry.getRegisteredProvidersByBitMask(providerId);
     if (providerNames.isEmpty()) {
       return null;
