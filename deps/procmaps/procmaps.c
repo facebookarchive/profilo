@@ -18,6 +18,7 @@ struct memorymap_vma {
   memorymap_address start;
   memorymap_address end;
   const char* permissions;
+  memorymap_offset offset;
   const char* file;
 };
 
@@ -338,6 +339,7 @@ memorymap_snapshot(pid_t pid)
 
   _Static_assert(sizeof (vma->start) == sizeof (unsigned long long), "!");
   _Static_assert(sizeof (vma->end) == sizeof (unsigned long long), "!");
+  _Static_assert(sizeof (vma->offset) == sizeof (unsigned long long), "!");
 
   vma = &map->vma[0];
   for (line = strtok_r(snapshot, "\n", &line_saveptr);
@@ -348,12 +350,12 @@ memorymap_snapshot(pid_t pid)
     int permissions_end_offset = -1;
     int file_start_offset = -1;
     char* file;
-    sscanf(line, "%llx-%llx %n%*s%n %*s %*s %*s %n",
+    sscanf(line, "%llx-%llx %n%*s%n %llx %*s %*s %n",
            (unsigned long long*) &vma->start,
            (unsigned long long*) &vma->end,
            &permissions_start_offset,
            &permissions_end_offset,
-           /* &offset, */
+           (unsigned long long*) &vma->offset,
            /* &inode, */
            /* &size, */
            &file_start_offset);
@@ -440,6 +442,12 @@ const char*
 memorymap_vma_permissions(const struct memorymap_vma* vma)
 {
   return vma->permissions;
+}
+
+memorymap_offset
+memorymap_vma_offset(const struct memorymap_vma* vma)
+{
+  return vma->offset;
 }
 
 const char*

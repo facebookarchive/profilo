@@ -19,6 +19,7 @@ struct memorymap;
 struct memorymap_vma;
 
 typedef uint64_t memorymap_address;
+typedef uint64_t memorymap_offset;
 
 /**
  * Read a consistent snapshot of a processes's memory mappings.  PID
@@ -70,6 +71,11 @@ memorymap_address memorymap_vma_end(const struct memorymap_vma* vma);
  * until the memorymap object is destroyed.
  */
 const char* memorymap_vma_permissions(const struct memorymap_vma* vma);
+
+/**
+ * Return the offest of this VMA.
+ */
+memorymap_offset memorymap_vma_offset(const struct memorymap_vma* vma);
 
 /**
  * Return the name of the file backing VMA as a NUL-terminated string;
