@@ -54,8 +54,6 @@ class SystemCounterThread
   bool vmStatsTracingDisabled_;
   std::unique_ptr<util::TaskSchedFile> schedStats_;
   bool schedStatsTracingDisabled_;
-  std::unique_ptr<util::TaskIoFile> ioStats_;
-  bool ioStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
   bool highFrequencyMode_;
 
@@ -63,7 +61,6 @@ class SystemCounterThread
   void logCpuFrequencyInfo();
   void logVmStatCounters();
   void logProcessSchedCounters();
-  void logIoStatCounters();
   void setHighFrequencyMode(bool enabled) {
     highFrequencyMode_ = enabled;
   }

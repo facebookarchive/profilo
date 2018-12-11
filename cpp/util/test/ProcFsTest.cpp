@@ -116,14 +116,6 @@ static const std::string VMSTAT_CONTENT_WITH_SPLIT_KSWAPD =
     "pgsteal_kswapd_movable 1\n"
     "pageoutrun 12\n"
     "allocstall 3\n";
-static const std::string IOSTAT_CONTENT =
-    "rchar: 15840\n"
-    "wchar: 0\n"
-    "syscr: 34\n"
-    "syscw: 0\n"
-    "read_bytes: 401408\n"
-    "write_bytes: 572848514115728485\n"
-    "cancelled_write_bytes: 0";
 
 class ProcFsTest : public ::testing::Test {
  protected:
@@ -232,15 +224,6 @@ TEST_F(ProcFsTest, testVmStatFileWithSplitKswapd) {
   EXPECT_EQ(statInfo.allocStall, 3);
   EXPECT_EQ(statInfo.pageOutrun, 12);
   EXPECT_EQ(statInfo.kswapdSteal, 465447587);
-}
-
-TEST_F(ProcFsTest, testIoStatFile) {
-  fs::path statPath = SetUpTempFile(IOSTAT_CONTENT);
-  TaskIoFile statFile{statPath.native()};
-  DiskIoInfo statInfo = statFile.refresh(ALL_STATS_MASK);
-
-  EXPECT_EQ(statInfo.readBytes, 401408);
-  EXPECT_EQ(statInfo.writeBytes, 572848514115728485);
 }
 
 } // namespace util
