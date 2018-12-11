@@ -19,18 +19,17 @@ public class PackageInfoProvider extends BaseTraceProvider {
 
   @Nullable private String mVersionName;
   private int mVersionCode;
-  // Android can return null from Context::getApplicationContext
-  @Nullable private final Context mContext;
+  private final Context mContext;
 
   public PackageInfoProvider(Context context) {
     super();
-    mContext = context.getApplicationContext();
+    // Android can return null from Context::getApplicationContext.
+    // Using the passed Context if it happens.
+    Context appContext = context.getApplicationContext();
+    mContext = appContext == null ? context : appContext;
   }
 
   private void resolvePackageInfo() {
-    if (mContext == null) {
-      return;
-    }
     if (mVersionName != null) {
       return;
     }
