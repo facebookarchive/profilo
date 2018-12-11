@@ -40,6 +40,67 @@ const char* LoggerType = "com/facebook/profilo/logger/Logger";
 /// product write APIs
 ///
 
+// These flags should match the ones from Logger.java
+static constexpr uint32_t FILL_TIMESTAMP = 1 << 1;
+static constexpr uint32_t FILL_TID = 1 << 2;
+
+static jint loggerWriteStandardEntry(
+    JNIEnv* env,
+    jobject cls,
+    jint flags,
+    jint type,
+    jlong timestamp,
+    jint tid,
+    jint arg1,
+    jint arg2,
+    jlong arg3) {
+  if (flags & FILL_TIMESTAMP) {
+    timestamp = monotonicTime();
+  }
+
+  if (flags & FILL_TID) {
+    tid = threadID();
+  }
+
+  return Logger::get().write(StandardEntry{
+      .id = 0,
+      .type = static_cast<decltype(StandardEntry::type)>(type),
+      .timestamp = timestamp,
+      .tid = tid,
+      .callid = arg1,
+      .matchid = arg2,
+      .extra = arg3,
+  });
+}
+
+static jint loggerWriteBytesEntry(
+    JNIEnv* env,
+    jobject cls,
+    jint flags,
+    jint type,
+    jint arg1,
+    jstring arg2) {
+  const auto kMaxJavaStringLength = 512;
+  auto len = std::min(env->GetStringLength(arg2), kMaxJavaStringLength);
+  uint8_t bytes[len]; // we're filtering to ASCII so one char must be one byte
+
+  {
+    // JStringUtf16Extractor is using GetStringCritical to give us raw jchar*.
+    // We then filter down the wide chars to uint8_t ASCII.
+    auto extract = fbjni::JStringUtf16Extractor(env, arg2);
+    const jchar* str = extract.chars();
+    for (int i = 0; i < len; i++) {
+      if (str[i] < 128) {
+        bytes[i] = str[i];
+      } else {
+        bytes[i] = '.';
+      }
+    }
+  }
+  return Logger::get().writeBytes(
+      static_cast<EntryType>(type), arg1, bytes, len);
+}
+
 static jint loggerWrite(
     JNIEnv* env,
     jobject cls,
@@ -231,6 +292,10 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         profilo::LoggerType,
         {
             makeNativeMethod("loggerWrite", profilo::loggerWrite),
+            makeNativeMethod(
+                "loggerWriteStandardEntry", profilo::loggerWriteStandardEntry),
+            makeNativeMethod(
+                "loggerWriteBytesEntry", profilo::loggerWriteBytesEntry),
             makeNativeMethod(
                 "loggerWriteWithMonotonicTime",
                 profilo::loggerWriteWithMonotonicTime),

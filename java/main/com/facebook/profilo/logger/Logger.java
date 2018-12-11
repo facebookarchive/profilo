@@ -66,6 +66,35 @@ final public class Logger {
     mWorker = new AtomicReference<>(null);
   }
 
+  public static final int SKIP_PROVIDER_CHECK = 1 << 0;
+  public static final int FILL_TIMESTAMP = 1 << 1;
+  public static final int FILL_TID = 1 << 2;
+
+  public static int writeStandardEntry(
+      int provider,
+      int flags,
+      int type,
+      long timestamp,
+      int tid,
+      int arg1 /* callid */,
+      int arg2 /* matchid */,
+      long arg3 /* extra */) {
+    if (sInitialized && ((flags & SKIP_PROVIDER_CHECK) != 0 || TraceEvents.isEnabled(provider))) {
+      return loggerWriteStandardEntry(flags, type, timestamp, tid, arg1, arg2, arg3);
+    } else {
+      return ProfiloConstants.TRACING_DISABLED;
+    }
+  }
+
+  public static int writeBytesEntry(
+      int provider, int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */) {
+    if (sInitialized && ((flags & SKIP_PROVIDER_CHECK) != 0 || TraceEvents.isEnabled(provider))) {
+      return loggerWriteBytesEntry(flags, type, arg1, arg2);
+    } else {
+      return ProfiloConstants.TRACING_DISABLED;
+    }
+  }
+
   public static int writeEntryWithoutMatch(int provider, int type, int callID) {
     if (!sInitialized) {
       return ProfiloConstants.TRACING_DISABLED;
@@ -380,6 +409,18 @@ final public class Logger {
           null);
     }
   }
+
+  private static native int loggerWriteStandardEntry(
+      int flags,
+      int type,
+      long timestamp,
+      int tid,
+      int arg1 /* callid */,
+      int arg2 /* matchid */,
+      long arg3 /* extra */);
+
+  private static native int loggerWriteBytesEntry(
+      int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */);
 
   private static native int loggerWrite(
       int type,
