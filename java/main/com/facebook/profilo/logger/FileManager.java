@@ -108,9 +108,7 @@ public class FileManager {
 
   private File mBaseFolder;
   private File mUploadFolder;
-  private File mTargetBaseFolder;
   private Context mContext;
-  private static boolean sNeedsFolderUpdate = true;
 
   public FileManager(Context context, @Nullable File folder) {
     mContext = context.getApplicationContext();
@@ -121,24 +119,13 @@ public class FileManager {
     File cacheFolder = getBaseFolder();
     mBaseFolder = cacheFolder;
 
-    if (folder != null) {
-      // Non-default (user-supplied) location
-      mUploadFolder = new File(folder, UPLOAD_FOLDER);
-      if (folder.exists()) {
-        sNeedsFolderUpdate = false;
-        mBaseFolder = folder;
-      }
-      mTargetBaseFolder = folder;
-    } else {
-      // Default location: cache/profilo
-      File traceFolder = new File(cacheFolder, PROFILO_FOLDER);
-      mUploadFolder = new File(traceFolder, UPLOAD_FOLDER);
-      if (traceFolder.exists()) {
-        sNeedsFolderUpdate = false;
-        mBaseFolder = traceFolder;
-      }
-      mTargetBaseFolder = traceFolder;
+    // Default location ("cache/profilo") or user-supplied location
+    File traceFolder = folder != null ? folder : new File(cacheFolder, PROFILO_FOLDER);
+    if (traceFolder.exists() || traceFolder.mkdirs()) {
+      // If unable to create the folder, fallback to default
+      mBaseFolder = traceFolder;
     }
+    mUploadFolder = new File(mBaseFolder, UPLOAD_FOLDER);
   }
 
   // Move traces that potentially live in the old location (getCacheDir()
@@ -225,13 +212,6 @@ public class FileManager {
       trimFolderByFileCount(mBaseFolder, mMaxArchivedTraces);
     } else {
       mFileManagerStatistics.errorsCreatingUploadDir++;
-    }
-
-    // Update the trace folder
-    if (sNeedsFolderUpdate) {
-      if (mTargetBaseFolder.exists() || mTargetBaseFolder.mkdirs()) {
-        sNeedsFolderUpdate = false;
-      }
     }
   }
 
