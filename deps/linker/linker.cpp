@@ -210,7 +210,7 @@ verify_got_entry_for_spec(prev_func* got_addr, plt_hook_spec* spec) {
     LOGE("GOT entry does not point to a DSO: %p", *got_addr);
     return false;
   }
-  if (strcmp(info.dli_sname, spec->fn_name)) {
+  if (info.dli_sname == nullptr || strcmp(info.dli_sname, spec->fn_name)) {
     LOGE(
         "GOT entry does not point to symbol we need: %s vs %s",
         info.dli_sname,
