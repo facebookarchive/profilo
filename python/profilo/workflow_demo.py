@@ -26,6 +26,7 @@ from collections import namedtuple
 import numpy as np
 import argparse
 import pandas as pd
+import zipfile
 
 
 def blocks(tracefile, args):
@@ -249,7 +250,21 @@ if __name__ == "__main__":
         print(args.trace, "no such file or directory")
         sys.exit(2)
 
-    with gzip.open(args.trace) as fd:
-        tracefile = TraceFile.from_file(fd)
+    # Unzip first if the file is zipped
+    if zipfile.is_zipfile(args.trace):
+        main_found = False
+        with zipfile.ZipFile(args.trace) as zipped:
+            for elem in zipped.namelist():
+                if elem.startswith("main-"):
+                    main_found = True
+                    with gzip.open(zipped.open(elem)) as fd:
+                        tracefile = TraceFile.from_file(fd)
+                    break
+            if not main_found:
+                print("Did not find trace inside zip file")
+                sys.exit(3)
+    else:
+        with gzip.open(args.trace) as fd:
+            tracefile = TraceFile.from_file(fd)
 
     args.func(tracefile, args)
