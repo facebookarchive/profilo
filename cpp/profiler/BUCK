@@ -152,7 +152,7 @@ fb_xplat_cxx_library(
         "PUBLIC",
     ],
     deps = [
-        profilo_path("deps/dalvik:dalvik-subset-headers"),
+        profilo_path("deps/dalvik:dalvik-subset-headers-for-tracer"),
     ],
 )
 
@@ -160,6 +160,7 @@ fb_xplat_cxx_library(
     name = "profiler",
     srcs = [
         "DalvikTracer.cpp",
+        "DalvikUtils.cpp",
         "SamplingProfiler.cpp",
         "jni.cpp",
     ],
@@ -190,7 +191,6 @@ fb_xplat_cxx_library(
         ":external_tracer",
         ":external_tracer_manager",
         ":js_tracer",
-        ":tracer_utils",
         ":unwindc-tracer-6.0.0",
         ":unwindc-tracer-7.0.0",
         ":unwindc-tracer-7.1.0",

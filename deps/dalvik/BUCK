@@ -10,3 +10,14 @@ profilo_oss_cxx_library(
         "PUBLIC",
     ],
 )
+
+profilo_oss_cxx_library(
+    name = "dalvik-subset-headers-for-tracer",
+    header_namespace = "dalvik-subset",
+    exported_headers = [
+        "internals.h",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)
