@@ -87,11 +87,6 @@ sig_safe_op (void (*op)(void*), void* data)
   __atomic_store_n(&handler_data.tid, as_safe_gettid(), __ATOMIC_SEQ_CST);
   __atomic_store_n(&handler_data.check_sigill, 0, __ATOMIC_SEQ_CST);
 
-  if (sigsetjmp(handler_data.jump_buffer, 1)) {
-    errno = EFAULT;
-    goto out;
-  }
-
   sigset_t sigset;
   if (sigemptyset(&sigset) ||
       sigaddset(&sigset, SIGSEGV) ||
@@ -102,6 +97,13 @@ sig_safe_op (void (*op)(void*), void* data)
 
   registration = sigmux_register(&sigset, &fault_handler, &handler_data, 0);
   if (!registration) {
+    goto out;
+  }
+
+  // Must be after `registration` is valid. If we ever longjmp to the buffer
+  // below, we will need the actual value in order to sigmux_unregister it.
+  if (sigsetjmp(handler_data.jump_buffer, 1)) {
+    errno = EFAULT;
     goto out;
   }
 
