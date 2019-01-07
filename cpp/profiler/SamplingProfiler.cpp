@@ -226,19 +226,6 @@ void initSignalHandlers() {
   static constexpr auto kNumAccessSignals =
       sizeof(kAccessSignals) / sizeof(*kAccessSignals);
 
-  // Block everything but kAccessSignals
-  sigset_t sigset;
-  if (sigfillset(&sigset)) {
-    throw_errno("Couldn't sigfillset");
-  }
-
-  for (size_t i = 0; i < kNumAccessSignals; i++) {
-    if (sigdelset(&sigset, kAccessSignals[i])) {
-      FBLOGE("Failed to remove signal from sigset: %s", strerror(errno));
-      throw_errno("Couldn't remove signal");
-    }
-  }
-
   auto& state = getProfileState();
 
   if (sigmux_init(SIGPROF)) {
@@ -259,6 +246,7 @@ void initSignalHandlers() {
   }
 
   // register handler to ignore potentially sigsegv/sigbus
+  sigset_t sigset;
   if (sigemptyset(&sigset)) {
     throw_errno("Couldn't sigemptyset");
   }
