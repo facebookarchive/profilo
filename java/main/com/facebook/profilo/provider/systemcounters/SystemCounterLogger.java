@@ -19,6 +19,7 @@ package com.facebook.profilo.provider.systemcounters;
 import android.os.Build;
 import android.os.Debug;
 import com.facebook.profilo.core.Identifiers;
+import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.logger.Logger;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -125,8 +126,15 @@ public class SystemCounterLogger {
   }
 
   private static void logProcessCounter(int key, long value) {
-    Logger.writeEntryWithoutMatch(
-        SystemCounterThread.PROVIDER_SYSTEM_COUNTERS, EntryType.COUNTER, key, value);
+    Logger.writeStandardEntry(
+        SystemCounterThread.PROVIDER_SYSTEM_COUNTERS,
+        Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        EntryType.COUNTER,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        key,
+        ProfiloConstants.NONE,
+        value);
   }
 
   public void reset() {

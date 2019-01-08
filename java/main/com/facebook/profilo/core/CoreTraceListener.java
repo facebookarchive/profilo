@@ -23,13 +23,31 @@ import java.util.Set;
 class CoreTraceListener extends DefaultTraceOrchestratorListener {
 
   private static void addTraceAnnotation(int key, String stringKey, String stringValue) {
-    Logger.writeEntryWithString(
-        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
-        EntryType.TRACE_ANNOTATION,
-        key,
-        ProfiloConstants.NO_MATCH,
-        0,
-        stringKey,
+
+    int returnedMatchID =
+        Logger.writeStandardEntry(
+            ProfiloConstants.NONE,
+            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            EntryType.TRACE_ANNOTATION,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            key,
+            ProfiloConstants.NO_MATCH,
+            ProfiloConstants.NONE);
+    if (stringKey != null) {
+      returnedMatchID =
+          Logger.writeBytesEntry(
+              ProfiloConstants.NONE,
+              Logger.SKIP_PROVIDER_CHECK,
+              EntryType.STRING_KEY,
+              returnedMatchID,
+              stringKey);
+    }
+    Logger.writeBytesEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK,
+        EntryType.STRING_VALUE,
+        returnedMatchID,
         stringValue);
   }
 
@@ -37,14 +55,30 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
   public void onProvidersInitialized() {
     // Writing a marker block to denote providers init finish
     int pushId =
-        Logger.writeEntryWithoutMatch(
-            ProfiloConstants.PROVIDER_PROFILO_SYSTEM, EntryType.MARK_PUSH, 0, 0);
-    Logger.writeEntry(
-        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+        Logger.writeStandardEntry(
+            ProfiloConstants.NONE,
+            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            EntryType.MARK_PUSH,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            0,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE);
+    Logger.writeBytesEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK,
         EntryType.STRING_NAME,
         pushId,
         "Profilo.ProvidersInitialized");
-    Logger.writeEntryWithoutMatch(ProfiloConstants.PROVIDER_PROFILO_SYSTEM, EntryType.MARK_POP, 0);
+    Logger.writeStandardEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        EntryType.MARK_POP,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        0,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE);
   }
 
   @Override

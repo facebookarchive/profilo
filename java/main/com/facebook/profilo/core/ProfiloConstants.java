@@ -18,8 +18,7 @@ package com.facebook.profilo.core;
 
 public final class ProfiloConstants {
 
-  public static final int PROVIDER_PROFILO_SYSTEM = 0xFFFFFFFF;
-
+  public static final int NONE = 0;
   public static final int NO_CALLSITE = 0;
   public static final int NO_MATCH = 0;
   public static final int TRACING_DISABLED = -1;

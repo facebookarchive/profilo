@@ -63,20 +63,41 @@ public class PackageInfoProvider extends BaseTraceProvider {
       return;
     }
 
-    Logger.writeEntryWithString(
-        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
-        EntryType.TRACE_ANNOTATION,
-        Identifiers.APP_VERSION_NAME,
-        ProfiloConstants.NO_MATCH,
-        0,
-        "App version",
+    int returnedMatchID =
+        Logger.writeStandardEntry(
+            ProfiloConstants.NONE,
+            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            EntryType.TRACE_ANNOTATION,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            Identifiers.APP_VERSION_NAME,
+            ProfiloConstants.NO_MATCH,
+            (long) 0);
+    if ("App version" != null) {
+      returnedMatchID =
+          Logger.writeBytesEntry(
+              ProfiloConstants.NONE,
+              Logger.SKIP_PROVIDER_CHECK,
+              EntryType.STRING_KEY,
+              returnedMatchID,
+              "App version");
+    }
+    Logger.writeBytesEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK,
+        EntryType.STRING_VALUE,
+        returnedMatchID,
         mVersionName);
 
-    Logger.writeEntryWithoutMatch(
-        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+    Logger.writeStandardEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
         EntryType.TRACE_ANNOTATION,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
         Identifiers.APP_VERSION_CODE,
-        mVersionCode);
+        ProfiloConstants.NONE,
+        (long) mVersionCode);
   }
 
   @Override

@@ -126,11 +126,15 @@ public final class StackFrameThread extends BaseTraceProvider {
       return false;
     }
 
-    Logger.writeEntryWithoutMatch(
-        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+    Logger.writeStandardEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
         EntryType.TRACE_ANNOTATION,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
         Identifiers.CPU_SAMPLING_INTERVAL_MS,
-        sampleRateMs);
+        ProfiloConstants.NONE,
+        (long) sampleRateMs);
 
     mEnabled = true;
     return mEnabled;

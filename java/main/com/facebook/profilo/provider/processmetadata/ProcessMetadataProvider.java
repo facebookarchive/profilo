@@ -93,12 +93,30 @@ public final class ProcessMetadataProvider extends BaseTraceProvider {
     if (processes == null || processes.isEmpty()) {
       processes = "PROCESS_METADATA_PROVIDER_FAILED_TO_GET_PROCESS_LIST";
     }
-    Logger.writeEntryWithStringWithNoMatch(
-        ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
-        EntryType.PROCESS_LIST,
-        0,
-        0,
-        "processes",
+    int returnedMatchID =
+        Logger.writeStandardEntry(
+            ProfiloConstants.NONE,
+            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            EntryType.PROCESS_LIST,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE);
+    if ("processes" != null) {
+      returnedMatchID =
+          Logger.writeBytesEntry(
+              ProfiloConstants.NONE,
+              Logger.SKIP_PROVIDER_CHECK,
+              EntryType.STRING_KEY,
+              returnedMatchID,
+              "processes");
+    }
+    Logger.writeBytesEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK,
+        EntryType.STRING_VALUE,
+        returnedMatchID,
         processes);
   }
 }

@@ -407,10 +407,14 @@ public final class TraceOrchestrator
     }
 
     if (config != null) {
-      Logger.writeEntryWithoutMatch(
-          ProfiloConstants.PROVIDER_PROFILO_SYSTEM,
+      Logger.writeStandardEntry(
+          ProfiloConstants.NONE,
+          Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
           EntryType.TRACE_ANNOTATION,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
           Identifiers.CONFIG_ID,
+          ProfiloConstants.NONE,
           config.getConfigID());
     }
 
