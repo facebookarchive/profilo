@@ -81,16 +81,16 @@ struct Convert<bool> {
 template<typename T>
 struct Convert<T,
     typename std::enable_if<
-      std::is_same<T, int64_t>::value && !std::is_same<T, jlong>::value
+      (std::is_same<T, long long>::value || std::is_same<T, int64_t>::value) && !std::is_same<T, jlong>::value
     >::type> {
   typedef jlong jniType;
-  static int64_t fromJni(jniType t) {
+  static T fromJni(jniType t) {
     return t;
   }
-  static jniType toJniRet(int64_t t) {
+  static jniType toJniRet(T t) {
     return t;
   }
-  static jniType toCall(int64_t t) {
+  static jniType toCall(T t) {
     return t;
   }
 };
