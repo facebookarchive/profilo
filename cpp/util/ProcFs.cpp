@@ -30,6 +30,30 @@ namespace util {
 
 static constexpr int kMaxProcFileLength = 64;
 
+// Custom parse for unsinged long values, ignores minus sign and skips blank
+// spaces in front. Such narrowly specialized method is faster than the standard
+// strtoull.
+static uint64_t parse_ull(char* str, char** end) {
+  static constexpr int kMaxDigits = 20;
+
+  char* cur = str;
+  while (*cur == ' ') {
+    ++cur;
+  }
+
+  uint64_t result = 0;
+  uint8_t len = 0;
+  while (*cur >= '0' && *cur <= '9' && len <= kMaxDigits) {
+    result *= 10;
+    result += (*cur - '0');
+    ++len;
+    ++cur;
+  }
+
+  *end = cur;
+  return result;
+}
+
 // Return all the numeric items in the folder passed as parameter.
 // Non-numeric items are ignored.
 static std::unordered_set<uint32_t> numericFolderItems(const char* folder) {
@@ -232,7 +256,7 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   data = skipUntil(data, end, ' '); // flags
 
   char* endptr = nullptr;
-  auto minflt = strtoull(data, &endptr, 10); // minflt
+  auto minflt = parse_ull(data, &endptr); // minflt
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse minflt");
   }
@@ -241,7 +265,7 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   data = skipUntil(data, end, ' '); // cminflt
 
   endptr = nullptr;
-  auto majflt = strtoull(data, &endptr, 10); // majflt
+  auto majflt = parse_ull(data, &endptr); // majflt
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse majflt");
   }
@@ -250,14 +274,14 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   data = skipUntil(data, end, ' '); // cmajflt
 
   endptr = nullptr;
-  auto utime = strtoull(data, &endptr, 10); // utime
+  auto utime = parse_ull(data, &endptr); // utime
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse utime");
   }
   data = skipUntil(endptr, end, ' ');
 
   endptr = nullptr;
-  auto stime = strtoull(data, &endptr, 10); // stime
+  auto stime = parse_ull(data, &endptr); // stime
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse stime");
   }
@@ -334,13 +358,13 @@ SchedstatInfo parseSchedstatFile(char* data, size_t size) {
   const char* end = (data + size);
 
   char* endptr = nullptr;
-  auto run_time_ns = strtoull(data, &endptr, 10); // run time
+  auto run_time_ns = parse_ull(data, &endptr); // run time
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse run time");
   }
   data = skipUntil(endptr, end, ' ');
   endptr = nullptr;
-  auto wait_time_ns = strtoull(data, &endptr, 10); // run time
+  auto wait_time_ns = parse_ull(data, &endptr); // run time
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse wait time");
   }
@@ -492,7 +516,7 @@ SchedInfo TaskSchedFile::doRead(int fd, uint32_t requested_stats_mask) {
     }
     errno = 0;
     char* endptr;
-    auto value = strtoull(buffer_ + value_offset, &endptr, 10);
+    auto value = parse_ull(buffer_ + value_offset, &endptr);
     if (errno == ERANGE || (buffer_ + value_offset) == endptr ||
         endptr > endfile) {
       throw std::runtime_error("Could not parse value");
@@ -631,7 +655,7 @@ VmStatInfo VmStatFile::doRead(int fd, uint32_t ignored) {
     errno = 0;
     char* endptr = nullptr;
     char* start = buffer_ + key.offset + key.length + 1;
-    auto value = strtoull(start, &endptr, 10);
+    auto value = parse_ull(start, &endptr);
     if (errno == ERANGE && value == ULLONG_MAX) {
       throw std::runtime_error("Value out of range");
     } else if (endptr == start) {
