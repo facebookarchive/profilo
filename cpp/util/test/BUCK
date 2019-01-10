@@ -29,7 +29,7 @@ profilo_cxx_test(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
-    labels = ["asan-ubsan"],
+    labels = ["opt-in-sandcastle-sanitized-test"],
     linker_flags = [
         "-pthread",
         "-ldl",
