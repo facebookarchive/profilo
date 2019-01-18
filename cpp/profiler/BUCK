@@ -180,7 +180,7 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
     ] + profilo_maybe_hidden_visibility(),
     soname = "libprofilo_stacktrace.$(ext)",
-    supported_platforms_regex = "^android-(armv7|x86)$",
+    supported_platforms_regex = "^android-",
     visibility = [
         "PUBLIC",
     ],

@@ -29,16 +29,15 @@ def unwindc_tracer_library(version):
         ],
         force_static = True,
         platform_headers = [
-            (".*x86", {
+            (".*x86.*", {
                 "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),
             }),
-            (".*armv7", {
+            (".*arm.*", {
                 "unwindc/unwinder.h": "unwindc/{}/arm/unwinder.h".format(android_version),
             }),
         ],
-        # TODO(delyank): Port to 64-bit.
-        platform_srcs = [
-            ("^android-(armv7|x86)", ["ArtUnwindcTracer.cpp"]),
+        srcs = [
+            "ArtUnwindcTracer.cpp",
         ],
         preprocessor_flags = [
             "-DANDROID_NAMESPACE=android_{}".format(version_num),
