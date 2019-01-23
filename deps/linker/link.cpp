@@ -20,7 +20,6 @@
 
 #include <errno.h>
 #include <stdexcept>
-#include <sstream>
 #include <libgen.h>
 
 using namespace facebook::linker;
@@ -50,11 +49,12 @@ int dladdr1(void* addr, Dl_info* info, void** extra_info, int flags) {
   *sym_info = lib.find_symbol_by_name(info->dli_sname);
   if (*sym_info) {
     if (lib.getLoadedAddress(*sym_info) != info->dli_saddr) {
-      std::stringstream ss;
-      ss << "tried to resolve address 0x" << std::hex << addr << " ";
-      ss << "but dladdr returned \"" << info->dli_sname << "\" (0x" << info->dli_saddr << ") ";
-      ss << "while find_symbol_by_name returned " << (*sym_info)->st_value;
-      log_assert(ss.str().c_str());
+      log_assert(
+        "tried to resolve address 0x%x but dladdr returned \"%s\" (0x%x) while find_symbol_by_name returned %x",
+        addr,
+        info->dli_sname,
+        info->dli_saddr,
+        (*sym_info)->st_value);
     }
     return 1;
   }

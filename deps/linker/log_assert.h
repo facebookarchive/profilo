@@ -16,10 +16,13 @@
 
 #pragma once
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
 #ifdef __ANDROID__
 
 #include <android/log.h>
-#include <stdlib.h>
 
 #ifdef LOG_TAG
 #define LINKER_ASSERT_LOG_TAG LOG_TAG
@@ -28,18 +31,25 @@
 #endif
 
 __attribute__ ((noreturn))
-static void log_assert(char const* msg) {
+static void log_assert(char const* fmt, ...) {
+  char* msg;
+  va_list args;
+  va_start(args, fmt);
+  vasprintf(&msg, fmt, args);
+
   __android_log_assert("", LINKER_ASSERT_LOG_TAG, "%s", msg);
   abort(); // just for good measure
 }
 
 #else
 
-#include <stdio.h>
-#include <stdlib.h>
-
 __attribute__ ((noreturn))
-static void log_assert(char const* msg) {
+static void log_assert(char const* fmt, ...) {
+  char* msg;
+  va_list args;
+  va_start(args, fmt);
+  vasprintf(&msg, fmt, args);
+
   fputs("Assertion Failure: ", stderr);
   fputs(msg, stderr);
   fputc('\n', stderr);

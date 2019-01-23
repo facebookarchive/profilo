@@ -21,7 +21,6 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include <sstream>
 #include <string.h>
 
 class ReaderLock {
@@ -33,18 +32,14 @@ public:
       : mutex_(mutex) {
     auto ret = pthread_rwlock_rdlock(mutex);
     if (ret != 0) {
-      std::stringstream ss;
-      ss << "pthread_rwlock_rdlock returned " << strerror(ret);
-      log_assert(ss.str().c_str());
+      log_assert("pthread_rwlock_rdlock returned %s", strerror(ret));
     }
   }
 
   inline ~ReaderLock() {
     auto ret = pthread_rwlock_unlock(mutex_);
     if (ret != 0) {
-      std::stringstream ss;
-      ss << "pthread_rwlock_unlock returned " << strerror(ret);
-      log_assert(ss.str().c_str());
+      log_assert("pthread_rwlock_unlock returned %s", strerror(ret));
     }
   }
 };
@@ -58,18 +53,14 @@ public:
       : mutex_(mutex) {
     int ret = pthread_rwlock_wrlock(mutex);
     if (ret != 0) {
-      std::stringstream ss;
-      ss << "pthread_rwlock_wrlock returned " << strerror(ret);
-      log_assert(ss.str().c_str());
+      log_assert("pthread_rwlock_wrlock returned %s", strerror(ret));
     }
   }
 
   inline ~WriterLock() {
     int ret = pthread_rwlock_unlock(mutex_);
     if (ret != 0) {
-      std::stringstream ss;
-      ss << "pthread_rwlock_unlock returned " << strerror(ret);
-      log_assert(ss.str().c_str());
+      log_assert("pthread_rwlock_unlock returned %s", strerror(ret));
     }
   }
 };
