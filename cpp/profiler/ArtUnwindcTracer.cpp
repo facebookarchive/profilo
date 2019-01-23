@@ -58,6 +58,8 @@ namespace {
 struct unwinder_data {
   ucontext_t* ucontext;
   int64_t* frames;
+  char const** method_names;
+  char const** class_descriptors;
   uint8_t depth;
   uint8_t max_depth;
 };
@@ -68,7 +70,17 @@ bool unwind_cb(uintptr_t frame, void* data) {
     // stack overflow, stop the traversal
     return false;
   }
-  ud->frames[ud->depth++] = get_method_trace_id(frame);
+  ud->frames[ud->depth] = get_method_trace_id(frame);
+
+  if (ud->method_names != nullptr && ud->class_descriptors != nullptr) {
+    auto declaring_class = get_declaring_class(frame);
+    auto class_string_t = get_class_descriptor(declaring_class);
+    auto method_string_t = get_method_name(frame);
+    ud->method_names[ud->depth] = method_string_t.data;
+    ud->class_descriptors[ud->depth] = class_string_t.data;
+  }
+
+  ++ud->depth;
   return true;
 }
 
@@ -78,14 +90,18 @@ template <>
 ArtUnwindcTracer<kVersion>::ArtUnwindcTracer() {}
 
 template <>
-bool ArtUnwindcTracer<kVersion>::collectStack(
+bool ArtUnwindcTracer<kVersion>::collectJavaStack(
     ucontext_t* ucontext,
     int64_t* frames,
+    char const** method_names,
+    char const** class_descriptors,
     uint8_t& depth,
     uint8_t max_depth) {
   unwinder_data data{
       .ucontext = ucontext,
       .frames = frames,
+      .method_names = method_names,
+      .class_descriptors = class_descriptors,
       .depth = 0,
       .max_depth = max_depth,
   };
@@ -95,6 +111,15 @@ bool ArtUnwindcTracer<kVersion>::collectStack(
   }
   depth = data.depth;
   return true;
+}
+
+template <>
+bool ArtUnwindcTracer<kVersion>::collectStack(
+    ucontext_t* ucontext,
+    int64_t* frames,
+    uint8_t& depth,
+    uint8_t max_depth) {
+  return collectJavaStack(ucontext, frames, nullptr, nullptr, depth, max_depth);
 }
 
 template <>

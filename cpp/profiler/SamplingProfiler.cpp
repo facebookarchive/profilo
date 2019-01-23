@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <chrono>
 #include <random>
+#include <string>
 
 #include <fb/Build.h>
 #include <fb/log.h>
@@ -40,6 +41,7 @@
 #include "profiler/ArtUnwindcTracer_712.h"
 #include "profiler/ExternalTracerManager.h"
 #include "profiler/JSTracer.h"
+#include "profiler/JavaBaseTracer.h"
 
 #if HAS_NATIVE_TRACER
 #include <profiler/NativeTracer.h>
@@ -176,11 +178,25 @@ sigmux_action sigprof_handler(
 
     // Can finally occupy the slot
     if (sigsetjmp(slot.sig_jmp_buf, 1) == 0) {
-      bool success = tracerEntry.second->collectStack(
-          (ucontext_t*)siginfo->context,
-          slot.frames,
-          slot.depth,
-          (uint8_t)MAX_STACK_DEPTH);
+      memset(slot.method_names, 0, sizeof(slot.method_names));
+      memset(slot.class_descriptors, 0, sizeof(slot.class_descriptors));
+      bool success{};
+      if (JavaBaseTracer::isJavaTracer(tracerType)) {
+        success = reinterpret_cast<JavaBaseTracer*>(tracerEntry.second.get())
+                      ->collectJavaStack(
+                          (ucontext_t*)siginfo->context,
+                          slot.frames,
+                          slot.method_names,
+                          slot.class_descriptors,
+                          slot.depth,
+                          (uint8_t)MAX_STACK_DEPTH);
+      } else {
+        success = tracerEntry.second->collectStack(
+            (ucontext_t*)siginfo->context,
+            slot.frames,
+            slot.depth,
+            (uint8_t)MAX_STACK_DEPTH);
+      }
 
       if (success) {
         slot.time = monotonicTime();
@@ -271,7 +287,7 @@ void initSignalHandlers() {
   }
 }
 
-void flushStackTraces() {
+void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet) {
   auto& profileState = getProfileState();
 
   int processedCount = 0;
@@ -289,6 +305,38 @@ void flushStackTraces() {
       auto& tracer = profileState.tracersMap[slot.profilerType];
       auto tid = slotStateCombo >> 16;
       tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
+
+      if (JavaBaseTracer::isJavaTracer(slot.profilerType)) {
+        for (int i = 0; i < slot.depth; i++) {
+          bool expectedResetState = true;
+          if (profileState.resetFrameworkSymbols.compare_exchange_strong(
+                  expectedResetState, false)) {
+            loggedFramesSet.clear();
+          }
+
+          if (loggedFramesSet.find(slot.frames[i]) == loggedFramesSet.end() &&
+              JavaBaseTracer::isFramework(slot.class_descriptors[i])) {
+            StandardEntry entry{};
+            entry.tid = threadID();
+            entry.timestamp = monotonicTime();
+            entry.type = entries::JAVA_FRAME_NAME;
+            entry.extra = slot.frames[i];
+            int32_t id = Logger::get().write(std::move(entry));
+
+            std::string full_name{slot.class_descriptors[i]};
+            full_name += slot.method_names[i];
+            Logger::get().writeBytes(
+                entries::STRING_VALUE,
+                id,
+                (const uint8_t*)full_name.c_str(),
+                full_name.length());
+          }
+          // Mark the frame as "logged" or "visited" so that we don't do a
+          // string comparison for it next time, regardless of whether it was
+          // a framework frame or not
+          loggedFramesSet.insert(slot.frames[i]);
+        }
+      }
     }
 
     uint32_t expected = slotStateCombo;
@@ -394,6 +442,7 @@ void loggerLoop(alias_ref<jobject> obj) {
 
   int res;
   bool done;
+  std::unordered_set<uint64_t> loggedFramesSet{};
 
   do {
     if (profileState.wallClockModeEnabled) {
@@ -407,7 +456,7 @@ void loggerLoop(alias_ref<jobject> obj) {
           profileState.whitelistedThreads.erase(tid);
         }
         if (res == 0 && profileState.enoughStacks.load()) {
-          flushStackTraces();
+          flushStackTraces(loggedFramesSet);
           profileState.enoughStacks.store(false);
         }
       }
@@ -415,7 +464,7 @@ void loggerLoop(alias_ref<jobject> obj) {
       // setitimer (i.e. every thread) case
       res = sem_wait(&profileState.slotsCounterSem);
       if (res == 0) {
-        flushStackTraces();
+        flushStackTraces(loggedFramesSet);
       }
     }
     done = profileState.isLoggerLoopDone.load();
@@ -549,6 +598,13 @@ void removeFromWhitelist(fbjni::alias_ref<jobject> obj, int targetThread) {
   auto& profileState = getProfileState();
   std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
   profileState.whitelistedThreads.erase(targetThread);
+}
+
+void resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj) {
+  auto& profileState = getProfileState();
+
+  // Let the logger loop know we should reset our cache of frames
+  profileState.resetFrameworkSymbols.store(true);
 }
 
 } // namespace profiler

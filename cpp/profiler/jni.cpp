@@ -53,6 +53,10 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
                 "nativeStopProfiling", "()V", profiler::stopProfiling),
             makeNativeMethod(
                 "nativeStartProfiling", "(IIZ)Z", profiler::startProfiling),
+            makeNativeMethod(
+                "nativeResetFrameworkNamesSet",
+                "()V",
+                profiler::resetFrameworkNamesSet),
         });
     fbjni::registerNatives(
         StackFrameThreadType,

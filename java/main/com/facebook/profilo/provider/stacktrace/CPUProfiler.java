@@ -111,6 +111,13 @@ public class CPUProfiler {
     nativeLoggerLoop();
   }
 
+  public static void resetFrameworkNamesSet() {
+    if (!sInitialized) {
+      return;
+    }
+    nativeResetFrameworkNamesSet();
+  }
+
   /** Note: Init correctness is guaranteed for Main Thread only at this point. */
   @DoNotStrip
   private static native boolean nativeInitialize(int availableTracers);
@@ -124,4 +131,7 @@ public class CPUProfiler {
 
   @DoNotStrip
   private static native void nativeLoggerLoop();
+
+  @DoNotStrip
+  private static native void nativeResetFrameworkNamesSet();
 }

@@ -18,7 +18,7 @@
 
 #include <unistd.h>
 
-#include "profiler/BaseTracer.h"
+#include "profiler/JavaBaseTracer.h"
 
 namespace facebook {
 namespace profilo {
@@ -33,13 +33,21 @@ enum ArtUnwindcVersion {
 };
 
 template <ArtUnwindcVersion kVersion>
-class ArtUnwindcTracer : public BaseTracer {
+class ArtUnwindcTracer : public JavaBaseTracer {
  public:
   ArtUnwindcTracer();
 
   bool collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
+      uint8_t& depth,
+      uint8_t max_depth) override;
+
+  bool collectJavaStack(
+      ucontext_t* ucontext,
+      int64_t* frames,
+      char const** method_names,
+      char const** class_descriptors,
       uint8_t& depth,
       uint8_t max_depth) override;
 

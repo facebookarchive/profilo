@@ -71,6 +71,7 @@ fb_xplat_cxx_library(
     header_namespace = "profiler",
     exported_headers = [
         "BaseTracer.h",
+        "JavaBaseTracer.h",
     ],
     visibility = [
         "PUBLIC",

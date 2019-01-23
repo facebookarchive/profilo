@@ -54,6 +54,8 @@ struct StackSlot {
   jmp_buf sig_jmp_buf;
   uint32_t profilerType;
   int64_t frames[MAX_STACK_DEPTH]; // frame pointer addresses
+  char const* method_names[MAX_STACK_DEPTH];
+  char const* class_descriptors[MAX_STACK_DEPTH];
 #ifdef PROFILER_COLLECT_PC
   u2 pcs[MAX_STACK_DEPTH];
 #endif
@@ -90,6 +92,10 @@ struct ProfileState {
   // Guards whitelistedThreads.
   std::mutex whitelistMtx;
 
+  // If a secondary trace starts, we need to tell the logger loop to clear
+  // its cache of logged frames, so that the new trace won't miss any symbols
+  std::atomic_bool resetFrameworkSymbols;
+
   ProfileState() {
     int ret;
     if ((ret = pthread_key_create(&threadIsProfilingKey, nullptr))) {
@@ -112,6 +118,7 @@ bool startProfiling(
     bool wall_clock_mode_enabled);
 void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
 void removeFromWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
+void resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj);
 
 } // namespace profiler
 } // namespace profilo

@@ -152,6 +152,8 @@ NAMES = [
     'CLASS_LOAD_FAILED',
 
     'STRING_NAME',
+
+    'JAVA_FRAME_NAME',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

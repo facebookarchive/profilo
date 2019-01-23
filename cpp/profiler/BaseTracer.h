@@ -29,6 +29,9 @@ namespace tracers {
 enum Tracer : uint32_t {
   DALVIK = 1,
   NATIVE = 1 << 2,
+
+  // Keep these ART_UNWINDC_* values in sync with
+  // JavaBaseTracer::isJavaTracer()
   ART_UNWINDC_6_0 = 1 << 4,
   ART_UNWINDC_7_0_0 = 1 << 5,
   ART_UNWINDC_7_1_0 = 1 << 6,
