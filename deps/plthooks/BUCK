@@ -1,0 +1,66 @@
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_oss_cxx_library", "profilo_path")
+
+profilo_oss_cxx_library(
+    name = "plthooks",
+    srcs = glob(
+        ["*.cpp"],
+    ),
+    header_namespace = "plthooks",
+    exported_headers = glob(["*.h"]),
+    compiler_flags = [
+        "-std=c++11",
+        "-fexceptions",
+    ],
+    platform_preprocessor_flags = [
+        (
+            "android-(arm|armv7)$",
+            ["-D__ARM__"],
+        ),
+        (
+            "android-x86$",
+            ["-D__X86__"],
+        ),
+    ],
+    preferred_linkage = "shared",
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/plthooks\"",
+    ],
+    soname = "libprofilo_plthooks.$(ext)",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        ":trampoline",
+        profilo_path("deps/sigmux:sigmux"),
+        profilo_path("deps/cjni:cjni"),
+        profilo_path("deps/linker:linker"),
+        profilo_path("deps/sig_safe_write:sig_safe_write"),
+    ],
+)
+
+profilo_oss_cxx_library(
+    name = "trampoline",
+    platform_compiler_flags = [(
+        "armv7$",
+        [
+            "-marm",
+        ],
+    )],
+    platform_srcs = [
+        (
+            "armv7$",
+            ["trampoline_arm.c"],
+        ),
+        (
+            "x86$",
+            ["trampoline_x86.c"],
+        ),
+    ],
+    preferred_linkage = "static",
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/plthooks\"",
+    ],
+    deps = [
+        profilo_path("deps/breakpad:abort-with-reason"),
+    ],
+)

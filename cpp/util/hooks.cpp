@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <linker/linker.h>
+#include <plthooks/plthooks.h>
 
 #include <dlfcn.h>
 #include <stdexcept>

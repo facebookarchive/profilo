@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#include <plthooktests/test.h>
-#include <plthooktestdata/meaningoflife.h>
+#include <linkertests/test.h>
 
 #include <dlfcn.h>
 #include <link.h>
@@ -29,6 +28,7 @@
 #include <cppdistract/dso.h>
 
 #include <linker/sharedlibs.h>
+#include <linkertestdata/var.h>
 
 using namespace facebook::linker;
 
@@ -78,9 +78,9 @@ TEST_F(ElfSharedLibDataTest, testGetPltRelocations) {
 }
 
 TEST_F(ElfSharedLibDataTest, testGetDynamicSymbolRelocation) {
-  auto symrelocs = lib.get_relocations(&meaning_of_life);
+  auto symrelocs = lib.get_relocations(&var);
   ASSERT_EQ(1, symrelocs.size());
-  ASSERT_EQ(&meaning_of_life, *symrelocs[0]);
+  ASSERT_EQ(&var, *symrelocs[0]);
 }
 
 // TEST_F(ElfSharedLibDataTest, testAliasedPltRelocations) {
@@ -133,7 +133,7 @@ TEST_F(ElfSharedLibDataTestGnuHash, testGetPltRelocations) {
 }
 
 TEST_F(ElfSharedLibDataTestGnuHash, testGetDynamicSymbolRelocation) {
-  auto symrelocs = lib.get_relocations(&meaning_of_life);
+  auto symrelocs = lib.get_relocations(&var);
   ASSERT_EQ(1, symrelocs.size());
-  ASSERT_EQ(&meaning_of_life, *symrelocs[0]);
+  ASSERT_EQ(&var, *symrelocs[0]);
 }

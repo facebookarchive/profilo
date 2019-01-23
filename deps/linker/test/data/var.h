@@ -14,14 +14,4 @@
  * limitations under the License.
  */
 
-#include <time.h>
-
-#include <linkertestdata/var.h>
-
-clock_t call_clock() {
-  return clock();
-}
-
-int get_var() {
-  return var;
-}
+extern int var;

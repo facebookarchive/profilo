@@ -29,7 +29,7 @@
 #include <fb/log.h>
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
-#include <linker/linker.h>
+#include <plthooks/plthooks.h>
 #include <util/hooks.h>
 
 #include <profilo/LogEntry.h>
@@ -228,8 +228,8 @@ void installSystraceSnooper(int providerMask) {
     }
   }
 
-  if (linker_initialize()) {
-    throw std::runtime_error("Could not initialize linker library");
+  if (plthooks_initialize()) {
+    throw std::runtime_error("Could not initialize plthooks library");
   }
 
   hookLoadedLibs();

@@ -17,7 +17,7 @@
 #include <linker/sharedlibs.h>
 #include <linker/locks.h>
 
-#include <fb/Build.h>
+#include <build/build.h>
 
 #include <sys/system_properties.h>
 #include <stdlib.h>
@@ -99,7 +99,7 @@ using namespace facebook::linker;
 
 int
 refresh_shared_libs() {
-  if (facebook::build::Build::getAndroidSdk() >= ANDROID_L) {
+  if (facebook::build::getAndroidSdk() >= ANDROID_L) {
     static auto dl_iterate_phdr =
       reinterpret_cast<int(*)(int(*)(dl_phdr_info*, size_t, void*), void*)>(
         dlsym(RTLD_DEFAULT, "dl_iterate_phdr"));
@@ -116,7 +116,7 @@ refresh_shared_libs() {
       return 0;
     }, nullptr);
   } else {
-#ifndef __LP64__ 
+#ifndef __LP64__
     soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
 
     if (si == nullptr) {

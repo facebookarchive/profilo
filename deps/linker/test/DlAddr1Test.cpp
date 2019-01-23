@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <plthooktests/test.h>
+#include <linkertests/test.h>
 
 #include <link.h>
 #include <gtest/gtest.h>

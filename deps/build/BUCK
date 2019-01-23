@@ -1,0 +1,29 @@
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_oss_cxx_library")
+
+profilo_oss_cxx_library(
+    name = "build",
+    srcs = glob(["*.cpp"]),
+    headers = glob(["*.h"]),
+    header_namespace = "build",
+    exported_headers = glob(["*.h"]),
+    compiler_flags = [
+        "-std=gnu++14",
+        "-fexceptions",
+        "-Wextra",
+        "-Wno-unused-parameter",
+        "-Wno-format-security",
+        "-Wno-unused-local-typedef",
+        "-Wno-unused",
+        "-Wno-missing-field-initializers",
+        "-Wno-gnu-alignof-expression",
+        "-O3",
+    ],
+    preferred_linkage = "shared",
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/build\"",
+    ],
+    soname = "libprofilo_build.$(ext)",
+    visibility = [
+        "PUBLIC",
+    ],
+)

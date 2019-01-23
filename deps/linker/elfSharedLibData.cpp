@@ -18,7 +18,7 @@
 #include <linker/locks.h>
 #include <linker/elfSharedLibData.h>
 
-#include <fb/Build.h>
+#include <build/build.h>
 
 #include <sys/system_properties.h>
 #include <stdlib.h>
@@ -209,7 +209,7 @@ elfSharedLibData::elfSharedLibData(soinfo const* si) {
 
   gnuHash_ = {};
 
-  if (facebook::build::Build::getAndroidSdk() >= 17) {
+  if (facebook::build::getAndroidSdk() >= 17) {
     loadBias = si->load_bias;
   } else {
     loadBias = si->base;

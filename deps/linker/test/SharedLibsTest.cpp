@@ -27,17 +27,17 @@
 
 #include <linker/sharedlibs.h>
 
-#include <plthooktests/test.h>
+#include <linkertests/test.h>
 
 using namespace facebook::linker;
 
 struct SharedLibsTest : public BaseTest {
   SharedLibsTest()
     : libtarget(std::make_unique<facebook::cppdistract::dso>(LIBDIR("libtarget.so"))),
-      libsecond_hook(LIBDIR("libsecond_hook.so")) { }
+      libgnu(LIBDIR("libgnu.so")) { }
 
   std::unique_ptr<facebook::cppdistract::dso> libtarget;
-  facebook::cppdistract::dso const libsecond_hook;
+  facebook::cppdistract::dso const libgnu;
 };
 
 TEST_F(SharedLibsTest, testLookupTarget) {
@@ -45,13 +45,13 @@ TEST_F(SharedLibsTest, testLookupTarget) {
 }
 
 TEST_F(SharedLibsTest, testLookupSecond) {
-  ASSERT_TRUE(sharedLib("libsecond_hook.so"));
+  ASSERT_TRUE(sharedLib("libgnu.so"));
 }
 
 TEST_F(SharedLibsTest, testNotSameLib) {
   ASSERT_NE(
     sharedLib("libtarget.so"),
-    sharedLib("libsecond_hook.so"));
+    sharedLib("libgnu.so"));
 }
 
 TEST_F(SharedLibsTest, testBadSharedLibCallThrows) {
