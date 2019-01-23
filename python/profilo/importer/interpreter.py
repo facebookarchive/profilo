@@ -117,7 +117,12 @@ class TraceFileInterpreter(object):
             id=self.trace_file.headers.get('id'),
         )
         thread_items = {}
+        framework_frames = {}   # method_id -> full name
         for entry in self.trace_file.entries:
+            if entry.type == "JAVA_FRAME_NAME":
+                for child in self.children[entry]:
+                    framework_frames[entry.arg3] = child.data
+                continue
             if isinstance(entry, StandardEntry):
                 thread_items.setdefault(entry.tid, []).append(entry)
             # BytesEntries will be processed as children of the above.
@@ -196,6 +201,9 @@ class TraceFileInterpreter(object):
                             symbol = None
                             if self.symbols:
                                 symbol = self.symbols.method_index.get(frame, None)
+                                if symbol is None:
+                                    # Let's see if it's a framework frame
+                                    symbol = framework_frames.get(frame, None)
                             stacktrace.append(identifier=frame, symbol=symbol)
 
                         item.properties.stackTraces.update({
