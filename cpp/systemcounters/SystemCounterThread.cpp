@@ -16,9 +16,7 @@
 
 #include "SystemCounterThread.h"
 
-#include <fb/log.h>
 #include <profilo/Logger.h>
-#include <profilo/log.h>
 #include <util/common.h>
 
 #include <unordered_set>

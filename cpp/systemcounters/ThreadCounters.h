@@ -61,7 +61,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_CPU_TIME,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::HIGH_PRECISION_CPU_TIME) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     } else if (
         prevInfo.cpuTimeMs != 0 &&
         (currInfo.availableStatsMask & StatType::CPU_TIME)) {
@@ -72,7 +75,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_CPU_TIME,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::CPU_TIME) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (prevInfo.waitToRunTimeMs != 0 &&
         (currInfo.availableStatsMask & StatType::WAIT_TO_RUN_TIME)) {
@@ -82,7 +88,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::WAIT_TO_RUN_TIME) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::MAJOR_FAULTS) {
       logMonotonicCounter<Logger>(
@@ -91,7 +100,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::QL_THREAD_FAULTS_MAJOR,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::MAJOR_FAULTS) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::NR_VOLUNTARY_SWITCHES) {
       logMonotonicCounter<Logger>(
@@ -100,7 +112,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::NR_VOLUNTARY_SWITCHES) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::NR_INVOLUNTARY_SWITCHES) {
       logMonotonicCounter<Logger>(
@@ -109,7 +124,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::NR_INVOLUNTARY_SWITCHES) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::IOWAIT_SUM) {
       logMonotonicCounter<Logger>(
@@ -118,7 +136,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::IOWAIT_TIME,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::IOWAIT_SUM) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::IOWAIT_COUNT) {
       logMonotonicCounter<Logger>(
@@ -127,7 +148,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::IOWAIT_COUNT,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::IOWAIT_COUNT) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::CPU_NUM) {
       logNonMonotonicCounter<Logger>(
@@ -145,7 +169,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_KERNEL_CPU_TIME,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::KERNEL_CPU_TIME) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::MINOR_FAULTS) {
       logMonotonicCounter<Logger>(
@@ -154,11 +181,18 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_SW_FAULTS_MINOR,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::MINOR_FAULTS) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
   }
 
  public:
+  ThreadCounters() = default;
+  // For Tests
+  ThreadCounters(ThreadCache cache) : cache_(cache) {}
+
   void logCounters(
       bool highFrequencyMode,
       std::unordered_set<int32_t>& ignoredTids) {

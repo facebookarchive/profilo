@@ -17,6 +17,10 @@
 #pragma once
 
 #include <profilo/LogEntry.h>
+#include <profilo/entries/EntryType.h>
+
+using facebook::profilo::entries::COUNTER;
+using facebook::profilo::entries::StandardEntry;
 
 namespace facebook {
 namespace profilo {
@@ -30,7 +34,7 @@ __attribute__((always_inline)) static inline void logCounter(
     int64_t time) {
   logger.write(StandardEntry{
       .id = 0,
-      .type = entries::COUNTER,
+      .type = COUNTER,
       .timestamp = time,
       .tid = thread_id,
       .callid = counter_name,
@@ -61,9 +65,15 @@ __attribute__((always_inline)) static inline void logMonotonicCounter(
     int64_t time,
     uint32_t quicklog_id,
     Logger& logger = Logger::get(),
+    int64_t prev_skipped_time = 0,
     int threshold = 0) {
   if (curr > prev + threshold) {
     logCounter(logger, quicklog_id, curr, tid, time);
+    if (prev_skipped_time) {
+      // If it's non-zero it means that the previous
+      // sample didn't result in a log point.
+      logCounter(logger, quicklog_id, prev, tid, prev_skipped_time);
+    }
   }
 }
 

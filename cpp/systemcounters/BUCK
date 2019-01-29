@@ -1,7 +1,11 @@
 load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-SYSTEM_COUNTERS_EXPORTED_HEADERS = ["SystemCounterThread.h"]
+SYSTEM_COUNTERS_EXPORTED_HEADERS = [
+    "SystemCounterThread.h",
+    "ThreadCounters.h",
+    "common.h",
+]
 
 fb_xplat_cxx_library(
     name = "systemcounters",
@@ -20,6 +24,7 @@ fb_xplat_cxx_library(
     ],
     soname = "libprofilo_systemcounters.$(ext)",
     visibility = [
+        profilo_path("cpp/test/systemcounters/..."),
         profilo_path("java/main/com/facebook/profilo/provider/systemcounters:"),
     ],
     deps = [

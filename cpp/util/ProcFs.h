@@ -104,6 +104,13 @@ struct ThreadStatInfo {
   // monotonic clock value when this was captured
   uint64_t monotonicStatTime;
 
+  // This bitmap contains information about which stats values were changed in
+  // the previous sample. Every bit corresponds to a StatType identifier:
+  //  1 - the value moved in the last sample
+  //  0 - the value remained unchanged with respect to the preceding sample
+  //  value.
+  uint32_t statChangeMask;
+
   // STAT
   uint64_t cpuTimeMs;
   ThreadState state;

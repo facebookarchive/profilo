@@ -1,0 +1,23 @@
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
+
+profilo_cxx_test(
+    name = "threadcounters",
+    srcs = [
+        "ThreadCountersTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-pthread",
+        "-ldl",
+    ],
+    deps = [
+        "xplat//folly:test-util",
+        profilo_path("cpp/systemcounters:systemcounters"),
+        profilo_path("cpp/util:util"),
+    ],
+)

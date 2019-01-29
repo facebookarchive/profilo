@@ -677,17 +677,36 @@ ThreadStatHolder::ThreadStatHolder(uint32_t tid)
       tid_(tid) {}
 
 ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
+  last_info_.statChangeMask = 0;
   // Assuming that /proc/self/<tid>/stat is always available.
   if (kFileStats[StatFileType::STAT] & requested_stats_mask) {
     if (stat_file_.get() == nullptr) {
       stat_file_ = std::make_unique<TaskStatFile>(tid_);
     }
     auto statInfo = stat_file_->refresh(requested_stats_mask);
+    last_info_.statChangeMask |=
+        (last_info_.cpuTimeMs != statInfo.cpuTime) ? StatType::CPU_TIME : 0;
     last_info_.cpuTimeMs = statInfo.cpuTime;
+    last_info_.statChangeMask |=
+        (last_info_.state != statInfo.state) ? StatType::STATE : 0;
     last_info_.state = statInfo.state;
+    last_info_.statChangeMask |=
+        (last_info_.majorFaults != statInfo.majorFaults)
+        ? StatType::MAJOR_FAULTS
+        : 0;
     last_info_.majorFaults = statInfo.majorFaults;
+    last_info_.statChangeMask |=
+        (last_info_.cpuNum != statInfo.cpuNum) ? StatType::CPU_NUM : 0;
     last_info_.cpuNum = statInfo.cpuNum;
+    last_info_.statChangeMask |=
+        (last_info_.kernelCpuTimeMs != statInfo.kernelCpuTimeMs)
+        ? StatType::KERNEL_CPU_TIME
+        : 0;
     last_info_.kernelCpuTimeMs = statInfo.kernelCpuTimeMs;
+    last_info_.statChangeMask |=
+        (last_info_.minorFaults != statInfo.minorFaults)
+        ? StatType::MINOR_FAULTS
+        : 0;
     last_info_.minorFaults = statInfo.minorFaults;
     availableStatsMask_ |=
         kFileStats[StatFileType::STAT] & requested_stats_mask;
@@ -702,7 +721,15 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     }
     try {
       auto schedstatInfo = schedstat_file_->refresh(requested_stats_mask);
+      last_info_.statChangeMask |=
+          (last_info_.waitToRunTimeMs != schedstatInfo.waitToRunTimeMs)
+          ? StatType::WAIT_TO_RUN_TIME
+          : 0;
       last_info_.waitToRunTimeMs = schedstatInfo.waitToRunTimeMs;
+      last_info_.highPrecisionCpuTimeMs |=
+          (last_info_.highPrecisionCpuTimeMs != schedstatInfo.cpuTimeMs)
+          ? StatType::HIGH_PRECISION_CPU_TIME
+          : 0;
       last_info_.highPrecisionCpuTimeMs = schedstatInfo.cpuTimeMs;
       availableStatsMask_ |= kFileStats[StatFileType::SCHEDSTAT];
     } catch (const std::system_error& e) {
@@ -721,9 +748,23 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     }
     try {
       auto schedInfo = sched_file_->refresh(requested_stats_mask);
+      last_info_.statChangeMask |=
+          (last_info_.nrVoluntarySwitches != schedInfo.nrVoluntarySwitches)
+          ? StatType::NR_VOLUNTARY_SWITCHES
+          : 0;
       last_info_.nrVoluntarySwitches = schedInfo.nrVoluntarySwitches;
+      last_info_.statChangeMask |=
+          (last_info_.nrInvoluntarySwitches != schedInfo.nrInvoluntarySwitches)
+          ? StatType::NR_INVOLUNTARY_SWITCHES
+          : 0;
       last_info_.nrInvoluntarySwitches = schedInfo.nrInvoluntarySwitches;
+      last_info_.statChangeMask |= (last_info_.iowaitSum != schedInfo.iowaitSum)
+          ? StatType::IOWAIT_SUM
+          : 0;
       last_info_.iowaitSum = schedInfo.iowaitSum;
+      last_info_.iowaitCount |= (last_info_.iowaitSum != schedInfo.iowaitCount)
+          ? StatType::IOWAIT_COUNT
+          : 0;
       last_info_.iowaitCount = schedInfo.iowaitCount;
       availableStatsMask_ |= sched_file_->availableStatsMask;
     } catch (const std::exception& e) {
