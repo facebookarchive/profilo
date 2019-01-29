@@ -17,11 +17,11 @@
 #pragma once
 
 #include <fbjni/fbjni.h>
-#include <util/ProcFs.h>
-#include <util/SysFs.h>
-#include <mutex>
-#include <unordered_map>
-#include <unordered_set>
+#include <profilo/Logger.h>
+
+#include "ProcessCounters.h"
+#include "SystemCounters.h"
+#include "ThreadCounters.h"
 
 namespace facebook {
 namespace profilo {
@@ -38,7 +38,6 @@ class SystemCounterThread
   static void registerNatives();
 
   void logCounters();
-  void logThreadCounters();
   void logHighFrequencyThreadCounters();
   void logTraceAnnotations();
 
@@ -46,21 +45,13 @@ class SystemCounterThread
   friend HybridBase;
   SystemCounterThread() = default;
 
-  std::mutex mtx_; // Guards cache_
-  util::ThreadCache cache_;
-  std::unique_ptr<util::TaskStatFile> processStatFile_;
-  std::unique_ptr<util::CpuFrequencyStats> cpuFrequencyStats_;
-  std::unique_ptr<util::VmStatFile> vmStats_;
-  bool vmStatsTracingDisabled_;
-  std::unique_ptr<util::TaskSchedFile> schedStats_;
-  bool schedStatsTracingDisabled_;
+  ThreadCounters<util::ThreadCache, Logger> threadCounters_;
+  ProcessCounters<Logger> processCounters_;
+  SystemCounters<Logger> systemCounters_;
+
   int32_t extraAvailableCounters_;
   bool highFrequencyMode_;
 
-  void logProcessCounters();
-  void logCpuFrequencyInfo();
-  void logVmStatCounters();
-  void logProcessSchedCounters();
   void setHighFrequencyMode(bool enabled) {
     highFrequencyMode_ = enabled;
   }

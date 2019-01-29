@@ -5,10 +5,7 @@ SYSTEM_COUNTERS_EXPORTED_HEADERS = ["SystemCounterThread.h"]
 
 fb_xplat_cxx_library(
     name = "systemcounters",
-    srcs = [
-        "SystemCounterThread.cpp",
-        "jni.cpp",
-    ],
+    srcs = glob(["*.cpp"]),
     headers = glob(
         ["*.h"],
         exclude = SYSTEM_COUNTERS_EXPORTED_HEADERS,

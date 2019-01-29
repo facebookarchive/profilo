@@ -85,8 +85,6 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   native void logCounters();
 
-  native void logThreadCounters();
-
   native void logHighFrequencyThreadCounters();
 
   native void logTraceAnnotations();
