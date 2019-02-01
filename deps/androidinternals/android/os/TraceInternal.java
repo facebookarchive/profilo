@@ -16,6 +16,8 @@
 
 package com.facebook.androidinternals.android.os;
 
+import static com.facebook.infer.annotation.Assertions.assertNotNull;
+
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Trace;
@@ -35,9 +37,9 @@ public final class TraceInternal {
       Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
 
   /** android.os.Trace.isTagEnabled(long traceTag) */
-  private static final Method sIsTagEnabled;
+  private static final @Nullable Method sIsTagEnabled;
   /** android.os.Trace.setAppTracingAllowed(boolean allowed) */
-  private static final Method sSetAppTracingAllowed;
+  private static final @Nullable Method sSetAppTracingAllowed;
   /**
    * android.os.Trace.TRACE_TAG_APP. We reflect to get it because technically it can change from
    * release to release
@@ -124,7 +126,7 @@ public final class TraceInternal {
       return false;
     }
 
-    final Boolean result = (Boolean) invoke(sIsTagEnabled, traceTag);
+    final Boolean result = (Boolean) invoke(assertNotNull(sIsTagEnabled), traceTag);
     if (result == null) {
       return false;
     }
@@ -137,7 +139,7 @@ public final class TraceInternal {
       return;
     }
 
-    invoke(sSetAppTracingAllowed, allowed);
+    invoke(assertNotNull(sSetAppTracingAllowed), allowed);
   }
 
   private static @Nullable Object invoke(final Method method, final Object... args) {

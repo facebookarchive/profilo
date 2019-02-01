@@ -25,21 +25,21 @@ import javax.annotation.Nullable;
 public final class SystemPropertiesInternal {
 
   /** android.os.SystemProperties#get(String) */
-  private static final Method sGetEmptyDefault;
+  private static final @Nullable Method sGetEmptyDefault;
 
   /** android.os.SystemProperties#getLong(String, long) */
-  private static final Method sGetLong;
+  private static final @Nullable Method sGetLong;
 
   /** android.os.SystemProperties#set(String, String) */
-  private static final Method sSet;
+  private static final @Nullable Method sSet;
 
   /** android.os.SystemProperties#addChangeCallback(Runnable) */
-  private static final Method sAddChangeCallback;
+  private static final @Nullable Method sAddChangeCallback;
 
   private static volatile boolean sHiddenMembersEnabled;
 
   private static class SystemPropertiesHiddenMembers {
-    public final Method addChangeCallback;
+    public final @Nullable Method addChangeCallback;
     public final Method getEmptyDefault;
     public final Method getLong;
     public final Method set;
@@ -65,7 +65,7 @@ public final class SystemPropertiesInternal {
     }
 
     private SystemPropertiesHiddenMembers(
-        final Method addChangeCallback,
+        final @Nullable Method addChangeCallback,
         final Method getEmptyDefault,
         final Method getLong,
         final Method set) {
@@ -144,7 +144,7 @@ public final class SystemPropertiesInternal {
   }
 
   @Nullable
-  private static Object invoke(final Method method, final Object... args) {
+  private static Object invoke(final @Nullable Method method, final Object... args) {
     if (method == null) {
       return null;
     }
