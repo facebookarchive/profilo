@@ -168,7 +168,7 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
         // We don't have to ever worry about indexing into invalid chains_ data, because the
         // chain-start indices that live in buckets_ are indices into dynSymbolsTable and will thus
         // also never be less than symoffset_.
-        gnuHash_.chains_ = &gnuHash_.buckets_[gnuHash_.numbuckets_ - gnuHash_.symoffset_];
+        gnuHash_.chains_ = gnuHash_.buckets_ + gnuHash_.numbuckets_ - gnuHash_.symoffset_;
 
         // verify that bloom_size_ is a power of 2
         if ((((uint32_t)(gnuHash_.bloom_size_ - 1)) & gnuHash_.bloom_size_) != 0) {

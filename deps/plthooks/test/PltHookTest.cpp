@@ -19,6 +19,7 @@
 #include <cppdistract/dso.h>
 
 #include <plthooks/plthooks.h>
+#include <plthooks/trampoline.h>
 
 #include <plthooktestdata/meaningoflife.h>
 #include <plthooktests/test.h>

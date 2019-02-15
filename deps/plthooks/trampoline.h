@@ -24,7 +24,7 @@ namespace facebook { namespace plthooks {
 // Testing only
 namespace trampoline {
 
-#if defined(__arm__) || defined(__i386__)
+#if defined(__arm__) || defined(__i386__) || defined(__aarch64__)
 #define LINKER_TRAMPOLINE_SUPPORTED_ARCH
 #endif
 

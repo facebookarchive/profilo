@@ -38,9 +38,9 @@ struct TrampolineTest : public BaseTest {
     return (void*) &test_hook;
   }
 
-  static uint32_t test_pop_stack() {
+  static void* test_pop_stack() {
     pop_vals = {true};
-    return (uint32_t) push_vals.return_address;
+    return push_vals.return_address;
   }
 
   static double test_hook(short a, double b, int c) {
@@ -113,13 +113,14 @@ TEST_F(TrampolineTest, testTrampoline) {
 
   EXPECT_EQ(trampoline_return, 0.50) << "return result not the same";
   EXPECT_TRUE(push_vals.called) << "push_hook not called";
+  EXPECT_TRUE(hook_vals.called) << "hook not called";
+  EXPECT_TRUE(pop_vals.called) << "pop_hook not called";
+
   EXPECT_EQ(push_vals.id, 0xfaceb00c)
       << "push_hook called with wrong hook id value";
-  EXPECT_TRUE(hook_vals.called) << "hook not called";
   EXPECT_EQ(hook_vals.a, 10) << "hook_a is wrong";
   EXPECT_EQ(hook_vals.b, 0.25) << "hook_b is wrong";
   EXPECT_EQ(hook_vals.c, 20) << "hook_c is wrong";
-  EXPECT_TRUE(pop_vals.called) << "pop_hook not called";
 }
 
 } // namespace trampoline

@@ -185,12 +185,12 @@ class trampoline {
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
     std::memcpy(code_, trampoline_template_pointer(), code_size_);
 
-    auto* data = reinterpret_cast<uint32_t*>(
+    void** data = reinterpret_cast<void**>(
         reinterpret_cast<uintptr_t>(code_) + code_size_);
 
-    *data++ = reinterpret_cast<uint32_t>(push_hook_stack);
-    *data++ = reinterpret_cast<uint32_t>(pop_hook_stack);
-    *data++ = reinterpret_cast<uint32_t>(id);
+    *data++ = reinterpret_cast<void*>(push_hook_stack);
+    *data++ = reinterpret_cast<void*>(pop_hook_stack);
+    *data++ = reinterpret_cast<void*>(id);
 
      __builtin___clear_cache((char*) code_, (char*) code_ + code_size_ + trampoline_data_size());
 #endif

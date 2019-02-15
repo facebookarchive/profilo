@@ -35,5 +35,4 @@ struct BaseTest : public testing::Test {
   }
 };
 
-// TODO maybe figure out a cleaner/more reliable way of adding this
-#define LIBDIR(lib) ("/data/data/native.plthooks.test.test/lib/" lib)
+#define LIBDIR(lib) (lib)

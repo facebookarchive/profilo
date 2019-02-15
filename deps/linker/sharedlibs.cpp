@@ -40,7 +40,6 @@ static std::unordered_map<std::string, elfSharedLibData>& sharedLibData() {
 
 template <typename Arg>
 bool addSharedLib(char const* libname, Arg&& arg) {
-#if !defined(__aarch64__)
   if (sharedLibData().find(basename(libname)) == sharedLibData().end()) {
     try {
       elfSharedLibData data(std::forward<Arg>(arg));
@@ -51,7 +50,6 @@ bool addSharedLib(char const* libname, Arg&& arg) {
       // just ignore it and don't add the library, we'll return false
     }
   }
-#endif
   return false;
 }
 

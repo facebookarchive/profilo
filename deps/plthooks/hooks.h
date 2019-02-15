@@ -20,7 +20,7 @@
 #include <unistd.h>
 #include <vector>
 
-using HookId = uint32_t;
+using HookId = uintptr_t;
 
 namespace facebook {
 namespace plthooks {
