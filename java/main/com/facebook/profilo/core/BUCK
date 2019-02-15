@@ -104,13 +104,11 @@ fb_core_android_library(
     visibility = [
         "//java/com/facebook/cloudseeder:cloudseeder",
         "//java/com/facebook/debug/profilo:profilo",
-        "//java/com/facebook/exoplayer/logging:logging_impl",
         "//java/com/facebook/fab/dumper/plugins:plugins",
         "//java/com/facebook/katana/activity:activity",
         "//java/com/facebook/katana/app:app",
         "//java/com/facebook/messenger:messenger",
         "//java/com/facebook/tools/dextr/...",
-        "//java/com/facebook/video/analytics:analytics",
         "//java/com/facebook/video/profiler/systrace:systrace",
         "//java/com/instagram/android/...",
         "//javatests/com/facebook/cloudseeder:cloudseeder",
