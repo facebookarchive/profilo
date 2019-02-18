@@ -6,6 +6,9 @@ load("//tools/build_defs:glob_defs.bzl", "subdir_glob")
 def profilo_path(dep):
     return "//" + dep
 
+def profilo_import_path(dep):
+    return dep
+
 def profilo_cxx_binary(**kwargs):
     """Delegates to the native cxx_test rule."""
     native.cxx_binary(**kwargs)
