@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.common.dextricks.classid;
 
 import android.os.Build;
@@ -26,7 +25,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
-import java.security.InvalidParameterException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -35,11 +33,7 @@ public class ClassId {
 
   public static final boolean sInitialized;
   public static final long CLASS_ID_NOT_FOUND = -1L;
-
-  public enum TestMode {
-    /** forces pure java dex signature computation for comparison purposes */
-    JAVA_DEX_SIGNATURE
-  }
+  private static final int DEX_SIGNATURE_OFFSET = 12;
 
   private static final ConcurrentHashMap<Object, Integer> sDexKeyToDexSignature;
   private static Field javaLangClass_dexClassDefIndex;
@@ -57,6 +51,7 @@ public class ClassId {
     sInitialized = initialize();
   }
 
+  @SuppressWarnings("JavaReflectionMemberAccess")
   static synchronized boolean initialize() {
     Class<?> jlClass = Class.class;
 
@@ -123,7 +118,9 @@ public class ClassId {
 
   private static void verifyInitialize() {
     getClassDef(ClassId.class);
-    getDexSignature(ClassId.class);
+    if (getDexSignature(ClassId.class) == 0) {
+      throw new UnsupportedOperationException();
+    }
   }
 
   public static long getClassId(final Class<?> cls) {
@@ -134,15 +131,6 @@ public class ClassId {
     final long signature = ((long) getDexSignature(cls)) & 0xFFFFFFFFL;
     final long id = ((long) getClassDef(cls) << 32) | signature;
     return id;
-  }
-
-  static void setTestMode(TestMode testMode) {
-    if (testMode == TestMode.JAVA_DEX_SIGNATURE) {
-      ClassId.sDexKeyToDexSignature.clear();
-      ClassId.comAndroidDexDex_data = null;
-    } else {
-      throw new InvalidParameterException();
-    }
   }
 
   private static int getClassDef(Class<?> cls) {
@@ -235,19 +223,43 @@ public class ClassId {
   private static int getSignatureForDex(Dex dex)
       throws IllegalAccessException, InvocationTargetException {
     if (comAndroidDexDex_data != null) { // update setTestMode if changed
-      ByteBuffer data = (ByteBuffer) comAndroidDexDex_data.get(dex);
-      int signature = getSignatureFromDexData(data);
-      if (signature != 0) {
-        return signature;
+      ByteBuffer dexDataBuffer = (ByteBuffer) comAndroidDexDex_data.get(dex);
+      if (dexDataBuffer != null) {
+        ByteBuffer data = dexDataBuffer.duplicate();
+        if (data.limit() >= 16) {
+          data.position(DEX_SIGNATURE_OFFSET);
+          int signature = data.getInt();
+          if (signature != 0) {
+            return signature;
+          }
+        }
       }
     }
 
-    final int SIGNATURE_OFFSET = 12;
-    Dex.Section signatureSection = dex.open(SIGNATURE_OFFSET);
+    Dex.Section signatureSection = dex.open(DEX_SIGNATURE_OFFSET);
     return signatureSection.readInt();
   }
 
-  private static native int getSignatureFromDexFile(long dexFilePointer);
+  private static int getSignatureFromDexFile(long dexFile) {
+    final int VERSION_O = 26;
+    final int VERSION_OMR1 = 27;
+    final int VERSION_P = 28;
 
-  private static native int getSignatureFromDexData(ByteBuffer data);
+    switch (Build.VERSION.SDK_INT) {
+      case VERSION_O:
+        return getSignatureFromDexFile_8_0_0(dexFile);
+      case VERSION_OMR1:
+        return getSignatureFromDexFile_8_1_0(dexFile);
+      case VERSION_P:
+        return getSignatureFromDexFile_9_0_0(dexFile);
+      default:
+        return 0;
+    }
+  }
+
+  private static native int getSignatureFromDexFile_8_0_0(long dexFilePointer);
+
+  private static native int getSignatureFromDexFile_8_1_0(long dexFilePointer);
+
+  private static native int getSignatureFromDexFile_9_0_0(long dexFilePointer);
 }
