@@ -71,6 +71,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
   SoLoader.class,
   SparseArray.class,
   Process.class,
+  BaseTraceProvider.class,
 })
 @SuppressStaticInitializationFor({
   "com.facebook.profilo.logger.Logger",

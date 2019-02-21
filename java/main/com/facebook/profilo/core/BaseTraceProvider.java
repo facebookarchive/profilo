@@ -81,12 +81,20 @@ public abstract class BaseTraceProvider {
   }
 
   public final void onEnable(TraceContext context, @Nullable File extraDataFile) {
+    // Early exit if a provider is disabled
+    if (TraceEvents.enabledMask(getSupportedProviders()) == 0) {
+      return;
+    }
     ensureSolibLoaded();
     processStateChange(context);
     onTraceStarted(context, extraDataFile);
   }
 
   public final void onDisable(TraceContext context, @Nullable File extraDataFile) {
+    // Currently not tracing
+    if (mSavedProviders == 0) {
+      return;
+    }
     ensureSolibLoaded();
     onTraceEnded(context, extraDataFile);
     processStateChange(context);
