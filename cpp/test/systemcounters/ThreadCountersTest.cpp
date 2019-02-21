@@ -177,6 +177,10 @@ class ThreadMonotonicCountersTest : public ::testing::Test {
     std::unordered_set<int32_t> ignored_tids{};
     threadCounters.logCounters(false, ignored_tids);
 
+    if (expected_cur_stats_mask != 0 || expected_prev_stats_mask != 0) {
+      EXPECT_EQ(testLogger.log.empty(), false);
+    }
+
     while (!testLogger.log.empty()) {
       StandardEntry logEntry = testLogger.log.top();
       auto timestamp = logEntry.timestamp;

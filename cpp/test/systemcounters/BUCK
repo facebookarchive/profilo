@@ -21,3 +21,25 @@ profilo_cxx_test(
         profilo_path("cpp/util:util"),
     ],
 )
+
+profilo_cxx_test(
+    name = "processcounters",
+    srcs = [
+        "ProcessCountersTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-pthread",
+        "-ldl",
+    ],
+    deps = [
+        "fbsource//xplat/folly:test-util",
+        profilo_path("cpp/systemcounters:systemcounters"),
+        profilo_path("cpp/util:util"),
+    ],
+)

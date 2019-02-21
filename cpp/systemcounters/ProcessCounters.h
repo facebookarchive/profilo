@@ -25,9 +25,19 @@ namespace facebook {
 namespace profilo {
 
 // Separating process counters from thread counters
-template <typename Logger>
+template <typename TaskStatFile, typename TaskSchedFile, typename Logger>
 class ProcessCounters {
  public:
+  ProcessCounters() = default;
+  // For Tests
+  ProcessCounters(
+      std::unique_ptr<TaskStatFile> taskStatFile,
+      std::unique_ptr<TaskSchedFile> schedStatFile)
+      : processStatFile_(std::move(taskStatFile)),
+        schedStats_(std::move(schedStatFile)),
+        schedStatsTracingDisabled_(false),
+        extraAvailableCounters_(false) {}
+
   void logCounters() {
     logProcessCounters();
     logProcessSchedCounters();
@@ -39,7 +49,7 @@ class ProcessCounters {
  private:
   void logProcessCounters() {
     if (!processStatFile_) {
-      processStatFile_.reset(new util::TaskStatFile("/proc/self/stat"));
+      processStatFile_.reset(new TaskStatFile("/proc/self/stat"));
     }
 
     auto prevInfo = processStatFile_->getInfo();
@@ -58,17 +68,13 @@ class ProcessCounters {
     Logger& logger = Logger::get();
 
     if (prevInfo.cpuTime != 0) {
-      // Don't log the initial value
-      const auto kThresholdMs = 1;
-
       logMonotonicCounter<Logger>(
           prevInfo.cpuTime,
           currInfo.cpuTime,
           tid,
           time,
           QuickLogConstants::PROC_CPU_TIME,
-          logger,
-          kThresholdMs);
+          logger);
 
       logMonotonicCounter<Logger>(
           prevInfo.kernelCpuTimeMs,
@@ -101,7 +107,7 @@ class ProcessCounters {
       return;
     }
     if (!schedStats_) {
-      schedStats_.reset(new util::TaskSchedFile("/proc/self/sched"));
+      schedStats_.reset(new TaskSchedFile("/proc/self/sched"));
     }
 
     auto prevInfo = schedStats_->getInfo();
@@ -162,8 +168,8 @@ class ProcessCounters {
     }
   }
 
-  std::unique_ptr<util::TaskStatFile> processStatFile_;
-  std::unique_ptr<util::TaskSchedFile> schedStats_;
+  std::unique_ptr<TaskStatFile> processStatFile_;
+  std::unique_ptr<TaskSchedFile> schedStats_;
   bool schedStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
 };
