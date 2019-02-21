@@ -107,14 +107,23 @@ refresh_shared_libs() {
       return 1;
     }
 
-    dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void*) {
+    std::vector<dl_phdr_info> to_add;
+    dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void* vec) {
+      auto to_add = reinterpret_cast<std::vector<dl_phdr_info>*>(vec);
       if (info->dlpi_name && ends_with(info->dlpi_name, ".so")) {
-        addSharedLib(info->dlpi_name, info);
+        // dl_iterate_phdr holds a global dl_* lock while invoking this and
+        // addSharedLib grabs its own locks. Other functions will grab those
+        // same locks and then call dl_* functions, which would result in a
+        // lock inversion.
+        to_add->push_back(*info);
       }
       return 0;
-    }, nullptr);
+    }, &to_add);
+    for (auto info : to_add) {
+      addSharedLib(info.dlpi_name, &info);
+    }
   } else {
-#ifndef __LP64__
+#ifndef __LP64__ /* prior to android L there were no 64-bit devices anyway */
     soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
 
     if (si == nullptr) {
