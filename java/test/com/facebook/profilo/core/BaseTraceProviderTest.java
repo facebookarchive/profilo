@@ -13,9 +13,11 @@
  */
 package com.facebook.profilo.core;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doNothing;
@@ -47,12 +49,14 @@ public class BaseTraceProviderTest {
   public static final int PROVIDER_ID = 1;
 
   private BaseTraceProvider mTestProvider;
+  private BaseTraceProvider.ExtraDataFileProvider mExtraFileProvider;
 
   @Before
   public void setUp() {
     mockStatic(TraceEvents.class);
     when(TraceEvents.enabledMask(anyInt())).thenReturn(0xFFFFFFFF);
 
+    mExtraFileProvider = mock(BaseTraceProvider.ExtraDataFileProvider.class);
     mTestProvider = spy(new TestTraceProvider());
 
     doReturn(PROVIDER_ID).when(mTestProvider).getSupportedProviders();
@@ -60,42 +64,50 @@ public class BaseTraceProviderTest {
     // Need to stub the methods below as a workaround for proper method counting.
     doNothing().when(mTestProvider).enable();
     doNothing().when(mTestProvider).disable();
-    doNothing().when(mTestProvider).onTraceStarted(any(TraceContext.class), any(File.class));
-    doNothing().when(mTestProvider).onTraceEnded(any(TraceContext.class), any(File.class));
+    doNothing()
+        .when(mTestProvider)
+        .onTraceStarted(
+            any(TraceContext.class), any(BaseTraceProvider.ExtraDataFileProvider.class));
+    doNothing()
+        .when(mTestProvider)
+        .onTraceEnded(any(TraceContext.class), any(BaseTraceProvider.ExtraDataFileProvider.class));
 
     Whitebox.setInternalState(mTestProvider, "mSolibInitialized", true);
+
+    when(mExtraFileProvider.getExtraDataFile(any(TraceContext.class), any(BaseTraceProvider.class)))
+        .thenReturn(EXTRA_FILE);
   }
 
   @Test
   public void testTraceProviderLifecycle() {
-    mTestProvider.onEnable(TRACE_CONTEXT, EXTRA_FILE);
-    mTestProvider.onDisable(TRACE_CONTEXT, EXTRA_FILE);
+    mTestProvider.onEnable(TRACE_CONTEXT, mExtraFileProvider);
+    mTestProvider.onDisable(TRACE_CONTEXT, mExtraFileProvider);
 
     InOrder enablingOrder = Mockito.inOrder(mTestProvider);
     enablingOrder.verify(mTestProvider).enable();
-    enablingOrder.verify(mTestProvider).onTraceStarted(eq(TRACE_CONTEXT), eq(EXTRA_FILE));
+    enablingOrder.verify(mTestProvider).onTraceStarted(eq(TRACE_CONTEXT), eq(mExtraFileProvider));
 
     InOrder disablingOrder = Mockito.inOrder(mTestProvider);
-    disablingOrder.verify(mTestProvider).onTraceEnded(eq(TRACE_CONTEXT), eq(EXTRA_FILE));
+    disablingOrder.verify(mTestProvider).onTraceEnded(eq(TRACE_CONTEXT), eq(mExtraFileProvider));
     disablingOrder.verify(mTestProvider).disable();
   }
 
   @Test
   public void testProviderEarlyExitOnEnableIfProviderMaskIsNotTracing() throws Exception {
     when(TraceEvents.enabledMask(anyInt())).thenReturn(0x0);
-    mTestProvider.onEnable(TRACE_CONTEXT, EXTRA_FILE);
+    mTestProvider.onEnable(TRACE_CONTEXT, mExtraFileProvider);
     verify(mTestProvider, never()).ensureSolibLoaded();
     verify(mTestProvider, never()).enable();
-    verify(mTestProvider, never()).onTraceStarted(eq(TRACE_CONTEXT), eq(EXTRA_FILE));
+    verify(mTestProvider, never()).onTraceStarted(eq(TRACE_CONTEXT), eq(mExtraFileProvider));
   }
 
   @Test
   public void testProviderEarlyExitOnDisableIfNoActiveTracingMask() {
     Whitebox.setInternalState(mTestProvider, "mSavedProviders", 0);
-    mTestProvider.onDisable(TRACE_CONTEXT, EXTRA_FILE);
+    mTestProvider.onDisable(TRACE_CONTEXT, mExtraFileProvider);
     verify(mTestProvider, never()).ensureSolibLoaded();
     verify(mTestProvider, never()).disable();
-    verify(mTestProvider, never()).onTraceEnded(eq(TRACE_CONTEXT), eq(EXTRA_FILE));
+    verify(mTestProvider, never()).onTraceEnded(eq(TRACE_CONTEXT), eq(mExtraFileProvider));
   }
 
   static class TestTraceProvider extends BaseTraceProvider {

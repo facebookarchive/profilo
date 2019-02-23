@@ -11,7 +11,6 @@ import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
-import java.io.File;
 import javax.annotation.Nullable;
 
 /** Logs versionName and versionCode from AndroidManifest.xml as trace annotations. */
@@ -56,7 +55,7 @@ public class PackageInfoProvider extends BaseTraceProvider {
   protected void disable() {}
 
   @Override
-  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     resolvePackageInfo();
 
     if (mVersionName == null) {

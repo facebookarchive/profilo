@@ -51,6 +51,10 @@ import javax.annotation.Nullable;
  */
 public abstract class BaseTraceProvider {
 
+  public interface ExtraDataFileProvider {
+    File getExtraDataFile(TraceContext context, BaseTraceProvider provider);
+  }
+
   private int mSavedProviders;
   private TraceContext mEnablingContext;
   protected static final int EVERY_PROVIDER_CHANGE = 0xFFFFFFFF;
@@ -80,23 +84,23 @@ public abstract class BaseTraceProvider {
     }
   }
 
-  public final void onEnable(TraceContext context, @Nullable File extraDataFile) {
+  public final void onEnable(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     // Early exit if a provider is disabled
     if (TraceEvents.enabledMask(getSupportedProviders()) == 0) {
       return;
     }
     ensureSolibLoaded();
     processStateChange(context);
-    onTraceStarted(context, extraDataFile);
+    onTraceStarted(context, dataFileProvider);
   }
 
-  public final void onDisable(TraceContext context, @Nullable File extraDataFile) {
+  public final void onDisable(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     // Currently not tracing
     if (mSavedProviders == 0) {
       return;
     }
     ensureSolibLoaded();
-    onTraceEnded(context, extraDataFile);
+    onTraceEnded(context, dataFileProvider);
     processStateChange(context);
   }
 
@@ -134,12 +138,12 @@ public abstract class BaseTraceProvider {
   /**
    * Called when any trace starts, regardless of whether any supported provider is enabled or not.
    */
-  protected void onTraceStarted(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceStarted(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     // noop
   }
 
   /** Called when any trace ends, regardless of whether any supported provider is enabled or not. */
-  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     // noop
   }
 

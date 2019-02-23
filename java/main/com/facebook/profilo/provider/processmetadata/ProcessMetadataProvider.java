@@ -23,9 +23,7 @@ import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
-import java.io.File;
 import java.util.List;
-import javax.annotation.Nullable;
 
 public final class ProcessMetadataProvider extends BaseTraceProvider {
 
@@ -36,12 +34,12 @@ public final class ProcessMetadataProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceStarted(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceStarted(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     logProcessList();
   }
 
   @Override
-  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     logProcessList();
   }
 

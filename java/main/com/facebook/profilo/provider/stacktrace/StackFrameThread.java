@@ -29,7 +29,6 @@ import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.proguard.annotations.DoNotStrip;
-import java.io.File;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -222,7 +221,7 @@ public final class StackFrameThread extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceStarted(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceStarted(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     CPUProfiler.resetFrameworkNamesSet();
   }
 

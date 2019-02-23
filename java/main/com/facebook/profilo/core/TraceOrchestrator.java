@@ -52,7 +52,8 @@ public final class TraceOrchestrator
         ConfigProvider.ConfigUpdateListener,
         TraceControl.TraceControlListener,
         BackgroundUploadService.BackgroundUploadListener,
-        LoggerCallbacks {
+        LoggerCallbacks,
+        BaseTraceProvider.ExtraDataFileProvider {
 
   public static final String EXTRA_DATA_FOLDER_NAME = "extra";
 
@@ -356,13 +357,14 @@ public final class TraceOrchestrator
   }
 
   @Nullable
-  private File buildExtraFileName(TraceContext context, int providerId) {
+  public File getExtraDataFile(TraceContext context, BaseTraceProvider provider) {
     if ((context.flags & Trace.FLAG_MEMORY_ONLY) != 0) {
       // Memory-only traces are not allowed to write to file system, hence skipping extra folder
       // creation.
       return null;
     }
 
+    int providerId = provider.getSupportedProviders();
     Set<String> providerNames = ProvidersRegistry.getRegisteredProvidersByBitMask(providerId);
     if (providerNames.isEmpty()) {
       return null;
@@ -392,7 +394,7 @@ public final class TraceOrchestrator
       providers = mBaseTraceProviders;
     }
     for (BaseTraceProvider provider : providers) {
-      provider.onEnable(context, buildExtraFileName(context, provider.getSupportedProviders()));
+      provider.onEnable(context, this);
     }
     mListenerManager.onProvidersInitialized();
   }
@@ -424,7 +426,7 @@ public final class TraceOrchestrator
     int tracingProviders = 0;
     for (BaseTraceProvider provider : providers) {
       tracingProviders |= provider.getActiveProviders();
-      provider.onDisable(context, buildExtraFileName(context, provider.getSupportedProviders()));
+      provider.onDisable(context, this);
     }
     mListenerManager.onProvidersStop(tracingProviders);
 
@@ -447,7 +449,7 @@ public final class TraceOrchestrator
     TraceEvents.disableProviders(context.enabledProviders);
 
     for (BaseTraceProvider provider : providers) {
-      provider.onDisable(context, buildExtraFileName(context, provider.getSupportedProviders()));
+      provider.onDisable(context, this);
     }
   }
 

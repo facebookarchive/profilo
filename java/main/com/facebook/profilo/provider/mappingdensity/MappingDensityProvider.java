@@ -18,7 +18,6 @@ import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.proguard.annotations.DoNotStrip;
 import java.io.File;
-import javax.annotation.Nullable;
 
 @DoNotStrip
 public final class MappingDensityProvider extends BaseTraceProvider {
@@ -43,7 +42,8 @@ public final class MappingDensityProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceStarted(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceStarted(TraceContext context, ExtraDataFileProvider dataFileProvider) {
+    File extraDataFile = dataFileProvider.getExtraDataFile(context, this);
     if (mEnabled && extraDataFile != null) {
       dumpMappingDensities(
           "^/data/(data|app)",
@@ -52,7 +52,8 @@ public final class MappingDensityProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceEnded(TraceContext context, @Nullable File extraDataFile) {
+  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
+    File extraDataFile = dataFileProvider.getExtraDataFile(context, this);
     if (mEnabled && extraDataFile != null) {
       dumpMappingDensities(
           "^/data/(data|app)",

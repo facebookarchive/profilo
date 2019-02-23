@@ -495,7 +495,8 @@ public class TraceOrchestratorTest {
   }
 
   private void verifyProvidersDisabled() {
-    verify(mTraceProvider).onDisable(any(TraceContext.class), any(File.class));
+    verify(mTraceProvider)
+        .onDisable(any(TraceContext.class), any(BaseTraceProvider.ExtraDataFileProvider.class));
   }
 
   private void assertProvidersTheSame(int providers) {
