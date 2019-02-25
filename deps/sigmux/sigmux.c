@@ -371,14 +371,14 @@ sigmux_handle_signal(
         (void) __atomic_compare_exchange_n(&next_handler_snapshot->sa_handler,
                                            &next_handler.sa_handler,
                                            SIG_DFL,
-                                           false /* weak */,
+                                           true,
                                            __ATOMIC_RELAXED,
                                            __ATOMIC_RELAXED);
       } else {
         (void) __atomic_compare_exchange_n(&next_handler_snapshot->sa_sigaction,
                                            &next_handler.sa_sigaction,
                                            NULL,
-                                           false /* weak */,
+                                           true,
                                            __ATOMIC_RELAXED,
                                            __ATOMIC_RELAXED);
 
