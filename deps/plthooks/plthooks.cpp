@@ -286,7 +286,7 @@ int unhook_single_lib(
 int hook_all_libs(
     plt_hook_spec* specs,
     size_t num_specs,
-    bool (*allowHookingLib)(char const* libname, void* data),
+    AllowHookingLibCallback allowHookingLib,
     void* data) {
   if (refresh_shared_libs()) {
     // Could not properly refresh the cache of shared library data

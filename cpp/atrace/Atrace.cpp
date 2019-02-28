@@ -29,6 +29,7 @@
 #include <fb/log.h>
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
+#include <linker/sharedlibs.h>
 #include <plthooks/plthooks.h>
 #include <util/hooks.h>
 
@@ -59,6 +60,36 @@ namespace {
 ssize_t const kAtraceMessageLength = 1024;
 // Magic FD to simply write to tracer logger and bypassing real write
 int const kTracerMagicFd = -100;
+// Libraries which log to ATRACE reference this function symbol. This symbol is
+// used for early verification if a library should be hooked.
+constexpr char kAtraceSymbol[] = "atrace_setup";
+
+// Determine if this library should be hooked.
+bool allowHookingCb(char const* libname, void* data) {
+  std::unordered_set<std::string>* seenLibs =
+      static_cast<std::unordered_set<std::string>*>(data);
+
+  if (seenLibs->find(libname) != seenLibs->cend()) {
+    // We already hooked (or saw and decided not to hook) this library.
+    return false;
+  }
+
+  seenLibs->insert(libname);
+
+  try {
+    // Verify if the library contains atrace indicator symbol, otherwise we
+    // don't need to install hooks.
+    auto elfData = linker::sharedLib(libname);
+    ElfW(Sym) const* sym = elfData.find_symbol_by_name(kAtraceSymbol);
+    if (!sym) {
+      return false;
+    }
+  } catch (std::out_of_range& e) {
+    return false;
+  }
+
+  return true;
+}
 
 void log_systrace(const void* buf, size_t count) {
   const char* msg = reinterpret_cast<const char*>(buf);
@@ -173,7 +204,8 @@ void hookLoadedLibs() {
   auto& functionHooks = getFunctionHooks();
   auto& seenLibs = getSeenLibs();
 
-  facebook::profilo::hooks::hookLoadedLibs(functionHooks, seenLibs);
+  facebook::profilo::hooks::hookLoadedLibs(
+      functionHooks, allowHookingCb, &seenLibs);
 }
 
 void unhookLoadedLibs() {

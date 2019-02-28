@@ -31,6 +31,16 @@ extern "C" {
  */
 typedef void* hook_func;
 
+
+/**
+ * This callback can supplied to hook_all_libs batch hooking method and gives
+ * a library client control whether to hook a particular library or not.
+ *
+ * Returns true if the library <libname> should be hooked and false otherwise.
+ */
+typedef bool (*AllowHookingLibCallback)(char const* libname, void* data);
+
+
 /**
  * Initializes the library, call to this function is expected before any other
  * function is invoked.

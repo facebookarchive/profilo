@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include <plthooks/plthooks.h>
+
 #include <string>
 #include <unordered_set>
 #include <utility>
@@ -37,7 +39,8 @@ namespace hooks {
  */
 void hookLoadedLibs(
     const std::vector<std::pair<char const*, void*>>& functionHooks,
-    std::unordered_set<std::string>& seenLibs);
+    AllowHookingLibCallback allowHookingCb,
+    void* data);
 
 void unhookLoadedLibs(
     const std::vector<std::pair<char const*, void*>>& functionHooks);
