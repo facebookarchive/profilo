@@ -40,17 +40,24 @@ static std::unordered_map<std::string, elfSharedLibData>& sharedLibData() {
 
 template <typename Arg>
 bool addSharedLib(char const* libname, Arg&& arg) {
-  if (sharedLibData().find(basename(libname)) == sharedLibData().end()) {
-    try {
-      elfSharedLibData data(std::forward<Arg>(arg));
-      WriterLock wl(&sharedLibsMutex_);
-      return sharedLibData().insert(std::make_pair(basename(libname), std::move(data))).second;
-    } catch (input_parse_error&) {
-      // elfSharedLibData ctor will throw if it is unable to parse input
-      // just ignore it and don't add the library, we'll return false
+  {
+    ReaderLock rl(&sharedLibsMutex_);
+    // the common path will be duplicate entries, so skip the weight of
+    // elfSharedLibData construction and grabbing a writer lock, if possible
+    if (sharedLibData().find(basename(libname)) != sharedLibData().end()) {
+      return false;
     }
   }
-  return false;
+
+  try {
+    elfSharedLibData data(std::forward<Arg>(arg));
+    WriterLock wl(&sharedLibsMutex_);
+    return sharedLibData().insert(std::make_pair(basename(libname), std::move(data))).second;
+  } catch (input_parse_error&) {
+    // elfSharedLibData ctor will throw if it is unable to parse input
+    // just ignore it and don't add the library
+    return false;
+  }
 }
 
 bool ends_with(const char* str, const char* ending) {
