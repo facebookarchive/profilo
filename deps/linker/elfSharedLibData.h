@@ -92,6 +92,10 @@ public:
     return !(*this == other);
   }
 
+  const char* getLibName() const {
+    return libName;
+  }
+
 private:
 
   ElfW(Sym) const* elf_find_symbol_by_name(char const*) const;

@@ -38,8 +38,10 @@ typedef void* hook_func;
  *
  * Returns true if the library <libname> should be hooked and false otherwise.
  */
-typedef bool (*AllowHookingLibCallback)(char const* libname, void* data);
-
+typedef bool (*AllowHookingLibCallback)(
+    char const* libname,
+    char const* full_libname,
+    void* data);
 
 /**
  * Initializes the library, call to this function is expected before any other
@@ -96,7 +98,7 @@ hook_single_lib(char const* libname, plt_hook_spec* specs, size_t num_specs);
  */
 int
 hook_all_libs(plt_hook_spec* specs, size_t num_specs,
-    bool (*allowHookingLib)(char const* libname, void* data), void* data);
+    bool (*allowHookingLib)(char const* libname, char const* full_libname, void* data), void* data);
 
 // Counterparts to the all hook_* routines:
 

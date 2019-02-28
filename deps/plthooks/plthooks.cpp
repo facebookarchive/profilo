@@ -296,7 +296,7 @@ int hook_all_libs(
   int failures = 0;
 
   for (auto const& lib : allSharedLibs()) {
-    if (allowHookingLib(lib.first.c_str(), data)) {
+    if (allowHookingLib(lib.first.c_str(), lib.second.getLibName(), data)) {
       failures += hook_single_lib(lib.first.c_str(), specs, num_specs);
     }
   }

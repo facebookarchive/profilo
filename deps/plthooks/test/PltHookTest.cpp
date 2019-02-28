@@ -165,7 +165,7 @@ TEST_F(HookUnhookTest, testUnhookAllWithUnhookedLib) {
   plt_hook_spec spec("clock", (void*)&clock1);
 
   auto hook_return = hook_all_libs(
-      &spec, 1, [](const char* name, void*) {
+      &spec, 1, [](const char* name, const char*, void*) {
         // Avoid accidental matches on system libraries by hardcoding our target
         return strcmp(name, "libtarget.so") == 0;
       }, nullptr);

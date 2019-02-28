@@ -63,9 +63,11 @@ int const kTracerMagicFd = -100;
 // Libraries which log to ATRACE reference this function symbol. This symbol is
 // used for early verification if a library should be hooked.
 constexpr char kAtraceSymbol[] = "atrace_setup";
+// Prefix for system libraries.
+constexpr char kSysLibPrefix[] = "/system";
 
 // Determine if this library should be hooked.
-bool allowHookingCb(char const* libname, void* data) {
+bool allowHookingCb(char const* libname, char const* full_libname, void* data) {
   std::unordered_set<std::string>* seenLibs =
       static_cast<std::unordered_set<std::string>*>(data);
 
@@ -75,6 +77,11 @@ bool allowHookingCb(char const* libname, void* data) {
   }
 
   seenLibs->insert(libname);
+
+  // Only allow to hook system libraries
+  if (strncmp(full_libname, kSysLibPrefix, sizeof(kSysLibPrefix) - 1)) {
+    return false;
+  }
 
   try {
     // Verify if the library contains atrace indicator symbol, otherwise we
