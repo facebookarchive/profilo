@@ -18,11 +18,25 @@
 
 #include <link.h>
 #include <gtest/gtest.h>
+#include <folly/ScopeGuard.h>
 
 #include <linker/link.h>
 
 int meaning_of_life() {
   return 42;
+}
+
+static bool null_dladdr_info_ = false;
+int dladdr(const void* addr, Dl_info *info) {
+  static auto real_dladdr =
+    reinterpret_cast<int(*)(const void*, Dl_info*)>(dlsym(RTLD_NEXT, "dladdr"));
+
+  int ret = real_dladdr(addr, info);
+  if (null_dladdr_info_) {
+    info->dli_sname = nullptr;
+    info->dli_saddr = nullptr;
+  }
+  return ret;
 }
 
 struct DlAddr1Test : public BaseTest { };
@@ -34,4 +48,15 @@ TEST_F(DlAddr1Test, testDladdr1) {
   ASSERT_EQ(&meaning_of_life, info.dli_saddr);
   ASSERT_NE(nullptr, sym);
   ASSERT_LT(0U, sym->st_size);
+}
+
+TEST_F(DlAddr1Test, testDladdr1NullTolerance) {
+  null_dladdr_info_ = true;
+  SCOPE_EXIT {
+    null_dladdr_info_ = false;
+  };
+
+  ElfW(Sym) const* sym;
+  Dl_info info;
+  ASSERT_EQ(0, dladdr1((void*)&meaning_of_life, &info, (void**)&sym, RTLD_DL_SYMENT));
 }

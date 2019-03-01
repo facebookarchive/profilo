@@ -34,7 +34,7 @@ int dladdr1(void* addr, Dl_info* info, void** extra_info, int flags) {
     return 0;
   }
 
-  if (!dladdr(addr, info)) {
+  if (!dladdr(addr, info) || !info->dli_fname || !info->dli_sname) {
     return 0; // docs specify dlerror not set in this case, which makes it easy for us
   }
 
