@@ -73,8 +73,13 @@ bool ends_with(const char* str, const char* ending) {
 } // namespace (anonymous)
 
 elfSharedLibData sharedLib(char const* libname) {
-  ReaderLock rl(&sharedLibsMutex_);
-  auto lib = sharedLibData().at(basename(libname));
+  auto lib = [&]{
+    // this lambda is to ensure that we only hold the lock for the lookup.
+    // the boolean check outside this block transitively calls dladdr(3), which
+    // would cause a lock inversion with refresh_shared_libs under Bionic
+    ReaderLock rl(&sharedLibsMutex_);
+    return sharedLibData().at(basename(libname));
+  }();
   if (!lib) {
     throw std::out_of_range(libname);
   }
@@ -114,21 +119,12 @@ refresh_shared_libs() {
       return 1;
     }
 
-    std::vector<dl_phdr_info> to_add;
-    dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void* vec) {
-      auto to_add = reinterpret_cast<std::vector<dl_phdr_info>*>(vec);
+    dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void*) {
       if (info->dlpi_name && ends_with(info->dlpi_name, ".so")) {
-        // dl_iterate_phdr holds a global dl_* lock while invoking this and
-        // addSharedLib grabs its own locks. Other functions will grab those
-        // same locks and then call dl_* functions, which would result in a
-        // lock inversion.
-        to_add->push_back(*info);
+        addSharedLib(info->dlpi_name, info);
       }
       return 0;
-    }, &to_add);
-    for (auto info : to_add) {
-      addSharedLib(info.dlpi_name, &info);
-    }
+    }, nullptr);
   } else {
 #ifndef __LP64__ /* prior to android L there were no 64-bit devices anyway */
     soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
