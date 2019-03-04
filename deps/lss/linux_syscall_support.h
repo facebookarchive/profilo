@@ -2575,14 +2575,12 @@ struct kernel_statfs {
     #define LSS_REG(r,a) register long __r##r __asm__("r"#r) = (long)a
     #undef  LSS_BODY
     #define LSS_BODY(type,name,args...)                                       \
+          LSS_REG(7, __NR_##name);                                            \
           register long __res_r0 __asm__("r0");                               \
           long __res;                                                         \
-          __asm__ __volatile__ ("push {r7}\n"                                 \
-                                "mov r7, %1\n"                                \
-                                "swi 0x0\n"                                   \
-                                "pop {r7}\n"                                  \
+          __asm__ __volatile__ ("swi 0x0\n"                                   \
                                 : "=r"(__res_r0)                              \
-                                : "i"(__NR_##name) , ## args                  \
+                                : "r"(__r7) , ## args                         \
                                 : "lr", "memory");                            \
           __res = __res_r0;                                                   \
           LSS_RETURN(type, __res)
