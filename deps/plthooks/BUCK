@@ -8,7 +8,7 @@ profilo_oss_cxx_library(
     header_namespace = "plthooks",
     exported_headers = glob(["*.h"]),
     compiler_flags = [
-        "-std=c++11",
+        "-std=c++14",
         "-fexceptions",
     ],
     platform_preprocessor_flags = [
