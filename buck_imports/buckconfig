@@ -34,6 +34,10 @@
 [python#py3any]
     interpreter = python3
 
+[repositories]
+    # TODO: This shouldn't be necessary
+    fbandroid = .
+
 [alias]
     sample = //java/main/com/facebook/profilo/sample:sample-atrace-stacktrace-systemcounters-threadmetadata
     aar = //java/main/com/facebook/profilo/sample:sample-aar-atrace-stacktrace-systemcounters-threadmetadata

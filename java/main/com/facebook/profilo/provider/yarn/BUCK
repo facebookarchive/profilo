@@ -5,9 +5,9 @@ fb_core_android_library(
     name = "yarn",
     srcs = glob(["*.java"]),
     visibility = [
-        "//instrumentation_tests/com/facebook/quicklog/...",
+        "fbandroid//instrumentation_tests/com/facebook/quicklog/...",
         profilo_path("..."),
-        "//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+        "fbandroid//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         profilo_path("cpp/yarn:yarn"),

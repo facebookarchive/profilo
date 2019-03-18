@@ -8,8 +8,8 @@ fb_core_android_library(
         "PUBLIC",
     ],
     deps = [
-        "//java/com/facebook/testing/powermock:powermock",
+        "fbandroid//java/com/facebook/testing/powermock:powermock",
         profilo_path("java/main/com/facebook/profilo/core:core"),
-        "//third-party/java/junit:junit",
+        "fbandroid//third-party/java/junit:junit",
     ],
 )
