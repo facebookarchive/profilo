@@ -14,7 +14,7 @@ profilo_oss_cxx_library(
         "sigmux.h",
     ],
     preferred_linkage = "shared",
-    soname = "libsigmux.$(ext)",
+    soname = "libprofilo_sigmux.$(ext)",
     visibility = [
         "PUBLIC",
     ],

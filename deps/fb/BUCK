@@ -27,7 +27,7 @@ profilo_oss_cxx_library(
         "-DDISABLE_CPUCAP",
         "-DDISABLE_XPLAT",
     ],
-    soname = "libfb.$(ext)",
+    soname = "libprofilo_fb.$(ext)",
     visibility = [
         "PUBLIC",
     ],

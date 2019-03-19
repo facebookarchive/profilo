@@ -13,6 +13,6 @@ profilo_oss_xplat_cxx_library(
     compiler_flags = [
         "-Wno-missing-prototypes",
     ],
-    soname = "libfmt.$(ext)",
+    soname = "libprofilo_fmt.$(ext)",
     visibility = ["PUBLIC"],
 )
