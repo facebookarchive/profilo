@@ -420,12 +420,15 @@ public final class TraceOrchestrator
           config.getConfigID());
     }
 
-    // Decrement providers for current trace
-    TraceEvents.disableProviders(context.enabledProviders);
-
     int tracingProviders = 0;
     for (BaseTraceProvider provider : providers) {
       tracingProviders |= provider.getActiveProviders();
+    }
+
+    // Decrement providers for current trace
+    TraceEvents.disableProviders(context.enabledProviders);
+
+    for (BaseTraceProvider provider : providers) {
       provider.onDisable(context, this);
     }
     mListenerManager.onProvidersStop(tracingProviders);

@@ -494,6 +494,51 @@ public class TraceOrchestratorTest {
     assertThat(tracingProviders).isEqualTo(TestBaseProvider.TRACING_PROVIDERS);
   }
 
+  @Test
+  public void testTracingConstantsProvidersOnProvidersStop() {
+    TraceOrchestrator.TraceListener listener = mock(TraceOrchestrator.TraceListener.class);
+    mOrchestrator.addListener(listener);
+
+    final int enabledProvidersMask = 0x1011000;
+    mOrchestrator.addTraceProvider(
+        new BaseTraceProvider() {
+          @Override
+          protected void enable() {}
+
+          @Override
+          protected void disable() {}
+
+          @Override
+          protected int getSupportedProviders() {
+            return enabledProvidersMask;
+          }
+
+          @Override
+          protected int getTracingProviders() {
+            return TraceEvents.enabledMask(enabledProvidersMask);
+          }
+        });
+
+    TraceEvents.enableProviders(enabledProvidersMask);
+    TraceContext traceContext =
+        new TraceContext(
+            0xFACEB000, // traceId
+            "FACEBOOO0", // encodedTraceId
+            0, // controller
+            null, // controllerObject
+            null, // context
+            0, // intContext
+            enabledProvidersMask, // enabled providers mask
+            0, // cpuSamplingRateMs
+            1);
+    mOrchestrator.onTraceStop(traceContext);
+
+    ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
+    verify(listener).onProvidersStop(providerMaskCaptor.capture());
+    int tracingProviders = providerMaskCaptor.getValue();
+    assertThat(tracingProviders & enabledProvidersMask).isEqualTo(enabledProvidersMask);
+  }
+
   private void verifyProvidersDisabled() {
     verify(mTraceProvider)
         .onDisable(any(TraceContext.class), any(BaseTraceProvider.ExtraDataFileProvider.class));
