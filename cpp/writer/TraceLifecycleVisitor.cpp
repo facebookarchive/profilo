@@ -51,13 +51,13 @@ class crc_ofstreambuf : public zstr::ostreambuf {
     crc_ = crc32(0, Z_NULL, 0);
   }
 
-  virtual ~crc_ofstreambuf() {
+  ~crc_ofstreambuf() override {
     sync();
   }
 
  protected:
-  virtual std::streambuf::int_type overflow(
-      std::streambuf::int_type ch = traits_type::eof()) {
+  std::streambuf::int_type overflow(
+      std::streambuf::int_type ch = traits_type::eof()) override {
     crc_ = crc32(
         crc_,
         reinterpret_cast<const unsigned char*>(pbase()),
@@ -87,7 +87,7 @@ class crc_ofstream
     exceptions(std::ios_base::badbit);
   }
 
-  virtual ~crc_ofstream() {
+  ~crc_ofstream() override {
     if (!rdbuf())
       return;
     delete rdbuf();
