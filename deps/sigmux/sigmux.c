@@ -420,6 +420,15 @@ sigmux_handle_signal_1(
       SIGMUX_HANDLE_SIGNAL_INVOKE_DEFAULT ));
 }
 
+static struct sigaction*
+allocate_sigaction(struct sigaction** sap)
+{
+  if (*sap == NULL) {
+    *sap = calloc(1, sizeof (**sap));
+  }
+  return *sap;
+}
+
 int
 sigmux_init(int signum)
 {
@@ -439,50 +448,31 @@ sigmux_init(int signum)
     goto out;
   }
 
-  struct sigaction* temp = NULL;
-  struct sigaction* orig_sigact = calloc(1, sizeof(struct sigaction));
-  if (orig_sigact == NULL) {
-    goto out;
-  }
-  if (!__atomic_compare_exchange_n(
-        &sigmux_global.orig_sigact[signum],
-        &temp,
-        orig_sigact,
-        false,
-        __ATOMIC_SEQ_CST,
-        __ATOMIC_SEQ_CST)) {
-    free(orig_sigact);
-    orig_sigact = temp;
-  }
+  if (ismem == 0) {
 
-  // Pre-allocate spare memory for sigmux_sigaction, since it isn't
-  // allowed to fail with ENOMEM.
-  temp = NULL;
-  struct sigaction* alt_sigact = calloc(1, sizeof(struct sigaction));
-  if (alt_sigact == NULL) {
-    goto out;
-  }
-  if (!__atomic_compare_exchange_n(
-        &sigmux_global.alt_sigact[signum],
-        &temp,
-        alt_sigact,
-        false,
-        __ATOMIC_SEQ_CST,
-        __ATOMIC_SEQ_CST)) {
-    free(alt_sigact);
-    alt_sigact = temp;
-  }
+    struct sigaction* orig_sigact =
+      allocate_sigaction(&sigmux_global.orig_sigact[signum]);
+    if (orig_sigact == NULL) {
+      goto out;
+    }
 
-  memset(&newact, 0, sizeof (newact));
-  newact.sa_sigaction = sigmux_handle_signal_1;
-  newact.sa_flags = SA_NODEFER | SA_SIGINFO | SA_ONSTACK | SA_RESTART;
-  if (invoke_real_sigaction(signum, &newact, orig_sigact) != 0) {
-    goto out;
-  }
+    // Pre-allocate spare memory for sigmux_sigaction, since it isn't
+    // allowed to fail with ENOMEM.
+    if (allocate_sigaction(&sigmux_global.alt_sigact[signum]) == NULL) {
+      goto out;
+    }
 
-  sigmux_sigaddset(&sigmux_global.initsig, signum);
-  __atomic_signal_fence(__ATOMIC_SEQ_CST);
-  sigmux_gdbhook_on_signal_seized();
+    memset(&newact, 0, sizeof (newact));
+    newact.sa_sigaction = sigmux_handle_signal_1;
+    newact.sa_flags = SA_NODEFER | SA_SIGINFO | SA_ONSTACK | SA_RESTART;
+    if (invoke_real_sigaction(signum, &newact, orig_sigact) != 0) {
+      goto out;
+    }
+
+    sigmux_sigaddset(&sigmux_global.initsig, signum);
+    __atomic_signal_fence(__ATOMIC_SEQ_CST);
+    sigmux_gdbhook_on_signal_seized();
+  }
 
   ret = 0;
 
