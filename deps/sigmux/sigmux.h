@@ -93,6 +93,25 @@ SIGMUX_EXPORT extern int sigmux_init(
   int signum
 );
 
+#define RESET_ORIG_SIGACTION_FLAG (1<<0)
+
+/**
+ * This forces sigmux to re-init. Before calling sigmux needs to have
+ * been called at least once, otherwise this does nothing.
+ *
+ * You most likely don't need to do this. The main case is to re-init
+ * sigaction for the specific signum (similar as sigmux_init).
+ * This can happen when some other libraries mess with the sigaction.
+ * without letting sigmux know.
+ *
+ * RESET_ORIG_SIGACTION_FLAG decides whether we should reset the stored
+ * original sigaction or replace it with the sigaction currently there.
+ */
+SIGMUX_EXPORT extern int sigmux_reinit(
+ int signum,
+ int flags
+);
+
 /**
  * Exit non-locally from a sigmux handler.  Use this routine instead
  * of longjmp or siglongjmp in order to restore internal sigmux

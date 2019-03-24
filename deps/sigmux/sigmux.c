@@ -482,6 +482,55 @@ sigmux_init(int signum)
   return ret;
 }
 
+int
+sigmux_reinit(int signum, int flags)
+{
+  int ismem;
+  struct sigaction reinitact;
+  int ret = -1;
+
+  VERIFY(0 == pthread_mutex_lock(&sigmux_global.lock));
+
+  ismem = sigmux_sigismember(&sigmux_global.initsig, signum);
+  if (ismem == -1) {
+    goto out;
+  }
+
+  // Not inited
+  if (ismem == 0) {
+    goto out;
+  }
+
+  struct sigaction* orig_sigaction_tmp =
+    (flags & RESET_ORIG_SIGACTION_FLAG) != 0
+         ? calloc(1, sizeof(struct sigaction))
+         : NULL;
+
+  memset(&reinitact, 0, sizeof (reinitact));
+  reinitact.sa_sigaction = sigmux_handle_signal_1;
+  reinitact.sa_flags = SA_NODEFER | SA_SIGINFO | SA_ONSTACK | SA_RESTART;
+  if (invoke_real_sigaction(signum, &reinitact, orig_sigaction_tmp) != 0) {
+    goto out;
+  }
+
+  // Only reset the original sigaction if were asked to
+  if (orig_sigaction_tmp != NULL) {
+    struct sigaction* old_orig_sigaction = sigmux_global.orig_sigact[signum];
+    sigmux_global.orig_sigact[signum] = orig_sigaction_tmp;
+    free(old_orig_sigaction);
+  }
+
+  __atomic_signal_fence(__ATOMIC_SEQ_CST);
+  sigmux_gdbhook_on_signal_seized();
+
+  ret = 0;
+
+  out:
+
+  VERIFY(0 == pthread_mutex_unlock(&sigmux_global.lock));
+  return ret;
+}
+
 struct sigmux_registration*
 sigmux_register(
   const sigset_t* signals,
