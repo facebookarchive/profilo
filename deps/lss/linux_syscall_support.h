@@ -2577,13 +2577,15 @@ struct kernel_statfs {
     #define LSS_BODY(type,name,args...)                                       \
           register long __res_r0 __asm__("r0");                               \
           long __res;                                                         \
-          __asm__ __volatile__ ("push {r7}\n"                                 \
+          __asm__ __volatile__ ("mov ip, r7\n"                                \
+                                ".cfi_register r7, ip\n"                      \
                                 "mov r7, %1\n"                                \
                                 "swi 0x0\n"                                   \
-                                "pop {r7}\n"                                  \
+                                "mov r7, ip\n"                                \
+                                ".cfi_restore r7\n"                           \
                                 : "=r"(__res_r0)                              \
                                 : "i"(__NR_##name) , ## args                  \
-                                : "lr", "memory");                            \
+                                : "ip", "lr", "memory");                      \
           __res = __res_r0;                                                   \
           LSS_RETURN(type, __res)
     #undef _syscall0
@@ -2660,9 +2662,9 @@ struct kernel_statfs {
         register void *__tls   __asm__("r3") = newtls;
         register int  *__ctid  __asm__("r4") = child_tidptr;
         __asm__ __volatile__(
-#ifdef __thumb2__
-            "push {r7}\n"
-#endif
+            "mov ip, r7\n"
+            ".cfi_register r7, ip\n"
+
             /* %r0 = syscall(%r0 = flags,
              *               %r1 = child_stack,
              *               %r2 = parent_tidptr,
@@ -2692,14 +2694,13 @@ struct kernel_statfs {
             /* Unreachable */
             "bkpt #0\n"
          "1:\n"
-#ifdef __thumb2__
-            "pop {r7}\n"
-#endif
+            "mov r7, ip\n"
+            ".cfi_restore r7\n"
             "movs  %0,r0\n"
             : "=r"(__res)
             : "r"(__stack), "r"(__flags), "r"(__ptid), "r"(__tls), "r"(__ctid),
               "i"(__NR_clone), "i"(__NR_exit)
-            : "cc", "lr", "memory"
+            : "cc", "ip", "lr", "memory"
 #ifndef __thumb2__
             , "r7"
 #endif
