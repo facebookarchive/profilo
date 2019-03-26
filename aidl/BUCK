@@ -11,6 +11,9 @@ fb_core_android_library(
     visibility = [
         profilo_path("..."),
     ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+    ],
 )
 
 fb_native.gen_aidl(

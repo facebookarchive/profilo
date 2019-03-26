@@ -18,14 +18,15 @@ package com.facebook.profilo.ipc;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import javax.annotation.Nullable;
 
 public final class TraceContext implements Parcelable {
 
   public long traceId;
   public String encodedTraceId;
   public int controller;
-  public Object controllerObject;
-  public Object context;
+  @Nullable public Object controllerObject;
+  @Nullable public Object context;
   public long longContext;
   public int enabledProviders;
   public int cpuSamplingRateMs;
@@ -50,8 +51,8 @@ public final class TraceContext implements Parcelable {
       long traceId,
       String encodedTraceId,
       int controller,
-      Object controllerObject,
-      Object context,
+      @Nullable Object controllerObject,
+      @Nullable Object context,
       long longContext,
       int enabledProviders,
       int cpuSamplingRateMs,
