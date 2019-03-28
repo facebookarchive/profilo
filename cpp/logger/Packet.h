@@ -26,6 +26,7 @@ using StreamID = uint32_t;
 
 struct __attribute__((packed)) Packet {
   constexpr static auto kPacketIdNone = 0;
+  constexpr static auto kVersion = 1;
 
   StreamID stream;
   bool start : 1;
