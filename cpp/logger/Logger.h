@@ -36,9 +36,6 @@ class Logger {
 
  public:
   const size_t kMaxVariableLengthEntry = 1024;
-  // Start first entry shifted to allow safely adding extra entries to the trace
-  // after completion.
-  static const int32_t kInitialEntryId = 512;
 
   PROFILOEXPORT static Logger& get();
 
@@ -78,15 +75,12 @@ class Logger {
 
   PROFILOEXPORT void writeTraceAnnotation(int32_t key, int64_t value);
 
-  // This constructor is for internal framework use.
-  // Client code should use Logger::get() method instead.
-  Logger(logger::PacketBufferProvider provider, int32_t start_entry_id = 0)
-      : entryID_(start_entry_id), logger_(provider) {}
-
  private:
   std::atomic<int32_t> entryID_;
   logger::PacketLogger logger_;
 
+  Logger(logger::PacketBufferProvider provider)
+      : entryID_(0), logger_(provider) {}
   Logger(const Logger& other) = delete;
 
   inline int32_t nextID(uint16_t step = 1) {

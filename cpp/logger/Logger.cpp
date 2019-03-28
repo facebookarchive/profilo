@@ -27,8 +27,7 @@ using namespace entries;
 
 Logger& Logger::get() {
   static Logger logger(
-      [&]() -> logger::PacketBuffer& { return RingBuffer::get(); },
-      kInitialEntryId);
+      [&]() -> logger::PacketBuffer& { return RingBuffer::get(); });
   return logger;
 }
 

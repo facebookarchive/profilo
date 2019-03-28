@@ -35,9 +35,7 @@ namespace lfrb {
 
 class LockFreeRingBufferTest : public ::testing::Test {
  protected:
-  LockFreeRingBufferTest() : ::testing::Test(), temp_dump_file_("test_dump") {
-    std::srand(std::time(nullptr));
-  }
+  LockFreeRingBufferTest() : ::testing::Test(), temp_dump_file_("test_dump") {}
 
   int fd() {
     return temp_dump_file_.fd();

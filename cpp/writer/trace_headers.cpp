@@ -17,14 +17,13 @@
 #include "trace_headers.h"
 
 #include <errno.h>
+#include <sys/system_properties.h>
 #include <sys/utsname.h>
 #include <unistd.h>
 #include <sstream>
 #include <string>
 #include <system_error>
 #include <vector>
-
-#include <util/common.h>
 
 namespace facebook {
 namespace profilo {
@@ -51,11 +50,10 @@ std::vector<std::pair<std::string, std::string>> calculateHeaders() {
   }
 
   {
-    std::string releaseVersion =
-        get_system_property("ro.build.version.release");
-    if (!releaseVersion.empty()) {
+    char prop_value[PROP_VALUE_MAX]{};
+    if (__system_property_get("ro.build.version.release", prop_value) > 0) {
       std::stringstream ss;
-      ss << "Android" << releaseVersion.c_str();
+      ss << "Android" << prop_value;
 
       result.push_back(std::make_pair("os", ss.str()));
     }

@@ -95,6 +95,7 @@ profilo_cxx_test(
         "-pthread",
     ],
     deps = [
+        "fbsource//xplat/folly:test-util",
         "fbsource//xplat/third-party/gmock:gmock",
         profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/writer:packet_reassembler"),
@@ -116,7 +117,7 @@ profilo_cxx_test(
         "-pthread",
     ],
     deps = [
-        "fbsource//xplat/folly:tempfile-util",
+        "fbsource//xplat/folly:test-util",
         "fbsource//xplat/third-party/gmock:gmock",
         profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/writer:writer"),
@@ -139,7 +140,7 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
-        "fbsource//xplat/folly:tempfile-util",
+        "fbsource//xplat/folly:test-util",
         profilo_path("deps/zstr:zstr"),
         profilo_path("cpp/logger/lfrb:lfrb"),
         profilo_path("cpp/util:util"),
