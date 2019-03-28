@@ -38,13 +38,36 @@ namespace facebook {
 namespace profilo {
 namespace writer {
 
+namespace {
+
+void traceBackward(
+    TraceLifecycleVisitor& visitor,
+    TraceBuffer& buffer,
+    TraceBuffer::Cursor& cursor) {
+  PacketReassembler reassembler([&visitor](const void* data, size_t size) {
+    EntryParser::parse(data, size, visitor);
+  });
+
+  TraceBuffer::Cursor backCursor{cursor};
+  backCursor.moveBackward(); // Move back before trace start
+
+  alignas(4) Packet packet;
+  while (buffer.tryRead(packet, backCursor)) {
+    reassembler.processBackwards(packet);
+
+    if (!backCursor.moveBackward()) {
+      break; // done
+    }
+  }
+}
+} // namespace
+
 TraceWriter::TraceWriter(
     const std::string&& folder,
     const std::string&& trace_prefix,
     TraceBuffer& buffer,
     std::shared_ptr<TraceCallbacks> callbacks,
-    std::vector<std::pair<std::string, std::string>>&& headers,
-    TraceBackwardsCallback trace_backwards_callback)
+    std::vector<std::pair<std::string, std::string>>&& headers)
     : wakeup_mutex_(),
       wakeup_cv_(),
       wakeup_trace_ids_(),
@@ -52,40 +75,7 @@ TraceWriter::TraceWriter(
       trace_prefix_(std::move(trace_prefix)),
       buffer_(buffer),
       trace_headers_(std::move(headers)),
-      callbacks_(callbacks),
-      trace_backwards_callback_(trace_backwards_callback) {}
-
-std::unordered_set<int64_t> TraceWriter::processTrace(
-    TraceBuffer::Cursor& cursor) {
-  MultiTraceLifecycleVisitor visitor(
-      trace_folder_,
-      trace_prefix_,
-      callbacks_,
-      trace_headers_,
-      [this, &cursor](TraceLifecycleVisitor& visitor) {
-        if (trace_backwards_callback_ == nullptr) {
-          return;
-        }
-        trace_backwards_callback_(visitor, buffer_, cursor);
-      });
-
-  PacketReassembler reassembler([&visitor](const void* data, size_t size) {
-    EntryParser::parse(data, size, visitor);
-  });
-
-  while (!visitor.done()) {
-    alignas(4) Packet packet;
-    if (!buffer_.waitAndTryRead(packet, cursor)) {
-      // Missed event, abort.
-      visitor.abort(AbortReason::MISSED_EVENT);
-      break;
-    }
-    reassembler.process(packet);
-    cursor.moveForward();
-  }
-
-  return visitor.getConsumedTraces();
-}
+      callbacks_(callbacks) {}
 
 void TraceWriter::loop() {
   while (true) {
@@ -111,15 +101,40 @@ void TraceWriter::loop() {
     }
 
     {
-      auto consumed_traces = processTrace(cursor);
-      // Cleanup of processed traces from the wakeup queue
-      std::lock_guard<std::mutex> lock(wakeup_mutex_);
-      while (!wakeup_trace_ids_.empty()) {
-        auto& item = wakeup_trace_ids_.front();
-        if (consumed_traces.find(item.second) == consumed_traces.end()) {
+      MultiTraceLifecycleVisitor visitor(
+          trace_folder_,
+          trace_prefix_,
+          callbacks_,
+          trace_headers_,
+          [this, &cursor](TraceLifecycleVisitor& visitor) {
+            traceBackward(visitor, buffer_, cursor);
+          });
+
+      PacketReassembler reassembler([&visitor](const void* data, size_t size) {
+        EntryParser::parse(data, size, visitor);
+      });
+
+      while (!visitor.done()) {
+        alignas(4) Packet packet;
+        if (!buffer_.waitAndTryRead(packet, cursor)) {
+          // Missed event, abort.
+          visitor.abort(AbortReason::MISSED_EVENT);
           break;
         }
-        wakeup_trace_ids_.pop();
+        reassembler.process(packet);
+        cursor.moveForward();
+      }
+
+      { // Cleanup of processed traces from the wakeup queue
+        std::lock_guard<std::mutex> lock(wakeup_mutex_);
+        auto consumed_traces = visitor.getConsumedTraces();
+        while (!wakeup_trace_ids_.empty()) {
+          auto& item = wakeup_trace_ids_.front();
+          if (consumed_traces.find(item.second) == consumed_traces.end()) {
+            break;
+          }
+          wakeup_trace_ids_.pop();
+        }
       }
     }
   }

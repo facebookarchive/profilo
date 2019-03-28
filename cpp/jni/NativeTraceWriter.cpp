@@ -16,10 +16,13 @@
 
 #include "NativeTraceWriter.h"
 
-#include <profilo/writer/trace_backwards.h>
-#include <profilo/writer/trace_headers.h>
+#include <errno.h>
+#include <sys/system_properties.h>
 #include <sys/types.h>
+#include <sys/utsname.h>
 #include <unistd.h>
+#include <sstream>
+#include <system_error>
 
 using facebook::jni::alias_ref;
 using facebook::jni::local_ref;
@@ -87,6 +90,43 @@ void JNativeTraceWriterCallbacks::onTraceAbort(
   onTraceAbortMethod(self(), trace_id, static_cast<jint>(abortReason));
 }
 
+namespace {
+
+std::vector<std::pair<std::string, std::string>> calculateHeaders() {
+  auto result = std::vector<std::pair<std::string, std::string>>();
+  result.reserve(4);
+
+  {
+    std::stringstream ss;
+    ss << getpid();
+    result.push_back(std::make_pair("pid", ss.str()));
+  }
+
+  {
+    struct utsname name {};
+    if (uname(&name)) {
+      throw std::system_error(
+          errno, std::system_category(), "could not uname(2)");
+    }
+
+    result.push_back(std::make_pair("arch", std::string(name.machine)));
+  }
+
+  {
+    char prop_value[PROP_VALUE_MAX]{};
+    if (__system_property_get("ro.build.version.release", prop_value) > 0) {
+      std::stringstream ss;
+      ss << "Android" << prop_value;
+
+      result.push_back(std::make_pair("os", ss.str()));
+    }
+  }
+
+  return result;
+}
+
+} // namespace
+
 NativeTraceWriter::NativeTraceWriter(
     std::string trace_folder,
     std::string trace_prefix,
@@ -99,8 +139,7 @@ NativeTraceWriter::NativeTraceWriter(
           std::move(trace_prefix),
           RingBuffer::get(),
           callbacks_,
-          calculateHeaders(),
-          traceBackwards) {}
+          calculateHeaders()) {}
 
 void NativeTraceWriter::loop() {
   writer_.loop();
