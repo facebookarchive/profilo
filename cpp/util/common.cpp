@@ -16,7 +16,6 @@
 
 #include "common.h"
 
-#include <string.h>
 #include <sys/stat.h>
 #include <algorithm>
 #include <chrono>
@@ -73,6 +72,22 @@ int32_t systemClockTickIntervalMs() {
 }
 #else
 #error "Do not have systemClockTickIntervalMs implementation for this platform"
+#endif
+
+#if defined(ANDROID)
+#include <sys/system_properties.h>
+
+std::string get_system_property(const char* key) {
+  char prop_value[PROP_VALUE_MAX]{};
+  if (__system_property_get(key, prop_value) > 0) {
+    return std::string(prop_value);
+  }
+  return "";
+}
+#else
+std::string get_system_property(const char* _) {
+  return "";
+}
 #endif
 
 // Creates the directory specified by a path, creating intermediate

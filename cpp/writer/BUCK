@@ -21,6 +21,7 @@ fb_xplat_cxx_library(
     ],
     visibility = [
         profilo_path("cpp/test/..."),
+        profilo_path("facebook/cpp/test/..."),
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -50,6 +51,7 @@ fb_xplat_cxx_library(
     ],
     visibility = [
         profilo_path("cpp/test/..."),
+        profilo_path("facebook/cpp/test/..."),
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -73,6 +75,7 @@ fb_xplat_cxx_library(
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/test/..."),
+        profilo_path("facebook/cpp/test/..."),
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -155,8 +158,10 @@ fb_xplat_cxx_library(
         profilo_path("cpp/test:trace_writer"),
     ],
     visibility = [
+        profilo_path("facebook/cpp/blackbox:crash_dump_writer"),
         profilo_path("cpp/jni/..."),
         profilo_path("cpp/test/..."),
+        profilo_path("facebook/cpp/test/..."),
     ],
     deps = [
         ":delta_visitor",
@@ -215,5 +220,8 @@ fb_xplat_cxx_library(
     visibility = [
         profilo_path("cpp/..."),
         profilo_path("facebook/cpp/..."),
+    ],
+    deps = [
+        profilo_path("cpp/util:util"),
     ],
 )

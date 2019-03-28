@@ -30,63 +30,6 @@ namespace facebook {
 namespace profilo {
 namespace writer {
 
-namespace {
-
-//
-// An object that takes ownership of the Java callbacks object and also
-// delegates all TraceCallbacks calls to it.
-//
-struct NativeTraceWriterCallbacksProxy : public TraceCallbacks {
-  NativeTraceWriterCallbacksProxy(
-      fbjni::alias_ref<JNativeTraceWriterCallbacks> javaCallbacks)
-      : TraceCallbacks(), javaCallbacks_(fbjni::make_global(javaCallbacks)) {}
-
-  virtual void onTraceStart(int64_t trace_id, int32_t flags, std::string file)
-      override {
-    javaCallbacks_->onTraceStart(trace_id, flags, file);
-  }
-
-  virtual void onTraceEnd(int64_t trace_id, uint32_t crc) override {
-    javaCallbacks_->onTraceEnd(trace_id, crc);
-  }
-
-  virtual void onTraceAbort(int64_t trace_id, AbortReason reason) override {
-    javaCallbacks_->onTraceAbort(trace_id, reason);
-  }
-
- private:
-  fbjni::global_ref<JNativeTraceWriterCallbacks> javaCallbacks_;
-};
-
-} // anonymous namespace
-
-void JNativeTraceWriterCallbacks::onTraceStart(
-    int64_t trace_id,
-    int32_t flags,
-    std::string file) {
-  static auto onTraceStartMethod =
-      javaClassStatic()->getMethod<void(jlong, jint, std::string)>(
-          "onTraceWriteStart");
-
-  onTraceStartMethod(self(), trace_id, flags, file);
-}
-
-void JNativeTraceWriterCallbacks::onTraceEnd(int64_t trace_id, uint32_t crc) {
-  static auto onTraceEndMethod =
-      javaClassStatic()->getMethod<void(jlong, jint)>("onTraceWriteEnd");
-
-  onTraceEndMethod(self(), trace_id, crc);
-}
-
-void JNativeTraceWriterCallbacks::onTraceAbort(
-    int64_t trace_id,
-    AbortReason abortReason) {
-  static auto onTraceAbortMethod =
-      javaClassStatic()->getMethod<void(jlong, jint)>("onTraceWriteAbort");
-
-  onTraceAbortMethod(self(), trace_id, static_cast<jint>(abortReason));
-}
-
 NativeTraceWriter::NativeTraceWriter(
     std::string trace_folder,
     std::string trace_prefix,

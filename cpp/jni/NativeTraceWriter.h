@@ -18,6 +18,7 @@
 
 #include <fbjni/fbjni.h>
 
+#include <profilo/jni/NativeTraceWriterCallbacks.h>
 #include <profilo/writer/TraceWriter.h>
 
 namespace fbjni = facebook::jni;
@@ -25,16 +26,6 @@ namespace fbjni = facebook::jni;
 namespace facebook {
 namespace profilo {
 namespace writer {
-
-struct JNativeTraceWriterCallbacks
-    : public fbjni::JavaClass<JNativeTraceWriterCallbacks> {
-  static constexpr const char* kJavaDescriptor =
-      "Lcom/facebook/profilo/writer/NativeTraceWriterCallbacks;";
-
-  void onTraceStart(int64_t trace_id, int32_t flags, std::string file);
-  void onTraceEnd(int64_t trace_id, uint32_t crc);
-  void onTraceAbort(int64_t trace_id, AbortReason abortReason);
-};
 
 class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
  public:
