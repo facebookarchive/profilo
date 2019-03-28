@@ -21,6 +21,7 @@
 #include <memory>
 #include <mutex>
 #include <queue>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -33,6 +34,9 @@
 namespace facebook {
 namespace profilo {
 namespace writer {
+
+using TraceBackwardsCallback = std::function<
+    void(entries::EntryVisitor&, TraceBuffer&, TraceBuffer::Cursor&)>;
 
 class TraceWriter {
  public:
@@ -51,12 +55,22 @@ class TraceWriter {
       TraceBuffer& buffer,
       std::shared_ptr<TraceCallbacks> callbacks = nullptr,
       std::vector<std::pair<std::string, std::string>>&& headers =
-          std::vector<std::pair<std::string, std::string>>());
+          std::vector<std::pair<std::string, std::string>>(),
+      TraceBackwardsCallback trace_backwards_callback = nullptr);
 
   //
   // Wait until a submit() call and then process a submitted trace ID.
   //
   void loop();
+
+  //
+  // Implements synchronous single trace processing logic starting from the
+  // given cursor. Can be used separately from the loop logic for single trace
+  // processing. It's recommended to use either loop logic or direct processing
+  // with this method on a single Writer (and Buffer) instance, but not both.
+  // Mixed mode usage is not safe.
+  //
+  std::unordered_set<int64_t> processTrace(TraceBuffer::Cursor& cursor);
 
   //
   // Submit a trace ID for processing. Walk will start from `cursor`.
@@ -85,6 +99,7 @@ class TraceWriter {
   std::vector<std::pair<std::string, std::string>> trace_headers_;
 
   std::shared_ptr<TraceCallbacks> callbacks_;
+  TraceBackwardsCallback trace_backwards_callback_;
 };
 
 } // namespace writer
