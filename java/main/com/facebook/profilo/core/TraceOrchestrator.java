@@ -101,7 +101,6 @@ public final class TraceOrchestrator
   private static final int RING_BUFFER_SIZE_SECONDARY_PROCESS = 1000;
   private boolean mHasReadFromBridge = false;
 
-  @GuardedBy("mTraces")
   private final HashMap<Long, Trace> mTraces;
 
   // This field is expected to be infrequently accessed (just once for the Dummy -> DI dependency
@@ -475,30 +474,21 @@ public final class TraceOrchestrator
 
   @Override
   public void onTraceWriteStart(long traceId, int flags, String file) {
-    Trace trace;
-    synchronized (mTraces) {
-      trace = mTraces.get(traceId);
-    }
+    Trace trace = mTraces.get(traceId);
     if (trace != null) {
       throw new IllegalStateException("Trace already registered on start");
     }
     mListenerManager.onTraceWriteStart(traceId, flags, file);
-    synchronized (mTraces) {
-      mTraces.put(traceId, new Trace(traceId, flags, new File(file)));
-    }
+    mTraces.put(traceId, new Trace(traceId, flags, new File(file)));
   }
 
   @Override
   public void onTraceWriteEnd(long traceId, int crc) {
-    Trace trace;
-    synchronized (mTraces) {
-      trace = mTraces.get(traceId);
-      if (trace == null) {
-        throw new IllegalStateException(
-            "onTraceWriteEnd can't be called without onTraceWriteStart");
-      }
-      mTraces.remove(traceId);
+    Trace trace = mTraces.get(traceId);
+    if (trace == null) {
+      throw new IllegalStateException("onTraceWriteEnd can't be called without onTraceWriteStart");
     }
+    mTraces.remove(traceId);
     mListenerManager.onTraceWriteEnd(traceId, crc);
 
     File logFile = trace.getLogFile();
@@ -551,15 +541,12 @@ public final class TraceOrchestrator
 
   @Override
   public void onTraceWriteAbort(long traceId, int abortReason) {
-    Trace trace;
-    synchronized (mTraces) {
-      trace = mTraces.get(traceId);
-      if (trace == null) {
-        throw new IllegalStateException(
-            "onTraceWriteAbort can't be called without onTraceWriteStart");
-      }
-      mTraces.remove(traceId);
+    Trace trace = mTraces.get(traceId);
+    if (trace == null) {
+      throw new IllegalStateException(
+          "onTraceWriteAbort can't be called without onTraceWriteStart");
     }
+    mTraces.remove(traceId);
     mListenerManager.onTraceWriteAbort(traceId, abortReason);
 
     Log.w(TAG, "Trace is aborted with code: " + ProfiloConstants.abortReasonName(abortReason));
@@ -700,9 +687,5 @@ public final class TraceOrchestrator
       }
     }
     return mConfigProvider;
-  }
-
-  public String getProcessName() {
-    return mProcessName;
   }
 }

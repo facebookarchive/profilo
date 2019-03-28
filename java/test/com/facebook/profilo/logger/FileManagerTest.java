@@ -68,16 +68,6 @@ public class FileManagerTest {
   }
 
   @Test
-  public void testDeleteAllRemovesAlsoCrashDumpFiles() throws Exception {
-    File dumpFolder = mFileManager.getCrashDumpFolder();
-    dumpFolder.mkdirs();
-    File dumpFile = File.createTempFile("test-dump", "dump", mFolder);
-    Files.touch(dumpFile);
-    mFileManager.deleteAllFiles();
-    assertNoFilesInFolder(mFolder);
-  }
-
-  @Test
   public void testDeleteAllRemovesTrimmableFilesScheduledForUpload() throws Exception {
     mFileManager.addFileToUploads(mTempFile, true);
     mFileManager.deleteAllFiles();

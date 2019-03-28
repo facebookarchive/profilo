@@ -75,7 +75,6 @@ public class FileManager {
 
   static final String PROFILO_FOLDER = "profilo";
   static final String UPLOAD_FOLDER = "upload";
-  static final String CRASH_DUMPS_FOLDER = "crash_dumps";
   static final String LOG_SUFFIX = ".log";
   static final String ZIP_SUFFIX = ".zip";
   public static final String TMP_SUFFIX = ".tmp";
@@ -109,7 +108,6 @@ public class FileManager {
 
   private File mBaseFolder;
   private File mUploadFolder;
-  private File mCrashDumpFolder;
   private Context mContext;
 
   public FileManager(Context context, @Nullable File folder) {
@@ -128,7 +126,6 @@ public class FileManager {
       mBaseFolder = traceFolder;
     }
     mUploadFolder = new File(mBaseFolder, UPLOAD_FOLDER);
-    mCrashDumpFolder = new File(mBaseFolder, CRASH_DUMPS_FOLDER);
   }
 
   // Move traces that potentially live in the old location (getCacheDir()
@@ -273,7 +270,6 @@ public class FileManager {
     allFiles.addAll(getFiles(getUploadFolder(), TRIMMABLE_FILES_FILTER));
     allFiles.addAll(getFiles(getFolder(), UNTRIMMABLE_FILES_FILTER));
     allFiles.addAll(getFiles(getFolder(), TRIMMABLE_FILES_FILTER));
-    allFiles.addAll(getAllFiles(getCrashDumpFolder()));
     return allFiles;
   }
 
@@ -301,10 +297,6 @@ public class FileManager {
 
   public File getUploadFolder() {
     return mUploadFolder;
-  }
-
-  public File getCrashDumpFolder() {
-    return mCrashDumpFolder;
   }
 
   private void trimFolderByFileCount(
@@ -356,15 +348,6 @@ public class FileManager {
 
       }
     }
-  }
-
-  private List<File> getAllFiles(File folder) {
-    File[] files = folder.listFiles();
-    if (files == null) {
-      return Collections.EMPTY_LIST;
-    }
-
-    return Arrays.asList(files);
   }
 
   private List<File> getFiles(File folder, FilenameFilter filter) {
