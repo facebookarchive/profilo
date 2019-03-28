@@ -20,9 +20,37 @@ fb_xplat_cxx_library(
     visibility = [
         profilo_path("..."),
     ],
+    deps = [
+        ":writer_callbacks",
+    ],
     exported_deps = [
         profilo_path("cpp/writer:trace_backwards"),
         profilo_path("cpp/writer:trace_headers"),
+        profilo_path("cpp/writer:writer"),
+        profilo_path("deps/fbjni:fbjni"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "writer_callbacks",
+    srcs = [
+        "NativeTraceWriterCallbacks.cpp",
+    ],
+    header_namespace = "profilo/jni",
+    exported_headers = [
+        "NativeTraceWriterCallbacks.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+    ],
+    force_static = True,
+    visibility = [
+        profilo_path("..."),
+    ],
+    exported_deps = [
         profilo_path("cpp/writer:writer"),
         profilo_path("deps/fbjni:fbjni"),
     ],

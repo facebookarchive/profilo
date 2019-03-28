@@ -16,8 +16,10 @@
 
 #pragma once
 
+#include <string.h>
 #include <unistd.h>
 #include <atomic>
+#include <string>
 #include <type_traits>
 
 namespace facebook {
@@ -27,6 +29,7 @@ int64_t monotonicTime();
 int32_t threadID();
 // Returns 0 if value was not found, and 1 if value <= 1, actual value otherwise
 int32_t systemClockTickIntervalMs();
+std::string get_system_property(const char* key);
 
 // Given a path, create the directory specified by it, along with all
 // intermediate directories
