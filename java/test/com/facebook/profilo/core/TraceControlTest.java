@@ -110,7 +110,8 @@ public class TraceControlTest {
             PROVIDER_TEST,
             100,
             1,
-            222);
+            222,
+            TraceContext.ProviderExtras.EMPTY);
   }
 
   @Test

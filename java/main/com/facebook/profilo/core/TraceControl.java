@@ -289,8 +289,13 @@ final public class TraceControl {
             context,
             longContext,
             providers,
-            traceController.getCpuSamplingRateMs(longContext, context, controllerConfig),
-            flags);
+            controllerConfig == null
+                ? 0
+                : traceController.getCpuSamplingRateMs(longContext, context, controllerConfig),
+            flags,
+            controllerConfig == null
+                ? TraceContext.ProviderExtras.EMPTY
+                : traceController.getProviderExtras(longContext, context, controllerConfig));
 
     return startTraceInternal(flags, nextContext);
   }

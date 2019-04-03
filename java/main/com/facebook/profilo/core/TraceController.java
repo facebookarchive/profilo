@@ -17,6 +17,7 @@
 package com.facebook.profilo.core;
 
 import com.facebook.profilo.config.ControllerConfig;
+import com.facebook.profilo.ipc.TraceContext;
 import javax.annotation.Nullable;
 
 public interface TraceController {
@@ -41,6 +42,17 @@ public interface TraceController {
    * @return sampling rate in milliseconds, 0 if not configured
    */
   int getCpuSamplingRateMs(long longContext, Object context, ControllerConfig config);
+
+  /**
+   * Determine current configuration extra parameters for providers.
+   *
+   * @param context the trace context object passed to {@link TraceControl#startTrace(int, int,
+   *     Object, long)}
+   * @param config the current config for this controller
+   * @return sampling rate in milliseconds, 0 if not configured
+   */
+  TraceContext.ProviderExtras getProviderExtras(
+      long longContext, @Nullable Object context, ControllerConfig config);
 
   boolean contextsEqual(long fstLong, @Nullable Object fst, long sndLong, @Nullable Object snd);
 

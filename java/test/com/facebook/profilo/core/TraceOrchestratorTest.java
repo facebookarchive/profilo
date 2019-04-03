@@ -151,7 +151,8 @@ public class TraceOrchestratorTest {
             0, // intContext
             DEFAULT_TRACING_PROVIDERS,
             0, // cpuSamplingRateMs
-            1); // flags
+            1, // flags
+            TraceContext.ProviderExtras.EMPTY); // providerExtras
     mSecondTraceContext =
         new TraceContext(
             0xFACEB000, // traceId
@@ -162,7 +163,8 @@ public class TraceOrchestratorTest {
             0, // intContext
             SECOND_TRACE_TRACING_PROVIDERS,
             0, // cpuSamplingRateMs
-            1); // flags
+            1, // flags
+            TraceContext.ProviderExtras.EMPTY); // providerExtras
 
     whenNew(SparseArray.class).withAnyArguments()
         .thenReturn(mock(SparseArray.class, RETURNS_MOCKS));
@@ -435,7 +437,8 @@ public class TraceOrchestratorTest {
             DEFAULT_TRACING_PROVIDERS,
             0, // cpuSamplingRateMs
             1, // flags
-            1); // configId
+            1, // configId
+            TraceContext.ProviderExtras.EMPTY); // providerExtras
     mOrchestrator.onTraceStartSync(anotherContext);
     mOrchestrator.onTraceStartAsync(anotherContext);
     verify(mBaseTraceProvider, never()).disable();
@@ -485,7 +488,8 @@ public class TraceOrchestratorTest {
             0, // intContext
             enabledProvidersMask, // enabled providers mask
             0, // cpuSamplingRateMs
-            1);
+            1,
+            TraceContext.ProviderExtras.EMPTY); // providerExtras
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -530,7 +534,8 @@ public class TraceOrchestratorTest {
             0, // intContext
             enabledProvidersMask, // enabled providers mask
             0, // cpuSamplingRateMs
-            1);
+            1,
+            TraceContext.ProviderExtras.EMPTY); // providerExtras
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);

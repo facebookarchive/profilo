@@ -19,6 +19,7 @@ package com.facebook.profilo.controllers.external;
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TriggerRegistry;
+import com.facebook.profilo.ipc.TraceContext;
 import javax.annotation.Nullable;
 
 public class ExternalController implements TraceController {
@@ -39,6 +40,12 @@ public class ExternalController implements TraceController {
   @Override
   public int getCpuSamplingRateMs(long longContext, Object context, ControllerConfig ignored) {
     return getConfigFromContext(context).cpuSamplingRateMs;
+  }
+
+  @Override
+  public TraceContext.ProviderExtras getProviderExtras(
+      long longContext, @Nullable Object context, ControllerConfig config) {
+    return TraceContext.ProviderExtras.EMPTY;
   }
 
   private Config getConfigFromContext(Object context) {

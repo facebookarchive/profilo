@@ -21,6 +21,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import android.os.Parcel;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
+import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,21 +40,40 @@ public class TraceContextTest {
   private static final int FLAGS = 1;
   private static final int ABORT_REASON = 1;
 
+  private static final TreeMap<String, Integer> intExtraParams = new TreeMap<>();
+  private static final TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
+  private static final TreeMap<String, int[]> intArrayExtraParams = new TreeMap<>();
+  private static final TraceContext.ProviderExtras PROVIDER_EXTRAS;
+
+  static {
+    TreeMap<String, Integer> intExtraParams = new TreeMap<>();
+    TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
+    TreeMap<String, int[]> intArrayExtraParams = new TreeMap<>();
+    intExtraParams.put("int_param_1", 2);
+    boolExtraParams.put("bool_param_1", true);
+    boolExtraParams.put("bool_param_2", false);
+    intArrayExtraParams.put("int_arr_param_1", new int[] {22, 19});
+    PROVIDER_EXTRAS =
+        new TraceContext.ProviderExtras(intExtraParams, boolExtraParams, intArrayExtraParams);
+  }
+
   private TraceContext mContext;
 
   @Before
   public void setUp() {
-    mContext = new TraceContext(
-        TRACE_ID,
-        ENCODED_TRACE_ID,
-        CONTROLLER,
-        CONTROLLER_OBJECT,
-        CONTEXT,
-        INT_CONTEXT,
-        ENABLED_PROVIDERS,
-        CPU_SAMPLING_RATE_MS,
-        FLAGS,
-        ABORT_REASON);
+    mContext =
+        new TraceContext(
+            TRACE_ID,
+            ENCODED_TRACE_ID,
+            CONTROLLER,
+            CONTROLLER_OBJECT,
+            CONTEXT,
+            INT_CONTEXT,
+            ENABLED_PROVIDERS,
+            CPU_SAMPLING_RATE_MS,
+            FLAGS,
+            ABORT_REASON,
+            PROVIDER_EXTRAS);
   }
 
   @Test
@@ -68,6 +88,9 @@ public class TraceContextTest {
     assertThat(mContext.cpuSamplingRateMs).isEqualTo(CPU_SAMPLING_RATE_MS);
     assertThat(mContext.flags).isEqualTo(FLAGS);
     assertThat(mContext.abortReason).isEqualTo(ABORT_REASON);
+    verifyProviderIntExtras(mContext.providerExtras, intExtraParams);
+    verifyProviderBooleanExtras(mContext.providerExtras, boolExtraParams);
+    verifyProviderIntArrayExtras(mContext.providerExtras, intArrayExtraParams);
   }
 
   @Test
@@ -86,5 +109,32 @@ public class TraceContextTest {
     assertThat(createdFromParcel.enabledProviders).isEqualTo(ENABLED_PROVIDERS);
     assertThat(createdFromParcel.cpuSamplingRateMs).isEqualTo(CPU_SAMPLING_RATE_MS);
     assertThat(createdFromParcel.abortReason).isEqualTo(ABORT_REASON);
+    verifyProviderIntExtras(createdFromParcel.providerExtras, intExtraParams);
+    verifyProviderBooleanExtras(createdFromParcel.providerExtras, boolExtraParams);
+    verifyProviderIntArrayExtras(createdFromParcel.providerExtras, intArrayExtraParams);
+  }
+
+  static void verifyProviderIntExtras(
+      TraceContext.ProviderExtras testExtras, TreeMap<String, Integer> intParams) {
+    for (TreeMap.Entry<String, Integer> nextEntry : intParams.entrySet()) {
+      assertThat(testExtras.getIntParam(nextEntry.getKey(), Integer.MIN_VALUE))
+          .isEqualTo(nextEntry.getValue());
+    }
+  }
+
+  static void verifyProviderBooleanExtras(
+      TraceContext.ProviderExtras testExtras, TreeMap<String, Boolean> boolParams) {
+    for (TreeMap.Entry<String, Boolean> nextEntry : boolParams.entrySet()) {
+      assertThat(testExtras.getBoolParam(nextEntry.getKey(), !nextEntry.getValue()))
+          .isEqualTo(nextEntry.getValue());
+    }
+  }
+
+  static void verifyProviderIntArrayExtras(
+      TraceContext.ProviderExtras testExtras, TreeMap<String, int[]> intArrayParams) {
+    for (TreeMap.Entry<String, int[]> nextEntry : intArrayParams.entrySet()) {
+      assertThat(testExtras.getIntArrayParam(nextEntry.getKey()))
+          .containsExactly(nextEntry.getValue());
+    }
   }
 }
