@@ -82,6 +82,10 @@ public class TraceOrchestratorTest {
   // These values are the inverse of each other, so we can do just one TraceEvents.isEnabled call
   private static final int DEFAULT_TRACING_PROVIDERS = 0xffffffff;
   private static final int SECOND_TRACE_TRACING_PROVIDERS = 0x11011;
+  private static final int NORMAL_PROVIDER_SUPPORTED_PROVIDERS = 0x101;
+  private static final int NORMAL_PROVIDER_TRACING_PROVIDERS = 0x001;
+  private static final int SYNC_PROVIDER_SUPPORTED_PROVIDERS = 0x10;
+  private static final int SYNC_PROVIDER_TRACING_PROVIDERS = 0x10;
   private static final int DEFAULT_PROCESS_ID = 1111;
   private static final String DEFAULT_TEMP_DIR = "temp_dir";
 
@@ -97,11 +101,21 @@ public class TraceOrchestratorTest {
   @Rule TraceEventsFakeRule mTraceEventsRule = new TraceEventsFakeRule();
   private BaseTraceProvider mTraceProvider;
   private BaseTraceProvider mBaseTraceProvider;
+  private BaseTraceProvider mSyncBaseTraceProvider;
+
+  private BaseTraceProvider[] mTraceProviders;
 
   static class TestBaseProvider extends BaseTraceProvider {
 
-    static final int SUPPORTED_PROVIDERS = 0x101;
-    static final int TRACING_PROVIDERS = 0x001;
+    final int supportedProviders;
+    final int tracingProviders;
+    final boolean sync;
+
+    TestBaseProvider(int supportedProviders, int tracingProviders, boolean sync) {
+      this.supportedProviders = supportedProviders;
+      this.tracingProviders = tracingProviders;
+      this.sync = sync;
+    }
 
     @Override
     protected void enable() {}
@@ -111,12 +125,17 @@ public class TraceOrchestratorTest {
 
     @Override
     protected int getSupportedProviders() {
-      return SUPPORTED_PROVIDERS;
+      return supportedProviders;
     }
 
     @Override
     protected int getTracingProviders() {
-      return TRACING_PROVIDERS;
+      return tracingProviders;
+    }
+
+    @Override
+    public boolean requiresSynchronousCallbacks() {
+      return sync;
     }
   }
 
@@ -170,14 +189,24 @@ public class TraceOrchestratorTest {
         .thenReturn(mock(SparseArray.class, RETURNS_MOCKS));
     whenNew(FileManager.class).withAnyArguments().thenReturn(mFileManager);
     mTraceProvider = mock(BaseTraceProvider.class);
-    mBaseTraceProvider = spy(new TestBaseProvider());
-    when(mFileManager.getAndResetStatistics()).
-        thenReturn(mock(FileManager.FileManagerStatistics.class));
+    mBaseTraceProvider =
+        spy(
+            new TestBaseProvider(
+                NORMAL_PROVIDER_SUPPORTED_PROVIDERS, NORMAL_PROVIDER_TRACING_PROVIDERS, false));
+    mSyncBaseTraceProvider =
+        spy(
+            new TestBaseProvider(
+                SYNC_PROVIDER_SUPPORTED_PROVIDERS, SYNC_PROVIDER_TRACING_PROVIDERS, true));
+
+    mTraceProviders =
+        new BaseTraceProvider[] {mTraceProvider, mBaseTraceProvider, mSyncBaseTraceProvider};
+    when(mFileManager.getAndResetStatistics())
+        .thenReturn(mock(FileManager.FileManagerStatistics.class));
     mOrchestrator =
         new TraceOrchestrator(
             mContext,
             mConfigProvider,
-            new BaseTraceProvider[] {mTraceProvider, mBaseTraceProvider},
+            mTraceProviders,
             TraceOrchestrator.MAIN_PROCESS_NAME,
             true, // isMainProcess
             null); // Default trace location
@@ -289,9 +318,10 @@ public class TraceOrchestratorTest {
   @Test
   public void testTraceStopChangesProviders() {
     mOrchestrator.onTraceStartSync(mTraceContext);
+    mOrchestrator.onTraceStartAsync(mTraceContext);
     mOrchestrator.onTraceStop(mTraceContext);
 
-    verifyProvidersDisabled();
+    verifyProvidersDisabled(mTraceProviders);
     assertThatAllProvidersDisabled();
   }
 
@@ -303,7 +333,7 @@ public class TraceOrchestratorTest {
         new TraceContext(mTraceContext, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
     mOrchestrator.onTraceAbort(traceContext);
     assertThatAllProvidersDisabled();
-    verifyProvidersDisabled();
+    verifyProvidersDisabled(mTraceProviders);
   }
 
   @Test
@@ -398,9 +428,11 @@ public class TraceOrchestratorTest {
   public void testBaseTraceProviderChanges() {
     assertThatAllProvidersDisabled();
     mOrchestrator.onTraceStartSync(mTraceContext);
+    verify(mSyncBaseTraceProvider).enable();
     mOrchestrator.onTraceStartAsync(mTraceContext);
     verify(mBaseTraceProvider).enable();
     mOrchestrator.onTraceStartSync(mSecondTraceContext);
+    verify(mSyncBaseTraceProvider, times(1)).enable();
     mOrchestrator.onTraceStartAsync(mSecondTraceContext);
     verify(mBaseTraceProvider, times(1)).enable();
     mOrchestrator.onTraceStop(mTraceContext);
@@ -408,22 +440,26 @@ public class TraceOrchestratorTest {
     verify(mBaseTraceProvider, times(2)).enable();
     mOrchestrator.onTraceStop(mSecondTraceContext);
     verify(mBaseTraceProvider, times(2)).disable();
+    verify(mSyncBaseTraceProvider, times(1)).disable();
   }
 
   @Test
   public void testBaseTraceProviderSimple() {
     assertThatAllProvidersDisabled();
     mOrchestrator.onTraceStartSync(mTraceContext);
+    verify(mSyncBaseTraceProvider).enable();
     mOrchestrator.onTraceStartAsync(mTraceContext);
     verify(mBaseTraceProvider).enable();
     mOrchestrator.onTraceStop(mTraceContext);
     verify(mBaseTraceProvider).disable();
+    verify(mSyncBaseTraceProvider).disable();
   }
 
   @Test
   public void testBaseTraceProvidersNotChanging() {
     assertThatAllProvidersDisabled();
     mOrchestrator.onTraceStartSync(mTraceContext);
+    verify(mSyncBaseTraceProvider).enable();
     mOrchestrator.onTraceStartAsync(mTraceContext);
     verify(mBaseTraceProvider).enable();
     TraceContext anotherContext =
@@ -442,10 +478,13 @@ public class TraceOrchestratorTest {
     mOrchestrator.onTraceStartSync(anotherContext);
     mOrchestrator.onTraceStartAsync(anotherContext);
     verify(mBaseTraceProvider, never()).disable();
+    verify(mSyncBaseTraceProvider, never()).disable();
     mOrchestrator.onTraceStop(mTraceContext);
     verify(mBaseTraceProvider, never()).disable();
+    verify(mSyncBaseTraceProvider, never()).disable();
     mOrchestrator.onTraceStop(anotherContext);
     verify(mBaseTraceProvider).disable();
+    verify(mSyncBaseTraceProvider).disable();
   }
 
   @Test
@@ -495,7 +534,10 @@ public class TraceOrchestratorTest {
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
     verify(listener).onProvidersStop(providerMaskCaptor.capture());
     int tracingProviders = providerMaskCaptor.getValue();
-    assertThat(tracingProviders).isEqualTo(TestBaseProvider.TRACING_PROVIDERS);
+    assertThat(tracingProviders)
+        .isEqualTo(
+            mBaseTraceProvider.getTracingProviders()
+                | mSyncBaseTraceProvider.getTracingProviders());
   }
 
   @Test
@@ -544,9 +586,11 @@ public class TraceOrchestratorTest {
     assertThat(tracingProviders & enabledProvidersMask).isEqualTo(enabledProvidersMask);
   }
 
-  private void verifyProvidersDisabled() {
-    verify(mTraceProvider)
-        .onDisable(any(TraceContext.class), any(BaseTraceProvider.ExtraDataFileProvider.class));
+  private static void verifyProvidersDisabled(BaseTraceProvider... providers) {
+    for (BaseTraceProvider provider : providers) {
+      verify(provider)
+          .onDisable(any(TraceContext.class), any(BaseTraceProvider.ExtraDataFileProvider.class));
+    }
   }
 
   private void assertProvidersTheSame(int providers) {

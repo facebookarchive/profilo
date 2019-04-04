@@ -35,6 +35,7 @@ import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -121,7 +122,8 @@ public final class TraceOrchestrator
     }
 
     TraceOrchestrator orchestrator =
-        new TraceOrchestrator(context, configProvider, providers, processName, isMainProcess, traceFolder);
+        new TraceOrchestrator(
+            context, configProvider, providers, processName, isMainProcess, traceFolder);
 
     if (sInstance.compareAndSet(null, orchestrator)) {
       orchestrator.bind(context, controllers);
@@ -159,7 +161,12 @@ public final class TraceOrchestrator
   private ProfiloBridgeFactory mProfiloBridgeFactory;
 
   @GuardedBy("this")
-  private BaseTraceProvider[] mBaseTraceProviders;
+  private BaseTraceProvider[] mNormalTraceProviders;
+
+  @GuardedBy("this")
+  private BaseTraceProvider[] mSyncTraceProviders;
+
+  private final Object mSyncProvidersLock = new Object();
 
   private final TraceListenerManager mListenerManager;
   private final boolean mIsMainProcess;
@@ -171,12 +178,11 @@ public final class TraceOrchestrator
   /*package*/ TraceOrchestrator(
       Context context,
       ConfigProvider configProvider,
-      BaseTraceProvider[] BaseTraceProviders,
+      BaseTraceProvider[] traceProviders,
       String processName,
       boolean isMainProcess,
       @Nullable File traceFolder) {
     mConfigProvider = configProvider;
-    mBaseTraceProviders = BaseTraceProviders;
     mConfig = null;
     mFileManager = new FileManager(context, traceFolder);
     mBackgroundUploadService = null;
@@ -185,6 +191,19 @@ public final class TraceOrchestrator
     mProcessName = processName;
     mIsMainProcess = isMainProcess;
     mTraces = new HashMap<>(2);
+
+    ArrayList<BaseTraceProvider> syncProviderList = new ArrayList<>();
+    ArrayList<BaseTraceProvider> normalProviderList = new ArrayList<>();
+    for (BaseTraceProvider provider : traceProviders) {
+      if (provider.requiresSynchronousCallbacks()) {
+        syncProviderList.add(provider);
+        continue;
+      }
+      normalProviderList.add(provider);
+    }
+    mNormalTraceProviders =
+        normalProviderList.toArray(new BaseTraceProvider[normalProviderList.size()]);
+    mSyncTraceProviders = syncProviderList.toArray(new BaseTraceProvider[syncProviderList.size()]);
   }
 
   @SuppressLint({
@@ -236,11 +255,19 @@ public final class TraceOrchestrator
     return mConfig;
   }
 
+  private static BaseTraceProvider[] copyAndAppendProviderArray(
+      BaseTraceProvider providerToAppend, BaseTraceProvider[] currentProviders) {
+    BaseTraceProvider[] providers = Arrays.copyOf(currentProviders, currentProviders.length + 1);
+    providers[providers.length - 1] = providerToAppend;
+    return providers;
+  }
+
   public synchronized void addTraceProvider(BaseTraceProvider provider) {
-    BaseTraceProvider[] providers =
-        Arrays.copyOf(mBaseTraceProviders, mBaseTraceProviders.length + 1);
-    providers[providers.length - 1] = provider;
-    mBaseTraceProviders = providers;
+    if (provider.requiresSynchronousCallbacks()) {
+      mSyncTraceProviders = copyAndAppendProviderArray(provider, mSyncTraceProviders);
+      return;
+    }
+    mNormalTraceProviders = copyAndAppendProviderArray(provider, mNormalTraceProviders);
   }
 
   public void setConfigProvider(ConfigProvider newConfigProvider) {
@@ -353,8 +380,17 @@ public final class TraceOrchestrator
     // Increment the providers
     TraceEvents.enableProviders(context.enabledProviders);
 
-    // We want all the in-line providers to know that they're on.
-    // However, don't do anything else blockingly.
+    // We want a subset of critical providers to run synchronously with trace start.
+    // The rest of providers will run asynchronously.
+    BaseTraceProvider[] syncProviders;
+    synchronized (this) {
+      syncProviders = mSyncTraceProviders;
+    }
+    synchronized (mSyncProvidersLock) {
+      for (BaseTraceProvider provider : syncProviders) {
+        provider.onEnable(context, this);
+      }
+    }
   }
 
   @Nullable
@@ -392,7 +428,7 @@ public final class TraceOrchestrator
 
     BaseTraceProvider[] providers;
     synchronized (this) {
-      providers = mBaseTraceProviders;
+      providers = mNormalTraceProviders;
     }
     for (BaseTraceProvider provider : providers) {
       provider.onEnable(context, this);
@@ -402,10 +438,12 @@ public final class TraceOrchestrator
 
   @Override
   public void onTraceStop(TraceContext context) {
-    BaseTraceProvider[] providers;
+    BaseTraceProvider[] normalProviders;
+    BaseTraceProvider[] syncProviders;
     Config config;
     synchronized (this) {
-      providers = mBaseTraceProviders;
+      normalProviders = mNormalTraceProviders;
+      syncProviders = mSyncTraceProviders;
       config = mConfig;
     }
 
@@ -422,14 +460,22 @@ public final class TraceOrchestrator
     }
 
     int tracingProviders = 0;
-    for (BaseTraceProvider provider : providers) {
+    for (BaseTraceProvider provider : normalProviders) {
+      tracingProviders |= provider.getActiveProviders();
+    }
+    for (BaseTraceProvider provider : syncProviders) {
       tracingProviders |= provider.getActiveProviders();
     }
 
     // Decrement providers for current trace
     TraceEvents.disableProviders(context.enabledProviders);
 
-    for (BaseTraceProvider provider : providers) {
+    synchronized (mSyncProvidersLock) {
+      for (BaseTraceProvider provider : syncProviders) {
+        provider.onDisable(context, this);
+      }
+    }
+    for (BaseTraceProvider provider : normalProviders) {
       provider.onDisable(context, this);
     }
     mListenerManager.onProvidersStop(tracingProviders);
@@ -443,16 +489,23 @@ public final class TraceOrchestrator
   public void onTraceAbort(TraceContext context) {
     checkConfigTransition();
 
-    BaseTraceProvider[] providers;
+    BaseTraceProvider[] normalProviders;
+    BaseTraceProvider[] syncProviders;
     synchronized (this) {
-      providers = mBaseTraceProviders;
+      normalProviders = mNormalTraceProviders;
+      syncProviders = mSyncTraceProviders;
     }
     mListenerManager.onTraceAbort(context);
 
     // Decrement providers for current trace
     TraceEvents.disableProviders(context.enabledProviders);
 
-    for (BaseTraceProvider provider : providers) {
+    synchronized (mSyncProvidersLock) {
+      for (BaseTraceProvider provider : syncProviders) {
+        provider.onDisable(context, this);
+      }
+    }
+    for (BaseTraceProvider provider : normalProviders) {
       provider.onDisable(context, this);
     }
   }

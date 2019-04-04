@@ -166,4 +166,18 @@ public abstract class BaseTraceProvider {
     }
     return getTracingProviders();
   }
+
+  /**
+   * Determines trace lifecycle callback semantics of an implementing provider.
+   *
+   * <p>Providers which return "true" are guaranteed that "onEnable" will be called synchronously
+   * with trace start. Asynchronous execution means both "onEnable" and "onDisable" are processed on
+   * a dedicated service thread. Providers which do not override this method are asynchronous by
+   * default.
+   *
+   * @return true if synchronous and false otherwise
+   */
+  public boolean requiresSynchronousCallbacks() {
+    return false;
+  }
 }
