@@ -1,7 +1,6 @@
-load("@fbsource//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
-load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
 
-fb_native.cxx_test(
+profilo_cxx_test(
     name = "common",
     srcs = [
         "CommonTest.cpp",
