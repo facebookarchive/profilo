@@ -50,7 +50,7 @@ profilo_oss_xplat_cxx_library(
             ]),
         ),
     ],
-    soname = "libprofilo_fbjni.$(ext)",
+    soname = "libfbjni.$(ext)",
     visibility = [
         "PUBLIC",
     ],
