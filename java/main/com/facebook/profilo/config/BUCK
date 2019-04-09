@@ -10,6 +10,7 @@ fb_core_android_library(
         "fbandroid//instrumentation_tests/com/facebook/quicklog/...",
         profilo_path("..."),
         "fbandroid//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+        "//instrumentation_tests/com/facebook/profilo/...",
     ],
     deps = [
         profilo_path("deps/jsr-305:jsr-305"),

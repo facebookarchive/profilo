@@ -10,6 +10,7 @@ fb_core_android_library(
     ),
     visibility = [
         profilo_path("java/test/com/facebook/profilo/core:core"),
+        profilo_path("facebook/java/test/com/facebook/profilo/instrumentation_tests/..."),
     ],
     deps = [
         profilo_path("deps/third-party/java/powermock:powermock"),

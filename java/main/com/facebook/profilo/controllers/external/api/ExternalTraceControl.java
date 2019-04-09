@@ -22,7 +22,7 @@ import com.facebook.profilo.logger.Trace;
 
 public class ExternalTraceControl {
 
-  public static boolean startTrace(int providers, int cpuSamplingRateMs) {
+  public static boolean startTrace(int providers, int cpuSamplingRateMs, int flags) {
     TraceControl control = TraceControl.get();
     if (control == null) {
       return false;
@@ -32,13 +32,16 @@ public class ExternalTraceControl {
     config.providers = providers;
     config.cpuSamplingRateMs = cpuSamplingRateMs;
 
+    return control.startTrace(ExternalController.TRIGGER_EXTERNAL, flags, config, 0L);
+  }
+
+  public static boolean startTrace(int providers, int cpuSamplingRateMs) {
     //
     // We set FLAG_MANUAL because external control implies no file manager and upload constraint
     // configuration. Therefore, it doesn't make sense to throttle things based on the fallback
     // config in DefaultConfigProvider.
     //
-    final int flags = Trace.FLAG_MANUAL;
-    return control.startTrace(ExternalController.TRIGGER_EXTERNAL, flags, config, 0L);
+    return startTrace(providers, cpuSamplingRateMs, Trace.FLAG_MANUAL);
   }
 
   public static void stopTrace() {

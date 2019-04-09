@@ -67,7 +67,7 @@ def blocks(tracefile, args):
         for block in blocks:
             thread_functions[tid][block[0]].append(block[1])
 
-    Statistics = namedtuple('Statistics', 'mean median std')
+    Statistics = namedtuple('Statistics', ['hits', 'mean', 'median', 'std'])
 
     stats = defaultdict(lambda: {})  # tid -> block_name -> Statistics
 
@@ -76,11 +76,11 @@ def blocks(tracefile, args):
             mean = np.mean(counts)
             median = np.median(counts)
             std = np.std(counts)
-            stats[tid][func] = Statistics(mean=mean, median=median, std=std)
+            stats[tid][func] = Statistics(hits=len(counts), mean=mean, median=median, std=std)
 
     # DataFrame dictionary
-    df_dict = {'IsMain': [], 'tid': [], 'event': [], 'mean': [], 'median': [],
-               'std': []}
+    df_dict = {'IsMain': [], 'tid': [], 'event': [], 'hits': [], 'mean': [],
+        'median': [], 'std': []}
 
     for tid, functions in stats.items():
         for func, stat in functions.items():
@@ -90,9 +90,10 @@ def blocks(tracefile, args):
             df_dict['mean'].append(stat.mean)
             df_dict['median'].append(stat.median)
             df_dict['std'].append(stat.std)
+            df_dict['hits'].append(stat.hits)
 
     dataframe = pd.DataFrame(data=df_dict, columns=['IsMain', 'tid',
-                             'event', 'mean', 'median', 'std'])
+                             'event', 'hits', 'mean', 'median', 'std'])
 
     print(dataframe.to_csv())
 

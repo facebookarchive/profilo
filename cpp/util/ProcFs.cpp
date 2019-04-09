@@ -33,7 +33,7 @@ static constexpr int kMaxProcFileLength = 64;
 // Custom parse for unsinged long values, ignores minus sign and skips blank
 // spaces in front. Such narrowly specialized method is faster than the standard
 // strtoull.
-static uint64_t parse_ull(char* str, char** end) {
+uint64_t parse_ull(char* str, char** end) {
   static constexpr int kMaxDigits = 20;
 
   char* cur = str;

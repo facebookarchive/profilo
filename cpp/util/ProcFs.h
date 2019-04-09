@@ -258,6 +258,8 @@ class ThreadCache {
   std::unordered_map<uint32_t, ThreadStatHolder> cache_;
 };
 
+uint64_t parse_ull(char* str, char** end);
+
 } // namespace util
 } // namespace profilo
 } // namespace facebook
