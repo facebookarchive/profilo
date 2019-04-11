@@ -1,4 +1,4 @@
-// @generated SignedSource<<cad474c206b9c09c3218c8a398974cbc>>
+// @generated SignedSource<<a66fb32dfc85a822ddcd9147d7951613>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -71,6 +71,7 @@ const char* to_string(EntryType type) {
     case QPL_CANCEL: return "QPL_CANCEL";
     case QPL_NOTE: return "QPL_NOTE";
     case QPL_POINT: return "QPL_POINT";
+    case QPL_EVENT: return "QPL_EVENT";
     case TRACE_ANNOTATION: return "TRACE_ANNOTATION";
     case WAIT_START: return "WAIT_START";
     case WAIT_END: return "WAIT_END";

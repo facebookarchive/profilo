@@ -1,4 +1,4 @@
-// @generated SignedSource<<3aa91c848415dd782836cc932ff83da8>>
+// @generated SignedSource<<7c6ac242b70ac79c0de4dce44de8dcd1>>
 
 package com.facebook.profilo.entries;
 
@@ -66,38 +66,39 @@ public class EntryType {
   public static final int QPL_CANCEL = 59;
   public static final int QPL_NOTE = 60;
   public static final int QPL_POINT = 61;
-  public static final int TRACE_ANNOTATION = 62;
-  public static final int WAIT_START = 63;
-  public static final int WAIT_END = 64;
-  public static final int WAIT_SIGNAL = 65;
-  public static final int STRING_KEY = 66;
-  public static final int STRING_VALUE = 67;
-  public static final int QPL_TAG = 68;
-  public static final int QPL_ANNOTATION = 69;
-  public static final int TRACE_THREAD_NAME = 70;
-  public static final int TRACE_PRE_END = 71;
-  public static final int TRACE_THREAD_PRI = 72;
-  public static final int MAJOR_FAULT = 73;
-  public static final int YARN_LOST_RECORDS = 74;
-  public static final int CLASS_LOAD = 75;
-  public static final int JAVASCRIPT_STACK_FRAME = 76;
-  public static final int MESSAGE_START = 77;
-  public static final int MESSAGE_END = 78;
-  public static final int CLASS_VALUE = 79;
-  public static final int HTTP2_REQUEST_INITIATED = 80;
-  public static final int HTTP2_FRAME_HEADER = 81;
-  public static final int HTTP2_WINDOW_UPDATE = 82;
-  public static final int HTTP2_PRIORITY = 83;
-  public static final int HTTP2_EGRESS_FRAME_HEADER = 84;
-  public static final int PROCESS_LIST = 85;
-  public static final int IO_START = 86;
-  public static final int IO_END = 87;
-  public static final int CPU_COUNTER = 88;
-  public static final int CLASS_LOAD_START = 89;
-  public static final int CLASS_LOAD_END = 90;
-  public static final int CLASS_LOAD_FAILED = 91;
-  public static final int STRING_NAME = 92;
-  public static final int JAVA_FRAME_NAME = 93;
+  public static final int QPL_EVENT = 62;
+  public static final int TRACE_ANNOTATION = 63;
+  public static final int WAIT_START = 64;
+  public static final int WAIT_END = 65;
+  public static final int WAIT_SIGNAL = 66;
+  public static final int STRING_KEY = 67;
+  public static final int STRING_VALUE = 68;
+  public static final int QPL_TAG = 69;
+  public static final int QPL_ANNOTATION = 70;
+  public static final int TRACE_THREAD_NAME = 71;
+  public static final int TRACE_PRE_END = 72;
+  public static final int TRACE_THREAD_PRI = 73;
+  public static final int MAJOR_FAULT = 74;
+  public static final int YARN_LOST_RECORDS = 75;
+  public static final int CLASS_LOAD = 76;
+  public static final int JAVASCRIPT_STACK_FRAME = 77;
+  public static final int MESSAGE_START = 78;
+  public static final int MESSAGE_END = 79;
+  public static final int CLASS_VALUE = 80;
+  public static final int HTTP2_REQUEST_INITIATED = 81;
+  public static final int HTTP2_FRAME_HEADER = 82;
+  public static final int HTTP2_WINDOW_UPDATE = 83;
+  public static final int HTTP2_PRIORITY = 84;
+  public static final int HTTP2_EGRESS_FRAME_HEADER = 85;
+  public static final int PROCESS_LIST = 86;
+  public static final int IO_START = 87;
+  public static final int IO_END = 88;
+  public static final int CPU_COUNTER = 89;
+  public static final int CLASS_LOAD_START = 90;
+  public static final int CLASS_LOAD_END = 91;
+  public static final int CLASS_LOAD_FAILED = 92;
+  public static final int STRING_NAME = 93;
+  public static final int JAVA_FRAME_NAME = 94;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -162,6 +163,7 @@ public class EntryType {
     "QPL_CANCEL",
     "QPL_NOTE",
     "QPL_POINT",
+    "QPL_EVENT",
     "TRACE_ANNOTATION",
     "WAIT_START",
     "WAIT_END",

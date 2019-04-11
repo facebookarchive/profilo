@@ -106,6 +106,7 @@ NAMES = [
     'QPL_CANCEL',
     'QPL_NOTE',
     'QPL_POINT',
+    'QPL_EVENT',
 
     'TRACE_ANNOTATION',
 
