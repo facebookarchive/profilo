@@ -36,7 +36,6 @@ public class TraceContextTest {
   private static final Object CONTEXT = "context";
   private static final int INT_CONTEXT = 22222;
   private static final int ENABLED_PROVIDERS = 33333;
-  private static final int CPU_SAMPLING_RATE_MS = 44444;
   private static final int FLAGS = 1;
   private static final int ABORT_REASON = 1;
 
@@ -70,7 +69,6 @@ public class TraceContextTest {
             CONTEXT,
             INT_CONTEXT,
             ENABLED_PROVIDERS,
-            CPU_SAMPLING_RATE_MS,
             FLAGS,
             ABORT_REASON,
             PROVIDER_EXTRAS);
@@ -85,7 +83,6 @@ public class TraceContextTest {
     assertThat(mContext.context).isEqualTo(CONTEXT);
     assertThat(mContext.longContext).isEqualTo(INT_CONTEXT);
     assertThat(mContext.enabledProviders).isEqualTo(ENABLED_PROVIDERS);
-    assertThat(mContext.cpuSamplingRateMs).isEqualTo(CPU_SAMPLING_RATE_MS);
     assertThat(mContext.flags).isEqualTo(FLAGS);
     assertThat(mContext.abortReason).isEqualTo(ABORT_REASON);
     verifyProviderIntExtras(mContext.providerExtras, intExtraParams);
@@ -107,7 +104,6 @@ public class TraceContextTest {
     assertThat(createdFromParcel.context).isNull();
     assertThat(createdFromParcel.longContext).isEqualTo(INT_CONTEXT);
     assertThat(createdFromParcel.enabledProviders).isEqualTo(ENABLED_PROVIDERS);
-    assertThat(createdFromParcel.cpuSamplingRateMs).isEqualTo(CPU_SAMPLING_RATE_MS);
     assertThat(createdFromParcel.abortReason).isEqualTo(ABORT_REASON);
     verifyProviderIntExtras(createdFromParcel.providerExtras, intExtraParams);
     verifyProviderBooleanExtras(createdFromParcel.providerExtras, boolExtraParams);

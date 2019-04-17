@@ -16,10 +16,13 @@
 
 package com.facebook.profilo.controllers.external;
 
+import static com.facebook.profilo.core.ProfiloConstants.CPU_SAMPLING_RATE_CONFIG_PARAM;
+
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TriggerRegistry;
 import com.facebook.profilo.ipc.TraceContext;
+import java.util.TreeMap;
 import javax.annotation.Nullable;
 
 public class ExternalController implements TraceController {
@@ -38,14 +41,15 @@ public class ExternalController implements TraceController {
   }
 
   @Override
-  public int getCpuSamplingRateMs(long longContext, Object context, ControllerConfig ignored) {
-    return getConfigFromContext(context).cpuSamplingRateMs;
-  }
-
-  @Override
   public TraceContext.ProviderExtras getProviderExtras(
       long longContext, @Nullable Object context, ControllerConfig config) {
-    return TraceContext.ProviderExtras.EMPTY;
+    if (context == null) {
+      return TraceContext.ProviderExtras.EMPTY;
+    }
+    TreeMap<String, Integer> extraIntMap = new TreeMap<>();
+    extraIntMap.put(
+        CPU_SAMPLING_RATE_CONFIG_PARAM, getConfigFromContext(context).cpuSamplingRateMs);
+    return new TraceContext.ProviderExtras(extraIntMap, null, null);
   }
 
   private Config getConfigFromContext(Object context) {

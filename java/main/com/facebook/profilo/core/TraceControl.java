@@ -289,9 +289,6 @@ final public class TraceControl {
             context,
             longContext,
             providers,
-            controllerConfig == null
-                ? 0
-                : traceController.getCpuSamplingRateMs(longContext, context, controllerConfig),
             flags,
             controllerConfig == null
                 ? TraceContext.ProviderExtras.EMPTY

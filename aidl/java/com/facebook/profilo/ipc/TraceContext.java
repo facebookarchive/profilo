@@ -151,7 +151,6 @@ public final class TraceContext implements Parcelable {
   @Nullable public Object context;
   public long longContext;
   public int enabledProviders;
-  public int cpuSamplingRateMs;
   public int flags;
   public int abortReason;
   public ProviderExtras providerExtras;
@@ -178,7 +177,6 @@ public final class TraceContext implements Parcelable {
       @Nullable Object context,
       long longContext,
       int enabledProviders,
-      int cpuSamplingRateMs,
       int flags,
       int abortReason,
       ProviderExtras providerExtras) {
@@ -189,7 +187,6 @@ public final class TraceContext implements Parcelable {
     this.context = context;
     this.longContext = longContext;
     this.enabledProviders = enabledProviders;
-    this.cpuSamplingRateMs = cpuSamplingRateMs;
     this.flags = flags;
     this.abortReason = abortReason;
     this.providerExtras = providerExtras;
@@ -203,7 +200,6 @@ public final class TraceContext implements Parcelable {
       Object context,
       long longContext,
       int enabledProviders,
-      int cpuSamplingRateMs,
       int flags,
       ProviderExtras providerExtras) {
     this(
@@ -214,7 +210,6 @@ public final class TraceContext implements Parcelable {
         context,
         longContext,
         enabledProviders,
-        cpuSamplingRateMs,
         flags,
         (short) 0,
         providerExtras);
@@ -229,7 +224,6 @@ public final class TraceContext implements Parcelable {
         traceContext.context,
         traceContext.longContext,
         traceContext.enabledProviders,
-        traceContext.cpuSamplingRateMs,
         traceContext.flags,
         traceContext.abortReason,
         traceContext.providerExtras);
@@ -244,7 +238,6 @@ public final class TraceContext implements Parcelable {
         traceContext.context,
         traceContext.longContext,
         traceContext.enabledProviders,
-        traceContext.cpuSamplingRateMs,
         traceContext.flags,
         abortReason,
         traceContext.providerExtras);
@@ -259,7 +252,6 @@ public final class TraceContext implements Parcelable {
         traceContext.context,
         traceContext.longContext,
         traceContext.enabledProviders,
-        traceContext.cpuSamplingRateMs,
         traceContext.flags,
         traceContext.abortReason,
         traceContext.providerExtras);
@@ -277,7 +269,6 @@ public final class TraceContext implements Parcelable {
     this.context = null;
     this.longContext = src.readLong();
     this.enabledProviders = src.readInt();
-    this.cpuSamplingRateMs = src.readInt();
     this.flags = src.readInt();
     this.abortReason = src.readInt();
     this.providerExtras = ProviderExtras.CREATOR.createFromParcel(src);
@@ -295,7 +286,6 @@ public final class TraceContext implements Parcelable {
     dest.writeInt(controller);
     dest.writeLong(longContext);
     dest.writeInt(enabledProviders);
-    dest.writeInt(cpuSamplingRateMs);
     dest.writeInt(this.flags);
     dest.writeInt(abortReason);
     providerExtras.writeToParcel(dest, flags);

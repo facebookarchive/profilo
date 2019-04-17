@@ -108,7 +108,6 @@ public class TraceControlTest {
             new Object(),
             1,
             PROVIDER_TEST,
-            100,
             1,
             222,
             TraceContext.ProviderExtras.EMPTY);
@@ -128,7 +127,7 @@ public class TraceControlTest {
     assertThat(currContext.context).isEqualTo(mTraceContext.context);
     assertThat(currContext.longContext).isEqualTo(mTraceContext.longContext);
     assertThat(currContext.enabledProviders).isEqualTo(mTraceContext.enabledProviders);
-    assertThat(currContext.cpuSamplingRateMs).isEqualTo(mTraceContext.cpuSamplingRateMs);
+    assertThat(currContext.providerExtras).isEqualTo(mTraceContext.providerExtras);
   }
 
   @Test

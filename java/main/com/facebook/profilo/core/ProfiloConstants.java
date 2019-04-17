@@ -35,6 +35,10 @@ public final class ProfiloConstants {
   // bit
   public static final int REMOTE_PROCESS_BIT = 0x80000000;
 
+  // Sampling rate config parameter for the call stacks provider.
+  public static final String CPU_SAMPLING_RATE_CONFIG_PARAM =
+      "provider.stack_trace.cpu_sampling_rate_ms";
+
   public static int packRemoteAbortReason(int abortReason) {
     return (abortReason | REMOTE_PROCESS_BIT);
   }

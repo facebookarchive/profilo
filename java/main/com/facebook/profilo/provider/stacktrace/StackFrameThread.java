@@ -39,6 +39,9 @@ public final class StackFrameThread extends BaseTraceProvider {
   public static final int PROVIDER_NATIVE_STACK_TRACE =
       ProvidersRegistry.newProvider("native_stack_trace");
 
+  public static final String CPU_SAMPLING_RATE_CONFIG_PARAM =
+      "provider.stack_trace.cpu_sampling_rate_ms";
+
   private static final String LOG_TAG = "StackFrameThread";
   private static final int ALL_THREADS = 0;
 
@@ -156,7 +159,10 @@ public final class StackFrameThread extends BaseTraceProvider {
       return;
     }
 
-    boolean enabled = enableInternal(context.cpuSamplingRateMs, context.enabledProviders);
+    boolean enabled =
+        enableInternal(
+            context.providerExtras.getIntParam(CPU_SAMPLING_RATE_CONFIG_PARAM, 0),
+            context.enabledProviders);
     if (!enabled) {
       return;
     }

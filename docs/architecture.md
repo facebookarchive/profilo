@@ -75,10 +75,13 @@ public class StringController implements TraceController {
   }
 
   @Override
-  public int getCpuSamplingRateMs(Object context, ControllerConfig config) {
+  public TraceContext.ProviderExtras getProviderExtras(
+      long longContext, @Nullable Object context, ControllerConfig config) {
     StringControllerConfig strconfig = (StringControllerConfig) config;
 
-    return strconfig.get(str).cpuSamplingRateMs;
+    TreeMap<String, int[]> extraIntArrMap = new TreeMap<>();
+    extraIntArrMap.put("sampling_rate_ms", strconfig.get(str).cpuSamplingRateMs);
+    return new TraceContext.ProviderExtras(extraIntMap, null, null);
   }
 
   @Override

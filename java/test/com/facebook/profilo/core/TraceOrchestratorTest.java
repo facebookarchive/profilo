@@ -169,7 +169,6 @@ public class TraceOrchestratorTest {
             null, // context
             0, // intContext
             DEFAULT_TRACING_PROVIDERS,
-            0, // cpuSamplingRateMs
             1, // flags
             TraceContext.ProviderExtras.EMPTY); // providerExtras
     mSecondTraceContext =
@@ -181,7 +180,6 @@ public class TraceOrchestratorTest {
             null, // context
             0, // intContext
             SECOND_TRACE_TRACING_PROVIDERS,
-            0, // cpuSamplingRateMs
             1, // flags
             TraceContext.ProviderExtras.EMPTY); // providerExtras
 
@@ -471,7 +469,6 @@ public class TraceOrchestratorTest {
             null, // context
             0, // intContext
             DEFAULT_TRACING_PROVIDERS,
-            0, // cpuSamplingRateMs
             1, // flags
             1, // configId
             TraceContext.ProviderExtras.EMPTY); // providerExtras
@@ -526,7 +523,6 @@ public class TraceOrchestratorTest {
             null, // context
             0, // intContext
             enabledProvidersMask, // enabled providers mask
-            0, // cpuSamplingRateMs
             1,
             TraceContext.ProviderExtras.EMPTY); // providerExtras
     mOrchestrator.onTraceStop(traceContext);
@@ -575,7 +571,6 @@ public class TraceOrchestratorTest {
             null, // context
             0, // intContext
             enabledProvidersMask, // enabled providers mask
-            0, // cpuSamplingRateMs
             1,
             TraceContext.ProviderExtras.EMPTY); // providerExtras
     mOrchestrator.onTraceStop(traceContext);
