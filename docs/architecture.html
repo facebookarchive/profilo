@@ -61,10 +61,13 @@
   }
 
   <span class="hljs-meta">@Override</span>
-  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getCpuSamplingRateMs</span><span class="hljs-params">(Object context, ControllerConfig config)</span> </span>{
+  <span class="hljs-keyword">public</span> TraceContext.<span class="hljs-function">ProviderExtras <span class="hljs-title">getProviderExtras</span><span class="hljs-params">(
+      <span class="hljs-keyword">long</span> longContext, @Nullable Object context, ControllerConfig config)</span> </span>{
     StringControllerConfig strconfig = (StringControllerConfig) config;
 
-    <span class="hljs-keyword">return</span> strconfig.get(str).cpuSamplingRateMs;
+    TreeMap&lt;String, <span class="hljs-keyword">int</span>[]&gt; extraIntArrMap = <span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+    extraIntArrMap.put(<span class="hljs-string">"sampling_rate_ms"</span>, strconfig.get(str).cpuSamplingRateMs);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TraceContext.ProviderExtras(extraIntMap, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>);
   }
 
   <span class="hljs-meta">@Override</span>
