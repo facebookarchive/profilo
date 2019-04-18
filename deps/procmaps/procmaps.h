@@ -33,6 +33,11 @@ typedef uint64_t memorymap_offset;
 struct memorymap* memorymap_snapshot(pid_t pid);
 
 /**
+ * Returns the number of memorymap_vma structures in the memorymap.
+ */
+size_t memorymap_size(const struct memorymap* map);
+
+/**
  * Find the memory map containing ADDR.  Return NULL if no map
  * contains ADDR.
  */
@@ -46,6 +51,13 @@ const struct memorymap_vma* memorymap_find(
  */
 const struct memorymap_vma* memorymap_first_vma(
   const struct memorymap* map);
+
+/**
+ * Returns the VMA at the given index in the map, or NULL if out of bounds.
+ */
+const struct memorymap_vma* memorymap_get_vma(
+  const struct memorymap* map,
+  size_t index);
 
 /**
  * Return the VMA that occurs in memory ordering after VMA or NULL if

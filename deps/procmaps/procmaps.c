@@ -1,18 +1,13 @@
-#include <errno.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <assert.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
+#include <sys/mman.h>
 #include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include "procmaps.h"
+#include <errno.h>
 
-#ifdef PROCMAPS_TEST
-char* procmaps_test_snapshot;
-#endif
+#include <procmaps.h>
+#include <limits.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+char* procmaps_test_snapshot; // testing only
 
 struct memorymap_vma {
   memorymap_address start;
@@ -50,6 +45,54 @@ struct memorymap {
                                                 \
         overflow;                               \
     })
+
+// we really only need sizeof(size_t) extra space, but 16-byte alignment is sometimes a thing, so
+// let's say the heck with it and cache-line-align the returned pointer. we're operating on PAGESIZE
+// chunks anyway; the odds of us saving a page on the end by squeezing our padding is low.
+#define XALLOC_PADDING  64
+
+static
+int
+xfree(void* mem)
+{
+  if (mem) {
+    void* raw = (char*)mem - XALLOC_PADDING;
+    return munmap(raw, *(size_t*)raw);
+  } else {
+    return 0;
+  }
+}
+
+static
+void*
+xrealloc(void* orig, size_t sz)
+{
+  size_t map_sz;
+  if (SATADD(&map_sz, sz, XALLOC_PADDING)) {
+    return NULL;
+  }
+
+  if (sz == 0) {
+    xfree(orig);
+    return NULL;
+  }
+
+  char* raw;
+
+  if (orig) {
+    raw = (char*)orig - XALLOC_PADDING;
+    raw = (char*)mremap(raw, *(size_t*)raw, map_sz, MREMAP_MAYMOVE);
+  } else {
+    raw = (char*)mmap(NULL, map_sz, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+  }
+
+  if (raw == MAP_FAILED) {
+    return NULL;
+  } else {
+    *(size_t*)raw = map_sz;
+    return raw + XALLOC_PADDING;
+  }
+}
 
 /**
  * Read up to MAXIMUM bytes from FD into BUF.  On failure, return -1.
@@ -182,7 +225,7 @@ atomic_read_fd(int fd, size_t guess, void** contents, size_t* size)
 
   do {
     bufsz = total_read;
-    new_buf = realloc(buf, bufsz < SIZE_MAX ? bufsz + 1 : bufsz);
+    new_buf = (char*)xrealloc(buf, bufsz < SIZE_MAX ? bufsz + 1 : bufsz);
     if (new_buf == NULL) {
       goto out;
     }
@@ -199,8 +242,8 @@ atomic_read_fd(int fd, size_t guess, void** contents, size_t* size)
 
   if (total_read < SIZE_MAX) {
     buf[total_read] = '\0';
-    // Return to the heap allocator any memory we didn't use
-    new_buf = realloc(buf, total_read + 1);
+    // Return to the kernel any memory we didn't use
+    new_buf = (char*)xrealloc(buf, total_read + 1);
     if (new_buf == NULL) { // How ?!
       goto out;
     }
@@ -215,14 +258,52 @@ atomic_read_fd(int fd, size_t guess, void** contents, size_t* size)
 
   out:
 
-  free(buf);
+  xfree(buf);
   return ret;
+}
+
+static
+size_t
+build_proc_path(char* path, size_t max_len, pid_t pid)
+{
+  size_t pos = 0;
+  const char pre[] = {'/', 'p', 'r', 'o', 'c', '/'};
+  const char post[] = {'/', 'm', 'a', 'p', 's'};
+
+  int digits = 1;
+  pid_t tmp = pid;
+  while (tmp > 9) {
+    tmp /= 10;
+    digits++;
+  }
+
+  // NOTE: sizeof() here is a C trick - sizeof(char*) == <pointer size>, but sizeof(char[10]) == 10.
+  // this will _only_ work as long as pre and post are defined as char[] instead of char*
+  if (sizeof(pre) + sizeof(post) + digits + 1 <= max_len) {
+    for (int i = 0; i < sizeof(pre); i++, pos++) {
+      path[pos] = pre[i];
+    }
+
+    for (int i = digits - 1; i >= 0; i--) {
+      path[pos + i] = (pid % 10) + '0';
+      pid /= 10;
+    }
+    pos += digits;
+
+    for (int i = 0; i < sizeof(post); i++, pos++) {
+      path[pos] = post[i];
+    }
+
+    path[pos] = '\0';
+  }
+
+  return pos;
 }
 
 /**
  * Atomically read the maps file for process PID; on success, return
- * malloc-allocated buffer containing the snapshot; on failure, return
- * NULL with errno set.
+ * allocated buffer containing the snapshot; on failure, return NULL
+ * with errno set.
  */
 static
 char*
@@ -233,20 +314,26 @@ read_proc_maps_snapshot(pid_t pid)
   size_t snapshot_length;
   int mapsfd = -1;
   char mapsname[sizeof ("/proc/18446744073709551615/maps")];
-  static const size_t bufsz_guess = 32 * 1024 * 1024;
+  static const size_t bufsz_guess = 32 * 1024 * 1024 - XALLOC_PADDING; // leave room for internal sz
 
-#ifdef PROCMAPS_TEST
-  if (procmaps_test_snapshot) {
-    return strdup(procmaps_test_snapshot);
+  if (procmaps_test_snapshot) { // testing only
+    snapshot_length = 0;
+    while (procmaps_test_snapshot[snapshot_length] != '\0') {
+      snapshot_length++;
+    }
+    snapshot = (char*)xrealloc(NULL, snapshot_length + 1);
+    for (size_t i = 0; i < snapshot_length; i++) {
+      snapshot[i] = procmaps_test_snapshot[i];
+    }
+    snapshot[snapshot_length] = '\0';
+    return snapshot;
   }
-#endif
 
-  snprintf(mapsname,
-           sizeof (mapsname),
-           "/proc/%lu/maps",
-           (unsigned long) pid);
+  if (!build_proc_path(mapsname, sizeof (mapsname), pid)) {
+    goto out;
+  }
 
-  mapsfd = open(mapsname, O_RDONLY | O_CLOEXEC);
+  mapsfd = open(mapsname, O_RDONLY | O_CLOEXEC, 0);
   if (mapsfd < 0) {
     goto out;
   }
@@ -273,8 +360,25 @@ read_proc_maps_snapshot(pid_t pid)
     close(mapsfd);
   }
 
-  free(snapshot);
+  xfree(snapshot);
   return ret;
+}
+
+/**
+ * Returns the first occurrence of c in str, or NULL
+ */
+static
+char*
+find_first(char* str, char c)
+{
+  while (*str) {
+    if (*str == c) {
+      return str;
+    }
+    str++;
+  }
+
+  return NULL;
 }
 
 /**
@@ -282,10 +386,10 @@ read_proc_maps_snapshot(pid_t pid)
  */
 static
 size_t
-count_char(const char* str, char c)
+count_char(char* str, char c)
 {
   size_t count = 0;
-  while ((str = strchr(str, c))) {
+  while ((str = find_first(str, c))) {
     count += 1;
     str = str + 1;
   }
@@ -293,10 +397,39 @@ count_char(const char* str, char c)
   return count;
 }
 
-/**
- * Allocate a memorymap large enough to hold NR_MAPS maps; return NULL
- * on failure with errno set.
- */
+static
+char*
+parse_hex(char* str, char delim, uint64_t *out_val)
+{
+  uint64_t val = 0;
+  int i = 0;
+  #define MAX_HEX_DIGITS (sizeof(val) * 2) /* each hex digit is half a byte */
+
+  while (*str != delim) {
+    int digit;
+
+    if (++i > MAX_HEX_DIGITS) {
+      return NULL;
+    }
+
+    if (*str >= '0' && *str <= '9') {
+      digit = *str - '0';
+    } else if (*str >= 'a' && *str <= 'f') {
+      digit = *str - 'a' + 0xA;
+    } else if (*str >= 'A' && *str <= 'F') {
+      digit = *str - 'A' + 0xA;
+    } else {
+      return NULL;
+    }
+
+    val = (val << 4) + digit;
+    ++str;
+  }
+
+  *out_val = val;
+  return str;
+}
+
 static
 struct memorymap*
 memorymap_allocate(size_t nr_maps)
@@ -312,7 +445,7 @@ memorymap_allocate(size_t nr_maps)
   }
 
   alloc_sz += nr_maps * vma_sz;
-  return calloc(1, alloc_sz);
+  return (struct memorymap*)xrealloc(NULL, alloc_sz);
 }
 
 struct memorymap*
@@ -323,7 +456,6 @@ memorymap_snapshot(pid_t pid)
   struct memorymap_vma* vma;
   char* snapshot = NULL;
   size_t nr_maps;
-  char* line_saveptr;
   char* line;
 
   snapshot = read_proc_maps_snapshot(pid);
@@ -331,45 +463,72 @@ memorymap_snapshot(pid_t pid)
     goto out;
   }
 
-  nr_maps = count_char(snapshot, '\n');
+  nr_maps = count_char(snapshot, '\n') + 1; // three \n means four lines total
   map = memorymap_allocate(nr_maps + 1);
   if (map == NULL) {
     goto out;
   }
 
-  _Static_assert(sizeof (vma->start) == sizeof (unsigned long long), "!");
-  _Static_assert(sizeof (vma->end) == sizeof (unsigned long long), "!");
-  _Static_assert(sizeof (vma->offset) == sizeof (unsigned long long), "!");
+  _Static_assert(sizeof (vma->start) == sizeof (uint64_t), "!");
+  _Static_assert(sizeof (vma->end) == sizeof (uint64_t), "!");
+  _Static_assert(sizeof (vma->offset) == sizeof (uint64_t), "!");
 
   vma = &map->vma[0];
-  for (line = strtok_r(snapshot, "\n", &line_saveptr);
-       line != NULL;
-       line = strtok_r(NULL, "\n", &line_saveptr))
+  line = snapshot;
+  while (line)
   {
-    int permissions_start_offset = -1;
-    int permissions_end_offset = -1;
-    int file_start_offset = -1;
-    char* file;
-    sscanf(line, "%llx-%llx %n%*s%n %llx %*s %*s %n",
-           (unsigned long long*) &vma->start,
-           (unsigned long long*) &vma->end,
-           &permissions_start_offset,
-           &permissions_end_offset,
-           (unsigned long long*) &vma->offset,
-           /* &inode, */
-           /* &size, */
-           &file_start_offset);
-
-    if (file_start_offset == -1) {
-      errno = EINVAL;
+    if (*line == '\0') {
+      break;
+    }
+    line = parse_hex(line, '-', &vma->start);
+    if (!line) {
       goto out;
     }
+    ++line;
 
-    vma->permissions = line + permissions_start_offset;
-    line[permissions_end_offset] = '\0';
-    file = line + file_start_offset;
-    if (*file != '\0') {
-      vma->file = file;
+    line = parse_hex(line, ' ', &vma->end);
+    if (!line) {
+      goto out;
+    }
+    ++line;
+
+    vma->permissions = line;
+    line = find_first(line, ' ');
+    if (!line) {
+      goto out;
+    }
+    *line = '\0';
+    ++line;
+
+    line = parse_hex(line, ' ', &vma->offset);
+    if (!line) {
+      goto out;
+    }
+    ++line;
+
+    // skip past inode
+    line = find_first(line, ' ');
+    if (!line) {
+      goto out;
+    }
+    ++line;
+
+    // skip past size
+    line = find_first(line, ' ');
+    if (!line) {
+      goto out;
+    }
+    ++line;
+
+    // skip past whitespace padding before filename
+    while (*line == ' ') {
+      ++line;
+    }
+    vma->file = line;
+    line = find_first(line, '\n');
+    if (line) {
+      *line = '\0';
+      ++line; // don't blindly increment! if we don't find \n, we're at the real terminator.
     }
 
     ++vma;
@@ -387,7 +546,7 @@ memorymap_snapshot(pid_t pid)
     memorymap_destroy(map);
   }
 
-  free(snapshot);
+  xfree(snapshot);
   return ret;
 }
 
@@ -420,10 +579,20 @@ memorymap_first_vma(const struct memorymap* map)
 }
 
 const struct memorymap_vma*
+memorymap_get_vma(const struct memorymap* map, size_t index) {
+  return index < memorymap_size(map) ? &map->vma[index] : NULL;
+}
+
+const struct memorymap_vma*
 memorymap_vma_next(const struct memorymap_vma* vma)
 {
   ++vma;
   return vma->permissions ? vma : NULL;
+}
+
+size_t
+memorymap_size(const struct memorymap* map) {
+  return map->nr_maps;
 }
 
 memorymap_address
@@ -459,8 +628,10 @@ memorymap_vma_file(const struct memorymap_vma* vma)
 void
 memorymap_destroy(struct memorymap* map)
 {
-  free(map->snapshot);
-  free(map);
+  if (map) {
+    xfree(map->snapshot);
+    xfree(map);
+  }
 }
 
 memorymap_address
