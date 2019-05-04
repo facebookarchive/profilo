@@ -127,8 +127,8 @@ class TraceFileInterpreter(object):
                 thread_items.setdefault(entry.tid, []).append(entry)
             # BytesEntries will be processed as children of the above.
 
-        BLOCK_START_ENTRIES = ["MARK_PUSH", "IO_START"]
-        BLOCK_END_ENTRIES = ["MARK_POP", "IO_END"]
+        BLOCK_START_ENTRIES = ["MARK_PUSH", "IO_START", "BINDER_START"]
+        BLOCK_END_ENTRIES = ["MARK_POP", "IO_END", "BINDER_END"]
 
         THREAD_METADATA_ENTRIES = ["TRACE_THREAD_NAME", "TRACE_THREAD_PRI"]
 

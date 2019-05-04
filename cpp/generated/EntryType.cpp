@@ -1,4 +1,4 @@
-// @generated SignedSource<<a66fb32dfc85a822ddcd9147d7951613>>
+// @generated SignedSource<<dbd1018005bca07e92da3562d5f70478>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -104,6 +104,8 @@ const char* to_string(EntryType type) {
     case CLASS_LOAD_FAILED: return "CLASS_LOAD_FAILED";
     case STRING_NAME: return "STRING_NAME";
     case JAVA_FRAME_NAME: return "JAVA_FRAME_NAME";
+    case BINDER_START: return "BINDER_START";
+    case BINDER_END: return "BINDER_END";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

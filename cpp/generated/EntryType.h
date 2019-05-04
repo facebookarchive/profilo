@@ -1,4 +1,4 @@
-// @generated SignedSource<<bcfdab47ffa11f41cb8c3100fad9dc3a>>
+// @generated SignedSource<<8d09b5ff933afcb218b1a554ee7ce4da>>
 
 #pragma once
 
@@ -101,6 +101,8 @@ enum EntryType {
   CLASS_LOAD_FAILED = 92,
   STRING_NAME = 93,
   JAVA_FRAME_NAME = 94,
+  BINDER_START = 95,
+  BINDER_END = 96,
 };
 
 

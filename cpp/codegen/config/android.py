@@ -155,6 +155,9 @@ NAMES = [
     'STRING_NAME',
 
     'JAVA_FRAME_NAME',
+
+    'BINDER_START',
+    'BINDER_END',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([
