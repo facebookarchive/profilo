@@ -35,7 +35,7 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
-        "fbsource//xplat/folly:test-util",
+        "fbsource//xplat/folly:tempfile-util",
         profilo_path("cpp/util:util"),
     ],
 )
