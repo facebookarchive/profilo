@@ -405,6 +405,7 @@ sigmux_handle_signal_1(
   siginfo_t* info,
   void* context)
 {
+  int orig_errno = errno;
 #ifdef __ANDROID__
   // Depending on Android version, sigchain can call us with any
   // random signal mask set despite our asking for no blocked signals
@@ -418,6 +419,7 @@ sigmux_handle_signal_1(
     ( SIGMUX_HANDLE_SIGNAL_NORMAL_PRIORITY |
       SIGMUX_HANDLE_SIGNAL_LOW_PRIORITY |
       SIGMUX_HANDLE_SIGNAL_INVOKE_DEFAULT ));
+  errno = orig_errno;
 }
 
 static struct sigaction*
