@@ -1,4 +1,4 @@
-// @generated SignedSource<<847b401db193e364d5b73104366575f9>>
+// @generated SignedSource<<60b1238693ef5f47358b0241a6377916>>
 
 package com.facebook.profilo.entries;
 
@@ -101,6 +101,7 @@ public class EntryType {
   public static final int JAVA_FRAME_NAME = 94;
   public static final int BINDER_START = 95;
   public static final int BINDER_END = 96;
+  public static final int MEMORY_ALLOCATION = 97;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -200,5 +201,6 @@ public class EntryType {
     "JAVA_FRAME_NAME",
     "BINDER_START",
     "BINDER_END",
+    "MEMORY_ALLOCATION",
   };
 }

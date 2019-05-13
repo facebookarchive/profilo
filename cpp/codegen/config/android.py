@@ -158,6 +158,8 @@ NAMES = [
 
     'BINDER_START',
     'BINDER_END',
+
+    'MEMORY_ALLOCATION',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

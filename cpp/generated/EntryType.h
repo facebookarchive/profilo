@@ -1,4 +1,4 @@
-// @generated SignedSource<<8d09b5ff933afcb218b1a554ee7ce4da>>
+// @generated SignedSource<<58c60d23edd54aa98ec96ae046e4f285>>
 
 #pragma once
 
@@ -103,6 +103,7 @@ enum EntryType {
   JAVA_FRAME_NAME = 94,
   BINDER_START = 95,
   BINDER_END = 96,
+  MEMORY_ALLOCATION = 97,
 };
 
 
