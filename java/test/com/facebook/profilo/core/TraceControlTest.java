@@ -274,7 +274,8 @@ public class TraceControlTest {
 
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, flag1)).isTrue();
     TraceContext traceContext1 = mTraceControl.getCurrentTraces().get(0);
-    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, flag2)).isTrue();
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, Trace.FLAG_MEMORY_ONLY, null, flag2))
+        .isTrue();
     TraceContext traceContext2 = mTraceControl.getCurrentTraces().get(1);
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, null, flag1);
 
@@ -341,6 +342,31 @@ public class TraceControlTest {
     verify(mTraceControlHandler).onTraceAbort(any(TraceContext.class));
     verifyStatic(never());
     Logger.postAbortTrace(anyLong());
+  }
+
+  @Test
+  public void testTwoConcurrentNormalTracesAreNotAllowed() {
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, 0)).isTrue();
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, 1)).isFalse();
+  }
+
+  @Test
+  public void testTwoConcurrentMemoryOnlyTracesAreNotAllowed() {
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, Trace.FLAG_MEMORY_ONLY, null, 0))
+        .isTrue();
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, Trace.FLAG_MEMORY_ONLY, null, 1))
+        .isFalse();
+  }
+
+  @Test
+  public void testNormalAndMemoryOnlyConcurrentTracesAreAllowed() {
+    long flag1 = 1;
+    long flag2 = 2;
+    when(mController.contextsEqual(eq(flag1), any(), eq(flag2), any())).thenReturn(false);
+    when(mController.contextsEqual(eq(flag2), any(), eq(flag1), any())).thenReturn(false);
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, Trace.FLAG_MEMORY_ONLY, null, flag1))
+        .isTrue();
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, flag2)).isTrue();
   }
 
   private void assertNotTracing() {

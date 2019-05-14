@@ -143,13 +143,18 @@ final public class TraceControl {
   }
 
   /**
-   * Returns lowest available bit from the supplied bit mask
+   * Returns lowest available bit from the supplied bit mask It takes trace flags mask into account
+   * to adjust for "Memory-only" traces with {@link Trace#FLAG_MEMORY_ONLY} flag. Memory-only traces
+   * have the first bit reserved only for them. Other normal traces share the rest of bits for
+   * simultaneous tracing.
    *
    * @param bitmask bit mask to check
    * @param maxBits Maximum number of bit slots available
+   * @param flags Trace flags mask
    * @return value with lowest free bit set to 1 and 0 if no empty slots left according to maxBits
    */
-  private static int findLowestFreeBit(int bitmask, int maxBits) {
+  private static int findLowestFreeBit(int bitmask, int maxBits, int flags) {
+    bitmask |= (flags & Trace.FLAG_MEMORY_ONLY) != 0 ? 0xfffe : 0x1;
     return ((bitmask + 1) & ~bitmask) & ((1 << maxBits) - 1);
   }
 
@@ -243,7 +248,7 @@ final public class TraceControl {
   }
 
   public boolean startTrace(int controller, int flags, @Nullable Object context, long longContext) {
-    if (findLowestFreeBit(mCurrentTracesMask.get(), MAX_TRACES) == 0) {
+    if (findLowestFreeBit(mCurrentTracesMask.get(), MAX_TRACES, flags) == 0) {
       // Reached max traces
       return false;
     }
@@ -312,7 +317,7 @@ final public class TraceControl {
   private boolean startTraceInternal(int flags, TraceContext nextContext) {
     while (true) { // Store new trace in CAS manner
       int currentMask = mCurrentTracesMask.get();
-      int freeBit = findLowestFreeBit(currentMask, MAX_TRACES);
+      int freeBit = findLowestFreeBit(currentMask, MAX_TRACES, flags);
       if (freeBit == 0) {
         // Reached max traces
         Log.d(LOG_TAG, "Tried to start a trace and failed because no free slots were left");
