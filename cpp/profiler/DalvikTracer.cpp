@@ -68,14 +68,14 @@ DalvikTracer::DalvikTracer()
     : dvmThreadSelf_(
           reinterpret_cast<decltype(dvmThreadSelf_)>(getDvmThreadSelf())) {}
 
-bool DalvikTracer::collectStack(
+StackCollectionRetcode DalvikTracer::collectStack(
     ucontext_t*,
     int64_t* frames,
     uint8_t& depth,
     uint8_t max_depth) {
   Thread* thread = dvmThreadSelf_();
   if (thread == nullptr) {
-    return false;
+    return StackCollectionRetcode::NO_STACK_FOR_THREAD;
   }
 
   u4* fp = thread->interpSave.curFrame;
@@ -83,7 +83,7 @@ bool DalvikTracer::collectStack(
 
   while (fp != nullptr) {
     if (depth == max_depth) {
-      return false;
+      return StackCollectionRetcode::STACK_OVERFLOW;
     }
 
     StackSaveArea* saveArea = SAVEAREA_FROM_FP(fp);
@@ -97,7 +97,10 @@ bool DalvikTracer::collectStack(
     fp = saveArea->prevFrame;
   }
 
-  return true;
+  if (depth == 0) {
+    return StackCollectionRetcode::EMPTY_STACK;
+  }
+  return StackCollectionRetcode::SUCCESS;
 }
 
 void DalvikTracer::flushStack(

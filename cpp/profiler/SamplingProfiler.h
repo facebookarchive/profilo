@@ -35,16 +35,17 @@
 #include "profilo/LogEntry.h"
 #include "util/ProcFs.h"
 
+#include <profilo/ExternalApi.h>
+
 namespace fbjni = facebook::jni;
 
 namespace facebook {
 namespace profilo {
 namespace profiler {
 
-enum StackSlotState : uint8_t {
-  FREE = 1,
-  BUSY = 2,
-  FULL = 3,
+enum StackSlotState {
+  FREE = StackCollectionRetcode::MAXVAL + 1,
+  BUSY,
 };
 
 struct StackSlot {

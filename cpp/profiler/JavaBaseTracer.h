@@ -30,7 +30,7 @@ struct framework_prefix {
 
 class JavaBaseTracer : public BaseTracer {
  public:
-  virtual bool collectJavaStack(
+  virtual StackCollectionRetcode collectJavaStack(
       ucontext_t* ucontext,
       int64_t* frames,
       char const** method_names,

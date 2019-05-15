@@ -36,7 +36,7 @@ class DalvikTracer : public BaseTracer {
   DalvikTracer(const DalvikTracer& obj) = delete;
   DalvikTracer& operator=(DalvikTracer obj) = delete;
 
-  bool collectStack(
+  StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
       uint8_t& depth,

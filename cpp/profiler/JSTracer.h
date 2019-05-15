@@ -29,7 +29,7 @@ class JSTracer : public ExternalTracer {
  public:
   explicit JSTracer() : ExternalTracer(tracers::JAVASCRIPT) {}
 
-  bool collectStack(
+  StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
       uint8_t& depth,

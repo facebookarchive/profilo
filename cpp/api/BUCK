@@ -36,6 +36,9 @@ fb_xplat_cxx_library(
     visibility = [
         profilo_path("..."),
     ],
+    deps = [
+        ":external_api_glue",
+    ],
 )
 
 fb_xplat_cxx_library(
