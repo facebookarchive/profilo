@@ -1,4 +1,4 @@
-// @generated SignedSource<<7176ae06b26e5f8ef66c8e79c9ec70a1>>
+// @generated SignedSource<<58c60d23edd54aa98ec96ae046e4f285>>
 
 #pragma once
 
@@ -104,11 +104,6 @@ enum EntryType {
   BINDER_START = 95,
   BINDER_END = 96,
   MEMORY_ALLOCATION = 97,
-  STKERR_EMPTYSTACK = 98,
-  STKERR_STACKOVERFLOW = 99,
-  STKERR_NOSTACKFORTHREAD = 100,
-  STKERR_SIGNALINTERRUPT = 101,
-  STKERR_NESTEDUNWIND = 102,
 };
 
 

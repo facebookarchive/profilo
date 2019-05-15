@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include <profilo/ExternalApi.h>
 #include <ucontext.h>
 #include <unistd.h>
 
@@ -46,7 +45,7 @@ class BaseTracer {
  public:
   virtual ~BaseTracer() = default;
 
-  virtual StackCollectionRetcode collectStack(
+  virtual bool collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
       uint8_t& depth,

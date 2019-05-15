@@ -1,4 +1,4 @@
-// @generated SignedSource<<2f802b2802312254538829a3ffa1ea2d>>
+// @generated SignedSource<<60b1238693ef5f47358b0241a6377916>>
 
 package com.facebook.profilo.entries;
 
@@ -102,11 +102,6 @@ public class EntryType {
   public static final int BINDER_START = 95;
   public static final int BINDER_END = 96;
   public static final int MEMORY_ALLOCATION = 97;
-  public static final int STKERR_EMPTYSTACK = 98;
-  public static final int STKERR_STACKOVERFLOW = 99;
-  public static final int STKERR_NOSTACKFORTHREAD = 100;
-  public static final int STKERR_SIGNALINTERRUPT = 101;
-  public static final int STKERR_NESTEDUNWIND = 102;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -207,10 +202,5 @@ public class EntryType {
     "BINDER_START",
     "BINDER_END",
     "MEMORY_ALLOCATION",
-    "STKERR_EMPTYSTACK",
-    "STKERR_STACKOVERFLOW",
-    "STKERR_NOSTACKFORTHREAD",
-    "STKERR_SIGNALINTERRUPT",
-    "STKERR_NESTEDUNWIND",
   };
 }

@@ -22,17 +22,6 @@
 extern "C" {
 #endif
 
-typedef enum {
-  SUCCESS = 0,
-  EMPTY_STACK = 1,
-  STACK_OVERFLOW = 2,
-  NO_STACK_FOR_THREAD = 3,
-  SIGNAL_INTERRUPT = 4,
-  NESTED_UNWIND = 5,
-  TRACER_DISABLED = 6,
-  MAXVAL,
-} StackCollectionRetcode;
-
 // A list of available external tracer types.
 // Must match the value in tracers::Tracer enumeration in BaseTracer.h.
 const int TRACER_TYPE_JAVASCRIPT = 1 << 9;
@@ -48,7 +37,7 @@ typedef bool (*profilo_int_is_enabled)(const char* provider);
 // This callback type is of similar signature as BaseTracer::collectStack()
 // function. However, depth parameter is pointer type instead of reference
 // so that this interface can be used with C language.
-typedef StackCollectionRetcode (*profilo_int_collect_stack_fn)(
+typedef bool (*profilo_int_collect_stack_fn)(
     ucontext_t* ucontext,
     int64_t* frames,
     uint8_t* depth,

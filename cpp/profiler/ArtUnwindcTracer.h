@@ -37,13 +37,13 @@ class ArtUnwindcTracer : public JavaBaseTracer {
  public:
   ArtUnwindcTracer();
 
-  StackCollectionRetcode collectStack(
+  bool collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
       uint8_t& depth,
       uint8_t max_depth) override;
 
-  StackCollectionRetcode collectJavaStack(
+  bool collectJavaStack(
       ucontext_t* ucontext,
       int64_t* frames,
       char const** method_names,

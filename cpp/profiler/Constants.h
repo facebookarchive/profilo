@@ -30,4 +30,4 @@
 /**
  * Number of full stacks upon which should flush stacks to the Profilo buffer
  */
-#define FLUSH_STACKS_COUNT 4
+#define FLUSH_STACKS_COUNT 8

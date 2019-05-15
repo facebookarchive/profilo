@@ -20,16 +20,13 @@ namespace facebook {
 namespace profilo {
 namespace profiler {
 
-StackCollectionRetcode ExternalTracer::collectStack(
+bool ExternalTracer::collectStack(
     ucontext_t* ucontext,
     int64_t* frames,
     uint8_t& depth,
     uint8_t max_depth) {
   auto fn = callback_.load(std::memory_order_acquire);
-  if (fn == nullptr) {
-    return StackCollectionRetcode::TRACER_DISABLED;
-  }
-  return fn(ucontext, frames, &depth, max_depth);
+  return fn != nullptr && fn(ucontext, frames, &depth, max_depth);
 }
 
 void ExternalTracer::registerCallback(profilo_int_collect_stack_fn callback) {
