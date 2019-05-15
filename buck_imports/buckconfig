@@ -5,7 +5,8 @@
 [ndk]
     ndk_version = 15.2.4203891
     app_platform = android-15
-    cpu_abis = armv7, x86
+    app_platform_per_cpu_abi = arm64 => android-21, x86_64 => android-21
+    cpu_abis = armv7, x86, arm64, x86_64
     compiler = clang
     clang_version = 5.0
     extra_ldflags = -Wl,-Bsymbolic

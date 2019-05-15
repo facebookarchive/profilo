@@ -11,16 +11,6 @@ profilo_oss_cxx_library(
         "-std=c++14",
         "-fexceptions",
     ],
-    platform_preprocessor_flags = [
-        (
-            "android-(arm|armv7)$",
-            ["-D__ARM__"],
-        ),
-        (
-            "android-x86$",
-            ["-D__X86__"],
-        ),
-    ],
     preferred_linkage = "shared",
     preprocessor_flags = [
         "-DLOG_TAG=\"Profilo/plthooks\"",
@@ -48,12 +38,16 @@ profilo_oss_cxx_library(
     )],
     platform_srcs = [
         (
-            "armv7$",
+            "^android-armv7$",
             ["trampoline_arm.c"],
         ),
         (
-            "x86$",
+            "^android-x86$",
             ["trampoline_x86.c"],
+        ),
+        (
+            "^android-arm64$",
+            ["trampoline_arm64.c"],
         ),
     ],
     preferred_linkage = "static",
