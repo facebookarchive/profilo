@@ -15,6 +15,7 @@
  */
 
 #include <fb/ALog.h>
+#include <fb/Build.h>
 #include <fb/xplat_init.h>
 #include <fbjni/detail/utf8.h>
 #include <fbjni/fbjni.h>
@@ -80,21 +81,39 @@ static jint loggerWriteBytesEntry(
     jint type,
     jint arg1,
     jstring arg2) {
-  const auto kMaxJavaStringLength = 512;
+  // Android 8.0 and above can issue syscalls during Get/ReleaseStringCritical,
+  // causing them to be much slower than the always-copy GetStringChars
+  // version. Therefore, we use GetStringCritical
+  // before 8.0 and GetStringChars after.
+  static bool jniUseCritical = build::Build::getAndroidSdk() < 26;
+
+  constexpr auto kMaxJavaStringLength = 512;
   auto len = std::min(env->GetStringLength(arg2), kMaxJavaStringLength);
+
   uint8_t bytes[len]; // we're filtering to ASCII so one char must be one byte
 
   {
     // JStringUtf16Extractor is using GetStringCritical to give us raw jchar*.
     // We then filter down the wide chars to uint8_t ASCII.
-    auto extract = fbjni::JStringUtf16Extractor(env, arg2);
-    const jchar* str = extract.chars();
+    const jchar* str = nullptr;
+    if (jniUseCritical) {
+      str = env->GetStringCritical(arg2, nullptr);
+    } else {
+      str = env->GetStringChars(arg2, nullptr);
+    }
+
     for (int i = 0; i < len; i++) {
       if (str[i] < 128) {
         bytes[i] = str[i];
       } else {
         bytes[i] = '.';
       }
+    }
+
+    if (jniUseCritical) {
+      env->ReleaseStringCritical(arg2, str);
+    } else {
+      env->ReleaseStringChars(arg2, str);
     }
   }
   return Logger::get().writeBytes(
