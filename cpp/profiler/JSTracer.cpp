@@ -21,7 +21,7 @@ namespace facebook {
 namespace profilo {
 namespace profiler {
 
-bool JSTracer::collectStack(
+StackCollectionRetcode JSTracer::collectStack(
     ucontext_t* ucontext,
     int64_t* frames,
     uint8_t& depth,

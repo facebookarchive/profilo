@@ -33,6 +33,7 @@
 #include <fbjni/fbjni.h>
 #include <sigmux.h>
 
+#include <profilo/ExternalApi.h>
 #include "DalvikTracer.h"
 #include "profiler/ArtUnwindcTracer_600.h"
 #include "profiler/ArtUnwindcTracer_700.h"
@@ -75,6 +76,35 @@ ProfileState& getProfileState() {
   return state;
 }
 
+EntryType errorToTraceEntry(StackCollectionRetcode error) {
+#pragma clang diagnostic push
+#pragma clang diagnostic error "-Wswitch"
+
+  switch (error) {
+    case StackCollectionRetcode::EMPTY_STACK:
+      return entries::STKERR_EMPTYSTACK;
+
+    case StackCollectionRetcode::STACK_OVERFLOW:
+      return entries::STKERR_STACKOVERFLOW;
+
+    case StackCollectionRetcode::NO_STACK_FOR_THREAD:
+      return entries::STKERR_NOSTACKFORTHREAD;
+
+    case StackCollectionRetcode::SIGNAL_INTERRUPT:
+      return entries::STKERR_SIGNALINTERRUPT;
+
+    case StackCollectionRetcode::NESTED_UNWIND:
+      return entries::STKERR_NESTEDUNWIND;
+
+    case StackCollectionRetcode::TRACER_DISABLED:
+    case StackCollectionRetcode::SUCCESS:
+    case StackCollectionRetcode::MAXVAL:
+      return entries::UNKNOWN_TYPE;
+  }
+
+#pragma clang diagnostic pop
+}
+
 static void throw_errno(const char* error) {
   throw std::system_error(errno, std::system_category(), error);
 }
@@ -92,16 +122,14 @@ sigmux_action sigcatch_handler(
   }
 
   int32_t tid = threadID();
+  uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
 
   // We know the thread that raised the signal was unwinding, find its slot and
   // jump to the saved state there.
   for (int i = 0; i < MAX_STACKS_COUNT; i++) {
     auto& slot = profileState.stacks[i];
-
-    uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
-    // If slot matches free it, increase error count and jump out
-    if (slot.state.compare_exchange_strong(
-            targetBusyState, StackSlotState::FREE)) {
+    // If slot matches mark it as an error, increase error count and jump out
+    if (slot.state.load() == targetBusyState) {
       profileState.errSigCrashes.fetch_add(1);
       sigmux_longjmp(siginfo, slot.sig_jmp_buf, 1);
     }
@@ -111,11 +139,7 @@ sigmux_action sigcatch_handler(
   abort();
 }
 
-void maybeSignalReader(bool stackCollected) {
-  if (!stackCollected) {
-    return;
-  }
-
+void maybeSignalReader() {
   auto& profileState = getProfileState();
   uint32_t prevSlotCounter = profileState.fullSlotsCounter.fetch_add(1);
   if ((prevSlotCounter + 1) % FLUSH_STACKS_COUNT == 0) {
@@ -130,46 +154,62 @@ void maybeSignalReader(bool stackCollected) {
   }
 }
 
+// Finds the next FREE slot and atomically sets its state to BUSY, so that
+// the acquiring thread can safely write to it, and returns the index via
+// <outSlot>. Returns true if a FREE slot was found, false otherwise.
+bool getSlotIndex(ProfileState& profileState, uint32_t tid, uint32_t& outSlot) {
+  auto slotIndex = profileState.currentSlot.fetch_add(1);
+  for (int i = 0; i < MAX_STACKS_COUNT; i++) {
+    auto nextSlotIndex = (slotIndex + i) % MAX_STACKS_COUNT;
+    auto& slot = profileState.stacks[nextSlotIndex];
+    uint32_t expected = StackSlotState::FREE;
+    if (slot.state.compare_exchange_strong(
+            expected, (tid << 16) | StackSlotState::BUSY)) {
+      outSlot = nextSlotIndex;
+      return true;
+    }
+  }
+  // We didn't find an empty slot, so bump our counter
+  profileState.errSlotMisses.fetch_add(1);
+  return false;
+}
+
 sigmux_action sigprof_handler(
     struct sigmux_siginfo* siginfo,
     void* handler_data) {
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
+  auto tid = threadID();
+  uint32_t busyState = (tid << 16) | StackSlotState::BUSY;
 
   if (threadIsUnwinding(profileState)) {
-    // Jump out, we're already in this handler.
+    uint32_t slotIndex;
+    bool slot_found = getSlotIndex(profileState, tid, slotIndex);
+    if (slot_found) {
+      auto& slot = profileState.stacks[slotIndex];
+      // Slot is in BUSY state, so it's OK to modify it
+      slot.time = monotonicTime();
+      // This error is not associated with a specific profiler
+      slot.profilerType = 0;
+      if (!slot.state.compare_exchange_strong(
+              busyState, (tid << 16) | StackCollectionRetcode::NESTED_UNWIND)) {
+        // Ordering violation
+        abort();
+      }
+    }
+
     return SIGMUX_CONTINUE_EXECUTION;
   }
 
   pthread_setspecific(profileState.threadIsProfilingKey, (void*)1);
 
-  auto tid = threadID();
   for (const auto& tracerEntry : profileState.tracersMap) {
     auto tracerType = tracerEntry.first;
     if (!(tracerType & profileState.currentTracers)) {
       continue;
     }
-    auto slotIndex = profileState.currentSlot.fetch_add(1);
-    bool slot_found = false;
-    // Busy state includes thread id to avoid race condition on slot's tid.
-    uint32_t busyState = StackSlotState::BUSY | (tid << 16);
-
-    for (int i = 0; i < MAX_STACKS_COUNT; i++) {
-      auto nextSlotIndex = (slotIndex + i) % MAX_STACKS_COUNT;
-      auto& slot = profileState.stacks[nextSlotIndex];
-
-      // Verify if the slot is actually in FREE state and switch it
-      // to BUSY atomically. If slot is not FREE then just exit.
-      // Normally free slot will be available from the first iteration.
-      uint32_t expected = StackSlotState::FREE;
-      if (slot.state.compare_exchange_strong(expected, busyState)) {
-        slotIndex = nextSlotIndex;
-        slot_found = true;
-        break;
-      }
-    }
-
+    uint32_t slotIndex;
+    bool slot_found = getSlotIndex(profileState, tid, slotIndex);
     if (!slot_found) {
-      profileState.errSlotMisses.fetch_add(1);
       // We're out of slots, no tracer is likely to succeed.
       break;
     }
@@ -180,46 +220,59 @@ sigmux_action sigprof_handler(
     if (sigsetjmp(slot.sig_jmp_buf, 1) == 0) {
       memset(slot.method_names, 0, sizeof(slot.method_names));
       memset(slot.class_descriptors, 0, sizeof(slot.class_descriptors));
-      bool success{};
+      uint8_t ret{StackSlotState::FREE};
       if (JavaBaseTracer::isJavaTracer(tracerType)) {
-        success = reinterpret_cast<JavaBaseTracer*>(tracerEntry.second.get())
-                      ->collectJavaStack(
-                          (ucontext_t*)siginfo->context,
-                          slot.frames,
-                          slot.method_names,
-                          slot.class_descriptors,
-                          slot.depth,
-                          (uint8_t)MAX_STACK_DEPTH);
+        ret = reinterpret_cast<JavaBaseTracer*>(tracerEntry.second.get())
+                  ->collectJavaStack(
+                      (ucontext_t*)siginfo->context,
+                      slot.frames,
+                      slot.method_names,
+                      slot.class_descriptors,
+                      slot.depth,
+                      (uint8_t)MAX_STACK_DEPTH);
       } else {
-        success = tracerEntry.second->collectStack(
+        ret = tracerEntry.second->collectStack(
             (ucontext_t*)siginfo->context,
             slot.frames,
             slot.depth,
             (uint8_t)MAX_STACK_DEPTH);
       }
 
-      if (success) {
-        slot.time = monotonicTime();
-        slot.profilerType = tracerType;
-      } else {
+      slot.time = monotonicTime();
+      slot.profilerType = tracerType;
+      if (StackCollectionRetcode::STACK_OVERFLOW == ret) {
         profileState.errStackOverflows.fetch_add(1);
       }
 
-      if (!slot.state.compare_exchange_strong(
-              busyState,
-              success ? ((tid << 16) | StackSlotState::FULL)
-                      : StackSlotState::FREE)) {
+      // Ignore TRACER_DISABLED errors for now and free the slot.
+      // TODO T42938550
+      if (StackCollectionRetcode::TRACER_DISABLED == ret) {
+        if (!slot.state.compare_exchange_strong(
+                busyState, StackSlotState::FREE)) {
+          abort();
+        }
+        continue;
+      }
+
+      if (!slot.state.compare_exchange_strong(busyState, (tid << 16) | ret)) {
         // Slot was overwritten by another thread.
         // This is an ordering violation, so abort.
         abort();
       }
 
-      maybeSignalReader(success);
+      maybeSignalReader();
       continue;
     } else {
       // We came from the longjmp in sigcatch_handler.
       // Something must have crashed.
-      // Don't continue if any tracer fails.
+      // Log the error information and bail out
+      slot.time = monotonicTime();
+      slot.profilerType = tracerType;
+      if (!slot.state.compare_exchange_strong(
+              busyState,
+              (tid << 16) | StackCollectionRetcode::SIGNAL_INTERRUPT)) {
+        abort();
+      }
       break;
     }
   }
@@ -296,7 +349,8 @@ void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet) {
 
     uint32_t slotStateCombo = slot.state.load();
     uint32_t slotState = slotStateCombo & 0xffff;
-    if (StackSlotState::FULL != slotState) {
+    if (slotState == StackSlotState::FREE ||
+        slotState == StackSlotState::BUSY) {
       continue;
     }
 
@@ -304,7 +358,18 @@ void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet) {
     if (slot.time > profileState.profileStartTime) {
       auto& tracer = profileState.tracersMap[slot.profilerType];
       auto tid = slotStateCombo >> 16;
-      tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
+
+      if (StackCollectionRetcode::SUCCESS == slotState) {
+        tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
+      } else {
+        StandardEntry entry{};
+        entry.type = static_cast<EntryType>(
+            errorToTraceEntry(static_cast<StackCollectionRetcode>(slotState)));
+        entry.timestamp = slot.time;
+        entry.tid = tid;
+        entry.extra = slot.profilerType;
+        Logger::get().write(std::move(entry));
+      }
 
       if (JavaBaseTracer::isJavaTracer(slot.profilerType)) {
         for (int i = 0; i < slot.depth; i++) {

@@ -1,4 +1,4 @@
-// @generated SignedSource<<deae212c54b29188f778a331fe4d3418>>
+// @generated SignedSource<<8ebed6b68f2365a4361e7f60b0a257a7>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -107,6 +107,11 @@ const char* to_string(EntryType type) {
     case BINDER_START: return "BINDER_START";
     case BINDER_END: return "BINDER_END";
     case MEMORY_ALLOCATION: return "MEMORY_ALLOCATION";
+    case STKERR_EMPTYSTACK: return "STKERR_EMPTYSTACK";
+    case STKERR_STACKOVERFLOW: return "STKERR_STACKOVERFLOW";
+    case STKERR_NOSTACKFORTHREAD: return "STKERR_NOSTACKFORTHREAD";
+    case STKERR_SIGNALINTERRUPT: return "STKERR_SIGNALINTERRUPT";
+    case STKERR_NESTEDUNWIND: return "STKERR_NESTEDUNWIND";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

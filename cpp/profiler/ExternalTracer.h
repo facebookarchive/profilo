@@ -53,7 +53,7 @@ class ExternalTracer : public BaseTracer {
   /// Register external \p callback for this external tracer.
   void registerCallback(profilo_int_collect_stack_fn callback);
 
-  bool collectStack(
+  StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
       uint8_t& depth,

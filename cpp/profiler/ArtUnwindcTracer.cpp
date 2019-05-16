@@ -90,7 +90,7 @@ template <>
 ArtUnwindcTracer<kVersion>::ArtUnwindcTracer() {}
 
 template <>
-bool ArtUnwindcTracer<kVersion>::collectJavaStack(
+StackCollectionRetcode ArtUnwindcTracer<kVersion>::collectJavaStack(
     ucontext_t* ucontext,
     int64_t* frames,
     char const** method_names,
@@ -107,14 +107,18 @@ bool ArtUnwindcTracer<kVersion>::collectJavaStack(
   };
   depth = 0;
   if (!unwind(&unwind_cb, &data)) {
-    return false;
+    return StackCollectionRetcode::STACK_OVERFLOW;
   }
+
   depth = data.depth;
-  return true;
+  if (depth == 0) {
+    return StackCollectionRetcode::EMPTY_STACK;
+  }
+  return StackCollectionRetcode::SUCCESS;
 }
 
 template <>
-bool ArtUnwindcTracer<kVersion>::collectStack(
+StackCollectionRetcode ArtUnwindcTracer<kVersion>::collectStack(
     ucontext_t* ucontext,
     int64_t* frames,
     uint8_t& depth,
