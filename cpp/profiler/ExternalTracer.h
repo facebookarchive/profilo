@@ -58,6 +58,12 @@ class ExternalTracer : public BaseTracer {
       int64_t* frames,
       uint8_t& depth,
       uint8_t max_depth) override;
+
+  bool isEnabled() const;
+
+  static bool isExternalTracer(int32_t type) {
+    return type == tracers::JAVASCRIPT;
+  }
 };
 
 } // namespace profiler

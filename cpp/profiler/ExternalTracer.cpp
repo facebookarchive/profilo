@@ -36,6 +36,10 @@ void ExternalTracer::registerCallback(profilo_int_collect_stack_fn callback) {
   callback_.store(callback, std::memory_order_release);
 }
 
+bool ExternalTracer::isEnabled() const {
+  return callback_.load() != nullptr;
+}
+
 } // namespace profiler
 } // namespace profilo
 } // namespace facebook

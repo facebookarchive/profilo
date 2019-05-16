@@ -207,6 +207,16 @@ sigmux_action sigprof_handler(
     if (!(tracerType & profileState.currentTracers)) {
       continue;
     }
+
+    // The external tracer is frequently disabled, so fail fast here
+    // if that is the case
+    if (ExternalTracer::isExternalTracer(tracerType)) {
+      if (!static_cast<ExternalTracer*>(tracerEntry.second.get())
+               ->isEnabled()) {
+        continue;
+      }
+    }
+
     uint32_t slotIndex;
     bool slot_found = getSlotIndex(profileState, tid, slotIndex);
     if (!slot_found) {
