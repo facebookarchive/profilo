@@ -51,6 +51,7 @@ enum StatType : int32_t {
   VMSTAT_ALLOCSTALL = 1 << 19,
   VMSTAT_PAGEOUTRUN = 1 << 20,
   VMSTAT_KSWAPD_STEAL = 1 << 21,
+  THREAD_PRIORITY = 1 << 22,
 };
 
 template <class StatInfo>

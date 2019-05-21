@@ -131,6 +131,12 @@ class ThreadMonotonicCountersTest : public ::testing::Test {
     if (StatType::KERNEL_CPU_TIME & stats_mask) {
       quickLogSet.insert(QuickLogConstants::THREAD_KERNEL_CPU_TIME);
     }
+    if (StatType::CPU_NUM & stats_mask) {
+      quickLogSet.insert(QuickLogConstants::THREAD_CPU_NUM);
+    }
+    if (StatType::THREAD_PRIORITY & stats_mask) {
+      quickLogSet.insert(QuickLogConstants::THREAD_PRIORITY);
+    }
   }
 
   void testCounters(
@@ -153,6 +159,8 @@ class ThreadMonotonicCountersTest : public ::testing::Test {
     cache.prevStats.iowaitCount = prev_value;
     cache.prevStats.kernelCpuTimeMs = prev_value;
     cache.prevStats.minorFaults = prev_value;
+    cache.prevStats.cpuNum = prev_value;
+    cache.prevStats.threadPriority = prev_value;
 
     cache.stats.monotonicStatTime = kCurTime;
     cache.stats.availableStatsMask = test_stats_mask;
@@ -166,6 +174,8 @@ class ThreadMonotonicCountersTest : public ::testing::Test {
     cache.stats.iowaitCount = cur_value;
     cache.stats.kernelCpuTimeMs = cur_value;
     cache.stats.minorFaults = cur_value;
+    cache.stats.cpuNum = cur_value;
+    cache.stats.threadPriority = cur_value;
 
     std::unordered_set<int32_t> expectedStatTypesCur;
     std::unordered_set<int32_t> expectedStatTypesPrev;

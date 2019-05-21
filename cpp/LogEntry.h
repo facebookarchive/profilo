@@ -75,6 +75,7 @@ enum QuickLogConstants {
   PROC_CONTEXT_SWITCHES_VOLUNTARY = 9240576 | 83, // = 9240659
   APP_VERSION_CODE = 8126464 | 54, // = 8126518
   CONFIG_ID = 8126464 | 6, // = 8126470
+  THREAD_PRIORITY = 9240576 | 91, // = 9240667
 };
 
 } // namespace profilo

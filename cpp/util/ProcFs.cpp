@@ -133,6 +133,7 @@ ThreadStatInfo::ThreadStatInfo()
       cpuNum(-1),
       kernelCpuTimeMs(),
       minorFaults(),
+      threadPriority(999),
       highPrecisionCpuTimeMs(),
       waitToRunTimeMs(),
       nrVoluntarySwitches(),
@@ -155,7 +156,8 @@ TaskStatInfo::TaskStatInfo()
       majorFaults(0),
       cpuNum(-1),
       kernelCpuTimeMs(0),
-      minorFaults(0) {}
+      minorFaults(0),
+      threadPriority(999) {}
 
 VmStatInfo::VmStatInfo()
     : nrFreePages(0),
@@ -178,7 +180,8 @@ enum StatFileType : int8_t {
 
 static const std::array<int32_t, 3> kFileStats = {
     /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS |
-        StatType::CPU_NUM | StatType::KERNEL_CPU_TIME | StatType::MINOR_FAULTS,
+        StatType::CPU_NUM | StatType::KERNEL_CPU_TIME | StatType::MINOR_FAULTS |
+        StatType::THREAD_PRIORITY,
     /*SCHEDSTAT*/ StatType::HIGH_PRECISION_CPU_TIME |
         StatType::WAIT_TO_RUN_TIME,
     /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
@@ -285,14 +288,21 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   if (errno == ERANGE || data == endptr || endptr > end) {
     throw std::runtime_error("Could not parse stime");
   }
+  data = skipUntil(endptr, end, ' ');
+
+  data = skipUntil(data, end, ' '); // cutime
+  data = skipUntil(data, end, ' '); // cstime
+
+  endptr = nullptr;
+  auto priority = strtol(data, &endptr, 10); // priority
+  if (errno == ERANGE || data == endptr || endptr > end) {
+    throw std::runtime_error("Could not parse priority");
+  }
 
   int cpuNum = 0;
   if (StatType::CPU_NUM & stats_mask) {
     data = skipUntil(endptr, end, ' ');
 
-    data = skipUntil(data, end, ' '); // cutime
-    data = skipUntil(data, end, ' '); // cstime
-    data = skipUntil(data, end, ' '); // priority
     data = skipUntil(data, end, ' '); // nice
     data = skipUntil(data, end, ' '); // num_threads
     data = skipUntil(data, end, ' '); // itrealvalue
@@ -333,6 +343,7 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   info.majorFaults = majflt;
   info.minorFaults = minflt;
   info.cpuNum = cpuNum;
+  info.threadPriority = priority;
 
   return info;
 }
@@ -708,6 +719,11 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
         ? StatType::MINOR_FAULTS
         : 0;
     last_info_.minorFaults = statInfo.minorFaults;
+    last_info_.statChangeMask |=
+        (last_info_.threadPriority != statInfo.threadPriority)
+        ? StatType::THREAD_PRIORITY
+        : 0;
+    last_info_.threadPriority = statInfo.threadPriority;
     availableStatsMask_ |=
         kFileStats[StatFileType::STAT] & requested_stats_mask;
   }

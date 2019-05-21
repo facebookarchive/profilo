@@ -62,6 +62,7 @@ struct TaskStatInfo {
   uint8_t cpuNum;
   uint64_t kernelCpuTimeMs;
   uint64_t minorFaults;
+  int16_t threadPriority;
 
   TaskStatInfo();
 };
@@ -118,6 +119,7 @@ struct ThreadStatInfo {
   uint64_t cpuNum;
   uint64_t kernelCpuTimeMs;
   uint64_t minorFaults;
+  int16_t threadPriority;
   // SCHEDSTAT
   uint64_t highPrecisionCpuTimeMs;
   uint64_t waitToRunTimeMs;

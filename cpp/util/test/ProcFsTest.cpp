@@ -185,6 +185,7 @@ TEST_F(ProcFsTest, testStatFile) {
   EXPECT_EQ(statInfo.kernelCpuTimeMs, 32 * CLK_TICK);
   EXPECT_EQ(statInfo.cpuTime, 136 * CLK_TICK);
   EXPECT_EQ(statInfo.cpuNum, 2);
+  EXPECT_EQ(statInfo.threadPriority, 12);
 }
 
 TEST_F(ProcFsTest, testVmStatFile) {

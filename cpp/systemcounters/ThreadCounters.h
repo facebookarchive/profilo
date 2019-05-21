@@ -29,10 +29,11 @@ namespace profilo {
 namespace {
 
 constexpr auto kAllThreadsStatsMask = StatType::CPU_TIME | StatType::STATE |
-    StatType::MAJOR_FAULTS | StatType::MINOR_FAULTS | StatType::KERNEL_CPU_TIME;
+    StatType::MAJOR_FAULTS | StatType::MINOR_FAULTS |
+    StatType::KERNEL_CPU_TIME | StatType::THREAD_PRIORITY;
 
 constexpr auto kHighFreqStatsMask = StatType::CPU_TIME | StatType::STATE |
-    StatType::MAJOR_FAULTS | StatType::CPU_NUM |
+    StatType::MAJOR_FAULTS | StatType::CPU_NUM | StatType::THREAD_PRIORITY |
     StatType::HIGH_PRECISION_CPU_TIME | StatType::WAIT_TO_RUN_TIME |
     StatType::NR_VOLUNTARY_SWITCHES | StatType::NR_INVOLUNTARY_SWITCHES |
     StatType::IOWAIT_SUM | StatType::IOWAIT_COUNT;
@@ -185,6 +186,15 @@ class ThreadCounters {
           (prevInfo.statChangeMask & StatType::MINOR_FAULTS) == 0
               ? prevInfo.monotonicStatTime
               : 0);
+    }
+    if (currInfo.availableStatsMask & StatType::THREAD_PRIORITY) {
+      logNonMonotonicCounter<Logger>(
+          prevInfo.threadPriority,
+          currInfo.threadPriority,
+          tid,
+          currInfo.monotonicStatTime,
+          QuickLogConstants::THREAD_PRIORITY,
+          logger);
     }
   }
 
