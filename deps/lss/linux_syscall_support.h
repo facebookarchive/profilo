@@ -3408,6 +3408,16 @@ struct kernel_statfs {
     LSS_INLINE _syscall2(int, ftruncate,           int,         f,
                          off_t,          l)
   #endif
+
+  #if defined(__NR_ftruncate64) &&  \
+      (defined(__i386__) || defined(__ARM_ARCH_3__) || defined(__ARM_EABI__))
+    LSS_INLINE _syscall2(int, ftruncate64, int, f, off64_t, l)
+  #else
+    LSS_INLINE int LSS_NAME(ftruncate64)(int f, off64_t l) {
+      return LSS_NAME(ftruncate)(f, l);
+    }
+  #endif
+
   LSS_INLINE _syscall4(int,     futex,           int*,        a,
                        int,            o, int,    v,
                       struct kernel_timespec*, t)
