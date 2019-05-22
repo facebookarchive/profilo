@@ -59,15 +59,14 @@ class allocator_block {
     }
 
 #ifdef ANDROID
-    if (prctl(
-            PR_SET_VMA,
-            PR_SET_VMA_ANON_NAME,
-            map_,
-            kSize,
-            "plthooks plt trampolines")) {
-      throw std::system_error(
-          errno, std::system_category(), "could not set VMA name");
-    }
+    // Older Linux kernels may not have the PR_SET_VMA call implementation.
+    // That's okay we just ignore errors if this call fails.
+    prctl(
+        PR_SET_VMA,
+        PR_SET_VMA_ANON_NAME,
+        map_,
+        kSize,
+        "plthooks plt trampolines");
 #endif // ANDROID
     top_ = reinterpret_cast<uint8_t*>(map_);
   }
