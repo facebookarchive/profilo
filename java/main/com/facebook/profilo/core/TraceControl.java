@@ -1,19 +1,16 @@
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.profilo.core;
 
 import android.os.StrictMode;
@@ -42,9 +39,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 /**
  * Responsible for managing the current trace state - starting, stopping traces based on a config.
  */
-@SuppressWarnings({
-    "BadMethodUse-android.util.Log.w"})
-final public class TraceControl {
+@SuppressWarnings({"BadMethodUse-android.util.Log.w"})
+public final class TraceControl {
 
   public static final String LOG_TAG = "Profilo/TraceControl";
   public static final int MAX_TRACES = 2;
@@ -69,26 +65,27 @@ final public class TraceControl {
 
   private static volatile TraceControl sInstance = null;
 
-  private static final ThreadLocal<Random> sTraceIdRandom = new ThreadLocal<Random>() {
+  private static final ThreadLocal<Random> sTraceIdRandom =
+      new ThreadLocal<Random>() {
 
-    @Override
-    public Random initialValue() {
-      // Produce an RNG that's not seeded with the current time.
+        @Override
+        public Random initialValue() {
+          // Produce an RNG that's not seeded with the current time.
 
-      // StrictMode is disabled because this is a non-blocking read and
-      // thus it's not as evil as it thinks.
-      StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
-      try (FileInputStream input = new FileInputStream("/dev/urandom")) {
-        ByteBuffer buffer = ByteBuffer.allocate(8);
-        input.read(buffer.array());
-        return new Random(buffer.getLong());
-      } catch (IOException e) {
-        throw new RuntimeException("Cannot read from /dev/urandom", e);
-      } finally {
-        StrictMode.setThreadPolicy(oldPolicy);
-      }
-    }
-  };
+          // StrictMode is disabled because this is a non-blocking read and
+          // thus it's not as evil as it thinks.
+          StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
+          try (FileInputStream input = new FileInputStream("/dev/urandom")) {
+            ByteBuffer buffer = ByteBuffer.allocate(8);
+            input.read(buffer.array());
+            return new Random(buffer.getLong());
+          } catch (IOException e) {
+            throw new RuntimeException("Cannot read from /dev/urandom", e);
+          } finally {
+            StrictMode.setThreadPolicy(oldPolicy);
+          }
+        }
+      };
 
   /*package*/ static void initialize(
       SparseArray<TraceController> controllers,
@@ -308,10 +305,7 @@ final public class TraceControl {
       throw new IllegalArgumentException("Unregistered controller for id = " + controller);
     }
 
-    return startTraceInternal(flags, new TraceContext(
-        traceContext,
-        controller,
-        traceController));
+    return startTraceInternal(flags, new TraceContext(traceContext, controller, traceController));
   }
 
   private boolean startTraceInternal(int flags, TraceContext nextContext) {
@@ -377,8 +371,8 @@ final public class TraceControl {
   }
 
   /**
-   * Adds timeout entry to the current trace.
-   * It is supposed to be called only from {@link LoggerWorkerThread}, not from "frontend" classes.
+   * Adds timeout entry to the current trace. It is supposed to be called only from {@link
+   * LoggerWorkerThread}, not from "frontend" classes.
    */
   void timeoutTrace(long traceId) {
     TraceContext traceContext = findCurrentTraceByTraceId(traceId);
@@ -420,12 +414,12 @@ final public class TraceControl {
   }
 
   /**
-   * Internal method to ensure consistency for traces we know are aborted in the
-   * logger thread through a path that didn't go through us (e.g., timeout).
+   * Internal method to ensure consistency for traces we know are aborted in the logger thread
+   * through a path that didn't go through us (e.g., timeout).
    *
-   * This does not write an abort trace event into the trace.
+   * <p>This does not write an abort trace event into the trace.
    *
-   * @param id  numeric trace id
+   * @param id numeric trace id
    */
   /*package*/ void cleanupTraceContextByID(long id, int abortReason) {
     TraceContext traceContext = findCurrentTraceByTraceId(id);
@@ -553,9 +547,7 @@ final public class TraceControl {
     return Arrays.copyOf(traceIds, index);
   }
 
-  /**
-   * @return current controller config for the specified controller.
-   */
+  /** @return current controller config for the specified controller. */
   @Nullable
   public ControllerConfig getControllerConfig(int controller) {
     Config config = mCurrentConfig.get();

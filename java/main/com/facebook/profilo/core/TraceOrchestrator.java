@@ -1,19 +1,16 @@
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.profilo.core;
 
 import android.annotation.SuppressLint;
@@ -74,10 +71,7 @@ public final class TraceOrchestrator
     void onTraceFlushed(File trace, long traceId);
 
     void onTraceFlushedDoFileAnalytics(
-        int totalErrors,
-        int trimmedFromCount,
-        int trimmedFromAge,
-        int filesAddedToUpload);
+        int totalErrors, int trimmedFromCount, int trimmedFromAge, int filesAddedToUpload);
     /** Config update has been received but not yet applied. */
     void onBeforeConfigUpdate();
     /** New updated config has been applied. */
@@ -90,6 +84,7 @@ public final class TraceOrchestrator
 
   public interface ProfiloBridgeFactory {
     BackgroundUploadService getUploadService();
+
     ConfigProvider getProvider();
 
     TraceListener[] getListeners();
@@ -149,12 +144,23 @@ public final class TraceOrchestrator
   }
 
   // Current ConfigProvider and Config
-  @GuardedBy("this") private ConfigProvider mConfigProvider;
-  @GuardedBy("this") @Nullable private Config mConfig;
+  @GuardedBy("this")
+  private ConfigProvider mConfigProvider;
+
+  @GuardedBy("this")
+  @Nullable
+  private Config mConfig;
   // Future ConfigProvider : used if we updated Config/ConfigProvider during a trace.
-  @GuardedBy("this") @Nullable ConfigProvider mNextConfigProvider;
-  @GuardedBy("this") private FileManager mFileManager;
-  @GuardedBy("this") @Nullable private BackgroundUploadService mBackgroundUploadService;
+  @GuardedBy("this")
+  @Nullable
+  ConfigProvider mNextConfigProvider;
+
+  @GuardedBy("this")
+  private FileManager mFileManager;
+
+  @GuardedBy("this")
+  @Nullable
+  private BackgroundUploadService mBackgroundUploadService;
 
   @GuardedBy("this")
   @Nullable
@@ -210,9 +216,8 @@ public final class TraceOrchestrator
     "BadMethodUse-android.os.HandlerThread._Constructor",
     "BadMethodUse-java.lang.Thread.start",
   })
-  //VisibleForTesting
-  /*package*/ void bind(
-      Context context, SparseArray<TraceController> controllers) {
+  // VisibleForTesting
+  /*package*/ void bind(Context context, SparseArray<TraceController> controllers) {
     Config initialConfig;
     synchronized (this) {
       mConfigProvider.setConfigUpdateListener(this);
@@ -700,13 +705,12 @@ public final class TraceOrchestrator
   private void triggerUpload() {
     BackgroundUploadService backgroundUploadService = getUploadService();
     if (backgroundUploadService == null) {
-        return;
+      return;
     }
 
     backgroundUploadService.uploadInBackground(mFileManager.getTrimmableFilesToUpload(), this);
     backgroundUploadService.uploadInBackgroundSkipChecks(
-        mFileManager.getUntrimmableFilesToUpload(),
-        this);
+        mFileManager.getUntrimmableFilesToUpload(), this);
   }
 
   /**
@@ -714,15 +718,13 @@ public final class TraceOrchestrator
    *
    * @return true if the cleanup succeeded, false otherwise
    */
-  synchronized public boolean clearConfigurationAndTraces(Context context) {
+  public synchronized boolean clearConfigurationAndTraces(Context context) {
     setConfigProvider(new DefaultConfigProvider());
     return mFileManager.deleteAllFiles();
   }
 
-  /**
-   * Returns all known trace files. Only use for crash reporting.
-   */
-  synchronized public Iterable<File> getAllTraceFilesForCrashReport() {
+  /** Returns all known trace files. Only use for crash reporting. */
+  public synchronized Iterable<File> getAllTraceFilesForCrashReport() {
     return mFileManager.getAllFiles();
   }
 
@@ -740,7 +742,7 @@ public final class TraceOrchestrator
     return mBackgroundUploadService;
   }
 
-  synchronized private ConfigProvider getConfigProvider() {
+  private synchronized ConfigProvider getConfigProvider() {
     if (mHasReadFromBridge == false && mProfiloBridgeFactory != null) {
       // The config provider never starts as null, and overriding the config with the same config
       // has repercussions, so we need to make sure the config provider is only fetched from the

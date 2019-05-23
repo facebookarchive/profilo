@@ -1,19 +1,16 @@
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.profilo.logger;
 
 import android.annotation.SuppressLint;
@@ -25,11 +22,12 @@ import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nullable;
 
 @DoNotStrip
-final public class Logger {
+public final class Logger {
 
   /**
    * A reference to the underlying trace writer. The first time we make this wrapper, we may cause
@@ -64,6 +62,12 @@ final public class Logger {
     sNativeTraceWriterCallbacks = nativeTraceWriterCallbacks;
     sRingBufferSize = ringBufferSize;
     mWorker = new AtomicReference<>(null);
+  }
+
+  public static void stopTraceWriter() {
+    if (sTraceWriter != null) {
+      stopTraceWriter(sTraceWriter);
+    }
   }
 
   public static final int SKIP_PROVIDER_CHECK = 1 << 0;
@@ -162,12 +166,9 @@ final public class Logger {
       int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */);
 
   private static native int loggerWriteAndWakeupTraceWriter(
-      NativeTraceWriter writer,
-      long traceId,
-      int type,
-      int callid,
-      int matchid,
-      long extra);
+      NativeTraceWriter writer, long traceId, int type, int callid, int matchid, long extra);
+
+  public static native void stopTraceWriter(NativeTraceWriter writer);
 
   @SuppressLint("BadMethodUse-java.lang.Thread.start")
   private static void startWorkerThreadIfNecessary() {
@@ -176,11 +177,14 @@ final public class Logger {
       return;
     }
 
-    NativeTraceWriter writer =
-        new NativeTraceWriter(
-            sTraceDirectory.getAbsolutePath(),
-            sFilePrefix,
-            sNativeTraceWriterCallbacks);
+    NativeTraceWriter writer;
+    try {
+      writer =
+          new NativeTraceWriter(
+              sTraceDirectory.getCanonicalPath(), sFilePrefix, sNativeTraceWriterCallbacks);
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Could not get canonical path of trace directory");
+    }
 
     LoggerWorkerThread thread = new LoggerWorkerThread(writer);
 
@@ -189,15 +193,16 @@ final public class Logger {
     }
 
     sTraceWriter = writer;
-    thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-      @Override
-      public void uncaughtException(Thread thread, Throwable ex) {
-        LoggerCallbacks callbacks = sLoggerCallbacks;
-        if (callbacks != null) {
-          callbacks.onLoggerException(ex);
-        }
-      }
-    });
+    thread.setUncaughtExceptionHandler(
+        new Thread.UncaughtExceptionHandler() {
+          @Override
+          public void uncaughtException(Thread thread, Throwable ex) {
+            LoggerCallbacks callbacks = sLoggerCallbacks;
+            if (callbacks != null) {
+              callbacks.onLoggerException(ex);
+            }
+          }
+        });
 
     thread.start();
   }

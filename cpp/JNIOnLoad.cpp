@@ -153,6 +153,17 @@ static jint loggerWriteAndWakeupTraceWriter(
   return id;
 }
 
+static void stopTraceWriter(
+    fbjni::alias_ref<jobject> cls,
+    writer::NativeTraceWriter* writer) {
+  if (writer == nullptr) {
+    throw std::invalid_argument("writer cannot be null (teardown)");
+  }
+
+  TraceBuffer::Cursor cursor = RingBuffer::get().currentTail();
+  writer->submit(cursor, writer::TraceWriter::kStopLoopTraceID);
+}
+
 static jint enableProviders(JNIEnv* env, jobject cls, jint providers) {
   return TraceProviders::get().enableProviders(
       static_cast<uint32_t>(providers));
@@ -215,6 +226,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
                 "loggerWriteAndWakeupTraceWriter",
                 profilo::loggerWriteAndWakeupTraceWriter),
             makeNativeMethod("nativeInitRingBuffer", profilo::initRingBuffer),
+            makeNativeMethod("stopTraceWriter", profilo::stopTraceWriter),
         });
 
     profilo::writer::NativeTraceWriter::registerNatives();
