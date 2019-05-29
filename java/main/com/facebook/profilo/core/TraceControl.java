@@ -46,6 +46,9 @@ public final class TraceControl {
   public static final int MAX_TRACES = 2;
   private static final int TRACE_TIMEOUT_MS = 30000; // 30s
 
+  private static final int NORMAL_TRACE_MASK = 0xfffe;
+  private static final int MEMORY_TRACE_MASK = 0x1;
+
   @NotThreadSafe
   public interface TraceControlListener {
 
@@ -151,7 +154,7 @@ public final class TraceControl {
    * @return value with lowest free bit set to 1 and 0 if no empty slots left according to maxBits
    */
   private static int findLowestFreeBit(int bitmask, int maxBits, int flags) {
-    bitmask |= (flags & Trace.FLAG_MEMORY_ONLY) != 0 ? 0xfffe : 0x1;
+    bitmask |= (flags & Trace.FLAG_MEMORY_ONLY) != 0 ? NORMAL_TRACE_MASK : MEMORY_TRACE_MASK;
     return ((bitmask + 1) & ~bitmask) & ((1 << maxBits) - 1);
   }
 
@@ -435,6 +438,14 @@ public final class TraceControl {
 
   public boolean isInsideTrace() {
     return mCurrentTracesMask.get() != 0;
+  }
+
+  public boolean isInsideNormalTrace() {
+    return (mCurrentTracesMask.get() & NORMAL_TRACE_MASK) != 0;
+  }
+
+  public boolean isInsideMemoryOnlyTrace() {
+    return (mCurrentTracesMask.get() & MEMORY_TRACE_MASK) != 0;
   }
 
   public boolean isInsideTriggerQPLTrace(int markerId) {

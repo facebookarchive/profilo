@@ -263,6 +263,7 @@ public class TraceControlTest {
     Logger.postCreateBackwardTrace(anyLong());
 
     verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), eq(Integer.MAX_VALUE));
+    assertMemoryOnlyTracing();
   }
 
   @Test
@@ -273,13 +274,17 @@ public class TraceControlTest {
     when(mController.contextsEqual(eq(flag2), any(), eq(flag1), any())).thenReturn(false);
 
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, flag1)).isTrue();
+    assertNormalTracing();
+    assertMemoryOnlyNotTracing();
     TraceContext traceContext1 = mTraceControl.getCurrentTraces().get(0);
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, Trace.FLAG_MEMORY_ONLY, null, flag2))
         .isTrue();
+    assertMemoryOnlyTracing();
     TraceContext traceContext2 = mTraceControl.getCurrentTraces().get(1);
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, null, flag1);
 
-    assertTracing();
+    assertNormalNotTracing();
+    assertMemoryOnlyTracing();
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, null, flag2);
     ArgumentCaptor<TraceContext> contextCaptor = ArgumentCaptor.forClass(TraceContext.class);
     verify(mTraceControlHandler, times(2)).onTraceStop(contextCaptor.capture());
@@ -369,9 +374,25 @@ public class TraceControlTest {
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, flag2)).isTrue();
   }
 
+  private void assertNormalNotTracing() {
+    assertThat(mTraceControl.isInsideNormalTrace()).isFalse();
+  }
+
+  private void assertMemoryOnlyNotTracing() {
+    assertThat(mTraceControl.isInsideMemoryOnlyTrace()).isFalse();
+  }
+
   private void assertNotTracing() {
     assertThat(mTraceControl.isInsideTrace()).isFalse();
     assertThat(mTraceControl.getCurrentTraces().isEmpty());
+  }
+
+  private void assertNormalTracing() {
+    assertThat(mTraceControl.isInsideNormalTrace()).isTrue();
+  }
+
+  private void assertMemoryOnlyTracing() {
+    assertThat(mTraceControl.isInsideMemoryOnlyTrace()).isTrue();
   }
 
   private void assertTracing() {
