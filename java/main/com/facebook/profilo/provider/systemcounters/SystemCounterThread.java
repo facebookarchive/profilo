@@ -26,6 +26,7 @@ import com.facebook.jni.HybridData;
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceEvents;
+import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.DoNotOptimize;
 import com.facebook.soloader.SoLoader;
@@ -52,8 +53,12 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   private static final String LOG_TAG = "SystemCounterThread";
 
+  public static final String SYSTEM_COUNTERS_SAMPLING_RATE_CONFIG_PARAM =
+      "provider.system_counters.sampling_rate_ms";
+  public static final String HIGH_FREQ_COUNTERS_SAMPLING_RATE_CONFIG_PARAM =
+      "provider.high_freq_main_thread_counters.sampling_rate_ms";
   private static final int DEFAULT_COUNTER_PERIODIC_TIME_MS = 50;
-  private static final int HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS = 7;
+  private static final int DEFAULT_HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS = 7;
 
   @GuardedBy("this") private boolean mEnabled;
   @GuardedBy("this") private HandlerThread mHandlerThread;
@@ -155,22 +160,30 @@ public final class SystemCounterThread extends BaseTraceProvider {
     mHybridData = initHybrid();
     mEnabled = true;
     initHandler();
+    final TraceContext traceContext = getEnablingTraceContext();
     if (TraceEvents.isEnabled(PROVIDER_SYSTEM_COUNTERS)) {
       setHighFrequencyMode(false);
       mAllThreadsMode = true;
       Debug.startAllocCounting();
       mSystemCounterLogger.reset();
-      mHandler
-          .obtainMessage(MSG_SYSTEM_COUNTERS, DEFAULT_COUNTER_PERIODIC_TIME_MS, 0)
-          .sendToTarget();
+      int samplingRateMs =
+          traceContext == null
+              ? DEFAULT_COUNTER_PERIODIC_TIME_MS
+              : traceContext.providerExtras.getIntParam(
+                  SYSTEM_COUNTERS_SAMPLING_RATE_CONFIG_PARAM, DEFAULT_COUNTER_PERIODIC_TIME_MS);
+      mHandler.obtainMessage(MSG_SYSTEM_COUNTERS, samplingRateMs, 0).sendToTarget();
     }
     if (TraceEvents.isEnabled(PROVIDER_HIGH_FREQ_THREAD_COUNTERS)) {
       // Add Main Thread to the whitelist
       WhitelistApi.add(Process.myPid());
       setHighFrequencyMode(true);
-      mHandler
-          .obtainMessage(MSG_HIGH_FREQ_THREAD_COUNTERS, HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS, 0)
-          .sendToTarget();
+      int samplingRateMs =
+          traceContext == null
+              ? DEFAULT_HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS
+              : traceContext.providerExtras.getIntParam(
+                  HIGH_FREQ_COUNTERS_SAMPLING_RATE_CONFIG_PARAM,
+                  DEFAULT_HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS);
+      mHandler.obtainMessage(MSG_HIGH_FREQ_THREAD_COUNTERS, samplingRateMs, 0).sendToTarget();
     }
   }
 
