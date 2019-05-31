@@ -15,6 +15,7 @@
  */
 
 #include "DalvikUtils.h"
+#include <string.h>
 
 namespace facebook {
 namespace profilo {
