@@ -93,6 +93,10 @@ FdList fdListFromProcFs() {
   return FdList(numericFolderItems("/proc/self/fd/"));
 }
 
+PidList pidListFromProcFs() {
+  return PidList(numericFolderItems("/proc/"));
+}
+
 std::string getThreadName(uint32_t thread_id) {
   char threadNamePath[kMaxProcFileLength]{};
   int bytesWritten = snprintf(

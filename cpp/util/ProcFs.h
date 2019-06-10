@@ -145,6 +145,9 @@ ThreadList threadListFromProcFs();
 using FdList = std::unordered_set<uint32_t>;
 FdList fdListFromProcFs();
 
+using PidList = std::unordered_set<uint32_t>;
+PidList pidListFromProcFs();
+
 std::string getThreadName(uint32_t thread_id);
 
 TaskStatInfo getStatInfo(uint32_t tid);
