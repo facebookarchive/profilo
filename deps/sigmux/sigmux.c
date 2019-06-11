@@ -324,7 +324,7 @@ sigmux_handle_signal(
     {
       reg = container_of(it, struct sigmux_registration, link);
       if ((reg->flags & SIGMUX_LOW_PRIORITY) == 0 &&
-          sigismember(&reg->signals, signum))
+          sigismember(&reg->signals, signum) == 1)
       {
         action = reg->handler(&siginfo.public, reg->handler_data);
       }
@@ -338,7 +338,7 @@ sigmux_handle_signal(
     {
       reg = container_of(it, struct sigmux_registration, link);
       if ((reg->flags & SIGMUX_LOW_PRIORITY) != 0 &&
-          sigismember(&reg->signals, signum))
+          sigismember(&reg->signals, signum) == 1)
       {
         action = reg->handler(&siginfo.public, reg->handler_data);
       }
