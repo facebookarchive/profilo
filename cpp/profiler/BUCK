@@ -12,11 +12,6 @@ unwindc_tracer_library("7.1.1")
 
 unwindc_tracer_library("7.1.2")
 
-PROFILER_EXPORTED_HEADERS = [
-    "DalvikTracer.h",
-    "SamplingProfiler.h",
-]
-
 fb_xplat_cxx_library(
     name = "constants",
     header_namespace = "profiler",
@@ -161,19 +156,44 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
-    name = "profiler",
+    name = "dalvik_tracer",
     srcs = [
         "DalvikTracer.cpp",
-        "DalvikUtils.cpp",
+    ],
+    header_namespace = "profiler",
+    exported_headers = [
+        "DalvikTracer.h",
+    ],
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/Dalvik\"",
+    ],
+    soname = "libprofilo_dalvik_tracer.so",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        ":base_tracer",
+        ":tracer_utils",
+        profilo_path("cpp/logger:logger"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "profiler",
+    srcs = [
         "SamplingProfiler.cpp",
         "jni.cpp",
     ],
-    headers = glob(
-        ["*.h"],
-        exclude = PROFILER_EXPORTED_HEADERS,
-    ),
     header_namespace = "profiler",
-    exported_headers = PROFILER_EXPORTED_HEADERS,
+    exported_headers = [
+        "SamplingProfiler.h",
+    ],
     allow_jni_merging = True,
     compiler_flags = [
         "-fexceptions",
@@ -192,6 +212,7 @@ fb_xplat_cxx_library(
         ":artcompat",
         ":base_tracer",
         ":constants",
+        ":dalvik_tracer",
         ":external_tracer",
         ":external_tracer_manager",
         ":js_tracer",
@@ -211,7 +232,9 @@ fb_xplat_cxx_library(
         profilo_path("deps/dalvik:dalvik-subset-headers"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
-        profilo_path("deps/sigmux:sigmux"),
         profilo_path("cpp/api:external_api"),
+    ],
+    exported_deps = [
+        profilo_path("deps/sigmux:sigmux"),
     ],
 )
