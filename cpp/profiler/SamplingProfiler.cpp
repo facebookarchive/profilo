@@ -110,34 +110,34 @@ static void throw_errno(const char* error) {
   throw std::system_error(errno, std::system_category(), error);
 }
 
-static bool threadIsUnwinding(ProfileState const& profileState) {
-  return pthread_getspecific(profileState.threadIsProfilingKey) != nullptr;
-}
-
 sigmux_action sigcatch_handler(
     struct sigmux_siginfo* siginfo,
     void* handler_data) {
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
-  if (!threadIsUnwinding(profileState)) {
-    return SIGMUX_CONTINUE_SEARCH;
-  }
 
   int32_t tid = threadID();
   uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
 
-  // We know the thread that raised the signal was unwinding, find its slot and
-  // jump to the saved state there.
+  // Find the most recent slot occupied by this thread.
+  // This allows us to handle crashes during nested unwinding from
+  // the most inner one out.
+  int64_t max_time = -1;
+  int max_idx = -1;
+
   for (int i = 0; i < MAX_STACKS_COUNT; i++) {
     auto& slot = profileState.stacks[i];
-    // If slot matches mark it as an error, increase error count and jump out
-    if (slot.state.load() == targetBusyState) {
-      profileState.errSigCrashes.fetch_add(1);
-      sigmux_longjmp(siginfo, slot.sig_jmp_buf, 1);
+    if (slot.state.load() == targetBusyState && slot.time > max_time) {
+      max_time = slot.time;
+      max_idx = i;
     }
   }
-  // Something is wrong. This thread is supposed to be unwinding but we
-  // couldn't find its slot. Something is corrupted in our state, abort.
-  abort();
+
+  if (max_idx >= 0) {
+    profileState.errSigCrashes.fetch_add(1);
+    sigmux_longjmp(siginfo, profileState.stacks[max_idx].sig_jmp_buf, 1);
+  }
+
+  return SIGMUX_CONTINUE_SEARCH;
 }
 
 void maybeSignalReader() {
@@ -191,27 +191,6 @@ sigmux_action sigprof_handler(
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
   auto tid = threadID();
   uint32_t busyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
-
-  if (threadIsUnwinding(profileState)) {
-    uint32_t slotIndex;
-    bool slot_found = getSlotIndex(profileState, tid, slotIndex);
-    if (slot_found) {
-      auto& slot = profileState.stacks[slotIndex];
-      // Slot is in BUSY_WITH_METADATA state, so it's OK to modify it
-      // This error is not associated with a specific profiler
-      slot.profilerType = 0;
-      if (!slot.state.compare_exchange_strong(
-              busyState, (tid << 16) | StackCollectionRetcode::NESTED_UNWIND)) {
-        // Ordering violation
-        abortWithReason(
-            "Invariant violation - BUSY_WITH_METADATA to NESTED_UNWIND failed");
-      }
-    }
-
-    return SIGMUX_CONTINUE_EXECUTION;
-  }
-
-  pthread_setspecific(profileState.threadIsProfilingKey, (void*)1);
 
   for (const auto& tracerEntry : profileState.tracersMap) {
     auto tracerType = tracerEntry.first;
@@ -300,7 +279,6 @@ sigmux_action sigprof_handler(
     }
   }
 
-  pthread_setspecific(profileState.threadIsProfilingKey, (void*)0);
   return SIGMUX_CONTINUE_EXECUTION;
 }
 
