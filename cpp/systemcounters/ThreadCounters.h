@@ -28,7 +28,7 @@ namespace profilo {
 
 namespace {
 
-constexpr auto kAllThreadsStatsMask = StatType::CPU_TIME | StatType::STATE |
+constexpr auto kAllThreadsStatsMask = StatType::CPU_TIME |
     StatType::MAJOR_FAULTS | StatType::MINOR_FAULTS |
     StatType::KERNEL_CPU_TIME | StatType::THREAD_PRIORITY;
 
@@ -194,6 +194,15 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_PRIORITY,
+          logger);
+    }
+    if (currInfo.availableStatsMask & StatType::STATE) {
+      logNonMonotonicCounter<Logger>(
+          prevInfo.state,
+          currInfo.state,
+          tid,
+          currInfo.monotonicStatTime,
+          QuickLogConstants::THREAD_STATE,
           logger);
     }
   }
