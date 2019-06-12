@@ -1,3 +1,4 @@
+load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
 
 profilo_cxx_test(
@@ -146,6 +147,23 @@ profilo_cxx_test(
     ],
 )
 
+fb_xplat_cxx_library(
+    name = "test_sequencer",
+    srcs = [
+        "TestSequencer.cpp",
+    ],
+    header_namespace = "profilo/test",
+    exported_headers = [
+        "TestSequencer.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+)
+
 profilo_cxx_test(
     name = "sampling_profiler",
     srcs = [
@@ -162,6 +180,8 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
+        ":test_sequencer",
+        profilo_path("deps/fb:fb"),
         profilo_path("cpp/profiler:profiler"),
         profilo_path("cpp/logger:logger_static"),
     ],
