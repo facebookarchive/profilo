@@ -282,7 +282,7 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
   return SIGMUX_CONTINUE_EXECUTION;
 }
 
-void SamplingProfiler::initSignalHandlers() {
+void SamplingProfiler::registerSignalHandlers() {
   //
   // Register a handler for SIGPROF, trusting that sigmux will internally use
   // SA_RESTART.
@@ -309,8 +309,9 @@ void SamplingProfiler::initSignalHandlers() {
     throw_errno("sigaddset");
   }
 
-  if (!sigmux_register(
-          &prof_set, SamplingProfiler::UnwindStackHandler, this, 0)) {
+  sigmux_state.profiling_registration =
+      sigmux_register(&prof_set, SamplingProfiler::UnwindStackHandler, this, 0);
+  if (!sigmux_state.profiling_registration) {
     throw_errno("sigmux_register for SIGPROF");
   }
 
@@ -334,9 +335,64 @@ void SamplingProfiler::initSignalHandlers() {
     }
   }
 
-  if (!sigmux_register(&sigset, SamplingProfiler::FaultHandler, this, 0)) {
+  sigmux_state.fault_registration =
+      sigmux_register(&sigset, SamplingProfiler::FaultHandler, this, 0);
+  if (!sigmux_state.fault_registration) {
+    sigmux_unregister(sigmux_state.profiling_registration);
+    sigmux_state.profiling_registration = nullptr;
+
     FBLOGE("Failed to register sigmux: %s", strerror(errno));
     throw_errno("Couldn't register sigmux for SIGSEGV/SIGBUS signal jail");
+  }
+}
+
+void SamplingProfiler::unregisterSignalHandlers() {
+  // There are multiple cases we need to worry about:
+  //   a) currently executing profiling handlers
+  //   b) pending profiling signals
+  //   c) currently executing fault handlers
+  //   d) pending fault signals
+  //
+  // Observe that fault handlers return to the profiling handler and
+  // are conceptually nested within them.
+  //   PROF_ENTER
+  //     FAULT_ENTER
+  //     FAULT_LONGJMP
+  //   PROF_EXIT
+  //
+  // By waiting for all profiling handlers to finish (which sigmux_unregister
+  // does internally), we solve a), c), and d) (pending fault signals during a
+  // profiling signal means we won't exit the corresponding profiling handler
+  // until we've handled the fault).
+  //
+  // To solve b), we change the signal disposition for SIGPROF from SIG_DFL to
+  // SIG_IGN. We only do this if the original handler before sigmux seized it
+  // was SIG_DFL.
+  //
+
+  struct sigaction original_sigaction;
+  if (sigmux_sigaction(SIGPROF, nullptr, &original_sigaction)) {
+    throw_errno("Could not read original sigaction for profiling signal");
+  }
+
+  if (original_sigaction.sa_handler == SIG_DFL) {
+    FBLOGV("Replacing default disposition for profiling signal with IGN");
+    struct sigaction ign_sigaction {
+      .sa_handler = SIG_IGN,
+    };
+    if (sigmux_sigaction(SIGPROF, &ign_sigaction, nullptr)) {
+      throw_errno("Could not change disposition for profiling signal to IGN");
+    }
+  }
+
+  if (sigmux_state.profiling_registration) {
+    sigmux_unregister(sigmux_state.profiling_registration);
+    sigmux_state.profiling_registration = nullptr;
+  }
+
+  if (sigmux_state.fault_registration) {
+    sigmux_unregister(sigmux_state.fault_registration);
+    sigmux_state.fault_registration = nullptr;
   }
 }
 
@@ -472,8 +528,6 @@ bool SamplingProfiler::initialize(uint32_t available_tracers) {
     ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
   }
 
-  initSignalHandlers();
-
   // Init semaphore for stacks flush to the Ring Buffer
   int res = sem_init(&state_.slotsCounterSem, 0, 0);
   if (res != 0) {
@@ -537,7 +591,13 @@ bool SamplingProfiler::startProfiling(
     int requested_tracers,
     int sampling_rate_ms,
     bool wall_clock_mode_enabled) {
+  if (state_.isProfiling) {
+    throw std::logic_error("startProfiling called while already profiling");
+  }
+  state_.isProfiling = true;
   FBLOGV("Start profiling");
+
+  registerSignalHandlers();
 
   state_.profileStartTime = monotonicTime();
   state_.currentTracers = state_.availableTracers & requested_tracers;
@@ -557,17 +617,34 @@ bool SamplingProfiler::startProfiling(
 
   // Call setitimer only if not in "single thread sampling" mode
   if (!state_.wallClockModeEnabled) {
-    auto sampleRateMicros = sampling_rate_ms * 1000;
+    constexpr auto kMicrosecondsInSecond = 1000000;
+    constexpr auto kMicrosecondsInMillisecond = 1000;
+    auto sampleRateMicros = sampling_rate_ms * kMicrosecondsInMillisecond;
     // Generate random initial delay. Used to calculate the initial trace delay
     // to avoid sampling bias.
-    std::mt19937 randGenerator(std::time(0));
+    // Narrowing cast is acceptable, the lower bits should have
+    // all the entropy anyway.
+    std::mt19937 randGenerator(static_cast<uint32_t>(monotonicTime()));
     std::uniform_int_distribution<> randDistribution(1, sampleRateMicros);
     auto sampleStartDelayMicros = randDistribution(randGenerator);
 
-    itimerval tv;
-    tv.it_value.tv_sec = 0;
+    int32_t sampleStartDelaySeconds = 0;
+    int32_t sampleRateSeconds = 0;
+
+    if (sampleStartDelayMicros >= kMicrosecondsInSecond) {
+      sampleStartDelaySeconds = sampleStartDelayMicros / kMicrosecondsInSecond;
+      sampleStartDelayMicros = sampleStartDelayMicros % kMicrosecondsInSecond;
+    }
+
+    if (sampleRateMicros >= kMicrosecondsInSecond) {
+      sampleRateSeconds = sampleRateMicros / kMicrosecondsInSecond;
+      sampleRateMicros = sampleRateMicros % kMicrosecondsInSecond;
+    }
+
+    itimerval tv{};
+    tv.it_value.tv_sec = sampleStartDelaySeconds;
     tv.it_value.tv_usec = sampleStartDelayMicros;
-    tv.it_interval.tv_sec = 0;
+    tv.it_interval.tv_sec = sampleRateSeconds;
     tv.it_interval.tv_usec = sampleRateMicros;
 
     int res = setitimer(ITIMER_PROF, &tv, nullptr);
@@ -590,6 +667,10 @@ bool SamplingProfiler::startProfiling(
  * checksum for the dex identification which should collide rare.
  */
 void SamplingProfiler::stopProfiling() {
+  if (!state_.isProfiling) {
+    throw std::logic_error("stopProfiling called while not profiling");
+  }
+
   FBLOGV("Stopping profiling");
 
   if (!state_.wallClockModeEnabled) {
@@ -640,6 +721,10 @@ void SamplingProfiler::stopProfiling() {
       tracerEntry.second->stopTracing();
     }
   }
+
+  unregisterSignalHandlers();
+
+  state_.isProfiling = false;
 }
 
 void SamplingProfiler::addToWhitelist(int targetThread) {

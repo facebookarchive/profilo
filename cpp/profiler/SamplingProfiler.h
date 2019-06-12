@@ -84,6 +84,7 @@ struct ProfileState {
   std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracersMap;
   StackSlot stacks[MAX_STACKS_COUNT];
   std::atomic<uint32_t> currentSlot;
+  std::atomic_bool isProfiling{};
   // Error stats
   std::atomic<uint16_t> errSigCrashes;
   std::atomic<uint16_t> errSlotMisses;
@@ -144,8 +145,14 @@ class SamplingProfiler {
 
  private:
   ProfileState state_;
+  struct {
+    sigmux_registration* profiling_registration;
+    sigmux_registration* fault_registration;
+  } sigmux_state;
 
-  void initSignalHandlers();
+  void registerSignalHandlers();
+
+  void unregisterSignalHandlers();
 
   void maybeSignalReader();
 
