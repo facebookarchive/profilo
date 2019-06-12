@@ -2,6 +2,10 @@ load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_librar
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_maybe_hidden_visibility", "profilo_path")
 load(":build_defs.bzl", "unwindc_tracer_library")
 
+unwindc_tracer_library("5.0.0")
+
+unwindc_tracer_library("5.1.0")
+
 unwindc_tracer_library("6.0.0")
 
 unwindc_tracer_library("7.0.0")
@@ -50,6 +54,8 @@ fb_xplat_cxx_library(
     soname = "libprofilo_stacktrace_artcompat.so",
     deps = [
         ":base_tracer",
+        ":unwindc-tracer-5.0.0",
+        ":unwindc-tracer-5.1.0",
         ":unwindc-tracer-6.0.0",
         ":unwindc-tracer-7.0.0",
         ":unwindc-tracer-7.1.0",
@@ -215,6 +221,8 @@ fb_xplat_cxx_library(
         ":external_tracer",
         ":external_tracer_manager",
         ":js_tracer",
+        ":unwindc-tracer-5.0.0",
+        ":unwindc-tracer-5.1.0",
         ":unwindc-tracer-6.0.0",
         ":unwindc-tracer-7.0.0",
         ":unwindc-tracer-7.1.0",

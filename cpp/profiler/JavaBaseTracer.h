@@ -56,7 +56,8 @@ class JavaBaseTracer : public BaseTracer {
 
   // Keep these in sync with all ART_UNWINDC_* from BaseTracer
   static bool isJavaTracer(int32_t type) {
-    return type == tracers::ART_UNWINDC_6_0 ||
+    return type == tracers::ART_UNWINDC_5_0 ||
+        type == tracers::ART_UNWINDC_5_1 || type == tracers::ART_UNWINDC_6_0 ||
         type == tracers::ART_UNWINDC_7_0_0 ||
         type == tracers::ART_UNWINDC_7_1_0 ||
         type == tracers::ART_UNWINDC_7_1_1 ||

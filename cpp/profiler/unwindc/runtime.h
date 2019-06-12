@@ -50,8 +50,12 @@ pthread_key_t determineThreadInstanceTLSKey() {
 
   constexpr int32_t kMaxPthreadKey = 128;
   constexpr int32_t kUserPthreadKeyStart = 0;
+#if ANDROID_VERSION_NUM < 600
+  constexpr int32_t kKeyValidFlag = 0;
+#else
   constexpr int32_t kKeyValidFlag = 1
-      << 31; // bionic tags keys by setting the MSB
+      << 31; // bionic tags keys by setting the MSB starting in Android 6.0
+#endif
 
   for (pthread_key_t i = kUserPthreadKeyStart; i < kMaxPthreadKey; i++) {
     pthread_key_t tagged = i | kKeyValidFlag;

@@ -32,6 +32,8 @@
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
 
+#include <profiler/ArtUnwindcTracer_500.h>
+#include <profiler/ArtUnwindcTracer_510.h>
 #include <profiler/ArtUnwindcTracer_600.h>
 #include <profiler/ArtUnwindcTracer_700.h>
 #include <profiler/ArtUnwindcTracer_710.h>
@@ -713,6 +715,14 @@ SamplingProfiler::ComputeAvailableTracers(uint32_t available_tracers) {
     tracers[tracers::NATIVE] = std::make_shared<NativeTracer>();
   }
 #endif
+
+  if (available_tracers & tracers::ART_UNWINDC_5_0) {
+    tracers[tracers::ART_UNWINDC_5_0] = std::make_shared<ArtUnwindcTracer50>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_5_1) {
+    tracers[tracers::ART_UNWINDC_5_1] = std::make_shared<ArtUnwindcTracer51>();
+  }
 
   if (available_tracers & tracers::ART_UNWINDC_6_0) {
     tracers[tracers::ART_UNWINDC_6_0] = std::make_shared<ArtUnwindcTracer60>();

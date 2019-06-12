@@ -80,6 +80,16 @@ public class ArtCompatibility {
           case "6.0.1":
             result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_6_0);
             break;
+          case "5.1":
+          case "5.1.0":
+          case "5.1.1":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_5_1);
+            break;
+          case "5.0":
+          case "5.0.1":
+          case "5.0.2":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_5_0);
+            break;
         }
         writeCompatFile(file, result);
       }

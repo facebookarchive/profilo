@@ -39,6 +39,8 @@ enum Tracer : uint32_t {
   ART_UNWINDC_7_1_1 = 1 << 7,
   ART_UNWINDC_7_1_2 = 1 << 8,
   JAVASCRIPT = 1 << 9,
+  ART_UNWINDC_5_0 = 1 << 10,
+  ART_UNWINDC_5_1 = 1 << 11,
 };
 }
 

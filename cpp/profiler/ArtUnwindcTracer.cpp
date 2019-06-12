@@ -27,7 +27,11 @@ namespace facebook {
 namespace profilo {
 namespace profiler {
 
-#if ANDROID_VERSION_NUM == 600
+#if ANDROID_VERSION_NUM == 500
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc500;
+#elif ANDROID_VERSION_NUM == 510
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc510;
+#elif ANDROID_VERSION_NUM == 600
 static constexpr ArtUnwindcVersion kVersion = kArtUnwindc600;
 #elif ANDROID_VERSION_NUM == 700
 static constexpr ArtUnwindcVersion kVersion = kArtUnwindc700;

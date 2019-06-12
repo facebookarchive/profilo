@@ -40,6 +40,8 @@ public class CPUProfiler {
   public static final int TRACER_ART_UNWINDC_7_1_1 = 1 << 7;
   public static final int TRACER_ART_UNWINDC_7_1_2 = 1 << 8;
   public static final int TRACER_JAVASCRIPT = 1 << 9;
+  public static final int TRACER_ART_UNWINDC_5_0 = 1 << 10;
+  public static final int TRACER_ART_UNWINDC_5_1 = 1 << 11;
 
   private static int calculateTracers(Context context) {
     int tracers = 0;
@@ -64,6 +66,16 @@ public class CPUProfiler {
         case "6.0":
         case "6.0.1":
           tracers |= TRACER_ART_UNWINDC_6_0;
+          break;
+        case "5.1":
+        case "5.1.0":
+        case "5.1.1":
+          tracers |= TRACER_ART_UNWINDC_5_1;
+          break;
+        case "5.0":
+        case "5.0.1":
+        case "5.0.2":
+          tracers |= TRACER_ART_UNWINDC_5_0;
           break;
       }
     }

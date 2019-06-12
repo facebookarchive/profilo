@@ -25,6 +25,8 @@ namespace profilo {
 namespace profiler {
 
 enum ArtUnwindcVersion {
+  kArtUnwindc500,
+  kArtUnwindc510,
   kArtUnwindc600,
   kArtUnwindc700,
   kArtUnwindc710,
@@ -61,6 +63,14 @@ class ArtUnwindcTracer : public JavaBaseTracer {
   void stopTracing() override;
 };
 
+#ifdef ANDROID_VERSION_500
+template class ArtUnwindcTracer<kArtUnwindc500>;
+using ArtUnwindcTracer50 = ArtUnwindcTracer<kArtUnwindc500>;
+#endif
+#ifdef ANDROID_VERSION_510
+template class ArtUnwindcTracer<kArtUnwindc510>;
+using ArtUnwindcTracer51 = ArtUnwindcTracer<kArtUnwindc510>;
+#endif
 #ifdef ANDROID_VERSION_600
 template class ArtUnwindcTracer<kArtUnwindc600>;
 using ArtUnwindcTracer60 = ArtUnwindcTracer<kArtUnwindc600>;
