@@ -97,21 +97,22 @@ static void throw_errno(const char* error) {
 }
 } // namespace
 
-ProfileState& SamplingProfiler::getProfileState() {
+SamplingProfiler& SamplingProfiler::getInstance() {
   //
   // Despite the fact that this is accessed from a signal handler (this routine
   // is not async-signal safe due to the initialization lock for this variable),
   // this is safe. The first access will always be before the first access from
   // a signal context, so the variable is guaranteed to be initialized by then.
   //
-  static ProfileState state;
-  return state;
+  static SamplingProfiler profiler;
+  return profiler;
 }
 
 sigmux_action SamplingProfiler::FaultHandler(
     struct sigmux_siginfo* siginfo,
     void* handler_data) {
-  ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
+  ProfileState& state =
+      reinterpret_cast<SamplingProfiler*>(handler_data)->state_;
 
   int32_t tid = threadID();
   uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
@@ -123,7 +124,7 @@ sigmux_action SamplingProfiler::FaultHandler(
   int max_idx = -1;
 
   for (int i = 0; i < MAX_STACKS_COUNT; i++) {
-    auto& slot = profileState.stacks[i];
+    auto& slot = state.stacks[i];
     if (slot.state.load() == targetBusyState && slot.time > max_time) {
       max_time = slot.time;
       max_idx = i;
@@ -131,21 +132,20 @@ sigmux_action SamplingProfiler::FaultHandler(
   }
 
   if (max_idx >= 0) {
-    profileState.errSigCrashes.fetch_add(1);
-    sigmux_longjmp(siginfo, profileState.stacks[max_idx].sig_jmp_buf, 1);
+    state.errSigCrashes.fetch_add(1);
+    sigmux_longjmp(siginfo, state.stacks[max_idx].sig_jmp_buf, 1);
   }
 
   return SIGMUX_CONTINUE_SEARCH;
 }
 
 void SamplingProfiler::maybeSignalReader() {
-  auto& profileState = SamplingProfiler::getProfileState();
-  uint32_t prevSlotCounter = profileState.fullSlotsCounter.fetch_add(1);
+  uint32_t prevSlotCounter = state_.fullSlotsCounter.fetch_add(1);
   if ((prevSlotCounter + 1) % FLUSH_STACKS_COUNT == 0) {
-    if (profileState.wallClockModeEnabled) {
-      profileState.enoughStacks.store(true);
+    if (state_.wallClockModeEnabled) {
+      state_.enoughStacks.store(true);
     } else {
-      int res = sem_post(&profileState.slotsCounterSem);
+      int res = sem_post(&state_.slotsCounterSem);
       if (res != 0) {
         abort(); // Something went wrong
       }
@@ -156,11 +156,11 @@ void SamplingProfiler::maybeSignalReader() {
 // Finds the next FREE slot and atomically sets its state to BUSY, so that
 // the acquiring thread can safely write to it, and returns the index via
 // <outSlot>. Returns true if a FREE slot was found, false otherwise.
-bool getSlotIndex(ProfileState& profileState, uint32_t tid, uint32_t& outSlot) {
-  auto slotIndex = profileState.currentSlot.fetch_add(1);
+bool getSlotIndex(ProfileState& state_, uint32_t tid, uint32_t& outSlot) {
+  auto slotIndex = state_.currentSlot.fetch_add(1);
   for (int i = 0; i < MAX_STACKS_COUNT; i++) {
     auto nextSlotIndex = (slotIndex + i) % MAX_STACKS_COUNT;
-    auto& slot = profileState.stacks[nextSlotIndex];
+    auto& slot = state_.stacks[nextSlotIndex];
     uint32_t expected = StackSlotState::FREE;
     uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
     if (slot.state.compare_exchange_strong(expected, targetBusyState)) {
@@ -179,20 +179,22 @@ bool getSlotIndex(ProfileState& profileState, uint32_t tid, uint32_t& outSlot) {
     }
   }
   // We didn't find an empty slot, so bump our counter
-  profileState.errSlotMisses.fetch_add(1);
+  state_.errSlotMisses.fetch_add(1);
   return false;
 }
 
 sigmux_action SamplingProfiler::UnwindStackHandler(
     struct sigmux_siginfo* siginfo,
     void* handler_data) {
-  ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
+  auto profiler = reinterpret_cast<SamplingProfiler*>(handler_data);
+  auto& state = profiler->state_;
+
   auto tid = threadID();
   uint32_t busyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
 
-  for (const auto& tracerEntry : profileState.tracersMap) {
+  for (const auto& tracerEntry : state.tracersMap) {
     auto tracerType = tracerEntry.first;
-    if (!(tracerType & profileState.currentTracers)) {
+    if (!(tracerType & state.currentTracers)) {
       continue;
     }
 
@@ -206,13 +208,13 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
     }
 
     uint32_t slotIndex;
-    bool slot_found = getSlotIndex(profileState, tid, slotIndex);
+    bool slot_found = getSlotIndex(state, tid, slotIndex);
     if (!slot_found) {
       // We're out of slots, no tracer is likely to succeed.
       break;
     }
 
-    auto& slot = profileState.stacks[slotIndex];
+    auto& slot = state.stacks[slotIndex];
 
     // Can finally occupy the slot
     if (sigsetjmp(slot.sig_jmp_buf, 1) == 0) {
@@ -238,7 +240,7 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
 
       slot.profilerType = tracerType;
       if (StackCollectionRetcode::STACK_OVERFLOW == ret) {
-        profileState.errStackOverflows.fetch_add(1);
+        state.errStackOverflows.fetch_add(1);
       }
 
       // Ignore TRACER_DISABLED errors for now and free the slot.
@@ -259,7 +261,7 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
             "Invariant violation - BUSY_WITH_METADATA to return code failed");
       }
 
-      maybeSignalReader();
+      profiler->maybeSignalReader();
       continue;
     } else {
       // We came from the longjmp in sigcatch_handler.
@@ -294,8 +296,6 @@ void SamplingProfiler::initSignalHandlers() {
   static constexpr auto kNumAccessSignals =
       sizeof(kAccessSignals) / sizeof(*kAccessSignals);
 
-  auto& state = getProfileState();
-
   if (sigmux_init(SIGPROF)) {
     throw_errno("Couldn't init sigmux for SIGPROF");
   }
@@ -310,7 +310,7 @@ void SamplingProfiler::initSignalHandlers() {
   }
 
   if (!sigmux_register(
-          &prof_set, SamplingProfiler::UnwindStackHandler, &state, 0)) {
+          &prof_set, SamplingProfiler::UnwindStackHandler, this, 0)) {
     throw_errno("sigmux_register for SIGPROF");
   }
 
@@ -334,7 +334,7 @@ void SamplingProfiler::initSignalHandlers() {
     }
   }
 
-  if (!sigmux_register(&sigset, SamplingProfiler::FaultHandler, &state, 0)) {
+  if (!sigmux_register(&sigset, SamplingProfiler::FaultHandler, this, 0)) {
     FBLOGE("Failed to register sigmux: %s", strerror(errno));
     throw_errno("Couldn't register sigmux for SIGSEGV/SIGBUS signal jail");
   }
@@ -342,11 +342,9 @@ void SamplingProfiler::initSignalHandlers() {
 
 void SamplingProfiler::flushStackTraces(
     std::unordered_set<uint64_t>& loggedFramesSet) {
-  auto& profileState = getProfileState();
-
   int processedCount = 0;
   for (size_t i = 0; i < MAX_STACKS_COUNT; i++) {
-    auto& slot = profileState.stacks[i];
+    auto& slot = state_.stacks[i];
 
     uint32_t slotStateCombo = slot.state.load();
     uint32_t slotState = slotStateCombo & 0xffff;
@@ -357,8 +355,8 @@ void SamplingProfiler::flushStackTraces(
     }
 
     // Ignore remains from a previous trace
-    if (slot.time > profileState.profileStartTime) {
-      auto& tracer = profileState.tracersMap[slot.profilerType];
+    if (slot.time > state_.profileStartTime) {
+      auto& tracer = state_.tracersMap[slot.profilerType];
       auto tid = slotStateCombo >> 16;
 
       if (StackCollectionRetcode::SUCCESS == slotState) {
@@ -376,7 +374,7 @@ void SamplingProfiler::flushStackTraces(
       if (JavaBaseTracer::isJavaTracer(slot.profilerType)) {
         for (int i = 0; i < slot.depth; i++) {
           bool expectedResetState = true;
-          if (profileState.resetFrameworkSymbols.compare_exchange_strong(
+          if (state_.resetFrameworkSymbols.compare_exchange_strong(
                   expectedResetState, false)) {
             loggedFramesSet.clear();
           }
@@ -429,59 +427,55 @@ void logProfilingErrAnnotation(int32_t key, uint16_t value) {
  * Initializes the profiler. Registers handler for custom defined SIGPROF
  * symbol which will collect traces and inits thread/process ids
  */
-bool SamplingProfiler::initialize(
-    alias_ref<jobject> ref,
-    jint available_tracers) {
-  auto& profileState = SamplingProfiler::getProfileState();
-
-  profileState.processId = getpid();
-  profileState.availableTracers = available_tracers;
+bool SamplingProfiler::initialize(uint32_t available_tracers) {
+  state_.processId = getpid();
+  state_.availableTracers = available_tracers;
 
   if (available_tracers & tracers::DALVIK) {
-    profileState.tracersMap[tracers::DALVIK] = std::make_shared<DalvikTracer>();
+    state_.tracersMap[tracers::DALVIK] = std::make_shared<DalvikTracer>();
   }
 
 #if HAS_NATIVE_TRACER && __arm__
   if (available_tracers & tracers::NATIVE) {
-    profileState.tracersMap[tracers::NATIVE] = std::make_shared<NativeTracer>();
+    state_.tracersMap[tracers::NATIVE] = std::make_shared<NativeTracer>();
   }
 #endif
 
   if (available_tracers & tracers::ART_UNWINDC_6_0) {
-    profileState.tracersMap[tracers::ART_UNWINDC_6_0] =
+    state_.tracersMap[tracers::ART_UNWINDC_6_0] =
         std::make_shared<ArtUnwindcTracer60>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
-    profileState.tracersMap[tracers::ART_UNWINDC_7_0_0] =
+    state_.tracersMap[tracers::ART_UNWINDC_7_0_0] =
         std::make_shared<ArtUnwindcTracer700>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_1_0) {
-    profileState.tracersMap[tracers::ART_UNWINDC_7_1_0] =
+    state_.tracersMap[tracers::ART_UNWINDC_7_1_0] =
         std::make_shared<ArtUnwindcTracer710>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_1_1) {
-    profileState.tracersMap[tracers::ART_UNWINDC_7_1_1] =
+    state_.tracersMap[tracers::ART_UNWINDC_7_1_1] =
         std::make_shared<ArtUnwindcTracer711>();
   }
 
   if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
-    profileState.tracersMap[tracers::ART_UNWINDC_7_1_2] =
+    state_.tracersMap[tracers::ART_UNWINDC_7_1_2] =
         std::make_shared<ArtUnwindcTracer712>();
   }
 
   if (available_tracers & tracers::JAVASCRIPT) {
     auto jsTracer = std::make_shared<JSTracer>();
-    profileState.tracersMap[tracers::JAVASCRIPT] = jsTracer;
+    state_.tracersMap[tracers::JAVASCRIPT] = jsTracer;
     ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
   }
 
-  SamplingProfiler::initSignalHandlers();
+  initSignalHandlers();
 
   // Init semaphore for stacks flush to the Ring Buffer
-  int res = sem_init(&profileState.slotsCounterSem, 0, 0);
+  int res = sem_init(&state_.slotsCounterSem, 0, 0);
   if (res != 0) {
     FBLOGV("Can not init semaphore: %s", strerror(errno));
     errno = 0;
@@ -497,12 +491,10 @@ bool SamplingProfiler::initialize(
  * Waits in a loop for semaphore wakeup and then flushes the current profiling
  * stacks.
  */
-void SamplingProfiler::loggerLoop(alias_ref<jobject> obj) {
+void SamplingProfiler::loggerLoop() {
   FBLOGV("Logger thread is going into the loop...");
-  auto& profileState = SamplingProfiler::getProfileState();
-
-  profileState.isLoggerLoopDone.store(false);
-  profileState.enoughStacks.store(false);
+  state_.isLoggerLoopDone.store(false);
+  state_.enoughStacks.store(false);
 
   // If we are targeting a subset of all the threads, then the setitimer logic
   // is not used; instead, we make this thread sleep the right amount of time
@@ -513,61 +505,58 @@ void SamplingProfiler::loggerLoop(alias_ref<jobject> obj) {
   std::unordered_set<uint64_t> loggedFramesSet{};
 
   do {
-    if (profileState.wallClockModeEnabled) {
-      usleep(profileState.samplingRateUs);
-      std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
-      for (int32_t tid : profileState.whitelistedThreads) {
-        res = syscall(__NR_tgkill, profileState.processId, tid, SIGPROF);
+    if (state_.wallClockModeEnabled) {
+      usleep(state_.samplingRateUs);
+      std::unique_lock<std::mutex> lock(state_.whitelistMtx);
+      for (int32_t tid : state_.whitelistedThreads) {
+        res = syscall(__NR_tgkill, state_.processId, tid, SIGPROF);
         if (res != 0 && errno == ESRCH) {
           // If the thread id is bad or no longer exists, remove it from our
           // whitelist.
-          profileState.whitelistedThreads.erase(tid);
+          state_.whitelistedThreads.erase(tid);
         }
-        if (res == 0 && profileState.enoughStacks.load()) {
-          SamplingProfiler::flushStackTraces(loggedFramesSet);
-          profileState.enoughStacks.store(false);
+        if (res == 0 && state_.enoughStacks.load()) {
+          flushStackTraces(loggedFramesSet);
+          state_.enoughStacks.store(false);
         }
       }
     } else {
       // setitimer (i.e. every thread) case
-      res = sem_wait(&profileState.slotsCounterSem);
+      res = sem_wait(&state_.slotsCounterSem);
       if (res == 0) {
-        SamplingProfiler::flushStackTraces(loggedFramesSet);
+        flushStackTraces(loggedFramesSet);
       }
     }
-    done = profileState.isLoggerLoopDone.load();
+    done = state_.isLoggerLoopDone.load();
   } while (!done && (res == 0 || errno == EINTR));
 
   FBLOGV("Logger thread is shutting down...");
 }
 
 bool SamplingProfiler::startProfiling(
-    fbjni::alias_ref<jobject> obj,
     int requested_tracers,
     int sampling_rate_ms,
     bool wall_clock_mode_enabled) {
   FBLOGV("Start profiling");
-  auto& profileState = getProfileState();
 
-  profileState.profileStartTime = monotonicTime();
-  profileState.currentTracers =
-      profileState.availableTracers & requested_tracers;
+  state_.profileStartTime = monotonicTime();
+  state_.currentTracers = state_.availableTracers & requested_tracers;
 
-  if (profileState.currentTracers == 0) {
+  if (state_.currentTracers == 0) {
     return false;
   }
 
-  profileState.samplingRateUs = sampling_rate_ms * 1000;
-  profileState.wallClockModeEnabled = wall_clock_mode_enabled;
+  state_.samplingRateUs = sampling_rate_ms * 1000;
+  state_.wallClockModeEnabled = wall_clock_mode_enabled;
 
-  for (const auto& tracerEntry : profileState.tracersMap) {
-    if (tracerEntry.first & profileState.currentTracers) {
+  for (const auto& tracerEntry : state_.tracersMap) {
+    if (tracerEntry.first & state_.currentTracers) {
       tracerEntry.second->startTracing();
     }
   }
 
   // Call setitimer only if not in "single thread sampling" mode
-  if (!profileState.wallClockModeEnabled) {
+  if (!state_.wallClockModeEnabled) {
     auto sampleRateMicros = sampling_rate_ms * 1000;
     // Generate random initial delay. Used to calculate the initial trace delay
     // to avoid sampling bias.
@@ -589,7 +578,7 @@ bool SamplingProfiler::startProfiling(
     }
   }
 
-  FBLOGV("Current tracers mask: %d", profileState.currentTracers);
+  FBLOGV("Current tracers mask: %d", state_.currentTracers);
   return true;
 }
 
@@ -600,12 +589,10 @@ bool SamplingProfiler::startProfiling(
  * we could reuse. Until this is possibly written custom by redex, we'll use
  * checksum for the dex identification which should collide rare.
  */
-void SamplingProfiler::stopProfiling(fbjni::alias_ref<jobject> obj) {
-  auto& profileState = getProfileState();
-
+void SamplingProfiler::stopProfiling() {
   FBLOGV("Stopping profiling");
 
-  if (!profileState.wallClockModeEnabled) {
+  if (!state_.wallClockModeEnabled) {
     itimerval tv;
     tv.it_value.tv_sec = 0;
     tv.it_value.tv_usec = 0;
@@ -619,64 +606,55 @@ void SamplingProfiler::stopProfiling(fbjni::alias_ref<jobject> obj) {
       abort();
     }
 
-    profileState.isLoggerLoopDone.store(true);
-    res = sem_post(&profileState.slotsCounterSem);
+    state_.isLoggerLoopDone.store(true);
+    res = sem_post(&state_.slotsCounterSem);
     if (res != 0) {
       FBLOGV("Can not execute sem_post for logger thread");
       errno = 0;
     }
   } else {
-    profileState.isLoggerLoopDone.store(true);
+    state_.isLoggerLoopDone.store(true);
   }
 
   // Logging errors
   logProfilingErrAnnotation(
-      QuickLogConstants::PROF_ERR_SIG_CRASHES, profileState.errSigCrashes);
+      QuickLogConstants::PROF_ERR_SIG_CRASHES, state_.errSigCrashes);
   logProfilingErrAnnotation(
-      QuickLogConstants::PROF_ERR_SLOT_MISSES, profileState.errSlotMisses);
+      QuickLogConstants::PROF_ERR_SLOT_MISSES, state_.errSlotMisses);
   logProfilingErrAnnotation(
-      QuickLogConstants::PROF_ERR_STACK_OVERFLOWS,
-      profileState.errStackOverflows);
+      QuickLogConstants::PROF_ERR_STACK_OVERFLOWS, state_.errStackOverflows);
 
   FBLOGV(
       "Stack overflows = %d, Sig crashes = %d, Slot misses = %d",
-      profileState.errStackOverflows.load(),
-      profileState.errSigCrashes.load(),
-      profileState.errSlotMisses.load());
+      state_.errStackOverflows.load(),
+      state_.errSigCrashes.load(),
+      state_.errSlotMisses.load());
 
-  profileState.currentSlot = 0;
-  profileState.errSigCrashes = 0;
-  profileState.errSlotMisses = 0;
-  profileState.errStackOverflows = 0;
+  state_.currentSlot = 0;
+  state_.errSigCrashes = 0;
+  state_.errSlotMisses = 0;
+  state_.errStackOverflows = 0;
 
-  for (const auto& tracerEntry : profileState.tracersMap) {
-    if (tracerEntry.first & profileState.currentTracers) {
+  for (const auto& tracerEntry : state_.tracersMap) {
+    if (tracerEntry.first & state_.currentTracers) {
       tracerEntry.second->stopTracing();
     }
   }
 }
 
-void SamplingProfiler::addToWhitelist(
-    fbjni::alias_ref<jobject> obj,
-    int targetThread) {
-  auto& profileState = getProfileState();
-  std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
-  profileState.whitelistedThreads.insert(static_cast<int32_t>(targetThread));
+void SamplingProfiler::addToWhitelist(int targetThread) {
+  std::unique_lock<std::mutex> lock(state_.whitelistMtx);
+  state_.whitelistedThreads.insert(static_cast<int32_t>(targetThread));
 }
 
-void SamplingProfiler::removeFromWhitelist(
-    fbjni::alias_ref<jobject> obj,
-    int targetThread) {
-  auto& profileState = getProfileState();
-  std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
-  profileState.whitelistedThreads.erase(targetThread);
+void SamplingProfiler::removeFromWhitelist(int targetThread) {
+  std::unique_lock<std::mutex> lock(state_.whitelistMtx);
+  state_.whitelistedThreads.erase(targetThread);
 }
 
-void SamplingProfiler::resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj) {
-  auto& profileState = getProfileState();
-
+void SamplingProfiler::resetFrameworkNamesSet() {
   // Let the logger loop know we should reset our cache of frames
-  profileState.resetFrameworkSymbols.store(true);
+  state_.resetFrameworkSymbols.store(true);
 }
 
 } // namespace profiler

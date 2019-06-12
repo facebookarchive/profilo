@@ -123,34 +123,33 @@ struct ProfileState {
 
 class SamplingProfiler {
  public:
-  static bool initialize(fbjni::alias_ref<jobject> ref, jint available_tracers);
+  static SamplingProfiler& getInstance();
 
-  static void loggerLoop(fbjni::alias_ref<jobject> obj);
+  bool initialize(uint32_t available_tracers);
 
-  static void stopProfiling(fbjni::alias_ref<jobject> obj);
+  void loggerLoop();
 
-  static bool startProfiling(
-      fbjni::alias_ref<jobject> obj,
+  void stopProfiling();
+
+  bool startProfiling(
       int requested_providers,
       int sampling_rate_ms,
       bool wall_clock_mode_enabled);
 
-  static void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
+  void addToWhitelist(int targetThread);
 
-  static void removeFromWhitelist(
-      fbjni::alias_ref<jobject> obj,
-      int targetThread);
+  void removeFromWhitelist(int targetThread);
 
-  static void resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj);
+  void resetFrameworkNamesSet();
 
  private:
-  static ProfileState& getProfileState();
+  ProfileState state_;
 
-  static void initSignalHandlers();
+  void initSignalHandlers();
 
-  static void maybeSignalReader();
+  void maybeSignalReader();
 
-  static void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet);
+  void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet);
 
   static sigmux_action FaultHandler(sigmux_siginfo*, void*);
 

@@ -32,15 +32,46 @@ const char* StackFrameThreadType =
 const char* StackTraceWhitelist =
     "com/facebook/profilo/provider/stacktrace/StackTraceWhitelist";
 
+using facebook::profilo::profiler::SamplingProfiler;
 namespace {
 
-int32_t getSystemClockTickIntervalMs(facebook::jni::alias_ref<jobject> obj) {
+int32_t getSystemClockTickIntervalMs(facebook::jni::alias_ref<jobject>) {
   return systemClockTickIntervalMs();
 }
 
-} // namespace
+static jboolean nativeInitialize(fbjni::alias_ref<jobject>, jint arg) {
+  return SamplingProfiler::getInstance().initialize(arg);
+}
 
-using facebook::profilo::profiler::SamplingProfiler;
+static void nativeLoggerLoop(fbjni::alias_ref<jobject>) {
+  return SamplingProfiler::getInstance().loggerLoop();
+}
+
+static void nativeStopProfiling(fbjni::alias_ref<jobject>) {
+  return SamplingProfiler::getInstance().stopProfiling();
+}
+
+static jboolean nativeStartProfiling(
+    fbjni::alias_ref<jobject>,
+    jint requested_tracers,
+    jint sampling_rate_ms,
+    jboolean wall_clock_mode) {
+  return SamplingProfiler::getInstance().startProfiling(
+      requested_tracers, sampling_rate_ms, wall_clock_mode);
+}
+
+static void nativeResetFrameworkNamesSet(fbjni::alias_ref<jobject>) {
+  return SamplingProfiler::getInstance().resetFrameworkNamesSet();
+}
+
+static void nativeAddToWhitelist(fbjni::alias_ref<jobject>, jint tid) {
+  SamplingProfiler::getInstance().addToWhitelist(tid);
+}
+
+static void nativeRemoveFromWhitelist(fbjni::alias_ref<jobject>, jint tid) {
+  SamplingProfiler::getInstance().removeFromWhitelist(tid);
+}
+} // namespace
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return facebook::xplat::initialize(vm, [] {
@@ -49,20 +80,12 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
     fbjni::registerNatives(
         CPUProfilerType,
         {
+            makeNativeMethod("nativeInitialize", nativeInitialize),
+            makeNativeMethod("nativeLoggerLoop", nativeLoggerLoop),
+            makeNativeMethod("nativeStopProfiling", nativeStopProfiling),
+            makeNativeMethod("nativeStartProfiling", nativeStartProfiling),
             makeNativeMethod(
-                "nativeInitialize", "(I)Z", SamplingProfiler::initialize),
-            makeNativeMethod(
-                "nativeLoggerLoop", "()V", SamplingProfiler::loggerLoop),
-            makeNativeMethod(
-                "nativeStopProfiling", "()V", SamplingProfiler::stopProfiling),
-            makeNativeMethod(
-                "nativeStartProfiling",
-                "(IIZ)Z",
-                SamplingProfiler::startProfiling),
-            makeNativeMethod(
-                "nativeResetFrameworkNamesSet",
-                "()V",
-                SamplingProfiler::resetFrameworkNamesSet),
+                "nativeResetFrameworkNamesSet", nativeResetFrameworkNamesSet),
         });
     fbjni::registerNatives(
         StackFrameThreadType,
@@ -74,14 +97,9 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
     fbjni::registerNatives(
         StackTraceWhitelist,
         {
+            makeNativeMethod("nativeAddToWhitelist", nativeAddToWhitelist),
             makeNativeMethod(
-                "nativeAddToWhitelist",
-                "(I)V",
-                SamplingProfiler::addToWhitelist),
-            makeNativeMethod(
-                "nativeRemoveFromWhitelist",
-                "(I)V",
-                SamplingProfiler::removeFromWhitelist),
+                "nativeRemoveFromWhitelist", nativeRemoveFromWhitelist),
         });
 
     artcompat::registerNatives();
