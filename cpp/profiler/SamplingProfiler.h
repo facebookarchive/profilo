@@ -88,8 +88,6 @@ struct ProfileState {
   std::atomic<uint16_t> errSlotMisses;
   std::atomic<uint16_t> errStackOverflows;
 
-  struct sigaction oldSigprofAct;
-
   int64_t profileStartTime;
   std::atomic<uint32_t> fullSlotsCounter;
   sem_t slotsCounterSem;
