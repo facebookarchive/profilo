@@ -17,7 +17,9 @@
 #pragma once
 
 #include <dlfcn.h>
+#ifdef ANDROID
 #include <fb/Build.h>
+#endif
 #include <fb/log.h>
 #include <linux_syscall_support.h>
 #include <sigmux.h>
@@ -49,6 +51,7 @@ int libc_sigaction(
 } // namespace
 
 inline void EnsureSigmuxOverridesArtFaultHandler() {
+#ifdef ANDROID
   static constexpr auto kL = 21;
   static constexpr auto kNMR1 = 25;
   auto sdk = build::Build::getAndroidSdk();
@@ -88,6 +91,7 @@ inline void EnsureSigmuxOverridesArtFaultHandler() {
       sigmux_set_real_sigaction(old_fn);
     }
   }
+#endif
 }
 
 } // namespace sigmuxsetup

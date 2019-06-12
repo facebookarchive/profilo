@@ -145,3 +145,24 @@ profilo_cxx_test(
         profilo_path("cpp/util:util"),
     ],
 )
+
+profilo_cxx_test(
+    name = "sampling_profiler",
+    srcs = [
+        "SamplingProfilerTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-pthread",
+        "-ldl",
+    ],
+    deps = [
+        profilo_path("cpp/profiler:profiler"),
+        profilo_path("cpp/logger:logger_static"),
+    ],
+)

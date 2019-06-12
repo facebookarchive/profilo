@@ -29,34 +29,31 @@
 #include <random>
 #include <string>
 
-#include <fb/Build.h>
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
-#include <sigmux.h>
 
+#include <profiler/ArtUnwindcTracer_600.h>
+#include <profiler/ArtUnwindcTracer_700.h>
+#include <profiler/ArtUnwindcTracer_710.h>
+#include <profiler/ArtUnwindcTracer_711.h>
+#include <profiler/ArtUnwindcTracer_712.h>
+#include <profiler/DalvikTracer.h>
+#include <profiler/ExternalTracerManager.h>
+#include <profiler/JSTracer.h>
+#include <profiler/JavaBaseTracer.h>
 #include <profilo/ExternalApi.h>
-#include "DalvikTracer.h"
-#include "profiler/ArtUnwindcTracer_600.h"
-#include "profiler/ArtUnwindcTracer_700.h"
-#include "profiler/ArtUnwindcTracer_710.h"
-#include "profiler/ArtUnwindcTracer_711.h"
-#include "profiler/ArtUnwindcTracer_712.h"
-#include "profiler/ExternalTracerManager.h"
-#include "profiler/JSTracer.h"
-#include "profiler/JavaBaseTracer.h"
 
 #if HAS_NATIVE_TRACER
 #include <profiler/NativeTracer.h>
 #endif
 
-#include "profilo/LogEntry.h"
-#include "profilo/Logger.h"
-#include "profilo/TraceProviders.h"
+#include <profilo/LogEntry.h>
+#include <profilo/Logger.h>
+#include <profilo/TraceProviders.h>
 
-#include "util/common.h"
+#include <util/common.h>
 
 using namespace facebook::jni;
-using namespace facebook::profilo::util;
 
 namespace facebook {
 namespace profilo {
@@ -483,50 +480,12 @@ void logProfilingErrAnnotation(int32_t key, uint16_t value) {
  * Initializes the profiler. Registers handler for custom defined SIGPROF
  * symbol which will collect traces and inits thread/process ids
  */
-bool SamplingProfiler::initialize(uint32_t available_tracers) {
+bool SamplingProfiler::initialize(
+    int32_t available_tracers,
+    std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers) {
   state_.processId = getpid();
   state_.availableTracers = available_tracers;
-
-  if (available_tracers & tracers::DALVIK) {
-    state_.tracersMap[tracers::DALVIK] = std::make_shared<DalvikTracer>();
-  }
-
-#if HAS_NATIVE_TRACER && __arm__
-  if (available_tracers & tracers::NATIVE) {
-    state_.tracersMap[tracers::NATIVE] = std::make_shared<NativeTracer>();
-  }
-#endif
-
-  if (available_tracers & tracers::ART_UNWINDC_6_0) {
-    state_.tracersMap[tracers::ART_UNWINDC_6_0] =
-        std::make_shared<ArtUnwindcTracer60>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
-    state_.tracersMap[tracers::ART_UNWINDC_7_0_0] =
-        std::make_shared<ArtUnwindcTracer700>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_1_0) {
-    state_.tracersMap[tracers::ART_UNWINDC_7_1_0] =
-        std::make_shared<ArtUnwindcTracer710>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_1_1) {
-    state_.tracersMap[tracers::ART_UNWINDC_7_1_1] =
-        std::make_shared<ArtUnwindcTracer711>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
-    state_.tracersMap[tracers::ART_UNWINDC_7_1_2] =
-        std::make_shared<ArtUnwindcTracer712>();
-  }
-
-  if (available_tracers & tracers::JAVASCRIPT) {
-    auto jsTracer = std::make_shared<JSTracer>();
-    state_.tracersMap[tracers::JAVASCRIPT] = jsTracer;
-    ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
-  }
+  state_.tracersMap = std::move(tracers);
 
   // Init semaphore for stacks flush to the Ring Buffer
   int res = sem_init(&state_.slotsCounterSem, 0, 0);
@@ -740,6 +699,51 @@ void SamplingProfiler::removeFromWhitelist(int targetThread) {
 void SamplingProfiler::resetFrameworkNamesSet() {
   // Let the logger loop know we should reset our cache of frames
   state_.resetFrameworkSymbols.store(true);
+}
+
+std::unordered_map<int32_t, std::shared_ptr<BaseTracer>>
+SamplingProfiler::ComputeAvailableTracers(uint32_t available_tracers) {
+  std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers;
+  if (available_tracers & tracers::DALVIK) {
+    tracers[tracers::DALVIK] = std::make_shared<DalvikTracer>();
+  }
+
+#if HAS_NATIVE_TRACER && __arm__
+  if (available_tracers & tracers::NATIVE) {
+    tracers[tracers::NATIVE] = std::make_shared<NativeTracer>();
+  }
+#endif
+
+  if (available_tracers & tracers::ART_UNWINDC_6_0) {
+    tracers[tracers::ART_UNWINDC_6_0] = std::make_shared<ArtUnwindcTracer60>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
+    tracers[tracers::ART_UNWINDC_7_0_0] =
+        std::make_shared<ArtUnwindcTracer700>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_0) {
+    tracers[tracers::ART_UNWINDC_7_1_0] =
+        std::make_shared<ArtUnwindcTracer710>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_1) {
+    tracers[tracers::ART_UNWINDC_7_1_1] =
+        std::make_shared<ArtUnwindcTracer711>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
+    tracers[tracers::ART_UNWINDC_7_1_2] =
+        std::make_shared<ArtUnwindcTracer712>();
+  }
+
+  if (available_tracers & tracers::JAVASCRIPT) {
+    auto jsTracer = std::make_shared<JSTracer>();
+    tracers[tracers::JAVASCRIPT] = jsTracer;
+    ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
+  }
+  return tracers;
 }
 
 } // namespace profiler

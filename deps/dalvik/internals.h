@@ -16,7 +16,8 @@
 
 #pragma once
 
-#include <unistd.h>
+#include <inttypes.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {

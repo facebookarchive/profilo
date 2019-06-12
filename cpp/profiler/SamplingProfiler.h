@@ -28,14 +28,9 @@
 #endif
 
 #include <fbjni/fbjni.h>
-
+#include <profiler/BaseTracer.h>
 #include <profiler/Constants.h>
-
-#include "DalvikTracer.h"
-#include "profilo/LogEntry.h"
-#include "util/ProcFs.h"
-
-#include <profilo/ExternalApi.h>
+#include <profilo/ExternalApiGlue.h>
 
 namespace fbjni = facebook::jni;
 
@@ -126,7 +121,9 @@ class SamplingProfiler {
  public:
   static SamplingProfiler& getInstance();
 
-  bool initialize(uint32_t available_tracers);
+  bool initialize(
+      int32_t available_tracers,
+      std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers);
 
   void loggerLoop();
 
@@ -142,6 +139,9 @@ class SamplingProfiler {
   void removeFromWhitelist(int targetThread);
 
   void resetFrameworkNamesSet();
+
+  static std::unordered_map<int32_t, std::shared_ptr<BaseTracer>>
+  ComputeAvailableTracers(uint32_t available_tracers);
 
  private:
   ProfileState state_;
@@ -161,6 +161,8 @@ class SamplingProfiler {
   static sigmux_action FaultHandler(sigmux_siginfo*, void*);
 
   static sigmux_action UnwindStackHandler(sigmux_siginfo*, void*);
+
+  friend class SamplingProfilerTestAccessor;
 };
 
 } // namespace profiler

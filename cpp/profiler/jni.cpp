@@ -40,7 +40,10 @@ int32_t getSystemClockTickIntervalMs(facebook::jni::alias_ref<jobject>) {
 }
 
 static jboolean nativeInitialize(fbjni::alias_ref<jobject>, jint arg) {
-  return SamplingProfiler::getInstance().initialize(arg);
+  auto available_tracers = static_cast<uint32_t>(arg);
+  return SamplingProfiler::getInstance().initialize(
+      available_tracers,
+      SamplingProfiler::ComputeAvailableTracers(available_tracers));
 }
 
 static void nativeLoggerLoop(fbjni::alias_ref<jobject>) {
