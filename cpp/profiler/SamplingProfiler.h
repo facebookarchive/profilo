@@ -46,8 +46,20 @@ namespace profiler {
 enum StackSlotState {
   FREE = StackCollectionRetcode::MAXVAL + 1,
   BUSY,
+  BUSY_WITH_METADATA,
 };
 
+//
+// Slots are preallocated storage for the sampling profiler. They
+// are necessary because unwinding happens in a signal context and thus
+// allocation via the traditional APIs is not possible.
+//
+// The slot state encodes the tid in the high 16 bits and the
+// state (StackSlotState) in the lower 16 bits.
+//
+// Each slot goes through a lifecycle:
+//   FREE -> BUSY -> BUSY_WITH_METADATA -> {StackCollectionRetcode}
+//
 struct StackSlot {
   std::atomic<uint32_t> state;
   uint8_t depth;

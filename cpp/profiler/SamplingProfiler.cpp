@@ -16,6 +16,7 @@
 
 #include "SamplingProfiler.h"
 
+#include <abort_with_reason.h>
 #include <errno.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -122,7 +123,7 @@ sigmux_action sigcatch_handler(
   }
 
   int32_t tid = threadID();
-  uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
+  uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
 
   // We know the thread that raised the signal was unwinding, find its slot and
   // jump to the saved state there.
@@ -163,9 +164,19 @@ bool getSlotIndex(ProfileState& profileState, uint32_t tid, uint32_t& outSlot) {
     auto nextSlotIndex = (slotIndex + i) % MAX_STACKS_COUNT;
     auto& slot = profileState.stacks[nextSlotIndex];
     uint32_t expected = StackSlotState::FREE;
-    if (slot.state.compare_exchange_strong(
-            expected, (tid << 16) | StackSlotState::BUSY)) {
+    uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
+    if (slot.state.compare_exchange_strong(expected, targetBusyState)) {
       outSlot = nextSlotIndex;
+
+      slot.time = monotonicTime();
+      memset(&slot.sig_jmp_buf, 0, sizeof(slot.sig_jmp_buf));
+
+      expected = targetBusyState;
+      targetBusyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
+      if (!slot.state.compare_exchange_strong(expected, targetBusyState)) {
+        abortWithReason(
+            "Invariant violation - BUSY to BUSY_WITH_METADATA failed");
+      }
       return true;
     }
   }
@@ -179,21 +190,21 @@ sigmux_action sigprof_handler(
     void* handler_data) {
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
   auto tid = threadID();
-  uint32_t busyState = (tid << 16) | StackSlotState::BUSY;
+  uint32_t busyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
 
   if (threadIsUnwinding(profileState)) {
     uint32_t slotIndex;
     bool slot_found = getSlotIndex(profileState, tid, slotIndex);
     if (slot_found) {
       auto& slot = profileState.stacks[slotIndex];
-      // Slot is in BUSY state, so it's OK to modify it
-      slot.time = monotonicTime();
+      // Slot is in BUSY_WITH_METADATA state, so it's OK to modify it
       // This error is not associated with a specific profiler
       slot.profilerType = 0;
       if (!slot.state.compare_exchange_strong(
               busyState, (tid << 16) | StackCollectionRetcode::NESTED_UNWIND)) {
         // Ordering violation
-        abort();
+        abortWithReason(
+            "Invariant violation - BUSY_WITH_METADATA to NESTED_UNWIND failed");
       }
     }
 
@@ -248,7 +259,6 @@ sigmux_action sigprof_handler(
             (uint8_t)MAX_STACK_DEPTH);
       }
 
-      slot.time = monotonicTime();
       slot.profilerType = tracerType;
       if (StackCollectionRetcode::STACK_OVERFLOW == ret) {
         profileState.errStackOverflows.fetch_add(1);
@@ -259,7 +269,8 @@ sigmux_action sigprof_handler(
       if (StackCollectionRetcode::TRACER_DISABLED == ret) {
         if (!slot.state.compare_exchange_strong(
                 busyState, StackSlotState::FREE)) {
-          abort();
+          abortWithReason(
+              "Invariant violation - BUSY_WITH_METADATA to FREE failed");
         }
         continue;
       }
@@ -267,7 +278,8 @@ sigmux_action sigprof_handler(
       if (!slot.state.compare_exchange_strong(busyState, (tid << 16) | ret)) {
         // Slot was overwritten by another thread.
         // This is an ordering violation, so abort.
-        abort();
+        abortWithReason(
+            "Invariant violation - BUSY_WITH_METADATA to return code failed");
       }
 
       maybeSignalReader();
@@ -281,7 +293,8 @@ sigmux_action sigprof_handler(
       if (!slot.state.compare_exchange_strong(
               busyState,
               (tid << 16) | StackCollectionRetcode::SIGNAL_INTERRUPT)) {
-        abort();
+        abortWithReason(
+            "Invariant violation - BUSY_WITH_METADATA to SIGNAL_INTERRUPT failed");
       }
       break;
     }
@@ -360,7 +373,8 @@ void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet) {
     uint32_t slotStateCombo = slot.state.load();
     uint32_t slotState = slotStateCombo & 0xffff;
     if (slotState == StackSlotState::FREE ||
-        slotState == StackSlotState::BUSY) {
+        slotState == StackSlotState::BUSY ||
+        slotState == StackSlotState::BUSY_WITH_METADATA) {
       continue;
     }
 
@@ -392,8 +406,8 @@ void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet) {
           if (loggedFramesSet.find(slot.frames[i]) == loggedFramesSet.end() &&
               JavaBaseTracer::isFramework(slot.class_descriptors[i])) {
             StandardEntry entry{};
-            entry.tid = threadID();
-            entry.timestamp = monotonicTime();
+            entry.tid = tid;
+            entry.timestamp = slot.time;
             entry.type = entries::JAVA_FRAME_NAME;
             entry.extra = slot.frames[i];
             int32_t id = Logger::get().write(std::move(entry));
