@@ -133,12 +133,154 @@ class SamplingProfilerTest : public ::testing::Test {
     tracer_->setCollectStackFn(std::move(tracer));
   }
 
+  void runLoggingTest(
+      TracerStdFunction tracer,
+      StackCollectionRetcode error,
+      int expected_count = 1);
+
+  void runLoggingTest(
+      TracerStdFunction tracer,
+      std::function<bool(StackSlot const&)> slot_predicate,
+      int expected_count = 1);
+
   SamplingProfiler profiler;
   SamplingProfilerTestAccessor access{profiler};
 
  private:
   std::shared_ptr<TestTracer> tracer_;
 };
+
+void SamplingProfilerTest::runLoggingTest(
+    TracerStdFunction tracer,
+    StackCollectionRetcode error,
+    int expected_count) {
+  runLoggingTest(
+      tracer,
+      [error](StackSlot const& slot) {
+        return (slot.state.load() & 0xffff) == error;
+      },
+      expected_count);
+}
+
+void SamplingProfilerTest::runLoggingTest(
+    TracerStdFunction tracer,
+    std::function<bool(StackSlot const&)> slot_predicate,
+    int expected_count) {
+  // This test a SIGSEGV during tracing leads to an error entry being written.
+  enum Sequence {
+    START = 0,
+    START_WORKER_THREAD,
+    SEND_PROFILING_SIGNAL,
+    START_TRACER,
+    END_WORKER_THREAD,
+    STOP_PROFILING,
+    END,
+  };
+  test::TestSequencer sequencer{START, END};
+
+  ASSERT_TRUE(profiler.startProfiling(kTestTracer, 1800 * 1000, false));
+
+  std::thread worker_thread([&] {
+    sequencer.waitAndAdvance(START_WORKER_THREAD, SEND_PROFILING_SIGNAL);
+    sequencer.waitAndAdvance(END_WORKER_THREAD, STOP_PROFILING);
+  });
+  auto tracer_wrapper =
+      std::make_unique<TracerStdFunction>([&](ucontext_t* ucontext,
+                                              int64_t* frames,
+                                              uint8_t& depth,
+                                              uint8_t max_depth) {
+        sequencer.waitAndAdvance(START_TRACER, END_WORKER_THREAD);
+        return tracer(ucontext, frames, depth, max_depth);
+      });
+  SetTracer(std::move(tracer_wrapper));
+
+  // begin test
+  sequencer.advance(START_WORKER_THREAD);
+
+  sequencer.waitFor(SEND_PROFILING_SIGNAL);
+  pthread_kill(worker_thread.native_handle(), SIGPROF);
+  sequencer.advance(START_TRACER);
+
+  sequencer.waitFor(STOP_PROFILING);
+  profiler.stopProfiling();
+  sequencer.advance(END);
+
+  EXPECT_EQ(access.countSlotsWithPredicate(slot_predicate), expected_count)
+      << "Incorrect number of slots matching the predicate";
+
+  worker_thread.join();
+}
+
+TEST_F(SamplingProfilerTest, errorLoggingFaultDuringTracing) {
+  runLoggingTest(
+      [](ucontext_t*, int64_t*, uint8_t&, uint8_t) {
+        raise(SIGSEGV);
+        return StackCollectionRetcode::SUCCESS;
+      },
+      StackCollectionRetcode::SIGNAL_INTERRUPT);
+}
+
+TEST_F(SamplingProfilerTest, errorLoggingEmptyStack) {
+  runLoggingTest(
+      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+        return StackCollectionRetcode::EMPTY_STACK;
+      },
+      StackCollectionRetcode::EMPTY_STACK);
+}
+
+TEST_F(SamplingProfilerTest, errorLoggingNoStackForThread) {
+  runLoggingTest(
+      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+        return StackCollectionRetcode::NO_STACK_FOR_THREAD;
+      },
+      StackCollectionRetcode::NO_STACK_FOR_THREAD);
+}
+
+TEST_F(SamplingProfilerTest, errorLoggingStackOverflow) {
+  runLoggingTest(
+      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+        return StackCollectionRetcode::STACK_OVERFLOW;
+      },
+      StackCollectionRetcode::STACK_OVERFLOW);
+}
+
+TEST_F(SamplingProfilerTest, noErrorLoggingForTracerDisabled) {
+  runLoggingTest(
+      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+        return StackCollectionRetcode::TRACER_DISABLED;
+      },
+      StackCollectionRetcode::TRACER_DISABLED,
+      0);
+}
+
+TEST_F(SamplingProfilerTest, basicStackLogging) {
+  constexpr int64_t MAGIC_FRAME = 0xfaceb00c;
+  runLoggingTest(
+      [](ucontext_t*, int64_t* frames, uint8_t& depth, uint8_t max_depth) {
+        for (int i = 0; i < max_depth; ++i) {
+          frames[i] = MAGIC_FRAME;
+        }
+        depth = max_depth;
+        return StackCollectionRetcode::SUCCESS;
+      },
+      [](StackSlot const& slot) {
+        if ((slot.state.load() & 0xffff) != StackCollectionRetcode::SUCCESS) {
+          return false;
+        }
+        if (slot.depth != MAX_STACK_DEPTH) {
+          return false;
+        }
+        if (slot.profilerType != kTestTracer) {
+          return false;
+        }
+        for (int i = 0; i < slot.depth; ++i) {
+          if (slot.frames[i] != MAGIC_FRAME) {
+            return false;
+          }
+        }
+        return true;
+      });
+}
 
 TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
   // This test ensures that stopProfiling waits for currently executing fault
