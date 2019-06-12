@@ -18,7 +18,7 @@
 
 #include <semaphore.h>
 #include <setjmp.h>
-#include <signal.h>
+#include <sigmux.h>
 #include <mutex>
 #include <unordered_map>
 #include <unordered_set>
@@ -72,6 +72,7 @@ struct StackSlot {
 #ifdef PROFILER_COLLECT_PC
   u2 pcs[MAX_STACK_DEPTH];
 #endif
+
   StackSlot() : state(StackSlotState::FREE), depth(0) {}
 };
 
@@ -119,17 +120,42 @@ struct ProfileState {
 /**
  * Exported functions
  */
-bool initialize(fbjni::alias_ref<jobject> ref, jint available_tracers);
-void loggerLoop(fbjni::alias_ref<jobject> obj);
-void stopProfiling(fbjni::alias_ref<jobject> obj);
-bool startProfiling(
-    fbjni::alias_ref<jobject> obj,
-    int requested_providers,
-    int sampling_rate_ms,
-    bool wall_clock_mode_enabled);
-void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
-void removeFromWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
-void resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj);
+
+class SamplingProfiler {
+ public:
+  static bool initialize(fbjni::alias_ref<jobject> ref, jint available_tracers);
+
+  static void loggerLoop(fbjni::alias_ref<jobject> obj);
+
+  static void stopProfiling(fbjni::alias_ref<jobject> obj);
+
+  static bool startProfiling(
+      fbjni::alias_ref<jobject> obj,
+      int requested_providers,
+      int sampling_rate_ms,
+      bool wall_clock_mode_enabled);
+
+  static void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread);
+
+  static void removeFromWhitelist(
+      fbjni::alias_ref<jobject> obj,
+      int targetThread);
+
+  static void resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj);
+
+ private:
+  static ProfileState& getProfileState();
+
+  static void initSignalHandlers();
+
+  static void maybeSignalReader();
+
+  static void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet);
+
+  static sigmux_action FaultHandler(sigmux_siginfo*, void*);
+
+  static sigmux_action UnwindStackHandler(sigmux_siginfo*, void*);
+};
 
 } // namespace profiler
 } // namespace profilo

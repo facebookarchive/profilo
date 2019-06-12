@@ -40,6 +40,8 @@ int32_t getSystemClockTickIntervalMs(facebook::jni::alias_ref<jobject> obj) {
 
 } // namespace
 
+using facebook::profilo::profiler::SamplingProfiler;
+
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return facebook::xplat::initialize(vm, [] {
     sigmuxsetup::EnsureSigmuxOverridesArtFaultHandler();
@@ -47,16 +49,20 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
     fbjni::registerNatives(
         CPUProfilerType,
         {
-            makeNativeMethod("nativeInitialize", "(I)Z", profiler::initialize),
-            makeNativeMethod("nativeLoggerLoop", "()V", profiler::loggerLoop),
             makeNativeMethod(
-                "nativeStopProfiling", "()V", profiler::stopProfiling),
+                "nativeInitialize", "(I)Z", SamplingProfiler::initialize),
             makeNativeMethod(
-                "nativeStartProfiling", "(IIZ)Z", profiler::startProfiling),
+                "nativeLoggerLoop", "()V", SamplingProfiler::loggerLoop),
+            makeNativeMethod(
+                "nativeStopProfiling", "()V", SamplingProfiler::stopProfiling),
+            makeNativeMethod(
+                "nativeStartProfiling",
+                "(IIZ)Z",
+                SamplingProfiler::startProfiling),
             makeNativeMethod(
                 "nativeResetFrameworkNamesSet",
                 "()V",
-                profiler::resetFrameworkNamesSet),
+                SamplingProfiler::resetFrameworkNamesSet),
         });
     fbjni::registerNatives(
         StackFrameThreadType,
@@ -69,11 +75,13 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         StackTraceWhitelist,
         {
             makeNativeMethod(
-                "nativeAddToWhitelist", "(I)V", profiler::addToWhitelist),
+                "nativeAddToWhitelist",
+                "(I)V",
+                SamplingProfiler::addToWhitelist),
             makeNativeMethod(
                 "nativeRemoveFromWhitelist",
                 "(I)V",
-                profiler::removeFromWhitelist),
+                SamplingProfiler::removeFromWhitelist),
         });
 
     artcompat::registerNatives();

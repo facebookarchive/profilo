@@ -63,20 +63,6 @@ namespace profilo {
 namespace profiler {
 
 namespace {
-
-// Function wrapper around the static profile state to avoid
-// using a DSO constructor.
-ProfileState& getProfileState() {
-  //
-  // Despite the fact that this is accessed from a signal handler (this routine
-  // is not async-signal safe due to the initialization lock for this variable),
-  // this is safe. The first access will always be before the first access from
-  // a signal context, so the variable is guaranteed to be initialized by then.
-  //
-  static ProfileState state;
-  return state;
-}
-
 EntryType errorToTraceEntry(StackCollectionRetcode error) {
 #pragma clang diagnostic push
 #pragma clang diagnostic error "-Wswitch"
@@ -109,8 +95,20 @@ EntryType errorToTraceEntry(StackCollectionRetcode error) {
 static void throw_errno(const char* error) {
   throw std::system_error(errno, std::system_category(), error);
 }
+} // namespace
 
-sigmux_action sigcatch_handler(
+ProfileState& SamplingProfiler::getProfileState() {
+  //
+  // Despite the fact that this is accessed from a signal handler (this routine
+  // is not async-signal safe due to the initialization lock for this variable),
+  // this is safe. The first access will always be before the first access from
+  // a signal context, so the variable is guaranteed to be initialized by then.
+  //
+  static ProfileState state;
+  return state;
+}
+
+sigmux_action SamplingProfiler::FaultHandler(
     struct sigmux_siginfo* siginfo,
     void* handler_data) {
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
@@ -140,8 +138,8 @@ sigmux_action sigcatch_handler(
   return SIGMUX_CONTINUE_SEARCH;
 }
 
-void maybeSignalReader() {
-  auto& profileState = getProfileState();
+void SamplingProfiler::maybeSignalReader() {
+  auto& profileState = SamplingProfiler::getProfileState();
   uint32_t prevSlotCounter = profileState.fullSlotsCounter.fetch_add(1);
   if ((prevSlotCounter + 1) % FLUSH_STACKS_COUNT == 0) {
     if (profileState.wallClockModeEnabled) {
@@ -185,7 +183,7 @@ bool getSlotIndex(ProfileState& profileState, uint32_t tid, uint32_t& outSlot) {
   return false;
 }
 
-sigmux_action sigprof_handler(
+sigmux_action SamplingProfiler::UnwindStackHandler(
     struct sigmux_siginfo* siginfo,
     void* handler_data) {
   ProfileState& profileState = *reinterpret_cast<ProfileState*>(handler_data);
@@ -282,7 +280,7 @@ sigmux_action sigprof_handler(
   return SIGMUX_CONTINUE_EXECUTION;
 }
 
-void initSignalHandlers() {
+void SamplingProfiler::initSignalHandlers() {
   //
   // Register a handler for SIGPROF, trusting that sigmux will internally use
   // SA_RESTART.
@@ -311,7 +309,8 @@ void initSignalHandlers() {
     throw_errno("sigaddset");
   }
 
-  if (!sigmux_register(&prof_set, sigprof_handler, &state, 0)) {
+  if (!sigmux_register(
+          &prof_set, SamplingProfiler::UnwindStackHandler, &state, 0)) {
     throw_errno("sigmux_register for SIGPROF");
   }
 
@@ -335,13 +334,14 @@ void initSignalHandlers() {
     }
   }
 
-  if (!sigmux_register(&sigset, sigcatch_handler, &state, 0)) {
+  if (!sigmux_register(&sigset, SamplingProfiler::FaultHandler, &state, 0)) {
     FBLOGE("Failed to register sigmux: %s", strerror(errno));
     throw_errno("Couldn't register sigmux for SIGSEGV/SIGBUS signal jail");
   }
 }
 
-void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet) {
+void SamplingProfiler::flushStackTraces(
+    std::unordered_set<uint64_t>& loggedFramesSet) {
   auto& profileState = getProfileState();
 
   int processedCount = 0;
@@ -424,14 +424,15 @@ void logProfilingErrAnnotation(int32_t key, uint16_t value) {
   }
   Logger::get().writeTraceAnnotation(key, value);
 }
-} // namespace
 
 /**
  * Initializes the profiler. Registers handler for custom defined SIGPROF
  * symbol which will collect traces and inits thread/process ids
  */
-bool initialize(alias_ref<jobject> ref, jint available_tracers) {
-  auto& profileState = getProfileState();
+bool SamplingProfiler::initialize(
+    alias_ref<jobject> ref,
+    jint available_tracers) {
+  auto& profileState = SamplingProfiler::getProfileState();
 
   profileState.processId = getpid();
   profileState.availableTracers = available_tracers;
@@ -477,7 +478,7 @@ bool initialize(alias_ref<jobject> ref, jint available_tracers) {
     ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
   }
 
-  initSignalHandlers();
+  SamplingProfiler::initSignalHandlers();
 
   // Init semaphore for stacks flush to the Ring Buffer
   int res = sem_init(&profileState.slotsCounterSem, 0, 0);
@@ -496,9 +497,9 @@ bool initialize(alias_ref<jobject> ref, jint available_tracers) {
  * Waits in a loop for semaphore wakeup and then flushes the current profiling
  * stacks.
  */
-void loggerLoop(alias_ref<jobject> obj) {
+void SamplingProfiler::loggerLoop(alias_ref<jobject> obj) {
   FBLOGV("Logger thread is going into the loop...");
-  auto& profileState = getProfileState();
+  auto& profileState = SamplingProfiler::getProfileState();
 
   profileState.isLoggerLoopDone.store(false);
   profileState.enoughStacks.store(false);
@@ -523,7 +524,7 @@ void loggerLoop(alias_ref<jobject> obj) {
           profileState.whitelistedThreads.erase(tid);
         }
         if (res == 0 && profileState.enoughStacks.load()) {
-          flushStackTraces(loggedFramesSet);
+          SamplingProfiler::flushStackTraces(loggedFramesSet);
           profileState.enoughStacks.store(false);
         }
       }
@@ -531,7 +532,7 @@ void loggerLoop(alias_ref<jobject> obj) {
       // setitimer (i.e. every thread) case
       res = sem_wait(&profileState.slotsCounterSem);
       if (res == 0) {
-        flushStackTraces(loggedFramesSet);
+        SamplingProfiler::flushStackTraces(loggedFramesSet);
       }
     }
     done = profileState.isLoggerLoopDone.load();
@@ -540,7 +541,7 @@ void loggerLoop(alias_ref<jobject> obj) {
   FBLOGV("Logger thread is shutting down...");
 }
 
-bool startProfiling(
+bool SamplingProfiler::startProfiling(
     fbjni::alias_ref<jobject> obj,
     int requested_tracers,
     int sampling_rate_ms,
@@ -599,7 +600,7 @@ bool startProfiling(
  * we could reuse. Until this is possibly written custom by redex, we'll use
  * checksum for the dex identification which should collide rare.
  */
-void stopProfiling(fbjni::alias_ref<jobject> obj) {
+void SamplingProfiler::stopProfiling(fbjni::alias_ref<jobject> obj) {
   auto& profileState = getProfileState();
 
   FBLOGV("Stopping profiling");
@@ -655,19 +656,23 @@ void stopProfiling(fbjni::alias_ref<jobject> obj) {
   }
 }
 
-void addToWhitelist(fbjni::alias_ref<jobject> obj, int targetThread) {
+void SamplingProfiler::addToWhitelist(
+    fbjni::alias_ref<jobject> obj,
+    int targetThread) {
   auto& profileState = getProfileState();
   std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
   profileState.whitelistedThreads.insert(static_cast<int32_t>(targetThread));
 }
 
-void removeFromWhitelist(fbjni::alias_ref<jobject> obj, int targetThread) {
+void SamplingProfiler::removeFromWhitelist(
+    fbjni::alias_ref<jobject> obj,
+    int targetThread) {
   auto& profileState = getProfileState();
   std::unique_lock<std::mutex> lock(profileState.whitelistMtx);
   profileState.whitelistedThreads.erase(targetThread);
 }
 
-void resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj) {
+void SamplingProfiler::resetFrameworkNamesSet(fbjni::alias_ref<jobject> obj) {
   auto& profileState = getProfileState();
 
   // Let the logger loop know we should reset our cache of frames
