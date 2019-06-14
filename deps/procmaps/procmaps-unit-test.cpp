@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 #include <procmaps.h>
 #include <unistd.h>
+#include <sys/user.h>
 #include <limits>
 
 #include <folly/ScopeGuard.h>
@@ -116,7 +117,7 @@ TEST(AllocTest, AllocTooBig) {
 TEST(AllocTest, FreeBad) {
   auto foo { 5 };
   auto* ptr { &foo };
-  if (reinterpret_cast<uintptr_t>(ptr) % PAGESIZE == 0) {
+  if (reinterpret_cast<uintptr_t>(ptr) % PAGE_SIZE == 0) {
     ptr++;
   }
 
@@ -473,7 +474,7 @@ TEST_F(AtomicReadTest, AtomicReadZeroGuess) {
 }
 
 TEST_F(AtomicReadTest, EnsureNullTerminatorEvenAcrossPageBoundary) {
-  performTest(4 * PAGESIZE, PAGESIZE);
+  performTest(4 * PAGE_SIZE, PAGE_SIZE);
 }
 
 TEST_F(AtomicReadTest, FailIfNotSeekable) {
@@ -530,7 +531,7 @@ TEST(FindFirst, NoMatch) {
 
 TEST(FindFirst, MultipleMatch) {
   char* ff = find_first(const_cast<char*>(kString), 'l');
-  char* sc = strchr(kString, 'l');
+  const char* sc = strchr(kString, 'l');
   EXPECT_EQ(ff, sc); // heLlo, world!
 
   ff = find_first(++ff, 'l');
