@@ -56,12 +56,16 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
         "-Wall",
         "-Wno-missing-braces",
+        "-DLOG_TAG=\"Profilo/util\"",
     ],
-    force_static = True,
+    soname = "libprofilo_util.$(ext)",
     tests = [
         profilo_path("cpp/util/test:procfs"),
     ],
     visibility = [
         "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/fb:fb"),
     ],
 )

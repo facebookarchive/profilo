@@ -16,6 +16,9 @@
 
 #include "common.h"
 
+#include <dlfcn.h>
+#include <fb/log.h>
+#include <pthread.h>
 #include <sys/stat.h>
 #include <algorithm>
 #include <chrono>
@@ -24,8 +27,6 @@
 
 #if defined(__linux__) || defined(ANDROID)
 #include <sys/syscall.h> // __NR_gettid, __NR_clock_gettime
-#else
-#include <pthread.h> // pthread_self()
 #endif
 
 namespace facebook {
@@ -47,7 +48,38 @@ int64_t monotonicTime() {
 #endif
 
 #if defined(__linux__) || defined(ANDROID)
+typedef pid_t (*gettid_t)(pthread_t);
+// Returns any available bionic helper to get the tid from the
+// pthread_t. This helps us avoid a syscall on a pretty hot paths.
+static gettid_t getBionicGetTid() {
+  // This is fast because libc is always loaded.
+  auto handle = dlopen("libc.so", RTLD_NOW | RTLD_GLOBAL);
+
+  if (!handle) {
+    FBLOGV("couldn't open libc: %s", dlerror());
+    return nullptr;
+  }
+
+  // L+ symbol name
+  gettid_t result = (gettid_t)dlsym(handle, "pthread_gettid_np");
+  FBLOGV("Found pthread_gettid_np: %p", result);
+  if (!result) {
+    // Pre-L symbol name. This should be available all the way down to ICS
+    // but be extra super cautious.
+    result = (gettid_t)dlsym(handle, "__pthread_gettid");
+    FBLOGV("__pthread_gettid: %p", result);
+  }
+
+  dlclose(handle);
+  return result;
+}
+
 int32_t threadID() {
+  static gettid_t bionicPthreadGetTid = getBionicGetTid();
+
+  if (bionicPthreadGetTid) {
+    return bionicPthreadGetTid(pthread_self());
+  }
   return static_cast<int32_t>(syscall(__NR_gettid));
 }
 #elif __MACH__
