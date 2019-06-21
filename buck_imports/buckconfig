@@ -10,8 +10,8 @@
     compiler = clang
     clang_version = 5.0
     extra_ldflags = -Wl,-Bsymbolic
-    extra_cflags = -Og
-    extra_cxxflags = -Og -std=gnu++14 -Wno-nullability-completeness
+    extra_cflags = -ffunction-sections -fdata-sections -Os
+    extra_cxxflags = -ffunction-sections -fdata-sections -Os -std=gnu++14 -Wno-nullability-completeness
 
 [download]
     maven_repo = https://repo1.maven.org/maven2
