@@ -24,42 +24,42 @@ extern "C" {
 
 namespace {
 
-void api_mark_start(const char* provider, const char* name, size_t len = 0) {
+void api_mark_start(Provider provider, const char* name, size_t len = 0) {
   if (profilo_api_int.mark_start == nullptr) {
     return;
   }
   profilo_api_int.mark_start(provider, name, len);
 }
 
-void api_mark_end(const char* provider) {
+void api_mark_end(Provider provider) {
   if (profilo_api_int.mark_end == nullptr) {
     return;
   }
   profilo_api_int.mark_end(provider);
 }
 
-void api_log_classload_start(const char* provider) {
+void api_log_classload_start(Provider provider) {
   if (profilo_api_int.log_classload_start == nullptr) {
     return;
   }
   profilo_api_int.log_classload_start(provider);
 }
 
-void api_log_classload_end(const char* provider, int64_t classid) {
+void api_log_classload_end(Provider provider, int64_t classid) {
   if (profilo_api_int.log_classload_end == nullptr) {
     return;
   }
   profilo_api_int.log_classload_end(provider, classid);
 }
 
-void api_log_classload_failed(const char* provider) {
+void api_log_classload_failed(Provider provider) {
   if (profilo_api_int.log_classload_failed == nullptr) {
     return;
   }
   profilo_api_int.log_classload_failed(provider);
 }
 
-bool api_is_enabled(const char* provider) {
+bool api_is_enabled(Provider provider) {
   if (profilo_api_int.is_enabled == nullptr) {
     return false;
   }
