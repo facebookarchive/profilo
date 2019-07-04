@@ -12,11 +12,11 @@ profilo_cxx_test(
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
     linker_flags = [
-        "-pthread",
         "-ldl",
     ],
     deps = [
         "fbsource//xplat/folly:test-util",
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/systemcounters:systemcounters"),
         profilo_path("cpp/util:util"),
     ],
@@ -34,11 +34,11 @@ profilo_cxx_test(
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
     linker_flags = [
-        "-pthread",
         "-ldl",
     ],
     deps = [
         "fbsource//xplat/folly:test-util",
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/systemcounters:systemcounters"),
         profilo_path("cpp/util:util"),
     ],

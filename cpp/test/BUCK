@@ -13,10 +13,10 @@ profilo_cxx_test(
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
     linker_flags = [
-        "-pthread",
         "-ldl",
     ],
     deps = [
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp:providers"),
     ],
 )
@@ -32,10 +32,8 @@ profilo_cxx_test(
         "-DLOG_TAG=\"Profilo\"",
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
-    linker_flags = [
-        "-pthread",
-    ],
     deps = [
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/generated:cpp"),
         profilo_path("cpp/writer:print_visitor"),
     ],
@@ -52,10 +50,8 @@ profilo_cxx_test(
         "-DLOG_TAG=\"Profilo\"",
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
-    linker_flags = [
-        "-pthread",
-    ],
     deps = [
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/writer:delta_visitor"),
         profilo_path("cpp/writer:print_visitor"),
     ],
@@ -72,10 +68,8 @@ profilo_cxx_test(
         "-DLOG_TAG=\"Profilo\"",
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
-    linker_flags = [
-        "-pthread",
-    ],
     deps = [
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/writer:print_visitor"),
         profilo_path("cpp/writer:stack_visitor"),
     ],
@@ -92,11 +86,9 @@ profilo_cxx_test(
         "-DLOG_TAG=\"Profilo\"",
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
-    linker_flags = [
-        "-pthread",
-    ],
     deps = [
         "fbsource//xplat/third-party/gmock:gmock",
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/writer:packet_reassembler"),
     ],
@@ -136,11 +128,11 @@ profilo_cxx_test(
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
     linker_flags = [
-        "-pthread",
         "-ldl",
     ],
     deps = [
         "fbsource//xplat/folly:tempfile-util",
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("deps/zstr:zstr"),
         profilo_path("cpp/logger/lfrb:lfrb"),
         profilo_path("cpp/util:util"),

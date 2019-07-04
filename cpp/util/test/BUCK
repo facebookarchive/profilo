@@ -31,11 +31,11 @@ profilo_cxx_test(
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
     linker_flags = [
-        "-pthread",
         "-ldl",
     ],
     deps = [
         "fbsource//xplat/folly:tempfile-util",
+        "fbsource//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/util:util"),
     ],
 )
