@@ -70,17 +70,40 @@ bool ends_with(const char* str, const char* ending) {
   return strcmp(str + (str_len - ending_len), ending) == 0;
 }
 
+bool starts_with(char const* str, char const* start) {
+  if (str == start) {
+    return true;
+  }
+
+  while (*str && *str == *start) {
+    ++str;
+    ++start;
+  }
+
+  return *start == 0;
+}
+
 } // namespace (anonymous)
 
 elfSharedLibData sharedLib(char const* libname) {
+  char const* libbasename = basename(libname);
   auto lib = [&]{
     // this lambda is to ensure that we only hold the lock for the lookup.
     // the boolean check outside this block transitively calls dladdr(3), which
     // would cause a lock inversion with refresh_shared_libs under Bionic
     ReaderLock rl(&sharedLibsMutex_);
-    return sharedLibData().at(basename(libname));
+
+    // std::unordered_map<>::at() seems broken for at least x86_64 in ndk17 - instead of throwing
+    // an out_of_range exception for a not-found key, it segfaults. so, do our own search and check.
+    auto iter = sharedLibData().find(libbasename);
+    if (iter == sharedLibData().end()) {
+      throw std::out_of_range(libname);
+    }
+    return iter->second;
   }();
-  if (!lib) {
+  if (!lib) { // this is necessary to ensure our data is still valid - lib might have been unloaded
+    WriterLock wl(&sharedLibsMutex_);
+    sharedLibData().erase(libbasename);
     throw std::out_of_range(libname);
   }
   return lib;
@@ -120,7 +143,8 @@ refresh_shared_libs() {
     }
 
     dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void*) {
-      if (info->dlpi_name && ends_with(info->dlpi_name, ".so")) {
+      if (info->dlpi_name &&
+            (ends_with(info->dlpi_name, ".so")  || starts_with(info->dlpi_name, "app_process"))) {
         addSharedLib(info->dlpi_name, info);
       }
       return 0;
@@ -134,7 +158,8 @@ refresh_shared_libs() {
     }
 
     for (; si != nullptr; si = si->next) {
-      if (si->link_map.l_name && ends_with(si->link_map.l_name, ".so")) {
+      if (si->link_map.l_name &&
+            (ends_with(si->link_map.l_name, ".so") || starts_with(si->link_map.l_name, "app_process"))) {
         addSharedLib(si->link_map.l_name, si);
       }
     }
