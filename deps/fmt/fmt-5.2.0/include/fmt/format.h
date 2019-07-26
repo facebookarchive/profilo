@@ -3605,7 +3605,7 @@ inline format_to_n_result<OutputIt> format_to_n(
 }
 
 template <typename Char>
-inline std::basic_string<Char> internal::vformat(
+std::basic_string<Char> internal::vformat(
     basic_string_view<Char> format_str,
     basic_format_args<typename buffer_context<Char>::type> args) {
   basic_memory_buffer<Char> buffer;
