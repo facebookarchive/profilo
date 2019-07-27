@@ -21,8 +21,8 @@ namespace perfevents {
 namespace detail {
 
 struct PollSet {
-  std::unique_ptr<std::vector<pollfd>> pollfds;
-  std::unique_ptr<std::vector<Event*>> events;
+  std::vector<pollfd> pollfds;
+  std::vector<Event const*> events;
 };
 
 //
@@ -33,7 +33,7 @@ struct PollSet {
 // 2) a pollfd (last element) for the stopfd that's passed in. The events
 // vector holds nullptr for this pollfd.
 //
-static std::unique_ptr<PollSet> createPollSet(EventList& events, int stopfd) {
+static PollSet createPollSet(EventList& events, int stopfd) {
   size_t buffer_events = 0;
   for (auto& event : events) {
     if (event.buffer() != nullptr) {
@@ -42,8 +42,8 @@ static std::unique_ptr<PollSet> createPollSet(EventList& events, int stopfd) {
   }
 
   size_t pollfd_size = buffer_events + 1; // +1 for the stopfd
-  auto poll_set = detail::make_unique<std::vector<pollfd>>(pollfd_size);
-  auto event_ptrs = detail::make_unique<std::vector<Event*>>(pollfd_size);
+  auto poll_set = std::vector<pollfd>(pollfd_size);
+  auto event_ptrs = std::vector<Event const*>(pollfd_size);
 
   size_t poll_set_idx = 0;
   for (auto& event : events) {
@@ -55,11 +55,11 @@ static std::unique_ptr<PollSet> createPollSet(EventList& events, int stopfd) {
       pfd.fd = event.fd();
       pfd.events = POLLIN;
 
-      (*poll_set)[poll_set_idx] = pfd;
+      poll_set[poll_set_idx] = pfd;
 
       // Not exactly safe. The alternative is to wrap every Event in a
       // shared_ptr and that's quite expensive.
-      (*event_ptrs)[poll_set_idx] = &event;
+      event_ptrs[poll_set_idx] = &event;
       ++poll_set_idx;
     }
   }
@@ -67,14 +67,14 @@ static std::unique_ptr<PollSet> createPollSet(EventList& events, int stopfd) {
   pollfd pfd{};
   pfd.fd = stopfd;
   pfd.events = POLLIN;
-  (*poll_set)[poll_set_idx] = pfd;
-  (*event_ptrs)[poll_set_idx] = nullptr;
+  poll_set[poll_set_idx] = pfd;
+  event_ptrs[poll_set_idx] = nullptr;
 
   PollSet ret{};
   ret.pollfds = std::move(poll_set);
   ret.events = std::move(event_ptrs);
 
-  return detail::make_unique<PollSet>(std::move(ret));
+  return ret;
 }
 
 static std::unordered_map<uint64_t, const Event&> createIdEventMap(
@@ -117,9 +117,7 @@ void FdPollReader::run() {
 
   while (run) {
     int ret = poll(
-        pollset->pollfds->data(),
-        pollset->pollfds->size(),
-        -1 /*infinite timeout*/
+        pollset.pollfds.data(), pollset.pollfds.size(), -1 /*infinite timeout*/
     );
 
     if (ret == -1 && errno == EINTR) {
@@ -135,9 +133,9 @@ void FdPollReader::run() {
     // Invariant: ret > 0 i.e. at least one fd was signalled.
     // Walk the list to figure out which one.
 
-    size_t stopfd_idx = pollset->pollfds->size() - 1;
-    for (size_t i = 0; i < pollset->pollfds->size(); i++) {
-      if (pollset->pollfds->at(i).revents == 0) {
+    size_t stopfd_idx = pollset.pollfds.size() - 1;
+    for (size_t i = 0; i < pollset.pollfds.size(); i++) {
+      if (pollset.pollfds.at(i).revents == 0) {
         continue; // not signalled
       }
 
@@ -147,7 +145,7 @@ void FdPollReader::run() {
       }
 
       // Invariant: Only the buffer fds are left at this point.
-      Event* evt = pollset->events->at(i);
+      Event* evt = pollset.events.at(i);
       if (evt == nullptr) {
         throw std::logic_error(
             "Invariant violation: reached buffer flush with no Event pointer");
@@ -161,11 +159,11 @@ void FdPollReader::run() {
   }
 
   // Flush all buffers
-  for (Event* event : *(pollset->events)) {
+  for (Event const* event : pollset.events) {
     if (event == nullptr) { // the entry for the stopfd is nullptr
       continue;
     }
-    auto& evt = *event;
+    auto const& evt = *event;
     detail::parser::parseBuffer(evt, id_event_map_, listener_);
   }
 
