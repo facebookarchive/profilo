@@ -56,11 +56,11 @@ void parseBuffer(
   printf("  tail: %.16llx\n", header->data_tail);
   printf("  lock: %.8x\n", header->lock);
   printf("  enabled: %.16llx\n", header->time_enabled);
-  printf("  running: %.16llx\n", header->time_running);*/
+  printf("  running: %.16llx\n", header->time_running);
   printf(
       "buffer {enabled: %llu running: %llu}\n",
       header->time_enabled,
-      header->time_running);
+      header->time_running);*/
 
   uint8_t* data = ((uint8_t*)buffer) + PAGE_SIZE;
   size_t last_read = header->data_tail;
