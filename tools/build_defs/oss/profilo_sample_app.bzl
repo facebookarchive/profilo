@@ -15,6 +15,7 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 PROVIDER_TO_RULE = {
     "atrace": profilo_path("java/main/com/facebook/profilo/provider/atrace:atrace"),
     "mappingdensity": profilo_path("java/main/com/facebook/profilo/provider/mappingdensity:mappingdensity"),
+    "memorymappings": profilo_path("java/main/com/facebook/profilo/provider/mappings:mappings"),
     "perfevents": profilo_path("java/main/com/facebook/profilo/provider/perfevents:perfevents"),
     "processmetadata": profilo_path("java/main/com/facebook/profilo/provider/processmetadata:processmetadata"),
     "stacktrace": profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),

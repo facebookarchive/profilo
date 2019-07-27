@@ -1,4 +1,4 @@
-// @generated SignedSource<<f2aa377ab4ba3c5b331ef76929a66567>>
+// @generated SignedSource<<b75064debba4afecd3ff6e4fea09941f>>
 
 package com.facebook.profilo.entries;
 
@@ -108,6 +108,7 @@ public class EntryType {
   public static final int STKERR_NOSTACKFORTHREAD = 101;
   public static final int STKERR_SIGNALINTERRUPT = 102;
   public static final int STKERR_NESTEDUNWIND = 103;
+  public static final int MAPPING = 104;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -214,5 +215,6 @@ public class EntryType {
     "STKERR_NOSTACKFORTHREAD",
     "STKERR_SIGNALINTERRUPT",
     "STKERR_NESTEDUNWIND",
+    "MAPPING",
   };
 }

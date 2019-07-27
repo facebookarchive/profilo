@@ -1,0 +1,33 @@
+load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+
+fb_xplat_cxx_library(
+    name = "mappings",
+    srcs = [
+        "jni.cpp",
+        "mappings.cpp",
+    ],
+    headers = glob(
+        ["*.h"],
+    ),
+    header_namespace = "profilo/mappings",
+    allow_jni_merging = True,
+    compiler_flags = [
+        "-fvisibility=hidden",
+        "-fexceptions",
+        "-std=gnu++14",
+        # "-DFBLOG_NDEBUG=0",  # verbose logging
+    ],
+    soname = "libprofilo_mappings.$(ext)",
+    visibility = [
+        profilo_path("java/main/com/facebook/profilo/provider/mappings:"),
+    ],
+    deps = [
+        profilo_path("cpp:profilo"),
+        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
+        profilo_path("deps/procmaps:procmaps"),
+    ],
+)

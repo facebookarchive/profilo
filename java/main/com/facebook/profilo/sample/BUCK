@@ -82,6 +82,7 @@ profilo_sample_app(
     app_manifest = "AndroidManifest-sample.xml",
     providers = [
         "atrace",
+        "memorymappings",
         "perfevents",
         "processmetadata",
         "stacktrace",
@@ -102,6 +103,7 @@ profilo_sample_app(
     )
     for provider in [
         "atrace",
+        "memorymappings",
         "processmetadata",
         "stacktrace",
         "systemcounters",
