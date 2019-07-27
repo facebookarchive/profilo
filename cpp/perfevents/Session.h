@@ -16,10 +16,8 @@
 
 #pragma once
 
-#include <time.h>
 #include <unistd.h>
 #include <memory>
-#include <unordered_map>
 #include <vector>
 
 #include <perfevents/Event.h>
@@ -51,8 +49,8 @@ class Session {
       const SessionSpec& spec,
       std::unique_ptr<RecordListener> listener = nullptr);
 
-  Session(Session& session) = delete;
-  void operator=(Session& session) = delete;
+  Session(Session const& session) = delete;
+  void operator=(Session const& session) = delete;
 
   //
   // Attach the specified events to the current process, obeying the
@@ -67,21 +65,23 @@ class Session {
   // not safe to call this if another thread is currently in a read() call.
   void detach();
 
-  // Enter the reading loop. This function will return only after a call to
-  // stopRead().
-  void read();
+  // Enter the reading loop in this thread. Exiting the loop requires a call to
+  // stop().
+  void run();
 
-  // Request that the current read() execution is stopped. Callable from any
-  // thread. Calling this has no effect if read() is not concurrently running.
-  // This call returns when read() is no longer reading any events.
-  void stopRead();
+  // Request that the current reading loop is stopped. Callable from any
+  // thread. Calling this has no effect if no reading loop is concurrently
+  // running. This call returns when the loop is no longer reading any events.
+  void stop();
 
  private:
   const std::vector<EventSpec> events_;
   const SessionSpec spec_;
 
-  EventList perf_events_;
+  std::mutex reader_mtx_;
   std::unique_ptr<detail::Reader> reader_;
+
+  EventList perf_events_;
   std::unique_ptr<RecordListener> listener_;
 };
 } // namespace perfevents

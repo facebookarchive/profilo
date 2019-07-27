@@ -54,6 +54,7 @@ public final class PerfEventsProvider extends BaseTraceProvider {
       session.stop();
       session.detach();
     }
+    mSession = null;
   }
 
   @Override

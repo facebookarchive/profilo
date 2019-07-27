@@ -146,6 +146,7 @@ static jlong nativeAttach(
           .maxAttachedFdsRatio = maxAttachedFdsRatio,
       },
       std::unique_ptr<RecordListener>(new ProfiloWriterListener(clockOffset)));
+
   if (!session->attach()) {
     delete session;
     FBLOGV("Session failed to attach");
@@ -160,14 +161,14 @@ static void nativeDetach(JNIEnv*, jobject cls, jlong handle) {
   delete session;
 }
 
-static void nativeStart(JNIEnv*, jobject cls, jlong handle) {
+static void nativeRun(JNIEnv*, jobject cls, jlong handle) {
   FBLOGV("Session about to run");
-  handleToSession(handle)->read();
+  handleToSession(handle)->run();
 }
 
 static void nativeStop(JNIEnv*, jobject cls, jlong handle) {
   FBLOGV("Session about to stop");
-  handleToSession(handle)->stopRead();
+  handleToSession(handle)->stop();
 }
 } // namespace perfevents
 } // namespace facebook
@@ -181,7 +182,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
                 "nativeAttach", facebook::perfevents::nativeAttach),
             makeNativeMethod(
                 "nativeDetach", facebook::perfevents::nativeDetach),
-            makeNativeMethod("nativeStart", facebook::perfevents::nativeStart),
+            makeNativeMethod("nativeRun", facebook::perfevents::nativeRun),
             makeNativeMethod("nativeStop", facebook::perfevents::nativeStop),
         });
   });

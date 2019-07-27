@@ -73,9 +73,6 @@ class FdPollReader : public Reader {
   bool running_;
   std::condition_variable running_cv_;
   std::mutex running_mutex_;
-
-  // Returns the value of the stop eventfd counter.
-  uint64_t stopValue() const;
 };
 
 } // namespace detail

@@ -53,7 +53,7 @@ public class PerfEventsSession {
           @Override
           public void run() {
             setThreadPriority(READER_THREAD_PRIORITY);
-            nativeStart(mNativeHandle);
+            nativeRun(mNativeHandle);
           }
         };
   }
@@ -127,7 +127,7 @@ public class PerfEventsSession {
 
   private static native void nativeDetach(long handle);
 
-  private static native void nativeStart(long handle);
+  private static native void nativeRun(long handle);
 
   private static native void nativeStop(long handle);
 }

@@ -106,7 +106,6 @@ void FdPollReader::run() {
   }
   running_cv_.notify_all();
 
-  uint64_t stop_value = stopValue(); // reset the counter
   auto pollset = createPollSet(events_, stop_fd_);
 
   bool run = true;
@@ -135,9 +134,9 @@ void FdPollReader::run() {
         continue; // not signalled
       }
 
-      if (i == stopfd_idx && stop_value != stopValue()) {
+      if (i == stopfd_idx) {
         run = false; // break outer loop
-        continue;
+        break;
       }
 
       // Invariant: Only the buffer fds are left at this point.
@@ -171,6 +170,13 @@ void FdPollReader::run() {
 }
 
 void FdPollReader::stop() {
+  // We want to ensure the thread won't start *after* we've
+  // exited stop(). Therefore, we must first ensure it's running.
+  {
+    std::unique_lock<std::mutex> lock(running_mutex_);
+    running_cv_.wait(lock, [&] { return running_; });
+  }
+
   uint64_t value = 1;
   // Signal the eventfd by writing to it
   ssize_t ret = write(stop_fd_, &value, sizeof(uint64_t));
@@ -181,26 +187,10 @@ void FdPollReader::stop() {
         "write() on eventfd wrote less than sizeof(uint64_t)");
   }
 
-  std::unique_lock<std::mutex> lock(running_mutex_);
-  running_cv_.wait(lock, [this] { return !this->running_; });
-}
-
-// Reads and resets the eventfd used to stop the reader.
-uint64_t FdPollReader::stopValue() const {
-  uint64_t value = 0;
-  ssize_t ret = read(stop_fd_, &value, sizeof(value));
-  if (ret < 0) {
-    if (errno == EAGAIN) {
-      errno = 0;
-      return 0;
-    } else {
-      throw std::system_error(errno, std::system_category());
-    }
-  } else if (ret != sizeof(value)) {
-    throw std::logic_error(
-        "read() on eventfd returned non-uint64_t-sized value");
+  {
+    std::unique_lock<std::mutex> lock(running_mutex_);
+    running_cv_.wait(lock, [&] { return !running_; });
   }
-  return value;
 }
 
 } // namespace detail

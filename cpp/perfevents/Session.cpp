@@ -27,8 +27,8 @@ Session::Session(
     std::unique_ptr<RecordListener> listener)
     : events_(events),
       spec_(spec),
-      perf_events_(),
       reader_(nullptr),
+      perf_events_(),
       listener_(std::move(listener)) {}
 
 bool Session::attach() {
@@ -53,8 +53,11 @@ bool Session::attach() {
     for (auto& evt : perf_events_) {
       evt.enable();
     }
-
-    reader_ = nullptr;
+    {
+      std::lock_guard<std::mutex> lg(reader_mtx_);
+      reader_ = detail::make_unique<detail::FdPollReader>(
+          perf_events_, listener_.get());
+    }
 
     return true;
   } catch (std::system_error& ex) {
@@ -63,30 +66,39 @@ bool Session::attach() {
 }
 
 void Session::detach() {
-  reader_ = nullptr;
+  {
+    std::lock_guard<std::mutex> lg(reader_mtx_);
+    reader_ = nullptr;
+  }
   for (auto& evt : perf_events_) {
     evt.disable();
   }
   perf_events_ = EventList();
 }
 
-void Session::read() {
-  if (perf_events_.empty()) {
-    throw std::logic_error("Cannot create reader for unattached Session");
+void Session::run() {
+  detail::Reader* reader;
+  {
+    // Read under the lock to ensure we synchronize with the write in attach()
+    std::lock_guard<std::mutex> lg(reader_mtx_);
+    reader = reader_.get();
   }
-
-  if (reader_ == nullptr) {
-    reader_ = detail::make_unique<detail::FdPollReader>(
-        perf_events_, listener_.get());
+  if (!reader) {
+    throw std::logic_error("Calling read() on an unattached session!");
   }
-  reader_->run();
+  reader->run();
 }
 
-void Session::stopRead() {
-  if (reader_ == nullptr) {
-    return;
+void Session::stop() {
+  detail::Reader* reader;
+  {
+    std::lock_guard<std::mutex> lg(reader_mtx_);
+    reader = reader_.get();
   }
-  reader_->stop();
+  if (reader == nullptr) {
+    throw std::logic_error("No reader, did you call attach()?");
+  }
+  reader->stop();
 }
 
 } // namespace perfevents
