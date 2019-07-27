@@ -19,13 +19,9 @@ import javax.annotation.concurrent.GuardedBy;
 
 public final class PerfEventsProvider extends BaseTraceProvider {
 
-  public static final String PROVIDER_MAJOR_FAULTS_NAME = "major_faults";
-  public static final String PROVIDER_THREAD_SCHEDULE_NAME = "thread_schedule";
+  public static final String PROVIDER_FAULTS_NAME = "faults";
 
-  public static final int PROVIDER_MAJOR_FAULTS =
-      ProvidersRegistry.newProvider(PROVIDER_MAJOR_FAULTS_NAME);
-  public static final int PROVIDER_THREAD_SCHEDULE =
-      ProvidersRegistry.newProvider(PROVIDER_THREAD_SCHEDULE_NAME);
+  public static final int PROVIDER_FAULTS = ProvidersRegistry.newProvider(PROVIDER_FAULTS_NAME);
 
   @GuardedBy("this")
   private PerfEventsSession mSession = null;
@@ -62,7 +58,7 @@ public final class PerfEventsProvider extends BaseTraceProvider {
 
   @Override
   protected int getSupportedProviders() {
-    return PROVIDER_MAJOR_FAULTS | PROVIDER_THREAD_SCHEDULE;
+    return PROVIDER_FAULTS;
   }
 
   @Override

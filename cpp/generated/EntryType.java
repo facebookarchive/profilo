@@ -1,4 +1,4 @@
-// @generated SignedSource<<2f802b2802312254538829a3ffa1ea2d>>
+// @generated SignedSource<<f2aa377ab4ba3c5b331ef76929a66567>>
 
 package com.facebook.profilo.entries;
 
@@ -78,35 +78,36 @@ public class EntryType {
   public static final int TRACE_THREAD_NAME = 71;
   public static final int TRACE_PRE_END = 72;
   public static final int TRACE_THREAD_PRI = 73;
-  public static final int MAJOR_FAULT = 74;
-  public static final int YARN_LOST_RECORDS = 75;
-  public static final int CLASS_LOAD = 76;
-  public static final int JAVASCRIPT_STACK_FRAME = 77;
-  public static final int MESSAGE_START = 78;
-  public static final int MESSAGE_END = 79;
-  public static final int CLASS_VALUE = 80;
-  public static final int HTTP2_REQUEST_INITIATED = 81;
-  public static final int HTTP2_FRAME_HEADER = 82;
-  public static final int HTTP2_WINDOW_UPDATE = 83;
-  public static final int HTTP2_PRIORITY = 84;
-  public static final int HTTP2_EGRESS_FRAME_HEADER = 85;
-  public static final int PROCESS_LIST = 86;
-  public static final int IO_START = 87;
-  public static final int IO_END = 88;
-  public static final int CPU_COUNTER = 89;
-  public static final int CLASS_LOAD_START = 90;
-  public static final int CLASS_LOAD_END = 91;
-  public static final int CLASS_LOAD_FAILED = 92;
-  public static final int STRING_NAME = 93;
-  public static final int JAVA_FRAME_NAME = 94;
-  public static final int BINDER_START = 95;
-  public static final int BINDER_END = 96;
-  public static final int MEMORY_ALLOCATION = 97;
-  public static final int STKERR_EMPTYSTACK = 98;
-  public static final int STKERR_STACKOVERFLOW = 99;
-  public static final int STKERR_NOSTACKFORTHREAD = 100;
-  public static final int STKERR_SIGNALINTERRUPT = 101;
-  public static final int STKERR_NESTEDUNWIND = 102;
+  public static final int MINOR_FAULT = 74;
+  public static final int MAJOR_FAULT = 75;
+  public static final int PERFEVENTS_LOST = 76;
+  public static final int CLASS_LOAD = 77;
+  public static final int JAVASCRIPT_STACK_FRAME = 78;
+  public static final int MESSAGE_START = 79;
+  public static final int MESSAGE_END = 80;
+  public static final int CLASS_VALUE = 81;
+  public static final int HTTP2_REQUEST_INITIATED = 82;
+  public static final int HTTP2_FRAME_HEADER = 83;
+  public static final int HTTP2_WINDOW_UPDATE = 84;
+  public static final int HTTP2_PRIORITY = 85;
+  public static final int HTTP2_EGRESS_FRAME_HEADER = 86;
+  public static final int PROCESS_LIST = 87;
+  public static final int IO_START = 88;
+  public static final int IO_END = 89;
+  public static final int CPU_COUNTER = 90;
+  public static final int CLASS_LOAD_START = 91;
+  public static final int CLASS_LOAD_END = 92;
+  public static final int CLASS_LOAD_FAILED = 93;
+  public static final int STRING_NAME = 94;
+  public static final int JAVA_FRAME_NAME = 95;
+  public static final int BINDER_START = 96;
+  public static final int BINDER_END = 97;
+  public static final int MEMORY_ALLOCATION = 98;
+  public static final int STKERR_EMPTYSTACK = 99;
+  public static final int STKERR_STACKOVERFLOW = 100;
+  public static final int STKERR_NOSTACKFORTHREAD = 101;
+  public static final int STKERR_SIGNALINTERRUPT = 102;
+  public static final int STKERR_NESTEDUNWIND = 103;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -183,8 +184,9 @@ public class EntryType {
     "TRACE_THREAD_NAME",
     "TRACE_PRE_END",
     "TRACE_THREAD_PRI",
+    "MINOR_FAULT",
     "MAJOR_FAULT",
-    "YARN_LOST_RECORDS",
+    "PERFEVENTS_LOST",
     "CLASS_LOAD",
     "JAVASCRIPT_STACK_FRAME",
     "MESSAGE_START",

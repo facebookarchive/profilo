@@ -124,8 +124,10 @@ NAMES = [
 
     'TRACE_PRE_END',
     'TRACE_THREAD_PRI',
+
+    'MINOR_FAULT',
     'MAJOR_FAULT',
-    'YARN_LOST_RECORDS',
+    'PERFEVENTS_LOST',
 
     'CLASS_LOAD',
 

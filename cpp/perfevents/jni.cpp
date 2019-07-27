@@ -34,12 +34,16 @@ const char* kPerfSessionType =
 namespace facebook {
 namespace perfevents {
 
-static std::vector<EventSpec> providersToSpecs(jboolean majorFaults) {
+static std::vector<EventSpec> providersToSpecs(jboolean faults) {
   auto specs = std::vector<EventSpec>{};
-  if (majorFaults) {
-    EventSpec spec = {.type = EVENT_TYPE_MAJOR_FAULTS,
-                      .tid = EventSpec::kAllThreads};
-    specs.push_back(spec);
+  if (faults) {
+    EventSpec major_spec = {.type = EVENT_TYPE_MAJOR_FAULTS,
+                            .tid = EventSpec::kAllThreads};
+    specs.push_back(major_spec);
+
+    EventSpec minor_spec = {.type = EVENT_TYPE_MINOR_FAULTS,
+                            .tid = EventSpec::kAllThreads};
+    specs.push_back(minor_spec);
   }
   return specs;
 }
@@ -60,22 +64,33 @@ class ProfiloWriterListener : public RecordListener {
   virtual void onMmap(const RecordMmap& record) {}
 
   virtual void onSample(const EventType type, const RecordSample& record) {
-    if (type == EVENT_TYPE_MAJOR_FAULTS) {
-      profilo::Logger::get().write(profilo::entries::StandardEntry{
-          .id = 0,
-          .type = profilo::entries::MAJOR_FAULT,
-          .timestamp = ((int64_t)record.time()) + offset_,
-          .tid = (int32_t)record.tid(),
-          .callid = 0,
-          .matchid = 0,
-          .extra = (int64_t)record.addr(),
-      });
-
-      FBLOGV("Major Fault: %i %llu", record.tid(), record.addr());
-    } else {
-      FBLOGV(
-          "Unhandled event type: %i (did you configure something that's not implemented yet?)",
-          type);
+    switch (type) {
+      case EVENT_TYPE_MAJOR_FAULTS: {
+        profilo::Logger::get().write(profilo::entries::StandardEntry{
+            .id = 0,
+            .type = profilo::entries::MAJOR_FAULT,
+            .timestamp = ((int64_t)record.time()) + offset_,
+            .tid = (int32_t)record.tid(),
+            .callid = 0,
+            .matchid = 0,
+            .extra = (int64_t)record.addr(),
+        });
+        return;
+      }
+      case EVENT_TYPE_MINOR_FAULTS: {
+        profilo::Logger::get().write(profilo::entries::StandardEntry{
+            .id = 0,
+            .type = profilo::entries::MINOR_FAULT,
+            .timestamp = ((int64_t)record.time()) + offset_,
+            .tid = (int32_t)record.tid(),
+            .callid = 0,
+            .matchid = 0,
+            .extra = (int64_t)record.addr(),
+        });
+        return;
+      }
+      default: {
+      } // ignore
     }
   }
 
@@ -86,7 +101,7 @@ class ProfiloWriterListener : public RecordListener {
   virtual void onLost(const RecordLost& record) {
     profilo::Logger::get().write(profilo::entries::StandardEntry{
         .id = 0,
-        .type = profilo::entries::YARN_LOST_RECORDS,
+        .type = profilo::entries::PERFEVENTS_LOST,
         .timestamp = profilo::monotonicTime(),
         .tid = profilo::threadID(),
         .callid = 0,
@@ -106,11 +121,11 @@ class ProfiloWriterListener : public RecordListener {
 static jlong nativeAttach(
     JNIEnv*,
     jobject cls,
-    jboolean majorFaults,
+    jboolean faults,
     jint fallbacks,
     jint maxIterations,
     jfloat maxAttachedFdsRatio) {
-  auto specs = providersToSpecs(majorFaults);
+  auto specs = providersToSpecs(faults);
   if (specs.empty()) {
     throw std::invalid_argument("Could not convert providers");
   }

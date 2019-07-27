@@ -62,15 +62,11 @@ public class PerfEventsSession {
     if (mNativeHandle != 0) {
       throw new IllegalStateException("Already attached");
     }
-    boolean majorFaults = (providers & PerfEventsProvider.PROVIDER_MAJOR_FAULTS) != 0;
-    boolean threadSchedule = (providers & PerfEventsProvider.PROVIDER_THREAD_SCHEDULE) != 0;
-    if (majorFaults || threadSchedule) {
+    boolean faults = (providers & PerfEventsProvider.PROVIDER_FAULTS) != 0;
+    if (faults) {
       mNativeHandle =
           nativeAttach(
-              majorFaults,
-              FALLBACK_RAISE_RLIMIT,
-              MAX_ATTACH_ITERATIONS,
-              MAX_ATTACHED_FDS_OPEN_RATIO);
+              faults, FALLBACK_RAISE_RLIMIT, MAX_ATTACH_ITERATIONS, MAX_ATTACHED_FDS_OPEN_RATIO);
     }
     return mNativeHandle != 0;
   }
@@ -127,7 +123,7 @@ public class PerfEventsSession {
   }
 
   private static native long nativeAttach(
-      boolean majorFaults, int fallbacks, int maxAttachIterations, float maxAttachedFdsOpenRatio);
+      boolean faults, int fallbacks, int maxAttachIterations, float maxAttachedFdsOpenRatio);
 
   private static native void nativeDetach(long handle);
 

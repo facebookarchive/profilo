@@ -1,4 +1,4 @@
-// @generated SignedSource<<8ebed6b68f2365a4361e7f60b0a257a7>>
+// @generated SignedSource<<9173a4331ea98951ab08b555a15388a2>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -83,8 +83,9 @@ const char* to_string(EntryType type) {
     case TRACE_THREAD_NAME: return "TRACE_THREAD_NAME";
     case TRACE_PRE_END: return "TRACE_PRE_END";
     case TRACE_THREAD_PRI: return "TRACE_THREAD_PRI";
+    case MINOR_FAULT: return "MINOR_FAULT";
     case MAJOR_FAULT: return "MAJOR_FAULT";
-    case YARN_LOST_RECORDS: return "YARN_LOST_RECORDS";
+    case PERFEVENTS_LOST: return "PERFEVENTS_LOST";
     case CLASS_LOAD: return "CLASS_LOAD";
     case JAVASCRIPT_STACK_FRAME: return "JAVASCRIPT_STACK_FRAME";
     case MESSAGE_START: return "MESSAGE_START";
