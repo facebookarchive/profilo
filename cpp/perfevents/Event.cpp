@@ -35,6 +35,12 @@ createEventAttr(EventType type, int32_t tid, int32_t cpu, bool inherit) {
       attr.sample_period = 1;
       break;
     }
+    case EventType::EVENT_TYPE_MINOR_FAULTS: {
+      attr.type = PERF_TYPE_SOFTWARE;
+      attr.config = PERF_COUNT_SW_PAGE_FAULTS_MIN;
+      attr.sample_period = 1;
+      break;
+    }
     case EventType::EVENT_TYPE_CONTEXT_SWITCHES: {
       attr.type = PERF_TYPE_SOFTWARE;
       attr.config = PERF_COUNT_SW_CONTEXT_SWITCHES;
