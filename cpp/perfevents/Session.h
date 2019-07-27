@@ -23,9 +23,7 @@
 #include <vector>
 
 #include <perfevents/Event.h>
-#include <perfevents/detail/AttachmentStrategy.h>
 #include <perfevents/detail/Reader.h>
-#include <perfevents/detail/make_unique.h>
 
 namespace facebook {
 namespace perfevents {

@@ -15,6 +15,8 @@
  */
 
 #include <perfevents/Session.h>
+#include <perfevents/detail/AttachmentStrategy.h>
+#include <perfevents/detail/make_unique.h>
 
 namespace facebook {
 namespace perfevents {
@@ -47,6 +49,11 @@ bool Session::attach() {
     }
 
     perf_events_ = std::move(events);
+
+    for (auto& evt : perf_events_) {
+      evt.enable();
+    }
+
     reader_ = nullptr;
 
     return true;
@@ -57,6 +64,9 @@ bool Session::attach() {
 
 void Session::detach() {
   reader_ = nullptr;
+  for (auto& evt : perf_events_) {
+    evt.disable();
+  }
   perf_events_ = EventList();
 }
 

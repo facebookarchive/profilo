@@ -132,6 +132,24 @@ Event::Event(Event&& other)
   other.id_ = 0;
 }
 
+Event& Event::operator=(Event&& other) {
+  type_ = other.type_;
+  tid_ = other.tid_;
+  cpu_ = other.cpu_;
+  fd_ = other.fd_;
+  buffer_ = other.buffer_;
+  buffer_size_ = other.buffer_size_;
+  id_ = other.id_;
+  event_attr_ = std::move(other.event_attr_);
+
+  // Tag the other event as non-owning a buffer or fd
+  other.fd_ = -1;
+  other.buffer_ = nullptr;
+  other.buffer_size_ = 0;
+  other.id_ = 0;
+  return *this;
+}
+
 Event::~Event() {
   if (buffer_ != nullptr) {
     try {

@@ -109,10 +109,6 @@ void FdPollReader::run() {
   uint64_t stop_value = stopValue(); // reset the counter
   auto pollset = createPollSet(events_, stop_fd_);
 
-  for (auto& event : events_) {
-    event.enable();
-  }
-
   bool run = true;
 
   while (run) {
@@ -145,17 +141,13 @@ void FdPollReader::run() {
       }
 
       // Invariant: Only the buffer fds are left at this point.
-      Event* evt = pollset.events.at(i);
+      const Event* evt = pollset.events.at(i);
       if (evt == nullptr) {
         throw std::logic_error(
             "Invariant violation: reached buffer flush with no Event pointer");
       }
       detail::parser::parseBuffer(*evt, id_event_map_, listener_);
     }
-  }
-
-  for (auto& event : events_) {
-    event.disable();
   }
 
   // Flush all buffers

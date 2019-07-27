@@ -51,8 +51,8 @@ enum EventType {
 struct EventSpec {
   static const int32_t kAllThreads = 0xFFFFFFFF;
 
-  const EventType type;
-  const int32_t tid;
+  EventType type;
+  int32_t tid;
 
   inline bool isProcessWide() const {
     return tid == kAllThreads;
@@ -63,10 +63,10 @@ class Event {
  public:
   explicit Event(EventType type, int32_t tid, int32_t cpu, bool inherit = true);
   Event();
-  Event(Event& evt) = delete;
+  Event(Event const& evt) = delete;
   Event(Event&& evt);
-  Event& operator=(Event& evt) = delete;
-  Event& operator=(Event&& evt) = delete;
+  Event& operator=(Event const& evt) = delete;
+  Event& operator=(Event&& evt);
 
   void open();
   uint64_t read() const;

@@ -22,6 +22,7 @@
 #include <fbjni/fbjni.h>
 #include <jni.h>
 #include <perfevents/Session.h>
+#include <perfevents/detail/ClockOffsetMeasurement.h>
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 
@@ -54,6 +55,8 @@ namespace {
 
 class ProfiloWriterListener : public RecordListener {
  public:
+  ProfiloWriterListener(int64_t clock_offset) : offset_(clock_offset) {}
+
   virtual void onMmap(const RecordMmap& record) {}
 
   virtual void onSample(const EventType type, const RecordSample& record) {
@@ -61,7 +64,7 @@ class ProfiloWriterListener : public RecordListener {
       profilo::Logger::get().write(profilo::entries::StandardEntry{
           .id = 0,
           .type = profilo::entries::MAJOR_FAULT,
-          .timestamp = (int64_t)record.time(),
+          .timestamp = ((int64_t)record.time()) + offset_,
           .tid = (int32_t)record.tid(),
           .callid = 0,
           .matchid = 0,
@@ -94,6 +97,9 @@ class ProfiloWriterListener : public RecordListener {
   }
 
   virtual void onReaderStop() {}
+
+ private:
+  int64_t offset_;
 };
 } // namespace
 
@@ -112,6 +118,11 @@ static jlong nativeAttach(
     throw std::invalid_argument("Max iterations must fit in uint16_t");
   }
 
+  auto clockOffset = detail::clock::measureOffsetFromPerfClock(CLOCK_MONOTONIC);
+  if (clockOffset == INT64_MIN) {
+    return 0;
+  }
+
   auto session = new Session(
       specs,
       {
@@ -119,7 +130,7 @@ static jlong nativeAttach(
           .maxAttachIterations = static_cast<uint16_t>(maxIterations),
           .maxAttachedFdsRatio = maxAttachedFdsRatio,
       },
-      std::unique_ptr<RecordListener>(new ProfiloWriterListener()));
+      std::unique_ptr<RecordListener>(new ProfiloWriterListener(clockOffset)));
   if (!session->attach()) {
     delete session;
     FBLOGV("Session failed to attach");

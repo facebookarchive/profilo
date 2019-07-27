@@ -18,6 +18,7 @@ fb_xplat_cxx_library(
         "Session.cpp",
         "detail/AttachmentStrategy.cpp",
         "detail/BufferParser.cpp",
+        "detail/ClockOffsetMeasurement.cpp",
         "detail/RLimits.cpp",
         "detail/Reader.cpp",
         "jni.cpp",
@@ -33,7 +34,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-fPIE",
         "-std=gnu++14",
-        "-DLOG_TAG=\"perfevents\"",
+        "-DLOG_TAG=\"Profilo/perfevt\"",
     ],
     soname = "libprofilo_perfevents.$(ext)",
     visibility = [
