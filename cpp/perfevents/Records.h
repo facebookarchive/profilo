@@ -49,11 +49,7 @@ class RecordSample {
  public:
   // Memory management is left to the caller, this class
   // is just a facade and will perform no copies.
-  RecordSample(
-      void* data,
-      size_t len,
-      uint64_t sample_type,
-      uint64_t read_format);
+  RecordSample(void* data, size_t len);
 
   // This object does not own any data and a copy may outlive
   // the pointed-to buffer.
@@ -76,11 +72,8 @@ class RecordSample {
  private:
   uint8_t* data_;
   size_t len_;
-  uint64_t sample_type_;
-  uint64_t read_format_;
 
   size_t offsetForField(uint64_t field) const;
-  size_t offsetForReadFormat(uint64_t field) const;
 };
 
 //

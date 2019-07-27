@@ -35,8 +35,6 @@ void notifyLost(void* data, RecordListener* listener);
 void notifySample(
     void* data,
     size_t size,
-    uint64_t sample_type,
-    uint64_t read_format,
     const IdEventMap& idEventMap,
     RecordListener* listener);
 
@@ -111,12 +109,9 @@ size_t parseEvent(
   int type = evt_header->type;
   switch (type) {
     case PERF_RECORD_SAMPLE: {
-      auto attr = bufferEvent.attr();
       notifySample(
           data_bytes,
           evt_header->size,
-          attr.sample_type,
-          attr.read_format,
           idEventMap,
           listener);
       break;
@@ -149,14 +144,12 @@ size_t parseEvent(
 void notifySample(
     void* data,
     size_t size,
-    uint64_t sample_type,
-    uint64_t read_format,
     const IdEventMap& idEventMap,
     RecordListener* listener) {
   if (listener == nullptr) {
     return;
   }
-  RecordSample rec(data, size, sample_type, read_format);
+  RecordSample rec(data, size);
 
   // Need groupLeaderId() because inheritance may give us id()s which we never
   // set up explicitly. We're

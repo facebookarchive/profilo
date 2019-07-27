@@ -71,14 +71,8 @@ createEventAttr(EventType type, int32_t tid, int32_t cpu, bool inherit) {
       throw std::invalid_argument("Unknown event type");
   }
 
-  attr.sample_type = PERF_SAMPLE_TID | PERF_SAMPLE_TIME | PERF_SAMPLE_ADDR |
-      PERF_SAMPLE_ID | PERF_SAMPLE_STREAM_ID | PERF_SAMPLE_CPU |
-      PERF_SAMPLE_READ;
-
-  // If you change this, update the struct in open() as well
-  attr.read_format = PERF_FORMAT_TOTAL_TIME_ENABLED |
-      PERF_FORMAT_TOTAL_TIME_RUNNING |
-      PERF_FORMAT_ID; // needed to read the group leader id
+  attr.sample_type = kSampleType;
+  attr.read_format = kReadFormat;
 
   attr.disabled = 1;
 

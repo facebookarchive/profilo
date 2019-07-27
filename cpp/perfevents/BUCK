@@ -33,6 +33,7 @@ fb_xplat_cxx_library(
         "-fvisibility=hidden",
         "-fexceptions",
         "-fPIE",
+        "-O3",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/perfevt\"",
     ],

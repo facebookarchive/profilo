@@ -37,6 +37,16 @@ struct EventSpec;
 using EventList = std::vector<Event>;
 using EventSpecList = std::vector<EventSpec>;
 
+// If you change this, you need to change the parser in SampleRecord
+constexpr uint64_t kSampleType = PERF_SAMPLE_TID | PERF_SAMPLE_TIME |
+    PERF_SAMPLE_ADDR | PERF_SAMPLE_ID | PERF_SAMPLE_STREAM_ID |
+    PERF_SAMPLE_CPU | PERF_SAMPLE_READ;
+
+// If you change this, you need to change the struct that Event::open() uses
+constexpr uint64_t kReadFormat = PERF_FORMAT_TOTAL_TIME_ENABLED |
+    PERF_FORMAT_TOTAL_TIME_RUNNING |
+    PERF_FORMAT_ID; // needed to read the group leader id
+
 enum EventType {
   EVENT_TYPE_NONE = 0,
   EVENT_TYPE_MAJOR_FAULTS = 1,
