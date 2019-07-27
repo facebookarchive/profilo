@@ -82,6 +82,7 @@ profilo_sample_app(
     app_manifest = "AndroidManifest-sample.xml",
     providers = [
         "atrace",
+        "perfevents",
         "processmetadata",
         "stacktrace",
         "systemcounters",
