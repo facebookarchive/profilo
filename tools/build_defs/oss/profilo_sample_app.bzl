@@ -15,11 +15,11 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 PROVIDER_TO_RULE = {
     "atrace": profilo_path("java/main/com/facebook/profilo/provider/atrace:atrace"),
     "mappingdensity": profilo_path("java/main/com/facebook/profilo/provider/mappingdensity:mappingdensity"),
+    "perfevents": profilo_path("java/main/com/facebook/profilo/provider/perfevents:perfevents"),
     "processmetadata": profilo_path("java/main/com/facebook/profilo/provider/processmetadata:processmetadata"),
     "stacktrace": profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),
     "systemcounters": profilo_path("java/main/com/facebook/profilo/provider/systemcounters:systemcounters"),
     "threadmetadata": profilo_path("java/main/com/facebook/profilo/provider/threadmetadata:threadmetadata"),
-    "yarn": profilo_path("java/main/com/facebook/profilo/provider/yarn:yarn"),
 }
 
 def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], provider_to_rule = PROVIDER_TO_RULE):

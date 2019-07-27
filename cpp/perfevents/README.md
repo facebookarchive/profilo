@@ -1,7 +1,7 @@
-#### What is `yarn`?
+#### What is `perfevents`?
 
-`libyarn` is a saner interface to the `perf_event_open` Linux API, specifically
-built for attaching to your own process. `yarn` is also a clean room
+`libperfevents` is a saner interface to the `perf_event_open` Linux API, specifically
+built for attaching to your own process. `perfevents` is also a clean room
 implementation and not tainted by `perf(1)`'s GPL license.
 
 #### What is `perf_event_open`?
@@ -23,12 +23,12 @@ don't actually work for an unprivileged process targeting itself. This situation
 is made worse on Android where the kernel can be quite old and long-solved
 bugs are still present.
 
-`yarn` hides all of these traps and complexity and aims to expose a simple and
+`perfevents` hides all of these traps and complexity and aims to expose a simple and
 sane API into `perf_event_open`, using only well-tested modes of execution.
 
 #### Design
 
-`yarn` is designed around the following concepts:
+`perfevents` is designed around the following concepts:
 
 `EventSpec`
   - High-level type of event that we want to capture.
@@ -42,7 +42,7 @@ sane API into `perf_event_open`, using only well-tested modes of execution.
     process.
 
 `Session`
-  - Controls the attachment of the perf events and is the entry point to yarn.
+  - Controls the attachment of the perf events and is the entry point to perfevents.
 
 `AttachmentStrategy`
   - An algorithm to materialize a set of EventSpecs into actual Events.

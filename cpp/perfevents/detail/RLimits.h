@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-#include <yarn/detail/RLimits.h>
+#pragma once
+
+#include <sys/resource.h>
+#include <system_error>
+#include <utility>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
 
-rlimit getrlimit(int resource) {
-  rlimit res{};
-  if (getrlimit(resource, &res) != 0) {
-    throw std::system_error(errno, std::system_category());
-  }
-  return res;
-}
-
-void setrlimit(int resource, const rlimit& limits) {
-  if (setrlimit(resource, &limits) != 0) {
-    throw std::system_error(errno, std::system_category());
-  }
-}
+rlimit getrlimit(int resource);
+void setrlimit(int resource, const rlimit& limits);
 
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

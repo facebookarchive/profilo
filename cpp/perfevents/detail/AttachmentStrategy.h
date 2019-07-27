@@ -23,15 +23,15 @@
 #include <system_error>
 #include <vector>
 
-#include <yarn/Event.h>
-#include <yarn/Session.h>
-#include <yarn/detail/RLimits.h>
-#include <yarn/detail/make_unique.h>
+#include <perfevents/Event.h>
+#include <perfevents/Session.h>
+#include <perfevents/detail/RLimits.h>
+#include <perfevents/detail/make_unique.h>
 
 #include <util/ProcFs.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
 
 using namespace facebook::profilo::util;
@@ -99,5 +99,5 @@ class PerCoreAttachmentStrategy : public AttachmentStrategy {
 };
 
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

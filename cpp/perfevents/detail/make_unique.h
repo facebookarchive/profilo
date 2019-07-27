@@ -20,7 +20,7 @@
 #include <type_traits>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
 
 // Array specialization
@@ -40,5 +40,5 @@ std::unique_ptr<T> make_unique(Args&&... args) {
 }
 
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

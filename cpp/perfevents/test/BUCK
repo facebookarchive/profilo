@@ -9,7 +9,7 @@ profilo_cxx_binary(
         "-fvisibility=hidden",
         "-fexceptions",
         "-fPIE",
-        "-DLOG_TAG=\"yarn\"",
+        "-DLOG_TAG=\"perfevents\"",
         "-g",
     ],
     linker_flags = [
@@ -17,6 +17,6 @@ profilo_cxx_binary(
         "-g",
     ],
     deps = [
-        profilo_path("cpp/yarn:yarn"),
+        profilo_path("cpp/perfevents:perfevents"),
     ],
 )

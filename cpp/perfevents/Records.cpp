@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <yarn/Records.h>
+#include <perfevents/Records.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 
 RecordSample::RecordSample(
     void* data,
@@ -197,5 +197,5 @@ size_t RecordSample::offsetForReadFormat(uint64_t field) const {
   throw std::invalid_argument("Unknown field for read_format");
 }
 
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

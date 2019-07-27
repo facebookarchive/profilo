@@ -2,7 +2,7 @@ load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 fb_core_android_library(
-    name = "yarn",
+    name = "perfevents",
     srcs = glob(["*.java"]),
     visibility = [
         "fbandroid//instrumentation_tests/com/facebook/quicklog/...",
@@ -10,7 +10,7 @@ fb_core_android_library(
         "fbandroid//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
-        profilo_path("cpp/yarn:yarn"),
+        profilo_path("cpp/perfevents:perfevents"),
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/proguard:annotations"),
         profilo_path("deps/soloader:soloader"),

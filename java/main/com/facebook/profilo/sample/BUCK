@@ -105,6 +105,6 @@ profilo_sample_app(
         "stacktrace",
         "systemcounters",
         "threadmetadata",
-        "yarn",
+        "perfevents",
     ]
 ]

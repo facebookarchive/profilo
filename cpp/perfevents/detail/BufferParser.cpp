@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <yarn/detail/BufferParser.h>
+#include <perfevents/detail/BufferParser.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
 namespace parser {
 
@@ -198,5 +198,5 @@ void notifyLost(void* data, RecordListener* listener) {
 
 } // namespace parser
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

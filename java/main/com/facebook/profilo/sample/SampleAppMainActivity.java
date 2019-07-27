@@ -16,11 +16,11 @@ package com.facebook.profilo.sample;
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.provider.atrace.SystraceProvider;
 import com.facebook.profilo.provider.mappingdensity.MappingDensityProvider;
+import com.facebook.profilo.provider.perfevents.PerfEventsProvider;
 import com.facebook.profilo.provider.processmetadata.ProcessMetadataProvider;
 import com.facebook.profilo.provider.stacktrace.StackFrameThread;
 import com.facebook.profilo.provider.systemcounters.SystemCounterThread;
 import com.facebook.profilo.provider.threadmetadata.ThreadMetadataProvider;
-import com.facebook.profilo.provider.yarn.PerfEventsProvider;
 
 public class SampleAppMainActivity extends BaseSampleAppMainActivity {
   @Override
@@ -38,7 +38,7 @@ public class SampleAppMainActivity extends BaseSampleAppMainActivity {
         return new ThreadMetadataProvider();
       case "processmetadata":
         return new ProcessMetadataProvider(this.getApplicationContext());
-      case "yarn":
+      case "perfevents":
         return new PerfEventsProvider();
       default:
         return super.createProvider(provider);

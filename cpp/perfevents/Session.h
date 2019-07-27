@@ -22,13 +22,13 @@
 #include <unordered_map>
 #include <vector>
 
-#include <yarn/Event.h>
-#include <yarn/detail/AttachmentStrategy.h>
-#include <yarn/detail/Reader.h>
-#include <yarn/detail/make_unique.h>
+#include <perfevents/Event.h>
+#include <perfevents/detail/AttachmentStrategy.h>
+#include <perfevents/detail/Reader.h>
+#include <perfevents/detail/make_unique.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 
 enum FallbackMode {
   FALLBACK_RAISE_RLIMIT = 1
@@ -86,5 +86,5 @@ class Session {
   std::unique_ptr<detail::Reader> reader_;
   std::unique_ptr<RecordListener> listener_;
 };
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

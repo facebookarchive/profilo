@@ -11,7 +11,7 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
-    name = "yarn",
+    name = "perfevents",
     srcs = [
         "Event.cpp",
         "Records.cpp",
@@ -22,7 +22,7 @@ fb_xplat_cxx_library(
         "detail/Reader.cpp",
         "jni.cpp",
     ],
-    header_namespace = "yarn",
+    header_namespace = "perfevents",
     exported_headers = glob([
         "*.h",
         "detail/*.h",
@@ -33,12 +33,12 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-fPIE",
         "-std=gnu++14",
-        "-DLOG_TAG=\"yarn\"",
+        "-DLOG_TAG=\"perfevents\"",
     ],
-    soname = "libprofilo_yarn.$(ext)",
+    soname = "libprofilo_perfevents.$(ext)",
     visibility = [
         profilo_path("..."),
-        profilo_path("cpp/yarn/..."),
+        profilo_path("cpp/perfevents/..."),
     ],
     deps = [
         ":headers_linux",

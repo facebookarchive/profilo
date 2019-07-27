@@ -16,17 +16,25 @@
 
 #pragma once
 
-#include <sys/resource.h>
-#include <system_error>
-#include <utility>
+#include <cstring>
+
+#include <perfevents/Event.h>
+#include <perfevents/Records.h>
+#include <perfevents/detail/Reader.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
+namespace parser {
 
-rlimit getrlimit(int resource);
-void setrlimit(int resource, const rlimit& limits);
+using IdEventMap = std::unordered_map<uint64_t, const Event&>;
 
+void parseBuffer(
+    const Event& bufferEvent,
+    IdEventMap& idEventMap,
+    RecordListener* listener);
+
+} // namespace parser
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

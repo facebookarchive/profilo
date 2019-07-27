@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <yarn/Event.h>
+#include <perfevents/Event.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 
 static perf_event_attr
 createEventAttr(EventType type, int32_t tid, int32_t cpu, bool inherit) {
@@ -312,5 +312,5 @@ EventType Event::type() const {
   return type_;
 }
 
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

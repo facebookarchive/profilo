@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <yarn/detail/AttachmentStrategy.h>
+#include <perfevents/detail/AttachmentStrategy.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
 
 static bool tryRaiseFdLimit();
@@ -259,5 +259,5 @@ static bool tryRaiseFdLimit() {
 }
 
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

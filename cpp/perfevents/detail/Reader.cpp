@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <yarn/detail/Reader.h>
+#include <perfevents/detail/Reader.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
 
 struct PollSet {
@@ -214,5 +214,5 @@ uint64_t FdPollReader::stopValue() const {
 }
 
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-#pragma once
-
-#include <cstring>
-
-#include <yarn/Event.h>
-#include <yarn/Records.h>
-#include <yarn/detail/Reader.h>
+#include <perfevents/detail/RLimits.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
-namespace parser {
 
-using IdEventMap = std::unordered_map<uint64_t, const Event&>;
+rlimit getrlimit(int resource) {
+  rlimit res{};
+  if (getrlimit(resource, &res) != 0) {
+    throw std::system_error(errno, std::system_category());
+  }
+  return res;
+}
 
-void parseBuffer(
-    const Event& bufferEvent,
-    IdEventMap& idEventMap,
-    RecordListener* listener);
+void setrlimit(int resource, const rlimit& limits) {
+  if (setrlimit(resource, &limits) != 0) {
+    throw std::system_error(errno, std::system_category());
+  }
+}
 
-} // namespace parser
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

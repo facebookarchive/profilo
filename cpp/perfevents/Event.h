@@ -29,7 +29,7 @@
 #endif
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 
 class Event;
 struct EventSpec;
@@ -106,5 +106,5 @@ class Event {
   perf_event_attr event_attr_;
 };
 
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

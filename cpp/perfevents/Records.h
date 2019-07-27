@@ -20,10 +20,10 @@
 #include <unistd.h>
 #include <stdexcept>
 
-#include <yarn/Event.h>
+#include <perfevents/Event.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 
 struct RecordForkExit {
   uint32_t pid, ppid;
@@ -100,5 +100,5 @@ struct RecordListener {
   virtual ~RecordListener() = default;
 };
 
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

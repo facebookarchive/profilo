@@ -25,13 +25,13 @@
 #include <unordered_map>
 #include <vector>
 
-#include <yarn/Event.h>
-#include <yarn/Records.h>
-#include <yarn/detail/BufferParser.h>
-#include <yarn/detail/make_unique.h>
+#include <perfevents/Event.h>
+#include <perfevents/Records.h>
+#include <perfevents/detail/BufferParser.h>
+#include <perfevents/detail/make_unique.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 namespace detail {
 
 class Reader {
@@ -79,5 +79,5 @@ class FdPollReader : public Reader {
 };
 
 } // namespace detail
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <yarn/Session.h>
+#include <perfevents/Session.h>
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 
 Session::Session(
     const std::vector<EventSpec>& events,
@@ -79,5 +79,5 @@ void Session::stopRead() {
   reader_->stop();
 }
 
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook

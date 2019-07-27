@@ -21,17 +21,17 @@
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
 #include <jni.h>
+#include <perfevents/Session.h>
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
-#include <yarn/Session.h>
 
 namespace fbjni = facebook::jni;
 
 const char* kPerfSessionType =
-    "com/facebook/profilo/provider/yarn/PerfEventsSession";
+    "com/facebook/profilo/provider/perfevents/PerfEventsSession";
 
 namespace facebook {
-namespace yarn {
+namespace perfevents {
 
 static std::vector<EventSpec> providersToSpecs(jboolean majorFaults) {
   auto specs = std::vector<EventSpec>{};
@@ -143,7 +143,7 @@ static void nativeStop(JNIEnv*, jobject cls, jlong handle) {
   FBLOGV("Session about to stop");
   handleToSession(handle)->stopRead();
 }
-} // namespace yarn
+} // namespace perfevents
 } // namespace facebook
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
@@ -151,10 +151,12 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
     fbjni::registerNatives(
         kPerfSessionType,
         {
-            makeNativeMethod("nativeAttach", facebook::yarn::nativeAttach),
-            makeNativeMethod("nativeDetach", facebook::yarn::nativeDetach),
-            makeNativeMethod("nativeStart", facebook::yarn::nativeStart),
-            makeNativeMethod("nativeStop", facebook::yarn::nativeStop),
+            makeNativeMethod(
+                "nativeAttach", facebook::perfevents::nativeAttach),
+            makeNativeMethod(
+                "nativeDetach", facebook::perfevents::nativeDetach),
+            makeNativeMethod("nativeStart", facebook::perfevents::nativeStart),
+            makeNativeMethod("nativeStop", facebook::perfevents::nativeStop),
         });
   });
 }

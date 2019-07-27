@@ -24,9 +24,9 @@
 #include <thread>
 #include <vector>
 
-#include <yarn/Session.h>
+#include <perfevents/Session.h>
 
-using namespace facebook::yarn;
+using namespace facebook::perfevents;
 
 #ifndef ANDROID
 static pid_t gettid() {
