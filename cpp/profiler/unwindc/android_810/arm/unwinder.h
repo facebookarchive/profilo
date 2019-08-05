@@ -1,7 +1,7 @@
 // @nolint
 // @generated
 struct OatMethod {
-  uintptr_t begin_u8p;
+  uintptr_t begin_p;
   uint32_t offset_u32;
   bool success_b;
 };
@@ -10,7 +10,7 @@ struct OatClass {
   int32_t status_i32;
   uint32_t type_u32;
   uint32_t bitmap_size_u32;
-  uintptr_t bitmap_ptr_u32p;
+  uintptr_t bitmap_ptr_p;
   uintptr_t methods_ptr_p;
   bool success_b;
 };
@@ -229,12 +229,6 @@ auto method_header_contains(uintptr_t method_header, uintptr_t pc)
   return ((code <= pc) && (pc <= (code + code_size)));
 }
 
-auto is_obsolete_method(uintptr_t method)
-{
-  uint32_t kAccObsoleteMethod = 262144U;
-  return ((get_method_access_flags(method) & kAccObsoleteMethod) != 0U);
-}
-
 auto is_resolved(uintptr_t cls)
 {
   uintptr_t status = AccessField(cls, 112U);
@@ -284,7 +278,7 @@ auto get_oat_class(uintptr_t oat_dex_file, uintptr_t class_def_idx)
       .status_i32 = status,
       .type_u32 = oat_type,
       .bitmap_size_u32 = bitmap_size,
-      .bitmap_ptr_u32p = bitmap_pointer,
+      .bitmap_ptr_p = bitmap_pointer,
       .methods_ptr_p = methods_pointer,
       .success_b = true,
   };
@@ -303,7 +297,7 @@ auto find_oat_class(uintptr_t cls)
         .status_i32 = -1,
         .type_u32 = 2,
         .bitmap_size_u32 = 0,
-        .bitmap_ptr_u32p = 0,
+        .bitmap_ptr_p = 0,
         .methods_ptr_p = 0,
         .success_b = false,
     };
@@ -328,7 +322,7 @@ auto get_oat_method_offsets(struct OatClass const& struct_OatClass, uintptr_t me
 {
   uintptr_t methods_ptr = struct_OatClass.methods_ptr_p;
   uint32_t oc_type = struct_OatClass.type_u32;
-  uintptr_t bitmap_ptr = struct_OatClass.bitmap_ptr_u32p;
+  uintptr_t bitmap_ptr = struct_OatClass.bitmap_ptr_p;
   if((methods_ptr == 0U)){
     uint32_t kOatClassNoneCompiled = 2U;
 
@@ -386,26 +380,26 @@ auto get_oat_method(uintptr_t runtime_obj, struct OatClass const& struct_OatClas
   auto oat_method_offsets = get_oat_method_offsets(struct_OatClass, oat_method_index);
   if((oat_method_offsets == 0U)){
     return OatMethod {
-      .begin_u8p = 0,
+      .begin_p = 0,
         .offset_u32 = 0,
         .success_b = true,
     };
   }
   uintptr_t runtime_current = get_runtime();
-  uint32_t begin_u8p = 0U;
+  uint32_t begin_p = 0U;
   uintptr_t oat_file = struct_OatClass.oat_file_p;
   if((Read1(AccessField(oat_file, 44U)) || ((runtime_current == 0U) || runtime_is_aot_compiler(runtime_current, runtime_current)))){
-    begin_u8p = Read4(AccessField(oat_file, 20U));
+    begin_p = Read4(AccessField(oat_file, 20U));
     uint32_t offset_u32 = Read4(AccessField(oat_method_offsets, 0U));
     return OatMethod {
-      .begin_u8p = begin_u8p,
+      .begin_p = begin_p,
         .offset_u32 = offset_u32,
         .success_b = true,
     };
   }
-  begin_u8p = Read4(AccessField(oat_file, 20U));
+  begin_p = Read4(AccessField(oat_file, 20U));
   return OatMethod {
-    .begin_u8p = begin_u8p,
+    .begin_p = begin_p,
       .offset_u32 = 0,
       .success_b = true,
   };
@@ -500,7 +494,7 @@ auto find_oat_method_for(uintptr_t method, uintptr_t runtime_obj)
   auto oat_class = find_oat_class(cls);
   if((! oat_class.success_b)){
     return OatMethod {
-      .begin_u8p = 0,
+      .begin_p = 0,
         .offset_u32 = 0,
         .success_b = false,
     };
@@ -513,7 +507,7 @@ auto get_oat_pointer(struct OatMethod const& struct_OatMethod, uintptr_t offset)
   if((offset == 0U)){
     return offset;
   }
-  uintptr_t begin = struct_OatMethod.begin_u8p;
+  uintptr_t begin = struct_OatMethod.begin_p;
   return AdvancePointer(begin, (offset * 1U));
 }
 

@@ -229,12 +229,6 @@ auto method_header_contains(uintptr_t method_header, uintptr_t pc)
   return ((code <= pc) && (pc <= (code + code_size)));
 }
 
-auto is_obsolete_method(uintptr_t method)
-{
-  uint32_t kAccObsoleteMethod = 262144U;
-  return ((get_method_access_flags(method) & kAccObsoleteMethod) != 0U);
-}
-
 auto is_resolved(uintptr_t cls)
 {
   uintptr_t status = AccessField(cls, 112U);
