@@ -61,7 +61,7 @@ uint32_t getDexMethodIndex5(fbjni::alias_ref<jobject> method) {
   return (uint32_t)artMethod->getFieldValue(jlrArtMethod_dexMethodIndex);
 }
 
-uint32_t getDexMethodIndex67(fbjni::alias_ref<jobject> method) {
+uint32_t getDexMethodIndex678(fbjni::alias_ref<jobject> method) {
   auto jlrMethod_class = fbjni::findClassLocal("java/lang/reflect/Method");
   auto jlrMethod_dexMethodIndex =
       jlrMethod_class->getField<jint>("dexMethodIndex");
@@ -115,8 +115,10 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(
         dexMethodIndex = getDexMethodIndex5(method);
       } else if (
           version == versions::ANDROID_6_0 ||
-          version == versions::ANDROID_7_0) {
-        dexMethodIndex = getDexMethodIndex67(method);
+          version == versions::ANDROID_7_0 ||
+          version == versions::ANDROID_8_0 ||
+          version == versions::ANDROID_8_1) {
+        dexMethodIndex = getDexMethodIndex678(method);
       }
       methods_map.insert(std::make_pair(
           jlrMethod_getName(method)->toStdString(), dexMethodIndex));
@@ -186,7 +188,6 @@ bool compareStackTraces(
       return false;
     }
   }
-
   return true;
 }
 

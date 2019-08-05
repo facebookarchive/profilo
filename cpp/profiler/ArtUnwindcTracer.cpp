@@ -41,6 +41,10 @@ static constexpr ArtUnwindcVersion kVersion = kArtUnwindc710;
 static constexpr ArtUnwindcVersion kVersion = kArtUnwindc711;
 #elif ANDROID_VERSION_NUM == 712
 static constexpr ArtUnwindcVersion kVersion = kArtUnwindc712;
+#elif ANDROID_VERSION_NUM == 800
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc800;
+#elif ANDROID_VERSION_NUM == 810
+static constexpr ArtUnwindcVersion kVersion = kArtUnwindc810;
 #endif
 
 /**

@@ -186,6 +186,12 @@ AccessArrayItem(uintptr_t addr, uint32_t item_size, uint32_t item) {
   return addr + (item_size * item);
 }
 
+__attribute__((always_inline)) inline uintptr_t AdvancePointer(
+    uintptr_t ptr,
+    uint32_t offset) {
+  return ptr + offset;
+}
+
 } // namespace ANDROID_NAMESPACE
 } // namespace profiler
 } // namespace profilo

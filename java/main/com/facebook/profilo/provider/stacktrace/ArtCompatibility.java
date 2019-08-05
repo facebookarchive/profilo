@@ -62,6 +62,12 @@ public class ArtCompatibility {
         result = readCompatFile(file);
       } else {
         switch (Build.VERSION.RELEASE) {
+          case "8.1.0":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_8_1_0);
+            break;
+          case "8.0.0":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_8_0_0);
+            break;
           case "7.1.2":
             result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_7_1_2);
             break;

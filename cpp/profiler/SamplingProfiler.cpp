@@ -39,6 +39,8 @@
 #include <profiler/ArtUnwindcTracer_710.h>
 #include <profiler/ArtUnwindcTracer_711.h>
 #include <profiler/ArtUnwindcTracer_712.h>
+#include <profiler/ArtUnwindcTracer_800.h>
+#include <profiler/ArtUnwindcTracer_810.h>
 #include <profiler/DalvikTracer.h>
 #include <profiler/ExternalTracerManager.h>
 #include <profiler/JSTracer.h>
@@ -746,6 +748,16 @@ SamplingProfiler::ComputeAvailableTracers(uint32_t available_tracers) {
   if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
     tracers[tracers::ART_UNWINDC_7_1_2] =
         std::make_shared<ArtUnwindcTracer712>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_8_0_0) {
+    tracers[tracers::ART_UNWINDC_8_0_0] =
+        std::make_shared<ArtUnwindcTracer800>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_8_1_0) {
+    tracers[tracers::ART_UNWINDC_8_1_0] =
+        std::make_shared<ArtUnwindcTracer810>();
   }
 
   if (available_tracers & tracers::JAVASCRIPT) {

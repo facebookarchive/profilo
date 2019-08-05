@@ -24,6 +24,8 @@
 #include "profiler/ArtUnwindcTracer_710.h"
 #include "profiler/ArtUnwindcTracer_711.h"
 #include "profiler/ArtUnwindcTracer_712.h"
+#include "profiler/ArtUnwindcTracer_800.h"
+#include "profiler/ArtUnwindcTracer_810.h"
 #include "profiler/BaseTracer.h"
 
 #include <fb/log.h>
@@ -63,6 +65,12 @@ jboolean check(JNIEnv* env, jclass, jint tracers) {
   } else if (tracers & ART_UNWINDC_7_1_2) {
     auto tracer = std::make_unique<profiler::ArtUnwindcTracer712>();
     return runJavaCompatibilityCheck(versions::ANDROID_7_0, tracer.get());
+  } else if (tracers & ART_UNWINDC_8_0_0) {
+    auto tracer = std::make_unique<profiler::ArtUnwindcTracer800>();
+    return runJavaCompatibilityCheck(versions::ANDROID_8_0, tracer.get());
+  } else if (tracers & ART_UNWINDC_8_1_0) {
+    auto tracer = std::make_unique<profiler::ArtUnwindcTracer810>();
+    return runJavaCompatibilityCheck(versions::ANDROID_8_1, tracer.get());
   } else {
     return false;
   }
