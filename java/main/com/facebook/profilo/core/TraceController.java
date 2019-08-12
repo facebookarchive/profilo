@@ -41,7 +41,7 @@ public interface TraceController {
    * @param config the current config for this controller
    * @return sampling rate in milliseconds, 0 if not configured
    */
-  TraceContext.ProviderExtras getProviderExtras(
+  TraceContext.TraceConfigExtras getTraceConfigExtras(
       long longContext, @Nullable Object context, ControllerConfig config);
 
   boolean contextsEqual(long fstLong, @Nullable Object fst, long sndLong, @Nullable Object snd);

@@ -296,8 +296,8 @@ public final class TraceControl {
             providers,
             flags,
             controllerConfig == null
-                ? TraceContext.ProviderExtras.EMPTY
-                : traceController.getProviderExtras(longContext, context, controllerConfig));
+                ? TraceContext.TraceConfigExtras.EMPTY
+                : traceController.getTraceConfigExtras(longContext, context, controllerConfig));
 
     return startTraceInternal(flags, nextContext);
   }
@@ -332,7 +332,10 @@ public final class TraceControl {
     if (rootConfig == null) {
       return false;
     }
-    int timeout = rootConfig.getControllersConfig().getTraceTimeoutMs();
+    int timeout =
+        nextContext.mTraceConfigExtras.getIntParam(
+            ProfiloConstants.TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS,
+            rootConfig.getControllersConfig().getTraceTimeoutMs());
     if (timeout == -1) { // config doesn't specify a value, use default
       timeout = TRACE_TIMEOUT_MS;
     }

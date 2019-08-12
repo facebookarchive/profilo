@@ -66,4 +66,6 @@ public final class ProfiloConstants {
     }
     return "UNKNOWN REASON " + abortReason;
   }
+
+  public static final String TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS = "trace_config.trace_timeout_ms";
 }

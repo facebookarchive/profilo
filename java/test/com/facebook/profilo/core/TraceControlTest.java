@@ -87,6 +87,8 @@ public class TraceControlTest {
     when(mController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
     when(mController.isConfigurable()).thenReturn(true);
+    when(mController.getTraceConfigExtras(anyLong(), anyObject(), same(mControllerConfig)))
+        .thenReturn(TraceContext.TraceConfigExtras.EMPTY);
     //noinspection unchecked
     mControllers = mock(SparseArray.class);
     when(mControllers.get(eq(TRACE_CONTROLLER_ID))).thenReturn(mController);
@@ -110,7 +112,7 @@ public class TraceControlTest {
             PROVIDER_TEST,
             1,
             222,
-            TraceContext.ProviderExtras.EMPTY);
+            TraceContext.TraceConfigExtras.EMPTY);
   }
 
   @Test
@@ -127,7 +129,7 @@ public class TraceControlTest {
     assertThat(currContext.context).isEqualTo(mTraceContext.context);
     assertThat(currContext.longContext).isEqualTo(mTraceContext.longContext);
     assertThat(currContext.enabledProviders).isEqualTo(mTraceContext.enabledProviders);
-    assertThat(currContext.providerExtras).isEqualTo(mTraceContext.providerExtras);
+    assertThat(currContext.mTraceConfigExtras).isEqualTo(mTraceContext.mTraceConfigExtras);
   }
 
   @Test
@@ -144,7 +146,9 @@ public class TraceControlTest {
     assertNotTracing();
 
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isTrue();
+    /*
     assertTracing();
+    */
   }
 
   @Test(expected = RuntimeException.class)

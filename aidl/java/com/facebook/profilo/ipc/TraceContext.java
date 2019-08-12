@@ -25,16 +25,17 @@ import javax.annotation.Nullable;
 
 public final class TraceContext implements Parcelable {
 
-  // Provider extra configuration parameters.
-  // In order to have flatter hierarchy we share map between all providers.
-  public static final class ProviderExtras implements Parcelable {
-    public static final ProviderExtras EMPTY = new ProviderExtras(null, null, null);
+  // Trace config extra configuration parameters.
+  // The granularity of these extras applies to everything within the trace
+  // config, which means that they apply to all the providers.
+  public static final class TraceConfigExtras implements Parcelable {
+    public static final TraceConfigExtras EMPTY = new TraceConfigExtras(null, null, null);
 
     private final @Nullable TreeMap<String, Integer> mIntParams;
     private final @Nullable TreeMap<String, Boolean> mBoolParams;
     private final @Nullable TreeMap<String, int[]> mIntArrayParams;
 
-    ProviderExtras(Parcel in) {
+    TraceConfigExtras(Parcel in) {
       Bundle intParamsBundle = in.readBundle(getClass().getClassLoader());
       Set<String> intParamKeys = intParamsBundle.keySet();
       if (!intParamKeys.isEmpty()) {
@@ -69,7 +70,7 @@ public final class TraceContext implements Parcelable {
       }
     }
 
-    public ProviderExtras(
+    public TraceConfigExtras(
         @Nullable TreeMap<String, Integer> intParams,
         @Nullable TreeMap<String, Boolean> boolParams,
         @Nullable TreeMap<String, int[]> intArrayParams) {
@@ -102,14 +103,14 @@ public final class TraceContext implements Parcelable {
       return mIntArrayParams.get(key);
     }
 
-    public static final Parcelable.Creator<ProviderExtras> CREATOR =
-        new Parcelable.Creator<ProviderExtras>() {
-          public ProviderExtras createFromParcel(Parcel in) {
-            return new ProviderExtras(in);
+    public static final Parcelable.Creator<TraceConfigExtras> CREATOR =
+        new Parcelable.Creator<TraceConfigExtras>() {
+          public TraceConfigExtras createFromParcel(Parcel in) {
+            return new TraceConfigExtras(in);
           }
 
-          public ProviderExtras[] newArray(int size) {
-            return new ProviderExtras[size];
+          public TraceConfigExtras[] newArray(int size) {
+            return new TraceConfigExtras[size];
           }
         };
 
@@ -153,7 +154,7 @@ public final class TraceContext implements Parcelable {
   public int enabledProviders;
   public int flags;
   public int abortReason;
-  public ProviderExtras providerExtras;
+  public TraceConfigExtras mTraceConfigExtras;
 
   public static final Parcelable.Creator<TraceContext> CREATOR = new
       Parcelable.Creator<TraceContext>() {
@@ -179,7 +180,7 @@ public final class TraceContext implements Parcelable {
       int enabledProviders,
       int flags,
       int abortReason,
-      ProviderExtras providerExtras) {
+      TraceConfigExtras traceConfigExtras) {
     this.traceId = traceId;
     this.encodedTraceId = encodedTraceId;
     this.controller = controller;
@@ -189,7 +190,7 @@ public final class TraceContext implements Parcelable {
     this.enabledProviders = enabledProviders;
     this.flags = flags;
     this.abortReason = abortReason;
-    this.providerExtras = providerExtras;
+    this.mTraceConfigExtras = traceConfigExtras;
   }
 
   public TraceContext(
@@ -201,7 +202,7 @@ public final class TraceContext implements Parcelable {
       long longContext,
       int enabledProviders,
       int flags,
-      ProviderExtras providerExtras) {
+      TraceConfigExtras traceConfigExtras) {
     this(
         traceId,
         encodedTraceId,
@@ -212,7 +213,7 @@ public final class TraceContext implements Parcelable {
         enabledProviders,
         flags,
         (short) 0,
-        providerExtras);
+        traceConfigExtras);
   }
 
   public TraceContext(TraceContext traceContext) {
@@ -226,7 +227,7 @@ public final class TraceContext implements Parcelable {
         traceContext.enabledProviders,
         traceContext.flags,
         traceContext.abortReason,
-        traceContext.providerExtras);
+        traceContext.mTraceConfigExtras);
   }
 
   public TraceContext(TraceContext traceContext, int abortReason) {
@@ -240,7 +241,7 @@ public final class TraceContext implements Parcelable {
         traceContext.enabledProviders,
         traceContext.flags,
         abortReason,
-        traceContext.providerExtras);
+        traceContext.mTraceConfigExtras);
   }
 
   public TraceContext(TraceContext traceContext, int controller, Object controllerObject) {
@@ -254,7 +255,7 @@ public final class TraceContext implements Parcelable {
         traceContext.enabledProviders,
         traceContext.flags,
         traceContext.abortReason,
-        traceContext.providerExtras);
+        traceContext.mTraceConfigExtras);
   }
 
   public TraceContext(Parcel src) {
@@ -271,7 +272,7 @@ public final class TraceContext implements Parcelable {
     this.enabledProviders = src.readInt();
     this.flags = src.readInt();
     this.abortReason = src.readInt();
-    this.providerExtras = ProviderExtras.CREATOR.createFromParcel(src);
+    this.mTraceConfigExtras = TraceConfigExtras.CREATOR.createFromParcel(src);
   }
 
   @Override
@@ -288,6 +289,6 @@ public final class TraceContext implements Parcelable {
     dest.writeInt(enabledProviders);
     dest.writeInt(this.flags);
     dest.writeInt(abortReason);
-    providerExtras.writeToParcel(dest, flags);
+    mTraceConfigExtras.writeToParcel(dest, flags);
   }
 }

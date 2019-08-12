@@ -169,7 +169,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
       int samplingRateMs =
           traceContext == null
               ? DEFAULT_COUNTER_PERIODIC_TIME_MS
-              : traceContext.providerExtras.getIntParam(
+              : traceContext.mTraceConfigExtras.getIntParam(
                   SYSTEM_COUNTERS_SAMPLING_RATE_CONFIG_PARAM, DEFAULT_COUNTER_PERIODIC_TIME_MS);
       mHandler.obtainMessage(MSG_SYSTEM_COUNTERS, samplingRateMs, 0).sendToTarget();
     }
@@ -180,7 +180,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
       int samplingRateMs =
           traceContext == null
               ? DEFAULT_HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS
-              : traceContext.providerExtras.getIntParam(
+              : traceContext.mTraceConfigExtras.getIntParam(
                   HIGH_FREQ_COUNTERS_SAMPLING_RATE_CONFIG_PARAM,
                   DEFAULT_HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS);
       mHandler.obtainMessage(MSG_HIGH_FREQ_THREAD_COUNTERS, samplingRateMs, 0).sendToTarget();

@@ -41,15 +41,15 @@ public class ExternalController implements TraceController {
   }
 
   @Override
-  public TraceContext.ProviderExtras getProviderExtras(
+  public TraceContext.TraceConfigExtras getTraceConfigExtras(
       long longContext, @Nullable Object context, ControllerConfig config) {
     if (context == null) {
-      return TraceContext.ProviderExtras.EMPTY;
+      return TraceContext.TraceConfigExtras.EMPTY;
     }
     TreeMap<String, Integer> extraIntMap = new TreeMap<>();
     extraIntMap.put(
         CPU_SAMPLING_RATE_CONFIG_PARAM, getConfigFromContext(context).cpuSamplingRateMs);
-    return new TraceContext.ProviderExtras(extraIntMap, null, null);
+    return new TraceContext.TraceConfigExtras(extraIntMap, null, null);
   }
 
   private Config getConfigFromContext(Object context) {

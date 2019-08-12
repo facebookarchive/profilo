@@ -165,7 +165,7 @@ public final class StackFrameThread extends BaseTraceProvider {
 
     boolean enabled =
         enableInternal(
-            context.providerExtras.getIntParam(CPU_SAMPLING_RATE_CONFIG_PARAM, 0),
+            context.mTraceConfigExtras.getIntParam(CPU_SAMPLING_RATE_CONFIG_PARAM, 0),
             context.enabledProviders);
     if (!enabled) {
       return;
