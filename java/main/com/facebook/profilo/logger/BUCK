@@ -8,11 +8,11 @@ fb_core_android_library(
         profilo_path("java/test/com/facebook/profilo/logger:logger"),
     ],
     visibility = [
-        "fbandroid//java/com/facebook/quicklog/...",
-        "fbandroid//java/com/facebook/tools/dextr/...",
-        "fbandroid//javatests/com/facebook/tools/dextr/...",
+        "//fbandroid/java/com/facebook/quicklog/...",
+        "//fbandroid/java/com/facebook/tools/dextr/...",
+        "//fbandroid/javatests/com/facebook/tools/dextr/...",
         profilo_path("..."),
-        "fbandroid//perftests/benchmarks/...",
+        "//fbandroid/perftests/benchmarks/...",
     ],
     deps = [
         profilo_path("cpp:profilo"),

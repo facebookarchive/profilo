@@ -4,10 +4,10 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 fb_core_android_library(
     name = "provider",
     visibility = [
-        "fbandroid//java/com/facebook/cloudseeder:cloudseeder",
-        "fbandroid//javatests/com/facebook/cloudseeder:cloudseeder",
+        "//fbandroid/java/com/facebook/cloudseeder:cloudseeder",
+        "//fbandroid/javatests/com/facebook/cloudseeder:cloudseeder",
         profilo_path("..."),
-        "fbandroid//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+        "//fbandroid/perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         profilo_path("java/main/com/facebook/profilo/provider/stacktrace:stacktrace"),

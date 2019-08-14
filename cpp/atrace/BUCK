@@ -21,7 +21,7 @@ fb_xplat_cxx_library(
     supported_platforms_regex = "^android-(armv7|arm64|x86)$",
     visibility = [
         profilo_path("..."),
-        "fbandroid//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+        "//fbandroid/perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
         profilo_path("cpp:constants"),

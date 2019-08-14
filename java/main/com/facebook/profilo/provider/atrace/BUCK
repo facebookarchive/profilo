@@ -5,7 +5,7 @@ fb_core_android_library(
     name = "atrace",
     srcs = glob(["*.java"]),
     visibility = [
-        "fbandroid//javatests/com/facebook/profilo/...",
+        "//fbandroid/javatests/com/facebook/profilo/...",
         profilo_path("..."),
     ],
     deps = [

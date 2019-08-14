@@ -5,9 +5,9 @@ fb_core_android_library(
     name = "external",
     srcs = glob(["*.java"]),
     visibility = [
-        "fbandroid//javatests/com/facebook/profilo/...",
+        "//fbandroid/javatests/com/facebook/profilo/...",
         profilo_path("..."),
-        "fbandroid//perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
+        "//fbandroid/perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
         profilo_path("facebook/java/test/com/facebook/profilo/instrumentation_tests/..."),
     ],
     deps = [
