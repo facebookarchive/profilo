@@ -39,7 +39,7 @@ public final class Logger {
 
   private static volatile boolean sInitialized;
 
-  private static AtomicReference<LoggerWorkerThread> mWorker;
+  private static AtomicReference<LoggerWorkerThread> sWorker;
   private static File sTraceDirectory;
   private static String sFilePrefix;
   private static NativeTraceWriterCallbacks sNativeTraceWriterCallbacks;
@@ -61,7 +61,7 @@ public final class Logger {
     sLoggerCallbacks = loggerCallbacks;
     sNativeTraceWriterCallbacks = nativeTraceWriterCallbacks;
     sRingBufferSize = ringBufferSize;
-    mWorker = new AtomicReference<>(null);
+    sWorker = new AtomicReference<>(null);
   }
 
   public static void stopTraceWriter() {
@@ -172,7 +172,7 @@ public final class Logger {
 
   @SuppressLint("BadMethodUse-java.lang.Thread.start")
   private static void startWorkerThreadIfNecessary() {
-    if (mWorker.get() != null) {
+    if (sWorker.get() != null) {
       // race conditions make it possible to try to start a second thread. ignore the call.
       return;
     }
@@ -188,7 +188,7 @@ public final class Logger {
 
     LoggerWorkerThread thread = new LoggerWorkerThread(writer);
 
-    if (!mWorker.compareAndSet(null, thread)) {
+    if (!sWorker.compareAndSet(null, thread)) {
       return;
     }
 
