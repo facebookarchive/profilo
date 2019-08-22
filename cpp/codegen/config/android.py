@@ -53,18 +53,7 @@ NAMES = [
 
     'ADAPTER_NOTIFY',
 
-    'ASYNC_TASK_PRE',
-    'ASYNC_TASK_BACKGROUND',
-    'ASYNC_TASK_POST',
-    'ASYNC_TASK_END',
-    'NETWORK_OP_START',
-    'NETWORK_OP_END',
-
     'MARK_FLAG',
-    'MARK_START',
-    'MARK_STOP',
-    'MARK_FAIL',
-    'MARK_CANCEL',
     'MARK_PUSH',
     'MARK_POP',
 
@@ -97,9 +86,6 @@ NAMES = [
 
     'COUNTER',
     'STACK_FRAME',
-
-    'TEST_CLOCK_SYNC_START',
-    'TEST_CLOCK_SYNC_END',
 
     'QPL_START',
     'QPL_END',

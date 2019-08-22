@@ -1,4 +1,4 @@
-// @generated SignedSource<<b75064debba4afecd3ff6e4fea09941f>>
+// @generated SignedSource<<16801a21cc20c06cd8c6657d68a9238d>>
 
 package com.facebook.profilo.entries;
 
@@ -25,90 +25,78 @@ public class EntryType {
   public static final int SERV_DISCONN = 18;
   public static final int SERV_END = 19;
   public static final int ADAPTER_NOTIFY = 20;
-  public static final int ASYNC_TASK_PRE = 21;
-  public static final int ASYNC_TASK_BACKGROUND = 22;
-  public static final int ASYNC_TASK_POST = 23;
-  public static final int ASYNC_TASK_END = 24;
-  public static final int NETWORK_OP_START = 25;
-  public static final int NETWORK_OP_END = 26;
-  public static final int MARK_FLAG = 27;
-  public static final int MARK_START = 28;
-  public static final int MARK_STOP = 29;
-  public static final int MARK_FAIL = 30;
-  public static final int MARK_CANCEL = 31;
-  public static final int MARK_PUSH = 32;
-  public static final int MARK_POP = 33;
-  public static final int LIFECYCLE_APPLICATION_START = 34;
-  public static final int LIFECYCLE_APPLICATION_END = 35;
-  public static final int LIFECYCLE_ACTIVITY_START = 36;
-  public static final int LIFECYCLE_ACTIVITY_END = 37;
-  public static final int LIFECYCLE_SERVICE_START = 38;
-  public static final int LIFECYCLE_SERVICE_END = 39;
-  public static final int LIFECYCLE_BROADCAST_RECEIVER_START = 40;
-  public static final int LIFECYCLE_BROADCAST_RECEIVER_END = 41;
-  public static final int LIFECYCLE_CONTENT_PROVIDER_START = 42;
-  public static final int LIFECYCLE_CONTENT_PROVIDER_END = 43;
-  public static final int LIFECYCLE_FRAGMENT_START = 44;
-  public static final int LIFECYCLE_FRAGMENT_END = 45;
-  public static final int LIFECYCLE_VIEW_START = 46;
-  public static final int LIFECYCLE_VIEW_END = 47;
-  public static final int TRACE_ABORT = 48;
-  public static final int TRACE_END = 49;
-  public static final int TRACE_START = 50;
-  public static final int TRACE_BACKWARDS = 51;
-  public static final int TRACE_TIMEOUT = 52;
-  public static final int COUNTER = 53;
-  public static final int STACK_FRAME = 54;
-  public static final int TEST_CLOCK_SYNC_START = 55;
-  public static final int TEST_CLOCK_SYNC_END = 56;
-  public static final int QPL_START = 57;
-  public static final int QPL_END = 58;
-  public static final int QPL_CANCEL = 59;
-  public static final int QPL_NOTE = 60;
-  public static final int QPL_POINT = 61;
-  public static final int QPL_EVENT = 62;
-  public static final int TRACE_ANNOTATION = 63;
-  public static final int WAIT_START = 64;
-  public static final int WAIT_END = 65;
-  public static final int WAIT_SIGNAL = 66;
-  public static final int STRING_KEY = 67;
-  public static final int STRING_VALUE = 68;
-  public static final int QPL_TAG = 69;
-  public static final int QPL_ANNOTATION = 70;
-  public static final int TRACE_THREAD_NAME = 71;
-  public static final int TRACE_PRE_END = 72;
-  public static final int TRACE_THREAD_PRI = 73;
-  public static final int MINOR_FAULT = 74;
-  public static final int MAJOR_FAULT = 75;
-  public static final int PERFEVENTS_LOST = 76;
-  public static final int CLASS_LOAD = 77;
-  public static final int JAVASCRIPT_STACK_FRAME = 78;
-  public static final int MESSAGE_START = 79;
-  public static final int MESSAGE_END = 80;
-  public static final int CLASS_VALUE = 81;
-  public static final int HTTP2_REQUEST_INITIATED = 82;
-  public static final int HTTP2_FRAME_HEADER = 83;
-  public static final int HTTP2_WINDOW_UPDATE = 84;
-  public static final int HTTP2_PRIORITY = 85;
-  public static final int HTTP2_EGRESS_FRAME_HEADER = 86;
-  public static final int PROCESS_LIST = 87;
-  public static final int IO_START = 88;
-  public static final int IO_END = 89;
-  public static final int CPU_COUNTER = 90;
-  public static final int CLASS_LOAD_START = 91;
-  public static final int CLASS_LOAD_END = 92;
-  public static final int CLASS_LOAD_FAILED = 93;
-  public static final int STRING_NAME = 94;
-  public static final int JAVA_FRAME_NAME = 95;
-  public static final int BINDER_START = 96;
-  public static final int BINDER_END = 97;
-  public static final int MEMORY_ALLOCATION = 98;
-  public static final int STKERR_EMPTYSTACK = 99;
-  public static final int STKERR_STACKOVERFLOW = 100;
-  public static final int STKERR_NOSTACKFORTHREAD = 101;
-  public static final int STKERR_SIGNALINTERRUPT = 102;
-  public static final int STKERR_NESTEDUNWIND = 103;
-  public static final int MAPPING = 104;
+  public static final int MARK_FLAG = 21;
+  public static final int MARK_PUSH = 22;
+  public static final int MARK_POP = 23;
+  public static final int LIFECYCLE_APPLICATION_START = 24;
+  public static final int LIFECYCLE_APPLICATION_END = 25;
+  public static final int LIFECYCLE_ACTIVITY_START = 26;
+  public static final int LIFECYCLE_ACTIVITY_END = 27;
+  public static final int LIFECYCLE_SERVICE_START = 28;
+  public static final int LIFECYCLE_SERVICE_END = 29;
+  public static final int LIFECYCLE_BROADCAST_RECEIVER_START = 30;
+  public static final int LIFECYCLE_BROADCAST_RECEIVER_END = 31;
+  public static final int LIFECYCLE_CONTENT_PROVIDER_START = 32;
+  public static final int LIFECYCLE_CONTENT_PROVIDER_END = 33;
+  public static final int LIFECYCLE_FRAGMENT_START = 34;
+  public static final int LIFECYCLE_FRAGMENT_END = 35;
+  public static final int LIFECYCLE_VIEW_START = 36;
+  public static final int LIFECYCLE_VIEW_END = 37;
+  public static final int TRACE_ABORT = 38;
+  public static final int TRACE_END = 39;
+  public static final int TRACE_START = 40;
+  public static final int TRACE_BACKWARDS = 41;
+  public static final int TRACE_TIMEOUT = 42;
+  public static final int COUNTER = 43;
+  public static final int STACK_FRAME = 44;
+  public static final int QPL_START = 45;
+  public static final int QPL_END = 46;
+  public static final int QPL_CANCEL = 47;
+  public static final int QPL_NOTE = 48;
+  public static final int QPL_POINT = 49;
+  public static final int QPL_EVENT = 50;
+  public static final int TRACE_ANNOTATION = 51;
+  public static final int WAIT_START = 52;
+  public static final int WAIT_END = 53;
+  public static final int WAIT_SIGNAL = 54;
+  public static final int STRING_KEY = 55;
+  public static final int STRING_VALUE = 56;
+  public static final int QPL_TAG = 57;
+  public static final int QPL_ANNOTATION = 58;
+  public static final int TRACE_THREAD_NAME = 59;
+  public static final int TRACE_PRE_END = 60;
+  public static final int TRACE_THREAD_PRI = 61;
+  public static final int MINOR_FAULT = 62;
+  public static final int MAJOR_FAULT = 63;
+  public static final int PERFEVENTS_LOST = 64;
+  public static final int CLASS_LOAD = 65;
+  public static final int JAVASCRIPT_STACK_FRAME = 66;
+  public static final int MESSAGE_START = 67;
+  public static final int MESSAGE_END = 68;
+  public static final int CLASS_VALUE = 69;
+  public static final int HTTP2_REQUEST_INITIATED = 70;
+  public static final int HTTP2_FRAME_HEADER = 71;
+  public static final int HTTP2_WINDOW_UPDATE = 72;
+  public static final int HTTP2_PRIORITY = 73;
+  public static final int HTTP2_EGRESS_FRAME_HEADER = 74;
+  public static final int PROCESS_LIST = 75;
+  public static final int IO_START = 76;
+  public static final int IO_END = 77;
+  public static final int CPU_COUNTER = 78;
+  public static final int CLASS_LOAD_START = 79;
+  public static final int CLASS_LOAD_END = 80;
+  public static final int CLASS_LOAD_FAILED = 81;
+  public static final int STRING_NAME = 82;
+  public static final int JAVA_FRAME_NAME = 83;
+  public static final int BINDER_START = 84;
+  public static final int BINDER_END = 85;
+  public static final int MEMORY_ALLOCATION = 86;
+  public static final int STKERR_EMPTYSTACK = 87;
+  public static final int STKERR_STACKOVERFLOW = 88;
+  public static final int STKERR_NOSTACKFORTHREAD = 89;
+  public static final int STKERR_SIGNALINTERRUPT = 90;
+  public static final int STKERR_NESTEDUNWIND = 91;
+  public static final int MAPPING = 92;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -132,17 +120,7 @@ public class EntryType {
     "SERV_DISCONN",
     "SERV_END",
     "ADAPTER_NOTIFY",
-    "ASYNC_TASK_PRE",
-    "ASYNC_TASK_BACKGROUND",
-    "ASYNC_TASK_POST",
-    "ASYNC_TASK_END",
-    "NETWORK_OP_START",
-    "NETWORK_OP_END",
     "MARK_FLAG",
-    "MARK_START",
-    "MARK_STOP",
-    "MARK_FAIL",
-    "MARK_CANCEL",
     "MARK_PUSH",
     "MARK_POP",
     "LIFECYCLE_APPLICATION_START",
@@ -166,8 +144,6 @@ public class EntryType {
     "TRACE_TIMEOUT",
     "COUNTER",
     "STACK_FRAME",
-    "TEST_CLOCK_SYNC_START",
-    "TEST_CLOCK_SYNC_END",
     "QPL_START",
     "QPL_END",
     "QPL_CANCEL",

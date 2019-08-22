@@ -1,4 +1,4 @@
-// @generated SignedSource<<240f94f4e41d90c7220ff927b12845f9>>
+// @generated SignedSource<<2dff97b6ba9c04862b9af8be9ff3dd08>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -30,17 +30,7 @@ const char* to_string(EntryType type) {
     case SERV_DISCONN: return "SERV_DISCONN";
     case SERV_END: return "SERV_END";
     case ADAPTER_NOTIFY: return "ADAPTER_NOTIFY";
-    case ASYNC_TASK_PRE: return "ASYNC_TASK_PRE";
-    case ASYNC_TASK_BACKGROUND: return "ASYNC_TASK_BACKGROUND";
-    case ASYNC_TASK_POST: return "ASYNC_TASK_POST";
-    case ASYNC_TASK_END: return "ASYNC_TASK_END";
-    case NETWORK_OP_START: return "NETWORK_OP_START";
-    case NETWORK_OP_END: return "NETWORK_OP_END";
     case MARK_FLAG: return "MARK_FLAG";
-    case MARK_START: return "MARK_START";
-    case MARK_STOP: return "MARK_STOP";
-    case MARK_FAIL: return "MARK_FAIL";
-    case MARK_CANCEL: return "MARK_CANCEL";
     case MARK_PUSH: return "MARK_PUSH";
     case MARK_POP: return "MARK_POP";
     case LIFECYCLE_APPLICATION_START: return "LIFECYCLE_APPLICATION_START";
@@ -64,8 +54,6 @@ const char* to_string(EntryType type) {
     case TRACE_TIMEOUT: return "TRACE_TIMEOUT";
     case COUNTER: return "COUNTER";
     case STACK_FRAME: return "STACK_FRAME";
-    case TEST_CLOCK_SYNC_START: return "TEST_CLOCK_SYNC_START";
-    case TEST_CLOCK_SYNC_END: return "TEST_CLOCK_SYNC_END";
     case QPL_START: return "QPL_START";
     case QPL_END: return "QPL_END";
     case QPL_CANCEL: return "QPL_CANCEL";
