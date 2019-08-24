@@ -1,19 +1,16 @@
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.profilo.sample;
 
 import android.app.Activity;
@@ -57,9 +54,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
           @Override
           public void onClick(View view) {
             if (mTracingButton.isChecked()) {
-              ExternalTraceControl.startTrace(
-                  getProvidersToEnable(),
-                  /*cpuSamplingRateMs*/ 10);
+              ExternalTraceControl.startTrace(getProvidersToEnable(), /*cpuSamplingRateMs*/ 10);
               mProgressBar.setVisibility(View.VISIBLE);
             } else {
               ExternalTraceControl.stopTrace();
@@ -104,16 +99,16 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     progressBar.setIndeterminate(true);
     progressBar.setVisibility(View.INVISIBLE);
 
-    RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
-        ViewGroup.MarginLayoutParams.WRAP_CONTENT,
-        ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+    RelativeLayout.LayoutParams buttonParams =
+        new RelativeLayout.LayoutParams(
+            ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
     buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT, 1);
 
     layout.addView(traceButton, buttonParams);
 
-    RelativeLayout.LayoutParams spinnerParams = new RelativeLayout.LayoutParams(
-        ViewGroup.MarginLayoutParams.WRAP_CONTENT,
-        ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+    RelativeLayout.LayoutParams spinnerParams =
+        new RelativeLayout.LayoutParams(
+            ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
     spinnerParams.setMargins(20, 20, 20, 20);
     spinnerParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
     spinnerParams.addRule(RelativeLayout.BELOW, BUTTON_ID);
@@ -133,7 +128,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
       result[idx++] = createProvider(provider);
     }
     return result;
-    }
+  }
 
   protected int getProvidersToEnable() {
     List<String> allProviders = ProvidersRegistry.getRegisteredProviders();

@@ -1,19 +1,16 @@
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.profilo.logger;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -94,7 +91,7 @@ public class FileManagerTest {
   @Test
   public void testDeleteAllRemovesTrimmableFilesAlreadyUploaded() throws Exception {
     mFileManager.addFileToUploads(mTempFile, true);
-    for (File f: mFileManager.getTrimmableFilesToUpload()) {
+    for (File f : mFileManager.getTrimmableFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
 
@@ -106,7 +103,7 @@ public class FileManagerTest {
   @Test
   public void testDeleteAllRemovesUntrimmableFilesAlreadyUploaded() throws Exception {
     mFileManager.addFileToUploads(mTempFile, false);
-    for (File f: mFileManager.getUntrimmableFilesToUpload()) {
+    for (File f : mFileManager.getUntrimmableFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
     assertThat(getFilesInFolderNoDirs(mFolder)).isNotEmpty();
@@ -119,15 +116,12 @@ public class FileManagerTest {
   public void testErrorsCreatingUploadDirUpdatesCorrectly() throws Exception {
     // create a file titled upload. Prevents creating upload dir.
     File uploadDir = new File(mFolder, FileManager.UPLOAD_FOLDER);
-    assertThat(uploadDir.createNewFile())
-        .overridingErrorMessage("Failed to setup test").isTrue();
+    assertThat(uploadDir.createNewFile()).overridingErrorMessage("Failed to setup test").isTrue();
 
     mFileManager.addFileToUploads(mTempFile, true);
-    assertThat(mFileManager.mFileManagerStatistics.errorsCreatingUploadDir)
-        .isEqualTo(1);
+    assertThat(mFileManager.mFileManagerStatistics.errorsCreatingUploadDir).isEqualTo(1);
 
-    assertThat(uploadDir.delete())
-        .overridingErrorMessage("Failed to cleanup after test").isTrue();
+    assertThat(uploadDir.delete()).overridingErrorMessage("Failed to cleanup after test").isTrue();
 
     mFileManager.deleteAllFiles();
     assertNoFilesInFolder(mFolder);
@@ -135,19 +129,17 @@ public class FileManagerTest {
 
   @Test
   public void testErrorsDeleteUpdatesCorrectly() throws Exception {
-    assertThat(mFileManager.mFileManagerStatistics.errorsDelete)
-        .isEqualTo(0);
+    assertThat(mFileManager.mFileManagerStatistics.errorsDelete).isEqualTo(0);
     mFileManager.addFileToUploads(mTempFile, true);
 
     // Make files undeletable by converting to a non-empty dir of same name
-    for (File f: mFileManager.getAllFiles()) {
+    for (File f : mFileManager.getAllFiles()) {
       makeUndeletable(f);
     }
     mFileManager.deleteAllFiles();
-    assertThat(mFileManager.mFileManagerStatistics.errorsDelete)
-        .isEqualTo(1);
+    assertThat(mFileManager.mFileManagerStatistics.errorsDelete).isEqualTo(1);
 
-    for (File f: mFileManager.getAllFiles()) {
+    for (File f : mFileManager.getAllFiles()) {
       deleteDir(f);
     }
 
@@ -160,7 +152,8 @@ public class FileManagerTest {
     assertThat(mFileManager.mFileManagerStatistics.errorsMove).isEqualTo(0);
     // Delete the file before trying to add it to uploads -> cause move failure.
     assertThat(mTempFile.delete())
-        .overridingErrorMessage("Unable to delete file to setup test").isTrue();
+        .overridingErrorMessage("Unable to delete file to setup test")
+        .isTrue();
     mFileManager.addFileToUploads(mTempFile, true);
     assertThat(mFileManager.mFileManagerStatistics.errorsMove).isEqualTo(1);
 
@@ -170,11 +163,9 @@ public class FileManagerTest {
 
   @Test
   public void testAddedFilesToUploadUpdatesCorrectly() throws Exception {
-    assertThat(mFileManager.mFileManagerStatistics.getAddedFilesToUpload())
-        .isEqualTo(0);
+    assertThat(mFileManager.mFileManagerStatistics.getAddedFilesToUpload()).isEqualTo(0);
     mFileManager.addFileToUploads(mTempFile, true);
-    assertThat(mFileManager.mFileManagerStatistics.getAddedFilesToUpload())
-        .isEqualTo(1);
+    assertThat(mFileManager.mFileManagerStatistics.getAddedFilesToUpload()).isEqualTo(1);
 
     mFileManager.deleteAllFiles();
     assertNoFilesInFolder(mFolder);
@@ -189,7 +180,7 @@ public class FileManagerTest {
     mFileManager.setTrimThreshold(numTracesLimit);
 
     // Add a bunch of files to be uploaded (limit + 1)
-    for (int i = 0; i< numTracesLimit + 1; i++) {
+    for (int i = 0; i < numTracesLimit + 1; i++) {
       File f = File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, mFolder);
       Files.touch(f);
       mFileManager.addFileToUploads(f, true);
@@ -197,7 +188,7 @@ public class FileManagerTest {
 
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToCount).isEqualTo(0);
     // Upload all the pending files
-    for (File f: mFileManager.getTrimmableFilesToUpload()) {
+    for (File f : mFileManager.getTrimmableFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToCount).isEqualTo(1);
@@ -223,14 +214,15 @@ public class FileManagerTest {
   @Test
   public void testErrorsTrimmingUpdatesCorrectly() throws Exception {
     mFileManager.addFileToUploads(mTempFile, true);
-    for (File f: mFileManager.getTrimmableFilesToUpload()) {
+    for (File f : mFileManager.getTrimmableFilesToUpload()) {
       f.setLastModified(0); // last modified in 1970
     }
 
     // Create a destination folder with same name so move fails
     String filename = mTempFile.getName();
-    File other = new File(mFolder,
-        filename.substring(0, filename.lastIndexOf('.')) + FileManager.LOG_SUFFIX);
+    File other =
+        new File(
+            mFolder, filename.substring(0, filename.lastIndexOf('.')) + FileManager.LOG_SUFFIX);
     assertThat(other.mkdir()).overridingErrorMessage("Failed to create directory").isTrue();
     assertThat(mFileManager.mFileManagerStatistics.errorsTrimming).isEqualTo(0);
     mFileManager.getTrimmableFilesToUpload(); // trigger an age-based trim
@@ -299,6 +291,5 @@ public class FileManagerTest {
                 return null;
               }
             });
-
   }
 }

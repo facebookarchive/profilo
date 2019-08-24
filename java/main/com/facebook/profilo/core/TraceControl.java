@@ -595,7 +595,7 @@ public final class TraceControl {
   private static long nextTraceID() {
     long l;
     // Math.abs(Long.MIN_VALUE) is still negative. Thanks, java.
-    while ((l = Math.abs(sTraceIdRandom.get().nextLong())) <= 0);
+    while ((l = Math.abs(sTraceIdRandom.get().nextLong())) <= 0) ;
     return l;
   }
 

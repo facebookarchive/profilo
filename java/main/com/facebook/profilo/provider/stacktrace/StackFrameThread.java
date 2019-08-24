@@ -1,19 +1,16 @@
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.profilo.provider.stacktrace;
 
 import android.annotation.SuppressLint;
@@ -45,8 +42,12 @@ public final class StackFrameThread extends BaseTraceProvider {
   private static final String LOG_TAG = "StackFrameThread";
   private static final int ALL_THREADS = 0;
 
-  @GuardedBy("this") private @Nullable Thread mProfilerThread;
-  @GuardedBy("this") private final Context mContext;
+  @GuardedBy("this")
+  private @Nullable Thread mProfilerThread;
+
+  @GuardedBy("this")
+  private final Context mContext;
+
   private volatile boolean mEnabled;
   private int mSystemClockTimeIntervalMs = -1;
   @Nullable private TraceContext mSavedTraceContext;
@@ -63,9 +64,7 @@ public final class StackFrameThread extends BaseTraceProvider {
     }
   }
 
-  /**
-   * Calculate all possible CPUProfiler tracers that correspond to the given providers bitset.
-   */
+  /** Calculate all possible CPUProfiler tracers that correspond to the given providers bitset. */
   private static int providersToTracers(int providers) {
     int tracers = 0;
     if ((providers & (PROVIDER_STACK_FRAME | PROVIDER_WALL_TIME_STACK_TRACE)) != 0) {

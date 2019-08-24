@@ -1,19 +1,16 @@
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.facebook.profilo.logger;
 
 import android.content.Context;
@@ -28,20 +25,20 @@ import javax.annotation.Nullable;
 
 /**
  * The FileManager stores the traces under a given base folder. In that folder the FileManager
- * creates a subfolder {@link #UPLOAD_FOLDER} where traces that are to be uploaded are
- * stored. When they are uploaded or when they are discarded from the upload queue, they are moved
- * back to the base folder. To distinguish traces that are in progress from archived traces,
- * the files corresponding to ongoing traces have a ".tmp" extension/ (Filename is currently set in
- * {@link Trace}. Should be moved here...)
+ * creates a subfolder {@link #UPLOAD_FOLDER} where traces that are to be uploaded are stored. When
+ * they are uploaded or when they are discarded from the upload queue, they are moved back to the
+ * base folder. To distinguish traces that are in progress from archived traces, the files
+ * corresponding to ongoing traces have a ".tmp" extension/ (Filename is currently set in {@link
+ * Trace}. Should be moved here...)
  *
- * Files can be added as either "trimmable" or "untrimmable". Untrimmable files are not subject
+ * <p>Files can be added as either "trimmable" or "untrimmable". Untrimmable files are not subject
  * to any automatic file trimming/folder cleanup.
  *
- * Both the upload folder and the base folder are trimmed. Currently this is done when files are
+ * <p>Both the upload folder and the base folder are trimmed. Currently this is done when files are
  * added to the folders, but that may be more intelligent some day... The upload folder is trimmed
  * based on the age of the trace {@link #mMaxScheduledTracesAgeMillis}, and the base folder is
- * trimmed based on the number of traces in the folder {@link #mMaxArchivedTraces}.
- * The ".tmp" files are currently ignored by the trimming algorithms.
+ * trimmed based on the number of traces in the folder {@link #mMaxArchivedTraces}. The ".tmp" files
+ * are currently ignored by the trimming algorithms.
  */
 public class FileManager {
 
@@ -85,8 +82,7 @@ public class FileManager {
   private boolean mHasMigrated = false;
 
   // Visible for testing
-  FileManagerStatistics mFileManagerStatistics =
-      new FileManagerStatistics();
+  FileManagerStatistics mFileManagerStatistics = new FileManagerStatistics();
 
   public static final FilenameFilter TRIMMABLE_FILES_FILTER =
       new FilenameFilter() {
@@ -163,8 +159,7 @@ public class FileManager {
     File internalCacheDir = mContext.getCacheDir();
     File internalDataDir = mContext.getFilesDir();
 
-    if (internalCacheDir != null &&
-        (internalCacheDir.exists() || internalCacheDir.mkdirs())) {
+    if (internalCacheDir != null && (internalCacheDir.exists() || internalCacheDir.mkdirs())) {
       return internalCacheDir;
     }
 
@@ -231,7 +226,9 @@ public class FileManager {
 
     List<File> files = getFiles(uploadFolder, TRIMMABLE_FILES_FILTER);
     // Order by name == order by date due to naming convention
-    Collections.sort(files, new Comparator<File>() {
+    Collections.sort(
+        files,
+        new Comparator<File>() {
           @Override
           public int compare(File lhs, File rhs) {
             return lhs.getName().compareTo(rhs.getName());
@@ -245,7 +242,9 @@ public class FileManager {
     List<File> files = getFiles(getUploadFolder(), UNTRIMMABLE_FILES_FILTER);
 
     // Order by name == order by date due to naming convention
-    Collections.sort(files, new Comparator<File>() {
+    Collections.sort(
+        files,
+        new Comparator<File>() {
           @Override
           public int compare(File lhs, File rhs) {
             return lhs.getName().compareTo(rhs.getName());
@@ -257,10 +256,10 @@ public class FileManager {
 
   public boolean deleteAllFiles() {
     boolean success = true;
-    for (File file: getAllFiles()) {
+    for (File file : getAllFiles()) {
       if (file.exists() && !file.delete()) {
-          success = false;
-          mFileManagerStatistics.errorsDelete++;
+        success = false;
+        mFileManagerStatistics.errorsDelete++;
       }
     }
     return success;
@@ -277,9 +276,7 @@ public class FileManager {
     return allFiles;
   }
 
-  /**
-   *   Tries to move the source to destination, and tries to delete source if moving fails.
-   */
+  /** Tries to move the source to destination, and tries to delete source if moving fails. */
   private boolean moveOrDelete(File source, @Nullable File destination) {
     if (destination != null) {
       if (source.renameTo(destination)) {
@@ -307,9 +304,7 @@ public class FileManager {
     return mCrashDumpFolder;
   }
 
-  private void trimFolderByFileCount(
-      File folder,
-      int maxSize) {
+  private void trimFolderByFileCount(File folder, int maxSize) {
 
     if (!folder.exists() && !folder.isDirectory()) {
       return;
@@ -319,7 +314,9 @@ public class FileManager {
 
     if (files.size() > maxSize) {
       // Order by name == order by date due to naming convention
-      Collections.sort(files, new Comparator<File>() {
+      Collections.sort(
+          files,
+          new Comparator<File>() {
             @Override
             public int compare(File lhs, File rhs) {
               return lhs.getName().compareTo(rhs.getName());
@@ -335,10 +332,7 @@ public class FileManager {
     }
   }
 
-  private void trimFolderByAge(
-      File source,
-      File destination,
-      long maxAgeMs) {
+  private void trimFolderByAge(File source, File destination, long maxAgeMs) {
 
     if (!source.exists() && !source.isDirectory()) {
       return;
@@ -353,7 +347,6 @@ public class FileManager {
         } else {
           mFileManagerStatistics.errorsTrimming++;
         }
-
       }
     }
   }

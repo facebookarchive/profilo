@@ -66,8 +66,7 @@ public final class MappingDensityProvider extends BaseTraceProvider {
     return PROVIDER_MAPPINGDENSITY;
   }
 
-  private static native void dumpMappingDensities(
-      String mapRegex, String extraDataFile);
+  private static native void dumpMappingDensities(String mapRegex, String extraDataFile);
 
   @Override
   protected int getTracingProviders() {
