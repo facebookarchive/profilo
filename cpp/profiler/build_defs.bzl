@@ -29,13 +29,16 @@ def unwindc_tracer_library(version):
         ],
         force_static = True,
         platform_headers = [
-            ("^android-x86", {  # intentionally also covers x86_64
+            ("^android-x86", {
+                # intentionally also covers x86_64
                 "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),
             }),
-            ("^android-arm", {  # intentionally also covers arm64
+            ("^android-arm", {
+                # intentionally also covers arm64
                 "unwindc/unwinder.h": "unwindc/{}/arm/unwinder.h".format(android_version),
             }),
-            ("^(?!android-.*$).*$", {  # none-android platforms still need a header, any header, to build
+            ("^(?!android-.*$).*$", {
+                # none-android platforms still need a header, any header, to build
                 "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),
             }),
         ],
