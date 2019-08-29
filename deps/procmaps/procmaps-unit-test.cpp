@@ -420,7 +420,7 @@ TEST_F(ReadTest, ReadAndDrainOversizedBuffer) {
 
 class AtomicReadTest : public ReadTest {
 public:
-  AtomicReadTest() : file_(std::fopen("/data/data/native.procmaps.unit_test/temp", "w+")) {
+  AtomicReadTest() : file_(std::fopen("/data/data/fbandroid.native.procmaps.unit_test/temp", "w+")) {
     if (!file_) {
       throw std::system_error(errno, std::generic_category());
     }
