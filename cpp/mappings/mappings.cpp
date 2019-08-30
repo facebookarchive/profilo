@@ -30,38 +30,6 @@ namespace facebook {
 namespace profilo {
 namespace mappings {
 
-namespace {
-
-bool starts_with(
-    std::string const& haystack,
-    const char* needle,
-    size_t needle_sz) {
-  if (haystack.size() < needle_sz) {
-    return false;
-  }
-  return std::equal(
-      haystack.begin(),
-      haystack.begin() + needle_sz,
-      needle,
-      needle + needle_sz);
-}
-
-bool ends_with(
-    std::string const& haystack,
-    const char* needle,
-    size_t needle_sz) {
-  if (haystack.size() < needle_sz) {
-    return false;
-  }
-  return std::equal(
-      haystack.rbegin(),
-      haystack.rbegin() + needle_sz,
-      std::reverse_iterator<const char*>(needle + needle_sz),
-      std::reverse_iterator<const char*>(needle));
-}
-
-} // namespace
-
 /* Log only interesting file-backed memory mappings. */
 void logMemoryMappings(JNIEnv*, jobject) {
   auto memorymap = memorymap_snapshot(getpid());
@@ -89,24 +57,6 @@ void logMemoryMappings(JNIEnv*, jobject) {
       continue;
     }
     std::string filestr(file);
-    // Accept any .so and all files under the whitelisted folders.
-    static constexpr char kSystemLib[] = "/system/lib";
-    static constexpr char kSystemBin[] = "/system/bin";
-    static constexpr char kSystemFramework[] = "/system/framework";
-    static constexpr char kData[] = "/data";
-    bool whitelisted_file =
-        // short string checks first
-        ends_with(filestr, ".so", 3) || ends_with(filestr, ".odex", 5) ||
-        ends_with(filestr, ".oat", 4) || ends_with(filestr, ".art", 4) ||
-        ends_with(filestr, ".jar", 4) ||
-        starts_with(filestr, kData, sizeof(kData) - 1) ||
-        starts_with(filestr, kSystemLib, sizeof(kSystemLib) - 1) ||
-        starts_with(filestr, kSystemBin, sizeof(kSystemBin) - 1) ||
-        starts_with(filestr, kSystemFramework, sizeof(kSystemFramework) - 1);
-
-    if (!whitelisted_file) {
-      continue;
-    }
 
     stream.str(std::string());
     stream.clear();
