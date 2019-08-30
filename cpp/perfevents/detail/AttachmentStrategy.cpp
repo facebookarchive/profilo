@@ -140,8 +140,11 @@ EventList PerCoreAttachmentStrategy::attach() {
             "Succeeded but did not assign a CPU output event for all cores");
       }
 
-      // TODO: figure out buffer size
-      perf_events.at(cpu_output_idxs[cpu]).mmap(4096 * 5);
+      // The buffer size must be 1 + 2^n number of pages.
+      // We choose 512KB + 1 page, should be enough for everyone (TM).
+      // (In practice, I see 1MB + 1 page failing with EPERM).
+      static constexpr auto kBufferPerCoreSz = (1 + 128) * 4096;
+      perf_events.at(cpu_output_idxs[cpu]).mmap(kBufferPerCoreSz);
     }
     for (auto& evt : perf_events) {
       // skip the cpu leaders

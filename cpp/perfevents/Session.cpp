@@ -15,6 +15,7 @@
  */
 
 #include <perfevents/Session.h>
+#include <fb/log.h>
 #include <perfevents/detail/AttachmentStrategy.h>
 #include <perfevents/detail/make_unique.h>
 
@@ -61,6 +62,7 @@ bool Session::attach() {
 
     return true;
   } catch (std::system_error& ex) {
+    FBLOGW("Session failed to attach: %s", ex.what());
     return false;
   }
 }

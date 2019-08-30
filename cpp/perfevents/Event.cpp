@@ -15,6 +15,7 @@
  */
 
 #include <perfevents/Event.h>
+#include <fb/log.h>
 
 namespace facebook {
 namespace perfevents {
@@ -149,6 +150,7 @@ Event::~Event() {
     try {
       munmap();
     } catch (std::system_error& ex) {
+      FBLOGW("Could not munmap event in destructor: %s", ex.what());
       // Intentionally ignored
     }
   }
@@ -156,6 +158,7 @@ Event::~Event() {
     try {
       disable();
     } catch (std::system_error& ex) {
+      FBLOGW("Could not disable event in destructor: %s", ex.what());
       // Intentionally ignored
     }
     // Regardless of whether disable() threw an exception,
@@ -163,6 +166,7 @@ Event::~Event() {
     try {
       close();
     } catch (std::system_error& ex) {
+      FBLOGW("Could not close event in destructor: %s", ex.what());
       // Intentionally ignored
     }
   }
@@ -185,7 +189,10 @@ static read_format readFromFd(int fd, const perf_event_attr& attr) {
 
   read_format data{};
   if (::read(fd, &data, sizeof(data)) != sizeof(data)) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno,
+        std::system_category(),
+        "Failed to read read_format struct from event");
   }
   return data;
 }
@@ -194,7 +201,8 @@ void Event::open() {
   int fd =
       perf_event_open(&event_attr_, tid_, cpu_, /*group_fd*/ -1, /*flags*/ 0);
   if (fd == -1) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno, std::system_category(), "Failed to perf_event_open() event");
   }
   fd_ = fd;
 
@@ -221,7 +229,8 @@ void Event::close() {
     throw std::invalid_argument("Cannot close an unopened event");
   }
   if (::close(fd_) == -1) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno, std::system_category(), "Failed to close event");
   }
   fd_ = -1;
 }
@@ -233,7 +242,8 @@ void Event::mmap(size_t sz) {
 
   void* buffer = ::mmap(0, sz, PROT_READ | PROT_WRITE, MAP_SHARED, fd_, 0);
   if (buffer == MAP_FAILED) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno, std::system_category(), "Failed to mmap() event");
   }
   buffer_ = buffer;
   buffer_size_ = sz;
@@ -244,7 +254,8 @@ void Event::munmap() {
     throw std::invalid_argument("Cannot munmap an unmmap'd event");
   }
   if (::munmap(buffer_, buffer_size_) == -1) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno, std::system_category(), "Failed to munmap() event");
   }
   buffer_ = nullptr;
   buffer_size_ = 0;
@@ -255,7 +266,8 @@ void Event::enable() {
     throw std::invalid_argument("Cannot enable an unopened event");
   }
   if (ioctl(fd_, PERF_EVENT_IOC_ENABLE, PERF_IOC_FLAG_GROUP) == -1) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno, std::system_category(), "Failed to enable event");
   }
 }
 
@@ -264,7 +276,8 @@ void Event::disable() {
     throw std::invalid_argument("Cannot disable an unopened event");
   }
   if (ioctl(fd_, PERF_EVENT_IOC_DISABLE, PERF_IOC_FLAG_GROUP) == -1) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno, std::system_category(), "Failed to disable event");
   }
 }
 
@@ -294,7 +307,8 @@ void Event::setOutput(const Event& event) {
         "Parent and child must agree on perf_event_attr.sample_type");
   }
   if (ioctl(fd_, PERF_EVENT_IOC_SET_OUTPUT, event.fd_) == -1) {
-    throw std::system_error(errno, std::system_category());
+    throw std::system_error(
+        errno, std::system_category(), "Failed to set output of event");
   }
 }
 
