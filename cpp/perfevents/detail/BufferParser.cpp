@@ -80,12 +80,13 @@ size_t parseEvent(
     const Event& bufferEvent,
     IdEventMap& idEventMap,
     RecordListener* listener) {
-  uint8_t split_buffer[128]; // buffer for reassembling split records
-
   size_t buffer_data_size = bufferEvent.bufferSize() - PAGE_SIZE;
   if (offset + sizeof(perf_event_header) > buffer_data_size) {
     throw std::runtime_error("Unhandled: split perf_event_header");
   }
+
+  // Optional buffer to hold split writes
+  std::unique_ptr<uint8_t[]> split_buffer{nullptr};
 
   perf_event_header* evt_header = (perf_event_header*)((uint8_t*)data + offset);
   uint8_t* data_bytes = ((uint8_t*)evt_header) + sizeof(perf_event_header);
@@ -94,26 +95,22 @@ size_t parseEvent(
   if (offset + evt_header->size > buffer_data_size) {
     // Split read, copy to buffer and present a contiguous view to the
     // listeners/etc.
-    if (evt_header->size > sizeof(split_buffer)) {
-      throw std::runtime_error("Split event is bigger than our buffer");
-    }
+    split_buffer = std::make_unique<uint8_t[]>(evt_header->size);
     size_t bytes_to_end =
         buffer_data_size - (offset + sizeof(perf_event_header));
-    std::memcpy(split_buffer, data_bytes, bytes_to_end);
+    std::memcpy(split_buffer.get(), data_bytes, bytes_to_end);
     std::memcpy(
-        split_buffer + bytes_to_end, data, evt_header->size - bytes_to_end);
+        split_buffer.get() + bytes_to_end,
+        data,
+        evt_header->size - bytes_to_end);
 
-    data_bytes = split_buffer;
+    data_bytes = split_buffer.get();
   }
 
   int type = evt_header->type;
   switch (type) {
     case PERF_RECORD_SAMPLE: {
-      notifySample(
-          data_bytes,
-          evt_header->size,
-          idEventMap,
-          listener);
+      notifySample(data_bytes, evt_header->size, idEventMap, listener);
       break;
     }
     case PERF_RECORD_MMAP:

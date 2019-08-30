@@ -16,9 +16,29 @@
 
 #include <perfevents/Records.h>
 #include <perfevents/Event.h>
+#include <perfevents/detail/FileBackedMappingsList.h>
+
+#include <cstring>
 
 namespace facebook {
 namespace perfevents {
+
+bool RecordMmap::isAnonymous() const {
+  // Purely anonymous entries have //anon as the filename.
+  static constexpr char kAnonPath[] = "//anon";
+
+  if (strncmp(filename, kAnonPath, strlen(kAnonPath)) == 0) {
+    return true;
+  }
+
+  // There are other named entries that are also anonymous.
+  // (e.g., [stack:1000])
+  if (detail::FileBackedMappingsList::isAnonymous(filename)) {
+    return true;
+  }
+
+  return false;
+}
 
 RecordSample::RecordSample(void* data, size_t len)
     : data_((uint8_t*)data), len_(len) {}

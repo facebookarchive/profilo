@@ -36,7 +36,9 @@ struct RecordMmap {
   uint64_t addr;
   uint64_t len;
   uint64_t pgoff;
-  char filename;
+  char filename[];
+
+  bool isAnonymous() const;
 };
 
 struct RecordLost {

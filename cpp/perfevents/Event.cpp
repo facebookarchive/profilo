@@ -74,6 +74,8 @@ createEventAttr(EventType type, int32_t tid, int32_t cpu, bool inherit) {
 
   attr.sample_type = kSampleType;
   attr.read_format = kReadFormat;
+  attr.mmap = 1;
+  attr.mmap_data = 1;
 
   attr.disabled = 1;
 

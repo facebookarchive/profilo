@@ -15,6 +15,7 @@
  */
 
 #include <limits>
+#include <tuple>
 #include <vector>
 
 #include <fb/log.h>
@@ -23,6 +24,7 @@
 #include <jni.h>
 #include <perfevents/Session.h>
 #include <perfevents/detail/ClockOffsetMeasurement.h>
+#include <perfevents/detail/FileBackedMappingsList.h>
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 
@@ -58,12 +60,34 @@ static Session* handleToSession(jlong handle) {
 namespace {
 
 class ProfiloWriterListener : public RecordListener {
- public:
-  ProfiloWriterListener(int64_t clock_offset) : offset_(clock_offset) {}
+  using FileBackedMappingsList = detail::FileBackedMappingsList;
 
-  virtual void onMmap(const RecordMmap& record) {}
+ public:
+  ProfiloWriterListener(
+      int64_t clock_offset,
+      std::vector<EventSpec> const& specs)
+      : offset_(clock_offset),
+        file_mappings_(buildMappingsFromSpecs(specs)),
+        have_filled_mappings_(false) {}
+
+  virtual void onMmap(const RecordMmap& record) {
+    if (record.isAnonymous()) {
+      return;
+    }
+    if (file_mappings_) {
+      file_mappings_->add(record.addr, record.addr + record.len);
+    }
+  }
 
   virtual void onSample(const EventType type, const RecordSample& record) {
+    if (file_mappings_ && !have_filled_mappings_) {
+      // We fill on first event instead of on FileMappings (or this Listener)
+      // construction because this way we know we're attached and won't miss
+      // a mapping.
+      file_mappings_->fillFromProcMaps();
+      have_filled_mappings_ = true;
+    }
+
     switch (type) {
       case EVENT_TYPE_MAJOR_FAULTS: {
         profilo::Logger::get().write(profilo::entries::StandardEntry{
@@ -78,6 +102,11 @@ class ProfiloWriterListener : public RecordListener {
         return;
       }
       case EVENT_TYPE_MINOR_FAULTS: {
+        if (file_mappings_ && !file_mappings_->contains(record.addr())) {
+          // Ignore anonymous mappings.
+          return;
+        }
+
         profilo::Logger::get().write(profilo::entries::StandardEntry{
             .id = 0,
             .type = profilo::entries::MINOR_FAULT,
@@ -115,6 +144,27 @@ class ProfiloWriterListener : public RecordListener {
 
  private:
   int64_t offset_;
+
+  // Contains file-backed mappings, kept up-to-date by
+  // virtue of RecordMmap events.
+  //
+  // First event fills this from /proc/self/maps, after
+  // which we add new RecordMmap ranges ourselves.
+  std::unique_ptr<FileBackedMappingsList> file_mappings_;
+  bool have_filled_mappings_;
+
+  static std::unique_ptr<FileBackedMappingsList> buildMappingsFromSpecs(
+      std::vector<EventSpec> const& specs) {
+    bool use_mappings = false;
+    for (auto& spec : specs) {
+      if (spec.type == EVENT_TYPE_MINOR_FAULTS) {
+        // We can't keep up with every single minor fault, we need to use
+        // the file mappings to filter out the anonymous memory ranges.
+        use_mappings = true;
+      }
+    }
+    return use_mappings ? std::make_unique<FileBackedMappingsList>() : nullptr;
+  }
 };
 } // namespace
 
@@ -145,7 +195,8 @@ static jlong nativeAttach(
           .maxAttachIterations = static_cast<uint16_t>(maxIterations),
           .maxAttachedFdsRatio = maxAttachedFdsRatio,
       },
-      std::unique_ptr<RecordListener>(new ProfiloWriterListener(clockOffset)));
+      std::unique_ptr<RecordListener>(
+          new ProfiloWriterListener(clockOffset, specs)));
 
   if (!session->attach()) {
     delete session;

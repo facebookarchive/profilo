@@ -1,4 +1,8 @@
+#if !defined(ANDROID) && !defined(_GNU_SOURCE)
+#define _GNU_SOURCE  1 // needed for mremap on host linux
+#endif
 #include <sys/mman.h>
+
 #include <sys/stat.h>
 #include <errno.h>
 

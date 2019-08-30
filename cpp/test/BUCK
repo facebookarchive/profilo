@@ -178,3 +178,22 @@ profilo_cxx_test(
         profilo_path("cpp/logger:logger_static"),
     ],
 )
+
+profilo_cxx_test(
+    name = "perfevents",
+    srcs = [
+        "FileBackedMappingsTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-ldl",
+    ],
+    deps = [
+        profilo_path("cpp/perfevents:file_backed_mappings_list"),
+    ],
+)

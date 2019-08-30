@@ -11,6 +11,20 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "file_backed_mappings_list",
+    header_namespace = "perfevents",
+    exported_headers = [
+        "detail/FileBackedMappingsList.h",
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    exported_deps = [
+        profilo_path("deps/procmaps:procmaps"),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "perfevents",
     srcs = [
         "Event.cpp",
@@ -50,5 +64,6 @@ fb_xplat_cxx_library(
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
+        profilo_path("deps/procmaps:procmaps"),
     ],
 )
