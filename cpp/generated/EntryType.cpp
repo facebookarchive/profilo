@@ -1,4 +1,4 @@
-// @generated SignedSource<<2dff97b6ba9c04862b9af8be9ff3dd08>>
+// @generated SignedSource<<76748ff996d95db40cd977da53d07633>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -102,6 +102,7 @@ const char* to_string(EntryType type) {
     case STKERR_SIGNALINTERRUPT: return "STKERR_SIGNALINTERRUPT";
     case STKERR_NESTEDUNWIND: return "STKERR_NESTEDUNWIND";
     case MAPPING: return "MAPPING";
+    case LOGGER_PRIORITY: return "LOGGER_PRIORITY";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

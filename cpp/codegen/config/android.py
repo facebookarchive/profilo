@@ -157,6 +157,8 @@ NAMES = [
     'STKERR_NESTEDUNWIND',
 
     'MAPPING',
+
+    'LOGGER_PRIORITY',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

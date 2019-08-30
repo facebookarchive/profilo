@@ -25,6 +25,7 @@
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryParser.h>
 #include <profilo/writer/AbortReason.h>
+#include <profilo/writer/ScopedThreadPriority.h>
 #include <profilo/writer/TraceCallbacks.h>
 
 #include <zstr/zstr.hpp>
@@ -71,6 +72,7 @@ class TraceLifecycleVisitor : public EntryVisitor {
   int64_t expected_trace_;
   std::shared_ptr<TraceCallbacks> callbacks_;
   bool done_;
+  std::unique_ptr<ScopedThreadPriority> thread_priority_;
 
   inline bool hasDelegate() {
     return !delegates_.empty();

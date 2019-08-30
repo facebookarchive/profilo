@@ -217,6 +217,15 @@ void TraceLifecycleVisitor::visit(const StandardEntry& entry) {
       }
       break;
     }
+    case entries::LOGGER_PRIORITY: {
+      if (expected_trace_ == entry.extra) {
+        thread_priority_ = std::make_unique<ScopedThreadPriority>(entry.callid);
+      }
+      if (hasDelegate()) {
+        delegates_.back()->visit(entry);
+      }
+      break;
+    }
     default: {
       if (hasDelegate()) {
         delegates_.back()->visit(entry);
@@ -326,6 +335,7 @@ void TraceLifecycleVisitor::onTraceEnd(int64_t trace_id) {
 
 void TraceLifecycleVisitor::cleanupState() {
   delegates_.clear();
+  thread_priority_ = nullptr;
   output_ = nullptr;
 }
 

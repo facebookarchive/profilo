@@ -65,4 +65,6 @@ public final class ProfiloConstants {
   }
 
   public static final String TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS = "trace_config.trace_timeout_ms";
+  public static final String TRACE_CONFIG_PARAM_LOGGER_PRIORITY = "trace_config.logger_priority";
+  public static final int TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT = 5;
 }

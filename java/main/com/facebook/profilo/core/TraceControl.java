@@ -19,6 +19,7 @@ import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ControllerConfig;
+import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
@@ -344,6 +345,20 @@ public final class TraceControl {
       timeout = Integer.MAX_VALUE;
     }
     Logger.postCreateTrace(nextContext.traceId, flags, timeout);
+
+    int logger_priority =
+        nextContext.mTraceConfigExtras.getIntParam(
+            ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY,
+            ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
+    Logger.writeStandardEntry(
+        ProfiloConstants.NONE,
+        Logger.FILL_TID | Logger.FILL_TIMESTAMP | Logger.SKIP_PROVIDER_CHECK,
+        EntryType.LOGGER_PRIORITY,
+        0,
+        0,
+        logger_priority,
+        0,
+        nextContext.traceId);
 
     synchronized (this) {
       ensureHandlerInitialized();

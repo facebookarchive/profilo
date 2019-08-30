@@ -1,4 +1,4 @@
-// @generated SignedSource<<130762d39d8e3da492a7e68837847357>>
+// @generated SignedSource<<fbd013060a25bb99a055606ce911f4d1>>
 
 #pragma once
 
@@ -99,6 +99,7 @@ enum EntryType {
   STKERR_SIGNALINTERRUPT = 90,
   STKERR_NESTEDUNWIND = 91,
   MAPPING = 92,
+  LOGGER_PRIORITY = 93,
 };
 
 

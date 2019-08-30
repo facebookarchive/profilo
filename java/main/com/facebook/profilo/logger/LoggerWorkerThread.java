@@ -14,6 +14,7 @@
 package com.facebook.profilo.logger;
 
 import android.os.Process;
+import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.writer.NativeTraceWriter;
 
 class LoggerWorkerThread extends Thread {
@@ -26,7 +27,7 @@ class LoggerWorkerThread extends Thread {
   }
 
   public void run() {
-    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND - 5);
+    Process.setThreadPriority(ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
 
     mTraceWriter.loop();
   }
