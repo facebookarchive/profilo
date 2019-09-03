@@ -57,6 +57,7 @@ fb_xplat_cxx_library(
         "-Wall",
         "-Wno-missing-braces",
         "-DLOG_TAG=\"Profilo/util\"",
+        "-O3",
     ],
     soname = "libprofilo_util.$(ext)",
     tests = [
