@@ -32,7 +32,20 @@ target_include_directories(fbjni PUBLIC
   cxx
 )
 
-target_link_libraries(fbjni
-  android
-  log
-)
+if (NOT ANDROID_ABI)
+  if (NOT JAVA_HOME)
+    message(FATAL_ERROR
+      "fbjni requires JAVA_HOME to be defined for non-Android builds.")
+  endif()
+  target_include_directories(fbjni PUBLIC ${JAVA_HOME}/include)
+  if (CMAKE_SYSTEM_NAME STREQUAL Linux)
+    target_include_directories(fbjni PUBLIC ${JAVA_HOME}/include/linux)
+  endif()
+endif()
+
+if (ANDROID_ABI)
+  target_link_libraries(fbjni
+    android
+    log
+  )
+endif()
