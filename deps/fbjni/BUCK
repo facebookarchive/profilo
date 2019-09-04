@@ -59,7 +59,7 @@ profilo_oss_xplat_cxx_library(
 profilo_oss_android_library(
     name = "fbjni-java",
     srcs = glob([
-        "**/*.java",
+        "java/**/*.java",
     ]),
     visibility = [
         "PUBLIC",
