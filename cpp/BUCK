@@ -81,7 +81,6 @@ fb_xplat_cxx_library(
     ],
 )
 
-
 PROFILO_EXPORTED_HEADERS = [
     "log.h",
 ] + PROVIDER_EXPORTED_HEADERS
