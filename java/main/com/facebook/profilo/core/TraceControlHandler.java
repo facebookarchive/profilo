@@ -41,6 +41,7 @@ public class TraceControlHandler extends Handler {
   private static final int MSG_START_TRACE = 1;
   private static final int MSG_STOP_TRACE = 2;
   private static final int MSG_ABORT_TRACE = 3;
+  private static final int MSG_END_TRACE = 4;
   // Set this system property to enable logs.
   private static final String PROFILO_LOG_LEVEL_SYSTEM_PROPERTY = "com.facebook.profilo.log";
 
@@ -76,6 +77,9 @@ public class TraceControlHandler extends Handler {
       case MSG_STOP_TRACE:
         stopTrace(traceContext);
         break;
+      case MSG_END_TRACE:
+        endTrace(traceContext);
+        break;
       case MSG_ABORT_TRACE:
         abortTrace(traceContext);
         break;
@@ -94,8 +98,19 @@ public class TraceControlHandler extends Handler {
       Logger.postCreateBackwardTrace(context.traceId);
     }
 
-    // call the listener's pre-stop trace and stop trace.
+    // post TRACE_PRE_END
     Logger.postPreCloseTrace(context.traceId);
+
+    // Schedule an optionally delayed *actual* end of the trace
+    sendMessageDelayed(
+        obtainMessage(MSG_END_TRACE, context),
+        context.mTraceConfigExtras.getIntParam(
+            ProfiloConstants.TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC,
+            ProfiloConstants.TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT));
+  }
+
+  protected synchronized void endTrace(TraceContext context) {
+    // This also runs teardown for all providers
     if (mListener != null) {
       mListener.onTraceStop(context);
     }
