@@ -122,9 +122,7 @@ public:
     }
 
     istreambuf(const istreambuf &) = delete;
-    istreambuf(istreambuf &&) = default;
     istreambuf & operator = (const istreambuf &) = delete;
-    istreambuf & operator = (istreambuf &&) = default;
 
     virtual ~istreambuf()
     {
@@ -239,9 +237,7 @@ public:
     }
 
     ostreambuf(const ostreambuf &) = delete;
-    ostreambuf(ostreambuf &&) = default;
     ostreambuf & operator = (const ostreambuf &) = delete;
-    ostreambuf & operator = (ostreambuf &&) = default;
 
     int deflate_loop(int flush)
     {
