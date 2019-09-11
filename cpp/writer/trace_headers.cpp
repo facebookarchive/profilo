@@ -60,6 +60,13 @@ std::vector<std::pair<std::string, std::string>> calculateHeaders() {
       result.push_back(std::make_pair("os", ss.str()));
     }
   }
+  {
+    static constexpr int kBackTracingWindowMicroSeconds =
+        10000000; // 10 seconds
+    std::stringstream ss;
+    ss << kBackTracingWindowMicroSeconds;
+    result.push_back(std::make_pair("trace_backdating_window", ss.str()));
+  }
 
   return result;
 }
