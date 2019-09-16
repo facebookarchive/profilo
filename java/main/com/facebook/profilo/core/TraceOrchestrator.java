@@ -298,6 +298,11 @@ public final class TraceOrchestrator
 
   public synchronized void setBackgroundUploadService(
       @Nullable BackgroundUploadService uploadService) {
+    setBackgroundUploadService(uploadService, true /* triggerUpload */);
+  }
+
+  public synchronized void setBackgroundUploadService(
+      @Nullable BackgroundUploadService uploadService, boolean triggerUpload) {
     if (mBackgroundUploadService == uploadService) {
       return;
     }
@@ -305,7 +310,9 @@ public final class TraceOrchestrator
     if (mBackgroundUploadService != null && mConfig != null) {
       mBackgroundUploadService.updateConstraints(mConfig.getSystemControl());
     }
-    triggerUpload();
+    if (triggerUpload) {
+      triggerUpload();
+    }
   }
 
   public synchronized void setProfiloBridgeFactory(ProfiloBridgeFactory profiloFactory) {
@@ -368,7 +375,7 @@ public final class TraceOrchestrator
     }
     traceControl.setConfig(newConfig);
 
-    BackgroundUploadService backgroundUploadService = getUploadService();
+    BackgroundUploadService backgroundUploadService = getUploadService(true /* triggerUpload */);
 
     if (backgroundUploadService != null) {
       backgroundUploadService.updateConstraints(newConfig.getSystemControl());
@@ -703,7 +710,7 @@ public final class TraceOrchestrator
 
   @GuardedBy("this")
   private void triggerUpload() {
-    BackgroundUploadService backgroundUploadService = getUploadService();
+    BackgroundUploadService backgroundUploadService = getUploadService(false /* triggerUpload */);
     if (backgroundUploadService == null) {
       return;
     }
@@ -732,11 +739,11 @@ public final class TraceOrchestrator
    * Every time the background upload service, profilo listener, or config provider are touched, we
    * need to make sure we've initialized them because they are lazy-instantiated during cold start.
    */
-  private synchronized BackgroundUploadService getUploadService() {
+  private synchronized @Nullable BackgroundUploadService getUploadService(boolean triggerUpload) {
     if (mBackgroundUploadService == null && mProfiloBridgeFactory != null) {
       BackgroundUploadService backgroundUploadService = mProfiloBridgeFactory.getUploadService();
       if (backgroundUploadService != null) {
-        setBackgroundUploadService(backgroundUploadService);
+        setBackgroundUploadService(backgroundUploadService, triggerUpload);
       }
     }
     return mBackgroundUploadService;

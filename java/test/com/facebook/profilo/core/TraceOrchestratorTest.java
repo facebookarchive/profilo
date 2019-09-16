@@ -51,10 +51,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({
@@ -214,11 +214,35 @@ public class TraceOrchestratorTest {
     when(mFileManager.getUntrimmableFilesToUpload()).thenReturn(tracesListSkipChecks);
 
     mOrchestrator.setBackgroundUploadService(mUploadService);
-    verify(mUploadService)
+    verify(mUploadService, times(1))
         .uploadInBackground(
             same(tracesList), any(BackgroundUploadService.BackgroundUploadListener.class));
 
-    verify(mUploadService)
+    verify(mUploadService, times(1))
+        .uploadInBackgroundSkipChecks(
+            same(tracesListSkipChecks),
+            any(BackgroundUploadService.BackgroundUploadListener.class));
+  }
+
+  @Test
+  public void testLazyUploadServiceInitTriggersImmediateUpload() throws Exception {
+    List<File> tracesList = new ArrayList<>();
+    List<File> tracesListSkipChecks = new ArrayList<>();
+
+    when(mFileManager.getTrimmableFilesToUpload()).thenReturn(tracesList);
+    when(mFileManager.getUntrimmableFilesToUpload()).thenReturn(tracesListSkipChecks);
+
+    TraceOrchestrator.ProfiloBridgeFactory profiloBridgeFactory =
+        mock(TraceOrchestrator.ProfiloBridgeFactory.class);
+    when(profiloBridgeFactory.getUploadService()).thenReturn(mUploadService);
+
+    mOrchestrator.setProfiloBridgeFactory(profiloBridgeFactory);
+    Whitebox.invokeMethod(mOrchestrator, "triggerUpload");
+    verify(mUploadService, times(1))
+        .uploadInBackground(
+            same(tracesList), any(BackgroundUploadService.BackgroundUploadListener.class));
+
+    verify(mUploadService, times(1))
         .uploadInBackgroundSkipChecks(
             same(tracesListSkipChecks),
             any(BackgroundUploadService.BackgroundUploadListener.class));
