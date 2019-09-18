@@ -39,7 +39,8 @@ def profilo_oss_maven_library(
         sha1,
         visibility,
         packaging = "jar",
-        scope = "compiled"):
+        scope = "compiled",
+        deps = []):
     """
     Creates remote_file and prebuilt_jar rules for a maven artifact.
     """
@@ -57,12 +58,14 @@ def profilo_oss_maven_library(
             name = name,
             binary_jar = ":{}".format(remote_file_name),
             visibility = visibility,
+            deps = deps,
         )
     else:
         native.android_prebuilt_aar(
             name = name,
             aar = ":{}".format(remote_file_name),
             visibility = visibility,
+            deps = deps,
         )
 
 def profilo_oss_xplat_cxx_library(**kwargs):
