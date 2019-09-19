@@ -83,10 +83,13 @@ public final class TraceOrchestrator
   }
 
   public interface ProfiloBridgeFactory {
+    @Nullable
     BackgroundUploadService getUploadService();
 
+    @Nullable
     ConfigProvider getProvider();
 
+    @Nullable
     TraceListener[] getListeners();
   }
 
