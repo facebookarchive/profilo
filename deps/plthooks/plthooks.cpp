@@ -15,8 +15,8 @@
  */
 
 #include <plthooks/hooks.h>
-#include <plthooks/locks.h>
-#include <plthooks/log_assert.h>
+#include <linker/locks.h>
+#include <linker/log_assert.h>
 #include <plthooks/trampoline.h>
 #include <plthooks/plthooks.h>
 

@@ -15,7 +15,7 @@
  */
 
 #include <plthooks/hooks.h>
-#include <plthooks/locks.h>
+#include <linker/locks.h>
 #include <stdlib.h>
 #include <algorithm>
 #include <atomic>

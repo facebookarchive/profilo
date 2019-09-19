@@ -16,7 +16,7 @@
 
 #include <plthooks/trampoline.h>
 #include <plthooks/hooks.h>
-#include <plthooks/locks.h>
+#include <linker/locks.h>
 
 #include <sys/mman.h>
 #include <algorithm>

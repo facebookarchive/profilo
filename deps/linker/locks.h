@@ -30,7 +30,7 @@ private:
 public:
   inline ReaderLock(pthread_rwlock_t* mutex)
       : mutex_(mutex) {
-    auto ret = pthread_rwlock_rdlock(mutex);
+    auto ret = pthread_rwlock_rdlock(mutex_);
     if (ret != 0) {
       log_assert("pthread_rwlock_rdlock returned %s", strerror(ret));
     }
@@ -51,7 +51,7 @@ private:
 public:
   inline WriterLock(pthread_rwlock_t *mutex)
       : mutex_(mutex) {
-    int ret = pthread_rwlock_wrlock(mutex);
+    int ret = pthread_rwlock_wrlock(mutex_);
     if (ret != 0) {
       log_assert("pthread_rwlock_wrlock returned %s", strerror(ret));
     }
