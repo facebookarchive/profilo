@@ -1,7 +1,7 @@
-load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
+load("//tools/build_defs:fb_python_library.bzl", "fb_python_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-fb_native.python_library(
+fb_python_library(
     name = "model",
     srcs = glob(["*.py"]),
     base_module = "profilo.model",
