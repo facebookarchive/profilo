@@ -32,9 +32,9 @@
 namespace facebook {
 namespace profilo {
 
+#if defined(__linux__) || defined(ANDROID)
 static const int64_t kSecondNanos = 1000000000;
 
-#if defined(__linux__) || defined(ANDROID)
 int64_t monotonicTime() {
   timespec ts{};
   syscall(__NR_clock_gettime, CLOCK_MONOTONIC, &ts);
