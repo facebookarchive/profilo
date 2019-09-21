@@ -6,27 +6,26 @@
 cmake_minimum_required(VERSION 3.6.0)
 project(fbjni CXX)
 
+set(FBJNI_COMPILE_OPTIONS
+  -Wall
+  -std=c++11
+  -fno-omit-frame-pointer
+  -fexceptions
+  -frtti
+  -ffunction-sections
+  -O3
+  -DNDEBUG
+)
+
 file(GLOB fbjni_SOURCES
   cxx/fbjni/*.cpp
   cxx/fbjni/detail/*.cpp
   cxx/lyra/*.cpp
 )
-add_library(fbjni SHARED
-  ${fbjni_SOURCES}
-)
 
-target_compile_options(fbjni PRIVATE
-  -fno-omit-frame-pointer
-  -fexceptions
-  -O3
-  -Wall
-  -std=c++11
-  -frtti
-  -ffunction-sections
-  -DDISABLE_CPUCAP
-  -DDISABLE_XPLAT
-  -DNDEBUG
-)
+add_library(fbjni SHARED ${fbjni_SOURCES})
+
+target_compile_options(fbjni PRIVATE ${FBJNI_COMPILE_OPTIONS})
 
 target_include_directories(fbjni PUBLIC
   cxx
@@ -49,3 +48,6 @@ if (ANDROID_ABI)
     log
   )
 endif()
+
+enable_testing()
+add_subdirectory(test/jni)
