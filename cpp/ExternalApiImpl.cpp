@@ -126,7 +126,8 @@ bool internal_register_external_tracer_callback(
 
 } // namespace
 
-__attribute__((constructor)) void init_external_api() {
+// Activates the External API by setting actual struct implementation.
+__attribute__((constructor)) void init_profilo_external_api() {
   profilo_api_int.mark_start = &internal_mark_start;
   profilo_api_int.mark_end = &internal_mark_end;
   profilo_api_int.log_classload_start = &internal_log_classload_start;
