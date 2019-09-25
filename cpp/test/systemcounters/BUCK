@@ -15,8 +15,8 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
-        "fbsource//xplat/folly:test-util",
-        "fbsource//xplat/third-party/linker_lib:pthread",
+        "//xplat/folly:test-util",
+        "//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/systemcounters:systemcounters"),
         profilo_path("cpp/util:util"),
     ],
@@ -37,8 +37,8 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
-        "fbsource//xplat/folly:test-util",
-        "fbsource//xplat/third-party/linker_lib:pthread",
+        "//xplat/folly:test-util",
+        "//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/systemcounters:systemcounters"),
         profilo_path("cpp/util:util"),
     ],
