@@ -43,6 +43,31 @@ if (NOT ANDROID_ABI)
   if (CMAKE_SYSTEM_NAME STREQUAL Darwin)
     target_include_directories(fbjni PUBLIC ${JAVA_HOME}/include/darwin)
   endif()
+
+  enable_testing()
+  add_subdirectory(test/jni)
+
+  # Download and unpack googletest at configure time
+  configure_file(googletest-CMakeLists.txt.in googletest-download/CMakeLists.txt)
+  execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+  if(result)
+    message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+  endif()
+  execute_process(COMMAND ${CMAKE_COMMAND} --build .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+  if(result)
+    message(FATAL_ERROR "Build step for googletest failed: ${result}")
+  endif()
+
+  # Add googletest directly to our build. This defines
+  # the gtest and gtest_main targets.
+  add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
+                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
+                  EXCLUDE_FROM_ALL)
+
 endif()
 
 if (ANDROID_ABI)
@@ -52,5 +77,3 @@ if (ANDROID_ABI)
   )
 endif()
 
-enable_testing()
-add_subdirectory(test/jni)
