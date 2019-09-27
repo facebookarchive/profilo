@@ -81,9 +81,6 @@ static uint32_t gnuhash(char const* name) {
 
 } // namespace (anonymous)
 
-// pltRelocations is explicitly set to nullptr as a sentinel to operator bool
-elfSharedLibData::elfSharedLibData() {}
-
 elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
   ElfW(Dyn) const* dynamic_table = nullptr;
 
@@ -352,11 +349,7 @@ elfSharedLibData::operator bool() const {
     return false;
   }
 
-  // pltRelocations is somewhat special: the "bad" constructor explicitly sets
-  // this to nullptr in order to mark the entire object as invalid. if this check
-  // is removed, be sure to use some other form of sentinel.
-  if (!pltRelocations ||
-      !dladdr(pltRelocations, &info) ||
+  if (!dladdr(pltRelocations, &info) ||
       strcmp(info.dli_fname, libName) != 0) {
     return false;
   }
