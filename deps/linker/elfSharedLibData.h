@@ -41,8 +41,7 @@ typedef ElfW(Rel) Elf_Reloc;
 class elfSharedLibData {
 public:
 
-  elfSharedLibData() = delete;
-
+  elfSharedLibData();
   // throws input_parse_error if it fails to parse all the info it needs from dlpi
   explicit elfSharedLibData(dl_phdr_info const* dlpi);
 #if !defined(__aarch64__)

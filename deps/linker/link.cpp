@@ -38,23 +38,25 @@ int dladdr1(void* addr, Dl_info* info, void** extra_info, int flags) {
     return 0; // docs specify dlerror not set in this case, which makes it easy for us
   }
 
+  elfSharedLibData lib;
   try {
-    auto lib = sharedLib(basename(info->dli_fname));
-    auto sym_info = const_cast<ElfW(Sym) const**>(reinterpret_cast<ElfW(Sym)**>(extra_info));
-    *sym_info = lib.find_symbol_by_name(info->dli_sname);
-    if (*sym_info) {
-      if (lib.getLoadedAddress(*sym_info) != info->dli_saddr) {
-        log_assert(
-          "tried to resolve address 0x%x but dladdr returned \"%s\" (0x%x) while find_symbol_by_name returned %x",
-          addr,
-          info->dli_sname,
-          info->dli_saddr,
-          (*sym_info)->st_value);
-      }
-      return 1;
-    }
+    lib = sharedLib(basename(info->dli_fname));
   } catch (std::out_of_range& e) {
-    // don't have any data on this lib. no worries, just fall through and return 0
+    return 0;
+  }
+
+  auto sym_info = const_cast<ElfW(Sym) const**>(reinterpret_cast<ElfW(Sym)**>(extra_info));
+  *sym_info = lib.find_symbol_by_name(info->dli_sname);
+  if (*sym_info) {
+    if (lib.getLoadedAddress(*sym_info) != info->dli_saddr) {
+      log_assert(
+        "tried to resolve address 0x%x but dladdr returned \"%s\" (0x%x) while find_symbol_by_name returned %x",
+        addr,
+        info->dli_sname,
+        info->dli_saddr,
+        (*sym_info)->st_value);
+    }
+    return 1;
   }
 
   return 0;

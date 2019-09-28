@@ -23,7 +23,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdexcept>
-#include <memory>
 
 #include <fb/Build.h>
 #include <cppdistract/dso.h>
@@ -40,47 +39,46 @@ struct ElfSharedLibDataTest : public BaseTest {
   virtual void SetUp() {
     BaseTest::SetUp();
 
-    lib = std::make_unique<elfSharedLibData const>(sharedLib("libtarget.so"));
-
-    ASSERT_TRUE(*lib);
-    ASSERT_FALSE(lib->usesGnuHashTable());
+    lib = sharedLib("libtarget.so");
+    ASSERT_TRUE(lib);
+    ASSERT_FALSE(lib.usesGnuHashTable());
   }
 
   facebook::cppdistract::dso const libtarget;
-  std::unique_ptr<elfSharedLibData const> lib;
+  elfSharedLibData lib;
 };
 
 TEST_F(ElfSharedLibDataTest, testElfLookupDefined) {
   auto call_clock = libtarget.get_symbol<int()>("call_clock");
   ASSERT_NE(nullptr, call_clock);
 
-  auto sym = lib->find_symbol_by_name("call_clock");
+  auto sym = lib.find_symbol_by_name("call_clock");
   ASSERT_NE(nullptr, sym);
-  ASSERT_EQ(call_clock, lib->getLoadedAddress(sym));
+  ASSERT_EQ(call_clock, lib.getLoadedAddress(sym));
 }
 
 TEST_F(ElfSharedLibDataTest, testElfLookupUndefined) {
-  auto sym = lib->find_symbol_by_name("clock");
+  auto sym = lib.find_symbol_by_name("clock");
   ASSERT_NE(nullptr, sym);
   ASSERT_EQ(0, sym->st_value);
 }
 
 TEST_F(ElfSharedLibDataTest, testElfLookupBad) {
-  auto sym = lib->find_symbol_by_name("supercalifragilisticexpialidocious");
+  auto sym = lib.find_symbol_by_name("supercalifragilisticexpialidocious");
   ASSERT_EQ(nullptr, sym);
 }
 
 TEST_F(ElfSharedLibDataTest, testGetPltRelocations) {
-  auto sym = lib->find_symbol_by_name("clock");
+  auto sym = lib.find_symbol_by_name("clock");
   ASSERT_NE(nullptr, sym);
 
-  auto pltrelocs = lib->get_plt_relocations(sym);
+  auto pltrelocs = lib.get_plt_relocations(sym);
   ASSERT_EQ(1, pltrelocs.size());
   ASSERT_EQ(&clock, *pltrelocs[0]);
 }
 
 TEST_F(ElfSharedLibDataTest, testGetDynamicSymbolRelocation) {
-  auto symrelocs = lib->get_relocations(&var);
+  auto symrelocs = lib.get_relocations(&var);
   ASSERT_EQ(1, symrelocs.size());
   ASSERT_EQ(&var, *symrelocs[0]);
 }
@@ -96,46 +94,46 @@ struct ElfSharedLibDataTestGnuHash : public BaseTest {
   virtual void SetUp() {
     BaseTest::SetUp();
 
-    lib = std::make_unique<elfSharedLibData const>(sharedLib("libgnu.so"));
-    ASSERT_TRUE(*lib);
-    ASSERT_TRUE(lib->usesGnuHashTable());
+    lib = sharedLib("libgnu.so");
+    ASSERT_TRUE(lib);
+    ASSERT_TRUE(lib.usesGnuHashTable());
   }
 
   facebook::cppdistract::dso const libgnu;
-  std::unique_ptr<elfSharedLibData const> lib;
+  elfSharedLibData lib;
 };
 
 TEST_F(ElfSharedLibDataTestGnuHash, testGnuLookupDefined) {
   auto call_clock = libgnu.get_symbol<int()>("call_clock");
   ASSERT_NE(nullptr, call_clock);
 
-  auto sym = lib->find_symbol_by_name("call_clock");
+  auto sym = lib.find_symbol_by_name("call_clock");
   ASSERT_NE(nullptr, sym);
-  ASSERT_EQ(call_clock, lib->getLoadedAddress(sym));
+  ASSERT_EQ(call_clock, lib.getLoadedAddress(sym));
 }
 
 TEST_F(ElfSharedLibDataTestGnuHash, testGnuLookupUndefined) {
-  auto sym = lib->find_symbol_by_name("clock");
+  auto sym = lib.find_symbol_by_name("clock");
   ASSERT_NE(nullptr, sym);
   ASSERT_EQ(0, sym->st_value);
 }
 
 TEST_F(ElfSharedLibDataTestGnuHash, testGnuLookupBad) {
-  auto sym = lib->find_symbol_by_name("supercalifragilisticexpialidocious");
+  auto sym = lib.find_symbol_by_name("supercalifragilisticexpialidocious");
   ASSERT_EQ(nullptr, sym);
 }
 
 TEST_F(ElfSharedLibDataTestGnuHash, testGetPltRelocations) {
-  auto sym = lib->find_symbol_by_name("clock");
+  auto sym = lib.find_symbol_by_name("clock");
   ASSERT_NE(nullptr, sym);
 
-  auto pltrelocs = lib->get_plt_relocations(sym);
+  auto pltrelocs = lib.get_plt_relocations(sym);
   ASSERT_EQ(1, pltrelocs.size());
   ASSERT_EQ(&clock, *pltrelocs[0]);
 }
 
 TEST_F(ElfSharedLibDataTestGnuHash, testGetDynamicSymbolRelocation) {
-  auto symrelocs = lib->get_relocations(&var);
+  auto symrelocs = lib.get_relocations(&var);
   ASSERT_EQ(1, symrelocs.size());
   ASSERT_EQ(&var, *symrelocs[0]);
 }
