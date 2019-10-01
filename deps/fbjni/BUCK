@@ -5,24 +5,18 @@ profilo_oss_xplat_cxx_library(
     name = "fbjni",
     srcs = glob([
         "cxx/fbjni/**/*.cpp",
+        "cxx/lyra/*.cpp",
     ]),
     header_namespace = "",
     exported_headers = subdir_glob([
         ("cxx", "fbjni/**/*.h"),
+        ("cxx", "lyra/**/*.h"),
     ]),
     compiler_flags = [
         "-fexceptions",
         "-fno-omit-frame-pointer",
         "-frtti",
         "-ffunction-sections",
-    ],
-    exported_platform_headers = [
-        (
-            "^(?!android-arm$).*$",
-            subdir_glob([
-                ("cxx", "lyra/**/*.h"),
-            ]),
-        ),
     ],
     exported_platform_linker_flags = [
         (
@@ -40,14 +34,6 @@ profilo_oss_xplat_cxx_library(
         (
             "^android-x86",
             ["-latomic"],
-        ),
-    ],
-    platform_srcs = [
-        (
-            "^(?!android-arm$).*$",
-            glob([
-                "cxx/lyra/*.cpp",
-            ]),
         ),
     ],
     soname = "libfbjni.$(ext)",
