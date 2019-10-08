@@ -101,12 +101,6 @@ class SystemCounters {
         logger, QuickLogConstants::NUM_PROCS, info.procs, tid, time);
     logCounter<Logger>(
         logger,
-        QuickLogConstants::TOTAL_MEM,
-        (int64_t)info.totalram * (int64_t)info.mem_unit,
-        tid,
-        time);
-    logCounter<Logger>(
-        logger,
         QuickLogConstants::FREE_MEM,
         (int64_t)info.freeram * (int64_t)info.mem_unit,
         tid,
