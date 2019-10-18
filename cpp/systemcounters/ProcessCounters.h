@@ -58,16 +58,14 @@ struct DefaultGetRusageStatsProvider {
 template <
     typename TaskSchedFile,
     typename Logger,
-    typename GetRusageStats = DefaultGetRusageStatsProvider,
-    typename StatmFile = util::ProcStatmFile>
+    typename GetRusageStats = DefaultGetRusageStatsProvider>
 class ProcessCounters {
  public:
+
   void logCounters() {
     logProcessCounters();
     logProcessSchedCounters();
-    logProcessStatmCounters();
   }
-
   int32_t getAvailableCounters() {
     return extraAvailableCounters_;
   }
@@ -181,39 +179,10 @@ class ProcessCounters {
     }
   }
 
-  void logProcessStatmCounters() {
-    if (!statmStats_) {
-      statmStats_.reset(new StatmFile());
-    }
-
-    util::StatmInfo prevInfo = statmStats_->getInfo();
-    util::StatmInfo currInfo = statmStats_->refresh();
-
-    auto tid = threadID();
-    auto time = monotonicTime();
-    Logger& logger = Logger::get();
-
-    logNonMonotonicCounter(
-        prevInfo.resident,
-        currInfo.resident,
-        tid,
-        time,
-        QuickLogConstants::PROC_STATM_RESIDENT,
-        logger);
-    logNonMonotonicCounter(
-        prevInfo.shared,
-        currInfo.shared,
-        tid,
-        time,
-        QuickLogConstants::PROC_STATM_SHARED,
-        logger);
-  }
-
   std::unique_ptr<TaskSchedFile> schedStats_;
   bool schedStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
   GetRusageStats getRusageStats_;
-  std::unique_ptr<StatmFile> statmStats_;
   friend class ProcessCountersTestAccessor;
 };
 

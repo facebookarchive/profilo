@@ -76,8 +76,6 @@ enum QuickLogConstants {
   APP_VERSION_CODE = 8126464 | 54, // = 8126518
   CONFIG_ID = 8126464 | 6, // = 8126470
   THREAD_PRIORITY = 9240576 | 91, // = 9240667
-  PROC_STATM_SHARED = 9240576 | 92, // = 9240668
-  PROC_STATM_RESIDENT = 9240576 | 93, // = 9240669
 };
 
 } // namespace profilo

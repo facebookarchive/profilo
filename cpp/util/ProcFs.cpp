@@ -391,23 +391,6 @@ SchedstatInfo parseSchedstatFile(char* data, size_t size) {
   return info;
 }
 
-StatmInfo parseStatmFile(char* data, size_t size) {
-  const char* end = (data + size);
-  data = skipUntil(data, end, ' '); // size
-  char* endptr = nullptr;
-  auto resident = parse_ull(data, &endptr); // resident
-  if (errno == ERANGE || data == endptr || endptr > end) {
-    throw std::runtime_error("Could not parse resident");
-  }
-  data = skipUntil(endptr, end, ' ');
-  endptr = nullptr;
-  auto shared = parse_ull(data, &endptr); // shared
-  if (errno == ERANGE || data == endptr || endptr > end) {
-    throw std::runtime_error("Could not parse stime");
-  }
-  return (struct StatmInfo){.resident = resident, .shared = shared};
-}
-
 } // namespace
 
 TaskStatFile::TaskStatFile(uint32_t tid)
@@ -697,23 +680,6 @@ VmStatInfo VmStatFile::doRead(int fd, uint32_t ignored) {
   }
 
   return stat_info_;
-}
-
-StatmInfo ProcStatmFile::doRead(int fd, uint32_t requested_stats_mask) {
-  // This is a conservative upper bound, so we can read the
-  // entire file in one fread call.
-  constexpr size_t kMaxStatFileLength = 64;
-
-  char buffer[kMaxStatFileLength]{};
-  int bytes_read = read(fd, buffer, (sizeof(buffer) - 1));
-  if (bytes_read < 0) {
-    throw std::system_error(
-        errno, std::system_category(), "Could not read statm file");
-  }
-
-  // At this point we know that `buffer` must be null terminated because we
-  // zeroed the array before we read at most `sizeof(buffer) - 1` from the file.
-  return parseStatmFile(buffer, bytes_read);
 }
 
 ThreadStatHolder::ThreadStatHolder(uint32_t tid)
