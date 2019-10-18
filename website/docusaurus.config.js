@@ -23,7 +23,7 @@ module.exports = {
       links: [
         { to: "docs/getting-started", label: "Docs", position: "left" },
         {
-          href: "https://github.com/facebook/docusaurus",
+          href: "https://github.com/facebookincubator/profilo",
           label: "GitHub",
           position: "right"
         }
