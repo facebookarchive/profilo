@@ -116,6 +116,7 @@ static const std::string VMSTAT_CONTENT_WITH_SPLIT_KSWAPD =
     "pgsteal_kswapd_movable 1\n"
     "pageoutrun 12\n"
     "allocstall 3\n";
+static const std::string STATM_CONTENT = "458494 18445 11398 6 0 38020 0";
 
 class ProcFsTest : public ::testing::Test {
  protected:
@@ -225,6 +226,15 @@ TEST_F(ProcFsTest, testVmStatFileWithSplitKswapd) {
   EXPECT_EQ(statInfo.allocStall, 3);
   EXPECT_EQ(statInfo.pageOutrun, 12);
   EXPECT_EQ(statInfo.kswapdSteal, 465447587);
+}
+
+TEST_F(ProcFsTest, testStatmFile) {
+  fs::path statPath = SetUpTempFile(STATM_CONTENT);
+  ProcStatmFile statFile{statPath.native()};
+  StatmInfo statInfo = statFile.refresh(ALL_STATS_MASK);
+
+  EXPECT_EQ(statInfo.resident, 18445);
+  EXPECT_EQ(statInfo.shared, 11398);
 }
 
 } // namespace util

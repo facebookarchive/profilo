@@ -100,6 +100,12 @@ struct VmStatInfo {
   VmStatInfo();
 };
 
+// Struct for data from /proc/../statm
+struct StatmInfo {
+  uint64_t resident;
+  uint64_t shared;
+};
+
 // Consolidated stats from different stat files
 struct ThreadStatInfo {
   // monotonic clock value when this was captured
@@ -218,6 +224,14 @@ class VmStatFile : public BaseStatFile<VmStatInfo> {
   size_t read_;
   VmStatInfo stat_info_;
   std::vector<Key> keys_;
+};
+
+class ProcStatmFile : public BaseStatFile<StatmInfo> {
+ public:
+  explicit ProcStatmFile() : BaseStatFile("/proc/self/statm") {}
+  explicit ProcStatmFile(std::string path) : BaseStatFile(path) {}
+
+  StatmInfo doRead(int fd, uint32_t requested_stats_mask) override;
 };
 
 // Consolidated stat files manager class

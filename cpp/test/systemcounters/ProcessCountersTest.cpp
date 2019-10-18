@@ -81,6 +81,22 @@ struct TestTaskSchedFile {
   }
 };
 
+struct TestProcStatmFile {
+  util::StatmInfo prevStats;
+  util::StatmInfo stats;
+  int32_t availableStatsMask;
+
+  TestProcStatmFile() = default;
+
+  util::StatmInfo getInfo() {
+    return prevStats;
+  }
+
+  util::StatmInfo refresh(uint32_t requested_stats_mask = 0) {
+    return stats;
+  }
+};
+
 struct TestGetRusageStatsProvider {
   TestGetRusageStatsProvider() = default;
 
@@ -107,11 +123,11 @@ struct TestGetRusageStatsProvider {
 
 class ProcessCountersTestAccessor {
  public:
-  explicit ProcessCountersTestAccessor(
-      ProcessCounters<
-          TestTaskSchedFile,
-          TestLogger,
-          TestGetRusageStatsProvider>& processCounters)
+  explicit ProcessCountersTestAccessor(ProcessCounters<
+                                       TestTaskSchedFile,
+                                       TestLogger,
+                                       TestGetRusageStatsProvider,
+                                       TestProcStatmFile>& processCounters)
       : processCounters_(processCounters) {}
 
   void substituteSchedFile(std::unique_ptr<TestTaskSchedFile>&& schedFile) {
@@ -124,8 +140,11 @@ class ProcessCountersTestAccessor {
   }
 
  private:
-  ProcessCounters<TestTaskSchedFile, TestLogger, TestGetRusageStatsProvider>&
-      processCounters_;
+  ProcessCounters<
+      TestTaskSchedFile,
+      TestLogger,
+      TestGetRusageStatsProvider,
+      TestProcStatmFile>& processCounters_;
 };
 
 class ProcessMonotonicCountersTest : public ::testing::Test {
@@ -164,6 +183,12 @@ class ProcessMonotonicCountersTest : public ::testing::Test {
     if (StatType::KERNEL_CPU_TIME & stats_mask) {
       quickLogSet.insert(QuickLogConstants::PROC_KERNEL_CPU_TIME);
     }
+    if (StatType::STATM_SHARED && stats_mask) {
+      quickLogSet.insert(QuickLogConstants::PROC_STATM_SHARED);
+    }
+    if (StatType::STATM_RESIDENT && stats_mask) {
+      quickLogSet.insert(QuickLogConstants::PROC_STATM_RESIDENT);
+    }
   }
 
   void testCounters(
@@ -186,10 +211,23 @@ class ProcessMonotonicCountersTest : public ::testing::Test {
     schedFile->stats.iowaitSum = cur_value;
     schedFile->stats.iowaitCount = cur_value;
 
+    std::unique_ptr<TestProcStatmFile> statmFile =
+        std::unique_ptr<TestProcStatmFile>(new TestProcStatmFile());
+
+    statmFile->availableStatsMask = test_stats_mask;
+    statmFile->prevStats.resident = prev_value;
+    statmFile->prevStats.shared = prev_value;
+    statmFile->stats.resident = cur_value;
+    statmFile->stats.shared = cur_value;
+
     std::unordered_set<int32_t> expectedStatTypesCur;
     fillQuickLogStatsSetByMask(expected_cur_stats_mask, expectedStatTypesCur);
 
-    ProcessCounters<TestTaskSchedFile, TestLogger, TestGetRusageStatsProvider>
+    ProcessCounters<
+        TestTaskSchedFile,
+        TestLogger,
+        TestGetRusageStatsProvider,
+        TestProcStatmFile>
         processCounters{};
 
     ProcessCountersTestAccessor processCountersAccessor(processCounters);
