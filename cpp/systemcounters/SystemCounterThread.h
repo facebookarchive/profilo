@@ -47,8 +47,7 @@ class SystemCounterThread
   SystemCounterThread() = default;
 
   ThreadCounters<util::ThreadCache, Logger> threadCounters_;
-  ProcessCounters<util::TaskStatFile, util::TaskSchedFile, Logger>
-      processCounters_;
+  ProcessCounters<util::TaskSchedFile, Logger> processCounters_;
   SystemCounters<Logger> systemCounters_;
 
   int32_t extraAvailableCounters_;

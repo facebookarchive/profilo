@@ -16,6 +16,9 @@
 
 #pragma once
 
+#include <sys/resource.h>
+#include <sys/time.h>
+
 #include <util/ProcFs.h>
 #include "common.h"
 
@@ -24,19 +27,40 @@ using facebook::profilo::util::StatType;
 namespace facebook {
 namespace profilo {
 
+namespace {
+
+static constexpr auto kMillisInSec = 1000;
+static constexpr auto kMicrosInMillis = 1000;
+
+inline uint64_t timeval_to_millis(timeval& tv) {
+  return tv.tv_sec * kMillisInSec + tv.tv_usec / kMicrosInMillis;
+}
+
+inline uint64_t timeval_sum_to_millis(timeval& tv1, timeval& tv2) {
+  return (tv1.tv_sec + tv2.tv_sec) * kMillisInSec +
+      (tv1.tv_usec + tv2.tv_usec) / kMicrosInMillis;
+}
+
+struct DefaultGetRusageStatsProvider {
+  DefaultGetRusageStatsProvider() = default;
+
+  void refresh() {
+    prevStats = curStats;
+    getrusage(RUSAGE_SELF, &curStats);
+  }
+
+  rusage prevStats;
+  rusage curStats;
+};
+} // namespace
+
 // Separating process counters from thread counters
-template <typename TaskStatFile, typename TaskSchedFile, typename Logger>
+template <
+    typename TaskSchedFile,
+    typename Logger,
+    typename GetRusageStats = DefaultGetRusageStatsProvider>
 class ProcessCounters {
  public:
-  ProcessCounters() = default;
-  // For Tests
-  ProcessCounters(
-      std::unique_ptr<TaskStatFile> taskStatFile,
-      std::unique_ptr<TaskSchedFile> schedStatFile)
-      : processStatFile_(std::move(taskStatFile)),
-        schedStats_(std::move(schedStatFile)),
-        schedStatsTracingDisabled_(false),
-        extraAvailableCounters_(false) {}
 
   void logCounters() {
     logProcessCounters();
@@ -48,54 +72,41 @@ class ProcessCounters {
 
  private:
   void logProcessCounters() {
-    if (!processStatFile_) {
-      processStatFile_.reset(new TaskStatFile("/proc/self/stat"));
-    }
-
-    auto prevInfo = processStatFile_->getInfo();
-    util::TaskStatInfo currInfo;
-
-    try {
-      currInfo = processStatFile_->refresh();
-    } catch (const std::system_error& e) {
-      return;
-    } catch (const std::runtime_error& e) {
-      return;
-    }
-
     auto time = monotonicTime();
     auto tid = threadID();
     Logger& logger = Logger::get();
+    getRusageStats_.refresh();
 
-    if (prevInfo.cpuTime != 0) {
-      logMonotonicCounter<Logger>(
-          prevInfo.cpuTime,
-          currInfo.cpuTime,
-          tid,
-          time,
-          QuickLogConstants::PROC_CPU_TIME,
-          logger);
-
-      logMonotonicCounter<Logger>(
-          prevInfo.kernelCpuTimeMs,
-          currInfo.kernelCpuTimeMs,
-          tid,
-          time,
-          QuickLogConstants::PROC_KERNEL_CPU_TIME,
-          logger);
-    }
+    rusage& prev = getRusageStats_.prevStats;
+    rusage& cur = getRusageStats_.curStats;
 
     logMonotonicCounter<Logger>(
-        prevInfo.majorFaults,
-        currInfo.majorFaults,
+        timeval_sum_to_millis(prev.ru_utime, prev.ru_stime),
+        timeval_sum_to_millis(cur.ru_utime, cur.ru_stime),
+        tid,
+        time,
+        QuickLogConstants::PROC_CPU_TIME,
+        logger);
+
+    logMonotonicCounter<Logger>(
+        timeval_to_millis(prev.ru_stime),
+        timeval_to_millis(cur.ru_stime),
+        tid,
+        time,
+        QuickLogConstants::PROC_KERNEL_CPU_TIME,
+        logger);
+
+    logMonotonicCounter<Logger>(
+        prev.ru_majflt,
+        cur.ru_majflt,
         tid,
         time,
         QuickLogConstants::PROC_SW_FAULTS_MAJOR,
         logger);
 
     logMonotonicCounter<Logger>(
-        prevInfo.minorFaults,
-        currInfo.minorFaults,
+        prev.ru_minflt,
+        cur.ru_minflt,
         tid,
         time,
         QuickLogConstants::PROC_SW_FAULTS_MINOR,
@@ -168,10 +179,11 @@ class ProcessCounters {
     }
   }
 
-  std::unique_ptr<TaskStatFile> processStatFile_;
   std::unique_ptr<TaskSchedFile> schedStats_;
   bool schedStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
+  GetRusageStats getRusageStats_;
+  friend class ProcessCountersTestAccessor;
 };
 
 } // namespace profilo

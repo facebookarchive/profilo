@@ -64,21 +64,6 @@ struct TestLogger {
   }
 };
 
-struct TestTaskStatFile {
-  util::TaskStatInfo prevStats;
-  util::TaskStatInfo stats;
-
-  TestTaskStatFile(std::string path) : prevStats(), stats() {}
-
-  util::TaskStatInfo getInfo() {
-    return prevStats;
-  }
-
-  util::TaskStatInfo refresh(uint32_t requested_stats_mask = 0) {
-    return stats;
-  }
-};
-
 struct TestTaskSchedFile {
   util::SchedInfo prevStats;
   util::SchedInfo stats;
@@ -94,6 +79,53 @@ struct TestTaskSchedFile {
   util::SchedInfo refresh(uint32_t requested_stats_mask = 0) {
     return stats;
   }
+};
+
+struct TestGetRusageStatsProvider {
+  TestGetRusageStatsProvider() = default;
+
+  TestGetRusageStatsProvider(int prev_value, int cur_value)
+      : prevStats(), curStats() {
+    prevStats.ru_utime.tv_usec = prev_value * 1000;
+    prevStats.ru_stime.tv_usec = prev_value * 1000;
+    prevStats.ru_majflt = prev_value;
+    prevStats.ru_minflt = prev_value;
+
+    curStats.ru_utime.tv_usec = cur_value * 1000;
+    curStats.ru_stime.tv_usec = cur_value * 1000;
+    curStats.ru_majflt = cur_value;
+    curStats.ru_minflt = cur_value;
+  }
+
+  void refresh() {
+    // no-op
+  }
+
+  rusage prevStats;
+  rusage curStats;
+};
+
+class ProcessCountersTestAccessor {
+ public:
+  explicit ProcessCountersTestAccessor(
+      ProcessCounters<
+          TestTaskSchedFile,
+          TestLogger,
+          TestGetRusageStatsProvider>& processCounters)
+      : processCounters_(processCounters) {}
+
+  void substituteSchedFile(std::unique_ptr<TestTaskSchedFile>&& schedFile) {
+    processCounters_.schedStats_ = std::move(schedFile);
+  }
+
+  void substituteGetRusageStatsProvider(
+      TestGetRusageStatsProvider&& getRusageProvider) {
+    processCounters_.getRusageStats_ = std::move(getRusageProvider);
+  }
+
+ private:
+  ProcessCounters<TestTaskSchedFile, TestLogger, TestGetRusageStatsProvider>&
+      processCounters_;
 };
 
 class ProcessMonotonicCountersTest : public ::testing::Test {
@@ -139,8 +171,6 @@ class ProcessMonotonicCountersTest : public ::testing::Test {
       uint32_t expected_cur_stats_mask,
       int32_t cur_value = kCurValue,
       int32_t prev_value = kPrevValue) {
-    std::unique_ptr<TestTaskStatFile> statFile =
-        std::unique_ptr<TestTaskStatFile>(new TestTaskStatFile(""));
     std::unique_ptr<TestTaskSchedFile> schedFile =
         std::unique_ptr<TestTaskSchedFile>(new TestTaskSchedFile(""));
 
@@ -150,25 +180,22 @@ class ProcessMonotonicCountersTest : public ::testing::Test {
     schedFile->prevStats.nrInvoluntarySwitches = prev_value;
     schedFile->prevStats.iowaitSum = prev_value;
     schedFile->prevStats.iowaitCount = prev_value;
-    statFile->prevStats.cpuTime = prev_value;
-    statFile->prevStats.majorFaults = prev_value;
-    statFile->prevStats.kernelCpuTimeMs = prev_value;
-    statFile->prevStats.minorFaults = prev_value;
 
     schedFile->stats.nrVoluntarySwitches = cur_value;
     schedFile->stats.nrInvoluntarySwitches = cur_value;
     schedFile->stats.iowaitSum = cur_value;
     schedFile->stats.iowaitCount = cur_value;
-    statFile->stats.cpuTime = cur_value;
-    statFile->stats.majorFaults = cur_value;
-    statFile->stats.kernelCpuTimeMs = cur_value;
-    statFile->stats.minorFaults = cur_value;
 
     std::unordered_set<int32_t> expectedStatTypesCur;
     fillQuickLogStatsSetByMask(expected_cur_stats_mask, expectedStatTypesCur);
 
-    ProcessCounters<TestTaskStatFile, TestTaskSchedFile, TestLogger>
-        processCounters{std::move(statFile), std::move(schedFile)};
+    ProcessCounters<TestTaskSchedFile, TestLogger, TestGetRusageStatsProvider>
+        processCounters{};
+
+    ProcessCountersTestAccessor processCountersAccessor(processCounters);
+    processCountersAccessor.substituteSchedFile(std::move(schedFile));
+    processCountersAccessor.substituteGetRusageStatsProvider(
+        TestGetRusageStatsProvider(prev_value, cur_value));
 
     auto timeBeforeLogging = monotonicTime();
     processCounters.logCounters();
@@ -182,7 +209,13 @@ class ProcessMonotonicCountersTest : public ::testing::Test {
       auto timestamp = logEntry.timestamp;
       EXPECT_GT(timestamp, timeBeforeLogging);
       EXPECT_SET_CONTAINS(logEntry.callid, expectedStatTypesCur);
-      EXPECT_EQ(logEntry.extra, kCurValue);
+      if (logEntry.callid == QuickLogConstants::PROC_CPU_TIME) {
+        // This is an exception as cpu time is get by summing utime + stime from
+        // "getrusage", so we need to account for that.
+        EXPECT_EQ(logEntry.extra, 2 * kCurValue);
+      } else {
+        EXPECT_EQ(logEntry.extra, kCurValue);
+      }
       expectedStatTypesCur.erase(logEntry.callid);
       testLogger.log.pop();
     }
