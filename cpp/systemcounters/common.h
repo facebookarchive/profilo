@@ -45,16 +45,22 @@ __attribute__((always_inline)) static inline void logCounter(
 
 template <typename Logger>
 __attribute__((always_inline)) static inline void logNonMonotonicCounter(
-    int64_t prev_value,
-    int64_t value,
-    int32_t thread_id,
+    int64_t prev,
+    int64_t curr,
+    int tid,
     int64_t time,
     int32_t quicklog_id,
-    Logger& logger = Logger::get()) {
-  if (prev_value == value) {
+    Logger& logger = Logger::get(),
+    int64_t prev_skipped_time = 0) {
+  if (prev == curr) {
     return;
   }
-  logCounter(logger, quicklog_id, value, thread_id, time);
+  logCounter(logger, quicklog_id, curr, tid, time);
+  if (prev_skipped_time) {
+    // If it's non-zero it means that the previous
+    // sample didn't result in a log point.
+    logCounter(logger, quicklog_id, prev, tid, prev_skipped_time);
+  }
 }
 
 template <typename Logger>

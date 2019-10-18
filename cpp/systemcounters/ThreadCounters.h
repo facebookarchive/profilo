@@ -194,7 +194,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_PRIORITY,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::THREAD_PRIORITY) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
     if (currInfo.availableStatsMask & StatType::STATE) {
       logNonMonotonicCounter<Logger>(
@@ -203,7 +206,10 @@ class ThreadCounters {
           tid,
           currInfo.monotonicStatTime,
           QuickLogConstants::THREAD_STATE,
-          logger);
+          logger,
+          (prevInfo.statChangeMask & StatType::STATE) == 0
+              ? prevInfo.monotonicStatTime
+              : 0);
     }
   }
 
