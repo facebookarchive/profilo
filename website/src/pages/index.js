@@ -47,16 +47,13 @@ const Index = () => {
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
-          <p className="lead">
+          <p>
             Profilo is an Android library for collecting performance traces from
             production builds of an app.
           </p>
           <div className={styles.buttons}>
             <Link
-              className={classnames(
-                "button button--secondary button--lg",
-                styles.getStarted
-              )}
+              className="button button--secondary button--lg"
               to={withBaseUrl("docs/getting-started")}
             >
               Get Started
@@ -70,10 +67,7 @@ const Index = () => {
             <div className="container">
               <div className="row">
                 {features.map(({ title, description }, idx) => (
-                  <div
-                    key={idx}
-                    className={classnames("col col--6", styles.feature)}
-                  >
+                  <div key={idx} className="col col--6">
                     <h3>{title}</h3>
                     <p>{description}</p>
                   </div>
