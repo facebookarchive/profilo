@@ -45,8 +45,9 @@ class JavaBaseTracer : public BaseTracer {
                                                  {"Landroid", 8},
                                                  {"Ldalvik", 7},
                                                  {"Lcom/android", 12},
-                                                 {"Lorg/apache", 11}};
-    constexpr int framework_prefixes_len = 5;
+                                                 {"Lorg/apache", 11},
+                                                 {"Lcom/google", 11}};
+    constexpr int framework_prefixes_len = 6;
     for (int i = 0; i < framework_prefixes_len; i++) {
       auto& p = prefixes[i];
       if (strncmp(name, p.name, p.length) == 0) {
