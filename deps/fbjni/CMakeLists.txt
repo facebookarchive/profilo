@@ -9,6 +9,7 @@ project(fbjni CXX)
 set(FBJNI_COMPILE_OPTIONS
   -Wall
   -std=c++11
+  -pthread
   -fno-omit-frame-pointer
   -fexceptions
   -frtti
