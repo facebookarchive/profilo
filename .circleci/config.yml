@@ -45,7 +45,7 @@ jobs:
           name: Deploy Website
           command: |
             echo "Deploying website..."
-            cd website && GIT_USER=docusaurus-bot USE_SSH=false yarn run publish-gh-pages
+            cd website && GIT_USER=docusaurus-bot USE_SSH=false yarn run deploy
 
 workflows:
   version: 2
