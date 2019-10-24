@@ -8,7 +8,7 @@ version: 2
 jobs:
   deploy-website:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:9.11
 
     working_directory: ~/profilo
 
