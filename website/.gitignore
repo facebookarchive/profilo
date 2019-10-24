@@ -1,8 +1,17 @@
-.DS_Store
-
-/build
+# dependencies
 /node_modules
-/translated_docs
+# production
+/build
+# generated files
+.docusaurus
+.cache-loader
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-/i18n/*
-!/i18n/en.json
