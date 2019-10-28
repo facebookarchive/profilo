@@ -98,9 +98,6 @@ public class TraceControlHandler extends Handler {
       Logger.postCreateBackwardTrace(context.traceId);
     }
 
-    // post TRACE_PRE_END
-    Logger.postPreCloseTrace(context.traceId);
-
     // Schedule an optionally delayed *actual* end of the trace
     sendMessageDelayed(
         obtainMessage(MSG_END_TRACE, context),

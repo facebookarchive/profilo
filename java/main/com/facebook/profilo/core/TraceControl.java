@@ -427,6 +427,7 @@ public final class TraceControl {
           mTraceControlHandler.onTraceAbort(new TraceContext(traceContext, abortReason));
           break;
         case TraceStopReason.STOP:
+          Logger.postPreCloseTrace(traceContext.traceId);
           mTraceControlHandler.onTraceStop(traceContext);
           break;
       }
