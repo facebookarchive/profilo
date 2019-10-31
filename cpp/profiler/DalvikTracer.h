@@ -20,7 +20,7 @@
 
 #include <dalvik-subset/internals.h>
 
-#include <profiler/BaseTracer.h>
+#include <profiler/JavaBaseTracer.h>
 #include <profilo/Logger.h>
 
 namespace facebook {
@@ -29,7 +29,7 @@ namespace profiler {
 
 using dvmThreadSelf_t = Thread* (*)();
 
-class DalvikTracer : public BaseTracer {
+class DalvikTracer : public JavaBaseTracer {
  public:
   DalvikTracer();
 
@@ -39,6 +39,14 @@ class DalvikTracer : public BaseTracer {
   StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
+      uint8_t& depth,
+      uint8_t max_depth) override;
+
+  StackCollectionRetcode collectJavaStack(
+      ucontext_t* ucontext,
+      int64_t* frames,
+      char const** method_names,
+      char const** class_descriptors,
       uint8_t& depth,
       uint8_t max_depth) override;
 

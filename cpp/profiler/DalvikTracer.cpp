@@ -68,9 +68,11 @@ DalvikTracer::DalvikTracer()
     : dvmThreadSelf_(
           reinterpret_cast<decltype(dvmThreadSelf_)>(getDvmThreadSelf())) {}
 
-StackCollectionRetcode DalvikTracer::collectStack(
+StackCollectionRetcode DalvikTracer::collectJavaStack(
     ucontext_t*,
     int64_t* frames,
+    char const** method_names,
+    char const** class_descriptors,
     uint8_t& depth,
     uint8_t max_depth) {
   Thread* thread = dvmThreadSelf_();
@@ -89,18 +91,33 @@ StackCollectionRetcode DalvikTracer::collectStack(
     StackSaveArea* saveArea = SAVEAREA_FROM_FP(fp);
     const Method* method = saveArea->method;
 
-    if (method != nullptr) {
-      frames[depth] = dalvikGetMethodIdForSymbolication(method);
-      depth++;
+    fp = saveArea->prevFrame;
+
+    if (method == nullptr) {
+      continue;
     }
 
-    fp = saveArea->prevFrame;
+    if (method_names != nullptr && class_descriptors != nullptr) {
+      method_names[depth] = method->name;
+      class_descriptors[depth] = method->clazz->descriptor;
+    }
+
+    frames[depth] = dalvikGetMethodIdForSymbolication(method);
+    depth++;
   }
 
   if (depth == 0) {
     return StackCollectionRetcode::EMPTY_STACK;
   }
   return StackCollectionRetcode::SUCCESS;
+}
+
+StackCollectionRetcode DalvikTracer::collectStack(
+    ucontext_t* ucontext,
+    int64_t* frames,
+    uint8_t& depth,
+    uint8_t max_depth) {
+  return collectJavaStack(ucontext, frames, nullptr, nullptr, depth, max_depth);
 }
 
 void DalvikTracer::flushStack(
