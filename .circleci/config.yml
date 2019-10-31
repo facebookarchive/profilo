@@ -3,7 +3,7 @@ aliases:
     branches:
       only:
         - master
-        
+
 version: 2
 jobs:
   deploy-website:
@@ -17,7 +17,7 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-          keys: 
+          keys:
           - dependencies-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - dependencies-{{ .Branch }}-
@@ -45,7 +45,7 @@ jobs:
           name: Deploy Website
           command: |
             echo "Deploying website..."
-            cd website && GIT_USER=docusaurus-bot USE_SSH=false yarn run deploy
+            cd website && GIT_USER=docusaurus-bot USE_SSH= yarn run deploy
 
 workflows:
   version: 2
