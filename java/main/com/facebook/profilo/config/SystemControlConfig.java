@@ -15,9 +15,12 @@ package com.facebook.profilo.config;
 
 public interface SystemControlConfig {
 
-  public long getUploadMaxBytes();
+  long getUploadMaxBytes();
 
-  public long getUploadBytesPerUpdate();
+  long getUploadBytesPerUpdate();
 
-  public long getUploadTimePeriodSec();
+  long getUploadTimePeriodSec();
+
+  /** Number of buffer slots to allocate. This is a global process lifetime setting. */
+  int getBufferSize();
 }

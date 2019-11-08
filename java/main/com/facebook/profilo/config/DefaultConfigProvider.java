@@ -23,6 +23,7 @@ public class DefaultConfigProvider implements ConfigProvider {
   public static final int DEFAULT_MAX_BYTES = 10000;
   public static final long DEFAULT_UPLOAD_PERIOD_SEC = TimeUnit.HOURS.toSeconds(1);
   public static final int DEFAULT_UPLOAD_BYTES_PER_UPDATE = 10000 / 24;
+  public static final int DEFAULT_BUFFER_SIZE = -1;
 
   public static final Config DEFAULT_CONFIG =
       new Config() {
@@ -68,6 +69,11 @@ public class DefaultConfigProvider implements ConfigProvider {
             @Override
             public long getUploadTimePeriodSec() {
               return DEFAULT_UPLOAD_PERIOD_SEC;
+            }
+
+            @Override
+            public int getBufferSize() {
+              return DEFAULT_BUFFER_SIZE;
             }
           };
         }

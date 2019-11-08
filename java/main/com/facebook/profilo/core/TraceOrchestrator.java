@@ -234,13 +234,16 @@ public final class TraceOrchestrator
     synchronized (this) {
       folder = mFileManager.getFolder();
 
+      int bufferSize;
+      if (mIsMainProcess) {
+        int configBufferSize = initialConfig.getSystemControl().getBufferSize();
+        bufferSize = configBufferSize != -1 ? configBufferSize : RING_BUFFER_SIZE_MAIN_PROCESS;
+      } else {
+        bufferSize = RING_BUFFER_SIZE_SECONDARY_PROCESS;
+      }
+
       // using process name as a unique prefix for each process
-      Logger.initialize(
-          mIsMainProcess ? RING_BUFFER_SIZE_MAIN_PROCESS : RING_BUFFER_SIZE_SECONDARY_PROCESS,
-          folder,
-          mProcessName,
-          this,
-          this);
+      Logger.initialize(bufferSize, folder, mProcessName, this, this);
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
       performConfigTransition(initialConfig);
