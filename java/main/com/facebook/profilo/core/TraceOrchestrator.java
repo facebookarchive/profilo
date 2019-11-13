@@ -73,9 +73,9 @@ public final class TraceOrchestrator
     void onTraceFlushedDoFileAnalytics(
         int totalErrors, int trimmedFromCount, int trimmedFromAge, int filesAddedToUpload);
     /** Config update has been received but not yet applied. */
-    void onBeforeConfigUpdate();
+    void onNewConfigAvailable();
     /** New updated config has been applied. */
-    void onAfterConfigUpdate();
+    void onConfigUpdated();
 
     void onProvidersInitialized();
 
@@ -288,7 +288,7 @@ public final class TraceOrchestrator
       }
     }
 
-    mListenerManager.onBeforeConfigUpdate();
+    mListenerManager.onNewConfigAvailable();
 
     synchronized (this) {
       // Defer updating the config provider if we're inside a trace
@@ -341,7 +341,7 @@ public final class TraceOrchestrator
 
   @Override
   public void onConfigUpdated(Config config) {
-    mListenerManager.onBeforeConfigUpdate();
+    mListenerManager.onNewConfigAvailable();
     synchronized (this) {
       // Defer updating the config if we're inside a trace
       TraceControl traceControl = TraceControl.get();
@@ -352,6 +352,7 @@ public final class TraceOrchestrator
       }
       performConfigTransition(config);
     }
+    mListenerManager.onConfigUpdated();
   }
 
   private void performConfigProviderTransition(ConfigProvider newConfigProvider) {
@@ -361,7 +362,7 @@ public final class TraceOrchestrator
       mConfigProvider = newConfigProvider;
       performConfigTransition(newConfigProvider.getFullConfig());
     }
-    mListenerManager.onAfterConfigUpdate();
+    mListenerManager.onConfigUpdated();
   }
 
   @GuardedBy("this")

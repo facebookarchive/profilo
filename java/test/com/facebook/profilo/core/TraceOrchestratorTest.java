@@ -267,6 +267,18 @@ public class TraceOrchestratorTest {
   }
 
   @Test
+  public void testListenersAreCalledOnConfigChange() {
+    reset(mTraceControl);
+    TraceListenerManager listenerManager = mock(TraceListenerManager.class);
+    Whitebox.setInternalState(mOrchestrator, "mListenerManager", listenerManager);
+
+    mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
+
+    verify(listenerManager).onNewConfigAvailable();
+    verify(listenerManager).onConfigUpdated();
+  }
+
+  @Test
   public void testConfigChangeDuringTraceIsDeferredToStop() {
     when(mTraceControl.isInsideTrace()).thenReturn(true); // Inside trace
 

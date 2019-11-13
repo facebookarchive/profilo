@@ -25,10 +25,10 @@ public abstract class DefaultTraceOrchestratorListener implements TraceOrchestra
       int totalErrors, int trimmedFromCount, int trimmedFromAge, int filesAddedToUpload) {}
 
   @Override
-  public void onBeforeConfigUpdate() {}
+  public void onNewConfigAvailable() {}
 
   @Override
-  public void onAfterConfigUpdate() {}
+  public void onConfigUpdated() {}
 
   @Override
   public void onProvidersInitialized() {}
