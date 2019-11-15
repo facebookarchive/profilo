@@ -21,6 +21,7 @@
 #include <limits>
 
 #include <folly/ScopeGuard.h>
+#include <array>
 #include <system_error>
 #include <thread>
 #include <cstdio>
