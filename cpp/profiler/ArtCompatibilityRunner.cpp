@@ -245,7 +245,7 @@ bool runJavaCompatibilityCheckInternal(
 
           if (compareStackTraces(cppStack, cppStackSize, javaStack)) {
             FBLOGV("compareStackTraces returned true");
-            _exit(kExitCodeSuccess);
+            forkjail::ForkJail::real_exit(kExitCodeSuccess);
           }
 
           FBLOGV("compareStackTraces returned false");
@@ -254,7 +254,7 @@ bool runJavaCompatibilityCheckInternal(
           // intentionally ignored
         }
 
-        _exit(kExitCodeFailure);
+        forkjail::ForkJail::real_exit(kExitCodeFailure);
       },
       kTimeoutSec);
 
