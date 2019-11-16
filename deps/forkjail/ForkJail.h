@@ -52,6 +52,9 @@ public:
   // handlers installed.
   pid_t forkAndRun();
 
+  // Executes the real exit. This bypasses any hooks on _exit
+  static void real_exit(int status);
+
  private:
   std::function<void()> jailed_;
   uint32_t timeout_sec_;

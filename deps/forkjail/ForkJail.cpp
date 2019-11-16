@@ -135,7 +135,7 @@ pid_t ForkJail::forkAndRun() {
     // process
     if (setpgid(0, 0)) {
       //LOGE("setpgid failed: %s", strerror(errno));
-      _exit(kChildSetupExitCode);
+      real_exit(kChildSetupExitCode);
     }
 
     // Restore the signal handlers to their default values.
@@ -157,7 +157,7 @@ pid_t ForkJail::forkAndRun() {
       // Similarly to fork() above, siagaction may have been distracted.
       if (real_sigaction(signum, &dfltaction, NULL)) {
         //LOGE("sigaction failed: %s", strerror(errno));
-        _exit(kChildSetupExitCode);
+        real_exit(kChildSetupExitCode);
       }
     }
 
@@ -169,12 +169,12 @@ pid_t ForkJail::forkAndRun() {
 
     if (sys_sigfillset(&alarm_act.sa_mask)) {
       //LOGE("sigemptyset in child: %s", strerror(errno));
-      _exit(kChildSetupExitCode);
+      real_exit(kChildSetupExitCode);
     }
 
     if (real_sigaction(SIGALRM, &alarm_act, NULL)) {
       //LOGE("sigaction(SIGALRM) failed: %s", strerror(errno));
-      _exit(kChildSetupExitCode);
+      real_exit(kChildSetupExitCode);
     }
   } // end SignalMask
 
@@ -184,7 +184,7 @@ pid_t ForkJail::forkAndRun() {
 
   if (sigprocmask(SIG_SETMASK, &nothing, NULL)) {
     //LOGE("pthread_sigmask unblock all: %s", strerror(errno));
-    _exit(kChildSetupExitCode);
+    real_exit(kChildSetupExitCode);
   }
 
   // Set our timeout alarm and run the jailed code.
@@ -195,8 +195,12 @@ pid_t ForkJail::forkAndRun() {
   return 0;
 }
 
+void ForkJail::real_exit(int status) {
+  syscall(__NR_exit, status);
+}
+
 void ForkJail::alarm_handler(int signum){
-  _exit(kChildTimeoutExitCode);
+  real_exit(kChildTimeoutExitCode);
 }
 
 } // forkjail
