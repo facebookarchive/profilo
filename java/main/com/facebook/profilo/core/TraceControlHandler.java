@@ -106,7 +106,7 @@ public class TraceControlHandler extends Handler {
             ProfiloConstants.TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT));
   }
 
-  protected synchronized void endTrace(TraceContext context) {
+  protected void endTrace(TraceContext context) {
     // This also runs teardown for all providers
     if (mListener != null) {
       mListener.onTraceStop(context);
@@ -114,9 +114,11 @@ public class TraceControlHandler extends Handler {
     Logger.postCloseTrace(context.traceId);
   }
 
-  protected synchronized void abortTrace(TraceContext context) {
+  protected void abortTrace(TraceContext context) {
     // stop any timeout timer associated with the thread
-    removeMessages(MSG_TIMEOUT_TRACE, context);
+    synchronized (this) {
+      removeMessages(MSG_TIMEOUT_TRACE, context);
+    }
     if (mListener != null) {
       mListener.onTraceAbort(context);
     }
@@ -130,7 +132,7 @@ public class TraceControlHandler extends Handler {
     control.timeoutTrace(traceId);
   }
 
-  protected synchronized void startTraceAsync(TraceContext context) {
+  protected void startTraceAsync(TraceContext context) {
     if (LogLevel.LOG_DEBUG_MESSAGE) {
       Log.d(
           LOG_TAG,
