@@ -2,11 +2,11 @@ load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_librar
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 fb_xplat_cxx_library(
-    name = "logger",
-    header_namespace = "profilo",
+    name = "buffer",
+    header_namespace = "profilo/logger/buffer",
     exported_headers = [
-        "Logger.h",
-        "PacketLogger.h",
+        "Packet.h",
+        "RingBuffer.h",
     ],
     compiler_flags = [
         "-fvisibility=hidden",
@@ -17,26 +17,20 @@ fb_xplat_cxx_library(
     visibility = [
         profilo_path("..."),
     ],
-    deps = [
-        profilo_path("cpp:constants"),
-        profilo_path("cpp/logger/buffer:buffer"),
-    ],
     exported_deps = [
-        profilo_path("cpp/generated:cpp"),
         profilo_path("cpp/logger/lfrb:lfrb"),
     ],
 )
 
 fb_xplat_cxx_library(
-    name = "logger_static",
+    name = "buffer_static",
     srcs = [
-        "Logger.cpp",
-        "PacketLogger.cpp",
+        "RingBuffer.cpp",
     ],
-    header_namespace = "profilo",
+    header_namespace = "profilo/logger/buffer",
     exported_headers = [
-        "Logger.h",
-        "PacketLogger.h",
+        "Packet.h",
+        "RingBuffer.h",
     ],
     compiler_flags = [
         "-fvisibility=hidden",
@@ -53,9 +47,7 @@ fb_xplat_cxx_library(
         profilo_path("..."),
     ],
     deps = [
-        profilo_path("cpp:constants"),
-        profilo_path("cpp/generated:cpp"),
-        profilo_path("cpp/logger/buffer:buffer_static"),
+        profilo_path("cpp/logger/lfrb:lfrb"),
         profilo_path("deps/fb:fb"),
     ],
 )

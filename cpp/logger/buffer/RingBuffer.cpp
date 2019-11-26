@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-#include <profilo/RingBuffer.h>
+#include "RingBuffer.h"
+#include "../lfrb/LockFreeRingBuffer.h"
 
 #include <fb/log.h>
 

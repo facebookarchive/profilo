@@ -18,7 +18,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include <profilo/RingBuffer.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/writer/AbortReason.h>
 #include <profilo/writer/TraceCallbacks.h>
 #include <profilo/writer/TraceLifecycleVisitor.h>

@@ -16,10 +16,10 @@
 
 #pragma once
 
+#include <profilo/logger/buffer/Packet.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <functional>
-
-#include "Packet.h"
 
 #define PROFILOEXPORT __attribute__((visibility("default")))
 
@@ -29,7 +29,7 @@ class Logger;
 
 namespace logger {
 
-using PacketBuffer = lfrb::LockFreeRingBuffer<Packet>;
+using PacketBuffer = TraceBuffer;
 using PacketBufferProvider = std::function<PacketBuffer&()>;
 
 class PacketLogger {

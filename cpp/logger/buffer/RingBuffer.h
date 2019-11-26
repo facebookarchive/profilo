@@ -16,10 +16,8 @@
 
 #pragma once
 
-#include <profilo/LogEntry.h>
+#include <profilo/logger/buffer/Packet.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
-
-#include "Packet.h"
 
 #define PROFILOEXPORT __attribute__((visibility("default")))
 

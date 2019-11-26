@@ -16,8 +16,8 @@
 
 #include "trace_backwards.h"
 
-#include <profilo/RingBuffer.h>
 #include <profilo/entries/EntryParser.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/writer/PacketReassembler.h>
 
 namespace facebook {

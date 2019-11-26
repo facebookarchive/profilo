@@ -26,8 +26,8 @@
 #include <vector>
 
 #include <profilo/LogEntry.h>
-#include <profilo/RingBuffer.h>
 #include <profilo/entries/EntryParser.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/writer/PacketReassembler.h>
 #include <profilo/writer/TraceCallbacks.h>
 

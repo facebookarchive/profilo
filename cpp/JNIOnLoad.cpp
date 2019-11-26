@@ -25,8 +25,8 @@
 
 #include <profilo/JNILoggerHelpers.h>
 #include <profilo/Logger.h>
-#include <profilo/RingBuffer.h>
 #include <profilo/jni/NativeTraceWriter.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include "TraceProviders.h"
 
 namespace fbjni = facebook::jni;
@@ -40,7 +40,6 @@ const char* LoggerType = "com/facebook/profilo/logger/Logger";
 ///
 /// product write APIs
 ///
-
 
 static jint loggerWriteAndWakeupTraceWriter(
     fbjni::alias_ref<jobject> cls,
@@ -141,9 +140,11 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         profilo::LoggerType,
         {
             makeNativeMethod(
-                "loggerWriteStandardEntry", profilo::detail::loggerWriteStandardEntry),
+                "loggerWriteStandardEntry",
+                profilo::detail::loggerWriteStandardEntry),
             makeNativeMethod(
-                "loggerWriteBytesEntry", profilo::detail::loggerWriteBytesEntry),
+                "loggerWriteBytesEntry",
+                profilo::detail::loggerWriteBytesEntry),
             makeNativeMethod(
                 "loggerWriteAndWakeupTraceWriter",
                 profilo::loggerWriteAndWakeupTraceWriter),

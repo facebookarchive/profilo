@@ -29,9 +29,9 @@
 
 #include <profilo/LogEntry.h>
 #include <profilo/PacketLogger.h>
-#include <profilo/RingBuffer.h>
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryType.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/writer/TraceCallbacks.h>
 #include <profilo/writer/TraceWriter.h>
 
