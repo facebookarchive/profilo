@@ -25,12 +25,32 @@ namespace facebook {
 namespace profilo {
 
 using TraceBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
+using TraceBufferSlot = logger::lfrb::detail::RingBufferSlot<logger::Packet>;
+using TraceBufferHolder =
+    logger::lfrb::LockFreeRingBufferHolder<logger::Packet>;
 
 class RingBuffer {
   static const size_t DEFAULT_SLOT_COUNT = 1000;
 
+  PROFILOEXPORT static TraceBuffer& init(TraceBufferHolder* new_buffer);
+
  public:
+  constexpr static auto kVersion = 1;
+
+  //
+  // sz - number of buffer slots
+  //
   PROFILOEXPORT static TraceBuffer& init(size_t sz = DEFAULT_SLOT_COUNT);
+  //
+  // Constructs the buffer at the specified address
+  // (for example in a memory mapped file)
+  // sz - number of buffer slots
+  // ptr - pointer to where allocate the buffer
+  //
+  PROFILOEXPORT static TraceBuffer& init(
+      void* ptr,
+      size_t sz = DEFAULT_SLOT_COUNT);
+
   PROFILOEXPORT static TraceBuffer& get();
 };
 

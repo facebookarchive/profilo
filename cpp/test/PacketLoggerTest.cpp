@@ -28,6 +28,8 @@ namespace profilo {
 using namespace logger;
 using namespace writer;
 
+using PacketBufferHolder = logger::lfrb::LockFreeRingBufferHolder<Packet>;
+
 const size_t kItemSize = sizeof(uint16_t);
 const size_t kItems = 512;
 
@@ -37,8 +39,8 @@ TEST(Logger, testPacketizedWrite) {
     data[i] = i;
   }
 
-  PacketBuffer buffer(1000);
-  PacketLogger logger([&]() -> PacketBuffer& { return buffer; });
+  PacketBufferHolder buffer = PacketBuffer::allocate(1000);
+  PacketLogger logger([&]() -> PacketBuffer& { return *buffer; });
 
   //
   // Try different sized writes from 1 to data.size().
@@ -46,7 +48,7 @@ TEST(Logger, testPacketizedWrite) {
   // PacketReassembler sees exactly one payload.
   //
   for (size_t i = 1; i <= data.size(); ++i) {
-    PacketBuffer::Cursor cursor = buffer.currentHead();
+    PacketBuffer::Cursor cursor = buffer->currentHead();
     logger.write(data.data(), i * kItemSize);
 
     size_t calls = 0;
@@ -63,7 +65,7 @@ TEST(Logger, testPacketizedWrite) {
     });
 
     Packet packet;
-    while (buffer.tryRead(packet, cursor)) {
+    while (buffer->tryRead(packet, cursor)) {
       reassembler.process(packet);
       cursor.moveForward();
     }
@@ -83,8 +85,8 @@ TEST(Logger, testPacketizedWriteBackwards) {
   // PacketReassembler sees exactly one payload.
   //
   for (size_t i = 1; i <= data.size(); ++i) {
-    PacketBuffer buffer(1000);
-    PacketLogger logger([&]() -> PacketBuffer& { return buffer; });
+    PacketBufferHolder buffer = PacketBuffer::allocate(1000);
+    PacketLogger logger([&]() -> PacketBuffer& { return *buffer; });
 
     logger.write(data.data(), i * kItemSize);
 
@@ -100,11 +102,11 @@ TEST(Logger, testPacketizedWriteBackwards) {
       ++calls;
     });
 
-    auto cursor = buffer.currentHead();
+    auto cursor = buffer->currentHead();
     cursor.moveBackward();
 
     Packet packet;
-    while (buffer.tryRead(packet, cursor)) {
+    while (buffer->tryRead(packet, cursor)) {
       reassembler.processBackwards(packet);
       if (!cursor.moveBackward()) {
         break;

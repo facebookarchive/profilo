@@ -33,9 +33,10 @@ namespace profilo {
 namespace logger {
 namespace lfrb {
 
-class LockFreeRingBufferTest : public ::testing::Test {
+class LockFreeRingBufferDumpTest : public ::testing::Test {
  protected:
-  LockFreeRingBufferTest() : ::testing::Test(), temp_dump_file_("test_dump") {
+  LockFreeRingBufferDumpTest()
+      : ::testing::Test(), temp_dump_file_("test_dump") {
     std::srand(std::time(nullptr));
   }
 
@@ -52,6 +53,10 @@ struct __attribute__((packed)) TestPacket {
   char payload[kPayloadSize];
 };
 
+using TestBuffer = LockFreeRingBuffer<TestPacket>;
+using TestBufferSlot = detail::RingBufferSlot<TestPacket>;
+using TestBufferHolder = LockFreeRingBufferHolder<TestPacket>;
+
 uint32_t writeRandomEntries(
     LockFreeRingBuffer<TestPacket>& buf,
     int records_count,
@@ -67,8 +72,8 @@ uint32_t writeRandomEntries(
       crc = crc32(0, Z_NULL, 0);
     }
     char payload[kPayloadSize];
-    for (int i = 0; i < kPayloadSize; i++) {
-      payload[i] = std::rand() % CHAR_MAX;
+    for (int j = 0; j < kPayloadSize; ++j) {
+      payload[j] = std::rand() % CHAR_MAX;
     }
     crc = crc32(
         crc, reinterpret_cast<const unsigned char*>(payload), kPayloadSize);
@@ -98,50 +103,80 @@ uint32_t readDumpCrc32(int fd, int records_count) {
   return crc;
 }
 
-TEST_F(LockFreeRingBufferTest, testEmptyBufDump) {
+TEST_F(LockFreeRingBufferDumpTest, testEmptyBufDump) {
   const auto kBufferSize = 10;
-  LockFreeRingBuffer<TestPacket> buf(kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
   int dumpFD = fd();
-  buf.dumpDataToFile(dumpFD);
+  buf->dumpDataToFile(dumpFD);
   struct stat dumpStat;
   fstat(dumpFD, &dumpStat);
 
   EXPECT_EQ(dumpStat.st_size, 0);
 }
 
-TEST_F(LockFreeRingBufferTest, testDumpCorrectness) {
+TEST_F(LockFreeRingBufferDumpTest, testDumpCorrectness) {
   const auto kBufferSize = 7;
-  LockFreeRingBuffer<TestPacket> buf(kBufferSize);
-  auto crc = writeRandomEntries(buf, kBufferSize, kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
+  auto crc = writeRandomEntries(*buf, kBufferSize, kBufferSize);
   int dumpFD = fd();
-  buf.dumpDataToFile(dumpFD);
+  buf->dumpDataToFile(dumpFD);
   auto crc_after = readDumpCrc32(dumpFD, kBufferSize);
 
   EXPECT_EQ(crc, crc_after);
 }
 
-TEST_F(LockFreeRingBufferTest, testSmallBufDump) {
+TEST_F(LockFreeRingBufferDumpTest, testSmallBufDump) {
   const auto kBufferSize = 10;
-  LockFreeRingBuffer<TestPacket> buf(kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
   const auto kRecords = 5;
-  auto crc = writeRandomEntries(buf, kRecords, kBufferSize);
+  auto crc = writeRandomEntries(*buf, kRecords, kBufferSize);
   int dumpFD = fd();
-  buf.dumpDataToFile(dumpFD);
+  buf->dumpDataToFile(dumpFD);
   auto crc_after = readDumpCrc32(dumpFD, kRecords);
 
   EXPECT_EQ(crc, crc_after);
 }
 
-TEST_F(LockFreeRingBufferTest, testBufDumpAfterOverflow) {
+TEST_F(LockFreeRingBufferDumpTest, testBufDumpAfterOverflow) {
   const auto kBufferSize = 10;
-  LockFreeRingBuffer<TestPacket> buf(kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
   const auto kRecords = 25;
-  auto crc = writeRandomEntries(buf, kRecords, kBufferSize);
+  auto crc = writeRandomEntries(*buf, kRecords, kBufferSize);
   int dumpFD = fd();
-  buf.dumpDataToFile(dumpFD);
+  buf->dumpDataToFile(dumpFD);
   auto crc_after = readDumpCrc32(dumpFD, kBufferSize);
 
   EXPECT_EQ(crc, crc_after);
+}
+
+TEST(LockFreeRingBuffer, testAllocationCorrectness) {
+  constexpr auto kBufferSize = 10;
+  constexpr auto kBufferStructSize = sizeof(TestBuffer);
+  constexpr auto kBufferSlotStructSize = sizeof(TestBufferSlot);
+  constexpr auto kBufferSlotsSize = kBufferSize * kBufferSlotStructSize;
+  constexpr auto bufLen = kBufferStructSize + kBufferSlotsSize;
+  char buf[bufLen] = {0};
+  TestBufferHolder ringBuffer = TestBuffer::allocateAt(kBufferSize, buf);
+
+  auto crc = writeRandomEntries(*ringBuffer, kBufferSize, kBufferSize);
+
+  auto crc_after = crc32(0L, Z_NULL, 0);
+  for (char* ptr = buf + kBufferStructSize; ptr < buf + bufLen;
+       ptr += kBufferSlotStructSize) {
+    crc_after = crc32(
+        crc_after,
+        reinterpret_cast<const unsigned char*>(
+            ptr + sizeof(TurnSequencer<std::atomic>)),
+        sizeof(TestPacket));
+  }
+
+  EXPECT_EQ(crc, crc_after);
+}
+
+// Expect not to send an error signal, such as SIGSEGV.
+TEST(LockFreeRingBuffer, testDeallocationAfterMove) {
+  TestBufferHolder ringBuffer = TestBuffer::allocate(10);
+  TestBufferHolder ringBufferMoved = std::move(ringBuffer);
 }
 
 } // namespace lfrb

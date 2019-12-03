@@ -27,8 +27,8 @@ namespace profilo {
 
 namespace {
 
-TraceBuffer noop_buffer(1);
-std::atomic<TraceBuffer*> buffer(&noop_buffer);
+TraceBufferHolder noop_buffer = TraceBuffer::allocate(1);
+std::atomic<TraceBufferHolder*> buffer(&noop_buffer);
 
 } // namespace
 
@@ -38,9 +38,25 @@ TraceBuffer& RingBuffer::init(size_t sz) {
     return get();
   }
 
-  auto expected = &noop_buffer;
-  auto new_buffer = new TraceBuffer(sz);
+  return init(new TraceBufferHolder(TraceBuffer::allocate(sz)));
+}
 
+TraceBuffer& RingBuffer::init(void* ptr, size_t sz) {
+  if (buffer.load() != &noop_buffer) {
+    // Already initialized
+    return get();
+  }
+
+  return init(new TraceBufferHolder(TraceBuffer::allocateAt(sz, ptr)));
+}
+
+TraceBuffer& RingBuffer::init(TraceBufferHolder* new_buffer) {
+  if (buffer.load() != &noop_buffer) {
+    // Already initialized
+    return get();
+  }
+
+  auto expected = &noop_buffer;
   // We expect the update succeed only once for noop_buffer
   if (!buffer.compare_exchange_strong(expected, new_buffer)) {
     delete new_buffer;
@@ -51,7 +67,7 @@ TraceBuffer& RingBuffer::init(size_t sz) {
 }
 
 TraceBuffer& RingBuffer::get() {
-  return *buffer.load();
+  return **(buffer.load());
 }
 
 } // namespace profilo

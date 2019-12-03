@@ -30,10 +30,42 @@ namespace profilo {
 namespace logger {
 namespace lfrb {
 
+namespace {
+//
+// Constructs n objects of type typename iterator_traits<ForwardIt>::value_type
+// in the uninitialized storage starting at first. As
+// std::uninitialized_default_construct_n symbol is not yet available for our
+// Android builds using this analogous implementation.
+//
+template <class ForwardIt, class Size>
+ForwardIt _uninitialized_default_construct_n(ForwardIt first, Size n) {
+  using T = typename std::iterator_traits<ForwardIt>::value_type;
+  ForwardIt current = first;
+  for (; n > 0; (void)++current, --n) {
+    new (static_cast<void*>(std::addressof(*current))) T;
+  }
+  return current;
+}
+
+//
+// Destruction of flexible array member
+//
+template <class ForwardIt, class Size>
+ForwardIt _destroy_n(ForwardIt first, Size n) {
+  using T = typename std::iterator_traits<ForwardIt>::value_type;
+  for (; n > 0; (void)++first, --n)
+    std::addressof(*first)->~T();
+  return first;
+}
+} // namespace
+
 namespace detail {
-template <typename T, template <typename> class Atom>
+template <typename T, template <typename> class Atom = std::atomic>
 class RingBufferSlot;
 } // namespace detail
+
+template <typename T, template <typename> class Atom = std::atomic>
+struct LockFreeRingBufferHolder;
 
 /// LockFreeRingBuffer<T> is a fixed-size, concurrent ring buffer with the
 /// following semantics:
@@ -95,11 +127,7 @@ class LockFreeRingBuffer {
     friend class LockFreeRingBuffer;
   };
 
-  explicit LockFreeRingBuffer(uint32_t capacity) noexcept
-      : capacity_(capacity),
-        slots_(new detail::RingBufferSlot<T, Atom>[capacity]),
-        ticket_(0) {}
-
+  LockFreeRingBuffer() = delete;
   LockFreeRingBuffer(LockFreeRingBuffer const&) = delete;
   LockFreeRingBuffer& operator=(LockFreeRingBuffer const&) = delete;
 
@@ -205,14 +233,44 @@ class LockFreeRingBuffer {
     return sizeof(T) * capacity_;
   }
 
-  ~LockFreeRingBuffer() {}
+  static LockFreeRingBufferHolder<T, Atom> allocateAt(
+      uint32_t capacity,
+      void* ptr) {
+    return allocateAt(capacity, ptr, true);
+  }
+
+  static LockFreeRingBufferHolder<T, Atom> allocate(uint32_t capacity) {
+    size_t alloc_size = sizeof(LockFreeRingBuffer<T, Atom>) +
+        capacity * sizeof(detail::RingBufferSlot<T, Atom>);
+    char* alloc_area = new char[alloc_size];
+    return allocateAt(capacity, reinterpret_cast<void*>(alloc_area), false);
+  }
 
  private:
   const uint32_t capacity_;
-
-  const std::unique_ptr<detail::RingBufferSlot<T, Atom>[]> slots_;
-
   Atom<uint64_t> ticket_;
+  detail::RingBufferSlot<T, Atom> slots_[];
+
+  ~LockFreeRingBuffer() {
+    _destroy_n(slots_, capacity_);
+  }
+
+  static LockFreeRingBufferHolder<T, Atom>
+  allocateAt(uint32_t capacity, void* ptr, bool is_external) {
+    LockFreeRingBuffer<T, Atom>* buffer =
+        new (ptr) LockFreeRingBuffer<T, Atom>(capacity);
+    _uninitialized_default_construct_n(buffer->slots_, capacity);
+
+    return LockFreeRingBufferHolder<T, Atom>(buffer, is_external);
+  }
+
+  static void deallocate(LockFreeRingBuffer<T, Atom>* buffer) {
+    buffer->~LockFreeRingBuffer();
+    delete[] reinterpret_cast<char*>(buffer);
+  }
+
+  explicit LockFreeRingBuffer(uint32_t capacity) noexcept
+      : capacity_(capacity), ticket_(0) {}
 
   uint32_t idx(uint64_t ticket) noexcept {
     return ticket % capacity_;
@@ -221,6 +279,8 @@ class LockFreeRingBuffer {
   uint32_t turn(uint64_t ticket) noexcept {
     return (uint32_t)(ticket / capacity_);
   }
+
+  friend LockFreeRingBufferHolder<T, Atom>;
 }; // LockFreeRingBuffer
 
 namespace detail {
@@ -272,6 +332,58 @@ class RingBufferSlot {
 }; // RingBufferSlot
 
 } // namespace detail
+
+template <typename T, template <typename> class Atom>
+struct LockFreeRingBufferHolder {
+  using Cursor = typename LockFreeRingBuffer<T, Atom>::Cursor;
+
+  LockFreeRingBufferHolder() = delete;
+  LockFreeRingBufferHolder(LockFreeRingBufferHolder const&) = delete;
+  LockFreeRingBufferHolder& operator=(LockFreeRingBufferHolder const&) = delete;
+
+  LockFreeRingBufferHolder& operator=(LockFreeRingBufferHolder&& other) {
+    isExternal_ = other.isExternal_;
+    buffer_ = other.buffer_;
+    other.isExternal_ = true;
+    return *this;
+  }
+
+  LockFreeRingBufferHolder(LockFreeRingBufferHolder&& other)
+      : buffer_(std::move(other.buffer_)),
+        isExternal_(std::move(other.isExternal_)) {
+    other.isExternal_ = true;
+  }
+
+  ~LockFreeRingBufferHolder() {
+    if (isExternal_) {
+      return;
+    }
+    LockFreeRingBuffer<T, Atom>::deallocate(buffer_);
+  }
+
+  LockFreeRingBuffer<T, Atom>* operator->() {
+    return buffer_;
+  }
+
+  LockFreeRingBuffer<T, Atom>& operator*() {
+    return *buffer_;
+  }
+
+  LockFreeRingBuffer<T, Atom>* get() {
+    return buffer_;
+  }
+
+ private:
+  LockFreeRingBuffer<T, Atom>* buffer_;
+  bool isExternal_;
+
+  explicit LockFreeRingBufferHolder(
+      LockFreeRingBuffer<T, Atom>* buffer,
+      bool isExternal)
+      : buffer_(buffer), isExternal_(isExternal) {}
+
+  friend LockFreeRingBuffer<T, Atom>;
+};
 
 } // namespace lfrb
 

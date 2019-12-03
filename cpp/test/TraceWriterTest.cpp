@@ -70,18 +70,18 @@ class TraceWriterTest : public ::testing::Test {
   TraceWriterTest()
       : ::testing::Test(),
         trace_dir_("trace-folder-"),
-        buffer_(kBufferSize),
-        logger_([this]() -> PacketBuffer& { return this->buffer_; }),
+        buffer_(TraceBuffer::allocate(kBufferSize)),
+        logger_([this]() -> PacketBuffer& { return *this->buffer_; }),
         callbacks_(std::make_shared<::testing::NiceMock<MockCallbacks>>()),
         writer_(
             std::move(trace_dir_.path().generic_string()),
             "test-prefix",
-            buffer_,
+            *buffer_,
             callbacks_,
             generateHeaders()) {}
 
   test::TemporaryDirectory trace_dir_;
-  TraceBuffer buffer_;
+  TraceBufferHolder buffer_;
   PacketLogger logger_;
   std::shared_ptr<::testing::NiceMock<MockCallbacks>> callbacks_;
   TraceWriter writer_;
@@ -190,7 +190,7 @@ class TraceWriterTest : public ::testing::Test {
 TEST_F(TraceWriterTest, testLoopStop) {
   auto thread = std::thread([&] { writer_.loop(); });
 
-  writer_.submit(buffer_.currentTail(), TraceWriter::kStopLoopTraceID);
+  writer_.submit(buffer_->currentTail(), TraceWriter::kStopLoopTraceID);
   thread.join();
 }
 
@@ -227,7 +227,7 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
 
 TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
   writeTraceStart();
-  auto cursorPastStart = buffer_.currentHead();
+  auto cursorPastStart = buffer_->currentHead();
   writeTraceEnd();
 
   auto thread = std::thread([&] { writer_.loop(); });
@@ -241,7 +241,7 @@ TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
 
 TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
   writeTraceStart();
-  auto cursorAtTraceStart = buffer_.currentTail();
+  auto cursorAtTraceStart = buffer_->currentTail();
 
   // force a wrap around
   for (int i = 0; i < kBufferSize; ++i) {
@@ -259,7 +259,7 @@ TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
 
 void TraceWriterTest::testNoTraceStartCursorAtTail(
     std::function<void()> end_event_fn) {
-  auto cursorAtBeginning = buffer_.currentTail();
+  auto cursorAtBeginning = buffer_->currentTail();
 
   end_event_fn();
 
@@ -306,7 +306,7 @@ TEST_F(TraceWriterTest, testHeadersPropagateToFile) {
 void TraceWriterTest::testCallbackCalls(std::function<void()> expectations) {
   ::testing::InSequence dummy_;
 
-  auto buffer_start = buffer_.currentHead();
+  auto buffer_start = buffer_->currentHead();
 
   expectations();
 
@@ -359,7 +359,7 @@ TEST_F(TraceWriterTest, testCallbacksMissedStart) {
 TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing) {
   using ::testing::_;
 
-  auto buffer_start = buffer_.currentHead();
+  auto buffer_start = buffer_->currentHead();
 
   EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
@@ -371,7 +371,7 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing) {
 
   writeTraceStart(kTraceID);
   writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_.currentHead();
+  buffer_start = buffer_->currentHead();
   writeTraceStart(kSecondTraceID);
   writer_.submit(buffer_start, kSecondTraceID);
   writer_.submit(TraceWriter::kStopLoopTraceID);
@@ -385,7 +385,7 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing) {
 TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing2) {
   using ::testing::_;
 
-  auto buffer_start = buffer_.currentHead();
+  auto buffer_start = buffer_->currentHead();
 
   EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
@@ -398,7 +398,7 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing2) {
   writeTraceStart(kTraceID);
   writeTraceEnd(kTraceID);
   writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_.currentHead();
+  buffer_start = buffer_->currentHead();
   writeTraceStart(kSecondTraceID);
   writeTraceEnd(kSecondTraceID);
   writer_.submit(buffer_start, kSecondTraceID);
@@ -410,7 +410,7 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing2) {
 TEST_F(TraceWriterTest, testCallbacksMultiTracingAbort) {
   using ::testing::_;
 
-  auto buffer_start = buffer_.currentHead();
+  auto buffer_start = buffer_->currentHead();
 
   EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
@@ -423,7 +423,7 @@ TEST_F(TraceWriterTest, testCallbacksMultiTracingAbort) {
 
   writeTraceStart(kTraceID);
   writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_.currentHead();
+  buffer_start = buffer_->currentHead();
   writeTraceStart(kSecondTraceID);
   writeTraceAbort(kTraceID);
   writeTraceEnd(kSecondTraceID);
