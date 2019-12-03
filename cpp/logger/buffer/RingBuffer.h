@@ -51,6 +51,14 @@ class RingBuffer {
       void* ptr,
       size_t sz = DEFAULT_SLOT_COUNT);
 
+  //
+  // Cleans-up current buffer and reverts back to no-op mode.
+  // DO NOTE USE: This operation is unsafe and currently serve merely as stub
+  // for future dynamic buffer management extensions. All tracing should be
+  // disabled before this method can be called.
+  //
+  PROFILOEXPORT static void destroy();
+
   PROFILOEXPORT static TraceBuffer& get();
 };
 

@@ -66,6 +66,17 @@ TraceBuffer& RingBuffer::init(TraceBufferHolder* new_buffer) {
   return get();
 }
 
+void RingBuffer::destroy() {
+  if (buffer.load() == &noop_buffer) {
+    return;
+  }
+
+  auto expected = buffer.load();
+  if (buffer.compare_exchange_strong(expected, &noop_buffer)) {
+    delete expected;
+  }
+}
+
 TraceBuffer& RingBuffer::get() {
   return **(buffer.load());
 }

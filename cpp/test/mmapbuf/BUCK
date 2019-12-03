@@ -1,0 +1,28 @@
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
+
+profilo_cxx_test(
+    name = "mmapbuf",
+    srcs = [
+        "MmapBufferManagerTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-ldl",
+    ],
+    deps = [
+        "//xplat/folly:tempfile-util",
+        "//xplat/third-party/linker_lib:pthread",
+        profilo_path("deps/zstr:zstr"),
+        profilo_path("cpp/logger/buffer:buffer_static"),
+        profilo_path("cpp/logger/lfrb:lfrb"),
+        profilo_path("cpp/mmapbuf:mmapbuf"),
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/fbjni:fbjni"),
+    ],
+)
