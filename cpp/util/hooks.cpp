@@ -49,7 +49,7 @@ void hookLoadedLibs(
   for (auto const& hookPair : functionHooks) {
     char const* functionName = hookPair.first;
     void* hook = hookPair.second;
-    specs.emplace_back(nullptr, functionName, hook);
+    specs.emplace_back(functionName, hook);
   }
 
   int ret = hook_all_libs(specs.data(), specs.size(), allowHookingCb, data);
@@ -67,7 +67,7 @@ void unhookLoadedLibs(
   for (auto const& hookPair : functionHooks) {
     char const* functionName = hookPair.first;
     void* hook = hookPair.second;
-    specs.emplace_back(nullptr, functionName, hook);
+    specs.emplace_back(functionName, hook);
   }
 
   int ret = unhook_all_libs(specs.data(), specs.size());

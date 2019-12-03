@@ -70,8 +70,6 @@ typedef struct _plt_hook_spec {
   _plt_hook_spec(const char* fname, hook_func hfn)
     : fn_name(fname), hook_fn(hfn), hook_result(0)
   {}
-  _plt_hook_spec(void*, const char* fname, hook_func hfn)
-    : _plt_hook_spec(fname, hfn) {}
 #endif //defined(__cplusplus)
 } plt_hook_spec;
 
