@@ -92,6 +92,14 @@ public final class Logger {
 
   public static int writeBytesEntry(
       int provider, int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */) {
+    if (arg2 == null) {
+      // Null strings will break the native side. One option here is to just
+      // avoid them and return TRACING_DISABLED. However, doing so would mess
+      // with the event stream, that is, it would affect subsequent entries
+      // that depend on "this" write. Thus, write something meaningless, just
+      // so that we can keep the correct sequence of events
+      arg2 = "null";
+    }
     if (sInitialized && ((flags & SKIP_PROVIDER_CHECK) != 0 || TraceEvents.isEnabled(provider))) {
       return loggerWriteBytesEntry(flags, type, arg1, arg2);
     } else {
