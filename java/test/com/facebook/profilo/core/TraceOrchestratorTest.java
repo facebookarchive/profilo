@@ -520,7 +520,7 @@ public class TraceOrchestratorTest {
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp.log", tempDirectory);
-    TraceOrchestrator.TraceListener fileListener = mock(TraceOrchestrator.TraceListener.class);
+    TraceOrchestratorListener fileListener = mock(TraceOrchestratorListener.class);
     mOrchestrator.addListener(fileListener);
 
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
@@ -539,7 +539,7 @@ public class TraceOrchestratorTest {
 
   @Test
   public void testTracingProvidersOnProvidersStop() {
-    TraceOrchestrator.TraceListener listener = mock(TraceOrchestrator.TraceListener.class);
+    TraceOrchestratorListener listener = mock(TraceOrchestratorListener.class);
     mOrchestrator.addListener(listener);
 
     int enabledProvidersMask = 0x11111;
@@ -567,7 +567,7 @@ public class TraceOrchestratorTest {
 
   @Test
   public void testTracingConstantsProvidersOnProvidersStop() {
-    TraceOrchestrator.TraceListener listener = mock(TraceOrchestrator.TraceListener.class);
+    TraceOrchestratorListener listener = mock(TraceOrchestratorListener.class);
     mOrchestrator.addListener(listener);
 
     final int enabledProvidersMask = 0x1011000;

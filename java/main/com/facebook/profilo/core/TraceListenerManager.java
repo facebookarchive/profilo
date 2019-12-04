@@ -18,14 +18,14 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/* package */ class TraceListenerManager implements TraceOrchestrator.TraceListener {
+/* package */ class TraceListenerManager implements TraceOrchestratorListener {
 
-  private final CopyOnWriteArrayList<TraceOrchestrator.TraceListener> mEventListeners =
+  private final CopyOnWriteArrayList<TraceOrchestratorListener> mEventListeners =
       new CopyOnWriteArrayList<>();
 
   @Override
   public void onTraceStart(TraceContext context) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onTraceStart(context);
     }
@@ -33,7 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onTraceStop(TraceContext context) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onTraceStop(context);
     }
@@ -41,7 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onTraceAbort(TraceContext context) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onTraceAbort(context);
     }
@@ -49,7 +49,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onUploadSuccessful(File file) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onUploadSuccessful(file);
     }
@@ -57,7 +57,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onUploadFailed(File file) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onUploadFailed(file);
     }
@@ -65,7 +65,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onTraceFlushed(File trace, long traceId) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onTraceFlushed(trace, traceId);
     }
@@ -74,7 +74,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
   @Override
   public void onTraceFlushedDoFileAnalytics(
       int totalErrors, int trimmedFromCount, int trimmedFromAge, int filesAddedToUpload) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator
           .next()
@@ -85,7 +85,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onNewConfigAvailable() {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onNewConfigAvailable();
     }
@@ -93,7 +93,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onConfigUpdated() {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onConfigUpdated();
     }
@@ -101,7 +101,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onTraceWriteStart(long traceId, int flags, String file) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onTraceWriteStart(traceId, flags, file);
     }
@@ -109,7 +109,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onTraceWriteEnd(long traceId, int crc) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onTraceWriteEnd(traceId, crc);
     }
@@ -117,7 +117,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onTraceWriteAbort(long traceId, int abortReason) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onTraceWriteAbort(traceId, abortReason);
     }
@@ -125,7 +125,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onLoggerException(Throwable t) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onLoggerException(t);
     }
@@ -133,7 +133,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onProvidersInitialized() {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onProvidersInitialized();
     }
@@ -141,21 +141,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
   @Override
   public void onProvidersStop(int activeProviders) {
-    Iterator<TraceOrchestrator.TraceListener> iterator = getIterator();
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
       iterator.next().onProvidersStop(activeProviders);
     }
   }
 
-  public void addEventListener(TraceOrchestrator.TraceListener listener) {
+  public void addEventListener(TraceOrchestratorListener listener) {
     mEventListeners.add(listener);
   }
 
-  public void removeEventListener(TraceOrchestrator.TraceListener listener) {
+  public void removeEventListener(TraceOrchestratorListener listener) {
     mEventListeners.remove(listener);
   }
 
-  private Iterator<TraceOrchestrator.TraceListener> getIterator() {
+  private Iterator<TraceOrchestratorListener> getIterator() {
     return mEventListeners.iterator();
   }
 }

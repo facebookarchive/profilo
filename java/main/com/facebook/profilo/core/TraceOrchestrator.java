@@ -57,31 +57,6 @@ public final class TraceOrchestrator
 
   static final String CHECKSUM_DELIM = "-cs-";
 
-  public interface TraceListener
-      extends NativeTraceWriterCallbacks,
-          BackgroundUploadService.BackgroundUploadListener,
-          LoggerCallbacks {
-
-    void onTraceStart(TraceContext context);
-
-    void onTraceStop(TraceContext context);
-
-    void onTraceAbort(TraceContext context);
-
-    void onTraceFlushed(File trace, long traceId);
-
-    void onTraceFlushedDoFileAnalytics(
-        int totalErrors, int trimmedFromCount, int trimmedFromAge, int filesAddedToUpload);
-    /** Config update has been received but not yet applied. */
-    void onNewConfigAvailable();
-    /** New updated config has been applied. */
-    void onConfigUpdated();
-
-    void onProvidersInitialized();
-
-    void onProvidersStop(int activeProviders);
-  }
-
   public interface ProfiloBridgeFactory {
     @Nullable
     BackgroundUploadService getUploadService();
@@ -90,7 +65,7 @@ public final class TraceOrchestrator
     ConfigProvider getProvider();
 
     @Nullable
-    TraceListener[] getListeners();
+    TraceOrchestratorListener[] getListeners();
   }
 
   public static final String MAIN_PROCESS_NAME = "main";
@@ -323,19 +298,19 @@ public final class TraceOrchestrator
 
   public synchronized void setProfiloBridgeFactory(ProfiloBridgeFactory profiloFactory) {
     mProfiloBridgeFactory = profiloFactory;
-    TraceListener[] listeners = profiloFactory.getListeners();
+    TraceOrchestratorListener[] listeners = profiloFactory.getListeners();
     if (listeners != null) {
-      for (TraceListener listener : listeners) {
+      for (TraceOrchestratorListener listener : listeners) {
         mListenerManager.addEventListener(listener);
       }
     }
   }
 
-  public void addListener(TraceListener listener) {
+  public void addListener(TraceOrchestratorListener listener) {
     mListenerManager.addEventListener(listener);
   }
 
-  public void removeListener(TraceListener listener) {
+  public void removeListener(TraceOrchestratorListener listener) {
     mListenerManager.removeEventListener(listener);
   }
 

@@ -24,6 +24,15 @@ REGISTRY = [
     "TriggerRegistry.java",
 ]
 
+LISTENER = [
+    "DefaultTraceOrchestratorListener.java",
+    "TraceOrchestratorListener.java",
+]
+
+UPLOAD = [
+    "BackgroundUploadService.java",
+]
+
 fb_core_android_library(
     name = "registry",
     srcs = REGISTRY,
@@ -93,10 +102,42 @@ fb_core_android_library(
 )
 
 fb_core_android_library(
+    name = "listener",
+    srcs = LISTENER,
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+    ],
+    exported_deps = [
+        ":upload",
+        profilo_path("aidl:aidl"),
+        profilo_path("java/main/com/facebook/profilo/config:config"),
+        profilo_path("java/main/com/facebook/profilo/logger:logger"),
+        profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
+    ],
+)
+
+fb_core_android_library(
+    name = "upload",
+    srcs = UPLOAD,
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+    ],
+    exported_deps = [
+        profilo_path("java/main/com/facebook/profilo/config:config"),
+    ],
+)
+
+fb_core_android_library(
     name = "core",
     srcs = glob(
         ["*.java"],
-        exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY,
+        exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY + LISTENER + UPLOAD,
     ),
     tests = [
         profilo_path("java/test/com/facebook/profilo/core:core"),
@@ -126,7 +167,9 @@ fb_core_android_library(
         ":constants",
         ":control",
         ":events",
+        ":listener",
         ":registry",
+        ":upload",
         profilo_path("java/main/com/facebook/profilo/config:config"),
         profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
     ],
