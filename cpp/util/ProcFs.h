@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <array>
+#include <climits>
 #include <cstring>
 #include <functional>
 #include <map>
@@ -37,6 +38,8 @@
 namespace facebook {
 namespace profilo {
 namespace util {
+
+uint64_t parse_ull(char* str, char** end);
 
 enum ThreadState : int {
   TS_RUNNING = 1, // R
@@ -54,7 +57,7 @@ enum ThreadState : int {
   TS_UNKNOWN = 0,
 };
 
-// Struct for data from /proc/self/task/<pid>/stat
+// data from /proc/self/task/<pid>/stat
 struct TaskStatInfo {
   uint64_t cpuTime;
   ThreadState state;
@@ -67,7 +70,7 @@ struct TaskStatInfo {
   TaskStatInfo();
 };
 
-// Struct for data from /proc/self/task/<pid>/schedstat
+// data from /proc/self/task/<pid>/schedstat
 struct SchedstatInfo {
   uint64_t cpuTimeMs;
   uint64_t waitToRunTimeMs;
@@ -75,7 +78,7 @@ struct SchedstatInfo {
   SchedstatInfo();
 };
 
-// Struct for data from /proc/self/task/<pid>/sched
+// data from /proc/self/task/<pid>/sched
 struct SchedInfo {
   uint64_t nrVoluntarySwitches;
   uint64_t nrInvoluntarySwitches;
@@ -85,7 +88,7 @@ struct SchedInfo {
   SchedInfo();
 };
 
-// Struct for data from /proc/vmstat
+// data from /proc/vmstat
 struct VmStatInfo {
   uint64_t nrFreePages;
   uint64_t nrDirty;
@@ -100,7 +103,7 @@ struct VmStatInfo {
   VmStatInfo();
 };
 
-// Struct for data from /proc/../statm
+// data from /proc/../statm
 struct StatmInfo {
   uint64_t resident;
   uint64_t shared;
@@ -199,30 +202,131 @@ class TaskSchedFile : public BaseStatFile<SchedInfo> {
   int32_t availableStatsMask;
 };
 
-class VmStatFile : public BaseStatFile<VmStatInfo> {
+/**
+ * Represents a file with one row per value where the values are structured as
+ * "<key><variable amount of whitespace><value>\n"
+ * and, most importantly, the keys are usually at the same offsets in the
+ * file (thus files with left-padded values are best).
+ *
+ * This class will avoid doing linear scans all the time by only
+ * calculating the offsets for each requested Key once. It will correctly
+ * recalculate them if any of them change but if this happens too often
+ * the caching is actually detrimental.
+ */
+template <class StatInfo>
+class OrderedKeyedStatFile : public BaseStatFile<StatInfo> {
  public:
-  explicit VmStatFile(std::string path);
-  explicit VmStatFile() : VmStatFile("/proc/vmstat") {}
+  struct Key {
+    const char* name;
+    uint8_t length;
+    int16_t offset;
+    // Pointer-to-member: which field of StatInfo should contain the key value
+    uint64_t StatInfo::*stat_field;
+  };
 
-  VmStatInfo doRead(int fd, uint32_t requested_stats_mask) override;
-
- private:
-  void recalculateOffsets();
+  explicit OrderedKeyedStatFile(std::string path, std::vector<Key> keys)
+      : BaseStatFile<StatInfo>(path), keys_(keys) {}
 
   static const auto kNotFound = -1;
   static const auto kNotSet = -2;
   static const size_t kMaxStatFileLength = 4096;
 
-  struct Key {
-    const char* name;
-    uint8_t length;
-    int16_t offset;
-    uint64_t& stat_field;
-  };
+ private:
+  void recalculateOffsets() {
+    bool found = false;
+    char* end = nullptr;
+    char* start = buffer_;
 
-  char buffer_[kMaxStatFileLength];
-  size_t read_;
-  VmStatInfo stat_info_;
+    auto nextKey = keys_.begin();
+    auto keys_end = keys_.end();
+
+    //
+    // These nested loops implement the following logic with some extra
+    // edge cases (kNotFound, etc)
+    //
+    // keys = [k1, k2, k3]
+    // idx = 0
+    //
+    // for line in file.readlines():
+    //   for search_idx in range(idx, len(keys)):
+    //     if line.startswith(keys[search_idx]):
+    //       <store key byte offset>
+    //       idx = search_idx + 1
+    //
+    // That is, we always look for all the keys from the current one to the end
+    // of the list. If we find one of the later keys, we skip straight to it
+    // and later mark the keys we skipped over as kNotFound.
+    //
+    //
+    while (nextKey < keys_end && (end = std::strchr(start, '\n'))) {
+      if (std::distance(buffer_, end) > read_) {
+        break;
+      }
+
+      // Skip not found keys
+      while (nextKey->offset == kNotFound && nextKey < keys_end) {
+        ++nextKey;
+      }
+
+      auto searchKey = nextKey;
+      while (searchKey < keys_end) {
+        if (std::strncmp(searchKey->name, start, searchKey->length) == 0) {
+          searchKey->offset = std::distance(buffer_, start);
+          found = true;
+          nextKey = ++searchKey;
+          break;
+        }
+        ++searchKey;
+      }
+
+      // Search for nextKey on the next line.
+      start = end + 1;
+    }
+
+    if (!found) {
+      throw std::runtime_error("No target fields found");
+    }
+
+    // Set not matched keys to kNotFound
+    for (auto& key : keys_) {
+      if (key.offset == kNotSet) {
+        key.offset = kNotFound;
+      }
+    }
+  }
+
+  StatInfo doRead(int fd, uint32_t ignored) override {
+    read_ = read(fd, buffer_, sizeof(buffer_) - 1);
+    if (read_ < 0) {
+      throw std::system_error(
+          errno, std::system_category(), "Could not read stat file");
+    }
+
+    for (auto& key : keys_) {
+      stat_info_.*(key.stat_field) = 0;
+    }
+
+    for (auto& key : keys_) {
+      if (key.offset == kNotFound) {
+        continue;
+      }
+      if (key.offset == kNotSet || key.offset >= read_ ||
+          std::strncmp(key.name, buffer_ + key.offset, key.length) != 0) {
+        recalculateOffsets();
+      }
+      errno = 0;
+      char* endptr = nullptr;
+      char* start = buffer_ + key.offset + key.length;
+      auto value = parse_ull(start, &endptr);
+      stat_info_.*(key.stat_field) += value;
+    }
+
+    return stat_info_;
+  }
+
+  char buffer_[kMaxStatFileLength]{};
+  size_t read_{};
+  StatInfo stat_info_{};
   std::vector<Key> keys_;
 };
 
@@ -232,6 +336,11 @@ class ProcStatmFile : public BaseStatFile<StatmInfo> {
   explicit ProcStatmFile(std::string path) : BaseStatFile(path) {}
 
   StatmInfo doRead(int fd, uint32_t requested_stats_mask) override;
+};
+
+struct VmStatFile : public OrderedKeyedStatFile<VmStatInfo> {
+  explicit VmStatFile(std::string path);
+  VmStatFile();
 };
 
 // Consolidated stat files manager class
