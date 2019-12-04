@@ -54,6 +54,12 @@ enum StatType : int32_t {
   THREAD_PRIORITY = 1 << 22,
   STATM_RESIDENT = 1 << 23,
   STATM_SHARED = 1 << 24,
+  MEMINFO_ACTIVE = 1 << 25,
+  MEMINFO_INACTIVE = 1 << 26,
+  MEMINFO_CACHED = 1 << 27,
+  MEMINFO_DIRTY = 1 << 28,
+  MEMINFO_WRITEBACK = 1 << 29,
+  MEMINFO_FREE = 1 << 30,
 };
 
 template <class StatInfo>

@@ -29,12 +29,12 @@ namespace facebook {
 namespace profilo {
 namespace util {
 
-static const auto ALL_STATS_MASK = 0xffffffff;
+constexpr auto ALL_STATS_MASK = 0xffffffff;
 
-static const std::string STAT_CONTENT =
+constexpr char STAT_CONTENT[] =
     "4653 (ebook.wakizashi) R 671 670 0 0 -1 4211008 22794 0 553 0 104 32 0 0 12 -8 32 0 147144270 2242772992 46062 18446744073709551615 2909851648 2909870673 4288193888 4288148192 4077764852 0 4612 0 1098945784 0 0 0 17 2 0 0 0 0 0 2909875376 2909876224 2913968128 4288195386 4288195495 4288195495 4288196574 0";
-static const std::string SCHEDSTAT_CONTENT = "2075550186 1196266356 3934";
-static const std::string SCHED_CONTENT_CUT =
+constexpr char SCHEDSTAT_CONTENT[] = "2075550186 1196266356 3934";
+constexpr char SCHED_CONTENT_CUT[] =
     "procfs_sched (29376, #threads: 1) \n"
     "-------------------------------------------------------------------\n"
     "se.exec_start                                :     115728485.820777\n"
@@ -45,7 +45,7 @@ static const std::string SCHED_CONTENT_CUT =
     "avg_per_cpu                                  :            21.523231\n"
     "nr_switches                                  :                   60\n"
     "nr_voluntary_switches                        :            23";
-static const std::string SCHED_CONTENT =
+constexpr char SCHED_CONTENT[] =
     "procfs_sched (29376, #threads: 1) \n"
     "-------------------------------------------------------------------\n"
     "se.exec_start                                :     115728485.820777\n"
@@ -59,7 +59,7 @@ static const std::string SCHED_CONTENT =
     "nr_involuntary_switches                      :                   46\n"
     "prio                                         :                  120\n"
     "clock-delta                                  :                  573\n";
-static const std::string SCHED_CONTENT_2 =
+constexpr char SCHED_CONTENT_2[] =
     "sh (29240, #threads: 1) \n"
     "---------------------------------------------------------\n"
     "se.exec_start                      :      57790837.521475\n"
@@ -75,7 +75,7 @@ static const std::string SCHED_CONTENT_2 =
     "se.statistics.nr_wakeups_passive   :                    0\n"
     "nr_voluntary_switches              :                   38\n"
     "nr_involuntary_switches            :                   19\n";
-static const std::string VMSTAT_CONTENT =
+constexpr char VMSTAT_CONTENT[] =
     "nr_free_pages 123\n"
     "nr_dirty 74317\n"
     "nr_mapped 76672\n"
@@ -92,7 +92,7 @@ static const std::string VMSTAT_CONTENT =
     "kswapd_high_wmark_hit_quickly 0\n"
     "pageoutrun 12\n"
     "allocstall 3\n";
-static const std::string VMSTAT_CONTENT_MODIFIED =
+constexpr char VMSTAT_CONTENT_MODIFIED[] =
     "nr_free_pages 123\n"
     "nr_dirty 74317\n"
     "nr_mapped 76672\n"
@@ -109,20 +109,43 @@ static const std::string VMSTAT_CONTENT_MODIFIED =
     "kswapd_high_wmark_hit_quickly 0\n"
     "pageoutrun 12\n"
     "allocstall 32\n";
-static const std::string VMSTAT_CONTENT_WITH_SPLIT_KSWAPD =
+constexpr char VMSTAT_CONTENT_WITH_SPLIT_KSWAPD[] =
     "nr_free_pages 123\n"
     "pgsteal_kswapd_dma 236448262\n"
     "pgsteal_kswapd_normal 228999324\n"
     "pgsteal_kswapd_movable 1\n"
     "pageoutrun 12\n"
     "allocstall 3\n";
-static const std::string STATM_CONTENT = "458494 18445 11398 6 0 38020 0";
+constexpr char STATM_CONTENT[] = "458494 18445 11398 6 0 38020 0";
+constexpr char MEMINFO_CONTENT[] =
+    "MemTotal:       32521744 kB\n"
+    "MemFree:         6883612 kB\n"
+    "MemAvailable:   21235196 kB\n"
+    "Buffers:         4518588 kB\n"
+    "Cached:          9887488 kB\n"
+    "SwapCached:       402120 kB\n"
+    "Active:         16627892 kB\n"
+    "Inactive:        5855820 kB\n"
+    "Active(anon):    7427148 kB\n"
+    "Inactive(anon):  2410516 kB\n"
+    "Active(file):    9200744 kB\n"
+    "Inactive(file):  3445304 kB\n"
+    "Unevictable:      303980 kB\n"
+    "Mlocked:           42472 kB\n"
+    "SwapTotal:      49061884 kB\n"
+    "SwapFree:       48631292 kB\n"
+    "Dirty:              3568 kB\n"
+    "Writeback:            12 kB\n"
+    "AnonPages:       7980164 kB\n"
+    "Mapped:          1396028 kB\n"
+    "Shmem:           1813380 kB\n"
+    "KReclaimable:    2174312 kB\n";
 
 class ProcFsTest : public ::testing::Test {
  protected:
   ProcFsTest() : ::testing::Test(), temp_stat_file_("test_stat") {}
 
-  fs::path SetUpTempFile(const std::string& stat_content) {
+  fs::path SetUpTempFile(char const* stat_content) {
     std::ofstream statFileStream(temp_stat_file_.path().c_str());
     statFileStream << stat_content;
     return temp_stat_file_.path();
@@ -194,9 +217,6 @@ TEST_F(ProcFsTest, testVmStatFile) {
   VmStatFile statFile{statPath.native()};
   VmStatInfo statInfo = statFile.refresh(ALL_STATS_MASK);
 
-  EXPECT_EQ(statInfo.nrFreePages, 123);
-  EXPECT_EQ(statInfo.nrDirty, 74317);
-  EXPECT_EQ(statInfo.nrWriteback, 17);
   EXPECT_EQ(statInfo.pgPgIn, 862085);
   EXPECT_EQ(statInfo.pgPgOut, 133892);
   EXPECT_EQ(statInfo.pgMajFault, 109);
@@ -206,9 +226,6 @@ TEST_F(ProcFsTest, testVmStatFile) {
 
   SetUpTempFile(VMSTAT_CONTENT_MODIFIED);
   statInfo = statFile.refresh(ALL_STATS_MASK);
-  EXPECT_EQ(statInfo.nrFreePages, 123);
-  EXPECT_EQ(statInfo.nrDirty, 74317);
-  EXPECT_EQ(statInfo.nrWriteback, 1);
   EXPECT_EQ(statInfo.pgPgIn, 1857940636);
   EXPECT_EQ(statInfo.pgPgOut, 133892);
   EXPECT_EQ(statInfo.pgMajFault, 109);
@@ -222,7 +239,6 @@ TEST_F(ProcFsTest, testVmStatFileWithSplitKswapd) {
   VmStatFile statFile{statPath.native()};
   VmStatInfo statInfo = statFile.refresh(ALL_STATS_MASK);
 
-  EXPECT_EQ(statInfo.nrFreePages, 123);
   EXPECT_EQ(statInfo.allocStall, 3);
   EXPECT_EQ(statInfo.pageOutrun, 12);
   EXPECT_EQ(statInfo.kswapdSteal, 465447587);
@@ -235,6 +251,19 @@ TEST_F(ProcFsTest, testStatmFile) {
 
   EXPECT_EQ(statInfo.resident, 18445);
   EXPECT_EQ(statInfo.shared, 11398);
+}
+
+TEST_F(ProcFsTest, testMeminfoFile) {
+  fs::path statPath = SetUpTempFile(MEMINFO_CONTENT);
+  MeminfoFile statFile{statPath.native()};
+  MeminfoInfo statInfo = statFile.refresh(ALL_STATS_MASK);
+
+  EXPECT_EQ(statInfo.freeKB, 6883612);
+  EXPECT_EQ(statInfo.dirtyKB, 3568);
+  EXPECT_EQ(statInfo.writebackKB, 12);
+  EXPECT_EQ(statInfo.cachedKB, 9887488);
+  EXPECT_EQ(statInfo.activeKB, 16627892);
+  EXPECT_EQ(statInfo.inactiveKB, 5855820);
 }
 
 } // namespace util

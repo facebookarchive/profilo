@@ -24,6 +24,7 @@
 #include <malloc.h>
 #include <sys/syscall.h>
 #include <sys/sysinfo.h>
+#include <unistd.h>
 
 using facebook::profilo::util::CpuFrequencyStats;
 using facebook::profilo::util::StatType;
@@ -38,6 +39,11 @@ const auto kVmStatCountersMask = StatType::VMSTAT_NR_FREE_PAGES |
     StatType::VMSTAT_PGPGIN | StatType::VMSTAT_PGPGOUT |
     StatType::VMSTAT_PGMAJFAULT | StatType::VMSTAT_ALLOCSTALL |
     StatType::VMSTAT_PAGEOUTRUN | StatType::VMSTAT_KSWAPD_STEAL;
+
+const auto kMeminfoCountersMask = StatType::MEMINFO_ACTIVE |
+    StatType::MEMINFO_INACTIVE | StatType::MEMINFO_CACHED |
+    StatType::MEMINFO_DIRTY | StatType::MEMINFO_WRITEBACK |
+    StatType::MEMINFO_FREE;
 
 static inline int64_t loadDecimal(int64_t load) {
   constexpr int64_t kLoadShift = 1 << SI_LOAD_SHIFT;
@@ -206,27 +212,6 @@ class SystemCounters {
     auto tid = threadID();
     Logger& logger = Logger::get();
 
-    logNonMonotonicCounter<Logger>(
-        prevInfo.nrFreePages,
-        currInfo.nrFreePages,
-        tid,
-        time,
-        QuickLogConstants::VMSTAT_NR_FREE_PAGES,
-        logger);
-    logNonMonotonicCounter<Logger>(
-        prevInfo.nrDirty,
-        currInfo.nrDirty,
-        tid,
-        time,
-        QuickLogConstants::VMSTAT_NR_DIRTY,
-        logger);
-    logNonMonotonicCounter<Logger>(
-        prevInfo.nrWriteback,
-        currInfo.nrWriteback,
-        tid,
-        time,
-        QuickLogConstants::VMSTAT_NR_WRITEBACK,
-        logger);
     logMonotonicCounter<Logger>(
         prevInfo.pgPgIn,
         currInfo.pgPgIn,
@@ -271,9 +256,79 @@ class SystemCounters {
         logger);
   }
 
+  void logMeminfoCounters() {
+    if (meminfoTracingDisabled_) {
+      return;
+    }
+    if (!meminfo_) {
+      meminfo_.reset(new util::MeminfoFile());
+    }
+
+    auto prevInfo = meminfo_->getInfo();
+    util::MeminfoInfo currInfo;
+    try {
+      currInfo = meminfo_->refresh();
+      extraAvailableCounters_ |= kMeminfoCountersMask;
+    } catch (...) {
+      meminfoTracingDisabled_ = true;
+      meminfo_.reset(nullptr);
+      return;
+    }
+
+    auto time = monotonicTime();
+    auto tid = threadID();
+    Logger& logger = Logger::get();
+    static constexpr auto kBytesInKB = 1024;
+
+    logNonMonotonicCounter<Logger>(
+        prevInfo.freeKB * kBytesInKB,
+        currInfo.freeKB * kBytesInKB,
+        tid,
+        time,
+        QuickLogConstants::MEMINFO_FREE,
+        logger);
+    logNonMonotonicCounter<Logger>(
+        prevInfo.dirtyKB * kBytesInKB,
+        currInfo.dirtyKB * kBytesInKB,
+        tid,
+        time,
+        QuickLogConstants::MEMINFO_DIRTY,
+        logger);
+    logNonMonotonicCounter<Logger>(
+        prevInfo.writebackKB * kBytesInKB,
+        currInfo.writebackKB * kBytesInKB,
+        tid,
+        time,
+        QuickLogConstants::MEMINFO_WRITEBACK,
+        logger);
+    logNonMonotonicCounter<Logger>(
+        prevInfo.cachedKB * kBytesInKB,
+        currInfo.cachedKB * kBytesInKB,
+        tid,
+        time,
+        QuickLogConstants::MEMINFO_CACHED,
+        logger);
+    logNonMonotonicCounter<Logger>(
+        prevInfo.activeKB * kBytesInKB,
+        currInfo.activeKB * kBytesInKB,
+        tid,
+        time,
+        QuickLogConstants::MEMINFO_ACTIVE,
+        logger);
+    logNonMonotonicCounter<Logger>(
+        prevInfo.inactiveKB * kBytesInKB,
+        currInfo.inactiveKB * kBytesInKB,
+        tid,
+        time,
+        QuickLogConstants::MEMINFO_INACTIVE,
+        logger);
+  }
+
   std::unique_ptr<CpuFrequencyStats> cpuFrequencyStats_;
   std::unique_ptr<util::VmStatFile> vmStats_;
+  std::unique_ptr<util::MeminfoFile> meminfo_;
   bool vmStatsTracingDisabled_;
+  bool meminfoTracingDisabled_;
   int32_t extraAvailableCounters_;
 
  public:
@@ -281,6 +336,7 @@ class SystemCounters {
     logMallinfo();
     logSysinfo();
     logVmStatCounters();
+    logMeminfoCounters();
   }
 
   void logHighFreqCounters() {

@@ -109,6 +109,16 @@ struct StatmInfo {
   uint64_t shared;
 };
 
+// data from /proc/meminfo
+struct MeminfoInfo {
+  uint64_t freeKB;
+  uint64_t dirtyKB;
+  uint64_t writebackKB;
+  uint64_t cachedKB;
+  uint64_t activeKB;
+  uint64_t inactiveKB;
+};
+
 // Consolidated stats from different stat files
 struct ThreadStatInfo {
   // monotonic clock value when this was captured
@@ -341,6 +351,11 @@ class ProcStatmFile : public BaseStatFile<StatmInfo> {
 struct VmStatFile : public OrderedKeyedStatFile<VmStatInfo> {
   explicit VmStatFile(std::string path);
   VmStatFile();
+};
+
+struct MeminfoFile : public OrderedKeyedStatFile<MeminfoInfo> {
+  explicit MeminfoFile(std::string path);
+  MeminfoFile();
 };
 
 // Consolidated stat files manager class
