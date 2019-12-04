@@ -762,4 +762,8 @@ public final class TraceOrchestrator
   public String getProcessName() {
     return mProcessName;
   }
+
+  public @Nullable MmapBufferManager getMmapBufferManager() {
+    return mMmapBufferManager;
+  }
 }

@@ -1,0 +1,30 @@
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
+
+profilo_cxx_test(
+    name = "trace_writer",
+    srcs = [
+        "MmapBufferTraceWriterTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-ldl",
+    ],
+    deps = [
+        "//xplat/folly:tempfile-util",
+        "//xplat/third-party/gmock:gmock",
+        "//xplat/third-party/linker_lib:pthread",
+        profilo_path("cpp/mmapbuf/writer:trace_writer"),
+        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/mmapbuf:mmapbuf"),
+        profilo_path("cpp/writer:writer"),
+        profilo_path("cpp/writer:print_visitor"),
+        profilo_path("deps/zstr:zstr"),
+        profilo_path("cpp/logger/lfrb:lfrb"),
+        profilo_path("cpp/util:util"),
+    ],
+)

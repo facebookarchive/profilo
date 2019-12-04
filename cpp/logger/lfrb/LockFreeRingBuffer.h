@@ -131,6 +131,10 @@ class LockFreeRingBuffer {
   LockFreeRingBuffer(LockFreeRingBuffer const&) = delete;
   LockFreeRingBuffer& operator=(LockFreeRingBuffer const&) = delete;
 
+  uint32_t capacity() {
+    return capacity_;
+  }
+
   /// Perform a single write of an object of type T.
   /// Writes can block iff a previous writer has not yet completed a write
   /// for the same slot (before the most recent wrap-around).

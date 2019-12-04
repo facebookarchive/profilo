@@ -3,7 +3,9 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 fb_core_android_library(
     name = "mmapbuf",
-    srcs = ["MmapBufferManager.java"],
+    srcs = [
+      "MmapBufferManager.java"
+    ],
     visibility = [
         profilo_path("..."),
         "//fbandroid/perftests/benchmarks/...",
@@ -17,8 +19,26 @@ fb_core_android_library(
 )
 
 fb_core_android_library(
+    name = "file_helper",
+    srcs = [
+        "MmapBufferFileHelper.java",
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        ":mmapbuf",
+        profilo_path("java/main/com/facebook/profilo/core:core"),
+        profilo_path("java/main/com/facebook/profilo/logger:logger"),
+        profilo_path("deps/jsr-305:jsr-305"),
+    ],
+)
+
+fb_core_android_library(
     name = "listener",
-    srcs = ["MmapBufferTraceListener.java"],
+    srcs = [
+      "MmapBufferTraceListener.java"
+    ],
     visibility = [
         profilo_path("..."),
     ],

@@ -160,6 +160,7 @@ fb_xplat_cxx_library(
     ],
     visibility = [
         profilo_path("facebook/cpp/blackbox:crash_dump_writer"),
+        profilo_path("cpp/mmapbuf/writer:trace_writer"),
         profilo_path("cpp/jni/..."),
         profilo_path("cpp/test/..."),
         profilo_path("facebook/cpp/test/..."),
