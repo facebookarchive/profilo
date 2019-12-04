@@ -18,7 +18,9 @@
 
 #include "MmapBufferPrefix.h"
 
-#include <fb/fbjni.h>
+#include <fb/xplat_init.h>
+#include <fbjni/fbjni.h>
+#include <jni.h>
 
 #include <atomic>
 #include <string>

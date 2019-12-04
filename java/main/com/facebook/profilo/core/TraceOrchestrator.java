@@ -28,6 +28,8 @@ import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.LoggerCallbacks;
 import com.facebook.profilo.logger.Trace;
+import com.facebook.profilo.mmapbuf.MmapBufferManager;
+import com.facebook.profilo.mmapbuf.MmapBufferTraceListener;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 import java.text.DateFormat;
@@ -150,6 +152,8 @@ public final class TraceOrchestrator
   @GuardedBy("this")
   private BaseTraceProvider[] mSyncTraceProviders;
 
+  private @Nullable MmapBufferManager mMmapBufferManager;
+
   private final Object mSyncProvidersLock = new Object();
 
   private final TraceListenerManager mListenerManager;
@@ -217,8 +221,17 @@ public final class TraceOrchestrator
         bufferSize = RING_BUFFER_SIZE_SECONDARY_PROCESS;
       }
 
+      boolean useMmapBuffer = mIsMainProcess && initialConfig.getSystemControl().isMmapBuffer();
+      // Register hooks to trace lifecycle to control mmaped buffer.
+      if (useMmapBuffer) {
+        mMmapBufferManager =
+            new MmapBufferManager(
+                initialConfig.getConfigID(), mFileManager.getMmapBufferFolder(), context);
+        addListener(new MmapBufferTraceListener(mMmapBufferManager));
+      }
+
       // using process name as a unique prefix for each process
-      Logger.initialize(bufferSize, folder, mProcessName, this, this);
+      Logger.initialize(bufferSize, folder, mProcessName, this, this, mMmapBufferManager);
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
       performConfigTransition(initialConfig);

@@ -73,6 +73,7 @@ public class FileManager {
   static final String PROFILO_FOLDER = "profilo";
   static final String UPLOAD_FOLDER = "upload";
   static final String CRASH_DUMPS_FOLDER = "crash_dumps";
+  static final String MMAP_BUFFER_FOLDER = "mmap_buffer";
   static final String LOG_SUFFIX = ".log";
   static final String ZIP_SUFFIX = ".zip";
   public static final String TMP_SUFFIX = ".tmp";
@@ -106,6 +107,7 @@ public class FileManager {
   private File mBaseFolder;
   private File mUploadFolder;
   private File mCrashDumpFolder;
+  private File mMmapBufferFolder;
   private Context mContext;
 
   public FileManager(Context context, @Nullable File folder) {
@@ -125,6 +127,7 @@ public class FileManager {
     }
     mUploadFolder = new File(mBaseFolder, UPLOAD_FOLDER);
     mCrashDumpFolder = new File(mBaseFolder, CRASH_DUMPS_FOLDER);
+    mMmapBufferFolder = new File(mBaseFolder, MMAP_BUFFER_FOLDER);
   }
 
   // Move traces that potentially live in the old location (getCacheDir()
@@ -302,6 +305,10 @@ public class FileManager {
 
   public File getCrashDumpFolder() {
     return mCrashDumpFolder;
+  }
+
+  public File getMmapBufferFolder() {
+    return mMmapBufferFolder;
   }
 
   private void trimFolderByFileCount(File folder, int maxSize) {

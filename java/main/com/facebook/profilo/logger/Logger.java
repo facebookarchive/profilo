@@ -17,6 +17,7 @@ import android.annotation.SuppressLint;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.TraceEvents;
 import com.facebook.profilo.entries.EntryType;
+import com.facebook.profilo.mmapbuf.MmapBufferManager;
 import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import com.facebook.proguard.annotations.DoNotStrip;
@@ -45,13 +46,15 @@ public final class Logger {
   private static NativeTraceWriterCallbacks sNativeTraceWriterCallbacks;
   private static LoggerCallbacks sLoggerCallbacks;
   private static int sRingBufferSize;
+  private static @Nullable MmapBufferManager sMmapBufferManager;
 
   public static void initialize(
       int ringBufferSize,
       File traceDirectory,
       String filePrefix,
       NativeTraceWriterCallbacks nativeTraceWriterCallbacks,
-      LoggerCallbacks loggerCallbacks) {
+      LoggerCallbacks loggerCallbacks,
+      @Nullable MmapBufferManager mmapBufferManager) {
     SoLoader.loadLibrary("profilo");
     TraceEvents.sInitialized = true;
 
@@ -62,6 +65,7 @@ public final class Logger {
     sNativeTraceWriterCallbacks = nativeTraceWriterCallbacks;
     sRingBufferSize = ringBufferSize;
     sWorker = new AtomicReference<>(null);
+    sMmapBufferManager = mmapBufferManager;
   }
 
   public static void stopTraceWriter() {
@@ -112,7 +116,16 @@ public final class Logger {
       return;
     }
 
-    nativeInitRingBuffer(sRingBufferSize);
+    boolean useDefaultInit = true;
+    if (sMmapBufferManager != null) {
+      // If mmap buffer mode is enabled but allocation fails Ring Buffer will be initialized
+      // using default initializer.
+      useDefaultInit = !sMmapBufferManager.allocateBuffer(sRingBufferSize);
+    }
+
+    if (useDefaultInit) {
+      nativeInitRingBuffer(sRingBufferSize);
+    }
 
     // Do not trigger trace writer for memory-only trace
     if ((flags & Trace.FLAG_MEMORY_ONLY) != 0) {
