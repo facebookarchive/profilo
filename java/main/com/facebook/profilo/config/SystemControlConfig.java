@@ -23,4 +23,7 @@ public interface SystemControlConfig {
 
   /** Number of buffer slots to allocate. This is a global process lifetime setting. */
   int getBufferSize();
+
+  /** @return true if the buffer will be allocated on disk in mmaped region. */
+  boolean isMmapBuffer();
 }
