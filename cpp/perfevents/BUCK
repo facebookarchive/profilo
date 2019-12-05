@@ -46,7 +46,7 @@ fb_xplat_cxx_library(
     compiler_flags = [
         "-fvisibility=hidden",
         "-fexceptions",
-        "-fPIE",
+        "-frtti",
         "-O3",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/perfevt\"",
