@@ -1434,14 +1434,11 @@ void arg_map<Context>::init(const basic_format_args<Context> &args) {
   if (use_values) {
     for (unsigned i = 0;/*nothing*/; ++i) {
       internal::type arg_type = args.type(i);
-      switch (arg_type) {
-        case internal::none_type:
-          return;
-        case internal::named_arg_type:
-          push_back(args.values_[i]);
-          break;
-        default:
-          break; // Do nothing.
+      if (arg_type == internal::none_type) {
+        return;
+      }
+      if (arg_type == internal::named_arg_type) {
+        push_back(args.values_[i]);
       }
     }
   }
