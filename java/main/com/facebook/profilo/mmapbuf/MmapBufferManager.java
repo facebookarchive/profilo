@@ -108,7 +108,8 @@ public class MmapBufferManager {
   private native boolean nativeAllocateBuffer(int size, String path, int buildId, long configId);
 
   @DoNotStrip
-  public native void nativeUpdateHeader(int controllers, int providers, int trigger);
+  public native void nativeUpdateHeader(
+      int providers, int trigger, long normalTraceId, long inMemoryTraceId);
 
   /**
    * De-allocates current memory mapped buffer and deletes the buffer file. This operation is unsafe

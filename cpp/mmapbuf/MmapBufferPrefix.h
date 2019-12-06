@@ -25,7 +25,7 @@ namespace profilo {
 namespace mmapbuf {
 
 constexpr static uint64_t kMagic = 0x306c3166307270; // pr0f1l0
-constexpr static uint64_t kVersion = 1;
+constexpr static uint64_t kVersion = 2;
 
 //
 // Static header for primary buffer verification.
@@ -49,13 +49,14 @@ struct __attribute__((packed)) alignas(8) MmapBufferHeader {
   int64_t configId;
   int32_t versionCode;
   uint32_t size;
-  // Currently running trace controllers bitmask. Can reflect simultaneous
-  // traces running from different controllers.
-  int32_t controller;
   // Currently turned on set of providers.
   int32_t providers;
   // Long context for regular traces.
   int32_t longContext;
+  // Trace ids will reflect simultaneous traces running from different
+  // controllers.
+  int64_t normalTraceId;
+  int64_t inMemoryTraceId;
 };
 
 //

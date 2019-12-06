@@ -134,15 +134,13 @@ MmapBufferTraceWriter::MmapBufferTraceWriter(
       callbacks_(callbacks) {}
 
 void MmapBufferTraceWriter::nativeWriteTrace(
-    std::string dump_path,
-    int64_t trace_id,
+    const std::string& dump_path,
     int32_t qpl_marker_id) {
-  writeTrace(dump_path, trace_id, qpl_marker_id);
+  writeTrace(dump_path, qpl_marker_id);
 }
 
 void MmapBufferTraceWriter::writeTrace(
-    std::string dump_path,
-    int64_t trace_id,
+    const std::string& dump_path,
     int32_t qpl_marker_id,
     uint64_t timestamp) {
   BufferFileMapHolder bufferFileMap(dump_path);
@@ -158,6 +156,17 @@ void MmapBufferTraceWriter::writeTrace(
 
   if (mapBufferPrefix->header.bufferVersion != RingBuffer::kVersion) {
     return;
+  }
+
+  // No trace was active when process died so the buffer is not useful.
+  if (mapBufferPrefix->header.normalTraceId == 0 &&
+      mapBufferPrefix->header.inMemoryTraceId == 0) {
+    return;
+  }
+
+  int64_t trace_id = mapBufferPrefix->header.normalTraceId;
+  if (mapBufferPrefix->header.inMemoryTraceId != 0) {
+    trace_id = mapBufferPrefix->header.inMemoryTraceId;
   }
 
   auto entriesCount = mapBufferPrefix->header.size;

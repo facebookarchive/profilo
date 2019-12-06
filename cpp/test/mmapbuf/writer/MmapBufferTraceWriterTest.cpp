@@ -182,6 +182,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     MmapBufferManager bufManager{};
     MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
     bool res = bufManager.allocateBuffer(records_count, dumpPath(), 1, 1);
+    bufManager.updateHeader(0, 0, 0, kTraceId);
     ASSERT_EQ(res, true) << "Unable to allocate the buffer";
     TraceBufferHolder ringBuffer = TraceBuffer::allocateAt(
         records_count, bufManagerAccessor.mmapBufferPointer());
@@ -245,8 +246,7 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0, _));
   EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId, _));
 
-  traceWriter.writeTrace(
-      dumpPath(), kTraceId, kQplId, kTraceRecollectionTimestamp);
+  traceWriter.writeTrace(dumpPath(), kQplId, kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
 }
@@ -267,8 +267,7 @@ TEST_F(
 
   EXPECT_CALL(*mockCallbacks, onTraceAbort(kTraceId, AbortReason::UNKNOWN));
 
-  traceWriter.writeTrace(
-      dumpPath(), kTraceId, kQplId, kTraceRecollectionTimestamp);
+  traceWriter.writeTrace(dumpPath(), kQplId, kTraceRecollectionTimestamp);
 }
 
 } // namespace writer

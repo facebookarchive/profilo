@@ -47,16 +47,12 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
 
   static void registerNatives();
 
-  void nativeWriteTrace(
-      std::string dump_path,
-      int64_t trace_id,
-      int32_t qpl_marker_id);
+  void nativeWriteTrace(const std::string& dump_path, int32_t qpl_marker_id);
 
   // Trace re-collection from dump logic
   // Given a dump path, verifies it and re-collects the data into trace
   void writeTrace(
-      std::string dump_path,
-      int64_t trace_id,
+      const std::string& dump_path,
       int32_t qpl_marker_id,
       uint64_t timestamp = monotonicTime());
 

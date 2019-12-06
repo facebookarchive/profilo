@@ -608,7 +608,7 @@ public final class TraceControl {
     return Arrays.copyOf(traceIds, index);
   }
 
-  public static long nextTraceID() {
+  private static long nextTraceID() {
     long l;
     // Math.abs(Long.MIN_VALUE) is still negative. Thanks, java.
     while ((l = Math.abs(sTraceIdRandom.get().nextLong())) <= 0) ;

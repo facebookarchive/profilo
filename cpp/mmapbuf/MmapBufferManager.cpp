@@ -104,13 +104,15 @@ void MmapBufferManager::deallocateBuffer() {
 }
 
 void MmapBufferManager::updateHeader(
-    int32_t controller,
     int32_t providers,
-    int32_t long_context) {
+    int32_t long_context,
+    int64_t normal_trace_id,
+    int64_t memory_trace_id) {
   MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
-  bufferPrefix->header.controller = controller;
   bufferPrefix->header.providers = providers;
   bufferPrefix->header.longContext = long_context;
+  bufferPrefix->header.normalTraceId = normal_trace_id;
+  bufferPrefix->header.inMemoryTraceId = memory_trace_id;
 }
 
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
