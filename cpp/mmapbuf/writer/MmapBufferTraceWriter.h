@@ -37,7 +37,7 @@ namespace writer {
 class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
  public:
   constexpr static auto kJavaDescriptor =
-      "Lcom/facebook/profilo/mmapbuf/MmapBufferTraceWriter;";
+      "Lcom/facebook/profilo/mmapbuf/writer/MmapBufferTraceWriter;";
 
   static fbjni::local_ref<MmapBufferTraceWriter::jhybriddata> initHybrid(
       fbjni::alias_ref<jclass>,
