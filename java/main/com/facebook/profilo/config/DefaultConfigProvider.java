@@ -91,9 +91,6 @@ public class DefaultConfigProvider implements ConfigProvider {
       };
 
   @Override
-  public void setConfigUpdateListener(ConfigUpdateListener listener) {}
-
-  @Override
   public Config getFullConfig() {
     return DEFAULT_CONFIG;
   }

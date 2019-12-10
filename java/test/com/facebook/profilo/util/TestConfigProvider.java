@@ -24,7 +24,6 @@ public final class TestConfigProvider implements ConfigProvider {
 
   private static final int TEST_TRACE_TIMEOUT_MS = 30000;
   private final HashMap<Integer, ControllerConfig> mControllers = new HashMap<>();
-  private ConfigUpdateListener mListener;
   private SystemControlConfig mSystemControlConfig =
       new DefaultConfigProvider().getFullConfig().getSystemControl();
   private int mTimedOutUploadSampleRate;
@@ -35,15 +34,6 @@ public final class TestConfigProvider implements ConfigProvider {
       mControllers.put(c, new ControllerConfig() {});
     }
     return this;
-  }
-
-  @Override
-  public void setConfigUpdateListener(ConfigUpdateListener listener) {
-    mListener = listener;
-  }
-
-  public ConfigUpdateListener getConfigUpdateListener() {
-    return mListener;
   }
 
   public void setSystemControlConfig(SystemControlConfig systemControlConfig) {

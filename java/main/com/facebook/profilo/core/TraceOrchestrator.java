@@ -64,9 +64,6 @@ public final class TraceOrchestrator
     BackgroundUploadService getUploadService();
 
     @Nullable
-    ConfigProvider getProvider();
-
-    @Nullable
     TraceOrchestratorListener[] getListeners();
   }
 
@@ -202,7 +199,6 @@ public final class TraceOrchestrator
   /*package*/ void bind(Context context, SparseArray<TraceController> controllers) {
     Config initialConfig;
     synchronized (this) {
-      mConfigProvider.setConfigUpdateListener(this);
       initialConfig = mConfigProvider.getFullConfig();
     }
 
@@ -243,10 +239,6 @@ public final class TraceOrchestrator
 
       mListenerManager.addEventListener(new CoreTraceListener());
     }
-  }
-
-  public void checkConfigProvider() {
-    getConfigProvider();
   }
 
   @GuardedBy("this")
@@ -345,8 +337,6 @@ public final class TraceOrchestrator
 
   private void performConfigProviderTransition(ConfigProvider newConfigProvider) {
     synchronized (this) {
-      mConfigProvider.setConfigUpdateListener(null);
-      newConfigProvider.setConfigUpdateListener(this);
       mConfigProvider = newConfigProvider;
       performConfigTransition(newConfigProvider.getFullConfig());
     }
@@ -704,7 +694,7 @@ public final class TraceOrchestrator
   }
 
   @GuardedBy("this")
-  private void triggerUpload() {
+  public void triggerUpload() {
     BackgroundUploadService backgroundUploadService = getUploadService(false /* triggerUpload */);
     if (backgroundUploadService == null) {
       return;
@@ -742,21 +732,6 @@ public final class TraceOrchestrator
       }
     }
     return mBackgroundUploadService;
-  }
-
-  private synchronized ConfigProvider getConfigProvider() {
-    if (mHasReadFromBridge == false && mProfiloBridgeFactory != null) {
-      // The config provider never starts as null, and overriding the config with the same config
-      // has repercussions, so we need to make sure the config provider is only fetched from the
-      // factory once.
-      ConfigProvider configProvider = mProfiloBridgeFactory.getProvider();
-      mHasReadFromBridge = true;
-
-      if (configProvider != null) {
-        setConfigProvider(configProvider);
-      }
-    }
-    return mConfigProvider;
   }
 
   public String getProcessName() {
