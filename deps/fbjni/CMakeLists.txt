@@ -17,7 +17,7 @@ project(fbjni CXX)
 
 set(FBJNI_COMPILE_OPTIONS
   -Wall
-  -std=c++11
+  -std=c++14
   -pthread
   -fno-omit-frame-pointer
   -fexceptions
