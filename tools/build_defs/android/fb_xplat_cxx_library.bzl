@@ -7,6 +7,10 @@ def fb_xplat_cxx_library(name, **kwargs):
     if "allow_jni_merging" in kwargs:
         kwargs.pop("allow_jni_merging")
 
+    # We don't need asset packing in the OSS build
+    if "can_be_asset" in kwargs:
+        kwargs.pop("can_be_asset")
+
     # Add standard if none selected
     compiler_flags = kwargs.get("compiler_flags", [])
     has_std = any([opt.startswith("-std") for opt in compiler_flags])
