@@ -165,15 +165,15 @@
       "css": [
         {
           "file": "main.18a066086bd80c01d0ce.css",
-          "hash": "b3409cad0e5f0702db32",
+          "hash": "4ea501ccae7f8623a136",
           "publicPath": "/profilo/main.18a066086bd80c01d0ce.css"
         }
       ],
       "js": [
         {
-          "file": "main.21866975c78cee7db5ea.js",
-          "hash": "b3409cad0e5f0702db32",
-          "publicPath": "/profilo/main.21866975c78cee7db5ea.js"
+          "file": "main.a24083302832ec019f98.js",
+          "hash": "4ea501ccae7f8623a136",
+          "publicPath": "/profilo/main.a24083302832ec019f98.js"
         }
       ]
     },
