@@ -15,6 +15,8 @@
  */
 
 #include <limits>
+#include <utility>
+#include <vector>
 
 #include <gtest/gtest.h>
 #include <profilo/TraceProviders.h>
@@ -102,6 +104,24 @@ TEST(TraceProviders, testClearAllProviders) {
   EXPECT_FALSE(tp.isEnabled(0b0010));
   EXPECT_FALSE(tp.isEnabled(0b0100));
   EXPECT_FALSE(tp.isEnabled(0b1000));
+}
+
+TEST(TraceProviders, testLookupByName) {
+  std::vector<ProviderEntry> providers{{"other", 1},
+                                       {"qpl", 1 << 1},
+                                       {"fbsystrace", 1 << 2},
+                                       {"class_load", 1 << 3}};
+  auto& tp = TraceProviders::get();
+  tp.clearAllProviders();
+  tp.initProviderNames(std::move(providers));
+  tp.enableProviders(1 << 2);
+  EXPECT_TRUE(tp.isEnabled("fbsystrace"));
+  EXPECT_FALSE(tp.isEnabled("qpl"));
+  tp.enableProviders(1 << 3);
+  EXPECT_TRUE(tp.isEnabled("class_load"));
+  tp.enableProviders(1);
+  EXPECT_TRUE(tp.isEnabled("other"));
+  EXPECT_FALSE(tp.isEnabled("fake_provider"));
 }
 
 } // namespace profilo

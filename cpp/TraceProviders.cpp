@@ -14,19 +14,34 @@
  * limitations under the License.
  */
 
+#include "TraceProviders.h"
+
 #include <fbjni/fbjni.h>
 
-#include "TraceProviders.h"
+#include <algorithm>
+#include <cstring>
 
 namespace facebook {
 namespace profilo {
+
+namespace {
+struct StrCompare {
+  bool operator()(const ProviderEntry& entry, const char* key) {
+    return strcmp(entry.first.c_str(), key) < 0;
+  }
+
+  bool operator()(const char* key, const ProviderEntry& entry) {
+    return strcmp(key, entry.first.c_str()) < 0;
+  }
+};
+} // namespace
 
 TraceProviders& TraceProviders::get() {
   static TraceProviders providers{};
   return providers;
 }
 
-bool TraceProviders::isEnabled(const std::string& provider) {
+bool TraceProviders::isEnabled(const char* provider) {
   // The native side doesn't have the full name -> int mapping.
   // This function retrieves the mapping for a single provider from
   // pre-initialized cache.
@@ -36,11 +51,20 @@ bool TraceProviders::isEnabled(const std::string& provider) {
   if (name_lookup_cache_.empty()) {
     return false;
   }
-  auto iter = name_lookup_cache_.find(provider);
-  if (iter != name_lookup_cache_.end()) {
-    return isEnabled(iter->second);
+  auto iter = std::lower_bound(
+      name_lookup_cache_.begin(),
+      name_lookup_cache_.end(),
+      provider,
+      StrCompare());
+  if (iter == name_lookup_cache_.end() ||
+      strcmp(iter->first.c_str(), provider) != 0) {
+    return false;
   }
-  return false;
+  return isEnabled(iter->second);
+}
+
+bool TraceProviders::isEnabled(const std::string& provider) {
+  return isEnabled(provider.c_str());
 }
 
 uint32_t TraceProviders::enableProviders(uint32_t providers) {
@@ -81,8 +105,9 @@ void TraceProviders::clearAllProviders() {
 }
 
 void TraceProviders::initProviderNames(
-    std::unordered_map<std::string, uint32_t>&& provider_names) {
+    std::vector<ProviderEntry>&& provider_names) {
   std::unique_lock<std::shared_timed_mutex> lock(name_lookup_mutex_);
+  std::sort(provider_names.begin(), provider_names.end());
   name_lookup_cache_ = std::move(provider_names);
 }
 

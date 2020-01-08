@@ -21,14 +21,19 @@
 #include <mutex>
 #include <shared_mutex>
 #include <string>
-#include <unordered_map>
+#include <utility>
+#include <vector>
 
 namespace facebook {
 namespace profilo {
 
+using ProviderEntry = std::pair<std::string, uint32_t>;
+
 class TraceProviders {
  public:
   static TraceProviders& get();
+
+  bool isEnabled(const char* provider);
 
   bool isEnabled(const std::string& provider);
 
@@ -46,8 +51,7 @@ class TraceProviders {
   uint32_t enableProviders(uint32_t providers);
   uint32_t disableProviders(uint32_t providers);
   void clearAllProviders();
-  void initProviderNames(
-      std::unordered_map<std::string, uint32_t>&& provider_names);
+  void initProviderNames(std::vector<ProviderEntry>&& provider_names);
 
  private:
   TraceProviders() : mutex_(), providers_(0), provider_counts_({}) {}
@@ -56,7 +60,7 @@ class TraceProviders {
   std::array<uint8_t, 32> provider_counts_;
 
   std::shared_timed_mutex name_lookup_mutex_; // Guards provider name lookup.
-  std::unordered_map<std::string, uint32_t> name_lookup_cache_;
+  std::vector<ProviderEntry> name_lookup_cache_;
 };
 
 } // namespace profilo
