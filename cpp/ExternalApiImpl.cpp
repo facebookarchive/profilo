@@ -28,22 +28,11 @@ using namespace facebook::profilo;
 
 namespace {
 
-std::string& providerToName(Provider provider) {
-  switch (provider) {
-    case Provider::CLASS_LOAD:
-      static std::string class_load = "class_load";
-      return class_load;
-    case Provider::FBSYSTRACE:
-      static std::string fbsystrace = "fbsystrace";
-      return fbsystrace;
-    default:
-      abort();
-  }
-}
-
-void internal_mark_start(Provider provider, const char* msg, size_t len = 0) {
-  if (msg == nullptr ||
-      !TraceProviders::get().isEnabled(providerToName(provider))) {
+void internal_mark_start(
+    const char* provider,
+    const char* msg,
+    size_t len = 0) {
+  if (msg == nullptr || !TraceProviders::get().isEnabled(provider)) {
     return;
   }
   auto& logger = Logger::get();
@@ -59,8 +48,8 @@ void internal_mark_start(Provider provider, const char* msg, size_t len = 0) {
   }
 }
 
-void internal_mark_end(Provider provider) {
-  if (!TraceProviders::get().isEnabled(providerToName(provider))) {
+void internal_mark_end(const char* provider) {
+  if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }
   auto& logger = Logger::get();
@@ -71,8 +60,8 @@ void internal_mark_end(Provider provider) {
   logger.write(std::move(entry));
 }
 
-void internal_log_classload_start(Provider provider) {
-  if (!TraceProviders::get().isEnabled(providerToName(provider))) {
+void internal_log_classload_start(const char* provider) {
+  if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }
 
@@ -85,8 +74,8 @@ void internal_log_classload_start(Provider provider) {
   logger.write(std::move(entry));
 }
 
-void internal_log_classload_end(Provider provider, int64_t classid) {
-  if (!TraceProviders::get().isEnabled(providerToName(provider))) {
+void internal_log_classload_end(const char* provider, int64_t classid) {
+  if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }
 
@@ -99,8 +88,8 @@ void internal_log_classload_end(Provider provider, int64_t classid) {
   logger.write(std::move(entry));
 }
 
-void internal_log_classload_failed(Provider provider) {
-  if (!TraceProviders::get().isEnabled(providerToName(provider))) {
+void internal_log_classload_failed(const char* provider) {
+  if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }
 
@@ -113,8 +102,8 @@ void internal_log_classload_failed(Provider provider) {
   logger.write(std::move(entry));
 }
 
-bool is_enabled(Provider provider) {
-  return TraceProviders::get().isEnabled(providerToName(provider));
+bool is_enabled(const char* provider) {
+  return TraceProviders::get().isEnabled(provider);
 }
 
 bool internal_register_external_tracer_callback(

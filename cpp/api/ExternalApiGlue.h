@@ -24,11 +24,6 @@ extern "C" {
 #endif
 
 typedef enum {
-  FBSYSTRACE,
-  CLASS_LOAD,
-} Provider;
-
-typedef enum {
   SUCCESS = 0,
   EMPTY_STACK = 1,
   STACK_OVERFLOW = 2,
@@ -44,13 +39,13 @@ typedef enum {
 const int TRACER_TYPE_JAVASCRIPT = 1 << 9;
 
 typedef void (
-    *profilo_int_mark_start)(Provider provider, const char* msg, size_t len);
-typedef void (*profilo_int_mark_end)(Provider provider);
-typedef void (*profilo_int_log_classload_start)(Provider provider);
+    *profilo_int_mark_start)(const char* provider, const char* msg, size_t len);
+typedef void (*profilo_int_mark_end)(const char* provider);
+typedef void (*profilo_int_log_classload_start)(const char* provider);
 typedef void (
-    *profilo_int_log_classload_end)(Provider provider, int64_t classid);
-typedef void (*profilo_int_log_classload_failed)(Provider provider);
-typedef bool (*profilo_int_is_enabled)(Provider provider);
+    *profilo_int_log_classload_end)(const char* provider, int64_t classid);
+typedef void (*profilo_int_log_classload_failed)(const char* provider);
+typedef bool (*profilo_int_is_enabled)(const char* provider);
 // This callback type is of similar signature as BaseTracer::collectStack()
 // function. However, depth parameter is pointer type instead of reference
 // so that this interface can be used with C language.
