@@ -8,6 +8,7 @@ fb_xplat_cxx_library(
     exported_headers = subdir_glob([
         ("headers", "*.h"),
     ]),
+    visibility = ["PUBLIC"],
 )
 
 fb_xplat_cxx_library(
