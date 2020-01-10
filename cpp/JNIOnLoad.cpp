@@ -99,7 +99,7 @@ static void clearAllProviders(JNIEnv* env, jobject cls) {
   TraceProviders::get().clearAllProviders();
 }
 
-static void initProviderNames(
+static void refreshProviderNames(
     fbjni::alias_ref<jobject> cls,
     fbjni::alias_ref<fbjni::JArrayInt> provider_ids,
     fbjni::alias_ref<fbjni::jtypeArray<jstring>> provider_names) {
@@ -133,7 +133,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
             makeNativeMethod(
                 "nativeClearAllProviders", profilo::clearAllProviders),
             makeNativeMethod(
-                "nativeInitProviderNames", profilo::initProviderNames),
+                "nativeRefreshProviderNames", profilo::refreshProviderNames),
         });
 
     fbjni::registerNatives(

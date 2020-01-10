@@ -374,6 +374,7 @@ public final class TraceOrchestrator
    */
   @Override
   public void onTraceStartSync(TraceContext context) {
+    TraceEvents.refreshProviderNames();
     // Increment the providers
     TraceEvents.enableProviders(context.enabledProviders);
 

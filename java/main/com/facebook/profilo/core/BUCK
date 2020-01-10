@@ -71,6 +71,7 @@ fb_core_android_library(
     ],
     exported_deps = [
         ":constants",
+        ":registry",
     ],
 )
 

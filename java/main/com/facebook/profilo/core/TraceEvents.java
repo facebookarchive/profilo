@@ -13,7 +13,7 @@
  */
 package com.facebook.profilo.core;
 
-import java.util.Map;
+import java.util.List;
 
 /** Responsible for managing the currently allowed trace providers. */
 public final class TraceEvents {
@@ -24,7 +24,7 @@ public final class TraceEvents {
    */
   public static boolean sInitialized;
 
-  private static volatile boolean sProviderNamesInitialized;
+  private static int sLastNameRefreshProvidersState;
   private static volatile int sProviders = 0;
 
   public static boolean isEnabled(int provider) {
@@ -33,29 +33,6 @@ public final class TraceEvents {
 
   public static int enabledMask(int providers) {
     return sProviders & providers;
-  }
-
-  public static boolean isProviderNamesInitialized() {
-    return sProviderNamesInitialized;
-  }
-
-  public static void initProviderNames(Map<String, Integer> providerNamesMap) {
-    if (!sInitialized) {
-      throw new IllegalStateException("Native library is not initialized.");
-    }
-    if (sProviderNamesInitialized) {
-      return;
-    }
-    int size = providerNamesMap.size();
-    int[] providerIds = new int[size];
-    String[] providerNames = new String[size];
-    int i = 0;
-    for (Map.Entry<String, Integer> nextProvider : providerNamesMap.entrySet()) {
-      providerNames[i] = nextProvider.getKey();
-      providerIds[i++] = nextProvider.getValue();
-    }
-    nativeInitProviderNames(providerIds, providerNames);
-    sProviderNamesInitialized = true;
   }
 
   public static synchronized void enableProviders(int providers) {
@@ -71,11 +48,35 @@ public final class TraceEvents {
     sProviders = 0;
   }
 
+  public static synchronized void refreshProviderNames() {
+    if (!sInitialized) {
+      throw new IllegalStateException("Native library is not initialized.");
+    }
+    int currentBitmaskForAllEntries = ProvidersRegistry.getBitmaskForAllEntries();
+    if (currentBitmaskForAllEntries == sLastNameRefreshProvidersState) {
+      return;
+    }
+    sLastNameRefreshProvidersState = currentBitmaskForAllEntries;
+
+    List<String> registeredProviders = ProvidersRegistry.getRegisteredProviders();
+    int size = registeredProviders.size();
+    int[] providerIds = new int[size];
+    String[] providerNames = new String[size];
+
+    int i = 0;
+    for (String nextProvider : registeredProviders) {
+      providerNames[i] = nextProvider;
+      providerIds[i++] = ProvidersRegistry.getBitMaskFor(nextProvider);
+    }
+
+    nativeRefreshProviderNames(providerIds, providerNames);
+  }
+
   static native int nativeEnableProviders(int providers);
 
   static native int nativeDisableProviders(int providers);
 
   static native void nativeClearAllProviders();
 
-  static native void nativeInitProviderNames(int[] providerIds, String[] providerNames);
+  static native void nativeRefreshProviderNames(int[] providerIds, String[] providerNames);
 }

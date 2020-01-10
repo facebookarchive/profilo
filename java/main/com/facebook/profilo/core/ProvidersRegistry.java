@@ -69,4 +69,8 @@ public final class ProvidersRegistry {
   public static Set<String> getRegisteredProvidersByBitMask(int bitMask) {
     return sRegistry.getRegisteredEntriesByBitMask(bitMask);
   }
+
+  public static int getBitmaskForAllEntries() {
+    return sRegistry.getBitMaskForAllEntries();
+  }
 }
