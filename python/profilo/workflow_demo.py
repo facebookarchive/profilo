@@ -142,7 +142,8 @@ def syscounters(tracefile, args):
         counters[counterType].sort(key=lambda x: x[0])
 
     # Now <counters> is a time series for each counter type. We can plot a few
-    # of them
+    # of them. Plotting other time series is just a matter of adding here
+    # any counter from the list in python/profilo/importer/constants.py
     import matplotlib.pyplot as plt
     test_counters = ['NUM_PROCS', 'PROC_CPU_TIME', 'GLOBAL_ALLOC_SIZE',
                      'ALLOC_FREE_BYTES']

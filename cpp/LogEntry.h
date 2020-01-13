@@ -27,6 +27,13 @@
 namespace facebook {
 namespace profilo {
 
+/**
+ * IMPORTANT:
+ * These constants will appear in OSS traces, but if they're not present
+ * in the demo directory's `constants.py` file, we'll fail to correctly
+ * process traces with `workflow_demo`. Thus, make sure that this
+ * file is in sync with `constants.py`
+ */
 enum QuickLogConstants {
   PROF_ERR_SIG_CRASHES = 8126464 | 27, // = 8126491
   PROF_ERR_SLOT_MISSES = 8126464 | 28, // = 8126492
