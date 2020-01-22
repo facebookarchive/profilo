@@ -15,14 +15,14 @@ package com.facebook.profilo.provider.processmetadata;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import com.facebook.profilo.core.BaseTraceProvider;
+import com.facebook.profilo.core.MetadataTraceProvider;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import java.util.List;
 
-public final class ProcessMetadataProvider extends BaseTraceProvider {
+public final class ProcessMetadataProvider extends MetadataTraceProvider {
 
   private Context mContext;
 
@@ -31,29 +31,13 @@ public final class ProcessMetadataProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void onTraceStarted(TraceContext context, ExtraDataFileProvider dataFileProvider) {
+  protected void logOnTraceStart(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     logProcessList();
   }
 
   @Override
-  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
+  protected void logOnTraceEnd(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     logProcessList();
-  }
-
-  @Override
-  protected void enable() {}
-
-  @Override
-  protected void disable() {}
-
-  @Override
-  protected int getSupportedProviders() {
-    return EVERY_PROVIDER_CHANGE;
-  }
-
-  @Override
-  protected int getTracingProviders() {
-    return 0;
   }
 
   private void logProcessList() {

@@ -13,36 +13,20 @@
  */
 package com.facebook.profilo.provider.threadmetadata;
 
-import com.facebook.profilo.core.BaseTraceProvider;
+import com.facebook.profilo.core.MetadataTraceProvider;
 import com.facebook.profilo.ipc.TraceContext;
 
-public final class ThreadMetadataProvider extends BaseTraceProvider {
+public final class ThreadMetadataProvider extends MetadataTraceProvider {
 
   public ThreadMetadataProvider() {
     super("profilo_threadmetadata");
   }
 
   @Override
-  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
+  protected void logOnTraceEnd(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     nativeLogThreadMetadata();
-  }
-
-  @Override
-  protected void enable() {}
-
-  @Override
-  protected void disable() {}
-
-  @Override
-  protected int getSupportedProviders() {
-    return EVERY_PROVIDER_CHANGE;
   }
 
   /* Log thread names and priorities. */
   private static native void nativeLogThreadMetadata();
-
-  @Override
-  protected int getTracingProviders() {
-    return 0;
-  }
 }

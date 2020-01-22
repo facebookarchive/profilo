@@ -5,8 +5,8 @@ package com.facebook.profilo.provider.packageinfo;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.Identifiers;
+import com.facebook.profilo.core.MetadataTraceProvider;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
@@ -14,7 +14,7 @@ import com.facebook.profilo.logger.Logger;
 import javax.annotation.Nullable;
 
 /** Logs versionName and versionCode from AndroidManifest.xml as trace annotations. */
-public class PackageInfoProvider extends BaseTraceProvider {
+public class PackageInfoProvider extends MetadataTraceProvider {
 
   @Nullable private String mVersionName;
   private int mVersionCode;
@@ -49,13 +49,7 @@ public class PackageInfoProvider extends BaseTraceProvider {
   }
 
   @Override
-  protected void enable() {}
-
-  @Override
-  protected void disable() {}
-
-  @Override
-  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
+  protected void logOnTraceEnd(TraceContext context, ExtraDataFileProvider dataFileProvider) {
     resolvePackageInfo();
 
     if (mVersionName == null) {
@@ -97,15 +91,5 @@ public class PackageInfoProvider extends BaseTraceProvider {
         Identifiers.APP_VERSION_CODE,
         ProfiloConstants.NONE,
         (long) mVersionCode);
-  }
-
-  @Override
-  protected int getSupportedProviders() {
-    return EVERY_PROVIDER_CHANGE;
-  }
-
-  @Override
-  protected int getTracingProviders() {
-    return 0;
   }
 }
