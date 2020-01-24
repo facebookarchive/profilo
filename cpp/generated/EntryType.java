@@ -1,4 +1,4 @@
-// @generated SignedSource<<a8efba107880ce016c2ed4595f25accb>>
+// @generated SignedSource<<d0d3e9b87dbd1ba733da98c1c886438b>>
 
 package com.facebook.profilo.entries;
 
@@ -47,57 +47,58 @@ public class EntryType {
   public static final int TRACE_START = 40;
   public static final int TRACE_BACKWARDS = 41;
   public static final int TRACE_TIMEOUT = 42;
-  public static final int COUNTER = 43;
-  public static final int STACK_FRAME = 44;
-  public static final int QPL_START = 45;
-  public static final int QPL_END = 46;
-  public static final int QPL_CANCEL = 47;
-  public static final int QPL_NOTE = 48;
-  public static final int QPL_POINT = 49;
-  public static final int QPL_EVENT = 50;
-  public static final int TRACE_ANNOTATION = 51;
-  public static final int WAIT_START = 52;
-  public static final int WAIT_END = 53;
-  public static final int WAIT_SIGNAL = 54;
-  public static final int STRING_KEY = 55;
-  public static final int STRING_VALUE = 56;
-  public static final int QPL_TAG = 57;
-  public static final int QPL_ANNOTATION = 58;
-  public static final int TRACE_THREAD_NAME = 59;
-  public static final int TRACE_PRE_END = 60;
-  public static final int TRACE_THREAD_PRI = 61;
-  public static final int MINOR_FAULT = 62;
-  public static final int MAJOR_FAULT = 63;
-  public static final int PERFEVENTS_LOST = 64;
-  public static final int CLASS_LOAD = 65;
-  public static final int JAVASCRIPT_STACK_FRAME = 66;
-  public static final int MESSAGE_START = 67;
-  public static final int MESSAGE_END = 68;
-  public static final int CLASS_VALUE = 69;
-  public static final int HTTP2_REQUEST_INITIATED = 70;
-  public static final int HTTP2_FRAME_HEADER = 71;
-  public static final int HTTP2_WINDOW_UPDATE = 72;
-  public static final int HTTP2_PRIORITY = 73;
-  public static final int HTTP2_EGRESS_FRAME_HEADER = 74;
-  public static final int PROCESS_LIST = 75;
-  public static final int IO_START = 76;
-  public static final int IO_END = 77;
-  public static final int CPU_COUNTER = 78;
-  public static final int CLASS_LOAD_START = 79;
-  public static final int CLASS_LOAD_END = 80;
-  public static final int CLASS_LOAD_FAILED = 81;
-  public static final int STRING_NAME = 82;
-  public static final int JAVA_FRAME_NAME = 83;
-  public static final int BINDER_START = 84;
-  public static final int BINDER_END = 85;
-  public static final int MEMORY_ALLOCATION = 86;
-  public static final int STKERR_EMPTYSTACK = 87;
-  public static final int STKERR_STACKOVERFLOW = 88;
-  public static final int STKERR_NOSTACKFORTHREAD = 89;
-  public static final int STKERR_SIGNALINTERRUPT = 90;
-  public static final int STKERR_NESTEDUNWIND = 91;
-  public static final int MAPPING = 92;
-  public static final int LOGGER_PRIORITY = 93;
+  public static final int BLACKBOX_TRACE_START = 43;
+  public static final int COUNTER = 44;
+  public static final int STACK_FRAME = 45;
+  public static final int QPL_START = 46;
+  public static final int QPL_END = 47;
+  public static final int QPL_CANCEL = 48;
+  public static final int QPL_NOTE = 49;
+  public static final int QPL_POINT = 50;
+  public static final int QPL_EVENT = 51;
+  public static final int TRACE_ANNOTATION = 52;
+  public static final int WAIT_START = 53;
+  public static final int WAIT_END = 54;
+  public static final int WAIT_SIGNAL = 55;
+  public static final int STRING_KEY = 56;
+  public static final int STRING_VALUE = 57;
+  public static final int QPL_TAG = 58;
+  public static final int QPL_ANNOTATION = 59;
+  public static final int TRACE_THREAD_NAME = 60;
+  public static final int TRACE_PRE_END = 61;
+  public static final int TRACE_THREAD_PRI = 62;
+  public static final int MINOR_FAULT = 63;
+  public static final int MAJOR_FAULT = 64;
+  public static final int PERFEVENTS_LOST = 65;
+  public static final int CLASS_LOAD = 66;
+  public static final int JAVASCRIPT_STACK_FRAME = 67;
+  public static final int MESSAGE_START = 68;
+  public static final int MESSAGE_END = 69;
+  public static final int CLASS_VALUE = 70;
+  public static final int HTTP2_REQUEST_INITIATED = 71;
+  public static final int HTTP2_FRAME_HEADER = 72;
+  public static final int HTTP2_WINDOW_UPDATE = 73;
+  public static final int HTTP2_PRIORITY = 74;
+  public static final int HTTP2_EGRESS_FRAME_HEADER = 75;
+  public static final int PROCESS_LIST = 76;
+  public static final int IO_START = 77;
+  public static final int IO_END = 78;
+  public static final int CPU_COUNTER = 79;
+  public static final int CLASS_LOAD_START = 80;
+  public static final int CLASS_LOAD_END = 81;
+  public static final int CLASS_LOAD_FAILED = 82;
+  public static final int STRING_NAME = 83;
+  public static final int JAVA_FRAME_NAME = 84;
+  public static final int BINDER_START = 85;
+  public static final int BINDER_END = 86;
+  public static final int MEMORY_ALLOCATION = 87;
+  public static final int STKERR_EMPTYSTACK = 88;
+  public static final int STKERR_STACKOVERFLOW = 89;
+  public static final int STKERR_NOSTACKFORTHREAD = 90;
+  public static final int STKERR_SIGNALINTERRUPT = 91;
+  public static final int STKERR_NESTEDUNWIND = 92;
+  public static final int MAPPING = 93;
+  public static final int LOGGER_PRIORITY = 94;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -143,6 +144,7 @@ public class EntryType {
     "TRACE_START",
     "TRACE_BACKWARDS",
     "TRACE_TIMEOUT",
+    "BLACKBOX_TRACE_START",
     "COUNTER",
     "STACK_FRAME",
     "QPL_START",
