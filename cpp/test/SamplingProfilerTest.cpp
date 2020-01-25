@@ -100,7 +100,7 @@ class TestTracer : public BaseTracer {
 
 class SamplingProfilerTest : public ::testing::Test {
  protected:
-  static constexpr int32_t kTestTracer = 1;
+  static constexpr int32_t kTestTracer = 0xfaceb00c;
 
   SamplingProfilerTest()
       : ::testing::Test(), tracer_(std::make_shared<TestTracer>()) {}
