@@ -51,12 +51,13 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
   @Override
   public void onProvidersInitialized() {
     // Writing a marker block to denote providers init finish
+    long time = System.nanoTime();
     int pushId =
         Logger.writeStandardEntry(
             ProfiloConstants.NONE,
-            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TID,
             EntryType.MARK_PUSH,
-            ProfiloConstants.NONE,
+            time,
             ProfiloConstants.NONE,
             0,
             ProfiloConstants.NONE,
@@ -69,9 +70,9 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
         "Profilo.ProvidersInitialized");
     Logger.writeStandardEntry(
         ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TID,
         EntryType.MARK_POP,
-        ProfiloConstants.NONE,
+        time,
         ProfiloConstants.NONE,
         0,
         ProfiloConstants.NONE,
