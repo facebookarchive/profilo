@@ -26,14 +26,14 @@ using StreamID = uint32_t;
 
 struct __attribute__((packed)) Packet {
   constexpr static auto kPacketIdNone = 0;
-  constexpr static auto kVersion = 1;
+  constexpr static auto kVersion = 2;
 
   StreamID stream;
   bool start : 1;
   bool next : 1;
   uint16_t size : 14;
 
-  alignas(4) char data[116];
+  alignas(4) char data[52];
 };
 
 //

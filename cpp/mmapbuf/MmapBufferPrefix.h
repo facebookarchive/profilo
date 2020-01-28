@@ -25,7 +25,7 @@ namespace profilo {
 namespace mmapbuf {
 
 constexpr static uint64_t kMagic = 0x306c3166307270; // pr0f1l0
-constexpr static uint64_t kVersion = 2;
+constexpr static uint64_t kVersion = 3;
 
 //
 // Static header for primary buffer verification.
