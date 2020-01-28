@@ -65,6 +65,10 @@ int const kTracerMagicFd = -100;
 constexpr char kAtraceSymbol[] = "atrace_setup";
 // Prefix for system libraries.
 constexpr char kSysLibPrefix[] = "/system";
+// Starting from SDK 26 it's enough to hook single "libcutils" lib to capture
+// all ATRACE logging.
+constexpr auto kSingleLibSdk = 26;
+constexpr char kSingleLibName[] = "libcutils.so";
 
 // Determine if this library should be hooked.
 bool allowHookingCb(char const* libname, char const* full_libname, void* data) {
@@ -184,6 +188,12 @@ std::vector<std::pair<char const*, void*>>& getFunctionHooks() {
   return functionHooks;
 }
 
+plt_hook_spec& getSingleLibFunctionSpec() {
+  static plt_hook_spec spec{"__write_chk",
+                            reinterpret_cast<void*>(__write_chk_hook)};
+  return spec;
+}
+
 // Returns the set of libraries that we don't want to hook.
 std::unordered_set<std::string>& getSeenLibs() {
   static std::unordered_set<std::string> seenLibs;
@@ -208,6 +218,13 @@ std::unordered_set<std::string>& getSeenLibs() {
 }
 
 void hookLoadedLibs() {
+  auto sdk = build::Build::getAndroidSdk();
+  if (sdk >= kSingleLibSdk) {
+    auto& spec = getSingleLibFunctionSpec();
+    hook_single_lib(kSingleLibName, &spec, 1);
+    return;
+  }
+
   auto& functionHooks = getFunctionHooks();
   auto& seenLibs = getSeenLibs();
 
@@ -216,6 +233,13 @@ void hookLoadedLibs() {
 }
 
 void unhookLoadedLibs() {
+  auto sdk = build::Build::getAndroidSdk();
+  if (sdk >= kSingleLibSdk) {
+    auto& spec = getSingleLibFunctionSpec();
+    unhook_single_lib(kSingleLibName, &spec, 1);
+    return;
+  }
+
   auto& functionHooks = getFunctionHooks();
 
   facebook::profilo::hooks::unhookLoadedLibs(functionHooks);
@@ -310,7 +334,8 @@ void restoreSystrace() {
 
   try {
     unhookLoadedLibs();
-  } catch (...) {}
+  } catch (...) {
+  }
 
   uint64_t tags = original_tags;
   if (tags != UINT64_MAX) { // if we somehow call this before enableSystrace,
