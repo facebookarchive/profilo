@@ -25,9 +25,9 @@ public final class Atrace {
   private static boolean sHasHook = false;
   private static boolean sHookFailed = false;
 
-  public static synchronized boolean hasHacks() {
+  public static synchronized boolean hasHacks(boolean singleLibOptimization) {
     if (!sHasHook && !sHookFailed) {
-      sHasHook = installSystraceHook(SystraceProvider.PROVIDER_ATRACE);
+      sHasHook = installSystraceHook(SystraceProvider.PROVIDER_ATRACE, singleLibOptimization);
 
       // Record that we failed, so we don't try again.
       sHookFailed = !sHasHook;
@@ -35,31 +35,31 @@ public final class Atrace {
     return sHasHook;
   }
 
-  private static native boolean installSystraceHook(int mask);
+  private static native boolean installSystraceHook(int mask, boolean singleLibOptimization);
 
-  public static void enableSystrace() {
-    if (!hasHacks()) {
+  public static void enableSystrace(boolean singleLibOptimization) {
+    if (!hasHacks(singleLibOptimization)) {
       return;
     }
 
-    enableSystraceNative();
+    enableSystraceNative(singleLibOptimization);
 
     SystraceReflector.updateSystraceTags();
   }
 
-  public static void restoreSystrace() {
-    if (!hasHacks()) {
+  public static void restoreSystrace(boolean singleLibOptimization) {
+    if (!hasHacks(singleLibOptimization)) {
       return;
     }
 
-    restoreSystraceNative();
+    restoreSystraceNative(singleLibOptimization);
 
     SystraceReflector.updateSystraceTags();
   }
 
-  private static native void enableSystraceNative();
+  private static native void enableSystraceNative(boolean singleLibOptimization);
 
-  private static native void restoreSystraceNative();
+  private static native void restoreSystraceNative(boolean singleLibOptimization);
 
   public static native boolean isEnabled();
 

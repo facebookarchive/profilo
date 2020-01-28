@@ -217,9 +217,9 @@ std::unordered_set<std::string>& getSeenLibs() {
   return seenLibs;
 }
 
-void hookLoadedLibs() {
+void hookLoadedLibs(bool singleLibOptimization) {
   auto sdk = build::Build::getAndroidSdk();
-  if (sdk >= kSingleLibSdk) {
+  if (singleLibOptimization && sdk >= kSingleLibSdk) {
     auto& spec = getSingleLibFunctionSpec();
     hook_single_lib(kSingleLibName, &spec, 1);
     return;
@@ -232,9 +232,9 @@ void hookLoadedLibs() {
       functionHooks, allowHookingCb, &seenLibs);
 }
 
-void unhookLoadedLibs() {
+void unhookLoadedLibs(bool singleLibOptimization) {
   auto sdk = build::Build::getAndroidSdk();
-  if (sdk >= kSingleLibSdk) {
+  if (singleLibOptimization && sdk >= kSingleLibSdk) {
     auto& spec = getSingleLibFunctionSpec();
     unhook_single_lib(kSingleLibName, &spec, 1);
     return;
@@ -246,7 +246,7 @@ void unhookLoadedLibs() {
   getSeenLibs().clear();
 }
 
-void installSystraceSnooper(int providerMask) {
+void installSystraceSnooper(int providerMask, bool singleLibOptimization) {
   auto sdk = build::Build::getAndroidSdk();
   {
     std::string lib_name("libcutils.so");
@@ -295,13 +295,13 @@ void installSystraceSnooper(int providerMask) {
     throw std::runtime_error("Could not initialize plthooks library");
   }
 
-  hookLoadedLibs();
+  hookLoadedLibs(singleLibOptimization);
 
   systrace_installed = true;
   provider_mask = providerMask;
 }
 
-void enableSystrace() {
+void enableSystrace(bool singleLibOptimization) {
   if (!systrace_installed) {
     return;
   }
@@ -310,7 +310,7 @@ void enableSystrace() {
     // On every enable, except the first one, find if new libs were loaded
     // and install systrace hook for them
     try {
-      hookLoadedLibs();
+      hookLoadedLibs(singleLibOptimization);
     } catch (...) {
       // It's ok to continue if the refresh has failed
     }
@@ -326,14 +326,14 @@ void enableSystrace() {
   atrace_enabled = true;
 }
 
-void restoreSystrace() {
+void restoreSystrace(bool singleLibOptimization) {
   atrace_enabled = false;
   if (!systrace_installed) {
     return;
   }
 
   try {
-    unhookLoadedLibs();
+    unhookLoadedLibs(singleLibOptimization);
   } catch (...) {
   }
 
@@ -344,9 +344,9 @@ void restoreSystrace() {
   }
 }
 
-bool installSystraceHook(int mask) {
+bool installSystraceHook(int mask, bool singleLibOptimization) {
   try {
-    installSystraceSnooper(mask);
+    installSystraceSnooper(mask, singleLibOptimization);
 
     return true;
   } catch (const std::runtime_error& e) {
@@ -357,16 +357,26 @@ bool installSystraceHook(int mask) {
 
 } // namespace
 
-bool JNI_installSystraceHook(JNIEnv*, jobject, jint mask) {
-  return installSystraceHook(mask);
+bool JNI_installSystraceHook(
+    JNIEnv*,
+    jobject,
+    jint mask,
+    jboolean singleLibOptimization) {
+  return installSystraceHook(mask, singleLibOptimization);
 }
 
-void JNI_enableSystraceNative(JNIEnv*, jobject) {
-  enableSystrace();
+void JNI_enableSystraceNative(
+    JNIEnv*,
+    jobject,
+    jboolean singleLibOptimization) {
+  enableSystrace(singleLibOptimization);
 }
 
-void JNI_restoreSystraceNative(JNIEnv*, jobject) {
-  restoreSystrace();
+void JNI_restoreSystraceNative(
+    JNIEnv*,
+    jobject,
+    jboolean singleLibOptimization) {
+  restoreSystrace(singleLibOptimization);
 }
 
 bool JNI_isEnabled(JNIEnv*, jobject) {
@@ -380,11 +390,11 @@ void registerNatives() {
       "com/facebook/profilo/provider/atrace/Atrace",
       {
           makeNativeMethod(
-              "installSystraceHook", "(I)Z", JNI_installSystraceHook),
+              "installSystraceHook", "(IZ)Z", JNI_installSystraceHook),
           makeNativeMethod(
-              "enableSystraceNative", "()V", JNI_enableSystraceNative),
+              "enableSystraceNative", "(Z)V", JNI_enableSystraceNative),
           makeNativeMethod(
-              "restoreSystraceNative", "()V", JNI_restoreSystraceNative),
+              "restoreSystraceNative", "(Z)V", JNI_restoreSystraceNative),
           makeNativeMethod("isEnabled", "()Z", JNI_isEnabled),
       });
 }

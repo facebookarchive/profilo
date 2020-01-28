@@ -14,7 +14,9 @@
 package com.facebook.profilo.provider.atrace;
 
 import com.facebook.profilo.core.BaseTraceProvider;
+import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.ProvidersRegistry;
+import com.facebook.profilo.ipc.TraceContext;
 
 public final class SystraceProvider extends BaseTraceProvider {
 
@@ -26,12 +28,22 @@ public final class SystraceProvider extends BaseTraceProvider {
 
   @Override
   protected void enable() {
-    Atrace.enableSystrace();
+    TraceContext tc = getEnablingTraceContext();
+    boolean applyOptimization =
+        tc != null
+            && tc.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM, false);
+    Atrace.enableSystrace(applyOptimization);
   }
 
   @Override
   protected void disable() {
-    Atrace.restoreSystrace();
+    TraceContext tc = getEnablingTraceContext();
+    boolean applyOptimization =
+        tc != null
+            && tc.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM, false);
+    Atrace.restoreSystrace(applyOptimization);
   }
 
   @Override

@@ -70,4 +70,6 @@ public final class ProfiloConstants {
   public static final String TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC =
       "trace_config.post_trace_extension_ms";
   public static final int TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT = 0;
+  public static final String ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM =
+      "provider.atrace.single_lib_optimization";
 }
