@@ -111,6 +111,8 @@ public class MmapBufferManager {
   public native void nativeUpdateHeader(
       int providers, int trigger, long normalTraceId, long inMemoryTraceId);
 
+  public native void nativeUpdateSessionId(String sessionId);
+
   /**
    * De-allocates current memory mapped buffer and deletes the buffer file. This operation is unsafe
    * and currently serve merely as stub for future dynamic buffer management extensions. All tracing

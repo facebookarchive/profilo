@@ -115,6 +115,14 @@ void MmapBufferManager::updateHeader(
   bufferPrefix->header.inMemoryTraceId = memory_trace_id;
 }
 
+void MmapBufferManager::updateSessionId(const std::string& session_id) {
+  MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
+  auto sz = std::min(
+      session_id.size(), (size_t)MmapBufferHeader::kSessionIdLength - 1);
+  session_id.copy(bufferPrefix->header.sessionId, sz);
+  bufferPrefix->header.sessionId[sz] = 0;
+}
+
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
     fbjni::alias_ref<jclass>) {
   return makeCxxInstance();
@@ -128,6 +136,8 @@ void MmapBufferManager::registerNatives() {
       makeNativeMethod(
           "nativeDeallocateBuffer", MmapBufferManager::deallocateBuffer),
       makeNativeMethod("nativeUpdateHeader", MmapBufferManager::updateHeader),
+      makeNativeMethod(
+          "nativeUpdateSessionId", MmapBufferManager::updateSessionId),
   });
 }
 

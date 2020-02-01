@@ -92,6 +92,8 @@ enum QuickLogConstants {
   MEMINFO_CACHED = 9240576 | 97, // = 9240673
   MEMINFO_ACTIVE = 9240576 | 98, // = 9240674
   MEMINFO_INACTIVE = 9240576 | 99, // = 9240675
+
+  SESSION_ID = 8126464 | 82, // = 8126546
 };
 
 } // namespace profilo

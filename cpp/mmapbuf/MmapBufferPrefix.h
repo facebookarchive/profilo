@@ -25,7 +25,7 @@ namespace profilo {
 namespace mmapbuf {
 
 constexpr static uint64_t kMagic = 0x306c3166307270; // pr0f1l0
-constexpr static uint64_t kVersion = 3;
+constexpr static uint64_t kVersion = 4;
 
 //
 // Static header for primary buffer verification.
@@ -45,6 +45,7 @@ struct __attribute__((packed)) MmapStaticHeader {
 // file. If format is modified, kVersion must be incremented.
 //
 struct __attribute__((packed)) alignas(8) MmapBufferHeader {
+  constexpr static auto kSessionIdLength = 40;
   uint16_t bufferVersion;
   int64_t configId;
   int32_t versionCode;
@@ -57,6 +58,7 @@ struct __attribute__((packed)) alignas(8) MmapBufferHeader {
   // controllers.
   int64_t normalTraceId;
   int64_t inMemoryTraceId;
+  char sessionId[kSessionIdLength];
 };
 
 //

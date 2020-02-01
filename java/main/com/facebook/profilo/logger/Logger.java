@@ -191,6 +191,14 @@ public final class Logger {
 
   public static native void stopTraceWriter(NativeTraceWriter writer);
 
+  public static void updateMmapBufferSessionId(String sessionId) {
+    MmapBufferManager mmapBufferManager = sMmapBufferManager;
+    if (mmapBufferManager == null) {
+      return;
+    }
+    mmapBufferManager.nativeUpdateSessionId(sessionId);
+  }
+
   @SuppressLint("BadMethodUse-java.lang.Thread.start")
   private static void startWorkerThreadIfNecessary() {
     if (sWorker.get() != null) {

@@ -58,6 +58,33 @@ void loggerWrite(
   });
 }
 
+void loggerWriteStringAnnotation(
+    Logger& logger,
+    int32_t annotationQuicklogId,
+    std::string annotationKey,
+    std::string annotationValue,
+    int64_t timestamp = monotonicTime()) {
+  StandardEntry annotationEntry{};
+  annotationEntry.type = entries::TRACE_ANNOTATION;
+  annotationEntry.tid = threadID();
+  annotationEntry.timestamp = timestamp;
+  annotationEntry.callid = annotationQuicklogId;
+  auto matchid = logger.write(std::move(annotationEntry));
+
+  auto key = annotationKey.c_str();
+  matchid = logger.writeBytes(
+      entries::STRING_KEY,
+      matchid,
+      reinterpret_cast<const uint8_t*>(key),
+      strlen(key));
+  auto value = annotationValue.c_str();
+  logger.writeBytes(
+      entries::STRING_VALUE,
+      matchid,
+      reinterpret_cast<const uint8_t*>(value),
+      strlen(value));
+}
+
 struct FileDescriptor {
   int fd;
 
@@ -170,7 +197,8 @@ void MmapBufferTraceWriter::writeTrace(
   }
 
   auto entriesCount = mapBufferPrefix->header.size;
-  constexpr auto kServiceRecordCount = 5;
+  // Number of additional records we need to log in addition to entries from the buffer file.
+  constexpr auto kServiceRecordCount = 8;
 
   TraceBufferHolder bufferHolder =
       TraceBuffer::allocate(entriesCount + kServiceRecordCount);
@@ -208,6 +236,11 @@ void MmapBufferTraceWriter::writeTrace(
       QuickLogConstants::CONFIG_ID,
       mapBufferPrefix->header.configId,
       timestamp);
+  loggerWriteStringAnnotation(
+      logger,
+      QuickLogConstants::SESSION_ID,
+      "Asl Session Id",
+      std::string(mapBufferPrefix->header.sessionId));
   loggerWrite(logger, entries::TRACE_END, 0, trace_id, timestamp);
 
   TraceWriter writer(
