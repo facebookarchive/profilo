@@ -34,8 +34,10 @@ file(GLOB fbjni_SOURCES
 )
 
 add_library(fbjni SHARED ${fbjni_SOURCES})
+set(fbjni PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 target_compile_options(fbjni PRIVATE ${FBJNI_COMPILE_OPTIONS})
+target_compile_options(fbjni PRIVATE -DBUILDING_FBJNI)
 
 target_include_directories(fbjni PUBLIC
   cxx
