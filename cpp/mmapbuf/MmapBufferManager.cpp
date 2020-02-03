@@ -109,6 +109,9 @@ void MmapBufferManager::updateHeader(
     int64_t normal_trace_id,
     int64_t memory_trace_id) {
   MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
+  if (bufferPrefix == nullptr) {
+    return;
+  }
   bufferPrefix->header.providers = providers;
   bufferPrefix->header.longContext = long_context;
   bufferPrefix->header.normalTraceId = normal_trace_id;
@@ -117,6 +120,9 @@ void MmapBufferManager::updateHeader(
 
 void MmapBufferManager::updateSessionId(const std::string& session_id) {
   MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
+  if (bufferPrefix == nullptr) {
+    return;
+  }
   auto sz = std::min(
       session_id.size(), (size_t)MmapBufferHeader::kSessionIdLength - 1);
   session_id.copy(bufferPrefix->header.sessionId, sz);
