@@ -53,6 +53,13 @@ if (NOT ANDROID_ABI)
   if (CMAKE_SYSTEM_NAME STREQUAL Darwin)
     target_include_directories(fbjni PUBLIC ${JAVA_HOME}/include/darwin)
   endif()
+  # win32/jni_md.h typedefs jint as long, because apparently
+  # long is 32 bits on Windows.  This breaks a lot of stuff.
+  # It could probably be fixed, but for now just require
+  # building with Android's jni.h on Windows, which doesn't do this.
+  # if (CMAKE_SYSTEM_NAME STREQUAL Windows)
+  #   target_include_directories(fbjni PUBLIC ${JAVA_HOME}/include/win32)
+  # endif()
 
   if(NOT FBJNI_SKIP_TESTS)
     enable_testing()
