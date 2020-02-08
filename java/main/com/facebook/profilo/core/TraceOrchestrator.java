@@ -349,9 +349,6 @@ public final class TraceOrchestrator
       return;
     }
 
-    TraceEvents.clearAllProviders(); // disable everything
-    // potentially schedule the following in the future, after a cool down period
-
     mConfig = newConfig;
     TraceControl traceControl = TraceControl.get();
     if (traceControl == null) {

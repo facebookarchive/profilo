@@ -43,6 +43,8 @@ public final class TraceEvents {
     sProviders = nativeDisableProviders(providers);
   }
 
+  /** Clearing all providers can lead to unpredicted effects in active providers mask state. */
+  @Deprecated
   public static synchronized void clearAllProviders() {
     nativeClearAllProviders();
     sProviders = 0;
