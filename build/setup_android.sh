@@ -15,3 +15,4 @@ unzip -q -d . sdk-tools-linux-3859397.zip
 yes | tools/bin/sdkmanager --licenses
 tools/bin/sdkmanager 'platforms;android-23'
 tools/bin/sdkmanager 'build-tools;27.0.1'
+tools/bin/sdkmanager 'platform-tools'
