@@ -300,7 +300,7 @@ public final class TraceControl {
                 ? TraceContext.TraceConfigExtras.EMPTY
                 : traceController.getTraceConfigExtras(longContext, context, controllerConfig));
 
-    return startTraceInternal(flags, nextContext);
+    return startTraceInternal(flags, nextContext, rootConfig);
   }
 
   public boolean adoptContext(int controller, int flags, TraceContext traceContext) {
@@ -309,10 +309,16 @@ public final class TraceControl {
       throw new IllegalArgumentException("Unregistered controller for id = " + controller);
     }
 
-    return startTraceInternal(flags, new TraceContext(traceContext, controller, traceController));
+    Config rootConfig = mCurrentConfig.get();
+    if (rootConfig == null) {
+      return false;
+    }
+
+    return startTraceInternal(
+        flags, new TraceContext(traceContext, controller, traceController), rootConfig);
   }
 
-  private boolean startTraceInternal(int flags, TraceContext nextContext) {
+  private boolean startTraceInternal(int flags, TraceContext nextContext, Config config) {
     while (true) { // Store new trace in CAS manner
       int currentMask = mCurrentTracesMask.get();
       int freeBit = findLowestFreeBit(currentMask, MAX_TRACES, flags);
@@ -329,14 +335,10 @@ public final class TraceControl {
       }
     }
 
-    Config rootConfig = mCurrentConfig.get();
-    if (rootConfig == null) {
-      return false;
-    }
     int timeout =
         nextContext.mTraceConfigExtras.getIntParam(
             ProfiloConstants.TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS,
-            rootConfig.getControllersConfig().getTraceTimeoutMs());
+            config.getControllersConfig().getTraceTimeoutMs());
     if (timeout == -1) { // config doesn't specify a value, use default
       timeout = TRACE_TIMEOUT_MS;
     }
