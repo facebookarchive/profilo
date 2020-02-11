@@ -362,7 +362,10 @@ public final class TraceControl {
 
     synchronized (this) {
       ensureHandlerInitialized();
-      mTraceControlHandler.onTraceStart(nextContext, timeout);
+      // It's a guard if trace stop was initiated from another thread.
+      if (findCurrentTraceByTraceId(nextContext.traceId) != null) {
+        mTraceControlHandler.onTraceStart(nextContext, timeout);
+      }
     }
 
     return true;
