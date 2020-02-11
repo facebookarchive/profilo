@@ -28,6 +28,7 @@ fb_native.android_build_config(
 fb_core_android_library(
     name = "sample-lib",
     srcs = SAMPLE_LIB_SRCS,
+    labels = ["supermodule:android/default/infra.loom.core"],
     provided_deps = [
         ":sample-buildconfig-dummy",
     ],

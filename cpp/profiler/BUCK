@@ -26,6 +26,7 @@ fb_xplat_cxx_library(
     exported_headers = [
         "Constants.h",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("cpp/writer/..."),
         profilo_path("cpp/test/..."),
@@ -55,6 +56,7 @@ fb_xplat_cxx_library(
         #"-DFBLOG_NDEBUG=0",  # verbose logging
     ],
     force_static = True,
+    labels = ["supermodule:android/default/infra.loom.core"],
     soname = "libprofilo_stacktrace_artcompat.so",
     deps = [
         ":base_tracer",
@@ -81,6 +83,7 @@ fb_xplat_cxx_library(
         "BaseTracer.h",
         "JavaBaseTracer.h",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "PUBLIC",
     ],
@@ -99,6 +102,7 @@ fb_xplat_cxx_library(
         "ExternalTracer.h",
     ],
     force_static = True,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "PUBLIC",
     ],
@@ -118,6 +122,7 @@ fb_xplat_cxx_library(
         "ExternalTracerManager.h",
     ],
     force_static = True,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "PUBLIC",
     ],
@@ -137,6 +142,7 @@ fb_xplat_cxx_library(
         "JSTracer.h",
     ],
     force_static = True,
+    labels = ["supermodule:android/default/infra.loom.core"],
     preprocessor_flags = [
         "-DLOG_TAG=\"Profilo/JS\"",
     ],
@@ -160,6 +166,7 @@ fb_xplat_cxx_library(
         "DalvikUtils.h",
     ],
     force_static = True,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "PUBLIC",
     ],
@@ -183,6 +190,7 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
     ],
     force_static = True,
+    labels = ["supermodule:android/default/infra.loom.core"],
     preprocessor_flags = [
         "-DLOG_TAG=\"Profilo/Dalvik\"",
     ],
@@ -216,6 +224,7 @@ fb_xplat_cxx_library(
         #'-DFBLOG_NDEBUG=0', # verbose logging
         "-std=gnu++14",
     ] + profilo_maybe_hidden_visibility(),
+    labels = ["supermodule:android/default/infra.loom.core"],
     soname = "libprofilo_stacktrace.$(ext)",
     supported_platforms_regex = "^(android-|linux|gcc|platform)",
     visibility = [

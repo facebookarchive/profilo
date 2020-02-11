@@ -14,6 +14,7 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("..."),
     ],
@@ -40,6 +41,7 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Profilo\"",
     ],
     force_static = True,
+    labels = ["supermodule:android/default/infra.loom.core"],
     tests = [
         profilo_path("cpp/test:packet_logger"),
     ],

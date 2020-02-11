@@ -19,6 +19,7 @@ fb_xplat_cxx_library(
         "-O3",
         #"-DFBLOG_NDEBUG=0",  # verbose logging
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     soname = "libprofilo_mmap_file_writer.$(ext)",
     tests = [
         profilo_path("cpp/test/mmapbuf/writer:trace_writer"),

@@ -8,6 +8,7 @@ fb_xplat_cxx_library(
     exported_headers = subdir_glob([
         ("headers", "*.h"),
     ]),
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = ["PUBLIC"],
 )
 
@@ -17,6 +18,7 @@ fb_xplat_cxx_library(
     exported_headers = [
         "detail/FileBackedMappingsList.h",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("..."),
     ],
@@ -52,6 +54,7 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/perfevt\"",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     soname = "libprofilo_perfevents.$(ext)",
     visibility = [
         profilo_path("..."),

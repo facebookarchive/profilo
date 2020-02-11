@@ -6,6 +6,7 @@ fb_core_android_library(
     srcs = [
         "MmapBufferManager.java",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("..."),
         "//fbandroid/perftests/benchmarks/...",
@@ -23,6 +24,7 @@ fb_core_android_library(
     srcs = [
         "MmapBufferFileHelper.java",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("..."),
     ],
@@ -39,6 +41,7 @@ fb_core_android_library(
     srcs = [
         "MmapBufferTraceListener.java",
     ],
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("..."),
     ],

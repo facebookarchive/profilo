@@ -6,6 +6,7 @@ fb_core_android_library(
     srcs = glob([
         "*.java",
     ]),
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "//fbandroid/instrumentation_tests/com/facebook/quicklog/...",
         profilo_path("..."),

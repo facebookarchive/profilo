@@ -36,6 +36,7 @@ UPLOAD = [
 fb_core_android_library(
     name = "registry",
     srcs = REGISTRY,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "PUBLIC",
     ],
@@ -48,6 +49,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "constants",
     srcs = CONSTANTS,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "PUBLIC",
     ],
@@ -60,6 +62,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "events",
     srcs = EVENTS,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         "//fbandroid/javatests/com/facebook/profilo/...",
         profilo_path("..."),
@@ -78,6 +81,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "control",
     srcs = CONTROL,
+    labels = ["supermodule:android/default/infra.loom.core"],
     required_for_source_only_abi = True,
     visibility = [
         profilo_path("..."),
@@ -105,6 +109,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "listener",
     srcs = LISTENER,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("..."),
     ],
@@ -123,6 +128,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "upload",
     srcs = UPLOAD,
+    labels = ["supermodule:android/default/infra.loom.core"],
     visibility = [
         profilo_path("..."),
     ],
@@ -140,6 +146,7 @@ fb_core_android_library(
         ["*.java"],
         exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY + LISTENER + UPLOAD,
     ),
+    labels = ["supermodule:android/default/infra.loom.core"],
     tests = [
         profilo_path("java/test/com/facebook/profilo/core:core"),
     ],
