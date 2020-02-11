@@ -26,8 +26,7 @@ void dumpMappingDensities(
     facebook::jni::alias_ref<jclass>,
     std::string mapRegex,
     std::string outFile) {
-  facebook::profilo::mappingdensity::dumpMappingDensities(
-      mapRegex, outFile);
+  facebook::profilo::mappingdensity::dumpMappingDensities(mapRegex, outFile);
 }
 
 } // namespace

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <fb/Build.h>
 #include <profilo/JNILoggerHelpers.h>
+#include <fb/Build.h>
 #include <profilo/Logger.h>
 #include <util/common.h>
 
@@ -32,7 +32,7 @@ jint loggerWriteStandardEntry(
     jint tid,
     jint arg1,
     jint arg2,
-    jlong arg3){
+    jlong arg3) {
   if (flags & FILL_TIMESTAMP) {
     timestamp = monotonicTime();
   }
@@ -97,4 +97,6 @@ jint loggerWriteBytesEntry(
   return Logger::get().writeBytes(
       static_cast<EntryType>(type), arg1, bytes, len);
 }
-}}}
+} // namespace detail
+} // namespace profilo
+} // namespace facebook

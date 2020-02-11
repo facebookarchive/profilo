@@ -88,7 +88,6 @@ void SystemCounterThread::registerNatives() {
 }
 
 void SystemCounterThread::logCounters() {
-
   // When collecting counters for all threads and in high frequency mode then
   // thread ids from the high frequency whitelist should be ignored.
   // Making a copy of whitelist here to avoid holding the whitelist lock while

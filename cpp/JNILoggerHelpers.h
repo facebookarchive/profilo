@@ -43,4 +43,6 @@ jint loggerWriteBytesEntry(
     jint arg1,
     jstring arg2);
 
-}}}
+} // namespace detail
+} // namespace profilo
+} // namespace facebook

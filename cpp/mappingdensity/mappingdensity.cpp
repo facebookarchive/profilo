@@ -23,7 +23,6 @@
 #include <sstream>
 #include <string>
 #include <system_error>
-#include <unistd.h>
 #include <vector>
 
 #include <fb/log.h>
