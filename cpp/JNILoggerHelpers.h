@@ -15,6 +15,7 @@
  */
 
 #include <jni.h>
+#include <cstdint>
 
 namespace facebook {
 namespace profilo {
