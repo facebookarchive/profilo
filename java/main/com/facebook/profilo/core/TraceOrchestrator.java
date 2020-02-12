@@ -409,7 +409,15 @@ public final class TraceOrchestrator
     String sanitizedTraceID = context.encodedTraceId.replaceAll("[^a-zA-Z0-9\\-_.]", "_");
     File extraFolder = new File(new File(mainFolder, sanitizedTraceID), EXTRA_DATA_FOLDER_NAME);
     if (!extraFolder.isDirectory() && !extraFolder.mkdirs()) {
-      return null;
+      // If the main & other process try to call mkdirs() simultaneously, one of the mkdirs will
+      // fail
+      // because mkdirs() checks for exists(). So, check if the directory was created.
+      Log.w(
+          TAG,
+          "Failed to create extra data file! This could be because another process created it");
+      if (!extraFolder.exists() || !extraFolder.isDirectory()) {
+        return null;
+      }
     }
 
     return new File(
