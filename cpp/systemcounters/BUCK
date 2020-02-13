@@ -23,7 +23,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-std=gnu++14",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     soname = "libprofilo_systemcounters.$(ext)",
     tests = [
         profilo_path("cpp/test/systemcounters:processcounters"),

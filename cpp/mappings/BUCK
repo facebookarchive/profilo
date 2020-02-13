@@ -18,7 +18,7 @@ fb_xplat_cxx_library(
         "-std=gnu++14",
         # "-DFBLOG_NDEBUG=0",  # verbose logging
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     soname = "libprofilo_mappings.$(ext)",
     visibility = [
         profilo_path("java/main/com/facebook/profilo/provider/mappings:"),

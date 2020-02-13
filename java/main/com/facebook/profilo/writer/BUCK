@@ -9,7 +9,7 @@ fb_core_android_library(
         ["*.java"],
         exclude = CALLBACKS_SRC,
     ),
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     visibility = [
         profilo_path("..."),
     ],
@@ -28,7 +28,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "writer_callbacks",
     srcs = glob(CALLBACKS_SRC),
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     visibility = [
         profilo_path("..."),
         "//fbandroid/perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",

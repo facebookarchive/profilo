@@ -15,7 +15,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     tests = [
         profilo_path("cpp/test:codegen"),
@@ -46,7 +46,7 @@ fb_xplat_cxx_library(
         # no __builtin_sub/add_overflow on gcc 4.9, so let's do this instead
         "-fwrapv",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     tests = [
         profilo_path("cpp/test:delta_visitor"),
@@ -74,7 +74,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/test/..."),
@@ -99,7 +99,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/test/..."),
@@ -126,7 +126,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/test/..."),
@@ -159,7 +159,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     tests = [
         profilo_path("cpp/test:trace_writer"),
@@ -200,7 +200,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/jni/..."),
@@ -226,7 +226,7 @@ fb_xplat_cxx_library(
         "-fexceptions",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     preferred_linkage = "static",
     visibility = [
         profilo_path("cpp/..."),

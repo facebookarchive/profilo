@@ -7,7 +7,7 @@ fb_core_android_library(
         "SystemCounterLogger.java",
         "SystemCounterThread.java",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     visibility = [profilo_path("...")],
     deps = [
         profilo_path("cpp/systemcounters:systemcounters"),

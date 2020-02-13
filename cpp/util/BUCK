@@ -27,7 +27,7 @@ fb_xplat_cxx_library(
         "-Wall",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     visibility = [
         profilo_path("cpp/..."),
         profilo_path("facebook/cpp/..."),
@@ -60,7 +60,7 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Profilo/util\"",
         "-O3",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     soname = "libprofilo_util.$(ext)",
     tests = [
         profilo_path("cpp/util/test:procfs"),

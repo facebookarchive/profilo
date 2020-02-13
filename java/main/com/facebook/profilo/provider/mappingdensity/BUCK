@@ -4,7 +4,7 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 fb_core_android_library(
     name = "mappingdensity",
     srcs = glob(["*.java"]),
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     visibility = [
         profilo_path("..."),
     ],

@@ -19,7 +19,7 @@ fb_xplat_cxx_library(
         # "-O0",
         # "-g3",
     ],
-    labels = ["supermodule:android/default/infra.loom.core"],
+    labels = ["supermodule:android/default/loom.core"],
     soname = "libprofilo_mappingdensity.$(ext)",
     supported_platforms_regex = "^android-(armv7|arm64|x86)$",
     visibility = [
