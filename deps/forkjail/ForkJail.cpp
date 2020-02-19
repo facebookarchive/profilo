@@ -154,7 +154,7 @@ pid_t ForkJail::forkAndRun() {
         continue;
       }
 
-      // Similarly to fork() above, siagaction may have been distracted.
+      // Similarly to fork() above, sigaction may have been distracted.
       if (real_sigaction(signum, &dfltaction, NULL)) {
         //LOGE("sigaction failed: %s", strerror(errno));
         real_exit(kChildSetupExitCode);
@@ -196,7 +196,7 @@ pid_t ForkJail::forkAndRun() {
 }
 
 void ForkJail::real_exit(int status) {
-  syscall(__NR_exit, status);
+  sys_exit_group(status);
 }
 
 void ForkJail::alarm_handler(int signum){
