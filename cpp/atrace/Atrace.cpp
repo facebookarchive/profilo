@@ -20,8 +20,10 @@
 #include <sys/mman.h>
 #include <sys/syscall.h>
 #include <unistd.h>
+#include <array>
 #include <atomic>
 #include <sstream>
+#include <string>
 #include <system_error>
 #include <unordered_set>
 
@@ -36,8 +38,6 @@
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
-
-#include <unordered_set>
 
 #include "Atrace.h"
 
@@ -178,6 +178,28 @@ __write_chk_hook(int fd, const void* buf, size_t count, size_t buf_size) {
   return CALL_PREV(__write_chk_hook, fd, buf, count, buf_size);
 }
 
+constexpr auto kWhitelistSize = 7;
+
+std::array<std::string, kWhitelistSize>& getLibWhitelist() {
+  static std::array<std::string, kWhitelistSize> whitelist = {
+      {"libandroid_runtime.so",
+       "libui.so",
+       "libgui.so",
+       "libart.so",
+       "libhwui.so",
+       "libEGL.so",
+       "libcutils.so"}};
+  return whitelist;
+}
+
+std::vector<plt_hook_spec>& getFunctionSpecsForWhitelist() {
+  static std::vector<plt_hook_spec> functionHooks = {
+      {"write", reinterpret_cast<void*>(&write_hook)},
+      {"__write_chk", reinterpret_cast<void*>(__write_chk_hook)},
+  };
+  return functionHooks;
+}
+
 } // namespace
 
 std::vector<std::pair<char const*, void*>>& getFunctionHooks() {
@@ -217,11 +239,24 @@ std::unordered_set<std::string>& getSeenLibs() {
   return seenLibs;
 }
 
-void hookLoadedLibs(bool singleLibOptimization) {
+void hookLoadedLibs(bool singleLibOptimization, bool useLibWhitelist) {
   auto sdk = build::Build::getAndroidSdk();
   if (singleLibOptimization && sdk >= kSingleLibSdk) {
     auto& spec = getSingleLibFunctionSpec();
     hook_single_lib(kSingleLibName, &spec, 1);
+    return;
+  }
+
+  if (useLibWhitelist) {
+    auto& whitelist = getLibWhitelist();
+    auto& functionSpecs = getFunctionSpecsForWhitelist();
+    for (auto& lib : whitelist) {
+      auto failures = hook_single_lib(
+          lib.c_str(), functionSpecs.data(), functionSpecs.size());
+      if (failures) {
+        throw std::runtime_error("Hook failed for library: " + lib);
+      }
+    }
     return;
   }
 
@@ -232,11 +267,24 @@ void hookLoadedLibs(bool singleLibOptimization) {
       functionHooks, allowHookingCb, &seenLibs);
 }
 
-void unhookLoadedLibs(bool singleLibOptimization) {
+void unhookLoadedLibs(bool singleLibOptimization, bool useLibWhitelist) {
   auto sdk = build::Build::getAndroidSdk();
   if (singleLibOptimization && sdk >= kSingleLibSdk) {
     auto& spec = getSingleLibFunctionSpec();
     unhook_single_lib(kSingleLibName, &spec, 1);
+    return;
+  }
+
+  if (useLibWhitelist) {
+    auto& whitelist = getLibWhitelist();
+    auto& functionSpecs = getFunctionSpecsForWhitelist();
+    for (auto& lib : whitelist) {
+      auto failures = unhook_single_lib(
+          lib.c_str(), functionSpecs.data(), functionSpecs.size());
+      if (failures) {
+        throw std::runtime_error("Unhook failed for library: " + lib);
+      }
+    }
     return;
   }
 
@@ -246,7 +294,10 @@ void unhookLoadedLibs(bool singleLibOptimization) {
   getSeenLibs().clear();
 }
 
-void installSystraceSnooper(int providerMask, bool singleLibOptimization) {
+void installSystraceSnooper(
+    int providerMask,
+    bool singleLibOptimization,
+    bool useLibWhitelist) {
   auto sdk = build::Build::getAndroidSdk();
   {
     std::string lib_name("libcutils.so");
@@ -295,13 +346,13 @@ void installSystraceSnooper(int providerMask, bool singleLibOptimization) {
     throw std::runtime_error("Could not initialize plthooks library");
   }
 
-  hookLoadedLibs(singleLibOptimization);
+  hookLoadedLibs(singleLibOptimization, useLibWhitelist);
 
   systrace_installed = true;
   provider_mask = providerMask;
 }
 
-void enableSystrace(bool singleLibOptimization) {
+void enableSystrace(bool singleLibOptimization, bool useLibWhitelist) {
   if (!systrace_installed) {
     return;
   }
@@ -310,7 +361,7 @@ void enableSystrace(bool singleLibOptimization) {
     // On every enable, except the first one, find if new libs were loaded
     // and install systrace hook for them
     try {
-      hookLoadedLibs(singleLibOptimization);
+      hookLoadedLibs(singleLibOptimization, useLibWhitelist);
     } catch (...) {
       // It's ok to continue if the refresh has failed
     }
@@ -326,14 +377,14 @@ void enableSystrace(bool singleLibOptimization) {
   atrace_enabled = true;
 }
 
-void restoreSystrace(bool singleLibOptimization) {
+void restoreSystrace(bool singleLibOptimization, bool useLibWhitelist) {
   atrace_enabled = false;
   if (!systrace_installed) {
     return;
   }
 
   try {
-    unhookLoadedLibs(singleLibOptimization);
+    unhookLoadedLibs(singleLibOptimization, useLibWhitelist);
   } catch (...) {
   }
 
@@ -344,9 +395,12 @@ void restoreSystrace(bool singleLibOptimization) {
   }
 }
 
-bool installSystraceHook(int mask, bool singleLibOptimization) {
+bool installSystraceHook(
+    int mask,
+    bool singleLibOptimization,
+    bool useLibWhitelist) {
   try {
-    installSystraceSnooper(mask, singleLibOptimization);
+    installSystraceSnooper(mask, singleLibOptimization, useLibWhitelist);
 
     return true;
   } catch (const std::runtime_error& e) {
@@ -361,22 +415,25 @@ bool JNI_installSystraceHook(
     JNIEnv*,
     jobject,
     jint mask,
-    jboolean singleLibOptimization) {
-  return installSystraceHook(mask, singleLibOptimization);
+    jboolean singleLibOptimization,
+    jboolean useLibWhitelist) {
+  return installSystraceHook(mask, singleLibOptimization, useLibWhitelist);
 }
 
 void JNI_enableSystraceNative(
     JNIEnv*,
     jobject,
-    jboolean singleLibOptimization) {
-  enableSystrace(singleLibOptimization);
+    jboolean singleLibOptimization,
+    jboolean useLibWhitelist) {
+  enableSystrace(singleLibOptimization, useLibWhitelist);
 }
 
 void JNI_restoreSystraceNative(
     JNIEnv*,
     jobject,
-    jboolean singleLibOptimization) {
-  restoreSystrace(singleLibOptimization);
+    jboolean singleLibOptimization,
+    jboolean useLibWhitelist) {
+  restoreSystrace(singleLibOptimization, useLibWhitelist);
 }
 
 bool JNI_isEnabled(JNIEnv*, jobject) {
@@ -390,11 +447,11 @@ void registerNatives() {
       "com/facebook/profilo/provider/atrace/Atrace",
       {
           makeNativeMethod(
-              "installSystraceHook", "(IZ)Z", JNI_installSystraceHook),
+              "installSystraceHook", "(IZZ)Z", JNI_installSystraceHook),
           makeNativeMethod(
-              "enableSystraceNative", "(Z)V", JNI_enableSystraceNative),
+              "enableSystraceNative", "(ZZ)V", JNI_enableSystraceNative),
           makeNativeMethod(
-              "restoreSystraceNative", "(Z)V", JNI_restoreSystraceNative),
+              "restoreSystraceNative", "(ZZ)V", JNI_restoreSystraceNative),
           makeNativeMethod("isEnabled", "()Z", JNI_isEnabled),
       });
 }

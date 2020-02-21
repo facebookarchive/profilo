@@ -33,7 +33,11 @@ public final class SystraceProvider extends BaseTraceProvider {
         tc != null
             && tc.mTraceConfigExtras.getBoolParam(
                 ProfiloConstants.ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM, false);
-    Atrace.enableSystrace(applyOptimization);
+    boolean useLibWhitelist =
+        tc != null
+            && tc.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.ATRACE_USE_LIB_WHITELIST_PARAM, false);
+    Atrace.enableSystrace(applyOptimization, useLibWhitelist);
   }
 
   @Override
@@ -43,7 +47,11 @@ public final class SystraceProvider extends BaseTraceProvider {
         tc != null
             && tc.mTraceConfigExtras.getBoolParam(
                 ProfiloConstants.ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM, false);
-    Atrace.restoreSystrace(applyOptimization);
+    boolean useLibWhitelist =
+        tc != null
+            && tc.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.ATRACE_USE_LIB_WHITELIST_PARAM, false);
+    Atrace.restoreSystrace(applyOptimization, useLibWhitelist);
   }
 
   @Override

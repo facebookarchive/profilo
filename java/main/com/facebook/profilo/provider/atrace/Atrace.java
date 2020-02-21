@@ -25,9 +25,12 @@ public final class Atrace {
   private static boolean sHasHook = false;
   private static boolean sHookFailed = false;
 
-  public static synchronized boolean hasHacks(boolean singleLibOptimization) {
+  public static synchronized boolean hasHacks(
+      boolean singleLibOptimization, boolean useLibWhitelist) {
     if (!sHasHook && !sHookFailed) {
-      sHasHook = installSystraceHook(SystraceProvider.PROVIDER_ATRACE, singleLibOptimization);
+      sHasHook =
+          installSystraceHook(
+              SystraceProvider.PROVIDER_ATRACE, singleLibOptimization, useLibWhitelist);
 
       // Record that we failed, so we don't try again.
       sHookFailed = !sHasHook;
@@ -35,31 +38,34 @@ public final class Atrace {
     return sHasHook;
   }
 
-  private static native boolean installSystraceHook(int mask, boolean singleLibOptimization);
+  private static native boolean installSystraceHook(
+      int mask, boolean singleLibOptimization, boolean useLibWhitelist);
 
-  public static void enableSystrace(boolean singleLibOptimization) {
-    if (!hasHacks(singleLibOptimization)) {
+  public static void enableSystrace(boolean singleLibOptimization, boolean useLibWhitelist) {
+    if (!hasHacks(singleLibOptimization, useLibWhitelist)) {
       return;
     }
 
-    enableSystraceNative(singleLibOptimization);
+    enableSystraceNative(singleLibOptimization, useLibWhitelist);
 
     SystraceReflector.updateSystraceTags();
   }
 
-  public static void restoreSystrace(boolean singleLibOptimization) {
-    if (!hasHacks(singleLibOptimization)) {
+  public static void restoreSystrace(boolean singleLibOptimization, boolean useLibWhitelist) {
+    if (!hasHacks(singleLibOptimization, useLibWhitelist)) {
       return;
     }
 
-    restoreSystraceNative(singleLibOptimization);
+    restoreSystraceNative(singleLibOptimization, useLibWhitelist);
 
     SystraceReflector.updateSystraceTags();
   }
 
-  private static native void enableSystraceNative(boolean singleLibOptimization);
+  private static native void enableSystraceNative(
+      boolean singleLibOptimization, boolean useLibWhitelist);
 
-  private static native void restoreSystraceNative(boolean singleLibOptimization);
+  private static native void restoreSystraceNative(
+      boolean singleLibOptimization, boolean useLibWhitelist);
 
   public static native boolean isEnabled();
 
