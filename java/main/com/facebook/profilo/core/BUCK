@@ -153,6 +153,7 @@ fb_core_android_library(
     visibility = [
         "//fbandroid/java/com/facebook/cloudseeder:cloudseeder",
         "//fbandroid/java/com/facebook/common/fury:util-fb4a",
+        "//fbandroid/java/com/facebook/common/fury:util-instagram",
         "//fbandroid/java/com/facebook/debug/profilo:profilo",
         "//fbandroid/java/com/facebook/fab/dumper/plugins:plugins",
         "//fbandroid/java/com/facebook/katana/activity:activity",
