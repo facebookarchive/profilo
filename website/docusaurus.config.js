@@ -38,6 +38,10 @@ module.exports = {
       copyright: `Copyright \u00A9 ${new Date().getFullYear()} Facebook, Inc. Built with Docusaurus.`
     }
   },
+  algolia: {
+      apiKey: '2d1e716ad64b24b64f695105790461a5',
+      indexName: 'profilo',
+  },
   presets: [
     [
       "@docusaurus/preset-classic",
