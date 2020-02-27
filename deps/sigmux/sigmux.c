@@ -518,7 +518,13 @@ sigmux_reinit_locked(int signum, uint32_t flags)
     }
   }
 
+  if ((flags & RESET_ORIG_SIGACTION_FLAG) != 0) {
+    // We will just let them leak for now, the clean up will still happen on sigmux_unregister
+    sigmux_global.handlers.prev = &sigmux_global.handlers;
+    sigmux_global.handlers.next = &sigmux_global.handlers;
 
+    phaser_drain(&sigmux_global.phaser);
+  }
 
   memset(&reinitact, 0, sizeof (reinitact));
   reinitact.sa_sigaction = sigmux_handle_signal_1;

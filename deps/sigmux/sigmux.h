@@ -94,18 +94,21 @@ SIGMUX_EXPORT extern int sigmux_init(
 );
 
 #define RESET_ORIG_SIGACTION_FLAG (1<<0)
+#define CLEAR_ALL_SIGMUXES_FLAG (1<<1)
 
 /**
- * This forces sigmux to re-init. Before calling sigmux needs to have
- * been called at least once, otherwise this does nothing.
+ * This forces sigmux to re-init. If it hasn't been inited it will force an init
  *
  * You most likely don't need to do this. The main case is to re-init
  * sigaction for the specific signum (similar as sigmux_init).
  * This can happen when some other libraries mess with the sigaction.
  * without letting sigmux know.
  *
- * RESET_ORIG_SIGACTION_FLAG decides whether we should reset the stored
- * original sigaction or replace it with the sigaction currently there.
+ * RESET_ORIG_SIGACTION_FLAG decides whether we should reset the existing
+ * original sigaction
+ *
+ * CLEAR_ALL_SIGMUXES_FLAG clears all of the existing sigmuxes registered
+ *
  */
 SIGMUX_EXPORT extern int sigmux_reinit(
   int signum,
