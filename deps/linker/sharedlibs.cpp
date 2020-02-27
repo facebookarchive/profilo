@@ -83,6 +83,27 @@ bool starts_with(char const* str, char const* start) {
   return *start == 0;
 }
 
+bool refresh_shared_lib_using_dl_iterate_phdr_if_can() {
+  static auto dl_iterate_phdr =
+    reinterpret_cast<int(*)(int(*)(dl_phdr_info*, size_t, void*), void*)>(
+      dlsym(RTLD_DEFAULT, "dl_iterate_phdr"));
+
+  if (dl_iterate_phdr == nullptr) {
+    // Undefined symbol.
+    return false;
+  }
+
+  dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void*) {
+    if (info->dlpi_name &&
+          (ends_with(info->dlpi_name, ".so")  || starts_with(info->dlpi_name, "app_process"))) {
+      addSharedLib(info->dlpi_name, info);
+    }
+    return 0;
+  }, nullptr);
+
+  return true;
+}
+
 } // namespace (anonymous)
 
 elfSharedLibData sharedLib(char const* libname) {
@@ -132,25 +153,15 @@ using namespace facebook::linker;
 
 int
 refresh_shared_libs() {
-  if (facebook::build::getAndroidSdk() >= ANDROID_L) {
-    static auto dl_iterate_phdr =
-      reinterpret_cast<int(*)(int(*)(dl_phdr_info*, size_t, void*), void*)>(
-        dlsym(RTLD_DEFAULT, "dl_iterate_phdr"));
+  bool successful = refresh_shared_lib_using_dl_iterate_phdr_if_can();
+  if (successful) {
+    return 0;
+  }
 
-    if (dl_iterate_phdr == nullptr) {
-      // Undefined symbol.
-      return 1;
-    }
-
-    dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void*) {
-      if (info->dlpi_name &&
-            (ends_with(info->dlpi_name, ".so")  || starts_with(info->dlpi_name, "app_process"))) {
-        addSharedLib(info->dlpi_name, info);
-      }
-      return 0;
-    }, nullptr);
-  } else {
 #ifndef __LP64__ /* prior to android L there were no 64-bit devices anyway */
+  if (facebook::build::getAndroidSdk() < ANDROID_L) {
+    // For some reason this can crash a lot on dalvik so we are only going to try if we can't
+    // use some other method
     soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
 
     if (si == nullptr) {
@@ -163,9 +174,12 @@ refresh_shared_libs() {
         addSharedLib(si->link_map.l_name, si);
       }
     }
-#endif
+
+    return 0;
   }
-  return 0;
+#endif
+
+  return successful ? 0 : 1;
 }
 
 } // extern C
