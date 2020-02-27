@@ -237,12 +237,12 @@ struct TurnSequencer {
     kWaitersMask = (1 << kTurnShift) - 1,
 
     /// The minimum spin count that we will adaptively select
-    kMinSpins = 20,
+    kMinSpins = 1,
 
     /// The maximum spin count that we will adaptively select, and the
     /// spin count that will be used when probing to get a new data point
     /// for the adaptation
-    kMaxSpins = 2000,
+    kMaxSpins = 1,
   };
 
   /// This holds both the current turn, and the highest waiting turn,
