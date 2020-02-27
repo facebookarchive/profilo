@@ -432,13 +432,12 @@ allocate_sigaction(struct sigaction** sap)
 }
 
 int
-sigmux_init(int signum)
+sigmux_init_locked(int signum)
 {
   int ismem;
   struct sigaction newact;
   int ret = -1;
 
-  VERIFY(0 == pthread_mutex_lock(&sigmux_global.lock));
   if (sigmux_global.phaser_needs_init) {
     if (phaser_init(&sigmux_global.phaser) != 0) {
       goto out;
@@ -480,52 +479,85 @@ sigmux_init(int signum)
 
   out:
 
+  return ret;
+}
+
+int
+sigmux_init(int signum)
+{
+  int ret = -1;
+
+  VERIFY(0 == pthread_mutex_lock(&sigmux_global.lock));
+
+  ret = sigmux_init_locked(signum);
+
   VERIFY(0 == pthread_mutex_unlock(&sigmux_global.lock));
   return ret;
 }
 
 int
-sigmux_reinit(int signum, int flags)
+sigmux_reinit_locked(int signum, uint32_t flags)
 {
-  int ismem;
   struct sigaction reinitact;
   int ret = -1;
 
-  VERIFY(0 == pthread_mutex_lock(&sigmux_global.lock));
+  struct sigaction* orig_sigaction = NULL;
+  if ((flags & RESET_ORIG_SIGACTION_FLAG) != 0) {
+    struct sigaction* old_orig_sigaction = sigmux_global.orig_sigact[signum];
 
-  ismem = sigmux_sigismember(&sigmux_global.initsig, signum);
-  if (ismem == -1) {
-    goto out;
+    orig_sigaction =
+      allocate_sigaction(&sigmux_global.orig_sigact[signum]);
+
+    if (orig_sigaction == NULL) {
+      sigmux_global.orig_sigact[signum] = old_orig_sigaction;
+      goto out;
+    }
+
+    if (old_orig_sigaction != NULL) {
+      free(old_orig_sigaction);
+    }
   }
 
-  // Not inited
-  if (ismem == 0) {
-    goto out;
-  }
 
-  struct sigaction* orig_sigaction_tmp =
-    (flags & RESET_ORIG_SIGACTION_FLAG) != 0
-         ? calloc(1, sizeof(struct sigaction))
-         : NULL;
 
   memset(&reinitact, 0, sizeof (reinitact));
   reinitact.sa_sigaction = sigmux_handle_signal_1;
   reinitact.sa_flags = SA_NODEFER | SA_SIGINFO | SA_ONSTACK | SA_RESTART;
-  if (invoke_real_sigaction(signum, &reinitact, orig_sigaction_tmp) != 0) {
+  if (invoke_real_sigaction(signum, &reinitact, orig_sigaction) != 0) {
     goto out;
-  }
-
-  // Only reset the original sigaction if were asked to
-  if (orig_sigaction_tmp != NULL) {
-    struct sigaction* old_orig_sigaction = sigmux_global.orig_sigact[signum];
-    sigmux_global.orig_sigact[signum] = orig_sigaction_tmp;
-    free(old_orig_sigaction);
   }
 
   __atomic_signal_fence(__ATOMIC_SEQ_CST);
   sigmux_gdbhook_on_signal_seized();
 
   ret = 0;
+
+  out:
+
+  return ret;
+}
+
+int
+sigmux_reinit(int signum, uint32_t flags)
+{
+  int ismem;
+  int ret = -1;
+
+  VERIFY(0 == pthread_mutex_lock(&sigmux_global.lock));
+
+  ismem = sigmux_sigismember(&sigmux_global.initsig, signum);
+  if (ismem == -1) {
+    // Already failed dont know how to restore easily
+    goto out;
+  }
+
+  if (ismem != 0) {
+    // Already inited and now reiniting
+    ret = sigmux_reinit_locked(signum, flags);
+  } else {
+    // Not inited so initing
+    ret = sigmux_init_locked(signum);
+  }
 
   out:
 

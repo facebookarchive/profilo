@@ -108,8 +108,8 @@ SIGMUX_EXPORT extern int sigmux_init(
  * original sigaction or replace it with the sigaction currently there.
  */
 SIGMUX_EXPORT extern int sigmux_reinit(
- int signum,
- int flags
+  int signum,
+  uint32_t flags
 );
 
 /**
