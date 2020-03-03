@@ -20,6 +20,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 import android.content.Context;
 import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.io.Files;
 import java.io.File;
 import java.io.FileFilter;
@@ -236,8 +237,7 @@ public class FileManagerTest {
     assertThat(folder).exists();
     assertThat(folder).isDirectory();
 
-    Files.fileTreeTraverser()
-        .breadthFirstTraversal(folder)
+    FluentIterable.from(Files.fileTraverser().breadthFirst(folder))
         .transform(
             new Function<File, Void>() {
               @Nullable
@@ -275,8 +275,8 @@ public class FileManagerTest {
 
   // Deletes a File that we made "undeletable" above
   private static void deleteDir(File f) {
-    Files.fileTreeTraverser()
-        .postOrderTraversal(f) // so directories are empty when we get to them
+    // so directories are empty when we get to them
+    FluentIterable.from(Files.fileTraverser().depthFirstPostOrder(f))
         .transform(
             new Function<File, Void>() {
 
