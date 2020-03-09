@@ -4,11 +4,11 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_oss_xplat_cxx_library")
 profilo_oss_xplat_cxx_library(
     name = "fmt",
     srcs = glob([
-        "fmt-5.2.0/src/*.cc",
+        "fmt-*/src/*.cc",
     ]),
     header_namespace = "",
     exported_headers = subdir_glob([
-        ("fmt-5.2.0/include", "fmt/*.h"),
+        ("fmt-*/include", "fmt/*.h"),
     ]),
     compiler_flags = [
         "-Wno-missing-prototypes",
