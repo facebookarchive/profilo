@@ -518,7 +518,7 @@ sigmux_reinit_locked(int signum, uint32_t flags)
     }
   }
 
-  if ((flags & RESET_ORIG_SIGACTION_FLAG) != 0) {
+  if ((flags & CLEAR_ALL_SIGMUXES_FLAG) != 0) {
     // We will just let them leak for now, the clean up will still happen on sigmux_unregister
     sigmux_global.handlers.prev = &sigmux_global.handlers;
     sigmux_global.handlers.next = &sigmux_global.handlers;
