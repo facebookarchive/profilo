@@ -52,12 +52,8 @@ void TestSequencer::advance() {
 }
 
 void TestSequencer::advance(int expectedTurn) {
-  if (state_ < max_states_) {
-    // Semaphores are 0-indexed - turn X has its
-    // waiters on semaphore X-1.
-    sem_post(&semaphores_[state_++]);
-  }
-  assert(state_ == expectedTurn);
+  assert(state_ + 1 == expectedTurn); // expect state to be stable
+  advance();
 }
 
 void TestSequencer::waitAndAdvance(int turn) {
