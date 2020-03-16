@@ -443,24 +443,20 @@ public final class TraceOrchestrator
   public void onTraceStop(TraceContext context) {
     BaseTraceProvider[] normalProviders;
     BaseTraceProvider[] syncProviders;
-    Config config;
     synchronized (this) {
       normalProviders = mNormalTraceProviders;
       syncProviders = mSyncTraceProviders;
-      config = mConfig;
     }
 
-    if (config != null) {
-      Logger.writeStandardEntry(
-          ProfiloConstants.NONE,
-          Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
-          EntryType.TRACE_ANNOTATION,
-          ProfiloConstants.NONE,
-          ProfiloConstants.NONE,
-          Identifiers.CONFIG_ID,
-          ProfiloConstants.NONE,
-          config.getConfigID());
-    }
+    Logger.writeStandardEntry(
+        ProfiloConstants.NONE,
+        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        EntryType.TRACE_ANNOTATION,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        Identifiers.CONFIG_ID,
+        ProfiloConstants.NONE,
+        context.configId);
 
     int tracingProviders = 0;
     for (BaseTraceProvider provider : normalProviders) {

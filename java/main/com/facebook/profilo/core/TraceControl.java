@@ -290,6 +290,7 @@ public final class TraceControl {
         new TraceContext(
             traceId,
             FbTraceId.encode(traceId),
+            rootConfig,
             controller,
             traceController,
             context,
@@ -315,7 +316,7 @@ public final class TraceControl {
     }
 
     return startTraceInternal(
-        flags, new TraceContext(traceContext, controller, traceController), rootConfig);
+        flags, new TraceContext(traceContext, rootConfig, controller, traceController), rootConfig);
   }
 
   private boolean startTraceInternal(int flags, TraceContext nextContext, Config config) {

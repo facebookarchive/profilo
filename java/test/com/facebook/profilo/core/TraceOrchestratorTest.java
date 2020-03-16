@@ -157,6 +157,7 @@ public class TraceOrchestratorTest {
         new TraceContext(
             0xFACEB00C, // traceId
             "FACEBOOOK", // encodedTraceId
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -168,6 +169,7 @@ public class TraceOrchestratorTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -493,6 +495,7 @@ public class TraceOrchestratorTest {
         new TraceContext(
             0xFACEB001, // traceId
             "FACEBOOO1", // encodedTraceId
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -547,6 +550,7 @@ public class TraceOrchestratorTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -595,6 +599,7 @@ public class TraceOrchestratorTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context

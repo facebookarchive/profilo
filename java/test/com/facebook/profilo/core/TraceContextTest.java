@@ -16,7 +16,9 @@ package com.facebook.profilo.core;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 import android.os.Parcel;
+import com.facebook.profilo.config.Config;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
 import java.util.TreeMap;
 import org.junit.Before;
@@ -54,13 +56,16 @@ public class TraceContextTest {
   }
 
   private TraceContext mContext;
+  private Config mConfig;
 
   @Before
   public void setUp() {
+    mConfig = new TestConfigProvider().getFullConfig();
     mContext =
         new TraceContext(
             TRACE_ID,
             ENCODED_TRACE_ID,
+            mConfig,
             CONTROLLER,
             CONTROLLER_OBJECT,
             CONTEXT,
@@ -75,6 +80,8 @@ public class TraceContextTest {
   public void testGetterMethods() {
     assertThat(mContext.traceId).isEqualTo(TRACE_ID);
     assertThat(mContext.encodedTraceId).isEqualTo(ENCODED_TRACE_ID);
+    assertThat(mContext.config).isEqualTo(mConfig);
+    assertThat(mContext.configId).isEqualTo(mConfig.getConfigID());
     assertThat(mContext.controller).isEqualTo(CONTROLLER);
     assertThat(mContext.controllerObject).isEqualTo(CONTROLLER_OBJECT);
     assertThat(mContext.context).isEqualTo(CONTEXT);
@@ -96,6 +103,7 @@ public class TraceContextTest {
     TraceContext createdFromParcel = TraceContext.CREATOR.createFromParcel(parcel);
     assertThat(createdFromParcel.traceId).isEqualTo(TRACE_ID);
     assertThat(createdFromParcel.encodedTraceId).isEqualTo(ENCODED_TRACE_ID);
+    assertThat(createdFromParcel.configId).isEqualTo(mConfig.getConfigID());
     assertThat(createdFromParcel.controller).isEqualTo(CONTROLLER);
     assertThat(createdFromParcel.controllerObject).isNull();
     assertThat(createdFromParcel.context).isNull();

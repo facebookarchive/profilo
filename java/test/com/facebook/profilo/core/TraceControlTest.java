@@ -101,6 +101,7 @@ public class TraceControlTest {
         new TraceContext(
             TEST_TRACE_ID,
             FbTraceId.encode(TEST_TRACE_ID),
+            mConfig,
             1111,
             new Object(),
             new Object(),
@@ -120,6 +121,8 @@ public class TraceControlTest {
     assertThat(currContext).isNotNull();
     assertThat(currContext.traceId).isEqualTo(mTraceContext.traceId);
     assertThat(currContext.encodedTraceId).isEqualTo(mTraceContext.encodedTraceId);
+    assertThat(currContext.config).isEqualTo(mTraceContext.config);
+    assertThat(currContext.configId).isEqualTo(mTraceContext.configId);
     assertThat(currContext.controller).isEqualTo(TRACE_CONTROLLER_ID);
     assertThat(currContext.controllerObject).isEqualTo(mController);
     assertThat(currContext.context).isEqualTo(mTraceContext.context);
