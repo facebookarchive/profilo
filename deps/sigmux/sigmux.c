@@ -423,19 +423,34 @@ sigmux_handle_signal_1(
 }
 
 static struct sigaction*
+force_allocate_sigaction(struct sigaction** sap) {
+  *sap = calloc(1, sizeof (**sap));
+  return *sap;
+}
+
+static struct sigaction*
 allocate_sigaction(struct sigaction** sap)
 {
   if (*sap == NULL) {
-    *sap = calloc(1, sizeof (**sap));
+    force_allocate_sigaction(sap);
   }
   return *sap;
+}
+
+int
+register_base_sigaction(int signum, struct sigaction* orig_sigact) {
+  struct sigaction newact;
+
+  memset(&newact, 0, sizeof (newact));
+  newact.sa_sigaction = sigmux_handle_signal_1;
+  newact.sa_flags = SA_NODEFER | SA_SIGINFO | SA_ONSTACK | SA_RESTART;
+  return invoke_real_sigaction(signum, &newact, orig_sigact);
 }
 
 int
 sigmux_init_locked(int signum)
 {
   int ismem;
-  struct sigaction newact;
   int ret = -1;
 
   if (sigmux_global.phaser_needs_init) {
@@ -463,10 +478,7 @@ sigmux_init_locked(int signum)
       goto out;
     }
 
-    memset(&newact, 0, sizeof (newact));
-    newact.sa_sigaction = sigmux_handle_signal_1;
-    newact.sa_flags = SA_NODEFER | SA_SIGINFO | SA_ONSTACK | SA_RESTART;
-    if (invoke_real_sigaction(signum, &newact, orig_sigact) != 0) {
+    if (register_base_sigaction(signum, orig_sigact) != 0) {
       goto out;
     }
 
@@ -506,7 +518,7 @@ sigmux_reinit_locked(int signum, uint32_t flags)
     struct sigaction* old_orig_sigaction = sigmux_global.orig_sigact[signum];
 
     orig_sigaction =
-      allocate_sigaction(&sigmux_global.orig_sigact[signum]);
+      force_allocate_sigaction(&sigmux_global.orig_sigact[signum]);
 
     if (orig_sigaction == NULL) {
       sigmux_global.orig_sigact[signum] = old_orig_sigaction;
@@ -515,6 +527,10 @@ sigmux_reinit_locked(int signum, uint32_t flags)
 
     if (old_orig_sigaction != NULL) {
       free(old_orig_sigaction);
+    }
+
+    if (register_base_sigaction(signum, old_orig_sigaction) != 0) {
+      goto out;
     }
   }
 
