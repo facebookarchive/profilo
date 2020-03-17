@@ -14,9 +14,7 @@
 package com.facebook.profilo.provider.atrace;
 
 import com.facebook.profilo.core.BaseTraceProvider;
-import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.ProvidersRegistry;
-import com.facebook.profilo.ipc.TraceContext;
 
 public final class SystraceProvider extends BaseTraceProvider {
 
@@ -28,30 +26,12 @@ public final class SystraceProvider extends BaseTraceProvider {
 
   @Override
   protected void enable() {
-    TraceContext tc = getEnablingTraceContext();
-    boolean applyOptimization =
-        tc != null
-            && tc.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM, false);
-    boolean useLibWhitelist =
-        tc != null
-            && tc.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.ATRACE_USE_LIB_WHITELIST_PARAM, false);
-    Atrace.enableSystrace(applyOptimization, useLibWhitelist);
+    Atrace.enableSystrace();
   }
 
   @Override
   protected void disable() {
-    TraceContext tc = getEnablingTraceContext();
-    boolean applyOptimization =
-        tc != null
-            && tc.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM, false);
-    boolean useLibWhitelist =
-        tc != null
-            && tc.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.ATRACE_USE_LIB_WHITELIST_PARAM, false);
-    Atrace.restoreSystrace(applyOptimization, useLibWhitelist);
+    Atrace.restoreSystrace();
   }
 
   @Override

@@ -25,12 +25,9 @@ public final class Atrace {
   private static boolean sHasHook = false;
   private static boolean sHookFailed = false;
 
-  public static synchronized boolean hasHacks(
-      boolean singleLibOptimization, boolean useLibWhitelist) {
+  public static synchronized boolean hasHacks() {
     if (!sHasHook && !sHookFailed) {
-      sHasHook =
-          installSystraceHook(
-              SystraceProvider.PROVIDER_ATRACE, singleLibOptimization, useLibWhitelist);
+      sHasHook = installSystraceHook(SystraceProvider.PROVIDER_ATRACE);
 
       // Record that we failed, so we don't try again.
       sHookFailed = !sHasHook;
@@ -38,34 +35,31 @@ public final class Atrace {
     return sHasHook;
   }
 
-  private static native boolean installSystraceHook(
-      int mask, boolean singleLibOptimization, boolean useLibWhitelist);
+  private static native boolean installSystraceHook(int mask);
 
-  public static void enableSystrace(boolean singleLibOptimization, boolean useLibWhitelist) {
-    if (!hasHacks(singleLibOptimization, useLibWhitelist)) {
+  public static void enableSystrace() {
+    if (!hasHacks()) {
       return;
     }
 
-    enableSystraceNative(singleLibOptimization, useLibWhitelist);
+    enableSystraceNative();
 
     SystraceReflector.updateSystraceTags();
   }
 
-  public static void restoreSystrace(boolean singleLibOptimization, boolean useLibWhitelist) {
-    if (!hasHacks(singleLibOptimization, useLibWhitelist)) {
+  public static void restoreSystrace() {
+    if (!hasHacks()) {
       return;
     }
 
-    restoreSystraceNative(singleLibOptimization, useLibWhitelist);
+    restoreSystraceNative();
 
     SystraceReflector.updateSystraceTags();
   }
 
-  private static native void enableSystraceNative(
-      boolean singleLibOptimization, boolean useLibWhitelist);
+  private static native void enableSystraceNative();
 
-  private static native void restoreSystraceNative(
-      boolean singleLibOptimization, boolean useLibWhitelist);
+  private static native void restoreSystraceNative();
 
   public static native boolean isEnabled();
 
