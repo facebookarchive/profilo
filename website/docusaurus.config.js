@@ -14,6 +14,10 @@ module.exports = {
   organizationName: "facebookincubator", // Usually your GitHub org/user name.
   projectName: "profilo", // Usually your repo name.
   themeConfig: {
+    algolia: {
+      apiKey: '2d1e716ad64b24b64f695105790461a5',
+      indexName: 'profilo',
+    },
     navbar: {
       title: "Profilo",
       logo: {
