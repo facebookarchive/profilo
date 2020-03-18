@@ -10,8 +10,8 @@
       4,
       5,
       6,
-      13,
       14,
+      15,
       0
     ],
     "@site/src/pages/help.js": [
@@ -58,38 +58,41 @@
       8,
       12
     ],
+    "docsearch.js": [
+      13
+    ],
     "@theme/DocPage": [
       0,
-      13
+      14
     ],
     "@theme/NotFound": [
       0,
-      14
+      15
     ]
   },
   "assets": {
     "0": {
       "css": [
         {
-          "file": "common.3bfe0c00301494d2e2b7.css",
-          "hash": "59a0eef7f65632dd8650",
-          "publicPath": "/profilo/common.3bfe0c00301494d2e2b7.css"
+          "file": "common.70dd370b15fde7e2ec84.css",
+          "hash": "73114c4560831cf3d58b",
+          "publicPath": "/profilo/common.70dd370b15fde7e2ec84.css"
         }
       ],
       "js": [
         {
-          "file": "common.70acde4c5a5a09fea300.js",
-          "hash": "59a0eef7f65632dd8650",
-          "publicPath": "/profilo/common.70acde4c5a5a09fea300.js"
+          "file": "common.bcb54faf92290b4c04b7.js",
+          "hash": "73114c4560831cf3d58b",
+          "publicPath": "/profilo/common.bcb54faf92290b4c04b7.js"
         }
       ]
     },
     "1": {
       "js": [
         {
-          "file": "component---site-src-pages-help-js-7-e-3-222.a93946f5dbdd78ea4684.js",
-          "hash": "b9b4da0c74d6e1b00767",
-          "publicPath": "/profilo/component---site-src-pages-help-js-7-e-3-222.a93946f5dbdd78ea4684.js"
+          "file": "component---site-src-pages-help-js-7-e-3-222.73354103db93e20dc3ab.js",
+          "hash": "7764f5abadeab55dfe9c",
+          "publicPath": "/profilo/component---site-src-pages-help-js-7-e-3-222.73354103db93e20dc3ab.js"
         }
       ]
     },
@@ -97,15 +100,15 @@
       "css": [
         {
           "file": "component---site-src-pages-index-jsc-4-f-f99.80d4207bc6bee6599cf9.css",
-          "hash": "594517df997372268257",
+          "hash": "c8b5bec90025785ca5cd",
           "publicPath": "/profilo/component---site-src-pages-index-jsc-4-f-f99.80d4207bc6bee6599cf9.css"
         }
       ],
       "js": [
         {
-          "file": "component---site-src-pages-index-jsc-4-f-f99.0e06f100603556a8921b.js",
-          "hash": "594517df997372268257",
-          "publicPath": "/profilo/component---site-src-pages-index-jsc-4-f-f99.0e06f100603556a8921b.js"
+          "file": "component---site-src-pages-index-jsc-4-f-f99.2ff9e7f5f3b5a3a1f0c9.js",
+          "hash": "c8b5bec90025785ca5cd",
+          "publicPath": "/profilo/component---site-src-pages-index-jsc-4-f-f99.2ff9e7f5f3b5a3a1f0c9.js"
         }
       ]
     },
@@ -113,42 +116,42 @@
       "css": [
         {
           "file": "component---theme-doc-item-178-a40.de2648345892298aff25.css",
-          "hash": "e9e55aae2d8e08f10f71",
+          "hash": "ebcf0fd96ddf37d4c32e",
           "publicPath": "/profilo/component---theme-doc-item-178-a40.de2648345892298aff25.css"
         }
       ],
       "js": [
         {
-          "file": "component---theme-doc-item-178-a40.dc4f510b1351ff4baf30.js",
-          "hash": "e9e55aae2d8e08f10f71",
-          "publicPath": "/profilo/component---theme-doc-item-178-a40.dc4f510b1351ff4baf30.js"
+          "file": "component---theme-doc-item-178-a40.8f1ddd5a9e511517a5a8.js",
+          "hash": "ebcf0fd96ddf37d4c32e",
+          "publicPath": "/profilo/component---theme-doc-item-178-a40.8f1ddd5a9e511517a5a8.js"
         }
       ]
     },
     "4": {
       "js": [
         {
-          "file": "content---profilo-docs-architecture-23-c-5d8.0448dfe95d95b6b7fc7d.js",
-          "hash": "256d88a41afee58c8848",
-          "publicPath": "/profilo/content---profilo-docs-architecture-23-c-5d8.0448dfe95d95b6b7fc7d.js"
+          "file": "content---profilo-docs-architecture-23-c-5d8.303a3f33c9813d08186a.js",
+          "hash": "152a96be9fa8a14b7bfc",
+          "publicPath": "/profilo/content---profilo-docs-architecture-23-c-5d8.303a3f33c9813d08186a.js"
         }
       ]
     },
     "5": {
       "js": [
         {
-          "file": "content---profilo-docs-getting-started-8-d-0-c76.4ae6c4d98f257790bfa6.js",
-          "hash": "27bd447d3bc6d5ad4b50",
-          "publicPath": "/profilo/content---profilo-docs-getting-started-8-d-0-c76.4ae6c4d98f257790bfa6.js"
+          "file": "content---profilo-docs-getting-started-8-d-0-c76.c895a25dfef16b4dda07.js",
+          "hash": "3617ffac94aabcdae394",
+          "publicPath": "/profilo/content---profilo-docs-getting-started-8-d-0-c76.c895a25dfef16b4dda07.js"
         }
       ]
     },
     "6": {
       "js": [
         {
-          "file": "content---profilo-docs-trace-processing-642-bf9.00639454d98bb409b938.js",
-          "hash": "e009d45d574d11086082",
-          "publicPath": "/profilo/content---profilo-docs-trace-processing-642-bf9.00639454d98bb409b938.js"
+          "file": "content---profilo-docs-trace-processing-642-bf9.8bc2cd02c3ba632b07d7.js",
+          "hash": "096026ea976735de8384",
+          "publicPath": "/profilo/content---profilo-docs-trace-processing-642-bf9.8bc2cd02c3ba632b07d7.js"
         }
       ]
     },
@@ -165,15 +168,15 @@
       "css": [
         {
           "file": "main.18a066086bd80c01d0ce.css",
-          "hash": "4ea501ccae7f8623a136",
+          "hash": "61064624056e9456c639",
           "publicPath": "/profilo/main.18a066086bd80c01d0ce.css"
         }
       ],
       "js": [
         {
-          "file": "main.a24083302832ec019f98.js",
-          "hash": "4ea501ccae7f8623a136",
-          "publicPath": "/profilo/main.a24083302832ec019f98.js"
+          "file": "main.824e030bddae4c251867.js",
+          "hash": "61064624056e9456c639",
+          "publicPath": "/profilo/main.824e030bddae4c251867.js"
         }
       ]
     },
@@ -207,34 +210,43 @@
     "12": {
       "js": [
         {
-          "file": "runtime~main.e883b5800c1ab1903cbe.js",
-          "hash": "474fa64c6d7c93a0a5a6",
-          "publicPath": "/profilo/runtime~main.e883b5800c1ab1903cbe.js"
+          "file": "runtime~main.e31d31b10892892770af.js",
+          "hash": "86b7b2833e22ad47ad1a",
+          "publicPath": "/profilo/runtime~main.e31d31b10892892770af.js"
         }
       ]
     },
     "13": {
-      "css": [
-        {
-          "file": "13.6f9a628984cd6cd76b1e.css",
-          "hash": "b2679620f3246917da39",
-          "publicPath": "/profilo/13.6f9a628984cd6cd76b1e.css"
-        }
-      ],
       "js": [
         {
-          "file": "13.cbe2bf8014d4e4391f35.js",
-          "hash": "b2679620f3246917da39",
-          "publicPath": "/profilo/13.cbe2bf8014d4e4391f35.js"
+          "file": "13.8dd6e133c5762babcca0.js",
+          "hash": "d6a568e33138cc51306a",
+          "publicPath": "/profilo/13.8dd6e133c5762babcca0.js"
         }
       ]
     },
     "14": {
+      "css": [
+        {
+          "file": "14.6f9a628984cd6cd76b1e.css",
+          "hash": "7e0b35d7ea31ffd68898",
+          "publicPath": "/profilo/14.6f9a628984cd6cd76b1e.css"
+        }
+      ],
       "js": [
         {
-          "file": "14.9aeebb4150d1ec7e902e.js",
-          "hash": "b4072bbb354b3681e655",
-          "publicPath": "/profilo/14.9aeebb4150d1ec7e902e.js"
+          "file": "14.1684483937e236c1c263.js",
+          "hash": "7e0b35d7ea31ffd68898",
+          "publicPath": "/profilo/14.1684483937e236c1c263.js"
+        }
+      ]
+    },
+    "15": {
+      "js": [
+        {
+          "file": "15.53d6e12500a4418ace3f.js",
+          "hash": "b651937a1b9f016ff433",
+          "publicPath": "/profilo/15.53d6e12500a4418ace3f.js"
         }
       ]
     }
