@@ -73,9 +73,8 @@ public final class ProfiloConstants {
   public static final String TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC =
       "trace_config.post_trace_extension_ms";
   public static final int TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT = 0;
-  public static final String ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM =
-      "provider.atrace.single_lib_optimization";
-  public static final String ATRACE_USE_LIB_WHITELIST_PARAM = "provider.atrace.use_lib_whitelist";
+  public static final String TRACE_CONFIG_PARAM_BLACKBOX_PAUSE_IN_BG =
+      "trace_config.should_pause_in_background";
 
   // Conditional upload keys
   public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";
