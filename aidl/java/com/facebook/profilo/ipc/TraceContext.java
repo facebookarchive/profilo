@@ -149,7 +149,6 @@ public final class TraceContext implements Parcelable {
   // Action's version in {@see ProfiloBroadcastReceiver}.
   public long traceId;
   public String encodedTraceId;
-  public long configId;
   public int controller;
   @Nullable public Object controllerObject;
   @Nullable public Object context;
@@ -175,7 +174,7 @@ public final class TraceContext implements Parcelable {
   public TraceContext(
       long traceId,
       String encodedTraceId,
-      Config config,
+      @Nullable Config config,
       int controller,
       @Nullable Object controllerObject,
       @Nullable Object context,
@@ -187,7 +186,6 @@ public final class TraceContext implements Parcelable {
     this.traceId = traceId;
     this.encodedTraceId = encodedTraceId;
     this.config = config;
-    this.configId = config.getConfigID();
     this.controller = controller;
     this.controllerObject = controllerObject;
     this.context = context;
@@ -254,7 +252,7 @@ public final class TraceContext implements Parcelable {
   }
 
   public TraceContext(
-      TraceContext traceContext, Config config, int controller, Object controllerObject) {
+      TraceContext traceContext, @Nullable Config config, int controller, Object controllerObject) {
     this(
         traceContext.traceId,
         traceContext.encodedTraceId,
@@ -276,7 +274,6 @@ public final class TraceContext implements Parcelable {
   public void readFromParcel(Parcel src) {
     this.traceId = src.readLong();
     this.encodedTraceId = src.readString();
-    this.configId = src.readLong();
     this.controller = src.readInt();
     this.controllerObject = null;
     this.context = null;
@@ -296,7 +293,6 @@ public final class TraceContext implements Parcelable {
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeLong(traceId);
     dest.writeString(encodedTraceId);
-    dest.writeLong(configId);
     dest.writeInt(controller);
     dest.writeLong(longContext);
     dest.writeInt(enabledProviders);

@@ -121,8 +121,6 @@ public class TraceControlTest {
     assertThat(currContext).isNotNull();
     assertThat(currContext.traceId).isEqualTo(mTraceContext.traceId);
     assertThat(currContext.encodedTraceId).isEqualTo(mTraceContext.encodedTraceId);
-    assertThat(currContext.config).isEqualTo(mTraceContext.config);
-    assertThat(currContext.configId).isEqualTo(mTraceContext.configId);
     assertThat(currContext.controller).isEqualTo(TRACE_CONTROLLER_ID);
     assertThat(currContext.controllerObject).isEqualTo(mController);
     assertThat(currContext.context).isEqualTo(mTraceContext.context);

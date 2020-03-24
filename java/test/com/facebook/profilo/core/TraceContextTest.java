@@ -81,7 +81,6 @@ public class TraceContextTest {
     assertThat(mContext.traceId).isEqualTo(TRACE_ID);
     assertThat(mContext.encodedTraceId).isEqualTo(ENCODED_TRACE_ID);
     assertThat(mContext.config).isEqualTo(mConfig);
-    assertThat(mContext.configId).isEqualTo(mConfig.getConfigID());
     assertThat(mContext.controller).isEqualTo(CONTROLLER);
     assertThat(mContext.controllerObject).isEqualTo(CONTROLLER_OBJECT);
     assertThat(mContext.context).isEqualTo(CONTEXT);
@@ -103,7 +102,6 @@ public class TraceContextTest {
     TraceContext createdFromParcel = TraceContext.CREATOR.createFromParcel(parcel);
     assertThat(createdFromParcel.traceId).isEqualTo(TRACE_ID);
     assertThat(createdFromParcel.encodedTraceId).isEqualTo(ENCODED_TRACE_ID);
-    assertThat(createdFromParcel.configId).isEqualTo(mConfig.getConfigID());
     assertThat(createdFromParcel.controller).isEqualTo(CONTROLLER);
     assertThat(createdFromParcel.controllerObject).isNull();
     assertThat(createdFromParcel.context).isNull();

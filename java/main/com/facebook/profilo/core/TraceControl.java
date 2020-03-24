@@ -301,7 +301,7 @@ public final class TraceControl {
                 ? TraceContext.TraceConfigExtras.EMPTY
                 : traceController.getTraceConfigExtras(longContext, context, controllerConfig));
 
-    return startTraceInternal(flags, nextContext, rootConfig);
+    return startTraceInternal(flags, nextContext);
   }
 
   public boolean adoptContext(int controller, int flags, TraceContext traceContext) {
@@ -310,16 +310,11 @@ public final class TraceControl {
       throw new IllegalArgumentException("Unregistered controller for id = " + controller);
     }
 
-    Config rootConfig = mCurrentConfig.get();
-    if (rootConfig == null) {
-      return false;
-    }
-
     return startTraceInternal(
-        flags, new TraceContext(traceContext, rootConfig, controller, traceController), rootConfig);
+        flags, new TraceContext(traceContext, null, controller, traceController));
   }
 
-  private boolean startTraceInternal(int flags, TraceContext nextContext, Config config) {
+  private boolean startTraceInternal(int flags, TraceContext nextContext) {
     while (true) { // Store new trace in CAS manner
       int currentMask = mCurrentTracesMask.get();
       int freeBit = findLowestFreeBit(currentMask, MAX_TRACES, flags);
@@ -336,16 +331,14 @@ public final class TraceControl {
       }
     }
 
-    int timeout =
-        nextContext.mTraceConfigExtras.getIntParam(
-            ProfiloConstants.TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS,
-            config.getControllersConfig().getTraceTimeoutMs());
-    if (timeout == -1) { // config doesn't specify a value, use default
-      timeout = TRACE_TIMEOUT_MS;
-    }
+    int timeout;
     if ((flags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) != 0) {
       // manual and in-memory traces should not time out
       timeout = Integer.MAX_VALUE;
+    } else {
+      timeout =
+          nextContext.mTraceConfigExtras.getIntParam(
+              ProfiloConstants.TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS, TRACE_TIMEOUT_MS);
     }
     Logger.postCreateTrace(nextContext.traceId, flags, timeout);
 

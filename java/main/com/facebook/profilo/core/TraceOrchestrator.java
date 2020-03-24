@@ -448,15 +448,17 @@ public final class TraceOrchestrator
       syncProviders = mSyncTraceProviders;
     }
 
-    Logger.writeStandardEntry(
-        ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
-        EntryType.TRACE_ANNOTATION,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        Identifiers.CONFIG_ID,
-        ProfiloConstants.NONE,
-        context.configId);
+    if (mIsMainProcess) {
+      Logger.writeStandardEntry(
+          ProfiloConstants.NONE,
+          Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+          EntryType.TRACE_ANNOTATION,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          Identifiers.CONFIG_ID,
+          ProfiloConstants.NONE,
+          context.config == null ? 0 : context.config.getConfigID());
+    }
 
     int tracingProviders = 0;
     for (BaseTraceProvider provider : normalProviders) {

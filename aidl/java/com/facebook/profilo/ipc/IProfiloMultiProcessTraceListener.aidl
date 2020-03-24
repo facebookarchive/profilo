@@ -17,7 +17,6 @@
 package com.facebook.profilo.ipc;
 
 import com.facebook.profilo.ipc.IProfiloMultiProcessTraceService;
-import com.facebook.profilo.ipc.TraceConfigData;
 import com.facebook.profilo.ipc.TraceContext;
 
 interface IProfiloMultiProcessTraceListener {
@@ -35,7 +34,4 @@ interface IProfiloMultiProcessTraceListener {
   void onTraceAbort(in TraceContext context);
 
   void waitForTraceClose(in long traceId);
-
-  void onConfigChanged(in TraceConfigData configData);
-
 }
