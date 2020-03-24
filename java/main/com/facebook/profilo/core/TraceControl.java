@@ -355,7 +355,6 @@ public final class TraceControl {
         logger_priority,
         0,
         nextContext.traceId);
-
     synchronized (this) {
       ensureHandlerInitialized();
       // It's a guard if trace stop was initiated from another thread.

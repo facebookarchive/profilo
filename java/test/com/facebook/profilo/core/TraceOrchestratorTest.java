@@ -281,51 +281,6 @@ public class TraceOrchestratorTest {
   }
 
   @Test
-  public void testConfigChangeDuringTraceIsDeferredToStop() {
-    when(mTraceControl.isInsideTrace()).thenReturn(true); // Inside trace
-
-    mOrchestrator.onTraceStartSync(mTraceContext);
-    mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
-    // Providers are untouched
-    assertProvidersTheSame(mTraceContext.enabledProviders);
-    // TraceControl doesn't get called with new config
-    verify(mTraceControl, times(1)).setConfig(any(Config.class));
-
-    // Stop Trace to see the deferred change
-    when(mTraceControl.isInsideTrace()).thenReturn(false);
-    mOrchestrator.onTraceStop(mTraceContext);
-
-    assertThatAllProvidersDisabled();
-    verify(mTraceControl, times(2)).setConfig(any(Config.class));
-  }
-
-  @Test
-  public void testConfigChangeDuringDeferredForMultipleRunningTraces() {
-    when(mTraceControl.isInsideTrace()).thenReturn(true); // Inside trace
-
-    mOrchestrator.onTraceStartSync(mTraceContext);
-    mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
-    mOrchestrator.onTraceStartSync(mSecondTraceContext);
-
-    // Providers are untouched
-    assertProvidersTheSame(mTraceContext.enabledProviders | mSecondTraceContext.enabledProviders);
-    // TraceControl doesn't get called with new config
-    verify(mTraceControl, times(1)).setConfig(any(Config.class));
-
-    // First trace is stopped but the second one is still running, expect no config change
-    mOrchestrator.onTraceStop(mSecondTraceContext);
-    assertProvidersTheSame(mTraceContext.enabledProviders);
-    verify(mTraceControl, times(1)).setConfig(any(Config.class));
-
-    // Stop Trace to see the deferred change
-    when(mTraceControl.isInsideTrace()).thenReturn(false);
-    mOrchestrator.onTraceStop(mTraceContext);
-
-    assertThatAllProvidersDisabled();
-    verify(mTraceControl, times(2)).setConfig(any(Config.class));
-  }
-
-  @Test
   public void testTracingChangesProviders() {
     assertThatAllProvidersDisabled();
     mOrchestrator.onTraceStartSync(mTraceContext);

@@ -126,11 +126,7 @@ public final class TraceOrchestrator
 
   @GuardedBy("this")
   @Nullable
-  private Config mConfig;
-  // Future ConfigProvider : used if we updated Config/ConfigProvider during a trace.
-  @GuardedBy("this")
-  @Nullable
-  ConfigProvider mNextConfigProvider;
+  private volatile Config mConfig;
 
   @GuardedBy("this")
   private FileManager mFileManager;
@@ -269,17 +265,7 @@ public final class TraceOrchestrator
     }
 
     mListenerManager.onNewConfigAvailable();
-
-    synchronized (this) {
-      // Defer updating the config provider if we're inside a trace
-      TraceControl traceControl = TraceControl.get();
-      if (traceControl != null && traceControl.isInsideTrace()) {
-        mNextConfigProvider = newConfigProvider;
-        return;
-      }
-
-      performConfigProviderTransition(newConfigProvider);
-    }
+    performConfigProviderTransition(newConfigProvider);
   }
 
   public synchronized void setBackgroundUploadService(
@@ -323,13 +309,6 @@ public final class TraceOrchestrator
   public void onConfigUpdated(Config config) {
     mListenerManager.onNewConfigAvailable();
     synchronized (this) {
-      // Defer updating the config if we're inside a trace
-      TraceControl traceControl = TraceControl.get();
-      if (traceControl != null && traceControl.isInsideTrace()) {
-        // OnTraceStop/Abort this will cause config to be updated.
-        mNextConfigProvider = mConfigProvider;
-        return;
-      }
       performConfigTransition(config);
     }
     mListenerManager.onConfigUpdated();
@@ -480,16 +459,11 @@ public final class TraceOrchestrator
       provider.onDisable(context, this);
     }
     mListenerManager.onProvidersStop(tracingProviders);
-
-    checkConfigTransition();
-
     mListenerManager.onTraceStop(context);
   }
 
   @Override
   public void onTraceAbort(TraceContext context) {
-    checkConfigTransition();
-
     BaseTraceProvider[] normalProviders;
     BaseTraceProvider[] syncProviders;
     synchronized (this) {
@@ -509,22 +483,6 @@ public final class TraceOrchestrator
     for (BaseTraceProvider provider : normalProviders) {
       provider.onDisable(context, this);
     }
-  }
-
-  private void checkConfigTransition() {
-    ConfigProvider nextProvider;
-    synchronized (this) {
-      if (mNextConfigProvider == null) {
-        return;
-      }
-      TraceControl traceControl = TraceControl.get();
-      if (traceControl != null && traceControl.isInsideTrace()) {
-        return;
-      }
-      nextProvider = mNextConfigProvider;
-      mNextConfigProvider = null;
-    }
-    performConfigProviderTransition(nextProvider);
   }
 
   @Override
