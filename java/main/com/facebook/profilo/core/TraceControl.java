@@ -374,6 +374,33 @@ public final class TraceControl {
     return true;
   }
 
+  public void processMarkerStop(
+      int controllerMask, @Nullable Object context, long longContext, int eventDuration) {
+    TraceContext traceContext = findCurrentTraceByContext(controllerMask, longContext, context);
+    if (traceContext == null) {
+      return;
+    }
+    synchronized (this) {
+      ensureHandlerInitialized();
+      mTraceControlHandler.processMarkerStop(traceContext, eventDuration);
+    }
+  }
+
+  public boolean stopTraceWithCondition(
+      int controllerMask, @Nullable Object context, long longContext) {
+    TraceContext traceContext = findCurrentTraceByContext(controllerMask, longContext, context);
+    if (traceContext == null) {
+      return false;
+    }
+    removeTraceContext(traceContext);
+    synchronized (this) {
+      ensureHandlerInitialized();
+      mTraceControlHandler.onConditionalTraceStop(traceContext);
+    }
+
+    return true;
+  }
+
   public boolean stopTrace(int controllerMask, @Nullable Object context, long longContext) {
     return stopTrace(controllerMask, context, TraceStopReason.STOP, longContext, /*abortReason*/ 0);
   }

@@ -26,6 +26,7 @@ public final class ProfiloConstants {
   public static final int ABORT_REASON_MISSED_EVENT = 3;
   public static final int ABORT_REASON_TIMEOUT = 4;
   public static final int ABORT_REASON_NEW_START = 5;
+  public static final int ABORT_REASON_CONDITION_NOT_MET = 6;
 
   // Things in the remote process can go wrong for the same reason as in the
   // main process. Thus, just mark if the reason is "remote" by using a single
@@ -60,6 +61,8 @@ public final class ProfiloConstants {
         return "timeout";
       case ABORT_REASON_NEW_START:
         return "new_start";
+      case ABORT_REASON_CONDITION_NOT_MET:
+        return "condition_not_met";
     }
     return "UNKNOWN REASON " + abortReason;
   }
@@ -70,4 +73,10 @@ public final class ProfiloConstants {
   public static final String TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC =
       "trace_config.post_trace_extension_ms";
   public static final int TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT = 0;
+  public static final String ATRACE_SINGLE_LIB_OPTIMIZATION_PARAM =
+      "provider.atrace.single_lib_optimization";
+  public static final String ATRACE_USE_LIB_WHITELIST_PARAM = "provider.atrace.use_lib_whitelist";
+
+  // Conditional upload keys
+  public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";
 }

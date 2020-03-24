@@ -24,6 +24,7 @@ import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import java.util.HashSet;
+import java.util.Random;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -42,6 +43,11 @@ public class TraceControlHandler extends Handler {
   private static final int MSG_STOP_TRACE = 2;
   private static final int MSG_ABORT_TRACE = 3;
   private static final int MSG_END_TRACE = 4;
+
+  // Messages related to upload condition management
+  private static final int MSG_EVENT_DURATION = 5;
+  private static final int MSG_CONDITIONAL_TRACE_STOP = 6;
+
   // Set this system property to enable logs.
   private static final String PROFILO_LOG_LEVEL_SYSTEM_PROPERTY = "com.facebook.profilo.log";
 
@@ -50,6 +56,11 @@ public class TraceControlHandler extends Handler {
 
   @GuardedBy("this")
   private final HashSet<Long> mTraceContexts;
+
+  @GuardedBy("this")
+  private final TraceConditionManager mTraceConditionManager;
+
+  private final Random mRandom;
 
   static class LogLevel {
     // Lazy load system properties.
@@ -62,6 +73,8 @@ public class TraceControlHandler extends Handler {
     super(looper);
     mListener = listener;
     mTraceContexts = new HashSet<>();
+    mTraceConditionManager = new TraceConditionManager();
+    mRandom = new Random();
   }
 
   @Override
@@ -82,6 +95,12 @@ public class TraceControlHandler extends Handler {
         break;
       case MSG_ABORT_TRACE:
         abortTrace(traceContext);
+        break;
+      case MSG_EVENT_DURATION:
+        processDurationEvent(traceContext, msg.arg1);
+        break;
+      case MSG_CONDITIONAL_TRACE_STOP:
+        conditionalTraceStop(traceContext);
         break;
       default:
         break;
@@ -104,6 +123,31 @@ public class TraceControlHandler extends Handler {
         context.mTraceConfigExtras.getIntParam(
             ProfiloConstants.TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC,
             ProfiloConstants.TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT));
+  }
+
+  protected void conditionalTraceStop(TraceContext context) {
+    int uploadSampleRate = 0;
+    synchronized (mTraceConditionManager) {
+      uploadSampleRate = mTraceConditionManager.getUploadSampleRate(context.traceId);
+    }
+    if (uploadSampleRate == 0 || mRandom.nextInt(uploadSampleRate) != 0) {
+      Logger.postAbortTrace(context.traceId);
+      onTraceAbort(new TraceContext(context, ProfiloConstants.ABORT_REASON_CONDITION_NOT_MET));
+    } else {
+      Logger.postConditionalUploadRate(uploadSampleRate);
+      Logger.postPreCloseTrace(context.traceId);
+      onTraceStop(context);
+    }
+
+    synchronized (mTraceConditionManager) {
+      mTraceConditionManager.unregisterTrace(context);
+    }
+  }
+
+  protected void processDurationEvent(TraceContext context, long duration) {
+    synchronized (mTraceConditionManager) {
+      mTraceConditionManager.processDurationEvent(context.traceId, duration);
+    }
   }
 
   protected void endTrace(TraceContext context) {
@@ -143,7 +187,25 @@ public class TraceControlHandler extends Handler {
     }
   }
 
+  public synchronized void processMarkerStop(TraceContext context, final int eventDuration) {
+    Message eventDurationMessage =
+        obtainMessage(
+            MSG_EVENT_DURATION, /* what */
+            eventDuration, /* arg1 */
+            0, /* arg2, unused */
+            context /* obj */);
+    sendMessage(eventDurationMessage);
+  }
+
+  public synchronized void onConditionalTraceStop(TraceContext context) {
+    Message stopMessage = obtainMessage(MSG_CONDITIONAL_TRACE_STOP, context);
+    sendMessage(stopMessage);
+  }
+
   public synchronized void onTraceStart(TraceContext context, final int timeoutMillis) {
+    synchronized (mTraceConditionManager) {
+      mTraceConditionManager.registerTrace(context);
+    }
 
     mTraceContexts.add(context.traceId);
     if (mListener != null) {

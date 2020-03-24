@@ -160,6 +160,8 @@ NAMES = [
     'MAPPING',
 
     'LOGGER_PRIORITY',
+
+    'CONDITIONAL_UPLOAD_RATE',
 ]
 
 STACK_FRAME_ENTRIES = frozenset([

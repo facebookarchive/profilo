@@ -16,6 +16,7 @@ CONTROL = [
     "TraceController.java",
     "TraceControlHandler.java",
     "TraceControlThreadHolder.java",
+    "TraceConditionManager.java",
 ]
 
 REGISTRY = [

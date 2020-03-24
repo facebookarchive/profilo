@@ -146,6 +146,18 @@ public final class Logger {
     }
   }
 
+  public static void postConditionalUploadRate(int uploadRate) {
+    writeStandardEntry(
+        ProfiloConstants.NONE,
+        SKIP_PROVIDER_CHECK | FILL_TIMESTAMP | FILL_TID,
+        EntryType.CONDITIONAL_UPLOAD_RATE,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        uploadRate);
+  }
+
   public static void postPreCloseTrace(long traceId) {
     postFinishTrace(EntryType.TRACE_PRE_END, traceId);
   }

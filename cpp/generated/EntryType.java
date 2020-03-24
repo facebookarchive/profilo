@@ -1,4 +1,4 @@
-// @generated SignedSource<<d0d3e9b87dbd1ba733da98c1c886438b>>
+// @generated SignedSource<<381129eb955cb9fbce608024120cceec>>
 
 package com.facebook.profilo.entries;
 
@@ -99,6 +99,7 @@ public class EntryType {
   public static final int STKERR_NESTEDUNWIND = 92;
   public static final int MAPPING = 93;
   public static final int LOGGER_PRIORITY = 94;
+  public static final int CONDITIONAL_UPLOAD_RATE = 95;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -196,5 +197,6 @@ public class EntryType {
     "STKERR_NESTEDUNWIND",
     "MAPPING",
     "LOGGER_PRIORITY",
+    "CONDITIONAL_UPLOAD_RATE",
   };
 }

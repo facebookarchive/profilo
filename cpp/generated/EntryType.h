@@ -1,4 +1,4 @@
-// @generated SignedSource<<986161627a372545d76d33036b997db5>>
+// @generated SignedSource<<2f0b7a7f7c8162cede3d20514c18fc8a>>
 
 #pragma once
 
@@ -101,6 +101,7 @@ enum EntryType {
   STKERR_NESTEDUNWIND = 92,
   MAPPING = 93,
   LOGGER_PRIORITY = 94,
+  CONDITIONAL_UPLOAD_RATE = 95,
 };
 
 
