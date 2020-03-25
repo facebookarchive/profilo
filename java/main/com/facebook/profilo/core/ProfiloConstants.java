@@ -75,7 +75,9 @@ public final class ProfiloConstants {
   public static final int TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT = 0;
   public static final String TRACE_CONFIG_PARAM_BLACKBOX_PAUSE_IN_BG =
       "trace_config.should_pause_in_background";
-
-  // Conditional upload keys
   public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";
+  public static final String PROVIDER_PARAM_STACK_TRACE_USE_THREAD_SPECIFIC_PROFILER =
+      "provider.stack_trace.use_thread_specific_profiler";
+  public static final String PROVIDER_PARAM_STACK_TRACE_THREAD_DETECT_INTERVAL_MS =
+      "provider.stack_trace.thread_detect_interval_ms";
 }

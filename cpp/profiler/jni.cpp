@@ -58,9 +58,15 @@ static jboolean nativeStartProfiling(
     fbjni::alias_ref<jobject>,
     jint requested_tracers,
     jint sampling_rate_ms,
+    jboolean use_thread_specific_profiler,
+    jint thread_detect_interval_ms,
     jboolean wall_clock_mode) {
   return SamplingProfiler::getInstance().startProfiling(
-      requested_tracers, sampling_rate_ms, wall_clock_mode);
+      requested_tracers,
+      sampling_rate_ms,
+      use_thread_specific_profiler,
+      thread_detect_interval_ms,
+      wall_clock_mode);
 }
 
 static void nativeResetFrameworkNamesSet(fbjni::alias_ref<jobject>) {

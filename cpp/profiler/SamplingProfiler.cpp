@@ -609,15 +609,6 @@ bool SamplingProfiler::stopProfilingTimers() {
 bool SamplingProfiler::startProfiling(
     int requested_tracers,
     int sampling_rate_ms,
-    bool wall_clock_mode_enabled) {
-  return startProfilingTemporary(
-      requested_tracers, sampling_rate_ms, true, 23, wall_clock_mode_enabled);
-}
-
-bool SamplingProfiler::startProfilingTemporary( // needed until corresponding
-                                                // Java changes are made
-    int requested_tracers,
-    int sampling_rate_ms,
     bool use_thread_specific_profiler,
     int thread_detect_interval_ms,
     bool wall_clock_mode_enabled) {

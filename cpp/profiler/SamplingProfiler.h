@@ -152,10 +152,6 @@ class SamplingProfiler {
   bool startProfiling(
       int requested_providers,
       int sampling_rate_ms,
-      bool wall_clock_mode_enabled);
-  bool startProfilingTemporary(
-      int requested_providers,
-      int sampling_rate_ms,
       bool use_thread_specific_profiler,
       int thread_detect_interval_ms,
       bool wall_clock_mode_enabled);

@@ -36,11 +36,7 @@ public final class StackFrameThread extends BaseTraceProvider {
   public static final int PROVIDER_NATIVE_STACK_TRACE =
       ProvidersRegistry.newProvider("native_stack_trace");
 
-  public static final String CPU_SAMPLING_RATE_CONFIG_PARAM =
-      "provider.stack_trace.cpu_sampling_rate_ms";
-
   private static final String LOG_TAG = "StackFrameThread";
-  private static final int ALL_THREADS = 0;
 
   @GuardedBy("this")
   private @Nullable Thread mProfilerThread;
@@ -101,13 +97,20 @@ public final class StackFrameThread extends BaseTraceProvider {
     }
   }
 
-  private synchronized boolean enableInternal(int sampleRateMs, int enabledProviders) {
+  private synchronized boolean enableInternal(
+      int sampleRateMs,
+      boolean useThreadSpecificProfiler,
+      int threadDetectIntervalMs,
+      int enabledProviders) {
     if (!initProfiler()) {
       return false;
     }
 
     if (sampleRateMs <= 0) {
       sampleRateMs = CPUProfiler.DEFAULT_PROFILER_SAMPLING_RATE_MS;
+    }
+    if (threadDetectIntervalMs <= 0) {
+      threadDetectIntervalMs = CPUProfiler.DEFAULT_THREAD_DETECT_INTERVAL_MS;
     }
 
     // Default to get stack traces from all threads, override for wall time
@@ -124,10 +127,14 @@ public final class StackFrameThread extends BaseTraceProvider {
     }
     // For now, we'll just keep an eye on the main thread. Eventually we
     // might want to pass a list of all the interesting threads.
-    // To use the setitimer logic, pass 0 as the second argument.
+    // To use the setitimer logic, pass false into useThreadSpecificProfiler.
     boolean started =
         CPUProfiler.startProfiling(
-            providersToTracers(enabledProviders), sampleRateMs, wallClockModeEnabled);
+            providersToTracers(enabledProviders),
+            sampleRateMs,
+            useThreadSpecificProfiler,
+            threadDetectIntervalMs,
+            wallClockModeEnabled);
     if (!started) {
       return false;
     }
@@ -164,7 +171,12 @@ public final class StackFrameThread extends BaseTraceProvider {
 
     boolean enabled =
         enableInternal(
-            context.mTraceConfigExtras.getIntParam(CPU_SAMPLING_RATE_CONFIG_PARAM, 0),
+            context.mTraceConfigExtras.getIntParam(
+                ProfiloConstants.CPU_SAMPLING_RATE_CONFIG_PARAM, 0),
+            context.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.PROVIDER_PARAM_STACK_TRACE_USE_THREAD_SPECIFIC_PROFILER, false),
+            context.mTraceConfigExtras.getIntParam(
+                ProfiloConstants.PROVIDER_PARAM_STACK_TRACE_THREAD_DETECT_INTERVAL_MS, 0),
             context.enabledProviders);
     if (!enabled) {
       return;
