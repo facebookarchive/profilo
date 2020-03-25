@@ -25,11 +25,21 @@
 #include <thread>
 
 #include <profiler/SamplingProfiler.h>
+#include <profilo/LogEntry.h>
 #include <profilo/test/TestSequencer.h>
 
 namespace facebook {
 namespace profilo {
 namespace profiler {
+constexpr auto kNanosecondsInMicrosecond = 1000;
+constexpr auto kMicrosecondsInSecond = 1000 * 1000;
+constexpr auto kMicrosecondsInMillisecond = 1000;
+constexpr auto kHalfHourInMilliseconds = 1800 * 1000;
+
+constexpr bool kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
+constexpr bool kDefaultUseThreadSpecificProfilerSetting = true;
+constexpr bool kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
+constexpr bool kDefaultUseWallClockSetting = false;
 
 /* Scopes all access to private data from the SamplingProfiler instance*/
 class SamplingProfilerTestAccessor {
@@ -59,6 +69,25 @@ class SamplingProfilerTestAccessor {
  private:
   SamplingProfiler& profiler_;
 };
+
+long getTimeDifferenceUsec(timespec t1, timespec t2) {
+  return (
+      ((t1.tv_sec - t2.tv_sec) * kMicrosecondsInSecond) +
+      (t1.tv_nsec - t2.tv_nsec) / kNanosecondsInMicrosecond);
+}
+
+void burnCpuMs(int workMilliseconds, float* f) {
+  struct timespec start_time, curr_time;
+  constexpr clockid_t clock_id = CLOCK_THREAD_CPUTIME_ID;
+  const long workMicroseconds = workMilliseconds * kMicrosecondsInMillisecond;
+  ASSERT_FALSE(clock_gettime(clock_id, &start_time));
+  do {
+    for (long ii = 0; ii < 1000000L; ii++) {
+      *f += 1;
+    }
+    ASSERT_FALSE(clock_gettime(clock_id, &curr_time));
+  } while (getTimeDifferenceUsec(curr_time, start_time) < workMicroseconds);
+}
 
 using TracerStdFunction = std::function<
     StackCollectionRetcode(ucontext_t*, int64_t*, uint8_t&, uint8_t)>;
@@ -143,6 +172,10 @@ class SamplingProfilerTest : public ::testing::Test {
       std::function<bool(StackSlot const&)> slot_predicate,
       int expected_count = 1);
 
+  void runSampleCountTest(bool use_wall_time_profiling);
+
+  void runThreadDetectTest(bool use_wall_time_profiling);
+
   SamplingProfiler profiler;
   SamplingProfilerTestAccessor access{profiler};
 
@@ -178,7 +211,12 @@ void SamplingProfilerTest::runLoggingTest(
   };
   test::TestSequencer sequencer{START, END};
 
-  ASSERT_TRUE(profiler.startProfiling(kTestTracer, 1800 * 1000, false));
+  ASSERT_TRUE(profiler.startProfiling(
+      kTestTracer,
+      kDefaultSampleIntervalMs,
+      kDefaultUseThreadSpecificProfilerSetting,
+      kDefaultThreadDetectIntervalMs,
+      kDefaultUseWallClockSetting));
 
   std::thread worker_thread([&] {
     sequencer.waitAndAdvance(START_WORKER_THREAD, SEND_PROFILING_SIGNAL);
@@ -209,6 +247,287 @@ void SamplingProfilerTest::runLoggingTest(
       << "Incorrect number of slots matching the predicate";
 
   worker_thread.join();
+}
+
+TracerStdFunction signalCountTracerFunction(
+    std::vector<int32_t>& tids,
+    std::vector<int>& signal_cnt) {
+  return [&signal_cnt, &tids](ucontext_t*, int64_t*, uint8_t&, uint8_t) {
+    auto tid = threadID();
+    for (int worker = 0; worker < tids.size(); worker++) {
+      if (tid == tids[worker]) { // assumes tid != 0
+        signal_cnt[worker]++;
+        // FBLOGV(
+        //     "----> signal worker %d: thread=%d cnt=%d",
+        //     worker,
+        //     tid,
+        //     signal_cnt[worker]);
+        break;
+      }
+    }
+    // Falls thru if tid is not from a worker
+    return SUCCESS;
+  };
+}
+
+void assertSamplesWithinTolerance(
+    int sample_interval_ms,
+    int thread_detect_interval_ms,
+    int allowed_lost_samples,
+    std::vector<int> expected_times_ms,
+    std::vector<int> signal_cnt) {
+  for (int worker = 0; worker < signal_cnt.size(); worker++) {
+    int expected_time_ms = expected_times_ms[worker];
+    int signal_count_delta =
+        abs(signal_cnt[worker] - expected_time_ms / sample_interval_ms);
+    int tolerance =
+        thread_detect_interval_ms / sample_interval_ms + allowed_lost_samples;
+    std::stringstream ss;
+    ss << "----> Thread: " << worker << " signals= " << signal_cnt[worker]
+       << ", expected_time=" << expected_time_ms
+       << ", expected_samples= " << expected_time_ms / sample_interval_ms
+       << ", tolerance=" << tolerance;
+    // FBLOGV("%s", ss.str().c_str());
+    ASSERT_TRUE(signal_count_delta <= tolerance) << ss.str();
+  }
+}
+
+void SamplingProfilerTest::runSampleCountTest(
+    bool enable_wall_time_sampling) { // true->wall, false->CPU
+  // This test runs two worker threads for different durations of time
+  // to confirm the right number of signals are received for each thread.
+  //
+  // The worker threads pre-exist the logger_thread and startProfiling;
+  // which means the sampler should detect the workers immediately, without
+  // missing any samples.
+  //
+  // The workers restart working after stopProfiling(); the additional work
+  // work should not be sampled.
+  enum Sequence {
+    START = 0,
+    INIT_WORKER_THREAD0,
+    INIT_WORKER_THREAD1,
+    START_PROFILING,
+    START_LOGGER,
+    START_WORKER_THREAD0,
+    START_WORKER_THREAD1,
+    STOP_WORKER_THREAD0,
+    STOP_WORKER_THREAD1,
+    STOP_PROFILING,
+    RESTART_WORKER_THREAD0,
+    RESTART_WORKER_THREAD1,
+    END,
+  };
+  test::TestSequencer sequencer{START, END};
+
+  constexpr int num_workers = 2;
+  std::array<int, num_workers> thread_cpu_ms = {750,
+                                                350}; // how much CPU to burn
+  constexpr int post_sampling_thread_cpu_ms =
+      100; // how much post-run CPU to burn
+  constexpr int cpu_sample_interval_ms = 19;
+  constexpr int wall_sample_interval_ms = 47;
+  constexpr int allowed_lost_samples = 3;
+
+  const int sample_interval_ms = enable_wall_time_sampling
+      ? wall_sample_interval_ms
+      : cpu_sample_interval_ms;
+
+  const int thread_detect_interval_ms = sample_interval_ms;
+
+  std::vector<int32_t> tids(num_workers, -1);
+  std::vector<int> signal_cnt(num_workers, 0);
+
+  sequencer.advance(INIT_WORKER_THREAD0);
+
+  FBLOGV("Main thread is %d", threadID());
+
+  // Worker 1
+  std::thread worker_thread1([&] {
+    auto tid = threadID();
+    tids[0] = tid;
+    if (enable_wall_time_sampling) {
+      profiler.addToWhitelist(tid);
+    }
+    sequencer.waitAndAdvance(INIT_WORKER_THREAD0, INIT_WORKER_THREAD1);
+    sequencer.waitAndAdvance(START_WORKER_THREAD0, START_WORKER_THREAD1);
+    float f = 0;
+    burnCpuMs(thread_cpu_ms[0], &f); // this work should get sampled
+    sequencer.waitAndAdvance(STOP_WORKER_THREAD0, STOP_WORKER_THREAD1);
+    sequencer.waitAndAdvance(RESTART_WORKER_THREAD0, RESTART_WORKER_THREAD1);
+    burnCpuMs(post_sampling_thread_cpu_ms, &f); // this shouldn't get sampled
+  });
+
+  // Worker 2
+  std::thread worker_thread2([&] {
+    auto tid = threadID();
+    tids[1] = tid;
+    if (enable_wall_time_sampling) {
+      profiler.addToWhitelist(tid);
+    }
+    sequencer.waitAndAdvance(INIT_WORKER_THREAD1, START_PROFILING);
+    sequencer.waitAndAdvance(START_WORKER_THREAD1, STOP_WORKER_THREAD0);
+    float f = 0;
+    burnCpuMs(thread_cpu_ms[1], &f); // this work should get sampled
+    sequencer.waitAndAdvance(STOP_WORKER_THREAD1, STOP_PROFILING);
+    sequencer.waitAndAdvance(RESTART_WORKER_THREAD1, END);
+    burnCpuMs(post_sampling_thread_cpu_ms, &f); // this shouldn't get sampled
+  });
+
+  // Tracer callback
+  SetTracer(std::make_unique<TracerStdFunction>(
+      signalCountTracerFunction(tids, signal_cnt)));
+
+  sequencer.waitFor(START_PROFILING);
+  ASSERT_TRUE(profiler.startProfiling(
+      kTestTracer,
+      sample_interval_ms,
+      true,
+      thread_detect_interval_ms,
+      enable_wall_time_sampling));
+  struct timespec start_time, end_time;
+  ASSERT_FALSE(clock_gettime(CLOCK_MONOTONIC, &start_time));
+
+  // Logger thread
+  sequencer.advance(START_LOGGER);
+  std::thread logger_thread([&] {
+    sequencer.advance(START_WORKER_THREAD0);
+    profiler.loggerLoop();
+  });
+
+  sequencer.waitFor(STOP_PROFILING);
+  ASSERT_TRUE(access.isProfiling());
+  ASSERT_FALSE(clock_gettime(CLOCK_MONOTONIC, &end_time));
+  profiler.stopProfiling();
+  ASSERT_FALSE(access.isProfiling());
+  sequencer.advance(RESTART_WORKER_THREAD0);
+
+  sequencer.waitFor(END);
+  logger_thread.join();
+  worker_thread2.join();
+  worker_thread1.join();
+
+  std::vector<int> expected_times_ms(num_workers, 0);
+  for (int worker = 0; worker < num_workers; worker++) {
+    expected_times_ms[worker] = enable_wall_time_sampling
+        ? getTimeDifferenceUsec(end_time, start_time) /
+            kMicrosecondsInMillisecond
+        : thread_cpu_ms[worker];
+  }
+  assertSamplesWithinTolerance(
+      sample_interval_ms,
+      0, // thread detect is @start - don't consider thread_detect_interval_ms
+      allowed_lost_samples,
+      expected_times_ms,
+      signal_cnt);
+} // namespace profiler
+
+void SamplingProfilerTest::runThreadDetectTest(
+    bool enable_wall_time_sampling) { // true: wall, false; CPU
+  // This test confirms that the thread profiler detects newly created threads
+  // and that sampling continues without errors as threads are added/removed.
+  enum Sequence {
+    START = 0,
+    START_LOGGER,
+    START_PROFILING,
+    RUN_WORKERS,
+    STOP_PROFILING,
+    END,
+  };
+  test::TestSequencer sequencer{START, END};
+
+  constexpr int num_iterations = 3;
+  constexpr int num_parallel_threads = 3;
+  constexpr int num_workers = num_iterations * num_parallel_threads;
+  const std::vector<int> thread_cpu_ms(
+      num_workers, 300); // how much CPU to burn
+  constexpr int cpu_sample_interval_ms = 19;
+  constexpr int wall_sample_interval_ms = 47;
+  constexpr int allowed_lost_samples = 3;
+
+  const int sample_interval_ms = enable_wall_time_sampling
+      ? wall_sample_interval_ms
+      : cpu_sample_interval_ms;
+
+  const int thread_detect_interval_ms = sample_interval_ms;
+
+  std::vector<int32_t> tids(num_workers, -1);
+  std::vector<int> signal_cnt(num_workers, 0);
+  std::vector<struct timespec> start_time(num_workers, {0});
+  std::vector<struct timespec> end_time(num_workers, {0});
+
+  // Tracer callback
+  SetTracer(std::make_unique<TracerStdFunction>(
+      signalCountTracerFunction(tids, signal_cnt)));
+
+  // Logger thread
+  sequencer.advance(START_LOGGER);
+  std::thread logger_thread([&sequencer, this] {
+    sequencer.advance(START_PROFILING);
+    this->profiler.loggerLoop();
+  });
+
+  sequencer.waitFor(START_PROFILING);
+  ASSERT_TRUE(profiler.startProfiling(
+      kTestTracer,
+      sample_interval_ms,
+      true,
+      thread_detect_interval_ms,
+      enable_wall_time_sampling));
+  sequencer.advance(RUN_WORKERS);
+
+  // FBLOGV("------> main thread is %d", threadID());
+
+  // Worker threads (blocking)
+  for (int worker = 0, itr = 0; itr < num_iterations; itr++) {
+    // FBLOGV("-------> START OF GROUP %d", itr);
+    std::thread threads[num_parallel_threads];
+    for (int j = 0; j < num_parallel_threads; j++, worker++) {
+      threads[j] = std::thread([worker,
+                                this,
+                                &enable_wall_time_sampling,
+                                &tids,
+                                &thread_cpu_ms,
+                                &end_time,
+                                &start_time] {
+        auto tid = threadID();
+        if (enable_wall_time_sampling) {
+          profiler.addToWhitelist(tid);
+        }
+        // FBLOGV("----> thread started %d:%d", worker, tid);
+        tids[worker] = tid;
+        ASSERT_FALSE(clock_gettime(CLOCK_MONOTONIC, &start_time[worker]));
+        float f = 0;
+        burnCpuMs(thread_cpu_ms[worker], &f);
+        ASSERT_FALSE(clock_gettime(CLOCK_MONOTONIC, &end_time[worker]));
+      });
+    }
+    for (int j = 0; j < num_parallel_threads; j++) {
+      threads[j].join();
+    }
+  }
+
+  sequencer.advance(STOP_PROFILING);
+  ASSERT_TRUE(access.isProfiling());
+  profiler.stopProfiling();
+  ASSERT_FALSE(access.isProfiling());
+
+  logger_thread.join();
+  sequencer.advance(END);
+
+  std::vector<int> expected_times_ms(num_workers, 0);
+  for (int worker = 0; worker < num_workers; worker++) {
+    expected_times_ms[worker] = enable_wall_time_sampling
+        ? getTimeDifferenceUsec(end_time[worker], start_time[worker]) /
+            kMicrosecondsInMillisecond
+        : thread_cpu_ms[worker];
+  }
+  assertSamplesWithinTolerance(
+      sample_interval_ms,
+      thread_detect_interval_ms,
+      allowed_lost_samples,
+      expected_times_ms,
+      signal_cnt);
 }
 
 TEST_F(SamplingProfilerTest, errorLoggingFaultDuringTracing) {
@@ -313,7 +632,12 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
   // Can't be the main thread because we want to verify that the thread blocks.
   std::thread control_thread([&] {
     sequencer.waitFor(START_PROFILING);
-    ASSERT_TRUE(profiler.startProfiling(kTestTracer, 1800 * 1000, false));
+    ASSERT_TRUE(profiler.startProfiling(
+        kTestTracer,
+        kDefaultSampleIntervalMs,
+        kDefaultUseThreadSpecificProfilerSetting,
+        kDefaultThreadDetectIntervalMs,
+        kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
 
     sequencer.waitAndAdvance(STOP_PROFILING, INSPECT_MIDDLE_OF_STOP);
@@ -423,7 +747,12 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
   // Can't be the main thread because we want to verify that the thread blocks.
   std::thread control_thread([&] {
     sequencer.waitFor(START_PROFILING);
-    ASSERT_TRUE(profiler.startProfiling(kTestTracer, 1800 * 1000, false));
+    ASSERT_TRUE(profiler.startProfiling(
+        kTestTracer,
+        kDefaultSampleIntervalMs,
+        kDefaultUseThreadSpecificProfilerSetting,
+        kDefaultThreadDetectIntervalMs,
+        kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
 
     sequencer.waitAndAdvance(STOP_PROFILING, INSPECT_MIDDLE_OF_STOP);
@@ -513,7 +842,12 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
   };
   test::TestSequencer sequencer{START, END};
 
-  ASSERT_TRUE(profiler.startProfiling(kTestTracer, 1800 * 1000, false));
+  ASSERT_TRUE(profiler.startProfiling(
+      kTestTracer,
+      kDefaultSampleIntervalMs,
+      kDefaultUseThreadSpecificProfilerSetting,
+      kDefaultThreadDetectIntervalMs,
+      kDefaultUseWallClockSetting));
 
   // Target thread that will receive the profiling signal.
   std::thread worker_thread([&] {
@@ -675,11 +1009,32 @@ TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
   // SIG_DFL for SIGPROF is Term, we should die on SIGPROF.
   ASSERT_DEATH(pthread_kill(pthread_self(), SIGPROF), "");
 
-  ASSERT_TRUE(profiler.startProfiling(kTestTracer, 1800 * 1000, false));
+  ASSERT_TRUE(profiler.startProfiling(
+      kTestTracer,
+      kDefaultSampleIntervalMs,
+      kDefaultUseThreadSpecificProfilerSetting,
+      kDefaultThreadDetectIntervalMs,
+      kDefaultUseWallClockSetting));
   profiler.stopProfiling();
 
   // No death!
   pthread_kill(pthread_self(), SIGPROF);
+}
+
+TEST_F(SamplingProfilerTest, verifyCpuSampleCounts) {
+  runSampleCountTest(false);
+}
+
+TEST_F(SamplingProfilerTest, verifyWallSampleCounts) {
+  runSampleCountTest(true);
+}
+
+TEST_F(SamplingProfilerTest, verifyCpuThreadDetect) {
+  runThreadDetectTest(false);
+}
+
+TEST_F(SamplingProfilerTest, verifyWallThreadDetect) {
+  runThreadDetectTest(true);
 }
 
 } // namespace profiler
