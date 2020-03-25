@@ -64,7 +64,7 @@ class TraceLifecycleVisitor : public EntryVisitor {
   const std::string folder_;
   const std::string trace_prefix_;
   const std::vector<std::pair<std::string, std::string>> trace_headers_;
-  std::unique_ptr<zstr::ofstream> output_;
+  std::unique_ptr<std::ofstream> output_;
 
   // chain of delegates
   std::deque<std::unique_ptr<EntryVisitor>> delegates_;

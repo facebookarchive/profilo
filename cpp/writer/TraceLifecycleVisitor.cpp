@@ -241,7 +241,21 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
 
   std::string trace_file = path_stream.str();
 
-  output_ = std::make_unique<zstr::ofstream>(trace_file);
+  output_ = std::make_unique<std::ofstream>(
+      trace_file,
+      std::ofstream::out | std::ofstream::binary);
+  output_->exceptions(std::ofstream::badbit | std::ofstream::failbit);
+
+  zstr::ostreambuf* output_buf_ = new zstr::ostreambuf(
+      output_->rdbuf(), // wrap the ofstream buffer
+      512 * 1024, // input and output buffers
+      3 // compression level
+  );
+
+  // Disable ofstream buffering
+  output_->rdbuf()->pubsetbuf(nullptr, 0);
+  // Replace ofstream buffer with the compressed one
+  output_->basic_ios<char>::rdbuf(output_buf_);
 
   writeHeaders(*output_, trace_id_string);
 
@@ -278,6 +292,8 @@ void TraceLifecycleVisitor::onTraceEnd(int64_t trace_id) {
 void TraceLifecycleVisitor::cleanupState() {
   delegates_.clear();
   thread_priority_ = nullptr;
+  output_->flush();
+  output_->close();
   output_ = nullptr;
 }
 
