@@ -64,6 +64,13 @@ public:
    */
   std::vector<void**> get_plt_relocations(ElfW(Sym) const* elf_sym) const;
 
+  /*
+   * Returns the loaded address of the shared library
+   */
+  uintptr_t getLoadBias() const {
+    return loadBias;
+  }
+
   /**
    * Finds the actual in-memory address of the given symbol
    */
