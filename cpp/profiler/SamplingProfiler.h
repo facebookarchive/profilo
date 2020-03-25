@@ -16,10 +16,13 @@
 
 #pragma once
 
+#include "TimerManager.h"
+
 #include <semaphore.h>
 #include <setjmp.h>
 #include <sigmux.h>
 #include <mutex>
+#include <thread>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -71,34 +74,47 @@ struct StackSlot {
   StackSlot() : state(StackSlotState::FREE), depth(0) {}
 };
 
+struct Whitelist {
+  std::unordered_set<int32_t> whitelistedThreads;
+  std::mutex whitelistedThreadsMtx; // Guards whitelistedThreads
+};
+
 struct ProfileState {
   pthread_key_t threadIsProfilingKey;
   pid_t processId;
   int availableTracers;
   int currentTracers;
   std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracersMap;
+  int64_t profileStartTime;
+  std::atomic_bool isProfiling{};
+
+  // Slots/Stacks
   StackSlot stacks[MAX_STACKS_COUNT];
   std::atomic<uint32_t> currentSlot;
-  std::atomic_bool isProfiling{};
+  std::atomic<uint32_t> fullSlotsCounter;
+
   // Error stats
   std::atomic<uint16_t> errSigCrashes;
   std::atomic<uint16_t> errSlotMisses;
   std::atomic<uint16_t> errStackOverflows;
 
-  int64_t profileStartTime;
-  std::atomic<uint32_t> fullSlotsCounter;
+  // Logger
   sem_t slotsCounterSem;
+  std::atomic_bool enoughStacks;
   std::atomic_bool isLoggerLoopDone;
 
+  // Config parameters
   bool wallClockModeEnabled;
-  int samplingRateUs;
-  std::atomic_bool enoughStacks;
+  bool useThreadSpecificProfiler;
+  bool useSleepBasedWallProfiler;
+  int threadDetectIntervalMs;
+  int samplingRateMs;
 
   // When in "wall clock mode", we can optionally whitelist additional threads
   // to profile as well.
-  std::unordered_set<int32_t> whitelistedThreads;
-  // Guards whitelistedThreads.
-  std::mutex whitelistMtx;
+  std::shared_ptr<Whitelist> whitelist;
+
+  std::unique_ptr<TimerManager> timerManager;
 
   // If a secondary trace starts, we need to tell the logger loop to clear
   // its cache of logged frames, so that the new trace won't miss any symbols
@@ -121,6 +137,10 @@ class SamplingProfiler {
  public:
   static SamplingProfiler& getInstance();
 
+  SamplingProfiler() : state_(), sigmux_state() {
+    state_.whitelist = std::make_shared<Whitelist>();
+  }
+
   bool initialize(
       int32_t available_tracers,
       std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers);
@@ -132,6 +152,12 @@ class SamplingProfiler {
   bool startProfiling(
       int requested_providers,
       int sampling_rate_ms,
+      bool wall_clock_mode_enabled);
+  bool startProfilingTemporary(
+      int requested_providers,
+      int sampling_rate_ms,
+      bool use_thread_specific_profiler,
+      int thread_detect_interval_ms,
       bool wall_clock_mode_enabled);
 
   void addToWhitelist(int targetThread);
@@ -150,16 +176,18 @@ class SamplingProfiler {
     sigmux_registration* fault_registration;
   } sigmux_state;
 
-  void registerSignalHandlers();
+  // Profiling timer management
+  bool startProfilingTimers();
+  bool stopProfilingTimers();
 
+  void registerSignalHandlers();
   void unregisterSignalHandlers();
 
+  // Logger
   void maybeSignalReader();
-
   void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet);
 
   static sigmux_action FaultHandler(sigmux_siginfo*, void*);
-
   static sigmux_action UnwindStackHandler(sigmux_siginfo*, void*);
 
   friend class SamplingProfilerTestAccessor;

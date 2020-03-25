@@ -170,6 +170,7 @@ profilo_cxx_test(
     linker_flags = [
         "-pthread",
         "-ldl",
+        "-lrt",
     ],
     deps = [
         ":test_sequencer",

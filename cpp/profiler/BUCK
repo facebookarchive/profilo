@@ -209,11 +209,15 @@ fb_xplat_cxx_library(
     name = "profiler",
     srcs = [
         "SamplingProfiler.cpp",
+        "ThreadTimer.cpp",
+        "TimerManager.cpp",
         "jni.cpp",
     ],
     header_namespace = "profiler",
     exported_headers = [
         "SamplingProfiler.h",
+        "ThreadTimer.h",
+        "TimerManager.h",
     ],
     allow_jni_merging = True,
     compiler_flags = [
@@ -221,7 +225,7 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Profilo/Profiler\"",
         "-Wno-format-security",
         "-Wno-unknown-attributes",
-        #'-DFBLOG_NDEBUG=0', # verbose logging
+        #"-DFBLOG_NDEBUG=0", # verbose logging
         "-std=gnu++14",
     ] + profilo_maybe_hidden_visibility(),
     labels = ["supermodule:android/default/loom.core"],

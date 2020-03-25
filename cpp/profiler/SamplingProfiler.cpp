@@ -15,6 +15,7 @@
  */
 
 #include "SamplingProfiler.h"
+#include "TimerManager.h"
 
 #include <abort_with_reason.h>
 #include <errno.h>
@@ -24,6 +25,7 @@
 #include <sys/syscall.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <sys/utsname.h>
 #include <unistd.h>
 #include <chrono>
 #include <random>
@@ -55,6 +57,7 @@
 #include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
 
+#include <util/ProcFs.h>
 #include <util/common.h>
 
 using namespace facebook::jni;
@@ -64,6 +67,8 @@ namespace profilo {
 namespace profiler {
 
 namespace {
+constexpr auto kMicrosecondsInMillisecond = 1000;
+
 EntryType errorToTraceEntry(StackCollectionRetcode error) {
 #pragma clang diagnostic push
 #pragma clang diagnostic error "-Wswitch"
@@ -96,6 +101,33 @@ EntryType errorToTraceEntry(StackCollectionRetcode error) {
 static void throw_errno(const char* error) {
   throw std::system_error(errno, std::system_category(), error);
 }
+
+// --- setitimer wrappers
+bool startSetitimer(int sampling_rate_ms) {
+  itimerval tv = getInitialItimerval(sampling_rate_ms);
+  int res = setitimer(ITIMER_PROF, &tv, nullptr);
+  if (res != 0) {
+    FBLOGV("Can not start itimer: %s", strerror(errno));
+    errno = 0;
+    return false;
+  }
+  return true;
+}
+
+bool stopSetitimer() {
+  itimerval tv;
+  tv.it_value.tv_sec = 0;
+  tv.it_value.tv_usec = 0;
+  tv.it_interval.tv_sec = 0;
+  tv.it_interval.tv_usec = 0;
+  int res = setitimer(ITIMER_PROF, &tv, nullptr);
+  if (res != 0) {
+    FBLOGV("Cannot stop itimer: %s", strerror(errno));
+    return false;
+  }
+  return true;
+}
+
 } // namespace
 
 SamplingProfiler& SamplingProfiler::getInstance() {
@@ -143,7 +175,7 @@ sigmux_action SamplingProfiler::FaultHandler(
 void SamplingProfiler::maybeSignalReader() {
   uint32_t prevSlotCounter = state_.fullSlotsCounter.fetch_add(1);
   if ((prevSlotCounter + 1) % FLUSH_STACKS_COUNT == 0) {
-    if (state_.wallClockModeEnabled) {
+    if (state_.useSleepBasedWallProfiler) {
       state_.enoughStacks.store(true);
     } else {
       int res = sem_post(&state_.slotsCounterSem);
@@ -311,7 +343,7 @@ void SamplingProfiler::registerSignalHandlers() {
   }
 
   sigmux_state.profiling_registration =
-      sigmux_register(&prof_set, SamplingProfiler::UnwindStackHandler, this, 0);
+      sigmux_register(&prof_set, UnwindStackHandler, this, 0);
   if (!sigmux_state.profiling_registration) {
     throw_errno("sigmux_register for SIGPROF");
   }
@@ -337,7 +369,7 @@ void SamplingProfiler::registerSignalHandlers() {
   }
 
   sigmux_state.fault_registration =
-      sigmux_register(&sigset, SamplingProfiler::FaultHandler, this, 0);
+      sigmux_register(&sigset, FaultHandler, this, 0);
   if (!sigmux_state.fault_registration) {
     sigmux_unregister(sigmux_state.profiling_registration);
     sigmux_state.profiling_registration = nullptr;
@@ -470,7 +502,6 @@ void SamplingProfiler::flushStackTraces(
     }
     processedCount++;
   }
-  FBLOGV("Stacks flush is done. Processed %d stacks", processedCount);
 }
 
 void logProfilingErrAnnotation(int32_t key, uint16_t value) {
@@ -490,11 +521,12 @@ bool SamplingProfiler::initialize(
   state_.processId = getpid();
   state_.availableTracers = available_tracers;
   state_.tracersMap = std::move(tracers);
+  state_.timerManager.reset();
 
   // Init semaphore for stacks flush to the Ring Buffer
   int res = sem_init(&state_.slotsCounterSem, 0, 0);
   if (res != 0) {
-    FBLOGV("Can not init semaphore: %s", strerror(errno));
+    FBLOGV("Can not init slotsCounterSem semaphore: %s", strerror(errno));
     errno = 0;
     return false;
   }
@@ -505,32 +537,33 @@ bool SamplingProfiler::initialize(
 /**
  * Called via JNI from CPUProfiler
  *
+ * Must only be called if SamplingProfiler::startProfiling() returns true.
+ *
  * Waits in a loop for semaphore wakeup and then flushes the current profiling
  * stacks.
  */
 void SamplingProfiler::loggerLoop() {
-  FBLOGV("Logger thread is going into the loop...");
-  state_.isLoggerLoopDone.store(false);
-  state_.enoughStacks.store(false);
+  FBLOGV("Logger thread %d is going into the loop...", threadID());
 
   // If we are targeting a subset of all the threads, then the setitimer logic
   // is not used; instead, we make this thread sleep the right amount of time
   // and, when it wakes up, we send a tgkill(SIGPROF) to the interested threads
 
-  int res;
-  bool done;
+  int res = 0;
   std::unordered_set<uint64_t> loggedFramesSet{};
 
   do {
-    if (state_.wallClockModeEnabled) {
-      usleep(state_.samplingRateUs);
-      std::unique_lock<std::mutex> lock(state_.whitelistMtx);
-      for (int32_t tid : state_.whitelistedThreads) {
+    if (state_.useSleepBasedWallProfiler) {
+      // sleep-based-wall-profiling mode
+      usleep(state_.samplingRateMs * kMicrosecondsInMillisecond);
+      std::unique_lock<std::mutex> lock(
+          state_.whitelist->whitelistedThreadsMtx);
+      for (int32_t tid : state_.whitelist->whitelistedThreads) {
         res = syscall(__NR_tgkill, state_.processId, tid, SIGPROF);
         if (res != 0 && errno == ESRCH) {
           // If the thread id is bad or no longer exists, remove it from our
           // whitelist.
-          state_.whitelistedThreads.erase(tid);
+          state_.whitelist->whitelistedThreads.erase(tid);
         }
         if (res == 0 && state_.enoughStacks.load()) {
           flushStackTraces(loggedFramesSet);
@@ -538,21 +571,55 @@ void SamplingProfiler::loggerLoop() {
         }
       }
     } else {
-      // setitimer (i.e. every thread) case
+      // setitimer and thread-specific timers
       res = sem_wait(&state_.slotsCounterSem);
       if (res == 0) {
         flushStackTraces(loggedFramesSet);
       }
     }
-    done = state_.isLoggerLoopDone.load();
-  } while (!done && (res == 0 || errno == EINTR));
-
+  } while (!state_.isLoggerLoopDone && (res == 0 || errno == EINTR));
   FBLOGV("Logger thread is shutting down...");
+}
+
+bool SamplingProfiler::startProfilingTimers() {
+  FBLOGI("Starting profiling timers w/sample rate %d", state_.samplingRateMs);
+  if (!state_.useThreadSpecificProfiler) {
+    return startSetitimer(state_.samplingRateMs); // use global CPU timer
+  } else { // thread-specific timers
+    state_.timerManager.reset(new TimerManager(
+        state_.threadDetectIntervalMs,
+        state_.samplingRateMs,
+        state_.wallClockModeEnabled,
+        state_.wallClockModeEnabled ? state_.whitelist : nullptr));
+    state_.timerManager->start();
+  }
+  return true;
+}
+
+bool SamplingProfiler::stopProfilingTimers() {
+  if (!state_.useThreadSpecificProfiler) {
+    return stopSetitimer(); // use global CPU timer
+  } else { // thread-specific timers
+    state_.timerManager->stop();
+    state_.timerManager.reset();
+  }
+  return true;
 }
 
 bool SamplingProfiler::startProfiling(
     int requested_tracers,
     int sampling_rate_ms,
+    bool wall_clock_mode_enabled) {
+  return startProfilingTemporary(
+      requested_tracers, sampling_rate_ms, true, 23, wall_clock_mode_enabled);
+}
+
+bool SamplingProfiler::startProfilingTemporary( // needed until corresponding
+                                                // Java changes are made
+    int requested_tracers,
+    int sampling_rate_ms,
+    bool use_thread_specific_profiler,
+    int thread_detect_interval_ms,
     bool wall_clock_mode_enabled) {
   if (state_.isProfiling) {
     throw std::logic_error("startProfiling called while already profiling");
@@ -569,8 +636,20 @@ bool SamplingProfiler::startProfiling(
     return false;
   }
 
-  state_.samplingRateUs = sampling_rate_ms * 1000;
+  constexpr auto kMinThreadDetectIntervalMs = 13; // TODO_YM T63620953
+  if (thread_detect_interval_ms < kMinThreadDetectIntervalMs) {
+    thread_detect_interval_ms = kMinThreadDetectIntervalMs;
+  }
+
+  state_.samplingRateMs = sampling_rate_ms;
   state_.wallClockModeEnabled = wall_clock_mode_enabled;
+  state_.useSleepBasedWallProfiler =
+      wall_clock_mode_enabled && !use_thread_specific_profiler;
+  state_.useThreadSpecificProfiler = use_thread_specific_profiler;
+  state_.threadDetectIntervalMs = thread_detect_interval_ms;
+
+  state_.enoughStacks = false;
+  state_.isLoggerLoopDone = false;
 
   for (const auto& tracerEntry : state_.tracersMap) {
     if (tracerEntry.first & state_.currentTracers) {
@@ -578,48 +657,11 @@ bool SamplingProfiler::startProfiling(
     }
   }
 
-  // Call setitimer only if not in "single thread sampling" mode
-  if (!state_.wallClockModeEnabled) {
-    constexpr auto kMicrosecondsInSecond = 1000000;
-    constexpr auto kMicrosecondsInMillisecond = 1000;
-    auto sampleRateMicros = sampling_rate_ms * kMicrosecondsInMillisecond;
-    // Generate random initial delay. Used to calculate the initial trace delay
-    // to avoid sampling bias.
-    // Narrowing cast is acceptable, the lower bits should have
-    // all the entropy anyway.
-    std::mt19937 randGenerator(static_cast<uint32_t>(monotonicTime()));
-    std::uniform_int_distribution<> randDistribution(1, sampleRateMicros);
-    auto sampleStartDelayMicros = randDistribution(randGenerator);
-
-    int32_t sampleStartDelaySeconds = 0;
-    int32_t sampleRateSeconds = 0;
-
-    if (sampleStartDelayMicros >= kMicrosecondsInSecond) {
-      sampleStartDelaySeconds = sampleStartDelayMicros / kMicrosecondsInSecond;
-      sampleStartDelayMicros = sampleStartDelayMicros % kMicrosecondsInSecond;
-    }
-
-    if (sampleRateMicros >= kMicrosecondsInSecond) {
-      sampleRateSeconds = sampleRateMicros / kMicrosecondsInSecond;
-      sampleRateMicros = sampleRateMicros % kMicrosecondsInSecond;
-    }
-
-    itimerval tv{};
-    tv.it_value.tv_sec = sampleStartDelaySeconds;
-    tv.it_value.tv_usec = sampleStartDelayMicros;
-    tv.it_interval.tv_sec = sampleRateSeconds;
-    tv.it_interval.tv_usec = sampleRateMicros;
-
-    int res = setitimer(ITIMER_PROF, &tv, nullptr);
-    if (res != 0) {
-      FBLOGV("Can not start itimer: %s", strerror(errno));
-      errno = 0;
-      return false;
-    }
+  if (state_.useSleepBasedWallProfiler) {
+    // sleep-based wall-clock profiling is handled by the logger thread
+    return true;
   }
-
-  FBLOGV("Current tracers mask: %d", state_.currentTracers);
-  return true;
+  return startProfilingTimers();
 }
 
 /**
@@ -636,28 +678,18 @@ void SamplingProfiler::stopProfiling() {
 
   FBLOGV("Stopping profiling");
 
-  if (!state_.wallClockModeEnabled) {
-    itimerval tv;
-    tv.it_value.tv_sec = 0;
-    tv.it_value.tv_usec = 0;
-    tv.it_interval.tv_sec = 0;
-    tv.it_interval.tv_usec = 0;
-
-    // Stop the timer
-    int res = setitimer(ITIMER_PROF, &tv, nullptr);
-    if (res != 0) {
-      FBLOGV("Cannot stop itimer: %s", strerror(errno));
+  if (state_.useSleepBasedWallProfiler) {
+    state_.isLoggerLoopDone.store(true);
+  } else {
+    if (!stopProfilingTimers()) {
       abort();
     }
-
     state_.isLoggerLoopDone.store(true);
-    res = sem_post(&state_.slotsCounterSem);
+    int res = sem_post(&state_.slotsCounterSem);
     if (res != 0) {
       FBLOGV("Can not execute sem_post for logger thread");
       errno = 0;
     }
-  } else {
-    state_.isLoggerLoopDone.store(true);
   }
 
   // Logging errors
@@ -691,13 +723,14 @@ void SamplingProfiler::stopProfiling() {
 }
 
 void SamplingProfiler::addToWhitelist(int targetThread) {
-  std::unique_lock<std::mutex> lock(state_.whitelistMtx);
-  state_.whitelistedThreads.insert(static_cast<int32_t>(targetThread));
+  std::unique_lock<std::mutex> lock(state_.whitelist->whitelistedThreadsMtx);
+  state_.whitelist->whitelistedThreads.insert(
+      static_cast<int32_t>(targetThread));
 }
 
 void SamplingProfiler::removeFromWhitelist(int targetThread) {
-  std::unique_lock<std::mutex> lock(state_.whitelistMtx);
-  state_.whitelistedThreads.erase(targetThread);
+  std::unique_lock<std::mutex> lock(state_.whitelist->whitelistedThreadsMtx);
+  state_.whitelist->whitelistedThreads.erase(targetThread);
 }
 
 void SamplingProfiler::resetFrameworkNamesSet() {
