@@ -31,7 +31,7 @@ struct JNativeTraceWriterCallbacks
       "Lcom/facebook/profilo/writer/NativeTraceWriterCallbacks;";
 
   void onTraceStart(int64_t trace_id, int32_t flags, std::string file);
-  void onTraceEnd(int64_t trace_id, uint32_t crc);
+  void onTraceEnd(int64_t trace_id);
   void onTraceAbort(int64_t trace_id, AbortReason abortReason);
 };
 
@@ -46,7 +46,7 @@ struct NativeTraceWriterCallbacksProxy : public TraceCallbacks {
   virtual void onTraceStart(int64_t trace_id, int32_t flags, std::string file)
       override;
 
-  virtual void onTraceEnd(int64_t trace_id, uint32_t crc) override;
+  virtual void onTraceEnd(int64_t trace_id) override;
 
   virtual void onTraceAbort(int64_t trace_id, AbortReason reason) override;
 

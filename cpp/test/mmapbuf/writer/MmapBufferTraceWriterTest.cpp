@@ -85,7 +85,7 @@ static ::testing::AssertionResult assertContainsInString(
 class MockCallbacks : public TraceCallbacks {
  public:
   MOCK_METHOD3(onTraceStart, void(int64_t, int32_t, std::string));
-  MOCK_METHOD2(onTraceEnd, void(int64_t, uint32_t));
+  MOCK_METHOD1(onTraceEnd, void(int64_t));
   MOCK_METHOD2(onTraceAbort, void(int64_t, AbortReason));
 };
 
@@ -244,7 +244,7 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   MmapBufferTraceWriter traceWriter(testFolder, testTracePrefix, mockCallbacks);
 
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0, _));
-  EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId, _));
+  EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId));
 
   traceWriter.writeTrace(dumpPath(), kQplId, kTraceRecollectionTimestamp);
 

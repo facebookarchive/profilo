@@ -376,7 +376,7 @@ public class TraceOrchestratorTest {
   public void testWriterCallbacksLifecycle() {
     final long traceId = 0xFACEB00C;
     mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-profilo-test");
-    mOrchestrator.onTraceWriteEnd(traceId, 0);
+    mOrchestrator.onTraceWriteEnd(traceId);
     mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
     // Assert that onTraceWriteStart doesn't throw
   }
@@ -403,7 +403,7 @@ public class TraceOrchestratorTest {
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
-    mOrchestrator.onTraceWriteEnd(traceId, 0);
+    mOrchestrator.onTraceWriteEnd(traceId);
     mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
     // Assert that onTraceWriteStart doesn't throw
   }
@@ -469,30 +469,6 @@ public class TraceOrchestratorTest {
     mOrchestrator.onTraceStop(anotherContext);
     verify(mBaseTraceProvider).disable();
     verify(mSyncBaseTraceProvider).disable();
-  }
-
-  @Test
-  public void testTraceFileChecksumRename() throws IOException {
-    final long traceId = 0xFACEB00C;
-    final int crc = 0xC00BECAF;
-    File tempDirectory = new File(DEFAULT_TEMP_DIR);
-    tempDirectory.mkdirs();
-    File traceFile = File.createTempFile("tmp", "tmp.log", tempDirectory);
-    TraceOrchestratorListener fileListener = mock(TraceOrchestratorListener.class);
-    mOrchestrator.addListener(fileListener);
-
-    mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
-    mOrchestrator.onTraceWriteEnd(traceId, crc);
-
-    ArgumentCaptor<File> fileCaptor = ArgumentCaptor.forClass(File.class);
-    verify(fileListener).onTraceFlushed(fileCaptor.capture(), eq(traceId));
-    String filename = fileCaptor.getValue().getName();
-    String filenameNoExt = filename.substring(0, filename.lastIndexOf('.'));
-    String result_crc =
-        filenameNoExt.substring(
-            filenameNoExt.lastIndexOf(TraceOrchestrator.CHECKSUM_DELIM)
-                + TraceOrchestrator.CHECKSUM_DELIM.length());
-    assertThat(result_crc).isEqualTo(Integer.toHexString(crc));
   }
 
   @Test

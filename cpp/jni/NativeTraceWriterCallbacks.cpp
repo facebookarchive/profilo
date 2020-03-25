@@ -33,11 +33,11 @@ void JNativeTraceWriterCallbacks::onTraceStart(
   onTraceStartMethod(self(), trace_id, flags, file);
 }
 
-void JNativeTraceWriterCallbacks::onTraceEnd(int64_t trace_id, uint32_t crc) {
+void JNativeTraceWriterCallbacks::onTraceEnd(int64_t trace_id) {
   static auto onTraceEndMethod =
-      javaClassStatic()->getMethod<void(jlong, jint)>("onTraceWriteEnd");
+      javaClassStatic()->getMethod<void(jlong)>("onTraceWriteEnd");
 
-  onTraceEndMethod(self(), trace_id, crc);
+  onTraceEndMethod(self(), trace_id);
 }
 
 void JNativeTraceWriterCallbacks::onTraceAbort(
@@ -60,10 +60,8 @@ void NativeTraceWriterCallbacksProxy::onTraceStart(
   javaCallbacks_->onTraceStart(trace_id, flags, file);
 }
 
-void NativeTraceWriterCallbacksProxy::onTraceEnd(
-    int64_t trace_id,
-    uint32_t crc) {
-  javaCallbacks_->onTraceEnd(trace_id, crc);
+void NativeTraceWriterCallbacksProxy::onTraceEnd(int64_t trace_id) {
+  javaCallbacks_->onTraceEnd(trace_id);
 }
 
 void NativeTraceWriterCallbacksProxy::onTraceAbort(

@@ -52,7 +52,7 @@ const char* kTracePrefix = "test-prefix";
 class MockCallbacks : public TraceCallbacks {
  public:
   MOCK_METHOD3(onTraceStart, void(int64_t, int32_t, std::string));
-  MOCK_METHOD2(onTraceEnd, void(int64_t, uint32_t));
+  MOCK_METHOD1(onTraceEnd, void(int64_t));
   MOCK_METHOD2(onTraceAbort, void(int64_t, AbortReason));
 };
 
@@ -321,7 +321,7 @@ TEST_F(TraceWriterTest, testCallbacksInOrderSuccess) {
   using ::testing::_;
   testCallbackCalls([&] {
     EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, 0, _));
-    EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID, _));
+    EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID));
     EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
 
     writeTraceStart();
@@ -333,7 +333,7 @@ TEST_F(TraceWriterTest, testCallbacksInOrderAbort) {
   using ::testing::_;
   testCallbackCalls([&] {
     EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, 0, _));
-    EXPECT_CALL(*callbacks_, onTraceEnd(_, _)).Times(0);
+    EXPECT_CALL(*callbacks_, onTraceEnd(_)).Times(0);
     EXPECT_CALL(
         *callbacks_, onTraceAbort(kTraceID, AbortReason::CONTROLLER_INITIATED));
 
@@ -346,7 +346,7 @@ TEST_F(TraceWriterTest, testCallbacksMissedStart) {
   using ::testing::_;
   testCallbackCalls([&] {
     EXPECT_CALL(*callbacks_, onTraceStart(_, _, _)).Times(0);
-    EXPECT_CALL(*callbacks_, onTraceEnd(_, _)).Times(0);
+    EXPECT_CALL(*callbacks_, onTraceEnd(_)).Times(0);
     EXPECT_CALL(*callbacks_, onTraceAbort(kTraceID, _)).Times(0);
 
     writeTraceStart();
@@ -363,8 +363,8 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing) {
 
   EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID, _)).Times(1);
+  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(1);
+  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
 
   auto thread = std::thread([&] { writer_.loop(); });
@@ -389,8 +389,8 @@ TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing2) {
 
   EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID, _)).Times(1);
+  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(1);
+  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
 
   auto thread = std::thread([&] { writer_.loop(); });
@@ -414,8 +414,8 @@ TEST_F(TraceWriterTest, testCallbacksMultiTracingAbort) {
 
   EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID, _)).Times(0);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID, _)).Times(1);
+  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(0);
+  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
   EXPECT_CALL(*callbacks_, onTraceAbort(kSecondTraceID, _)).Times(0);
   EXPECT_CALL(*callbacks_, onTraceAbort(kTraceID, _)).Times(1);
 
@@ -431,29 +431,6 @@ TEST_F(TraceWriterTest, testCallbacksMultiTracingAbort) {
   writer_.submit(TraceWriter::kStopLoopTraceID);
 
   thread.join();
-}
-
-TEST_F(TraceWriterTest, testTraceCRC32Checksum) {
-  using ::testing::_;
-  writeTraceStart();
-  writeTraceEnd();
-
-  uint32_t crc;
-  EXPECT_CALL(*callbacks_, onTraceEnd(_, _))
-      .WillOnce(testing::SaveArg<1>(&crc));
-
-  auto thread = std::thread([&] { writer_.loop(); });
-
-  writer_.submit(kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
-  thread.join();
-
-  auto trace = getOnlyTraceFileContents();
-  auto result_crc = crc32(
-      0,
-      reinterpret_cast<const unsigned char*>(trace.c_str()),
-      strlen(trace.c_str()));
-  EXPECT_EQ(result_crc, crc);
 }
 
 } // namespace profilo

@@ -108,10 +108,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceWriteEnd(long traceId, int crc) {
+  public void onTraceWriteEnd(long traceId) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteEnd(traceId, crc);
+      iterator.next().onTraceWriteEnd(traceId);
     }
   }
 

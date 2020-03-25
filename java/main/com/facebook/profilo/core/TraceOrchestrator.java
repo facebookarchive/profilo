@@ -501,7 +501,7 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onTraceWriteEnd(long traceId, int crc) {
+  public void onTraceWriteEnd(long traceId) {
     Trace trace;
     synchronized (mTraces) {
       trace = mTraces.get(traceId);
@@ -511,24 +511,11 @@ public final class TraceOrchestrator
       }
       mTraces.remove(traceId);
     }
-    mListenerManager.onTraceWriteEnd(traceId, crc);
+    mListenerManager.onTraceWriteEnd(traceId);
 
     File logFile = trace.getLogFile();
     if (!logFile.exists()) {
       return;
-    }
-
-    String logFileName = logFile.getName();
-    int extIndex = logFileName.lastIndexOf('.');
-    String checksumSuffix = CHECKSUM_DELIM + Integer.toHexString(crc);
-    File logFileWithCrc =
-        new File(
-            logFile.getParent(),
-            (extIndex > 0 ? logFileName.substring(0, extIndex) : logFileName)
-                + checksumSuffix
-                + (extIndex > 0 ? logFileName.substring(extIndex) : ""));
-    if (logFile.renameTo(logFileWithCrc)) {
-      logFile = logFileWithCrc;
     }
 
     if (!mIsMainProcess) {
