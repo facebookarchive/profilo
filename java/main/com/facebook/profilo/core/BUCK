@@ -88,7 +88,7 @@ fb_core_android_library(
         profilo_path("..."),
         "//fbandroid/javatests/com/facebook/cloudseeder:cloudseeder",
         "//fbandroid/javatests/com/facebook/debug/fps:fps",
-        "//fbandroid/javatests/com/facebook/stall:stall",
+        "//fbandroid/javatests/com/facebook/stall:",
         "//fbandroid/perftests/benchmarks/java/com/facebook/benchmarks/profilo/...",
     ],
     deps = [
