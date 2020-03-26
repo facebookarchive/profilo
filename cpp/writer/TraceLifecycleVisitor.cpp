@@ -242,8 +242,7 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
   std::string trace_file = path_stream.str();
 
   output_ = std::make_unique<std::ofstream>(
-      trace_file,
-      std::ofstream::out | std::ofstream::binary);
+      trace_file, std::ofstream::out | std::ofstream::binary);
   output_->exceptions(std::ofstream::badbit | std::ofstream::failbit);
 
   zstr::ostreambuf* output_buf_ = new zstr::ostreambuf(
