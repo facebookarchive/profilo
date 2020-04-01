@@ -20,7 +20,6 @@ fb_xplat_cxx_library(
     labels = ["supermodule:android/default/loom.core"],
     link_style = "shared",
     preferred_linkage = "static",
-    supported_platforms_regex = "^android-(arm|armv7|arm64|x86|x86_64)$",
     visibility = [
         "PUBLIC",
     ],
@@ -56,7 +55,6 @@ fb_xplat_cxx_library(
     labels = ["supermodule:android/default/loom.core"],
     link_style = "shared",
     soname = "libprofiloextapi.$(ext)",
-    supported_platforms_regex = "^android-(arm|armv7|arm64|x86|x86_64)$",
     visibility = [
         profilo_path("..."),
     ],
