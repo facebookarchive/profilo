@@ -60,7 +60,7 @@ public final class TraceContext implements Parcelable {
       Set<String> intArrayParamKeys = intArrayParamsBundle.keySet();
       if (!intArrayParamKeys.isEmpty()) {
         mIntArrayParams = new TreeMap<>();
-        for (String key : boolParamKeys) {
+        for (String key : intArrayParamKeys) {
           mIntArrayParams.put(key, intArrayParamsBundle.getIntArray(key));
         }
       } else {
