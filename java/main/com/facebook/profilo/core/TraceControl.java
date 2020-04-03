@@ -385,6 +385,7 @@ public final class TraceControl {
       return false;
     }
     removeTraceContext(traceContext);
+    Log.w(LOG_TAG, "STOP PROFILO_TRACEID: " + FbTraceId.encode(traceContext.traceId));
     synchronized (this) {
       ensureHandlerInitialized();
       mTraceControlHandler.onConditionalTraceStop(traceContext);
