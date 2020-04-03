@@ -15,17 +15,15 @@ package com.facebook.profilo.mmapbuf;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import javax.annotation.Nullable;
 
 class MmapBufferFileHelper {
 
   public static final String BUFFER_FILE_SUFFIX = ".buff";
 
-  private static final int MAX_DUMPS_TO_PROCESS = 5;
+  private static final int MAX_DUMPS_TO_KEEP = 3;
 
   private static final Comparator<File> MOST_RECENT_FILES_COMPARATOR =
       new Comparator<File>() {
@@ -45,44 +43,34 @@ class MmapBufferFileHelper {
       };
 
   private final File mMmapFilesFolder;
+  public static final Object DUMP_FILES_LOCK = new Object();
 
   MmapBufferFileHelper(File mmapFilesFolder) {
     mMmapFilesFolder = mmapFilesFolder;
   }
 
-  /** Get current pending buffer files to process */
-  public List<File> getBufferFilesToProcess() {
+  public void deleteOldBufferFiles() {
     File mmapFolder = getFolderIfExists();
     if (mmapFolder == null) {
-      return Collections.emptyList();
+      return;
     }
-    ArrayList<File> filesToProcess = new ArrayList<>();
-    File[] mmapFolderFiles = mmapFolder.listFiles();
-    if (mmapFolderFiles == null) {
-      return Collections.emptyList();
+    File[] mmapFiles = mmapFolder.listFiles();
+    if (mmapFiles == null) {
+      return;
     }
-    for (File nextFile : mmapFolderFiles) {
-      if (!nextFile.getName().endsWith(BUFFER_FILE_SUFFIX) || nextFile.length() == 0) {
-        if (!nextFile.delete()) {
-          nextFile.deleteOnExit();
+    int filesCount = mmapFiles.length;
+    if (filesCount <= MAX_DUMPS_TO_KEEP) {
+      return;
+    }
+    Arrays.sort(mmapFiles, MOST_RECENT_FILES_COMPARATOR);
+    for (int i = MAX_DUMPS_TO_KEEP; i < filesCount; i++) {
+      File file = mmapFiles[i];
+      synchronized (DUMP_FILES_LOCK) {
+        if (file.exists()) {
+          file.delete();
         }
-        continue;
-      }
-      filesToProcess.add(nextFile);
-    }
-    // Cleanup old files if they happen to be not processed yet.
-    if (filesToProcess.size() > MAX_DUMPS_TO_PROCESS) {
-      Collections.sort(filesToProcess, MOST_RECENT_FILES_COMPARATOR);
-      while (filesToProcess.size() > MAX_DUMPS_TO_PROCESS) {
-        int lastIdx = filesToProcess.size() - 1;
-        File file = filesToProcess.get(lastIdx);
-        if (!file.delete()) {
-          file.deleteOnExit();
-        }
-        filesToProcess.remove(lastIdx);
       }
     }
-    return filesToProcess;
   }
 
   @Nullable
