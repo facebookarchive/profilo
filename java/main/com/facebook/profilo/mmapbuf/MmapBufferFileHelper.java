@@ -14,6 +14,7 @@
 package com.facebook.profilo.mmapbuf;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -47,6 +48,27 @@ class MmapBufferFileHelper {
 
   MmapBufferFileHelper(File mmapFilesFolder) {
     mMmapFilesFolder = mmapFilesFolder;
+  }
+
+  @Nullable
+  public File findBufferFileById(String id) {
+    File mmapFolder = getFolderIfExists();
+    if (mmapFolder == null) {
+      return null;
+    }
+    final String targetFilename = getBufferFilename(id);
+    File[] foundFiles =
+        mmapFolder.listFiles(
+            new FilenameFilter() {
+              @Override
+              public boolean accept(File dir, String name) {
+                return targetFilename.equals(name);
+              }
+            });
+    if (foundFiles == null || foundFiles.length != 1) {
+      return null;
+    }
+    return foundFiles[0];
   }
 
   public void deleteOldBufferFiles() {
@@ -90,7 +112,7 @@ class MmapBufferFileHelper {
   }
 
   public static String getBufferFilename(String id) {
-    return sanitizeFilename(id + BUFFER_FILE_SUFFIX);
+    return sanitizeFilename(id) + BUFFER_FILE_SUFFIX;
   }
 
   public static String sanitizeFilename(String filename) {
