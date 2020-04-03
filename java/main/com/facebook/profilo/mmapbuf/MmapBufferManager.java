@@ -16,11 +16,11 @@ package com.facebook.profilo.mmapbuf;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import com.facebook.jni.HybridData;
 import com.facebook.jni.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 @DoNotStrip
 public class MmapBufferManager {
 
-  public static final String BUFFER_FILE_SUFFIX = ".buff";
+  private static final String LOG_TAG = "Profilo/MmapBufferMngr";
 
   static {
     SoLoader.loadLibrary("profilo_mmapbuf");
@@ -36,7 +36,8 @@ public class MmapBufferManager {
 
   @DoNotStrip private final HybridData mHybridData;
   private volatile @Nullable String mMmapFileName;
-  private final File mFolder;
+  private @Nullable String mId;
+  private final MmapBufferFileHelper mFileHelper;
   private final Context mContext;
   private final long mConfigId;
   private AtomicBoolean mAllocated;
@@ -47,10 +48,10 @@ public class MmapBufferManager {
 
   public MmapBufferManager(long configId, File folder, Context context) {
     mConfigId = configId;
-    mFolder = folder;
     mContext = context;
     mAllocated = new AtomicBoolean(false);
     mEnabled = new AtomicBoolean(false);
+    mFileHelper = new MmapBufferFileHelper(folder);
     mHybridData = initHybrid();
   }
 
@@ -80,28 +81,44 @@ public class MmapBufferManager {
   }
 
   public boolean allocateBuffer(int size) {
-    File folder = mFolder;
-    if (folder == null) {
-      throw new IllegalStateException("Mmap folder is not set");
-    }
     if (!mAllocated.compareAndSet(false, true)) {
       return false;
     }
 
-    if (!folder.exists() && !folder.mkdirs()) {
-      return false;
-    }
-    String fileName = UUID.randomUUID().toString() + BUFFER_FILE_SUFFIX;
-    String mmapBufferPath = null;
-    try {
-      mmapBufferPath = folder.getCanonicalPath() + File.separator + fileName;
-    } catch (IOException ignored) {
+    String fileName = MmapBufferFileHelper.getBufferFilename(UUID.randomUUID().toString());
+    String mmapBufferPath = mFileHelper.ensureFilePath(fileName);
+    if (mmapBufferPath == null) {
       return false;
     }
     mMmapFileName = fileName;
+
     boolean res = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
     mEnabled.set(res);
     return res;
+  }
+
+  public synchronized void updateId(String id) {
+    if (!mEnabled.get()) {
+      return;
+    }
+    if (id.equals(mId)) {
+      return;
+    }
+
+    String fileName = MmapBufferFileHelper.getBufferFilename(id);
+    String filePath = mFileHelper.ensureFilePath(fileName);
+    if (filePath == null) {
+      return;
+    }
+
+    try {
+      nativeUpdateId(id);
+      nativeUpdateFilePath(filePath);
+    } catch (Exception ex) {
+      Log.e(LOG_TAG, "Id update failed", ex);
+    }
+    mId = id;
+    mMmapFileName = fileName;
   }
 
   @DoNotStrip
@@ -111,7 +128,9 @@ public class MmapBufferManager {
   public native void nativeUpdateHeader(
       int providers, int trigger, long normalTraceId, long inMemoryTraceId);
 
-  public native void nativeUpdateSessionId(String sessionId);
+  public native void nativeUpdateId(String sessionId);
+
+  public native void nativeUpdateFilePath(String filePath);
 
   /**
    * De-allocates current memory mapped buffer and deletes the buffer file. This operation is unsafe

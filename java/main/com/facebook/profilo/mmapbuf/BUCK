@@ -12,6 +12,7 @@ fb_core_android_library(
         "//fbandroid/perftests/benchmarks/...",
     ],
     deps = [
+        ":file_helper",
         profilo_path("cpp/mmapbuf:mmapbuf"),
         profilo_path("deps/fbjni:fbjni-java"),
         profilo_path("deps/jsr-305:jsr-305"),
@@ -29,9 +30,6 @@ fb_core_android_library(
         profilo_path("..."),
     ],
     deps = [
-        ":mmapbuf",
-        profilo_path("java/main/com/facebook/profilo/core:core"),
-        profilo_path("java/main/com/facebook/profilo/logger:logger"),
         profilo_path("deps/jsr-305:jsr-305"),
     ],
 )

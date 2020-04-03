@@ -13,11 +13,8 @@
  */
 package com.facebook.profilo.mmapbuf;
 
-import static com.facebook.profilo.mmapbuf.MmapBufferManager.BUFFER_FILE_SUFFIX;
-
-import com.facebook.profilo.core.TraceOrchestrator;
-import com.facebook.profilo.logger.FileManager;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,6 +22,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 class MmapBufferFileHelper {
+
+  public static final String BUFFER_FILE_SUFFIX = ".buff";
 
   private static final int MAX_DUMPS_TO_PROCESS = 5;
 
@@ -45,14 +44,15 @@ class MmapBufferFileHelper {
         }
       };
 
-  @Nullable private File mMmapFilesFolder;
-  @Nullable private FileManager mFileManager;
+  private final File mMmapFilesFolder;
 
-  MmapBufferFileHelper() {}
+  MmapBufferFileHelper(File mmapFilesFolder) {
+    mMmapFilesFolder = mmapFilesFolder;
+  }
 
   /** Get current pending buffer files to process */
   public List<File> getBufferFilesToProcess() {
-    File mmapFolder = getFolder();
+    File mmapFolder = getFolderIfExists();
     if (mmapFolder == null) {
       return Collections.emptyList();
     }
@@ -85,30 +85,47 @@ class MmapBufferFileHelper {
     return filesToProcess;
   }
 
-  void ensureFileManager() {
-    if (mFileManager != null) {
-      return;
+  @Nullable
+  public String ensureFilePath(String fileName) {
+    if (!mMmapFilesFolder.exists() && !mMmapFilesFolder.mkdirs()) {
+      return null;
     }
-    TraceOrchestrator tc = TraceOrchestrator.get();
-    if (tc == null) {
-      return;
+
+    String mmapBufferPath = null;
+    try {
+      mmapBufferPath = mMmapFilesFolder.getCanonicalPath() + File.separator + fileName;
+    } catch (IOException ignored) {
+      // Ignored
     }
-    mFileManager = tc.getFileManager();
+
+    return mmapBufferPath;
+  }
+
+  public static String getBufferFilename(String id) {
+    return sanitizeFilename(id + BUFFER_FILE_SUFFIX);
+  }
+
+  public static String sanitizeFilename(String filename) {
+    int len = filename.length();
+    StringBuilder sanitizedFilename = new StringBuilder(len);
+    for (int i = 0; i < len; i++) {
+      char ch = filename.charAt(i);
+      boolean isValid =
+          (ch >= 'A' && ch <= 'Z')
+              || (ch >= 'a' && ch <= 'z')
+              || (ch >= '0' && ch <= '9')
+              || ch == '-'
+              || ch == '_'
+              || ch == '.';
+      sanitizedFilename.append(isValid ? ch : "_");
+    }
+    return sanitizedFilename.toString();
   }
 
   @Nullable
-  private File getFolder() {
-    if (mMmapFilesFolder != null) {
+  private File getFolderIfExists() {
+    if (mMmapFilesFolder.isDirectory() && mMmapFilesFolder.exists()) {
       return mMmapFilesFolder;
-    }
-    ensureFileManager();
-    if (mFileManager == null) {
-      return null;
-    }
-    File mmapFolder = mFileManager.getMmapBufferFolder();
-    if (mmapFolder.isDirectory() && mmapFolder.exists()) {
-      mMmapFilesFolder = mmapFolder;
-      return mmapFolder;
     }
     return null;
   }

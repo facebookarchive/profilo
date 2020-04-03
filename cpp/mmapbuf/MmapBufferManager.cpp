@@ -118,15 +118,22 @@ void MmapBufferManager::updateHeader(
   bufferPrefix->header.inMemoryTraceId = memory_trace_id;
 }
 
-void MmapBufferManager::updateSessionId(const std::string& session_id) {
+void MmapBufferManager::updateId(const std::string& id) {
   MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
   if (bufferPrefix == nullptr) {
     return;
   }
-  auto sz = std::min(
-      session_id.size(), (size_t)MmapBufferHeader::kSessionIdLength - 1);
-  session_id.copy(bufferPrefix->header.sessionId, sz);
+  // Compare and if session id has not changed exit
+  auto sz = std::min(id.size(), (size_t)MmapBufferHeader::kSessionIdLength - 1);
+  id.copy(bufferPrefix->header.sessionId, sz);
   bufferPrefix->header.sessionId[sz] = 0;
+}
+
+void MmapBufferManager::updateFilePath(const std::string& file_path) {
+  if (rename(path_.c_str(), file_path.c_str())) {
+    throw std::runtime_error(
+        std::string("Failed to rename mmap file: ") + std::strerror(errno));
+  }
 }
 
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
@@ -142,8 +149,9 @@ void MmapBufferManager::registerNatives() {
       makeNativeMethod(
           "nativeDeallocateBuffer", MmapBufferManager::deallocateBuffer),
       makeNativeMethod("nativeUpdateHeader", MmapBufferManager::updateHeader),
+      makeNativeMethod("nativeUpdateId", MmapBufferManager::updateId),
       makeNativeMethod(
-          "nativeUpdateSessionId", MmapBufferManager::updateSessionId),
+          "nativeUpdateFilePath", MmapBufferManager::updateFilePath),
   });
 }
 

@@ -208,7 +208,7 @@ public final class Logger {
     if (mmapBufferManager == null) {
       return;
     }
-    mmapBufferManager.nativeUpdateSessionId(sessionId);
+    mmapBufferManager.updateId(sessionId);
   }
 
   @SuppressLint("BadMethodUse-java.lang.Thread.start")

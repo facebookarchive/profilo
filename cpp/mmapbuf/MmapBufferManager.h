@@ -61,7 +61,9 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
       int64_t normal_trace_id,
       int64_t memory_trace_id);
 
-  void updateSessionId(const std::string& session_id);
+  void updateId(const std::string& id);
+
+  void updateFilePath(const std::string& file_path);
 
   static void registerNatives();
 
