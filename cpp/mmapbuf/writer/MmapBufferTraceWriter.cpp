@@ -60,15 +60,17 @@ void loggerWrite(
 
 void loggerWriteStringAnnotation(
     Logger& logger,
-    int32_t annotationQuicklogId,
-    std::string annotationKey,
-    std::string annotationValue,
+    EntryType type,
+    int32_t callid,
+    const std::string& annotationKey,
+    const std::string& annotationValue,
+    int64_t extra = 0,
     int64_t timestamp = monotonicTime()) {
   StandardEntry annotationEntry{};
-  annotationEntry.type = entries::TRACE_ANNOTATION;
+  annotationEntry.type = type;
   annotationEntry.tid = threadID();
   annotationEntry.timestamp = timestamp;
-  annotationEntry.callid = annotationQuicklogId;
+  annotationEntry.callid = callid;
   auto matchid = logger.write(std::move(annotationEntry));
 
   auto key = annotationKey.c_str();
@@ -83,6 +85,38 @@ void loggerWriteStringAnnotation(
       matchid,
       reinterpret_cast<const uint8_t*>(value),
       strlen(value));
+}
+
+void loggerWriteTraceStringAnnotation(
+    Logger& logger,
+    int32_t annotationQuicklogId,
+    const std::string& annotationKey,
+    const std::string& annotationValue,
+    int64_t timestamp = monotonicTime()) {
+  loggerWriteStringAnnotation(
+      logger,
+      entries::TRACE_ANNOTATION,
+      annotationQuicklogId,
+      annotationKey,
+      annotationValue,
+      0,
+      timestamp);
+}
+
+void loggerWriteQplTriggerAnnotation(
+    Logger& logger,
+    int32_t marker_id,
+    const std::string& annotationKey,
+    const std::string& annotationValue,
+    int64_t timestamp = monotonicTime()) {
+  loggerWriteStringAnnotation(
+      logger,
+      entries::QPL_ANNOTATION,
+      marker_id,
+      annotationKey,
+      annotationValue,
+      kTriggerEventFlag,
+      timestamp);
 }
 
 struct FileDescriptor {
@@ -160,35 +194,37 @@ MmapBufferTraceWriter::MmapBufferTraceWriter(
       trace_prefix_(trace_prefix),
       callbacks_(callbacks) {}
 
-void MmapBufferTraceWriter::nativeWriteTrace(
-    const std::string& dump_path,
-    int32_t qpl_marker_id) {
-  writeTrace(dump_path, qpl_marker_id);
-}
-
-void MmapBufferTraceWriter::writeTrace(
+int64_t MmapBufferTraceWriter::nativeWriteTrace(
     const std::string& dump_path,
     int32_t qpl_marker_id,
+    const std::string& type) {
+  return writeTrace(dump_path, qpl_marker_id, type);
+}
+
+int64_t MmapBufferTraceWriter::writeTrace(
+    const std::string& dump_path,
+    int32_t qpl_marker_id,
+    const std::string& type,
     uint64_t timestamp) {
   BufferFileMapHolder bufferFileMap(dump_path);
   MmapBufferPrefix* mapBufferPrefix =
       reinterpret_cast<MmapBufferPrefix*>(bufferFileMap.map_ptr);
   if (mapBufferPrefix->staticHeader.magic != kMagic) {
-    return;
+    return 0;
   }
 
   if (mapBufferPrefix->staticHeader.version != kVersion) {
-    return;
+    return 0;
   }
 
   if (mapBufferPrefix->header.bufferVersion != RingBuffer::kVersion) {
-    return;
+    return 0;
   }
 
   // No trace was active when process died so the buffer is not useful.
   if (mapBufferPrefix->header.normalTraceId == 0 &&
       mapBufferPrefix->header.inMemoryTraceId == 0) {
-    return;
+    return 0;
   }
 
   int64_t trace_id = mapBufferPrefix->header.normalTraceId;
@@ -199,7 +235,7 @@ void MmapBufferTraceWriter::writeTrace(
   auto entriesCount = mapBufferPrefix->header.size;
   // Number of additional records we need to log in addition to entries from the
   // buffer file.
-  constexpr auto kServiceRecordCount = 8;
+  constexpr auto kServiceRecordCount = 11;
 
   TraceBufferHolder bufferHolder =
       TraceBuffer::allocate(entriesCount + kServiceRecordCount);
@@ -237,11 +273,13 @@ void MmapBufferTraceWriter::writeTrace(
       QuickLogConstants::CONFIG_ID,
       mapBufferPrefix->header.configId,
       timestamp);
-  loggerWriteStringAnnotation(
+  loggerWriteTraceStringAnnotation(
       logger,
       QuickLogConstants::SESSION_ID,
       "Asl Session Id",
       std::string(mapBufferPrefix->header.sessionId));
+  loggerWriteQplTriggerAnnotation(
+      logger, qpl_marker_id, "type", type, timestamp);
   loggerWrite(logger, entries::TRACE_END, 0, trace_id, timestamp);
 
   TraceWriter writer(
@@ -257,6 +295,8 @@ void MmapBufferTraceWriter::writeTrace(
     FBLOGE("Error during dump processing: %s", e.what());
     callbacks_->onTraceAbort(trace_id, AbortReason::UNKNOWN);
   }
+
+  return trace_id;
 }
 
 fbjni::local_ref<MmapBufferTraceWriter::jhybriddata>

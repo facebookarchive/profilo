@@ -246,7 +246,8 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0, _));
   EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId));
 
-  traceWriter.writeTrace(dumpPath(), kQplId, kTraceRecollectionTimestamp);
+  traceWriter.writeTrace(
+      dumpPath(), kQplId, "test", kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
 }
@@ -267,7 +268,8 @@ TEST_F(
 
   EXPECT_CALL(*mockCallbacks, onTraceAbort(kTraceId, AbortReason::UNKNOWN));
 
-  traceWriter.writeTrace(dumpPath(), kQplId, kTraceRecollectionTimestamp);
+  traceWriter.writeTrace(
+      dumpPath(), kQplId, "test", kTraceRecollectionTimestamp);
 }
 
 } // namespace writer
