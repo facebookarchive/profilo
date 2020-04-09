@@ -25,6 +25,10 @@ int ask() {
   return meaning_of_life;
 }
 
+int add_foo_and_bar() {
+  return foo() + bar();
+}
+
 double call_nice1(int one) {
   return nice1(one);
 }

@@ -155,11 +155,28 @@ verify_got_entry_for_spec(prev_func* got_addr, plt_hook_spec* spec) {
     return false;
   }
   if (info.dli_sname == nullptr || strcmp(info.dli_sname, spec->fn_name)) {
-    LOGE(
-        "GOT entry does not point to symbol we need: %s vs %s",
-        info.dli_sname,
-        spec->fn_name);
-    return false;
+    // name we got back from dladdr doesn't match what we're trying to hook
+    // but maybe there are multiple aliases and dladdr gave us back a different one?
+    // only fail if that's not the case
+    void* dladdr_sym_value = nullptr;
+    if (info.dli_sname != nullptr) {
+      try {
+        auto target_lib = sharedLib(info.dli_fname);
+        auto sym = target_lib.find_symbol_by_name(info.dli_sname);
+        if (sym) {
+          dladdr_sym_value = target_lib.getLoadedAddress(sym);
+        }
+      } catch (std::out_of_range const&) {
+        return false;
+      }
+    }
+    if (dladdr_sym_value != *got_addr) {
+      LOGE(
+          "GOT entry does not point to symbol we need: %s vs %s",
+          info.dli_sname,
+          spec->fn_name);
+      return false;
+    }
   }
   return true;
 }

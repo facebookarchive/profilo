@@ -30,6 +30,9 @@ struct large {
 
 clock_t call_clock();
 
+int foo();
+int bar();
+
 double nice1(int one);
 int nice2(int one, double two);
 

@@ -504,6 +504,37 @@ TEST_F(Evil3Test, evil3Test) {
 
 // TODO: write a varargs test
 
+template <int Ret>
+struct AliasTest : public OneHookTest {
+  AliasTest(char const* method_name)
+    : OneHookTest(method_name, (void*)(+[] { return Ret; })),
+      libmeaningoflife(LIBDIR("libmeaningoflife.so")),
+      foo(libmeaningoflife.get_symbol<int()>("foo")),
+      bar(libmeaningoflife.get_symbol<int()>("bar")) {}
+
+  static constexpr int kExpectedValue = Ret;
+
+  facebook::cppdistract::dso const libmeaningoflife;
+  int (*foo)();
+  int (*bar)();
+};
+
+struct AliasFooTest : public AliasTest<69> {
+  AliasFooTest() : AliasTest("foo") {}
+};
+
+TEST_F(AliasFooTest, aliasFooTest) {
+  ASSERT_EQ(kExpectedValue + bar(), libtarget.get_symbol<int()>("add_foo_and_bar")());
+}
+
+struct AliasBarTest : public AliasTest<101> {
+  AliasBarTest() : AliasTest("bar") {}
+};
+
+TEST_F(AliasBarTest, aliasBarTest) {
+  ASSERT_EQ(kExpectedValue + foo(), libtarget.get_symbol<int()>("add_foo_and_bar")());
+}
+
 #else
 
 TEST(UnsupportedArch, unsupportedArch) {

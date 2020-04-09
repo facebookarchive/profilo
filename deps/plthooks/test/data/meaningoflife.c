@@ -21,6 +21,12 @@ clock_t call_clock() {
   return clock();
 }
 
+int foo() {
+  return 5;
+}
+
+int bar() __attribute__((alias("foo")));
+
 int meaning_of_life = 42;
 
 double nice1(int one) {
