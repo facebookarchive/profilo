@@ -1,14 +1,12 @@
-load("@fbsource//tools/build_defs/android:robolectric3_test.bzl", "robolectric3_test")
+load("@fbsource//tools/build_defs/android:robolectric4_test.bzl", "robolectric4_test")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-robolectric3_test(
+robolectric4_test(
     name = "core",
     srcs = glob(["*Test.java"]),
     contacts = ["oncall+loom@xmail.facebook.com"],
     deps = [
         "//fbandroid/java/com/facebook/testing/inject:inject",
-        "//fbandroid/java/com/facebook/testing/powermock:powermock",
-        "//fbandroid/java/com/facebook/testing/robolectric/v3:v3",
         "//fbandroid/java/com/facebook/testing/util:util",
         profilo_path("deps/fbtrace:utils"),
         profilo_path("deps/jsr-305:jsr-305"),
@@ -22,6 +20,5 @@ robolectric3_test(
         "//fbandroid/third-party/java/fest:fest_android",
         "//fbandroid/third-party/java/guava:guava",
         "//fbandroid/third-party/java/junit:junit",
-        "//fbandroid/third-party/java/robolectric3/robolectric:robolectric",
     ],
 )

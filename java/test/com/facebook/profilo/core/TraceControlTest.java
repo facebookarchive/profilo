@@ -15,12 +15,12 @@ package com.facebook.profilo.core;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.same;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -37,14 +37,15 @@ import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.util.TestConfigProvider;
-import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
+import com.facebook.testing.powermock.PowerMockTest;
+import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.powermock.reflect.Whitebox;
 
 @RunWith(WithTestDefaultsRunner.class)
 @PrepareForTest({
@@ -52,7 +53,7 @@ import org.powermock.core.classloader.annotations.SuppressStaticInitializationFo
   TraceControl.class,
 })
 @SuppressStaticInitializationFor("com.facebook.profilo.logger.Logger")
-public class TraceControlTest {
+public class TraceControlTest extends PowerMockTest {
 
   private static final int TRACE_CONTROLLER_ID = 100;
   private static final long TEST_TRACE_ID = 10000l;
@@ -81,7 +82,8 @@ public class TraceControlTest {
 
     when(mController.evaluateConfig(anyLong(), anyObject(), same(mControllerConfig)))
         .thenReturn(PROVIDER_TEST);
-    when(mController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject())).thenReturn(true);
+    when(mController.contextsEqual(anyLong(), anyObject(), anyLong(), anyObject()))
+        .thenReturn(true);
     when(mController.isConfigurable()).thenReturn(true);
     when(mController.getTraceConfigExtras(anyLong(), anyObject(), same(mControllerConfig)))
         .thenReturn(TraceContext.TraceConfigExtras.EMPTY);
@@ -206,12 +208,14 @@ public class TraceControlTest {
     assertTracing();
 
     // Different context doesn't stop the trace..
-    when(mController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject())).thenReturn(false);
+    when(mController.contextsEqual(anyLong(), anyObject(), anyLong(), anyObject()))
+        .thenReturn(false);
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, new Object(), 0);
     assertTracing();
 
     // ..but the right context does
-    when(mController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject())).thenReturn(true);
+    when(mController.contextsEqual(anyLong(), anyObject(), anyLong(), anyObject()))
+        .thenReturn(true);
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, context, 0);
     assertNotTracing();
   }
@@ -243,7 +247,7 @@ public class TraceControlTest {
     int flags = 0xFACEB00C & ~Trace.FLAG_MEMORY_ONLY; // MEMORY_ONLY trace is special
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, flags, new Object(), 0)).isTrue();
 
-    verifyStatic();
+    verifyStatic(Logger.class);
     Logger.postCreateTrace(anyLong(), eq(flags), anyInt());
 
     verify(mTraceControlHandler)
@@ -256,9 +260,9 @@ public class TraceControlTest {
     int flags = Trace.FLAG_MEMORY_ONLY;
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, flags, new Object(), 0)).isTrue();
 
-    verifyStatic(times(1));
+    verifyStatic(Logger.class, times(1));
     Logger.postCreateTrace(anyLong(), eq(flags), anyInt());
-    verifyStatic(never());
+    verifyStatic(Logger.class, never());
     Logger.postCreateBackwardTrace(anyLong());
 
     verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), eq(Integer.MAX_VALUE));
@@ -307,7 +311,7 @@ public class TraceControlTest {
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isTrue();
     mTraceControl.abortTrace(TRACE_CONTROLLER_ID, context, 0);
 
-    verifyStatic();
+    verifyStatic(Logger.class);
     Logger.postAbortTrace(anyLong());
 
     verify(mTraceControlHandler).onTraceAbort(any(TraceContext.class));
@@ -318,7 +322,7 @@ public class TraceControlTest {
     TestConfigProvider provider = new TestConfigProvider().setControllers(1, 2);
     mTraceControl.setConfig(provider.getFullConfig());
 
-    verifyStatic(never());
+    verifyStatic(Logger.class, never());
     Logger.postAbortTrace(anyLong());
   }
 
@@ -344,7 +348,7 @@ public class TraceControlTest {
     assertNotTracing();
 
     verify(mTraceControlHandler).onTraceAbort(any(TraceContext.class));
-    verifyStatic(never());
+    verifyStatic(Logger.class, never());
     Logger.postAbortTrace(anyLong());
   }
 

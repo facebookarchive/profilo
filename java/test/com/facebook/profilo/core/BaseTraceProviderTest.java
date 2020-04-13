@@ -13,10 +13,9 @@
  */
 package com.facebook.profilo.core;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.any;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -27,22 +26,23 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 import com.facebook.profilo.ipc.TraceContext;
-import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
+import com.facebook.testing.powermock.PowerMockTest;
+import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.Whitebox;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.reflect.Whitebox;
 
 @PrepareForTest({
   TraceEvents.class,
   BaseTraceProvider.class,
 })
 @RunWith(WithTestDefaultsRunner.class)
-public class BaseTraceProviderTest {
+public class BaseTraceProviderTest extends PowerMockTest {
 
   public static final TraceContext TRACE_CONTEXT = new TraceContext();
   public static final File EXTRA_FILE = new File("/");

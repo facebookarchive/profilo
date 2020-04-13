@@ -19,7 +19,7 @@ import android.os.Parcel;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.util.TestConfigProvider;
-import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
+import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Test;

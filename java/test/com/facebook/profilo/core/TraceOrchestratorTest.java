@@ -14,11 +14,11 @@
 package com.facebook.profilo.core;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.notNull;
-import static org.mockito.Matchers.same;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -42,6 +42,8 @@ import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.profilo.util.TraceEventsFakeRule;
 import com.facebook.soloader.SoLoader;
+import com.facebook.testing.powermock.PowerMockTest;
+import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,10 +55,9 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
-@RunWith(PowerMockRunner.class)
+@RunWith(WithTestDefaultsRunner.class)
 @PrepareForTest({
   Context.class,
   FileManager.class,
@@ -68,13 +69,12 @@ import org.powermock.reflect.Whitebox;
   SoLoader.class,
   SparseArray.class,
   Process.class,
-  BaseTraceProvider.class,
 })
 @SuppressStaticInitializationFor({
   "com.facebook.profilo.logger.Logger",
   "com.facebook.profilo.core.TraceEvents"
 })
-public class TraceOrchestratorTest {
+public class TraceOrchestratorTest extends PowerMockTest {
 
   // These values are the inverse of each other, so we can do just one TraceEvents.isEnabled call
   private static final int DEFAULT_TRACING_PROVIDERS = 0xffffffff;
@@ -95,7 +95,7 @@ public class TraceOrchestratorTest {
   private TraceContext mTraceContext;
   private TraceContext mSecondTraceContext;
 
-  @Rule TraceEventsFakeRule mTraceEventsRule = new TraceEventsFakeRule();
+  @Rule public TraceEventsFakeRule mTraceEventsRule = new TraceEventsFakeRule();
   private BaseTraceProvider mTraceProvider;
   private BaseTraceProvider mBaseTraceProvider;
   private BaseTraceProvider mSyncBaseTraceProvider;
@@ -252,7 +252,7 @@ public class TraceOrchestratorTest {
 
   @Test
   public void testInitialBindInstallsProviders() {
-    verifyStatic();
+    verifyStatic(TraceControl.class);
     //noinspection unchecked
     TraceControl.initialize(notNull(SparseArray.class), same(mOrchestrator), notNull(Config.class));
 

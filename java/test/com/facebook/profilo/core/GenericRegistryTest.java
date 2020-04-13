@@ -13,7 +13,7 @@
  */
 package com.facebook.profilo.core;
 
-import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
+import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;

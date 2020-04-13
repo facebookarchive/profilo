@@ -19,7 +19,8 @@ import static org.mockito.Mockito.when;
 
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.util.TestConfigProvider;
-import com.facebook.testing.robolectric.v3.WithTestDefaultsRunner;
+import com.facebook.testing.powermock.PowerMockTest;
+import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 
 @PrepareForTest({TraceContext.TraceConfigExtras.class})
 @RunWith(WithTestDefaultsRunner.class)
-public class TraceConditionManagerTest {
+public class TraceConditionManagerTest extends PowerMockTest {
   private final int DUMMY_TRACE_ID = 1234;
 
   private TraceContext.TraceConfigExtras mExtras;
