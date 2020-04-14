@@ -4,9 +4,17 @@ aliases:
       only:
         - master
 
+  - &restore-cache
+    restore_cache:
+      keys:
+      - dependencies-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
+      # fallback to using the latest cache if no exact match is found
+      - dependencies-{{ .Branch }}-
+
+
 version: 2
 jobs:
-  deploy-website:
+  build-website:
     docker:
       - image: circleci/node:9.11
 
@@ -14,13 +22,9 @@ jobs:
 
     steps:
       - checkout
+      - *restore-cache
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - dependencies-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - dependencies-{{ .Branch }}-
 
       - run:
           name: Install Docusaurus
@@ -35,6 +39,30 @@ jobs:
           key: dependencies-{{ .Branch }}-{{ checksum "website/yarn.lock" }}
 
       - run:
+          name: Build website
+          command: |
+            cd website
+            yarn --non-interactive --cache-folder ~/.cache/yarn build
+
+      - persist_to_workspace:
+          root: website
+          paths:
+            - "*/*"
+
+  deploy-website:
+    docker:
+      - image: circleci/node:9.11
+
+    working_directory: ~/profilo
+
+    steps:
+      - checkout
+      - *restore-cache
+      
+      - attach_workspace:
+          at: website
+
+      - run:
           name: Configure GitHub Bot
           command: |
             git config --global user.email "docusaurus-bot@users.noreply.github.com"
@@ -45,11 +73,15 @@ jobs:
           name: Deploy Website
           command: |
             echo "Deploying website..."
-            cd website && GIT_USER=docusaurus-bot USE_SSH= yarn run deploy
+            cd website 
+            GIT_USER=docusaurus-bot USE_SSH= yarn run deploy
 
 workflows:
   version: 2
-  build_and_deploy:
+  website_workflow:
     jobs:
+      - build-website
       - deploy-website:
           filters: *filter-only-master
+          requires:
+            - build-website
