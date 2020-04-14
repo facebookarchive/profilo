@@ -24,6 +24,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
       new CopyOnWriteArrayList<>();
 
   @Override
+  public void onListenerAdded() {}
+
+  @Override
+  public void onListenerRemoved() {}
+
+  @Override
   public void onTraceStart(TraceContext context) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {

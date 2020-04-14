@@ -17,6 +17,13 @@ import com.facebook.profilo.ipc.TraceContext;
 import java.io.File;
 
 public abstract class DefaultTraceOrchestratorListener implements TraceOrchestratorListener {
+
+  @Override
+  public void onListenerAdded() {}
+
+  @Override
+  public void onListenerRemoved() {}
+
   @Override
   public void onTraceFlushed(File trace, long traceId) {}
 
