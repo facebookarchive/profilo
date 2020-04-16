@@ -68,6 +68,8 @@ public class FileManager {
     }
   }
 
+  private static final String TAG = "FileManager";
+
   static final String PROFILO_FOLDER = "profilo";
   static final String UPLOAD_FOLDER = "upload";
   static final String CRASH_DUMPS_FOLDER = "crash_dumps";
@@ -78,6 +80,7 @@ public class FileManager {
   public static final String UNTRIMMABLE_PREFIX = "override-";
   private int mMaxArchivedTraces = 0;
   private long mMaxScheduledTracesAgeMillis = 0;
+  private boolean mHasMigrated = false;
 
   // Visible for testing
   FileManagerStatistics mFileManagerStatistics = new FileManagerStatistics();
@@ -101,30 +104,69 @@ public class FileManager {
         }
       };
 
-  private final File mBaseFolder;
+  private File mBaseFolder;
   private File mUploadFolder;
   private File mCrashDumpFolder;
   private File mMmapBufferFolder;
+  private Context mContext;
 
-  public FileManager(Context context, @Nullable File customFolder) {
-    // Default location ("files/profilo") or user-supplied location
-    if (customFolder != null && (customFolder.exists() || customFolder.mkdirs())) {
-      mBaseFolder = customFolder;
-    } else {
-      // If unable to create the custom folder or not provided, fallback to default
-      mBaseFolder = new File(context.getFilesDir(), PROFILO_FOLDER);
-      // Check if we need to migrate the old folder cache/profilo to files/profilo
-      File oldProfiloFolder = new File(context.getCacheDir(), PROFILO_FOLDER);
-      if (oldProfiloFolder.exists()) {
-        oldProfiloFolder.renameTo(mBaseFolder);
-      }
-      if (!mBaseFolder.exists() && !mBaseFolder.mkdirs()) {
-        throw new IllegalStateException("Unable to initialize Profilo folder");
-      }
+  public FileManager(Context context, @Nullable File folder) {
+    mContext = context.getApplicationContext();
+    if (mContext == null) {
+      // Not ideal, but we need to know where to store our stuff
+      mContext = context;
+    }
+    File cacheFolder = getBaseFolder();
+    mBaseFolder = cacheFolder;
+
+    // Default location ("cache/profilo") or user-supplied location
+    File traceFolder = folder != null ? folder : new File(cacheFolder, PROFILO_FOLDER);
+    if (traceFolder.exists() || traceFolder.mkdirs()) {
+      // If unable to create the folder, fallback to default
+      mBaseFolder = traceFolder;
     }
     mUploadFolder = new File(mBaseFolder, UPLOAD_FOLDER);
     mCrashDumpFolder = new File(mBaseFolder, CRASH_DUMPS_FOLDER);
     mMmapBufferFolder = new File(mBaseFolder, MMAP_BUFFER_FOLDER);
+  }
+
+  // Move traces that potentially live in the old location (getCacheDir()
+  // or getFilesDir()) into the new location ([cache|files]/profilo or
+  // a custom location).
+  private void migrateOldFiles() {
+    List<File> oldFiles = new ArrayList<>();
+
+    File oldUploadFolder = new File(getBaseFolder(), UPLOAD_FOLDER);
+
+    oldFiles.addAll(getFiles(oldUploadFolder, UNTRIMMABLE_FILES_FILTER));
+    oldFiles.addAll(getFiles(oldUploadFolder, TRIMMABLE_FILES_FILTER));
+
+    if (oldFiles.isEmpty()) {
+      // Nothing to migrate
+      return;
+    }
+
+    File uploadFolder = getUploadFolder();
+    for (File oldFile : oldFiles) {
+      oldFile.renameTo(new File(uploadFolder, oldFile.getName()));
+    }
+
+    // No need to keep around the old upload folder
+    oldUploadFolder.delete();
+
+    // No need to attempt to migrate again
+    mHasMigrated = true;
+  }
+
+  private File getBaseFolder() {
+    File internalCacheDir = mContext.getCacheDir();
+    File internalDataDir = mContext.getFilesDir();
+
+    if (internalCacheDir != null && (internalCacheDir.exists() || internalCacheDir.mkdirs())) {
+      return internalCacheDir;
+    }
+
+    return internalDataDir;
   }
 
   public void setTrimThreshold(int numTraces) {
@@ -160,6 +202,11 @@ public class FileManager {
         mFileManagerStatistics.addedFilesToUpload++;
       } else {
         mFileManagerStatistics.errorsMove++;
+      }
+
+      // Migrate files in the old upload directory to the new one
+      if (!mHasMigrated) {
+        migrateOldFiles();
       }
 
       trimFolderByAge(uploadFolder, mBaseFolder, mMaxScheduledTracesAgeMillis);
