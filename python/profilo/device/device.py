@@ -25,8 +25,8 @@ import zipfile
 from io import BytesIO
 
 
-# Traces go to the cache/ directory when they are created, then moved into the
-# cache/upload/ directory for uploading, and then moved back to cache/ once
+# Traces go to the files/profilo directory when they are created, then moved into the
+# files/profilo/upload/ directory for uploading, and then moved back to files/profilo once
 # the upload is finished. This exception will get thrown if a trace file was
 # found in one place and then moved and thus was not found at a later point
 # in time.
@@ -36,8 +36,8 @@ class FileMovedException(Exception):
 
 # FileManager#getBaseFolder has the logic for where Profilo traces will exist. For
 # now we assume that the traces will exist inside the internal data dir of our
-# package, under the cache/ folder.
-_PROFILO_DIR = 'cache/'
+# package, under the files/profilo folder.
+_PROFILO_DIR = 'files/profilo/'
 _TRACE_FILE_EXT = ".log"
 _TRACE_FILE_EXPRESSION = '*' + _TRACE_FILE_EXT
 _PROFILO_HEADER_START = 'dt\n'.encode("utf-8")
