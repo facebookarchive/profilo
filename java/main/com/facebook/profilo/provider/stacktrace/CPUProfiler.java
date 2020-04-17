@@ -99,6 +99,10 @@ public class CPUProfiler {
     return tracers;
   }
 
+  static synchronized int getAvailableTracers() {
+    return sAvailableTracers;
+  }
+
   public static synchronized boolean init(Context context) throws Exception {
     if (sInitialized) {
       return true;

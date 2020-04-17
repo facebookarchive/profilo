@@ -200,6 +200,37 @@ public final class StackFrameThread extends BaseTraceProvider {
   }
 
   @Override
+  protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
+    if ((context.enabledProviders & PROVIDER_STACK_FRAME) != 0) {
+      logAnnotation(
+          "provider.stack_trace.art_compatibility",
+          Boolean.toString(ArtCompatibility.isCompatible(mContext)));
+      logAnnotation(
+          "provider.stack_trace.tracers",
+          Integer.toBinaryString(
+              providersToTracers(context.enabledProviders) & CPUProfiler.getAvailableTracers()));
+    }
+  }
+
+  private static void logAnnotation(String key, String value) {
+    int match =
+        Logger.writeStandardEntry(
+            PROVIDER_STACK_FRAME,
+            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            EntryType.TRACE_ANNOTATION,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NO_MATCH,
+            ProfiloConstants.NONE);
+    match =
+        Logger.writeBytesEntry(
+            PROVIDER_STACK_FRAME, Logger.SKIP_PROVIDER_CHECK, EntryType.STRING_KEY, match, key);
+    Logger.writeBytesEntry(
+        PROVIDER_STACK_FRAME, Logger.SKIP_PROVIDER_CHECK, EntryType.STRING_VALUE, match, value);
+  }
+
+  @Override
   protected void disable() {
     if (!mEnabled) {
       mProfilerThread = null;
