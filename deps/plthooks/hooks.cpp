@@ -32,6 +32,7 @@ namespace {
 struct InternalHookInfo {
   HookId id;
   uintptr_t got_address;
+  bool no_chaining;
   std::vector<void*> hooks;
 
   pthread_rwlock_t mutex;
@@ -120,6 +121,10 @@ HookResult add(HookInfo& info) {
     if (it != got_map.end()) {
       // Success, we already have an entry for this GOT address.
       auto& internal_info = *it->second;
+      if (internal_info.no_chaining) {
+        return HOOK_CANNOT_BE_CHAINED;
+      }
+
       WriterLock info_lock(&internal_info.mutex);
       internal_info.hooks.emplace_back(info.new_function);
       return ALREADY_HOOKED_APPENDED;
@@ -132,6 +137,7 @@ HookResult add(HookInfo& info) {
 
   internal_info->id = allocate_id();
   internal_info->got_address = info.got_address;
+  internal_info->no_chaining = info.no_chaining;
   internal_info->hooks.emplace_back(info.previous_function);
   internal_info->hooks.emplace_back(info.new_function);
 

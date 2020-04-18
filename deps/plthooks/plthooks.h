@@ -64,11 +64,13 @@ hook_plt_method(const char* libname, const char* name, hook_func hook);
 typedef struct _plt_hook_spec {
   const char* fn_name;
   hook_func hook_fn;
+  // Use the inverted form so that aggregate initialization defaults to false.
+  bool no_chaining;
   int hook_result;
 
 #if defined(__cplusplus)
-  _plt_hook_spec(const char* fname, hook_func hfn)
-    : fn_name(fname), hook_fn(hfn), hook_result(0)
+  _plt_hook_spec(const char* fname, hook_func hfn, bool no_chaining = false)
+    : fn_name(fname), hook_fn(hfn), no_chaining(no_chaining), hook_result(0)
   {}
 #endif //defined(__cplusplus)
 } plt_hook_spec;

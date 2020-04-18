@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <unwind.h>
+#include <algorithm>
 #include <memory>
 
 #include <cppdistract/dso.h>
@@ -22,6 +24,7 @@
 #include <plthooks/trampoline.h>
 
 #include <plthooktestdata/meaningoflife.h>
+#include <plthooktestdata/target.h>
 #include <plthooktests/test.h>
 
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
@@ -533,6 +536,124 @@ struct AliasBarTest : public AliasTest<101> {
 
 TEST_F(AliasBarTest, aliasBarTest) {
   ASSERT_EQ(kExpectedValue + foo(), libtarget.get_symbol<int()>("add_foo_and_bar")());
+}
+
+struct NoChainingTest : public BaseTest {
+  NoChainingTest() : libtarget(LIBDIR("libtarget.so")) {}
+
+  facebook::cppdistract::dso const libtarget;
+
+  // Can't use hook_clock because CALL_PREV will abort in a no-chaining hook.
+  static clock_t beef_clock() {
+    return 0xbeef;
+  }
+
+  // Avoid tail call differences in optimized and non-optimized tests. Ideally
+  // we'd always force a tail call instead, but there's no way to do so that I'm
+  // aware of.
+  __attribute__((optnone))
+  static _Unwind_Reason_Code unwind_backtrace_wrapper(_Unwind_Trace_Fn trace, void* arg) {
+    return _Unwind_Backtrace(trace, arg);
+  }
+};
+
+TEST_F(NoChainingTest, testHook) {
+  plt_hook_spec spec("clock", (hook_func)NoChainingTest::beef_clock, /*no_chaining=*/true);
+  auto failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+  auto call_clock = libtarget.get_symbol<int()>("call_clock");
+  ASSERT_EQ(0xbeef, call_clock());
+}
+
+TEST_F(NoChainingTest, testHookingAfterNoChainingHook) {
+  plt_hook_spec spec("clock", (hook_func)NoChainingTest::beef_clock, /*no_chaining=*/true);
+  auto failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+
+  spec.hook_result = 0;
+  failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(1, failures);
+  ASSERT_EQ(0, spec.hook_result);
+
+  spec.no_chaining = false;
+  spec.hook_result = 0;
+  failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(1, failures);
+  ASSERT_EQ(0, spec.hook_result);
+}
+
+TEST_F(NoChainingTest, testNoChainingHookAfterRegularHookAndUnhook) {
+  plt_hook_spec spec("clock", (hook_func)NoChainingTest::beef_clock);
+  auto failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+
+  spec.no_chaining = true;
+  spec.hook_result = 0;
+  failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(1, failures);
+  ASSERT_EQ(0, spec.hook_result);
+
+  failures = unhook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+
+  spec.hook_result = 0;
+  failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+}
+
+TEST_F(NoChainingTest, unwindingTest) {
+  auto call_unwind_backtrace =
+      libtarget.get_symbol<bool(unsigned*)>("call_unwind_backtrace");
+  unsigned num_frames_original;
+  bool success = call_unwind_backtrace(&num_frames_original);
+  ASSERT_TRUE(success);
+
+  plt_hook_spec spec(
+#if defined(_LIBCPP_VERSION) && defined(__arm__)
+      // We use linker wrapping for the unwinder symbols to prevent clashes with
+      // the libgcc unwinder.
+      "__wrap__Unwind_Backtrace",
+#else
+      "_Unwind_Backtrace",
+#endif
+      (hook_func)&NoChainingTest::unwind_backtrace_wrapper);
+  auto failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+
+  // The assembly trampoline used by regular hooks can't be unwound through.
+  unsigned num_frames_with_regular_hook;
+  success = call_unwind_backtrace(&num_frames_with_regular_hook);
+  ASSERT_TRUE(success);
+
+  spec.hook_result = 0;
+  failures = unhook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+
+  spec.no_chaining = true;
+  spec.hook_result = 0;
+  failures = hook_single_lib("libtarget.so", &spec, 1);
+  ASSERT_EQ(0, failures);
+  ASSERT_EQ(1, spec.hook_result);
+
+  // No-chaining hooks shouldn't use the trampoline and unwinding should behave
+  // as normal.
+  unsigned num_frames_with_no_chaining_hook;
+  success = call_unwind_backtrace(&num_frames_with_no_chaining_hook);
+  ASSERT_TRUE(success);
+
+  // Add 1 to account for the extra unwind_backtrace_wrapper frame, but cap to
+  // the max number of frames the callback will traverse.
+  unsigned num_frames_adjusted =
+      std::min<unsigned>(num_frames_original + 1, MAX_BACKTRACE_FRAMES);
+  ASSERT_EQ(num_frames_adjusted, num_frames_with_no_chaining_hook);
+  ASSERT_GT(num_frames_with_no_chaining_hook, num_frames_with_regular_hook);
 }
 
 #else

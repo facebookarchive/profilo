@@ -31,6 +31,7 @@ struct HookInfo {
   uintptr_t got_address;
   void* new_function;
   void* previous_function;
+  bool no_chaining;
 };
 
 enum HookResult {
@@ -41,6 +42,7 @@ enum HookResult {
   REMOVED_STILL_HOOKED = 3,
   REMOVED_TRIVIAL = 4, // only one item left in the run list
   REMOVED_FULLY = 5,
+  HOOK_CANNOT_BE_CHAINED = 6,
 };
 
 HookResult add(HookInfo&);

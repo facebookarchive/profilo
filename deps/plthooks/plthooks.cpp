@@ -107,12 +107,17 @@ patch_relocation_address_for_hook(prev_func* plt_got_entry, plt_hook_spec* spec)
 
   WriterLock lock(&g_got_modification_lock);
   if (hooks::is_hooked(got_addr)) {
+    if (spec->no_chaining) {
+      return 1;
+    }
+
     // No point in safety checks if we've already once hooked this GOT slot.
     hooks::HookInfo info {
       .out_id = 0,
       .got_address = got_addr,
       .new_function = spec->hook_fn,
       .previous_function = *plt_got_entry,
+      .no_chaining = spec->no_chaining,
     };
     auto ret = hooks::add(info);
     if (ret != hooks::ALREADY_HOOKED_APPENDED) {
@@ -128,14 +133,19 @@ patch_relocation_address_for_hook(prev_func* plt_got_entry, plt_hook_spec* spec)
     .got_address = got_addr,
     .new_function = spec->hook_fn,
     .previous_function = *plt_got_entry,
+    .no_chaining = spec->no_chaining,
   };
   auto ret = hooks::add(hook_info);
   if (ret != hooks::NEW_HOOK) {
     return 1;
   }
-  hook_func trampoline = create_trampoline(hook_info.out_id);
 
-  return unsafe_patch_relocation_address(plt_got_entry, trampoline);
+  if (spec->no_chaining) {
+    return unsafe_patch_relocation_address(plt_got_entry, spec->hook_fn);
+  } else {
+    hook_func trampoline = create_trampoline(hook_info.out_id);
+    return unsafe_patch_relocation_address(plt_got_entry, trampoline);
+  }
 }
 
 static bool
