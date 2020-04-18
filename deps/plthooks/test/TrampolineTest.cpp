@@ -16,6 +16,7 @@
 
 #include <plthooktests/test.h>
 
+#include <errno.h>
 #include <gtest/gtest.h>
 #include <plthooks/hooks.h>
 #include <plthooks/trampoline.h>
