@@ -38,12 +38,11 @@ namespace hooks {
  * doesn't want to hook.
  */
 void hookLoadedLibs(
-    const std::vector<std::pair<char const*, void*>>& functionHooks,
+    std::vector<plt_hook_spec>& functionHooks,
     AllowHookingLibCallback allowHookingCb,
     void* data);
 
-void unhookLoadedLibs(
-    const std::vector<std::pair<char const*, void*>>& functionHooks);
+void unhookLoadedLibs(std::vector<plt_hook_spec>& functionHooks);
 } // namespace hooks
 } // namespace profilo
 } // namespace facebook

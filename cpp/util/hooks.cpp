@@ -40,37 +40,19 @@ namespace hooks {
 // data: Optional custom data pointer which will be passed to allowHookingCb as
 //       a parameter.
 void hookLoadedLibs(
-    const std::vector<std::pair<char const*, void*>>& functionHooks,
+    std::vector<plt_hook_spec>& functionHooks,
     AllowHookingLibCallback allowHookingCb,
     void* data) {
-  std::vector<plt_hook_spec> specs{};
-  specs.reserve(functionHooks.size());
-
-  for (auto const& hookPair : functionHooks) {
-    char const* functionName = hookPair.first;
-    void* hook = hookPair.second;
-    specs.emplace_back(functionName, hook);
-  }
-
-  int ret = hook_all_libs(specs.data(), specs.size(), allowHookingCb, data);
+  int ret = hook_all_libs(
+      functionHooks.data(), functionHooks.size(), allowHookingCb, data);
 
   if (ret) {
     throw std::runtime_error("Could not hook libraries");
   }
 }
 
-void unhookLoadedLibs(
-    const std::vector<std::pair<char const*, void*>>& functionHooks) {
-  std::vector<plt_hook_spec> specs{};
-  specs.reserve(functionHooks.size());
-
-  for (auto const& hookPair : functionHooks) {
-    char const* functionName = hookPair.first;
-    void* hook = hookPair.second;
-    specs.emplace_back(functionName, hook);
-  }
-
-  int ret = unhook_all_libs(specs.data(), specs.size());
+void unhookLoadedLibs(std::vector<plt_hook_spec>& functionHooks) {
+  int ret = unhook_all_libs(functionHooks.data(), functionHooks.size());
 
   if (ret) {
     throw std::runtime_error("Could not unhook libraries");

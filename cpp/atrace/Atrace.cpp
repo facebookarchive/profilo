@@ -193,20 +193,12 @@ std::array<std::string, kWhitelistSize>& getLibWhitelist() {
   return whitelist;
 }
 
-std::vector<plt_hook_spec>& getFunctionSpecsForWhitelist() {
-  static std::vector<plt_hook_spec> functionHooks = {
-      {"write", reinterpret_cast<void*>(&write_hook)},
-      {"__write_chk", reinterpret_cast<void*>(__write_chk_hook)},
-  };
-  return functionHooks;
-}
-
 } // namespace
 
-std::vector<std::pair<char const*, void*>>& getFunctionHooks() {
-  static std::vector<std::pair<char const*, void*>> functionHooks = {
-      {"write", reinterpret_cast<void*>(&write_hook)},
-      {"__write_chk", reinterpret_cast<void*>(__write_chk_hook)},
+std::vector<plt_hook_spec>& getFunctionHooks() {
+  static std::vector<plt_hook_spec> functionHooks = {
+      {"libc.so", "write", reinterpret_cast<void*>(&write_hook)},
+      {"libc.so", "__write_chk", reinterpret_cast<void*>(__write_chk_hook)},
   };
   return functionHooks;
 }
@@ -250,7 +242,7 @@ void hookLoadedLibs() {
 
   if (sdk >= kLibWhitelistMinSdk) {
     auto& whitelist = getLibWhitelist();
-    auto& functionSpecs = getFunctionSpecsForWhitelist();
+    auto& functionSpecs = getFunctionHooks();
     for (auto& lib : whitelist) {
       auto failures = hook_single_lib(
           lib.c_str(), functionSpecs.data(), functionSpecs.size());
@@ -278,7 +270,7 @@ void unhookLoadedLibs() {
 
   if (sdk >= kLibWhitelistMinSdk) {
     auto& whitelist = getLibWhitelist();
-    auto& functionSpecs = getFunctionSpecsForWhitelist();
+    auto& functionSpecs = getFunctionHooks();
     for (auto& lib : whitelist) {
       auto failures = unhook_single_lib(
           lib.c_str(), functionSpecs.data(), functionSpecs.size());
