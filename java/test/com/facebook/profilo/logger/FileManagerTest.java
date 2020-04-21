@@ -47,7 +47,6 @@ public class FileManagerTest {
 
     when(mContext.getCacheDir()).thenReturn(mFolder);
     when(mContext.getFilesDir()).thenReturn(mFolder);
-    when(mContext.getApplicationContext()).thenReturn(mContext);
     mFileManager = new FileManager(mContext, mFolder);
     mFileManager.setTrimThreshold(Integer.MAX_VALUE);
     // Age out after a day
@@ -57,6 +56,91 @@ public class FileManagerTest {
   @After
   public void teardown() {
     deleteDir(mFolder);
+  }
+
+  @Test
+  public void testFileManagerInitWithCustomFolder() {
+    File customFolder = Files.createTempDir();
+    FileManager fileManager = new FileManager(mContext, customFolder);
+    assertThat(fileManager.getFolder().getAbsolutePath()).isEqualTo(customFolder.getAbsolutePath());
+  }
+
+  @Test
+  public void testFileManagerInitWithFakeCustomFolder() {
+    File customFolder = new File("/dev/null/void");
+    FileManager fileManager = new FileManager(mContext, customFolder);
+    assertThat(fileManager.getFolder().getParentFile().getAbsolutePath())
+        .isEqualTo(mFolder.getAbsolutePath());
+  }
+
+  @Test
+  public void testFileManagerInitWithMigration() throws IOException {
+    File cacheFolder = Files.createTempDir();
+    File cacheProfiloFolder = new File(cacheFolder, FileManager.PROFILO_FOLDER);
+    cacheProfiloFolder.mkdirs();
+    File fakeTraceFile =
+        File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, cacheProfiloFolder);
+
+    File filesFolder = Files.createTempDir();
+    File filesProfiloFolder = new File(filesFolder, FileManager.PROFILO_FOLDER);
+    filesProfiloFolder.mkdirs();
+
+    when(mContext.getCacheDir()).thenReturn(cacheFolder);
+    when(mContext.getFilesDir()).thenReturn(filesFolder);
+
+    try {
+      FileManager fileManager = new FileManager(mContext, null);
+      assertThat(fileManager.getFolder().getParentFile().getAbsolutePath())
+          .isEqualTo(filesFolder.getAbsolutePath());
+      assertThat(cacheProfiloFolder.exists()).isFalse();
+      assertThat(fileManager.getFolder().list().length).isEqualTo(1);
+      assertThat(fileManager.getFolder().list()[0]).isEqualTo(fakeTraceFile.getName());
+    } finally {
+      // Cleanup
+      deleteDir(cacheFolder);
+      deleteDir(filesFolder);
+    }
+  }
+
+  @Test
+  public void testFileManagerInitIgnoreMigrationIfNonEmptyTarget() throws IOException {
+    File cacheFolder = Files.createTempDir();
+    File cacheProfiloFolder = new File(cacheFolder, FileManager.PROFILO_FOLDER);
+    cacheProfiloFolder.mkdirs();
+    File fakeCacheTraceFile =
+        File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, cacheProfiloFolder);
+
+    File filesFolder = Files.createTempDir();
+    File filesProfiloFolder = new File(filesFolder, FileManager.PROFILO_FOLDER);
+    filesProfiloFolder.mkdirs();
+    File fakeFilesTraceFile =
+        File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, filesProfiloFolder);
+
+    when(mContext.getCacheDir()).thenReturn(cacheFolder);
+    when(mContext.getFilesDir()).thenReturn(filesFolder);
+
+    try {
+      FileManager fileManager = new FileManager(mContext, null);
+      assertThat(fileManager.getFolder().getParentFile().getAbsolutePath())
+          .isEqualTo(filesFolder.getAbsolutePath());
+      // Assert that migration was ignored
+      assertThat(cacheProfiloFolder.exists()).isTrue();
+      assertThat(fileManager.getFolder().list().length).isEqualTo(1);
+      assertThat(fileManager.getFolder().list()[0]).isEqualTo(fakeFilesTraceFile.getName());
+    } finally {
+      deleteDir(cacheFolder);
+      deleteDir(filesFolder);
+    }
+  }
+
+  @Test
+  public void testNormalFileManagerInitFromFilesFolder() {
+    File cacheFolder = new File("/dev/null/void");
+    when(mContext.getCacheDir()).thenReturn(cacheFolder);
+
+    FileManager fileManager = new FileManager(mContext, null);
+    assertThat(fileManager.getFolder().getParentFile().getAbsolutePath())
+        .isEqualTo(mFolder.getAbsolutePath());
   }
 
   @Test
