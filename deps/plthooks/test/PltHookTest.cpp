@@ -94,6 +94,44 @@ TEST_F(TwoHookTest, testDoubleHook) {
   ASSERT_EQ(0xfaceb00c, call_clock());
 }
 
+struct TargetedHooksTest : public BaseTest {
+  TargetedHooksTest()
+      : BaseTest(),
+        libtarget(LIBDIR("libtarget.so")),
+        libownclock(LIBDIR("libownclock.so")) {}
+
+  facebook::cppdistract::dso const libtarget;
+  facebook::cppdistract::dso const libownclock;
+};
+
+TEST_F(TargetedHooksTest, testNonTargetedLibSymbolsAreIgnored) {
+  // libtarget uses clock() from libc. We want to
+  // be able to hook that.
+  // libownclock use clock() from libownclock_impl. We
+  // want to ignore that, if the spec specifies it.
+
+  {
+    plt_hook_spec spec("libc.so", "clock", (void*)hook_clock);
+    // Verify that the linker did the right thing and linked against our own
+    // clock() implementation.
+    ASSERT_EQ(1, libownclock.get_symbol<clock_t()>("call_clock")());
+
+    ASSERT_EQ(0, hook_single_lib("libownclock.so", &spec, 1));
+    ASSERT_EQ(0, spec.hook_result);
+
+    // Since the hook did not succeed, we expect the result to be unhooked.
+    ASSERT_EQ(1, libownclock.get_symbol<clock_t()>("call_clock")());
+  }
+
+  {
+    plt_hook_spec spec("libc.so", "clock", (void*)hook_clock);
+    ASSERT_EQ(0, hook_single_lib("libtarget.so", &spec, 1));
+    ASSERT_EQ(1, spec.hook_result);
+    ASSERT_EQ(0xface, libtarget.get_symbol<clock_t()>("call_clock")());
+    ASSERT_EQ(0, unhook_single_lib("libtarget.so", &spec, 1));
+  }
+}
+
 struct HookUnhookTest : public BaseTest {
   struct Hook {
     Hook(const char* sym, void* hook) : symbol(sym), fn(hook) {

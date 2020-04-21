@@ -23,6 +23,7 @@
 #include <unistd.h>
 
 #ifdef __cplusplus
+#include <linker/sharedlibs.h>
 extern "C" {
 #endif
 
@@ -63,6 +64,7 @@ hook_plt_method(const char* libname, const char* name, hook_func hook);
 
 typedef struct _plt_hook_spec {
   const char* fn_name;
+  const char* lib_name; // optional library name that contains the target function
   hook_func hook_fn;
   // Use the inverted form so that aggregate initialization defaults to false.
   bool no_chaining;
@@ -70,8 +72,34 @@ typedef struct _plt_hook_spec {
 
 #if defined(__cplusplus)
   _plt_hook_spec(const char* fname, hook_func hfn, bool no_chaining = false)
-    : fn_name(fname), hook_fn(hfn), no_chaining(no_chaining), hook_result(0)
+    : fn_name(fname), lib_name(nullptr), hook_fn(hfn), no_chaining(no_chaining), hook_result(0), fn_addr_(nullptr)
   {}
+  _plt_hook_spec(const char* libname, const char* fname, hook_func hfn, bool no_chaining = false)
+    : fn_name(fname), lib_name(libname), hook_fn(hfn), no_chaining(no_chaining), hook_result(0), fn_addr_(nullptr)
+  {}
+
+  void* target_address() {
+    if (fn_addr_ != nullptr) {
+      // return from cache
+      return fn_addr_;
+    }
+    if (lib_name == nullptr) {
+      // no target lib name, so no one address to return
+      return nullptr;
+    }
+    try {
+      auto lib = facebook::linker::sharedLib(lib_name);
+      auto sym = lib.find_symbol_by_name(fn_name);
+      if (sym == nullptr) {
+        return nullptr;
+      }
+      fn_addr_ = lib.getLoadedAddress(sym);
+      return fn_addr_;
+    } catch (std::out_of_range& ex) {}
+    return nullptr;
+  }
+private:
+  void* fn_addr_;
 #endif //defined(__cplusplus)
 } plt_hook_spec;
 

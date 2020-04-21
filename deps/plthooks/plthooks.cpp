@@ -222,12 +222,20 @@ int hook_single_lib(char const* libname, plt_hook_spec* specs, size_t num_specs)
         continue;
       }
 
-      ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec->fn_name);
-      if (!sym) {
-        continue; // Did not find symbol in the hash table, so go to next spec
+      void* target_addr = spec->target_address();
+      std::vector<void**> plt_relocs;
+
+      if (target_addr == nullptr) {
+        ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec->fn_name);
+        if (!sym) {
+          continue; // Did not find symbol in the hash table, so go to next spec
+        }
+        plt_relocs = elfData.get_plt_relocations(sym);
+      } else {
+        plt_relocs = elfData.get_plt_relocations(target_addr);
       }
 
-      for (prev_func* plt_got_entry : elfData.get_plt_relocations(sym)) {
+      for (prev_func* plt_got_entry : plt_relocs) {
 
         // Run sanity checks on what we parsed as the GOT slot.
         if (!verify_got_entry_for_spec(plt_got_entry, spec)) {
