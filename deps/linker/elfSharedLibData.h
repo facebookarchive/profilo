@@ -64,6 +64,11 @@ public:
    */
   std::vector<void**> get_plt_relocations(ElfW(Sym) const* elf_sym) const;
 
+  /**
+   * Returns a vector of all fixed-up PLT entries that point to the target address
+   */
+  std::vector<void**> get_plt_relocations(void const* addr) const;
+
   /*
    * Returns the loaded address of the shared library
    */

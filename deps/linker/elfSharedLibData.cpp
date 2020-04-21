@@ -334,6 +334,26 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_s
   return relocs;
 }
 
+std::vector<void**> elfSharedLibData::get_plt_relocations(void const* addr) const {
+  std::vector<void**> relocs;
+
+  for (unsigned int i = 0; i < pltRelocationsLen; i++) {
+    Elf_Reloc const& rel = pltRelocations[i];
+
+    // is this necessary? will there ever be a type of relocation in pltRelocations
+    // that points to symbol and we *don't* want to fix up?
+    if (ELF_RELOC_TYPE(rel.r_info) != PLT_RELOCATION_TYPE) {
+      continue;
+    }
+    void** plt_got_entry = reinterpret_cast<void**>(loadBias + rel.r_offset);
+    if (*plt_got_entry == addr) {
+      relocs.push_back(plt_got_entry);
+    }
+  }
+
+  return relocs;
+}
+
 bool elfSharedLibData::is_complete() const {
   return pltRelocationsLen && pltRelocations &&
          // relocationsLen && relocations &&     TODO (t30088113): re-enable when DT_ANDROID_REL is supported

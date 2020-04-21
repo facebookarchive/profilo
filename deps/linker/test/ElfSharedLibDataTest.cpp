@@ -68,11 +68,19 @@ TEST_F(ElfSharedLibDataTest, testElfLookupBad) {
   ASSERT_EQ(nullptr, sym);
 }
 
-TEST_F(ElfSharedLibDataTest, testGetPltRelocations) {
+TEST_F(ElfSharedLibDataTest, testGetPltRelocationsBySym) {
   auto sym = lib.find_symbol_by_name("clock");
   ASSERT_NE(nullptr, sym);
 
   auto pltrelocs = lib.get_plt_relocations(sym);
+  ASSERT_EQ(1, pltrelocs.size());
+  ASSERT_EQ(&clock, *pltrelocs[0]);
+}
+
+TEST_F(ElfSharedLibDataTest, testGetPltRelocationsByAddr) {
+  void* addr = (void*) &clock;
+
+  auto pltrelocs = lib.get_plt_relocations(addr);
   ASSERT_EQ(1, pltrelocs.size());
   ASSERT_EQ(&clock, *pltrelocs[0]);
 }
