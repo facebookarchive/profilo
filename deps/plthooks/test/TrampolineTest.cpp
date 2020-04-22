@@ -49,6 +49,26 @@ struct TrampolineTest : public BaseTest {
     return 0.50;
   }
 
+  // Confusingly enough, this defines the setup for the entire class (i.e. it's
+  // only called once).
+  static void SetUpTestCase() {
+    // Change the permissions around the trampoline code so we can write
+    // to its PIC data area.
+    trampoline_data = reinterpret_cast<data_fields*>(trampoline_data_pointer());
+    static_assert(
+        sizeof(data_fields) == trampoline_data_size(),
+        "trampoline data is the wrong size");
+
+    auto ret = mprotect(
+        reinterpret_cast<void*>(
+            reinterpret_cast<uintptr_t>(trampoline_data) & ~(PAGE_SIZE - 1)),
+        PAGE_SIZE,
+        PROT_READ | PROT_WRITE | PROT_EXEC);
+
+    ASSERT_EQ(ret, 0) << "could not mprotect trampoline data: "
+                      << strerror(errno);
+  }
+
   virtual void SetUp() {
     push_vals = {};
     hook_vals = {};
@@ -74,41 +94,27 @@ struct TrampolineTest : public BaseTest {
     bool called;
   };
   static PopVals pop_vals;
-};
-
-TrampolineTest::PushVals TrampolineTest::push_vals = {};
-TrampolineTest::HookVals TrampolineTest::hook_vals = {};
-TrampolineTest::PopVals TrampolineTest::pop_vals = {};
-
-TEST_F(TrampolineTest, testTrampoline) {
-  auto trampoline_code = reinterpret_cast<decltype(test_hook)*>(
-      trampoline_template_pointer());
-  void* trampoline_data = trampoline_data_pointer();
-
-  // Change the permissions around the trampoline code so we can write
-  // to its PIC data area.
-  auto ret = mprotect(
-      reinterpret_cast<void*>(
-          reinterpret_cast<uintptr_t>(trampoline_data) & ~(PAGE_SIZE - 1)),
-      PAGE_SIZE,
-      PROT_READ | PROT_WRITE | PROT_EXEC);
-
-  ASSERT_EQ(ret, 0) << "could not mprotect trampoline data: "
-                    << strerror(errno);
 
   struct __attribute__((packed)) data_fields {
     decltype(test_push_stack)* push_hook;
     decltype(test_pop_stack)* pop_hook;
     HookId id;
   };
-  static_assert(
-      sizeof(data_fields) == trampoline_data_size(),
-      "trampoline data is the wrong size");
+  static data_fields* trampoline_data;
+};
 
-  auto fields = reinterpret_cast<data_fields*>(trampoline_data);
-  fields->push_hook = &test_push_stack;
-  fields->pop_hook = &test_pop_stack;
-  fields->id = 0xfaceb00c;
+TrampolineTest::PushVals TrampolineTest::push_vals = {};
+TrampolineTest::HookVals TrampolineTest::hook_vals = {};
+TrampolineTest::PopVals TrampolineTest::pop_vals = {};
+TrampolineTest::data_fields* TrampolineTest::trampoline_data;
+
+TEST_F(TrampolineTest, testTrampoline) {
+  auto trampoline_code = reinterpret_cast<decltype(test_hook)*>(
+      trampoline_template_pointer());
+
+  trampoline_data->push_hook = &test_push_stack;
+  trampoline_data->pop_hook = &test_pop_stack;
+  trampoline_data->id = 0xfaceb00c;
 
   auto trampoline_return = trampoline_code(10, 0.25, 20);
 
