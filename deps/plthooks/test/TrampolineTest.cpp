@@ -296,7 +296,7 @@ TEST_F(TrampolineAbiTest, testIntegerReturn) {
   EXPECT_EQ(42, trampoline_return) << "return result not the same";
 }
 
-TEST_F(TrampolineAbiTest, DISABLED_testFloatReturn) {
+TEST_F(TrampolineAbiTest, testFloatReturn) {
   test_hook_ptr = reinterpret_cast<void*>(float_return);
   auto trampoline_code = reinterpret_cast<decltype(float_return)*>(
       trampoline_template_pointer());
@@ -326,7 +326,7 @@ TEST_F(TrampolineAbiTest, testIndirectReturn) {
   EXPECT_EQ(6, trampoline_return.z) << "return result not the same";
 }
 
-TEST_F(TrampolineAbiTest, DISABLED_testHfaReturn) {
+TEST_F(TrampolineAbiTest, testHfaReturn) {
   test_hook_ptr = reinterpret_cast<void*>(hfa_return);
   auto trampoline_code = reinterpret_cast<decltype(hfa_return)*>(
       trampoline_template_pointer());
@@ -347,7 +347,7 @@ TEST_F(TrampolineAbiTest, testIntegerArgs) {
   EXPECT_EQ(31, trampoline_return) << "return result not the same";
 }
 
-TEST_F(TrampolineAbiTest, DISABLED_testFloatArgs) {
+TEST_F(TrampolineAbiTest, testFloatArgs) {
   test_hook_ptr = reinterpret_cast<void*>(float_args);
   auto trampoline_code = reinterpret_cast<decltype(float_args)*>(
       trampoline_template_pointer());
@@ -356,7 +356,7 @@ TEST_F(TrampolineAbiTest, DISABLED_testFloatArgs) {
   EXPECT_EQ(-0.5, trampoline_return) << "return result not the same";
 }
 
-TEST_F(TrampolineAbiTest, DISABLED_testLotsOfArgs) {
+TEST_F(TrampolineAbiTest, testLotsOfArgs) {
   test_hook_ptr = reinterpret_cast<void*>(lots_of_args);
   auto trampoline_code = reinterpret_cast<decltype(lots_of_args)*>(
       trampoline_template_pointer());
