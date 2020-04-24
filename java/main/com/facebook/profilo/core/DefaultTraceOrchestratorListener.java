@@ -47,7 +47,7 @@ public abstract class DefaultTraceOrchestratorListener implements TraceOrchestra
   public void onUploadSuccessful(File file) {}
 
   @Override
-  public void onUploadFailed(File file) {}
+  public void onUploadFailed(File file, int reason) {}
 
   @Override
   public void onTraceStart(TraceContext context) {}

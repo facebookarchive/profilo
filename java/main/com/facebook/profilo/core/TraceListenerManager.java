@@ -62,10 +62,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onUploadFailed(File file) {
+  public void onUploadFailed(File file, int reason) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onUploadFailed(file);
+      iterator.next().onUploadFailed(file, reason);
     }
   }
 

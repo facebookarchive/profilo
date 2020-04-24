@@ -18,10 +18,15 @@ import java.io.File;
 import java.util.List;
 
 public interface BackgroundUploadService {
+
+  int UPLOAD_FAILURE_REQUEST_FAILED = 1;
+  int UPLOAD_FAILURE_NO_CONNECTION = 2;
+  int UPLOAD_FAILURE_NO_BYTES_REMAINING = 3;
+
   public static interface BackgroundUploadListener {
     public void onUploadSuccessful(File file);
 
-    public void onUploadFailed(File file);
+    public void onUploadFailed(File file, int reason);
   }
 
   public void uploadInBackground(List<File> files, BackgroundUploadListener listener);

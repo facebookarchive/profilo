@@ -640,8 +640,8 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onUploadFailed(File file) {
-    mListenerManager.onUploadFailed(file);
+  public void onUploadFailed(File file, int reason) {
+    mListenerManager.onUploadFailed(file, reason);
   }
 
   @GuardedBy("this")
