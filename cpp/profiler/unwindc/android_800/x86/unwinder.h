@@ -671,7 +671,7 @@ auto get_frame_size(
         (((callee_info_size - voidptr_size) + artmethodptr_size) +
          handle_scope_size);
     uint32_t kStackAlignment = 16U;
-    size = (size + (kStackAlignment - (size % kStackAlignment)));
+    size = round_up(size, kStackAlignment);
     return size;
   }
   auto frame_info = get_quick_frame_info_from_entry_point(code);
