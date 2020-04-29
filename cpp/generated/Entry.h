@@ -1,4 +1,4 @@
-// @generated SignedSource<<fd7850188940a134a5e47dd2166834cd>>
+// @generated SignedSource<<b23ca7f65edbd8e6516fa67852136bd2>>
 
 #include <cstdint>
 #include <cstring>
@@ -37,6 +37,7 @@ struct __attribute__((packed)) FramesEntry {
   uint8_t type;
   int64_t timestamp;
   int32_t tid;
+  int32_t matchid;
   struct {
     const int64_t* values;
     uint16_t size;

@@ -1,4 +1,4 @@
-// @generated SignedSource<<a73396ab15e3e578b3cb47cd9e0f6612>>
+// @generated SignedSource<<872dbd0a7243d6ce0db09a6fef117548>>
 
 #include <cstring>
 #include <stdexcept>
@@ -134,6 +134,10 @@ void FramesEntry::pack(const FramesEntry& entry, void* dst, size_t size) {
   offset += sizeof((entry.tid));
   
   
+  std::memcpy((dst_byte) + offset, &(entry.matchid), sizeof((entry.matchid)));
+  offset += sizeof((entry.matchid));
+  
+  
   auto _size_size = sizeof(entry.frames.size);
   std::memcpy((dst_byte + offset), &(entry.frames.size), (_size_size));
   offset += _size_size;
@@ -179,6 +183,10 @@ void FramesEntry::unpack(FramesEntry& entry, const void* src, size_t size) {
   offset += sizeof((entry.tid));
   
   
+  std::memcpy(&(entry.matchid), (src_byte) + offset, sizeof((entry.matchid)));
+  offset += sizeof((entry.matchid));
+  
+  
   auto _size_size = sizeof(entry.frames.size);
   std::memcpy(&(entry.frames).size, (src_byte + offset), (_size_size));
   offset += _size_size;
@@ -201,6 +209,7 @@ size_t FramesEntry::calculateSize(FramesEntry const& entry) {
   (offset) += sizeof(entry.type);
   (offset) += sizeof(entry.timestamp);
   (offset) += sizeof(entry.tid);
+  (offset) += sizeof(entry.matchid);
   // Must align entry.frames on a 4-byte boundary.
   offset = (offset + 0x03) & ~0x03;
   

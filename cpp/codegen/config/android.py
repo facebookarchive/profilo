@@ -175,20 +175,13 @@ BYTES_ENTRIES = frozenset([
     'STRING_NAME',
 ])
 
-TARGET_SIZE = (
-    128 -
-    Types.int32.constant_size -  # ring buffer slot overhead
-    Types.int32.constant_size -  # stream ID
-    Types.int8.constant_size -   # size + next flag
-    Types.int8.constant_size # serialization format
-)
-
 def get_frames_memory_format():
     fields = [
         ('id', Types.int32),
         ('type', Types.uint8),
         ('timestamp', Types.int64),
         ('tid', Types.int32),
+        ('matchid', Types.int32),
         ('frames', DynamicArrayType(Types.int64)),
     ]
 

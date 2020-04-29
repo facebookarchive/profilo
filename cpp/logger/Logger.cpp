@@ -58,12 +58,14 @@ void Logger::writeStackFrames(
     int64_t time,
     const int64_t* methods,
     uint8_t depth,
+    int32_t matchid,
     EntryType entry_type) {
   FramesEntry entry{
       .id = 0,
       .type = static_cast<decltype(FramesEntry::type)>(entry_type),
       .timestamp = time,
       .tid = tid,
+      .matchid = 0,
       .frames = {.values = const_cast<int64_t*>(methods), .size = depth}};
   write(std::move(entry));
 }
