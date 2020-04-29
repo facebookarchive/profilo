@@ -34,6 +34,7 @@ enum ArtUnwindcVersion {
   kArtUnwindc712,
   kArtUnwindc800,
   kArtUnwindc810,
+  kArtUnwindc900
 };
 
 template <ArtUnwindcVersion kVersion>
@@ -100,6 +101,10 @@ using ArtUnwindcTracer800 = ArtUnwindcTracer<kArtUnwindc800>;
 #ifdef ANDROID_VERSION_810
 template class ArtUnwindcTracer<kArtUnwindc810>;
 using ArtUnwindcTracer810 = ArtUnwindcTracer<kArtUnwindc810>;
+#endif
+#ifdef ANDROID_VERSION_900
+template class ArtUnwindcTracer<kArtUnwindc900>;
+using ArtUnwindcTracer900 = ArtUnwindcTracer<kArtUnwindc900>;
 #endif
 
 } // namespace profiler

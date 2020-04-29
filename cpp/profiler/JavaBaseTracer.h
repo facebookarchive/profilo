@@ -66,7 +66,8 @@ class JavaBaseTracer : public BaseTracer {
         type == tracers::ART_UNWINDC_7_1_1 ||
         type == tracers::ART_UNWINDC_7_1_2 ||
         type == tracers::ART_UNWINDC_8_0_0 ||
-        type == tracers::ART_UNWINDC_8_1_0;
+        type == tracers::ART_UNWINDC_8_1_0 ||
+        type == tracers::ART_UNWINDC_9_0_0;
   }
 };
 

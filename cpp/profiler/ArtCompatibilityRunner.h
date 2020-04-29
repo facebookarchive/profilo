@@ -28,6 +28,7 @@ enum AndroidVersion : uint8_t {
   ANDROID_7_0,
   ANDROID_8_0,
   ANDROID_8_1,
+  ANDROID_9_0,
 };
 } // namespace versions
 
