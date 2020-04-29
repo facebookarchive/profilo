@@ -41,8 +41,10 @@ auto get_class_dexfile(uintptr_t cls) {
 auto get_dexfile_string_by_idx(uintptr_t dexfile, uintptr_t idx) {
   idx = idx;
   uintptr_t id = AccessArrayItem(Read4(AccessField(dexfile, 36U)), idx, 4U);
-  uint32_t ptr = (Read4(AccessField(dexfile, 4U)) + Read4(AccessField(id, 0U)));
-  uint32_t val = ptr;
+  uint32_t begin = Read4(AccessField(dexfile, 4U));
+  uint32_t string_data_off = Read4(AccessField(id, 0U));
+  uintptr_t ptr = AdvancePointer(begin, (string_data_off * 1U));
+  uintptr_t val = ptr;
   uint32_t length = 0U;
   uint32_t index = 0U;
   bool proceed = true;
@@ -105,7 +107,9 @@ auto get_method_shorty(uintptr_t method) {
   uint16_t proto_idx = Read2(AccessField(method_id, 2U));
   uintptr_t method_proto_id =
       AccessArrayItem(Read4(AccessField(dexfile, 52U)), proto_idx, 12U);
-  return get_dexfile_string_by_idx(dexfile, AccessField(method_proto_id, 0U));
+  uintptr_t shorty_id = AccessField(method_proto_id, 0U);
+  shorty_id = Read4(AccessField(shorty_id, 0U));
+  return get_dexfile_string_by_idx(dexfile, shorty_id);
 }
 
 auto get_number_of_refs_without_receiver(uintptr_t method) {
@@ -557,7 +561,9 @@ auto get_oat_quick_method_header(
     return 0U;
   }
   uint32_t method_header = 0U;
-  if (((!is_quick_resolution_stub(
+  if (((!is_quick_generic_jni_stub(
+           existing_entry_point, runtime_obj, thread_obj)) &&
+       (!is_quick_resolution_stub(
            existing_entry_point, runtime_obj, thread_obj)) &&
        (!is_quick_to_interpreter_bridge(
            existing_entry_point, runtime_obj, thread_obj)))) {
@@ -678,9 +684,9 @@ auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
   if ((thread == 0U)) {
     return true;
   }
-  uintptr_t runtime = get_runtime();
+  auto runtime = get_runtime_from_thread(thread);
   uintptr_t thread_obj = thread;
-  uintptr_t runtime_obj = runtime;
+  auto runtime_obj = runtime;
   uintptr_t tls = AccessField(thread_obj, 136U);
   uintptr_t mstack = AccessField(tls, 12U);
   uint32_t generic_jni_trampoline =
@@ -700,12 +706,12 @@ auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
           break;
         }
         uint32_t frame = frameptr;
-        auto size = get_frame_size(frameptr, runtime_obj, thread_obj, pc);
         if ((!is_runtime_method(frame))) {
           if ((!__unwind_callback(frame, __unwind_data))) {
             return false;
           }
         }
+        auto size = get_frame_size(frameptr, runtime_obj, thread_obj, pc);
         auto return_pc_offset = (size - 4U);
         uint32_t return_pc_addr = (quick_frame + return_pc_offset);
         uint32_t return_pc = return_pc_addr;
@@ -730,6 +736,9 @@ auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
       }
     }
     uint32_t link = Read4(AccessField(mstack, 4U));
+    if ((link == 0U)) {
+      break;
+    }
     mstack = link;
   }
   return true;

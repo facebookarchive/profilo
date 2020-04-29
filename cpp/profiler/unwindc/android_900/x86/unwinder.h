@@ -108,7 +108,9 @@ auto get_method_shorty(uintptr_t method) {
   uint16_t proto_idx = Read2(AccessField(method_id, 2U));
   uintptr_t method_proto_id =
       AccessArrayItem(Read4(AccessField(dexfile, 56U)), proto_idx, 12U);
-  return get_dexfile_string_by_idx(dexfile, AccessField(method_proto_id, 0U));
+  uintptr_t shorty_id = AccessField(method_proto_id, 0U);
+  shorty_id = Read4(AccessField(shorty_id, 0U));
+  return get_dexfile_string_by_idx(dexfile, shorty_id);
 }
 
 auto get_number_of_refs_without_receiver(uintptr_t method) {
