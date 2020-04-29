@@ -263,7 +263,7 @@ public class TraceControlTest extends PowerMockTest {
     verifyStatic(Logger.class, times(1));
     Logger.postCreateTrace(anyLong(), eq(flags), anyInt());
     verifyStatic(Logger.class, never());
-    Logger.postCreateBackwardTrace(anyLong());
+    Logger.postCreateBackwardTrace(anyLong(), eq(flags));
 
     verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), eq(Integer.MAX_VALUE));
     assertMemoryOnlyTracing();

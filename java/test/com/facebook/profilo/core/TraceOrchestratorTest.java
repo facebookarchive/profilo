@@ -39,6 +39,7 @@ import com.facebook.profilo.config.Config;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
+import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.profilo.util.TraceEventsFakeRule;
 import com.facebook.soloader.SoLoader;
@@ -370,6 +371,19 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mFileManager, never()).addFileToUploads(any(File.class), anyBoolean());
+  }
+
+  @Test
+  public void testTraceMemoryOnlyTraceAddedToUploadsAsNotTrimmable() throws Exception {
+    mConfigProvider.setTimedOutUploadSampleRate(1);
+    final long traceId = 0xFACEB00C;
+    File tempDirectory = new File(DEFAULT_TEMP_DIR);
+    tempDirectory.mkdirs();
+    File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
+    mOrchestrator.onTraceWriteStart(traceId, Trace.FLAG_MEMORY_ONLY, traceFile.getPath());
+    mOrchestrator.onTraceWriteEnd(traceId);
+
+    verify(mFileManager).addFileToUploads(any(File.class), eq(false));
   }
 
   @Test

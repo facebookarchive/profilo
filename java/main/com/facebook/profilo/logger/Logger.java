@@ -137,12 +137,12 @@ public final class Logger {
         sTraceWriter, traceId, EntryType.TRACE_START, timeoutMs, flags, traceId);
   }
 
-  public static void postCreateBackwardTrace(long traceId) {
+  public static void postCreateBackwardTrace(long traceId, int flags) {
     if (sInitialized) {
       startWorkerThreadIfNecessary();
 
       loggerWriteAndWakeupTraceWriter(
-          sTraceWriter, traceId, EntryType.TRACE_BACKWARDS, 0, ProfiloConstants.NO_MATCH, traceId);
+          sTraceWriter, traceId, EntryType.TRACE_BACKWARDS, 0, flags, traceId);
     }
   }
 

@@ -610,7 +610,7 @@ public final class TraceOrchestrator
     FileManager.FileManagerStatistics fStats;
     synchronized (this) {
       // Manual traces are untrimmable, everything else can be cleaned up
-      boolean trimmable = (traceFlags & Trace.FLAG_MANUAL) == 0;
+      boolean trimmable = (traceFlags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) == 0;
       mFileManager.addFileToUploads(uploadFile, trimmable);
       triggerUpload();
       fStats = mFileManager.getAndResetStatistics();

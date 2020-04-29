@@ -268,12 +268,16 @@ public class FileManagerTest {
     for (int i = 0; i < numTracesLimit + 1; i++) {
       File f = File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, mFolder);
       Files.touch(f);
-      mFileManager.addFileToUploads(f, true);
+      // Add both trimmable and untrimmable files.
+      mFileManager.addFileToUploads(f, i % 2 == 0);
     }
 
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToCount).isEqualTo(0);
     // Upload all the pending files
     for (File f : mFileManager.getTrimmableFilesToUpload()) {
+      mFileManager.handleSuccessfulUpload(f);
+    }
+    for (File f : mFileManager.getUntrimmableFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToCount).isEqualTo(1);

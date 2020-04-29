@@ -114,7 +114,7 @@ public class TraceControlHandler extends Handler {
     if ((context.flags & Trace.FLAG_MEMORY_ONLY) != 0) {
       // For in-memory trace everything in the tracing buffer trace is started and then immediately
       // stopped after dumping the contents of the buffer.
-      Logger.postCreateBackwardTrace(context.traceId);
+      Logger.postCreateBackwardTrace(context.traceId, context.flags);
     }
 
     // Schedule an optionally delayed *actual* end of the trace

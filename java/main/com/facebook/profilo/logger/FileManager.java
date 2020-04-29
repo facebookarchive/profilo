@@ -163,7 +163,8 @@ public class FileManager {
       }
 
       trimFolderByAge(uploadFolder, mBaseFolder, mMaxScheduledTracesAgeMillis);
-      trimFolderByFileCount(mBaseFolder, mMaxArchivedTraces);
+      trimFolderByFileCount(
+          mBaseFolder, mMaxArchivedTraces, TRIMMABLE_FILES_FILTER, UNTRIMMABLE_FILES_FILTER);
     } else {
       mFileManagerStatistics.errorsCreatingUploadDir++;
     }
@@ -172,7 +173,8 @@ public class FileManager {
   public void handleSuccessfulUpload(File file) {
     File newPath = new File(mBaseFolder, file.getName());
     if (moveOrDelete(file, newPath)) {
-      trimFolderByFileCount(mBaseFolder, mMaxArchivedTraces);
+      trimFolderByFileCount(
+          mBaseFolder, mMaxArchivedTraces, TRIMMABLE_FILES_FILTER, UNTRIMMABLE_FILES_FILTER);
     }
   }
 
@@ -264,13 +266,18 @@ public class FileManager {
     return mMmapBufferFolder;
   }
 
-  private void trimFolderByFileCount(File folder, int maxSize) {
-
+  private void trimFolderByFileCount(File folder, int maxSize, FilenameFilter... filters) {
+    if (filters.length == 0) {
+      return;
+    }
     if (!folder.exists() && !folder.isDirectory()) {
       return;
     }
 
-    List<File> files = getFiles(folder, TRIMMABLE_FILES_FILTER);
+    ArrayList<File> files = new ArrayList<>();
+    for (FilenameFilter filter : filters) {
+      files.addAll(getFiles(folder, filter));
+    }
 
     if (files.size() > maxSize) {
       // Order by name == order by date due to naming convention
