@@ -18,6 +18,7 @@
 
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
+#include <profiler/JavaBaseTracer.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -40,6 +41,18 @@ namespace fbjni = facebook::jni;
 namespace facebook {
 namespace profilo {
 namespace artcompat {
+
+struct JavaFrame {
+  const char* class_descriptor;
+  const char* name;
+  std::set<int64_t> identifiers;
+  int32_t identifier;
+
+  // Sometimes we need to own the strings pointed to by the fields above.
+  // We can put them in here to transparently handle the case where we
+  // own or don't own the strings.
+  std::unique_ptr<std::vector<std::string>> owned_strings;
+};
 
 namespace {
 
@@ -68,7 +81,7 @@ uint32_t getDexMethodIndex678(fbjni::alias_ref<jobject> method) {
   return (uint32_t)method->getFieldValue(jlrMethod_dexMethodIndex);
 }
 
-std::vector<std::set<uint32_t>> getJavaStackTrace(
+std::vector<JavaFrame> getJavaStackTrace(
     versions::AndroidVersion version,
     fbjni::alias_ref<jobject> thread) {
   auto jlThread_class = getThreadClass();
@@ -94,7 +107,7 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(
   auto stacktrace = jlThread_getStackTrace(thread);
   auto stacktrace_len = stacktrace->size();
 
-  std::vector<std::set<uint32_t>> result;
+  std::vector<JavaFrame> result;
 
   for (size_t idx = 0; idx < stacktrace_len; idx++) {
     auto element = stacktrace->getElement(idx);
@@ -102,6 +115,22 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(
     auto methodname = jlStackTraceElement_getMethodName(element)->toStdString();
 
     std::replace(classname.begin(), classname.end(), '.', '/');
+
+    JavaFrame frame{};
+    frame.owned_strings = std::make_unique<std::vector<std::string>>();
+    auto& strings = *frame.owned_strings;
+
+    strings.push_back("L" + classname + ";"); // convert to descriptor
+    auto& class_descriptor = strings.at(0);
+    frame.class_descriptor = class_descriptor.c_str();
+
+    strings.push_back(methodname);
+    auto& name = strings.at(1);
+    frame.name = name.c_str();
+
+    // On pre-Pie Android we can also verify the method idx by
+    // extracting all possible overloads for the method in the
+    // stack trace and using reflection to collect their method idxs.
 
     auto cls = fbjni::findClassLocal(classname.c_str());
     auto cls_methods = jlClass_getDeclaredMethods(cls);
@@ -119,45 +148,61 @@ std::vector<std::set<uint32_t>> getJavaStackTrace(
           version == versions::ANDROID_8_0 ||
           version == versions::ANDROID_8_1) {
         dexMethodIndex = getDexMethodIndex678(method);
+      } else {
+        // Skip for OS 9
+        continue;
       }
       methods_map.insert(std::make_pair(
           jlrMethod_getName(method)->toStdString(), dexMethodIndex));
     }
 
     auto matches = methods_map.equal_range(methodname);
-    std::set<uint32_t> overloads{};
+    std::set<int64_t> overloads{};
     std::transform(
         matches.first,
         matches.second,
         std::inserter(overloads, overloads.begin()),
         [](const std::pair<std::string, uint32_t>& pair) {
-          FBLOGV("Java Stack: %s -> %u", pair.first.c_str(), pair.second);
           return pair.second;
         });
-    result.emplace_back(overloads);
+
+    frame.identifiers = std::move(overloads);
+
+    result.emplace_back(std::move(frame));
   }
 
   return result;
 }
 
 size_t getCppStackTrace(
-    profiler::BaseTracer* tracer,
-    std::array<uint32_t, kStackSize>& result) {
+    profiler::JavaBaseTracer* tracer,
+    std::array<JavaFrame, kStackSize>& result) {
   uint8_t depth = 0;
-  int64_t frames[kStackSize];
-  tracer->collectStack(nullptr, frames, depth, kStackSize);
 
+  int64_t ints[kStackSize];
+  char const* method_names[kStackSize];
+  char const* class_descriptors[kStackSize];
+  auto ret = tracer->collectJavaStack(
+      nullptr, ints, method_names, class_descriptors, depth, kStackSize);
   for (size_t idx = 0; idx < depth; idx++) {
-    result[idx] = static_cast<uint32_t>(frames[idx] >> 32);
+    JavaFrame frame{};
+    frame.class_descriptor = class_descriptors[idx];
+    frame.name = method_names[idx];
+    frame.identifier = ints[idx] >> 32;
+    result[idx] = std::move(frame);
+  }
+
+  if (ret != StackCollectionRetcode::SUCCESS) {
+    return 0;
   }
 
   return depth;
 }
 
 bool compareStackTraces(
-    std::array<uint32_t, kStackSize> cppStack,
+    std::array<JavaFrame, kStackSize>& cppStack,
     size_t cppStackSize,
-    std::vector<std::set<uint32_t>> javaStack) {
+    std::vector<JavaFrame>& javaStack) {
   size_t javaStackSize = javaStack.size();
 
   // We expect the C++ stack trace to be a subset of the Java one (which has to
@@ -166,27 +211,60 @@ bool compareStackTraces(
     return false;
   }
 
-  // The Java entries are a set of IDs because the Java mechanism does not help
-  // us with overload resolution, so we have the IDs of all overloads.
+  // We may get different types of data from the Java and C++ sides.
+  // In particular, we may not have method idxs on the Java side or
+  // we may not have class descriptors and method names on the C++ side.
+  //
+  // Attempt to match what we have and complain if there's no
+  // intersection of available information.
   for (size_t i = 0; i < cppStackSize; i++) {
-    auto cpp_frame = cppStack[cppStackSize - i - 1];
-    auto java_options = javaStack[javaStackSize - i - 1];
+    auto& cpp_frame = cppStack[cppStackSize - i - 1];
+    auto& java_frame = javaStack[javaStackSize - i - 1];
 
-#ifdef DEBUG
-    std::stringstream options_str{};
-    options_str << '[' << std::hex;
-    for (auto& option : java_options) {
-      options_str << option << " ";
+    bool performed_check = false;
+    if (java_frame.identifiers.size() != 0 && cpp_frame.identifier != 0) {
+      int64_t cpp_identifier = cpp_frame.identifier;
+
+      // Ensure that the C++ identifier is in the list of
+      // possibilities from Java.
+      if (java_frame.identifiers.find(cpp_identifier) ==
+          java_frame.identifiers.end()) {
+        FBLOGW("C++ identifier not in Java list");
+        return false;
+      }
+
+      performed_check = true;
     }
-    options_str << ']';
 
-    FBLOGV(
-        "Trying to find %x in any of %s", cpp_frame, options_str.str().c_str());
-#endif
+    // We want Class + Name to be extra sure.
+    if (java_frame.name != nullptr && cpp_frame.name != nullptr &&
+        java_frame.class_descriptor != nullptr &&
+        cpp_frame.class_descriptor != nullptr) {
+      if (strcmp(java_frame.class_descriptor, cpp_frame.class_descriptor) !=
+          0) {
+        FBLOGW(
+            "Class descriptors did not match Java:%s C++:%s",
+            java_frame.class_descriptor,
+            cpp_frame.class_descriptor);
+        return false;
+      }
 
-    if (java_options.find(cpp_frame) == java_options.end()) {
+      if (strcmp(java_frame.name, cpp_frame.name) != 0) {
+        FBLOGW(
+            "Method names did not match Java:%s C++:%s",
+            java_frame.name,
+            cpp_frame.name);
+        return false;
+      }
+      performed_check = true;
+    }
+
+    if (!performed_check) {
+      FBLOGE("No intersecting information between unwinder and Java side");
       return false;
     }
+
+    return true;
   }
   return true;
 }
@@ -211,7 +289,7 @@ bool compareStackTraces(
 //
 bool runJavaCompatibilityCheckInternal(
     versions::AndroidVersion version,
-    profiler::BaseTracer* tracer) {
+    profiler::JavaBaseTracer* tracer) {
   constexpr int kExitCodeSuccess = 100;
   constexpr int kExitCodeFailure = 150;
   constexpr int kTimeoutSec = 1;
@@ -225,7 +303,7 @@ bool runJavaCompatibilityCheckInternal(
   // We must collect the Java stack trace before we fork because of internal
   // allocation locks within art.
   //
-  std::vector<std::set<uint32_t>> javaStack;
+  std::vector<JavaFrame> javaStack;
   try {
     javaStack = getJavaStackTrace(version, jlThread);
   } catch (...) {
@@ -240,10 +318,10 @@ bool runJavaCompatibilityCheckInternal(
         try {
           tracer->startTracing();
 
-          std::array<uint32_t, kStackSize> cppStack;
-          auto cppStackSize = getCppStackTrace(tracer, cppStack);
+          std::array<JavaFrame, kStackSize> cppStack2;
+          auto cppStackSize2 = getCppStackTrace(tracer, cppStack2);
 
-          if (compareStackTraces(cppStack, cppStackSize, javaStack)) {
+          if (compareStackTraces(cppStack2, cppStackSize2, javaStack)) {
             FBLOGV("compareStackTraces returned true");
             forkjail::ForkJail::real_exit(kExitCodeSuccess);
           }
@@ -271,9 +349,10 @@ bool runJavaCompatibilityCheckInternal(
     } while (!WIFEXITED(status) && !WIFSIGNALED(status));
 
     FBLOGD(
-        "Cpp stack child exited: %i status: %i signalled: %i signal: %i",
+        "Cpp stack child exited: %i status: %i (%s) signalled: %i signal: %i",
         WIFEXITED(status),
         WEXITSTATUS(status),
+        WEXITSTATUS(status) == kExitCodeSuccess ? "success" : "failure",
         WIFSIGNALED(status),
         WTERMSIG(status));
 
@@ -292,7 +371,7 @@ bool runJavaCompatibilityCheckInternal(
 
 bool runJavaCompatibilityCheck(
     versions::AndroidVersion version,
-    profiler::BaseTracer* tracer) {
+    profiler::JavaBaseTracer* tracer) {
   return runJavaCompatibilityCheckInternal(version, tracer);
 }
 

@@ -15,7 +15,7 @@
  */
 #pragma once
 
-#include "profiler/BaseTracer.h"
+#include "profiler/JavaBaseTracer.h"
 
 namespace facebook {
 namespace profilo {
@@ -34,7 +34,7 @@ enum AndroidVersion : uint8_t {
 
 bool runJavaCompatibilityCheck(
     versions::AndroidVersion version,
-    profiler::BaseTracer* tracer);
+    profiler::JavaBaseTracer* tracer);
 
 } // namespace artcompat
 } // namespace profilo
