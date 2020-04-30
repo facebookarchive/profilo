@@ -49,7 +49,9 @@ void PrintEntryVisitor::visit(const FramesEntry& data) {
     stream_ << fmt::format_int{data.timestamp}.c_str();
     stream_ << '|';
     stream_ << fmt::format_int{data.tid}.c_str();
-    stream_ << "|0|0|";
+    stream_ << "|0|";
+    stream_ << fmt::format_int{data.matchid}.c_str();
+    stream_ << '|';
     stream_ << fmt::format_int{data.frames.values[idx]}.c_str();
     stream_ << '\n';
   }

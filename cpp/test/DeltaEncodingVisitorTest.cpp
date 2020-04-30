@@ -102,13 +102,14 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeFramesEntry) {
       .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 123,
       .tid = 0,
+      .matchid = 10,
       .frames.values = frames,
       .frames.size = 3,
   });
 
   EXPECT_EQ(
       stream.str(),
-      "10|STACK_FRAME|123|0|0|0|1000\n"
+      "10|STACK_FRAME|123|0|0|10|1000\n"
       "1|STACK_FRAME|0|0|0|0|3000\n"
       "1|STACK_FRAME|0|0|0|0|-2000\n");
 }
@@ -160,6 +161,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
       .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 125,
       .tid = 0,
+      .matchid = 10,
       .frames.values = frames,
       .frames.size = 3,
   });
@@ -170,7 +172,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
       "11|STRING_KEY|10|key\n"
       "12|STRING_VALUE|11|value\n"
       "3|QPL_END|1|0|0|0|0\n"
-      "1|STACK_FRAME|1|0|0|0|997\n"
+      "1|STACK_FRAME|1|0|0|8|997\n"
       "1|STACK_FRAME|0|0|0|0|1000\n"
       "1|STACK_FRAME|0|0|0|0|1000\n");
 }

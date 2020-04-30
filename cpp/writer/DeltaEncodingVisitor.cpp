@@ -58,6 +58,7 @@ void DeltaEncodingVisitor::visit(const FramesEntry& entry) {
                         .type = entry.type,
                         .timestamp = entry.timestamp - last_values_.timestamp,
                         .tid = entry.tid - last_values_.tid,
+                        .matchid = entry.matchid - last_values_.matchid,
                         .frames = {.values = frames, .size = 1}};
 
     last_values_ = {
@@ -65,10 +66,10 @@ void DeltaEncodingVisitor::visit(const FramesEntry& entry) {
         .timestamp = entry.timestamp,
         .tid = entry.tid,
 
-        // FramesEntries don't use callid and matchid, it's okay
-        // to preserve them to whatever they were before this entry.
+        // FramesEntries don't use callid, it's okay
+        // to preserve it to whatever they were before this entry.
         .callid = last_values_.callid,
-        .matchid = last_values_.matchid,
+        .matchid = entry.matchid,
 
         .extra = current_frame,
     };

@@ -40,6 +40,7 @@ TEST(StackInvertingVisitorTest, testStacksAreInverted) {
       .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 1,
       .tid = 1,
+      .matchid = 10,
       .frames =
           {
               .values = frames,
@@ -53,6 +54,7 @@ TEST(StackInvertingVisitorTest, testStacksAreInverted) {
       .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 2,
       .tid = 2,
+      .matchid = 10,
       .frames =
           {
               .values = otherframes,
@@ -62,12 +64,12 @@ TEST(StackInvertingVisitorTest, testStacksAreInverted) {
 
   EXPECT_EQ(
       stream.str(),
-      "1|STACK_FRAME|1|1|0|0|100\n"
-      "1|STACK_FRAME|1|1|0|0|200\n"
-      "1|STACK_FRAME|1|1|0|0|300\n"
-      "2|STACK_FRAME|2|2|0|0|1000\n"
-      "2|STACK_FRAME|2|2|0|0|2000\n"
-      "2|STACK_FRAME|2|2|0|0|3000\n");
+      "1|STACK_FRAME|1|1|0|10|100\n"
+      "1|STACK_FRAME|1|1|0|10|200\n"
+      "1|STACK_FRAME|1|1|0|10|300\n"
+      "2|STACK_FRAME|2|2|0|10|1000\n"
+      "2|STACK_FRAME|2|2|0|10|2000\n"
+      "2|STACK_FRAME|2|2|0|10|3000\n");
 }
 
 } // namespace profilo

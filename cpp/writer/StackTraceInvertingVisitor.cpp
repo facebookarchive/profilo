@@ -48,6 +48,7 @@ void StackTraceInvertingVisitor::visit(const FramesEntry& entry) {
       .type = entry.type,
       .timestamp = entry.timestamp,
       .tid = entry.tid,
+      .matchid = entry.matchid,
       .frames =
           {
               .values = stack_.get(),
