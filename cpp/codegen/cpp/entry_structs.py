@@ -44,6 +44,7 @@ class CppEntryStructsCodegen(Codegen):
 #include <cstring>
 #include <type_traits>
 #include <unistd.h>
+#include <profilo/entries/EntryType.h>
 
 #pragma once
 

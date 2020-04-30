@@ -23,6 +23,7 @@ from ..codegen import Codegen
 from ..types import ArrayType
 from ..types import CompoundType
 from ..types import DynamicArrayType
+from ..types import EntryTypeEnum
 from ..types import IntegerType
 from ..types import PointerType
 
@@ -110,6 +111,49 @@ class IntegerTypeConverter(PrimitiveTypeConverter):
         return template.format(
             unsigned=unsigned_char,
             bits=bits,
+        )
+
+
+class EntryTypeEnumConverter(IntegerTypeConverter):
+
+    def __init__(self, abstract_type):
+        super(EntryTypeEnumConverter, self).__init__(abstract_type)
+
+        if not isinstance(self.abstract_type, EntryTypeEnum):
+            raise ValueError(
+                "abstract_type must be an instance of EntryTypeEnum"
+            )
+
+    def generate_declaration(self, name):
+        return "EntryType {name};".format(
+            name=name,
+        )
+
+    def generate_pack_code(self, from_expression, to_expression, offset_expr):
+        return """
+{int_type} {from_tmp} = static_cast<{int_type}>({from_});
+std::memcpy(({to}) + {offset}, &({from_tmp}), sizeof(({from_tmp})));
+{offset} += sizeof(({from_tmp}));
+""".format(
+            int_type=self.map_type(),
+            from_tmp=from_expression.replace('.', '_') + '_tmp',
+            from_=from_expression,
+            to=to_expression,
+            offset=offset_expr,
+        )
+
+    def generate_unpack_code(self, from_expression, to_expression, offset_expr):
+        return """
+{int_type} {to_tmp};
+std::memcpy(&({to_tmp}), ({from_}) + {offset}, sizeof(({to_tmp})));
+{offset} += sizeof(({to_tmp}));
+{to} = static_cast<EntryType>({to_tmp});
+""".format(
+            int_type=self.map_type(),
+            to_tmp=to_expression.replace('.', '_') + '_tmp',
+            from_=from_expression,
+            to=to_expression,
+            offset=offset_expr,
         )
 
 
@@ -205,7 +249,7 @@ class CompoundTypeConverter(CppTypeConverter):
 
     @abc.abstractmethod
     def generate_unpack_code(self, from_expression, to_expression, offset_expr):
-        passl
+        pass
 
 
 class DynamicArrayTypeConverter(CompoundTypeConverter):
@@ -289,4 +333,5 @@ CONVERTERS = {
     DynamicArrayType: DynamicArrayTypeConverter,
     IntegerType: IntegerTypeConverter,
     PointerType: PointerTypeConverter,
+    EntryTypeEnum: EntryTypeEnumConverter,
 }

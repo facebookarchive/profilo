@@ -156,7 +156,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     StandardEntry entry{.id = 0,
                         /* First 10 entries as they don't have trace control
                            entries among them. */
-                        .type = static_cast<uint8_t>(std::rand() % 10),
+                        .type = static_cast<EntryType>(std::rand() % 10),
                         .timestamp = std::rand() % INT64_MAX,
                         .tid = std::rand() % INT32_MAX,
                         .callid = std::rand() % INT32_MAX,

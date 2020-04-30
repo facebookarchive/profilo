@@ -22,6 +22,7 @@ from ..codegen import EntryDescription
 from ..codegen import MemoryDescription
 from ..types import Types
 from ..types import DynamicArrayType
+from ..types import EntryTypeEnum
 
 NAMES = [
     'UNKNOWN_TYPE',
@@ -178,7 +179,7 @@ BYTES_ENTRIES = frozenset([
 def get_frames_memory_format():
     fields = [
         ('id', Types.int32),
-        ('type', Types.uint8),
+        ('type', EntryTypeEnum()),
         ('timestamp', Types.int64),
         ('tid', Types.int32),
         ('matchid', Types.int32),
@@ -193,7 +194,7 @@ def get_frames_memory_format():
 def get_bytes_memory_format():
     fields = [
         ('id', Types.int32),
-        ('type', Types.uint8),
+        ('type', EntryTypeEnum()),
         ('matchid', Types.int32),
         ('bytes', DynamicArrayType(Types.uint8)),
     ]
@@ -209,7 +210,7 @@ def get_entry_descriptions():
     standard_entry = MemoryDescription(
         fields=[
             ('id', Types.int32),
-            ('type', Types.uint8),
+            ('type', EntryTypeEnum()),
             ('timestamp', Types.int64),
             ('tid', Types.int32),
             ('callid', Types.int32),

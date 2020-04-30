@@ -1,4 +1,4 @@
-// @generated SignedSource<<872dbd0a7243d6ce0db09a6fef117548>>
+// @generated SignedSource<<dac133554c4c93a6470de853350a032e>>
 
 #include <cstring>
 #include <stdexcept>
@@ -25,8 +25,9 @@ void StandardEntry::pack(const StandardEntry& entry, void* dst, size_t size) {
   offset += sizeof((entry.id));
   
   
-  std::memcpy((dst_byte) + offset, &(entry.type), sizeof((entry.type)));
-  offset += sizeof((entry.type));
+  uint8_t entry_type_tmp = static_cast<uint8_t>(entry.type);
+  std::memcpy((dst_byte) + offset, &(entry_type_tmp), sizeof((entry_type_tmp)));
+  offset += sizeof((entry_type_tmp));
   
   
   std::memcpy((dst_byte) + offset, &(entry.timestamp), sizeof((entry.timestamp)));
@@ -66,8 +67,10 @@ void StandardEntry::unpack(StandardEntry& entry, const void* src, size_t size) {
   offset += sizeof((entry.id));
   
   
-  std::memcpy(&(entry.type), (src_byte) + offset, sizeof((entry.type)));
-  offset += sizeof((entry.type));
+  uint8_t entry_type_tmp;
+  std::memcpy(&(entry_type_tmp), (src_byte) + offset, sizeof((entry_type_tmp)));
+  offset += sizeof((entry_type_tmp));
+  entry.type = static_cast<EntryType>(entry_type_tmp);
   
   
   std::memcpy(&(entry.timestamp), (src_byte) + offset, sizeof((entry.timestamp)));
@@ -122,8 +125,9 @@ void FramesEntry::pack(const FramesEntry& entry, void* dst, size_t size) {
   offset += sizeof((entry.id));
   
   
-  std::memcpy((dst_byte) + offset, &(entry.type), sizeof((entry.type)));
-  offset += sizeof((entry.type));
+  uint8_t entry_type_tmp = static_cast<uint8_t>(entry.type);
+  std::memcpy((dst_byte) + offset, &(entry_type_tmp), sizeof((entry_type_tmp)));
+  offset += sizeof((entry_type_tmp));
   
   
   std::memcpy((dst_byte) + offset, &(entry.timestamp), sizeof((entry.timestamp)));
@@ -171,8 +175,10 @@ void FramesEntry::unpack(FramesEntry& entry, const void* src, size_t size) {
   offset += sizeof((entry.id));
   
   
-  std::memcpy(&(entry.type), (src_byte) + offset, sizeof((entry.type)));
-  offset += sizeof((entry.type));
+  uint8_t entry_type_tmp;
+  std::memcpy(&(entry_type_tmp), (src_byte) + offset, sizeof((entry_type_tmp)));
+  offset += sizeof((entry_type_tmp));
+  entry.type = static_cast<EntryType>(entry_type_tmp);
   
   
   std::memcpy(&(entry.timestamp), (src_byte) + offset, sizeof((entry.timestamp)));
@@ -236,8 +242,9 @@ void BytesEntry::pack(const BytesEntry& entry, void* dst, size_t size) {
   offset += sizeof((entry.id));
   
   
-  std::memcpy((dst_byte) + offset, &(entry.type), sizeof((entry.type)));
-  offset += sizeof((entry.type));
+  uint8_t entry_type_tmp = static_cast<uint8_t>(entry.type);
+  std::memcpy((dst_byte) + offset, &(entry_type_tmp), sizeof((entry_type_tmp)));
+  offset += sizeof((entry_type_tmp));
   
   
   std::memcpy((dst_byte) + offset, &(entry.matchid), sizeof((entry.matchid)));
@@ -277,8 +284,10 @@ void BytesEntry::unpack(BytesEntry& entry, const void* src, size_t size) {
   offset += sizeof((entry.id));
   
   
-  std::memcpy(&(entry.type), (src_byte) + offset, sizeof((entry.type)));
-  offset += sizeof((entry.type));
+  uint8_t entry_type_tmp;
+  std::memcpy(&(entry_type_tmp), (src_byte) + offset, sizeof((entry_type_tmp)));
+  offset += sizeof((entry_type_tmp));
+  entry.type = static_cast<EntryType>(entry_type_tmp);
   
   
   std::memcpy(&(entry.matchid), (src_byte) + offset, sizeof((entry.matchid)));

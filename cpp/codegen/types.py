@@ -42,13 +42,18 @@ class PrimitiveType(Type):
     def constant_size(self):
         return self.size
 
-
 class IntegerType(PrimitiveType):
 
     def __init__(self, size, signed):
         super(IntegerType, self).__init__(size)
         self.signed = signed
 
+
+class EntryTypeEnum(IntegerType):
+    "Represents the code-generated EntryType enum"
+
+    def __init__(self):
+        super(EntryTypeEnum, self).__init__(size=1, signed=False)
 
 class ArrayType(PrimitiveType):
 

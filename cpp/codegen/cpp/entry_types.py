@@ -28,6 +28,11 @@ class CppEntryTypesCodegen(Codegen):
     def __init__(self, entries):
         super(CppEntryTypesCodegen, self).__init__()
         self.entries = entries
+        if len(self.entries) > 255:
+            raise ValueError(
+                "EntryType codegen currently assumes 1-byte entry types.\n"
+                "See types.EntryTypeEnum for that size."
+            )
 
     def preferred_filename(self):
         return 'EntryType.h'

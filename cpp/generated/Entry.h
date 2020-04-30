@@ -1,9 +1,10 @@
-// @generated SignedSource<<b23ca7f65edbd8e6516fa67852136bd2>>
+// @generated SignedSource<<92e7f010a9d663922326eefa54f7b0e0>>
 
 #include <cstdint>
 #include <cstring>
 #include <type_traits>
 #include <unistd.h>
+#include <profilo/entries/EntryType.h>
 
 #pragma once
 
@@ -16,7 +17,7 @@ struct __attribute__((packed)) StandardEntry {
   static const uint8_t kSerializationType = 1;
 
   int32_t id;
-  uint8_t type;
+  EntryType type;
   int64_t timestamp;
   int32_t tid;
   int32_t callid;
@@ -34,7 +35,7 @@ struct __attribute__((packed)) FramesEntry {
   static const uint8_t kSerializationType = 2;
 
   int32_t id;
-  uint8_t type;
+  EntryType type;
   int64_t timestamp;
   int32_t tid;
   int32_t matchid;
@@ -54,7 +55,7 @@ struct __attribute__((packed)) BytesEntry {
   static const uint8_t kSerializationType = 3;
 
   int32_t id;
-  uint8_t type;
+  EntryType type;
   int32_t matchid;
   struct {
     const uint8_t* values;
