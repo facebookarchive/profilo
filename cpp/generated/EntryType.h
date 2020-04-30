@@ -1,11 +1,11 @@
-// @generated SignedSource<<2f0b7a7f7c8162cede3d20514c18fc8a>>
+// @generated SignedSource<<b94f544ad66c7c1404ac82473101e8f0>>
 
 #pragma once
 
 namespace facebook {
 namespace profilo {
 namespace entries {
-enum EntryType {
+enum class EntryType {
   UNKNOWN_TYPE = 0,
   UI_INPUT_START = 1,
   UI_INPUT_END = 2,

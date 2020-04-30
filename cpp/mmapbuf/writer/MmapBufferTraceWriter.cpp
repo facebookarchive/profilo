@@ -67,7 +67,7 @@ void loggerWriteStringAnnotation(
     int64_t extra = 0,
     int64_t timestamp = monotonicTime()) {
   StandardEntry annotationEntry{};
-  annotationEntry.type = type;
+  annotationEntry.type = static_cast<decltype(annotationEntry.type)>(type);
   annotationEntry.tid = threadID();
   annotationEntry.timestamp = timestamp;
   annotationEntry.callid = callid;
@@ -75,13 +75,13 @@ void loggerWriteStringAnnotation(
 
   auto key = annotationKey.c_str();
   matchid = logger.writeBytes(
-      entries::STRING_KEY,
+      EntryType::STRING_KEY,
       matchid,
       reinterpret_cast<const uint8_t*>(key),
       strlen(key));
   auto value = annotationValue.c_str();
   logger.writeBytes(
-      entries::STRING_VALUE,
+      EntryType::STRING_VALUE,
       matchid,
       reinterpret_cast<const uint8_t*>(value),
       strlen(value));
@@ -95,7 +95,7 @@ void loggerWriteTraceStringAnnotation(
     int64_t timestamp = monotonicTime()) {
   loggerWriteStringAnnotation(
       logger,
-      entries::TRACE_ANNOTATION,
+      EntryType::TRACE_ANNOTATION,
       annotationQuicklogId,
       annotationKey,
       annotationValue,
@@ -111,7 +111,7 @@ void loggerWriteQplTriggerAnnotation(
     int64_t timestamp = monotonicTime()) {
   loggerWriteStringAnnotation(
       logger,
-      entries::QPL_ANNOTATION,
+      EntryType::QPL_ANNOTATION,
       marker_id,
       annotationKey,
       annotationValue,
@@ -245,7 +245,7 @@ int64_t MmapBufferTraceWriter::writeTrace(
 
   // It's not technically backwards trace but that's what we use to denote Black
   // Box traces.
-  loggerWrite(logger, entries::TRACE_BACKWARDS, 0, trace_id, timestamp);
+  loggerWrite(logger, EntryType::TRACE_BACKWARDS, 0, trace_id, timestamp);
 
   {
     // Copying entries from the saved buffer to the new one.
@@ -260,16 +260,20 @@ int64_t MmapBufferTraceWriter::writeTrace(
   }
 
   loggerWrite(
-      logger, entries::QPL_START, qpl_marker_id, kTriggerEventFlag, timestamp);
+      logger,
+      EntryType::QPL_START,
+      qpl_marker_id,
+      kTriggerEventFlag,
+      timestamp);
   loggerWrite(
       logger,
-      entries::TRACE_ANNOTATION,
+      EntryType::TRACE_ANNOTATION,
       QuickLogConstants::APP_VERSION_CODE,
       mapBufferPrefix->header.versionCode,
       timestamp);
   loggerWrite(
       logger,
-      entries::TRACE_ANNOTATION,
+      EntryType::TRACE_ANNOTATION,
       QuickLogConstants::CONFIG_ID,
       mapBufferPrefix->header.configId,
       timestamp);
@@ -280,7 +284,7 @@ int64_t MmapBufferTraceWriter::writeTrace(
       std::string(mapBufferPrefix->header.sessionId));
   loggerWriteQplTriggerAnnotation(
       logger, qpl_marker_id, "type", type, timestamp);
-  loggerWrite(logger, entries::TRACE_END, 0, trace_id, timestamp);
+  loggerWrite(logger, EntryType::TRACE_END, 0, trace_id, timestamp);
 
   TraceWriter writer(
       std::move(trace_folder_),

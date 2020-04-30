@@ -56,7 +56,7 @@ const char* to_string(EntryType type);
 
     def _generate_entries_enum(self):
         template = """
-enum EntryType {
+enum class EntryType {
 %%NAME_TO_ID_ENTRIES%%
 };
 """.lstrip()
@@ -109,7 +109,7 @@ const char* to_string(EntryType type) {
 }
 """.lstrip()
 
-        cases = ['case {0.name}: return "{0.name}";'.format(x) for x in self.entries]
+        cases = ['case EntryType::{0.name}: return "{0.name}";'.format(x) for x in self.entries]
         cases = '\n'.join(cases)
 
         cases = Codegen.indent(cases)

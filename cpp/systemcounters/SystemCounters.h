@@ -60,7 +60,8 @@ inline void logCpuCoreCounter(
     int64_t time) {
   logger.write(StandardEntry{
       .id = 0,
-      .type = entries::CPU_COUNTER,
+      .type =
+          static_cast<decltype(StandardEntry::type)>(EntryType::CPU_COUNTER),
       .timestamp = time,
       .tid = thread_id,
       .callid = counter_name,

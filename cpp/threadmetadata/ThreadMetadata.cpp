@@ -30,24 +30,24 @@ namespace threadmetadata {
 
 static int32_t logAnnotation(
     Logger& logger,
-    entries::EntryType type,
+    EntryType type,
     const char* key,
     const char* value) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = type;
+  entry.type = static_cast<decltype(StandardEntry::type)>(type);
 
   int32_t matchId = logger.write(std::move(entry));
   if (key != nullptr) {
     matchId = logger.writeBytes(
-        entries::STRING_KEY,
+        EntryType::STRING_KEY,
         matchId,
         reinterpret_cast<const uint8_t*>(key),
         strlen(key));
   }
   return logger.writeBytes(
-      entries::STRING_VALUE,
+      EntryType::STRING_VALUE,
       matchId,
       reinterpret_cast<const uint8_t*>(value),
       strlen(value));
@@ -64,7 +64,7 @@ static void logThreadName(Logger& logger, uint32_t tid) {
   snprintf(threadId, 16, "%d", tid);
 
   logAnnotation(
-      logger, entries::TRACE_THREAD_NAME, threadId, threadName.data());
+      logger, EntryType::TRACE_THREAD_NAME, threadId, threadName.data());
 }
 
 static void logThreadPriority(Logger& logger, int32_t tid) {
@@ -77,7 +77,8 @@ static void logThreadPriority(Logger& logger, int32_t tid) {
 
   logger.write(StandardEntry{
       .id = 0,
-      .type = entries::TRACE_THREAD_PRI,
+      .type = static_cast<decltype(StandardEntry::type)>(
+          EntryType::TRACE_THREAD_PRI),
       .timestamp = monotonicTime(),
       .tid = tid,
       .callid = 0,

@@ -73,7 +73,8 @@ void Logger::writeStackFrames(
 void Logger::writeTraceAnnotation(int32_t key, int64_t value) {
   write(StandardEntry{
       .id = 0,
-      .type = entries::TRACE_ANNOTATION,
+      .type = static_cast<decltype(StandardEntry::type)>(
+          EntryType::TRACE_ANNOTATION),
       .timestamp = monotonicTime(),
       .tid = threadID(),
       .callid = key,

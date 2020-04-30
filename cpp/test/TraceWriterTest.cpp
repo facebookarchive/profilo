@@ -90,7 +90,8 @@ class TraceWriterTest : public ::testing::Test {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
         .id = 1,
-        .type = entries::TRACE_START,
+        .type =
+            static_cast<decltype(StandardEntry::type)>(EntryType::TRACE_START),
         .timestamp = 123,
         .tid = 0,
         .callid = 0,
@@ -105,7 +106,8 @@ class TraceWriterTest : public ::testing::Test {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
         .id = 2,
-        .type = entries::TRACE_END,
+        .type =
+            static_cast<decltype(StandardEntry::type)>(EntryType::TRACE_END),
         .timestamp = 124,
         .tid = 0,
         .callid = 0,
@@ -120,7 +122,8 @@ class TraceWriterTest : public ::testing::Test {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
         .id = 2,
-        .type = entries::TRACE_ABORT,
+        .type =
+            static_cast<decltype(StandardEntry::type)>(EntryType::TRACE_ABORT),
         .timestamp = 125,
         .tid = 0,
         .callid = 0,
@@ -135,7 +138,8 @@ class TraceWriterTest : public ::testing::Test {
     char payload[sizeof(StandardEntry) + 1]{};
     StandardEntry start{
         .id = 2,
-        .type = entries::MARK_PUSH,
+        .type =
+            static_cast<decltype(StandardEntry::type)>(EntryType::MARK_PUSH),
         .timestamp = 125,
         .tid = 0,
         .callid = 0,

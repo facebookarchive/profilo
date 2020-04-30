@@ -35,7 +35,7 @@ void JSTracer::flushStack(
     int tid,
     int64_t time_) {
   Logger::get().writeStackFrames(
-      tid, time_, frames, depth, entries::JAVASCRIPT_STACK_FRAME);
+      tid, time_, frames, depth, 0, EntryType::JAVASCRIPT_STACK_FRAME);
 }
 
 void JSTracer::prepare() {}

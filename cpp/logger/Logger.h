@@ -75,7 +75,7 @@ class Logger {
       const int64_t* methods,
       uint8_t depth,
       int32_t matchid = 0,
-      EntryType entry_type = entries::STACK_FRAME);
+      EntryType entry_type = EntryType::STACK_FRAME);
 
   PROFILOEXPORT void writeTraceAnnotation(int32_t key, int64_t value);
 

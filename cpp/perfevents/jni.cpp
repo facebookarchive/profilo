@@ -59,6 +59,10 @@ static Session* handleToSession(jlong handle) {
 
 namespace {
 
+using namespace profilo;
+using namespace profilo::logger;
+using namespace profilo::entries;
+
 class ProfiloWriterListener : public RecordListener {
   using FileBackedMappingsList = detail::FileBackedMappingsList;
 
@@ -90,9 +94,10 @@ class ProfiloWriterListener : public RecordListener {
 
     switch (type) {
       case EVENT_TYPE_MAJOR_FAULTS: {
-        profilo::Logger::get().write(profilo::entries::StandardEntry{
+        profilo::Logger::get().write(StandardEntry{
             .id = 0,
-            .type = profilo::entries::MAJOR_FAULT,
+            .type = static_cast<decltype(StandardEntry::type)>(
+                EntryType::MAJOR_FAULT),
             .timestamp = ((int64_t)record.time()) + offset_,
             .tid = (int32_t)record.tid(),
             .callid = 0,
@@ -107,9 +112,10 @@ class ProfiloWriterListener : public RecordListener {
           return;
         }
 
-        profilo::Logger::get().write(profilo::entries::StandardEntry{
+        Logger::get().write(StandardEntry{
             .id = 0,
-            .type = profilo::entries::MINOR_FAULT,
+            .type = static_cast<decltype(StandardEntry::type)>(
+                EntryType::MINOR_FAULT),
             .timestamp = ((int64_t)record.time()) + offset_,
             .tid = (int32_t)record.tid(),
             .callid = 0,
@@ -128,11 +134,12 @@ class ProfiloWriterListener : public RecordListener {
   virtual void onForkExit(const RecordForkExit& record) {}
 
   virtual void onLost(const RecordLost& record) {
-    profilo::Logger::get().write(profilo::entries::StandardEntry{
+    Logger::get().write(StandardEntry{
         .id = 0,
-        .type = profilo::entries::PERFEVENTS_LOST,
-        .timestamp = profilo::monotonicTime(),
-        .tid = profilo::threadID(),
+        .type = static_cast<decltype(StandardEntry::type)>(
+            EntryType::PERFEVENTS_LOST),
+        .timestamp = monotonicTime(),
+        .tid = threadID(),
         .callid = 0,
         .matchid = 0,
         .extra = (int64_t)record.lost,

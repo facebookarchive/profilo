@@ -76,24 +76,24 @@ EntryType errorToTraceEntry(StackCollectionRetcode error) {
 
   switch (error) {
     case StackCollectionRetcode::EMPTY_STACK:
-      return entries::STKERR_EMPTYSTACK;
+      return EntryType::STKERR_EMPTYSTACK;
 
     case StackCollectionRetcode::STACK_OVERFLOW:
-      return entries::STKERR_STACKOVERFLOW;
+      return EntryType::STKERR_STACKOVERFLOW;
 
     case StackCollectionRetcode::NO_STACK_FOR_THREAD:
-      return entries::STKERR_NOSTACKFORTHREAD;
+      return EntryType::STKERR_NOSTACKFORTHREAD;
 
     case StackCollectionRetcode::SIGNAL_INTERRUPT:
-      return entries::STKERR_SIGNALINTERRUPT;
+      return EntryType::STKERR_SIGNALINTERRUPT;
 
     case StackCollectionRetcode::NESTED_UNWIND:
-      return entries::STKERR_NESTEDUNWIND;
+      return EntryType::STKERR_NESTEDUNWIND;
 
     case StackCollectionRetcode::TRACER_DISABLED:
     case StackCollectionRetcode::SUCCESS:
     case StackCollectionRetcode::MAXVAL:
-      return entries::UNKNOWN_TYPE;
+      return EntryType::UNKNOWN_TYPE;
   }
 
 #pragma clang diagnostic pop
@@ -453,7 +453,7 @@ void SamplingProfiler::flushStackTraces(
         tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
       } else {
         StandardEntry entry{};
-        entry.type = static_cast<EntryType>(
+        entry.type = static_cast<decltype(entry.type)>(
             errorToTraceEntry(static_cast<StackCollectionRetcode>(slotState)));
         entry.timestamp = slot.time;
         entry.tid = tid;
@@ -474,14 +474,15 @@ void SamplingProfiler::flushStackTraces(
             StandardEntry entry{};
             entry.tid = tid;
             entry.timestamp = slot.time;
-            entry.type = entries::JAVA_FRAME_NAME;
+            entry.type =
+                static_cast<decltype(entry.type)>(EntryType::JAVA_FRAME_NAME);
             entry.extra = slot.frames[i];
             int32_t id = Logger::get().write(std::move(entry));
 
             std::string full_name{slot.class_descriptors[i]};
             full_name += slot.method_names[i];
             Logger::get().writeBytes(
-                entries::STRING_VALUE,
+                EntryType::STRING_VALUE,
                 id,
                 (const uint8_t*)full_name.c_str(),
                 full_name.length());

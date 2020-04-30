@@ -69,17 +69,17 @@ void logMemoryMappings(JNIEnv*, jobject) {
     FBLOGV("Logging mapping: %s", formatted_entry.c_str());
 
     auto mappingId = logger.write(StandardEntry{
-        .type = entries::MAPPING,
+        .type = static_cast<decltype(StandardEntry::type)>(EntryType::MAPPING),
         .tid = tid,
         .timestamp = time,
     });
     auto keyId = logger.writeBytes(
-        entries::STRING_KEY,
+        EntryType::STRING_KEY,
         mappingId,
         reinterpret_cast<const uint8_t*>(kAndroidMappingKey),
         sizeof(kAndroidMappingKey));
     logger.writeBytes(
-        entries::STRING_VALUE,
+        EntryType::STRING_VALUE,
         keyId,
         reinterpret_cast<const uint8_t*>(formatted_entry.data()),
         formatted_entry.size());

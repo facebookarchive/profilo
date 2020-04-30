@@ -37,7 +37,7 @@ TEST(StackInvertingVisitorTest, testStacksAreInverted) {
   int64_t frames[] = {300, 200, 100};
   stack.visit(FramesEntry{
       .id = 1,
-      .type = entries::STACK_FRAME,
+      .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 1,
       .tid = 1,
       .frames =
@@ -50,7 +50,7 @@ TEST(StackInvertingVisitorTest, testStacksAreInverted) {
   int64_t otherframes[] = {3000, 2000, 1000};
   stack.visit(FramesEntry{
       .id = 2,
-      .type = entries::STACK_FRAME,
+      .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 2,
       .tid = 2,
       .frames =

@@ -109,11 +109,11 @@ void log_systrace(const void* buf, size_t count) {
   EntryType type;
   switch (msg[0]) {
     case 'B': { // begin synchronous event. format: "B|<pid>|<name>"
-      type = entries::MARK_PUSH;
+      type = EntryType::MARK_PUSH;
       break;
     }
     case 'E': { // end synchronous event. format: "E"
-      type = entries::MARK_POP;
+      type = EntryType::MARK_POP;
       break;
     }
     // the following events we don't currently log.
@@ -128,10 +128,10 @@ void log_systrace(const void* buf, size_t count) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = type;
+  entry.type = static_cast<decltype(entry.type)>(type);
 
   int32_t id = logger.write(std::move(entry));
-  if (type != entries::MARK_POP) {
+  if (type != EntryType::MARK_POP) {
     // Format is B|<pid>|<name>.
     // Skip "B|" trivially, find next '|' with memchr. We cannot use strchr
     // since we can't trust the message to have a null terminator.
@@ -146,7 +146,7 @@ void log_systrace(const void* buf, size_t count) {
     ssize_t len = msg + count - name;
     if (len > 0) {
       logger.writeBytes(
-          entries::STRING_NAME,
+          EntryType::STRING_NAME,
           id,
           (const uint8_t*)name,
           std::min(len, kAtraceMessageLength));

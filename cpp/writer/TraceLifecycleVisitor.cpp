@@ -121,8 +121,9 @@ TraceLifecycleVisitor::TraceLifecycleVisitor(
       done_(false) {}
 
 void TraceLifecycleVisitor::visit(const StandardEntry& entry) {
-  switch (entry.type) {
-    case entries::TRACE_END: {
+  auto type = static_cast<EntryType>(entry.type);
+  switch (type) {
+    case EntryType::TRACE_END: {
       int64_t trace_id = entry.extra;
       if (trace_id != expected_trace_) {
         return;
@@ -134,13 +135,13 @@ void TraceLifecycleVisitor::visit(const StandardEntry& entry) {
       onTraceEnd(trace_id);
       break;
     }
-    case entries::TRACE_TIMEOUT:
-    case entries::TRACE_ABORT: {
+    case EntryType::TRACE_TIMEOUT:
+    case EntryType::TRACE_ABORT: {
       int64_t trace_id = entry.extra;
       if (trace_id != expected_trace_) {
         return;
       }
-      auto reason = entry.type == entries::TRACE_TIMEOUT
+      auto reason = type == EntryType::TRACE_TIMEOUT
           ? AbortReason::TIMEOUT
           : AbortReason::CONTROLLER_INITIATED;
 
@@ -151,15 +152,15 @@ void TraceLifecycleVisitor::visit(const StandardEntry& entry) {
       onTraceAbort(trace_id, reason);
       break;
     }
-    case entries::TRACE_BACKWARDS:
-    case entries::TRACE_START: {
+    case EntryType::TRACE_BACKWARDS:
+    case EntryType::TRACE_START: {
       onTraceStart(entry.extra, entry.matchid);
       if (hasDelegate()) {
         delegates_.back()->visit(entry);
       }
       break;
     }
-    case entries::LOGGER_PRIORITY: {
+    case EntryType::LOGGER_PRIORITY: {
       if (expected_trace_ == entry.extra) {
         thread_priority_ = std::make_unique<ScopedThreadPriority>(entry.callid);
       }

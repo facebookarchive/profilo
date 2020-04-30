@@ -35,7 +35,8 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeStandardEntry) {
   DeltaEncodingVisitor delta(print);
 
   delta.visit(StandardEntry{.id = 10,
-                            .type = TRACE_START,
+                            .type = static_cast<decltype(StandardEntry::type)>(
+                                EntryType::TRACE_START),
                             .timestamp = 123,
                             .tid = 0,
                             .callid = 1,
@@ -44,7 +45,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeStandardEntry) {
 
   delta.visit(StandardEntry{
       .id = 11,
-      .type = TRACE_END,
+      .type = static_cast<decltype(StandardEntry::type)>(EntryType::TRACE_END),
       .timestamp = 124,
       .tid = 1,
       .callid = 2,
@@ -65,7 +66,8 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeStandardEntryIntegerOverflow) {
 
   delta.visit(StandardEntry{
       .id = 10,
-      .type = TRACE_START,
+      .type =
+          static_cast<decltype(StandardEntry::type)>(EntryType::TRACE_START),
       .timestamp = 123,
       .tid = 0,
       .callid = 1,
@@ -75,7 +77,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeStandardEntryIntegerOverflow) {
 
   delta.visit(StandardEntry{
       .id = 11,
-      .type = TRACE_END,
+      .type = static_cast<decltype(StandardEntry::type)>(EntryType::TRACE_END),
       .timestamp = 124,
       .tid = 1,
       .callid = 2,
@@ -97,7 +99,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeFramesEntry) {
   int64_t frames[] = {1000, 4000, 2000};
   delta.visit(FramesEntry{
       .id = 10,
-      .type = STACK_FRAME,
+      .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 123,
       .tid = 0,
       .frames.values = frames,
@@ -116,18 +118,19 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
   PrintEntryVisitor print(stream);
   DeltaEncodingVisitor delta(print);
 
-  delta.visit(StandardEntry{.id = 10,
-                            .type = QPL_START,
-                            .timestamp = 123,
-                            .tid = 0,
-                            .callid = 65545, // 0xFFFF + 10
-                            .matchid = 2,
-                            .extra = 3});
+  delta.visit(StandardEntry{
+      .id = 10,
+      .type = static_cast<decltype(StandardEntry::type)>(EntryType::QPL_START),
+      .timestamp = 123,
+      .tid = 0,
+      .callid = 65545, // 0xFFFF + 10
+      .matchid = 2,
+      .extra = 3});
 
   uint8_t key[] = {'k', 'e', 'y'};
   delta.visit(BytesEntry{
       .id = 11,
-      .type = STRING_KEY,
+      .type = static_cast<decltype(BytesEntry::type)>(EntryType::STRING_KEY),
       .matchid = 10,
       .bytes.values = key,
       .bytes.size = 3,
@@ -136,24 +139,25 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
   uint8_t value[] = {'v', 'a', 'l', 'u', 'e'};
   delta.visit(BytesEntry{
       .id = 12,
-      .type = STRING_VALUE,
+      .type = static_cast<decltype(BytesEntry::type)>(EntryType::STRING_VALUE),
       .matchid = 11,
       .bytes.values = value,
       .bytes.size = 5,
   });
 
-  delta.visit(StandardEntry{.id = 13,
-                            .type = QPL_END,
-                            .timestamp = 124,
-                            .tid = 0,
-                            .callid = 65545,
-                            .matchid = 2,
-                            .extra = 3});
+  delta.visit(StandardEntry{
+      .id = 13,
+      .type = static_cast<decltype(StandardEntry::type)>(EntryType::QPL_END),
+      .timestamp = 124,
+      .tid = 0,
+      .callid = 65545,
+      .matchid = 2,
+      .extra = 3});
 
   int64_t frames[] = {1000, 2000, 3000};
   delta.visit(FramesEntry{
       .id = 14,
-      .type = STACK_FRAME,
+      .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 125,
       .tid = 0,
       .frames.values = frames,

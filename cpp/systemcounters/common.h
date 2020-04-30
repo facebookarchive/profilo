@@ -19,7 +19,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/entries/EntryType.h>
 
-using facebook::profilo::entries::COUNTER;
+using facebook::profilo::entries::EntryType;
 using facebook::profilo::entries::StandardEntry;
 
 namespace facebook {
@@ -34,7 +34,7 @@ __attribute__((always_inline)) static inline void logCounter(
     int64_t time) {
   logger.write(StandardEntry{
       .id = 0,
-      .type = COUNTER,
+      .type = static_cast<decltype(StandardEntry::type)>(EntryType::COUNTER),
       .timestamp = time,
       .tid = thread_id,
       .callid = counter_name,

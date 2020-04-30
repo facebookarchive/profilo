@@ -51,9 +51,10 @@ MultiTraceLifecycleVisitor::MultiTraceLifecycleVisitor(
       done_(false) {}
 
 void MultiTraceLifecycleVisitor::visit(const StandardEntry& entry) {
-  switch (entry.type) {
-    case entries::TRACE_BACKWARDS:
-    case entries::TRACE_START: {
+  auto type = static_cast<EntryType>(entry.type);
+  switch (type) {
+    case EntryType::TRACE_BACKWARDS:
+    case EntryType::TRACE_START: {
       int64_t trace_id = entry.extra;
       visitors_.emplace(
           trace_id,
@@ -63,15 +64,15 @@ void MultiTraceLifecycleVisitor::visit(const StandardEntry& entry) {
       visitors_.at(trace_id).visit(entry);
       consumed_traces_.insert(trace_id);
 
-      if (entry.type == entries::TRACE_BACKWARDS) {
+      if (type == EntryType::TRACE_BACKWARDS) {
         trace_backward_callback_(visitors_.at(trace_id));
       }
 
       break;
     }
-    case entries::TRACE_END:
-    case entries::TRACE_ABORT:
-    case entries::TRACE_TIMEOUT: {
+    case EntryType::TRACE_END:
+    case EntryType::TRACE_ABORT:
+    case EntryType::TRACE_TIMEOUT: {
       int64_t trace_id = entry.extra;
       auto visitor = visitors_.find(trace_id);
       if (visitor != visitors_.end()) {

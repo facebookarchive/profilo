@@ -49,7 +49,8 @@ class TestVisitor : public EntryVisitor {
 
 TEST(EntryCodegen, testPackUnpackStandardEntry) {
   StandardEntry input{.id = 10,
-                      .type = TRACE_START,
+                      .type = static_cast<decltype(StandardEntry::type)>(
+                          EntryType::TRACE_START),
                       .timestamp = 123,
                       .tid = 0,
                       .callid = 1,
@@ -74,7 +75,8 @@ TEST(EntryCodegen, testPackUnpackStandardEntry) {
 
 TEST(EntryCodegen, testPrintStandardEntry) {
   StandardEntry input{.id = 10,
-                      .type = TRACE_START,
+                      .type = static_cast<decltype(StandardEntry::type)>(
+                          EntryType::TRACE_START),
                       .timestamp = 123,
                       .tid = 0,
                       .callid = 1,
@@ -95,7 +97,7 @@ TEST(EntryCodegen, testPackUnpackBytesEntry) {
   uint8_t bytes[] = {'h', 'i', '!'};
   BytesEntry input{
       .id = 10,
-      .type = STRING_KEY,
+      .type = static_cast<decltype(BytesEntry::type)>(EntryType::STRING_KEY),
       .matchid = 1,
       .bytes.values = bytes,
       .bytes.size = 3,
@@ -122,7 +124,7 @@ TEST(EntryCodegen, testPrintBytesEntry) {
   uint8_t bytes[] = {'h', 'i', '!'};
   BytesEntry input{
       .id = 10,
-      .type = STRING_KEY,
+      .type = static_cast<decltype(BytesEntry::type)>(EntryType::STRING_KEY),
       .matchid = 1,
       .bytes.values = bytes,
       .bytes.size = 3,
@@ -142,7 +144,7 @@ TEST(EntryCodegen, testPackUnpackFramesEntry) {
   int64_t frames[] = {100, 200, 300};
   FramesEntry input{
       .id = 10,
-      .type = STACK_FRAME,
+      .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 123,
       .tid = 1,
       .frames.values = frames,
@@ -171,7 +173,7 @@ TEST(EntryCodegen, testPrintFramesEntry) {
   int64_t frames[] = {100, 200, 300};
   FramesEntry input{
       .id = 10,
-      .type = STACK_FRAME,
+      .type = static_cast<decltype(FramesEntry::type)>(EntryType::STACK_FRAME),
       .timestamp = 123,
       .tid = 1,
       .frames.values = frames,
