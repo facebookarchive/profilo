@@ -96,8 +96,7 @@ class ProfiloWriterListener : public RecordListener {
       case EVENT_TYPE_MAJOR_FAULTS: {
         profilo::Logger::get().write(StandardEntry{
             .id = 0,
-            .type = static_cast<decltype(StandardEntry::type)>(
-                EntryType::MAJOR_FAULT),
+            .type = EntryType::MAJOR_FAULT,
             .timestamp = ((int64_t)record.time()) + offset_,
             .tid = (int32_t)record.tid(),
             .callid = 0,
@@ -114,8 +113,7 @@ class ProfiloWriterListener : public RecordListener {
 
         Logger::get().write(StandardEntry{
             .id = 0,
-            .type = static_cast<decltype(StandardEntry::type)>(
-                EntryType::MINOR_FAULT),
+            .type = EntryType::MINOR_FAULT,
             .timestamp = ((int64_t)record.time()) + offset_,
             .tid = (int32_t)record.tid(),
             .callid = 0,
@@ -136,8 +134,7 @@ class ProfiloWriterListener : public RecordListener {
   virtual void onLost(const RecordLost& record) {
     Logger::get().write(StandardEntry{
         .id = 0,
-        .type = static_cast<decltype(StandardEntry::type)>(
-            EntryType::PERFEVENTS_LOST),
+        .type = EntryType::PERFEVENTS_LOST,
         .timestamp = monotonicTime(),
         .tid = threadID(),
         .callid = 0,

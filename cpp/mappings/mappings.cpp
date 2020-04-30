@@ -69,7 +69,7 @@ void logMemoryMappings(JNIEnv*, jobject) {
     FBLOGV("Logging mapping: %s", formatted_entry.c_str());
 
     auto mappingId = logger.write(StandardEntry{
-        .type = static_cast<decltype(StandardEntry::type)>(EntryType::MAPPING),
+        .type = EntryType::MAPPING,
         .tid = tid,
         .timestamp = time,
     });

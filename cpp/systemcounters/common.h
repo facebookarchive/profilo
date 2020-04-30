@@ -34,7 +34,7 @@ __attribute__((always_inline)) static inline void logCounter(
     int64_t time) {
   logger.write(StandardEntry{
       .id = 0,
-      .type = static_cast<decltype(StandardEntry::type)>(EntryType::COUNTER),
+      .type = EntryType::COUNTER,
       .timestamp = time,
       .tid = thread_id,
       .callid = counter_name,

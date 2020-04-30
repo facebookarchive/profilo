@@ -453,8 +453,8 @@ void SamplingProfiler::flushStackTraces(
         tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
       } else {
         StandardEntry entry{};
-        entry.type = static_cast<decltype(entry.type)>(
-            errorToTraceEntry(static_cast<StackCollectionRetcode>(slotState)));
+        entry.type =
+            errorToTraceEntry(static_cast<StackCollectionRetcode>(slotState));
         entry.timestamp = slot.time;
         entry.tid = tid;
         entry.extra = slot.profilerType;
@@ -474,8 +474,7 @@ void SamplingProfiler::flushStackTraces(
             StandardEntry entry{};
             entry.tid = tid;
             entry.timestamp = slot.time;
-            entry.type =
-                static_cast<decltype(entry.type)>(EntryType::JAVA_FRAME_NAME);
+            entry.type = EntryType::JAVA_FRAME_NAME;
             entry.extra = slot.frames[i];
             int32_t id = Logger::get().write(std::move(entry));
 

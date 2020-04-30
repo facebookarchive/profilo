@@ -36,7 +36,7 @@ static int32_t logAnnotation(
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = static_cast<decltype(StandardEntry::type)>(type);
+  entry.type = type;
 
   int32_t matchId = logger.write(std::move(entry));
   if (key != nullptr) {
@@ -77,8 +77,7 @@ static void logThreadPriority(Logger& logger, int32_t tid) {
 
   logger.write(StandardEntry{
       .id = 0,
-      .type = static_cast<decltype(StandardEntry::type)>(
-          EntryType::TRACE_THREAD_PRI),
+      .type = EntryType::TRACE_THREAD_PRI,
       .timestamp = monotonicTime(),
       .tid = tid,
       .callid = 0,

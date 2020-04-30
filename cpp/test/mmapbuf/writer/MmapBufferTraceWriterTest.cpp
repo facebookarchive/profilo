@@ -142,8 +142,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
   StandardEntry generateTraceBackwardsEntry() {
     return StandardEntry{
         .id = 0,
-        .type = static_cast<decltype(StandardEntry::type)>(
-            EntryType::TRACE_BACKWARDS),
+        .type = EntryType::TRACE_BACKWARDS,
         .timestamp = kTraceRecollectionTimestamp,
         .tid = threadID(),
         .callid = 0,

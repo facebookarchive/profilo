@@ -49,7 +49,7 @@ void loggerWrite(
     int64_t timestamp = monotonicTime()) {
   logger.write(StandardEntry{
       .id = 0,
-      .type = static_cast<decltype(StandardEntry::type)>(type),
+      .type = type,
       .timestamp = timestamp,
       .tid = threadID(),
       .callid = callid,
@@ -67,7 +67,7 @@ void loggerWriteStringAnnotation(
     int64_t extra = 0,
     int64_t timestamp = monotonicTime()) {
   StandardEntry annotationEntry{};
-  annotationEntry.type = static_cast<decltype(annotationEntry.type)>(type);
+  annotationEntry.type = type;
   annotationEntry.tid = threadID();
   annotationEntry.timestamp = timestamp;
   annotationEntry.callid = callid;

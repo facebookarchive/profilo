@@ -39,7 +39,7 @@ void internal_mark_start(
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = static_cast<decltype(entry.type)>(EntryType::MARK_PUSH);
+  entry.type = EntryType::MARK_PUSH;
   int32_t id = logger.write(std::move(entry));
   size_t msg_len = len == 0 ? strlen(msg) : len;
 
@@ -56,7 +56,7 @@ void internal_mark_end(const char* provider) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = static_cast<decltype(entry.type)>(EntryType::MARK_POP);
+  entry.type = EntryType::MARK_POP;
   logger.write(std::move(entry));
 }
 
@@ -69,7 +69,7 @@ void internal_log_classload_start(const char* provider) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = static_cast<decltype(entry.type)>(EntryType::CLASS_LOAD_START);
+  entry.type = EntryType::CLASS_LOAD_START;
   entry.extra = 0;
   logger.write(std::move(entry));
 }
@@ -83,7 +83,7 @@ void internal_log_classload_end(const char* provider, int64_t classid) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = static_cast<decltype(entry.type)>(EntryType::CLASS_LOAD_END);
+  entry.type = EntryType::CLASS_LOAD_END;
   entry.extra = classid;
   logger.write(std::move(entry));
 }
@@ -97,7 +97,7 @@ void internal_log_classload_failed(const char* provider) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = static_cast<decltype(entry.type)>(EntryType::CLASS_LOAD_FAILED);
+  entry.type = EntryType::CLASS_LOAD_FAILED;
   entry.extra = 0;
   logger.write(std::move(entry));
 }

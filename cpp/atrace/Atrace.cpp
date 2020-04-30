@@ -128,7 +128,7 @@ void log_systrace(const void* buf, size_t count) {
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
-  entry.type = static_cast<decltype(entry.type)>(type);
+  entry.type = type;
 
   int32_t id = logger.write(std::move(entry));
   if (type != EntryType::MARK_POP) {
