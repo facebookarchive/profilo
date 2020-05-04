@@ -318,10 +318,10 @@ bool runJavaCompatibilityCheckInternal(
         try {
           tracer->startTracing();
 
-          std::array<JavaFrame, kStackSize> cppStack2;
-          auto cppStackSize2 = getCppStackTrace(tracer, cppStack2);
+          std::array<JavaFrame, kStackSize> cppStack;
+          auto cppStackSize = getCppStackTrace(tracer, cppStack);
 
-          if (compareStackTraces(cppStack2, cppStackSize2, javaStack)) {
+          if (compareStackTraces(cppStack, cppStackSize, javaStack)) {
             FBLOGV("compareStackTraces returned true");
             forkjail::ForkJail::real_exit(kExitCodeSuccess);
           }
