@@ -86,6 +86,7 @@ fb_core_android_library(
     required_for_source_only_abi = True,
     visibility = [
         profilo_path("..."),
+        "//fbandroid/javatests/com/facebook/cloudseeder:",
         "//fbandroid/javatests/com/facebook/cloudseeder:cloudseeder",
         "//fbandroid/javatests/com/facebook/debug/fps:",
         "//fbandroid/javatests/com/facebook/stall:",
@@ -163,6 +164,7 @@ fb_core_android_library(
         "//fbandroid/java/com/facebook/tools/dextr/...",
         "//fbandroid/java/com/facebook/video/profiler/systrace:systrace",
         "//fbandroid/java/com/instagram/android/...",
+        "//fbandroid/javatests/com/facebook/cloudseeder:",
         "//fbandroid/javatests/com/facebook/cloudseeder:cloudseeder",
         "//fbandroid/javatests/com/facebook/tools/dextr/...",
         profilo_path("..."),
