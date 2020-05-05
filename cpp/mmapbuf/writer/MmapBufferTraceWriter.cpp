@@ -173,7 +173,6 @@ bool copyBufferEntries(TraceBuffer& source, TraceBuffer& dest) {
   TraceBuffer::Cursor cursor = source.currentTail(0);
   alignas(4) Packet packet;
   uint32_t processed_count = 0;
-  auto capacity = source.capacity();
   while (source.tryRead(packet, cursor)) {
     Packet writePacket = packet; // copy
     dest.write(writePacket);
@@ -182,7 +181,7 @@ bool copyBufferEntries(TraceBuffer& source, TraceBuffer& dest) {
       break;
     }
   }
-  return processed_count > capacity / 2;
+  return processed_count > 0;
 }
 } // namespace
 
@@ -254,8 +253,7 @@ int64_t MmapBufferTraceWriter::writeTrace(
         sizeof(MmapBufferPrefix));
     bool ok = copyBufferEntries(*historicBuffer, *bufferHolder);
     if (!ok) {
-      throw std::runtime_error(
-          "Unable to read the file-backed buffer. More than 50% of data is corrupted");
+      throw std::runtime_error("Unable to read the file-backed buffer.");
     }
   }
 

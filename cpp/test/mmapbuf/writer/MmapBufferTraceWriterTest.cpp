@@ -178,13 +178,17 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
   }
 
   void writeTraceWithRandomEntries(int records_count) {
+    writeTraceWithRandomEntries(records_count, records_count);
+  }
+
+  void writeTraceWithRandomEntries(int records_count, int buffer_size) {
     MmapBufferManager bufManager{};
     MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
     bool res = bufManager.allocateBuffer(records_count, dumpPath(), 1, 1);
     bufManager.updateHeader(0, 0, 0, kTraceId);
     ASSERT_EQ(res, true) << "Unable to allocate the buffer";
     TraceBufferHolder ringBuffer = TraceBuffer::allocateAt(
-        records_count, bufManagerAccessor.mmapBufferPointer());
+        buffer_size, bufManagerAccessor.mmapBufferPointer());
     writeRandomEntries(*ringBuffer, records_count);
     int msync_res = msync(
         bufManagerAccessor.mmapPointer(), bufManagerAccessor.size(), MS_SYNC);
@@ -269,6 +273,28 @@ TEST_F(
 
   traceWriter.writeTrace(
       dumpPath(), kQplId, "test", kTraceRecollectionTimestamp);
+}
+
+TEST_F(
+    MmapBufferTraceWriterTest,
+    testExceptionIsThrownWhenNothingReadFromBuffer) {
+  using ::testing::_;
+  writeTraceWithRandomEntries(0, 1);
+
+  std::string testFolder(traceFolderPath());
+  std::string testTracePrefix(kTracePrefix);
+  auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
+  MmapBufferTraceWriter traceWriter(testFolder, testTracePrefix, mockCallbacks);
+
+  bool caughtException = false;
+  try {
+    traceWriter.writeTrace(
+        dumpPath(), kQplId, "test", kTraceRecollectionTimestamp);
+  } catch (std::runtime_error& e) {
+    ASSERT_STREQ(e.what(), "Unable to read the file-backed buffer.");
+    caughtException = true;
+  }
+  ASSERT_TRUE(caughtException);
 }
 
 } // namespace writer
