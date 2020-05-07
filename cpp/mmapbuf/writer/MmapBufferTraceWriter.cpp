@@ -233,8 +233,8 @@ int64_t MmapBufferTraceWriter::writeTrace(
 
   auto entriesCount = mapBufferPrefix->header.size;
   // Number of additional records we need to log in addition to entries from the
-  // buffer file.
-  constexpr auto kServiceRecordCount = 11;
+  // buffer file + some buffer for long string entries.
+  constexpr auto kServiceRecordCount = 11 + 10 /* extra buffer */;
 
   TraceBufferHolder bufferHolder =
       TraceBuffer::allocate(entriesCount + kServiceRecordCount);

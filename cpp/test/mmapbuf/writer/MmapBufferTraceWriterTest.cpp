@@ -184,8 +184,9 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
   void writeTraceWithRandomEntries(int records_count, int buffer_size) {
     MmapBufferManager bufManager{};
     MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
-    bool res = bufManager.allocateBuffer(records_count, dumpPath(), 1, 1);
+    bool res = bufManager.allocateBuffer(buffer_size, dumpPath(), 1, 1);
     bufManager.updateHeader(0, 0, 0, kTraceId);
+    bufManager.updateId("272c3f80-f076-5a89-e265-60dcf407373b");
     ASSERT_EQ(res, true) << "Unable to allocate the buffer";
     TraceBufferHolder ringBuffer = TraceBuffer::allocateAt(
         buffer_size, bufManagerAccessor.mmapBufferPointer());
