@@ -43,6 +43,7 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
       fbjni::alias_ref<jclass>,
       std::string trace_folder,
       std::string trace_prefix,
+      int32_t trace_flags,
       fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks);
 
   static void registerNatives();
@@ -64,11 +65,13 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
   MmapBufferTraceWriter(
       std::string trace_folder,
       std::string trace_prefix,
+      int32_t trace_flags,
       std::shared_ptr<TraceCallbacks> callbacks);
 
  private:
   std::string trace_folder_;
   std::string trace_prefix_;
+  int32_t trace_flags_;
   std::shared_ptr<TraceCallbacks> callbacks_;
 };
 

@@ -245,7 +245,8 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
-  MmapBufferTraceWriter traceWriter(testFolder, testTracePrefix, mockCallbacks);
+  MmapBufferTraceWriter traceWriter(
+      testFolder, testTracePrefix, 0, mockCallbacks);
 
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0, _));
   EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId));
@@ -268,7 +269,8 @@ TEST_F(
   std::string testTracePrefix(kTracePrefix);
 
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
-  MmapBufferTraceWriter traceWriter(testFolder, testTracePrefix, mockCallbacks);
+  MmapBufferTraceWriter traceWriter(
+      testFolder, testTracePrefix, 0, mockCallbacks);
 
   EXPECT_CALL(*mockCallbacks, onTraceAbort(kTraceId, AbortReason::UNKNOWN));
 
@@ -285,7 +287,8 @@ TEST_F(
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
-  MmapBufferTraceWriter traceWriter(testFolder, testTracePrefix, mockCallbacks);
+  MmapBufferTraceWriter traceWriter(
+      testFolder, testTracePrefix, 0, mockCallbacks);
 
   bool caughtException = false;
   try {

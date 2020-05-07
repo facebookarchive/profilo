@@ -45,6 +45,7 @@ void loggerWrite(
     Logger& logger,
     EntryType type,
     int32_t callid,
+    int32_t matchid,
     int64_t extra,
     int64_t timestamp = monotonicTime()) {
   logger.write(StandardEntry{
@@ -53,7 +54,7 @@ void loggerWrite(
       .timestamp = timestamp,
       .tid = threadID(),
       .callid = callid,
-      .matchid = 0,
+      .matchid = matchid,
       .extra = extra,
   });
 }
@@ -188,9 +189,11 @@ bool copyBufferEntries(TraceBuffer& source, TraceBuffer& dest) {
 MmapBufferTraceWriter::MmapBufferTraceWriter(
     std::string trace_folder,
     std::string trace_prefix,
+    int32_t trace_flags,
     std::shared_ptr<TraceCallbacks> callbacks)
     : trace_folder_(trace_folder),
       trace_prefix_(trace_prefix),
+      trace_flags_(trace_flags),
       callbacks_(callbacks) {}
 
 int64_t MmapBufferTraceWriter::nativeWriteTrace(
@@ -244,7 +247,8 @@ int64_t MmapBufferTraceWriter::writeTrace(
 
   // It's not technically backwards trace but that's what we use to denote Black
   // Box traces.
-  loggerWrite(logger, EntryType::TRACE_BACKWARDS, 0, trace_id, timestamp);
+  loggerWrite(
+      logger, EntryType::TRACE_BACKWARDS, 0, trace_flags_, trace_id, timestamp);
 
   {
     // Copying entries from the saved buffer to the new one.
@@ -261,18 +265,21 @@ int64_t MmapBufferTraceWriter::writeTrace(
       logger,
       EntryType::QPL_START,
       qpl_marker_id,
+      0,
       kTriggerEventFlag,
       timestamp);
   loggerWrite(
       logger,
       EntryType::TRACE_ANNOTATION,
       QuickLogConstants::APP_VERSION_CODE,
+      0,
       mapBufferPrefix->header.versionCode,
       timestamp);
   loggerWrite(
       logger,
       EntryType::TRACE_ANNOTATION,
       QuickLogConstants::CONFIG_ID,
+      0,
       mapBufferPrefix->header.configId,
       timestamp);
   loggerWriteTraceStringAnnotation(
@@ -282,7 +289,7 @@ int64_t MmapBufferTraceWriter::writeTrace(
       std::string(mapBufferPrefix->header.sessionId));
   loggerWriteQplTriggerAnnotation(
       logger, qpl_marker_id, "type", type, timestamp);
-  loggerWrite(logger, EntryType::TRACE_END, 0, trace_id, timestamp);
+  loggerWrite(logger, EntryType::TRACE_END, 0, 0, trace_id, timestamp);
 
   TraceWriter writer(
       std::move(trace_folder_),
@@ -306,10 +313,12 @@ MmapBufferTraceWriter::initHybrid(
     fbjni::alias_ref<jclass>,
     std::string trace_folder,
     std::string trace_prefix,
+    int32_t trace_flags,
     fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks) {
   return makeCxxInstance(
       trace_folder,
       trace_prefix,
+      trace_flags,
       std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks));
 }
 

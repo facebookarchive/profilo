@@ -15,6 +15,7 @@ package com.facebook.profilo.mmapbuf.writer;
 
 import com.facebook.jni.HybridData;
 import com.facebook.jni.annotations.DoNotStrip;
+import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import com.facebook.soloader.SoLoader;
 
@@ -31,12 +32,15 @@ public class MmapBufferTraceWriter {
   public MmapBufferTraceWriter(
       String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks) {
     mCallbacks = callbacks;
-    mHybridData = initHybrid(traceFolder, tracePrefix, mCallbacks);
+    mHybridData = initHybrid(traceFolder, tracePrefix, Trace.FLAG_MEMORY_ONLY, mCallbacks);
   }
 
   @DoNotStrip
   private static native HybridData initHybrid(
-      String traceFolder, String tracePrefix, NativeTraceWriterCallbacks mCallbacks);
+      String traceFolder,
+      String tracePrefix,
+      int traceFlags,
+      NativeTraceWriterCallbacks mCallbacks);
 
   @DoNotStrip
   public native long nativeWriteTrace(String dumpPath, int qplMarkerId, String tag);
