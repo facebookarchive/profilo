@@ -657,6 +657,15 @@ public final class TraceOrchestrator
   }
 
   /**
+   * Temporary accessor to Config Provider to experiment with Init Configuration file.
+   *
+   * @return Current Config Provider
+   */
+  public synchronized ConfigProvider getConfigProvider() {
+    return mConfigProvider;
+  }
+
+  /**
    * Sets a new config provider and deletes all existing trace files.
    *
    * @return true if the cleanup succeeded, false otherwise
