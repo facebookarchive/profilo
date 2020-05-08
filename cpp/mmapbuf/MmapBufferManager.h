@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "MmapBufferPrefix.h"
+#include <profilo/mmapbuf/header/MmapBufferHeader.h>
 
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
@@ -30,6 +30,8 @@ namespace fbjni = facebook::jni;
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
+
+using namespace facebook::profilo::mmapbuf::header;
 
 class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
  public:

@@ -1,0 +1,17 @@
+load("@fbsource//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
+load("@fbsource//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+
+fb_core_android_library(
+    name = "header_reader",
+    srcs = glob(["*.java"]),
+    labels = ["supermodule:android/default/loom.core"],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("cpp/mmapbuf/header:reader"),
+        profilo_path("deps/fbjni:fbjni-java"),
+        profilo_path("deps/jsr-305:jsr-305"),
+        profilo_path("deps/soloader:soloader"),
+    ],
+)

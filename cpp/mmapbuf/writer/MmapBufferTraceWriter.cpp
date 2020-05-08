@@ -27,7 +27,7 @@
 
 #include <profilo/entries/EntryType.h>
 #include <profilo/logger/buffer/RingBuffer.h>
-#include <profilo/mmapbuf/MmapBufferPrefix.h>
+#include <profilo/mmapbuf/header/MmapBufferHeader.h>
 #include <profilo/writer/TraceWriter.h>
 #include <profilo/writer/trace_headers.h>
 #include <util/common.h>
@@ -36,6 +36,8 @@ namespace facebook {
 namespace profilo {
 namespace mmapbuf {
 namespace writer {
+
+using namespace facebook::profilo::mmapbuf::header;
 
 namespace {
 
