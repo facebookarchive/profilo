@@ -341,14 +341,4 @@ public class FileManager {
     mFileManagerStatistics = new FileManagerStatistics();
     return fStats;
   }
-
-  @Nullable
-  public static File getMmapBufferFolderIfExists(Context context) {
-    File baseFolder = new File(context.getFilesDir(), PROFILO_FOLDER);
-    File mmapFilesFolder = new File(baseFolder, MMAP_BUFFER_FOLDER);
-    if (!mmapFilesFolder.exists()) {
-      return null;
-    }
-    return mmapFilesFolder;
-  }
 }

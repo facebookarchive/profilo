@@ -10,6 +10,7 @@ fb_xplat_cxx_library(
     header_namespace = "profilo/mmapbuf",
     exported_headers = [
         "MmapBufferManager.h",
+        "MmapBufferPrefix.h",
     ],
     allow_jni_merging = True,
     compiler_flags = [
@@ -28,8 +29,5 @@ fb_xplat_cxx_library(
         profilo_path("cpp:profilo"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
-    ],
-    exported_deps = [
-        profilo_path("cpp/mmapbuf/header:header"),
     ],
 )

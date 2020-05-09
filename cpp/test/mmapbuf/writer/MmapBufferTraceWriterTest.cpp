@@ -16,7 +16,7 @@
 #include <profilo/entries/Entry.h>
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
-#include <profilo/mmapbuf/header/MmapBufferHeader.h>
+#include <profilo/mmapbuf/MmapBufferPrefix.h>
 #include <profilo/mmapbuf/writer/MmapBufferTraceWriter.h>
 #include <profilo/writer/DeltaEncodingVisitor.h>
 #include <profilo/writer/PrintEntryVisitor.h>
@@ -25,7 +25,6 @@
 
 using namespace facebook::profilo::logger;
 using namespace facebook::profilo::entries;
-using namespace facebook::profilo::mmapbuf::header;
 
 namespace test = folly::test;
 namespace fs = boost::filesystem;
