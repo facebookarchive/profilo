@@ -7,6 +7,7 @@ profilo_cxx_test(
     ],
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
@@ -29,6 +30,7 @@ profilo_cxx_test(
     ],
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],

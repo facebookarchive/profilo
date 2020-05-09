@@ -13,8 +13,8 @@ fb_xplat_cxx_library(
     header_namespace = "profilo/threadmetadata",
     allow_jni_merging = True,
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
     ],
     labels = ["supermodule:android/default/loom.core"],

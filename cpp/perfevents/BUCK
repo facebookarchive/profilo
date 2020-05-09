@@ -47,7 +47,6 @@ fb_xplat_cxx_library(
     ]),
     allow_jni_merging = True,
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
         "-frtti",
         "-O3",

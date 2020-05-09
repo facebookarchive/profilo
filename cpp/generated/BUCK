@@ -8,6 +8,7 @@ fb_xplat_cxx_library(
     exported_headers = glob(["*.h"]),
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-ffunction-sections",
     ],
     force_static = True,

@@ -11,13 +11,13 @@ fb_xplat_cxx_library(
         "NativeTraceWriter.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    force_static = True,
     labels = ["supermodule:android/default/loom.core"],
+    preferred_linkage = "static",
     visibility = [
         profilo_path("..."),
     ],
@@ -42,13 +42,13 @@ fb_xplat_cxx_library(
         "NativeTraceWriterCallbacks.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    force_static = True,
     labels = ["supermodule:android/default/loom.core"],
+    preferred_linkage = "static",
     visibility = [
         profilo_path("..."),
     ],

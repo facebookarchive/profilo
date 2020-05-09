@@ -11,8 +11,8 @@ fb_xplat_cxx_library(
         "PrintEntryVisitor.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     labels = ["supermodule:android/default/loom.core"],
@@ -40,8 +40,8 @@ fb_xplat_cxx_library(
         "DeltaEncodingVisitor.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
         # no __builtin_sub/add_overflow on gcc 4.9, so let's do this instead
         "-fwrapv",
@@ -70,8 +70,8 @@ fb_xplat_cxx_library(
         "TimestampTruncatingVisitor.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     labels = ["supermodule:android/default/loom.core"],
@@ -95,8 +95,8 @@ fb_xplat_cxx_library(
         "StackTraceInvertingVisitor.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     labels = ["supermodule:android/default/loom.core"],
@@ -122,8 +122,8 @@ fb_xplat_cxx_library(
         "PacketReassembler.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     labels = ["supermodule:android/default/loom.core"],
@@ -155,8 +155,8 @@ fb_xplat_cxx_library(
         "TraceWriter.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     labels = ["supermodule:android/default/loom.core"],
@@ -196,8 +196,8 @@ fb_xplat_cxx_library(
         "trace_backwards.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     labels = ["supermodule:android/default/loom.core"],
@@ -222,8 +222,8 @@ fb_xplat_cxx_library(
         "trace_headers.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
     labels = ["supermodule:android/default/loom.core"],

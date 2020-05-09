@@ -6,8 +6,8 @@ profilo_cxx_binary(
         "stress_test.cpp",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-fPIE",
         "-DLOG_TAG=\"perfevents\"",
         "-g",

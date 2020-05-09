@@ -9,8 +9,8 @@ fb_xplat_cxx_library(
         "PacketLogger.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
@@ -40,8 +40,8 @@ fb_xplat_cxx_library(
         "PacketLogger.h",
     ],
     compiler_flags = [
-        "-fvisibility=hidden",
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-O3",
         "-DLOG_TAG=\"Profilo\"",

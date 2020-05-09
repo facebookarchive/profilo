@@ -14,6 +14,7 @@ fb_xplat_cxx_library(
     allow_jni_merging = True,
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/atrace\"",
     ],

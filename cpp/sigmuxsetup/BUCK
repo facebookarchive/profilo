@@ -9,6 +9,7 @@ fb_xplat_cxx_library(
     ],
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
         "-Wall",
     ],

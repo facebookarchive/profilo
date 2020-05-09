@@ -17,6 +17,7 @@ fb_xplat_cxx_library(
     allow_jni_merging = False,
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
     ],
     force_static = True,
@@ -45,6 +46,7 @@ fb_xplat_cxx_library(
     allow_jni_merging = False,
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-std=gnu++14",
     ],
     force_static = True,
@@ -70,6 +72,7 @@ fb_xplat_cxx_library(
     allow_jni_merging = True,
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo\"",
         "-std=gnu++14",
         "-O3",
@@ -103,6 +106,7 @@ fb_xplat_cxx_library(
     allow_jni_merging = True,
     compiler_flags = [
         "-fexceptions",
+        "-frtti",
         "-DLOG_TAG=\"Profilo\"",
         "-std=gnu++14",
     ],
