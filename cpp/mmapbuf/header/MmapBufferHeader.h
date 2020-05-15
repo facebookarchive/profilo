@@ -23,6 +23,7 @@
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
+namespace header {
 
 constexpr static uint64_t kMagic = 0x306c3166307270; // pr0f1l0
 constexpr static uint64_t kVersion = 4;
@@ -93,6 +94,7 @@ struct check_size_buf_prefix_ {
   check_size_hdr<MmapBufferPrefix> check;
 };
 
+} // namespace header
 } // namespace mmapbuf
 } // namespace profilo
 } // namespace facebook
