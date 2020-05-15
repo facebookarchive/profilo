@@ -181,7 +181,7 @@ enum StatFileType : int8_t {
   SCHED = 1 << 1,
 };
 
-static const std::array<int32_t, 3> kFileStats = {
+static const std::array<int32_t, 3> kFileStats = {{
     /*STAT*/ StatType::CPU_TIME | StatType::STATE | StatType::MAJOR_FAULTS |
         StatType::CPU_NUM | StatType::KERNEL_CPU_TIME | StatType::MINOR_FAULTS |
         StatType::THREAD_PRIORITY,
@@ -190,7 +190,7 @@ static const std::array<int32_t, 3> kFileStats = {
     /*SCHED*/ StatType::NR_VOLUNTARY_SWITCHES |
         StatType::NR_INVOLUNTARY_SWITCHES | StatType::IOWAIT_SUM |
         StatType::IOWAIT_COUNT,
-};
+}};
 
 inline ThreadState convertCharToStateEnum(char stateChar) {
   switch (stateChar) {
