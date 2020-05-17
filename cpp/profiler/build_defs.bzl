@@ -7,6 +7,9 @@ def unwindc_tracer_library(version):
 
     fb_xplat_cxx_library(
         name = "unwindc-tracer-{}".format(version),
+        srcs = [
+            "ArtUnwindcTracer.cpp",
+        ],
         headers = [
             "ArtUnwindcTracer.h",
             "unwindc/runtime.h",
@@ -28,6 +31,7 @@ def unwindc_tracer_library(version):
             "-DANDROID_VERSION_{}".format(version_num),
         ],
         force_static = True,
+        labels = ["supermodule:android/default/loom.core"],
         platform_headers = [
             ("^android-x86", {
                 # intentionally also covers x86_64
@@ -41,9 +45,6 @@ def unwindc_tracer_library(version):
                 # none-android platforms still need a header, any header, to build
                 "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),
             }),
-        ],
-        srcs = [
-            "ArtUnwindcTracer.cpp",
         ],
         preprocessor_flags = [
             "-DANDROID_NAMESPACE=android_{}".format(version_num),
