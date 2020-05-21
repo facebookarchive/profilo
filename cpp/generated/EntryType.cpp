@@ -1,4 +1,4 @@
-// @generated SignedSource<<ada2e6a0fa74a2432bd02aa61f9f05ff>>
+// @generated SignedSource<<78318a3b94021de54066d021eb55bf71>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -105,6 +105,9 @@ const char* to_string(EntryType type) {
     case EntryType::MAPPING: return "MAPPING";
     case EntryType::LOGGER_PRIORITY: return "LOGGER_PRIORITY";
     case EntryType::CONDITIONAL_UPLOAD_RATE: return "CONDITIONAL_UPLOAD_RATE";
+    case EntryType::NATIVE_ALLOC: return "NATIVE_ALLOC";
+    case EntryType::NATIVE_FREE: return "NATIVE_FREE";
+    case EntryType::NATIVE_ALLOC_FAILURE: return "NATIVE_ALLOC_FAILURE";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

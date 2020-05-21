@@ -1,4 +1,4 @@
-// @generated SignedSource<<b94f544ad66c7c1404ac82473101e8f0>>
+// @generated SignedSource<<997028e94e721c306cc2f380a6dd9297>>
 
 #pragma once
 
@@ -102,6 +102,9 @@ enum class EntryType {
   MAPPING = 93,
   LOGGER_PRIORITY = 94,
   CONDITIONAL_UPLOAD_RATE = 95,
+  NATIVE_ALLOC = 96,
+  NATIVE_FREE = 97,
+  NATIVE_ALLOC_FAILURE = 98,
 };
 
 

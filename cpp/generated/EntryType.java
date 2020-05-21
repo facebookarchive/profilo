@@ -1,4 +1,4 @@
-// @generated SignedSource<<381129eb955cb9fbce608024120cceec>>
+// @generated SignedSource<<1dce5820861d0d45dc31ebf84446c2bc>>
 
 package com.facebook.profilo.entries;
 
@@ -100,6 +100,9 @@ public class EntryType {
   public static final int MAPPING = 93;
   public static final int LOGGER_PRIORITY = 94;
   public static final int CONDITIONAL_UPLOAD_RATE = 95;
+  public static final int NATIVE_ALLOC = 96;
+  public static final int NATIVE_FREE = 97;
+  public static final int NATIVE_ALLOC_FAILURE = 98;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -198,5 +201,8 @@ public class EntryType {
     "MAPPING",
     "LOGGER_PRIORITY",
     "CONDITIONAL_UPLOAD_RATE",
+    "NATIVE_ALLOC",
+    "NATIVE_FREE",
+    "NATIVE_ALLOC_FAILURE",
   };
 }
