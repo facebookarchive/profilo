@@ -20,8 +20,6 @@ unwindc_tracer_library("8.0.0")
 
 unwindc_tracer_library("8.1.0")
 
-unwindc_tracer_library("9.0.0")
-
 fb_xplat_cxx_library(
     name = "constants",
     header_namespace = "profiler",
@@ -71,7 +69,6 @@ fb_xplat_cxx_library(
         ":unwindc-tracer-7.1.2",
         ":unwindc-tracer-8.0.0",
         ":unwindc-tracer-8.1.0",
-        ":unwindc-tracer-9.0.0",
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
         profilo_path("deps/forkjail:forkjail"),
@@ -253,7 +250,6 @@ fb_xplat_cxx_library(
         ":unwindc-tracer-7.1.2",
         ":unwindc-tracer-8.0.0",
         ":unwindc-tracer-8.1.0",
-        ":unwindc-tracer-9.0.0",
         profilo_path("cpp:constants"),
         profilo_path("cpp:profilo"),
         profilo_path("cpp:providers"),
