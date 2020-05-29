@@ -26,7 +26,7 @@ namespace mmapbuf {
 namespace header {
 
 constexpr static uint64_t kMagic = 0x306c3166307270; // pr0f1l0
-constexpr static uint64_t kVersion = 4;
+constexpr static uint64_t kVersion = 5;
 
 //
 // Static header for primary buffer verification.
@@ -53,12 +53,8 @@ struct __attribute__((packed)) alignas(8) MmapBufferHeader {
   uint32_t size;
   // Currently turned on set of providers.
   int32_t providers;
-  // Long context for regular traces.
-  int32_t longContext;
-  // Trace ids will reflect simultaneous traces running from different
-  // controllers.
-  int64_t normalTraceId;
-  int64_t inMemoryTraceId;
+  int64_t longContext;
+  int64_t traceId;
   char sessionId[kSessionIdLength];
 };
 

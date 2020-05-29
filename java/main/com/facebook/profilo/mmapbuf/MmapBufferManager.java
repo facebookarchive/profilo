@@ -125,8 +125,7 @@ public class MmapBufferManager {
   private native boolean nativeAllocateBuffer(int size, String path, int buildId, long configId);
 
   @DoNotStrip
-  public native void nativeUpdateHeader(
-      int providers, int trigger, long normalTraceId, long inMemoryTraceId);
+  public native void nativeUpdateHeader(int providers, long longContext, long traceId);
 
   public native void nativeUpdateId(String sessionId);
 

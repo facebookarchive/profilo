@@ -186,7 +186,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     MmapBufferManager bufManager{};
     MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
     bool res = bufManager.allocateBuffer(buffer_size, dumpPath(), 1, 1);
-    bufManager.updateHeader(0, 0, 0, kTraceId);
+    bufManager.updateHeader(0, kQplId, kTraceId);
     bufManager.updateId("272c3f80-f076-5a89-e265-60dcf407373b");
     ASSERT_EQ(res, true) << "Unable to allocate the buffer";
     TraceBufferHolder ringBuffer = TraceBuffer::allocateAt(
@@ -252,8 +252,7 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0, _));
   EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId));
 
-  traceWriter.writeTrace(
-      dumpPath(), kQplId, "test", kTraceRecollectionTimestamp);
+  traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
 }
@@ -275,8 +274,7 @@ TEST_F(
 
   EXPECT_CALL(*mockCallbacks, onTraceAbort(kTraceId, AbortReason::UNKNOWN));
 
-  traceWriter.writeTrace(
-      dumpPath(), kQplId, "test", kTraceRecollectionTimestamp);
+  traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
 }
 
 TEST_F(
@@ -293,8 +291,7 @@ TEST_F(
 
   bool caughtException = false;
   try {
-    traceWriter.writeTrace(
-        dumpPath(), kQplId, "test", kTraceRecollectionTimestamp);
+    traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
   } catch (std::runtime_error& e) {
     ASSERT_STREQ(e.what(), "Unable to read the file-backed buffer.");
     caughtException = true;

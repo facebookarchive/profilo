@@ -43,5 +43,5 @@ public class MmapBufferTraceWriter {
       NativeTraceWriterCallbacks mCallbacks);
 
   @DoNotStrip
-  public native long nativeWriteTrace(String dumpPath, int qplMarkerId, String tag);
+  public native long nativeWriteTrace(String dumpPath, String tag);
 }

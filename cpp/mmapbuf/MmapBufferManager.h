@@ -57,11 +57,7 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
   void deallocateBuffer();
 
   // Updates current tracing state
-  void updateHeader(
-      int32_t providers,
-      int32_t long_context,
-      int64_t normal_trace_id,
-      int64_t memory_trace_id);
+  void updateHeader(int32_t providers, int64_t long_context, int64_t trace_id);
 
   void updateId(const std::string& id);
 

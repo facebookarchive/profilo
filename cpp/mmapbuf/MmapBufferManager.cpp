@@ -105,17 +105,15 @@ void MmapBufferManager::deallocateBuffer() {
 
 void MmapBufferManager::updateHeader(
     int32_t providers,
-    int32_t long_context,
-    int64_t normal_trace_id,
-    int64_t memory_trace_id) {
+    int64_t long_context,
+    int64_t trace_id) {
   MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
   if (bufferPrefix == nullptr) {
     return;
   }
   bufferPrefix->header.providers = providers;
   bufferPrefix->header.longContext = long_context;
-  bufferPrefix->header.normalTraceId = normal_trace_id;
-  bufferPrefix->header.inMemoryTraceId = memory_trace_id;
+  bufferPrefix->header.traceId = trace_id;
 }
 
 void MmapBufferManager::updateId(const std::string& id) {

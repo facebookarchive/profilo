@@ -84,18 +84,7 @@ class MmapBufferHeaderReader
       return 0;
     }
 
-    // No trace was active when process died so the buffer is not useful.
-    if (header->header.normalTraceId == 0 &&
-        header->header.inMemoryTraceId == 0) {
-      return 0;
-    }
-
-    int64_t trace_id = header->header.normalTraceId;
-    if (header->header.inMemoryTraceId != 0) {
-      trace_id = header->header.inMemoryTraceId;
-    }
-
-    return trace_id;
+    return header->header.traceId;
   }
 
   static void registerNatives() {

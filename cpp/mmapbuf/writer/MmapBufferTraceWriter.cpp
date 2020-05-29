@@ -200,14 +200,12 @@ MmapBufferTraceWriter::MmapBufferTraceWriter(
 
 int64_t MmapBufferTraceWriter::nativeWriteTrace(
     const std::string& dump_path,
-    int32_t qpl_marker_id,
     const std::string& type) {
-  return writeTrace(dump_path, qpl_marker_id, type);
+  return writeTrace(dump_path, type);
 }
 
 int64_t MmapBufferTraceWriter::writeTrace(
     const std::string& dump_path,
-    int32_t qpl_marker_id,
     const std::string& type,
     uint64_t timestamp) {
   BufferFileMapHolder bufferFileMap(dump_path);
@@ -225,16 +223,14 @@ int64_t MmapBufferTraceWriter::writeTrace(
     return 0;
   }
 
-  // No trace was active when process died so the buffer is not useful.
-  if (mapBufferPrefix->header.normalTraceId == 0 &&
-      mapBufferPrefix->header.inMemoryTraceId == 0) {
+  int64_t trace_id = mapBufferPrefix->header.traceId;
+  // No trace was active when process died, so the buffer is not useful.
+  if (mapBufferPrefix->header.traceId == 0) {
     return 0;
   }
 
-  int64_t trace_id = mapBufferPrefix->header.normalTraceId;
-  if (mapBufferPrefix->header.inMemoryTraceId != 0) {
-    trace_id = mapBufferPrefix->header.inMemoryTraceId;
-  }
+  int32_t qpl_marker_id =
+      static_cast<int32_t>(mapBufferPrefix->header.longContext);
 
   auto entriesCount = mapBufferPrefix->header.size;
   // Number of additional records we need to log in addition to entries from the
