@@ -146,18 +146,25 @@ extern "C" {
 #endif
 #endif
 
-/* The Android NDK's <sys/stat.h> #defines these macros as aliases
- * to their non-64 counterparts. To avoid naming conflict, remove them. */
-#ifdef __ANDROID__
-  /* These are restored by the corresponding #pragma pop_macro near
-   * the end of this file. */
-# pragma push_macro("stat64")
-# pragma push_macro("fstat64")
-# pragma push_macro("lstat64")
-# undef stat64
-# undef fstat64
-# undef lstat64
-#endif
+/* Some libcs, for example Android NDK and musl, #define these
+ * macros as aliases to their non-64 counterparts. To avoid naming
+ * conflict, remove them.
+ *
+ * These are restored by the corresponding #pragma pop_macro near
+ * the end of this file.
+ */
+#pragma push_macro("stat64")
+#pragma push_macro("fstat64")
+#pragma push_macro("lstat64")
+#pragma push_macro("pread64")
+#pragma push_macro("pwrite64")
+#pragma push_macro("getdents64")
+#undef stat64
+#undef fstat64
+#undef lstat64
+#undef pread64
+#undef pwrite64
+#undef getdents64
 
 #if defined(__ANDROID__) && defined(__x86_64__)
 // A number of x86_64 syscalls are blocked by seccomp on recent Android;
@@ -2421,7 +2428,7 @@ struct kernel_statfs {
                                "d"(LSS_SYSCALL_ARG(parent_tidptr)),
                                "r"(LSS_SYSCALL_ARG(newtls)),
                                "r"(LSS_SYSCALL_ARG(child_tidptr))
-                             : "rsp", "memory", "r8", "r10", "r11", "rcx");
+                             : "memory", "r8", "r10", "r11", "rcx");
       }
       LSS_RETURN(int, __res);
     }
@@ -2700,10 +2707,7 @@ struct kernel_statfs {
             : "=r"(__res)
             : "r"(__stack), "r"(__flags), "r"(__ptid), "r"(__tls), "r"(__ctid),
               "i"(__NR_clone), "i"(__NR_exit)
-            : "cc", "ip", "lr", "memory"
-#ifndef __thumb2__
-            , "r7"
-#endif
+            : "cc", "lr", "memory", "r7"
             );
       }
       LSS_RETURN(int, __res);
@@ -3408,19 +3412,10 @@ struct kernel_statfs {
     LSS_INLINE _syscall2(int, ftruncate,           int,         f,
                          off_t,          l)
   #endif
-
-  #if defined(__NR_ftruncate64) &&  \
-      (defined(__i386__) || defined(__ARM_ARCH_3__) || defined(__ARM_EABI__))
-    LSS_INLINE _syscall2(int, ftruncate64, int, f, off64_t, l)
-  #else
-    LSS_INLINE int LSS_NAME(ftruncate64)(int f, off64_t l) {
-      return LSS_NAME(ftruncate)(f, l);
-    }
-  #endif
-
-  LSS_INLINE _syscall4(int,     futex,           int*,        a,
-                       int,            o, int,    v,
-                      struct kernel_timespec*, t)
+  LSS_INLINE _syscall6(int,     futex,          int*,        u,
+                       int,     o,              int,         v,
+                       struct kernel_timespec*, t,
+                       int*,    u2,             int,         v2)
   LSS_INLINE _syscall3(int,     getdents,        int,         f,
                        struct kernel_dirent*, d, int,    c)
   LSS_INLINE _syscall3(int,     getdents64,      int,         f,
@@ -3536,6 +3531,8 @@ struct kernel_statfs {
                        struct kernel_sigset_t*,        o, size_t, c)
   LSS_INLINE _syscall2(int, rt_sigsuspend,
                        const struct kernel_sigset_t*, s,  size_t, c)
+  LSS_INLINE _syscall4(int, rt_sigtimedwait, const struct kernel_sigset_t*, s,
+                       siginfo_t*, i, const struct timespec*, t, size_t, c)
   LSS_INLINE _syscall3(int,     sched_getaffinity,pid_t,      p,
                        unsigned int,   l, unsigned long *, m)
   LSS_INLINE _syscall3(int,     sched_setaffinity,pid_t,      p,
@@ -3655,7 +3652,10 @@ struct kernel_statfs {
       LSS_BODY(4, int, fallocate, LSS_SYSCALL_ARG(f), LSS_SYSCALL_ARG(mode),
                                   (uint64_t)(offset), (uint64_t)(len));
     }
-    #elif defined(__i386__) || (defined(__s390__) && !defined(__s390x__))
+    #elif (defined(__i386__) || (defined(__s390__) && !defined(__s390x__)) \
+           || defined(__ARM_ARCH_3__) || defined(__ARM_EABI__) \
+           || (defined(__mips__) && _MIPS_SIM == _MIPS_SIM_ABI32) \
+           || defined(__PPC__))
     #define __NR__fallocate __NR_fallocate
     LSS_INLINE _syscall6(int, _fallocate, int, fd,
                          int, mode,
@@ -3731,14 +3731,22 @@ struct kernel_statfs {
       return LSS_NAME(rt_sigpending)(set, (KERNEL_NSIG+7)/8);
     }
 
+    LSS_INLINE int LSS_NAME(sigsuspend)(const struct kernel_sigset_t *set) {
+      return LSS_NAME(rt_sigsuspend)(set, (KERNEL_NSIG+7)/8);
+    }
+  #endif
+  #if defined(__NR_rt_sigprocmask)
     LSS_INLINE int LSS_NAME(sigprocmask)(int how,
                                          const struct kernel_sigset_t *set,
                                          struct kernel_sigset_t *oldset) {
       return LSS_NAME(rt_sigprocmask)(how, set, oldset, (KERNEL_NSIG+7)/8);
     }
-
-    LSS_INLINE int LSS_NAME(sigsuspend)(const struct kernel_sigset_t *set) {
-      return LSS_NAME(rt_sigsuspend)(set, (KERNEL_NSIG+7)/8);
+  #endif
+  #if defined(__NR_rt_sigtimedwait)
+    LSS_INLINE int LSS_NAME(sigtimedwait)(const struct kernel_sigset_t *set,
+                                          siginfo_t *info,
+                                          const struct timespec *timeout) {
+      return LSS_NAME(rt_sigtimedwait)(set, info, timeout, (KERNEL_NSIG+7)/8);
     }
   #endif
   #if defined(__NR_wait4)
@@ -3914,7 +3922,6 @@ struct kernel_statfs {
      (defined(__s390__) && !defined(__s390x__))
     #define __NR__sigaction   __NR_sigaction
     #define __NR__sigpending  __NR_sigpending
-    #define __NR__sigprocmask __NR_sigprocmask
     #define __NR__sigsuspend  __NR_sigsuspend
     #define __NR__socketcall  __NR_socketcall
     LSS_INLINE _syscall2(int, fstat64,             int, f,
@@ -3943,9 +3950,6 @@ struct kernel_statfs {
                          const struct kernel_old_sigaction*,  a,
                          struct kernel_old_sigaction*,        o)
     LSS_INLINE _syscall1(int,   _sigpending, unsigned long*, s)
-    LSS_INLINE _syscall3(int,   _sigprocmask,      int,   h,
-                         const unsigned long*,     s,
-                         unsigned long*,           o)
     #ifdef __PPC__
     LSS_INLINE _syscall1(int, _sigsuspend,         unsigned long, s)
     #else
@@ -4025,23 +4029,6 @@ struct kernel_statfs {
         LSS_ERRNO = old_errno;
         LSS_NAME(sigemptyset)(set);
         rc = LSS_NAME(_sigpending)(&set->sig[0]);
-      }
-      return rc;
-    }
-
-    LSS_INLINE int LSS_NAME(sigprocmask)(int how,
-                                         const struct kernel_sigset_t *set,
-                                         struct kernel_sigset_t *oldset) {
-      int olderrno = LSS_ERRNO;
-      int rc = LSS_NAME(rt_sigprocmask)(how, set, oldset, (KERNEL_NSIG+7)/8);
-      if (rc < 0 && LSS_ERRNO == ENOSYS) {
-        LSS_ERRNO = olderrno;
-        if (oldset) {
-          LSS_NAME(sigemptyset)(oldset);
-        }
-        rc = LSS_NAME(_sigprocmask)(how,
-                                    set ? &set->sig[0] : NULL,
-                                    oldset ? &oldset->sig[0] : NULL);
       }
       return rc;
     }
@@ -4546,13 +4533,14 @@ struct kernel_statfs {
 # endif
 #endif
 
-#ifdef __ANDROID__
-  /* These restore the original values of these macros saved by the
-   * corresponding #pragma push_macro near the top of this file. */
-# pragma pop_macro("stat64")
-# pragma pop_macro("fstat64")
-# pragma pop_macro("lstat64")
-#endif
+/* These restore the original values of these macros saved by the
+ * corresponding #pragma push_macro near the top of this file. */
+#pragma pop_macro("stat64")
+#pragma pop_macro("fstat64")
+#pragma pop_macro("lstat64")
+#pragma pop_macro("pread64")
+#pragma pop_macro("pwrite64")
+#pragma pop_macro("getdents64")
 
 #if defined(__cplusplus) && !defined(SYS_CPLUSPLUS)
 }
