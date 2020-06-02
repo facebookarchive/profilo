@@ -80,7 +80,6 @@ struct Whitelist {
 };
 
 struct ProfileState {
-  pthread_key_t threadIsProfilingKey;
   pid_t processId;
   int availableTracers;
   int currentTracers;
@@ -119,14 +118,6 @@ struct ProfileState {
   // If a secondary trace starts, we need to tell the logger loop to clear
   // its cache of logged frames, so that the new trace won't miss any symbols
   std::atomic_bool resetFrameworkSymbols;
-
-  ProfileState() {
-    int ret;
-    if ((ret = pthread_key_create(&threadIsProfilingKey, nullptr))) {
-      throw std::system_error(
-          ret, std::system_category(), "pthread_key_create");
-    }
-  }
 };
 
 /**
