@@ -1,4 +1,4 @@
-// @generated SignedSource<<997028e94e721c306cc2f380a6dd9297>>
+// @generated SignedSource<<ec48922e65b8784837dddbf002b59f64>>
 
 #pragma once
 
@@ -105,6 +105,7 @@ enum class EntryType {
   NATIVE_ALLOC = 96,
   NATIVE_FREE = 97,
   NATIVE_ALLOC_FAILURE = 98,
+  NATIVE_STACK_FRAME = 99,
 };
 
 

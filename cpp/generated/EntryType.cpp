@@ -1,4 +1,4 @@
-// @generated SignedSource<<78318a3b94021de54066d021eb55bf71>>
+// @generated SignedSource<<4a93e2d2cc2604d6d810cae8eefa2aad>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -108,6 +108,7 @@ const char* to_string(EntryType type) {
     case EntryType::NATIVE_ALLOC: return "NATIVE_ALLOC";
     case EntryType::NATIVE_FREE: return "NATIVE_FREE";
     case EntryType::NATIVE_ALLOC_FAILURE: return "NATIVE_ALLOC_FAILURE";
+    case EntryType::NATIVE_STACK_FRAME: return "NATIVE_STACK_FRAME";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

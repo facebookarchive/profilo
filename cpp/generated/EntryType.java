@@ -1,4 +1,4 @@
-// @generated SignedSource<<1dce5820861d0d45dc31ebf84446c2bc>>
+// @generated SignedSource<<15bfb82ff976b2cfeacdfd0c07d6c397>>
 
 package com.facebook.profilo.entries;
 
@@ -103,6 +103,7 @@ public class EntryType {
   public static final int NATIVE_ALLOC = 96;
   public static final int NATIVE_FREE = 97;
   public static final int NATIVE_ALLOC_FAILURE = 98;
+  public static final int NATIVE_STACK_FRAME = 99;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -204,5 +205,6 @@ public class EntryType {
     "NATIVE_ALLOC",
     "NATIVE_FREE",
     "NATIVE_ALLOC_FAILURE",
+    "NATIVE_STACK_FRAME",
   };
 }
