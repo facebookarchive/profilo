@@ -115,7 +115,7 @@ profilo_cxx_test(
         "-pthread",
     ],
     deps = [
-        "//xplat/folly:tempfile-util",
+        "//xplat/folly:experimental_test_util",
         "//xplat/third-party/gmock:gmock",
         profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/writer:writer"),
@@ -138,7 +138,7 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
-        "//xplat/folly:tempfile-util",
+        "//xplat/folly:experimental_test_util",
         "//xplat/third-party/linker_lib:pthread",
         profilo_path("deps/zstr:zstr"),
         profilo_path("cpp/logger/lfrb:lfrb"),

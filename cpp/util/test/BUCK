@@ -36,7 +36,7 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
-        "//xplat/folly:tempfile-util",
+        "//xplat/folly:experimental_test_util",
         "//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/util:util"),
     ],
