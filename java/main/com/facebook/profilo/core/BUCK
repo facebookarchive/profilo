@@ -156,7 +156,6 @@ fb_core_android_library(
         "//fbandroid/java/com/facebook/cloudseeder:cloudseeder",
         "//fbandroid/java/com/facebook/common/fury/fb4a:util",
         "//fbandroid/java/com/facebook/common/fury/instagram:util",
-        "//fbandroid/java/com/facebook/debug/profilo:profilo",
         "//fbandroid/java/com/facebook/fab/dumper/plugins:plugins",
         "//fbandroid/java/com/facebook/katana/activity:activity",
         "//fbandroid/java/com/facebook/katana/app:app",
