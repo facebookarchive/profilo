@@ -15,7 +15,6 @@ package com.facebook.profilo.sample;
 
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.provider.atrace.SystraceProvider;
-import com.facebook.profilo.provider.mappingdensity.MappingDensityProvider;
 import com.facebook.profilo.provider.mappings.MemoryMappingsProvider;
 import com.facebook.profilo.provider.perfevents.PerfEventsProvider;
 import com.facebook.profilo.provider.processmetadata.ProcessMetadataProvider;
@@ -31,8 +30,6 @@ public class SampleAppMainActivity extends BaseSampleAppMainActivity {
         return new SystraceProvider();
       case "memorymappings":
         return new MemoryMappingsProvider();
-      case "mappingdensity":
-        return new MappingDensityProvider();
       case "systemcounters":
         return new SystemCounterThread();
       case "stacktrace":
