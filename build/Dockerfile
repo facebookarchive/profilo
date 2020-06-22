@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends ant git default-jdk python wget unzip
+RUN apt-get install -y --no-install-recommends ant git default-jdk python wget unzip python3
 
 RUN mkdir -p /scripts/
 
