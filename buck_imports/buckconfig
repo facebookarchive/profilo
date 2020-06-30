@@ -3,15 +3,17 @@
     target_level = 7
 
 [ndk]
-    ndk_version = 15.2.4203891
+    ndk_version = 17.2.4988734
     app_platform = android-15
     app_platform_per_cpu_abi = arm64 => android-21, x86_64 => android-21
     cpu_abis = armv7, x86, arm64, x86_64
     compiler = clang
-    clang_version = 5.0
-    extra_ldflags = -Wl,-Bsymbolic
+    cxx_runtime = libcxx
+    cxx_runtime_type = dynamic
+    clang_version = 6.0.2
+    extra_ldflags = -Wl,-Bsymbolic -Wl,--gc-sections
     extra_cflags = -ffunction-sections -fdata-sections -Os
-    extra_cxxflags = -ffunction-sections -fdata-sections -Os -std=gnu++14 -Wno-nullability-completeness
+    extra_cxxflags = -ffunction-sections -fdata-sections -Os -std=gnu++14 -DGOOGLE_STRIP_LOG=1
 
 [download]
     maven_repo = https://repo1.maven.org/maven2

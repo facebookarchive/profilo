@@ -5,8 +5,8 @@ set -e
 mkdir -p /opt/android-{sdk,ndk}
 
 cd /opt/android-ndk/
-wget -q https://dl.google.com/android/repository/android-ndk-r15c-linux-x86_64.zip
-unzip -q -d . android-ndk-r15c-linux-x86_64.zip
+wget -q https://dl.google.com/android/repository/android-ndk-r17c-linux-x86_64.zip
+unzip -q -d . android-ndk-r17c-linux-x86_64.zip
 
 cd /opt/android-sdk/
 wget -q https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
