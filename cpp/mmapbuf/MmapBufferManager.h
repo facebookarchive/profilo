@@ -63,6 +63,8 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
 
   void updateFilePath(const std::string& file_path);
 
+  void updateMemoryMappingFilename(const std::string& maps_file_path);
+
   static void registerNatives();
 
   explicit MmapBufferManager();

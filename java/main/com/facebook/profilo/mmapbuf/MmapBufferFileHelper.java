@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 class MmapBufferFileHelper {
 
   public static final String BUFFER_FILE_SUFFIX = ".buff";
+  public static final String MEMORY_MAPPING_FILE_SUFFIX = ".maps";
 
   private static final int MAX_DUMPS_TO_KEEP = 3;
 
@@ -113,6 +114,10 @@ class MmapBufferFileHelper {
 
   public static String getBufferFilename(String id) {
     return sanitizeFilename(id) + BUFFER_FILE_SUFFIX;
+  }
+
+  public static String getMemoryMappingFilename(String id) {
+    return sanitizeFilename(id) + MEMORY_MAPPING_FILE_SUFFIX;
   }
 
   public static String sanitizeFilename(String filename) {

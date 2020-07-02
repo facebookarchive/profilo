@@ -134,6 +134,20 @@ void MmapBufferManager::updateFilePath(const std::string& file_path) {
   }
 }
 
+void MmapBufferManager::updateMemoryMappingFilename(
+    const std::string& maps_filename) {
+  MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
+  if (bufferPrefix == nullptr) {
+    return;
+  }
+  // Compare and if session id has not changed exit
+  auto sz = std::min(
+      maps_filename.size(),
+      (size_t)MmapBufferHeader::kMemoryMapsFilenameLength - 1);
+  maps_filename.copy(bufferPrefix->header.memoryMapsFilename, sz);
+  bufferPrefix->header.memoryMapsFilename[sz] = 0;
+}
+
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
     fbjni::alias_ref<jclass>) {
   return makeCxxInstance();
@@ -150,6 +164,9 @@ void MmapBufferManager::registerNatives() {
       makeNativeMethod("nativeUpdateId", MmapBufferManager::updateId),
       makeNativeMethod(
           "nativeUpdateFilePath", MmapBufferManager::updateFilePath),
+      makeNativeMethod(
+          "nativeUpdateMemoryMappingFilename",
+          MmapBufferManager::updateMemoryMappingFilename),
   });
 }
 

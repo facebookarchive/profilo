@@ -37,6 +37,7 @@ public class MmapBufferManager {
   @DoNotStrip private final HybridData mHybridData;
   private volatile @Nullable String mMmapFileName;
   private @Nullable String mId;
+  private volatile @Nullable File mMemoryMappingsFile;
   private final MmapBufferFileHelper mFileHelper;
   private final Context mContext;
   private final long mConfigId;
@@ -121,6 +122,27 @@ public class MmapBufferManager {
     mMmapFileName = fileName;
   }
 
+  @Nullable
+  public synchronized String generateMemoryMappingFilePath() {
+    if (!mEnabled.get()) {
+      return null;
+    }
+    if (mMemoryMappingsFile != null) {
+      return mMemoryMappingsFile.getAbsolutePath();
+    }
+
+    String fileName = MmapBufferFileHelper.getMemoryMappingFilename(UUID.randomUUID().toString());
+    String filePath = mFileHelper.ensureFilePath(fileName);
+    if (filePath == null) {
+      return null;
+    }
+
+    nativeUpdateMemoryMappingFilename(fileName);
+
+    mMemoryMappingsFile = new File(filePath);
+    return filePath;
+  }
+
   @DoNotStrip
   private native boolean nativeAllocateBuffer(int size, String path, int buildId, long configId);
 
@@ -130,6 +152,8 @@ public class MmapBufferManager {
   public native void nativeUpdateId(String sessionId);
 
   public native void nativeUpdateFilePath(String filePath);
+
+  public native void nativeUpdateMemoryMappingFilename(String mappingFilePath);
 
   /**
    * De-allocates current memory mapped buffer and deletes the buffer file. This operation is unsafe
