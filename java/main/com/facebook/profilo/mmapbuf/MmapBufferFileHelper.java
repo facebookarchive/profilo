@@ -16,33 +16,17 @@ package com.facebook.profilo.mmapbuf;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.List;
 import javax.annotation.Nullable;
 
 class MmapBufferFileHelper {
 
+  interface FileDeletionBlacklist {
+    List<String> getFilenames();
+  }
+
   public static final String BUFFER_FILE_SUFFIX = ".buff";
   public static final String MEMORY_MAPPING_FILE_SUFFIX = ".maps";
-
-  private static final int MAX_DUMPS_TO_KEEP = 3;
-
-  private static final Comparator<File> MOST_RECENT_FILES_COMPARATOR =
-      new Comparator<File>() {
-        @Override
-        public int compare(File f1, File f2) {
-          long f1LastModified = f1.lastModified();
-          long f2LastModified = f2.lastModified();
-          if (f1LastModified == f2LastModified) {
-            return 0;
-          }
-          if (f1LastModified < f2LastModified) {
-            return 1;
-          } else {
-            return -1;
-          }
-        }
-      };
 
   private final File mMmapFilesFolder;
   public static final Object DUMP_FILES_LOCK = new Object();
@@ -72,7 +56,7 @@ class MmapBufferFileHelper {
     return foundFiles[0];
   }
 
-  public void deleteOldBufferFiles() {
+  public void deleteOldBufferFiles(@Nullable FileDeletionBlacklist blacklist) {
     File mmapFolder = getFolderIfExists();
     if (mmapFolder == null) {
       return;
@@ -81,13 +65,11 @@ class MmapBufferFileHelper {
     if (mmapFiles == null) {
       return;
     }
-    int filesCount = mmapFiles.length;
-    if (filesCount <= MAX_DUMPS_TO_KEEP) {
-      return;
-    }
-    Arrays.sort(mmapFiles, MOST_RECENT_FILES_COMPARATOR);
-    for (int i = MAX_DUMPS_TO_KEEP; i < filesCount; i++) {
-      File file = mmapFiles[i];
+    List<String> blacklistFilenames = blacklist.getFilenames();
+    for (File file : mmapFiles) {
+      if (blacklistFilenames.contains(file.getName())) {
+        continue;
+      }
       synchronized (DUMP_FILES_LOCK) {
         if (file.exists()) {
           file.delete();

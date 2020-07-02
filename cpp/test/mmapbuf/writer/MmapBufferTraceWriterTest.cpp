@@ -9,6 +9,7 @@
 #include <zlib.h>
 #include <zstr/zstr.hpp>
 #include <climits>
+#include <fstream>
 #include <ostream>
 #include <sstream>
 #include <vector>
@@ -67,6 +68,11 @@ constexpr int64_t kTraceRecollectionTimestamp = 1234567;
 constexpr int32_t kConfigId = 11;
 constexpr int32_t kBuildId = 17;
 
+static const std::array<std::string, 3> kMappings = {
+    "libhwui.so:722580c000:586015DEC7C4DA055D33796D9D793508:186000:491000",
+    "libart-compiler.so:71987dd000:25CFFF6256F96F117E72005B5318E262:c2000:244000",
+    "libc.so:7224896000:0965E88D999C749783C8947F9B7937E9:40000:a7000"};
+
 #define EXPECT_STRING_CONTAINS(haystack, needle) \
   EXPECT_PRED_FORMAT2(assertContainsInString, haystack, needle)
 
@@ -90,46 +96,15 @@ class MockCallbacks : public TraceCallbacks {
   MOCK_METHOD2(onTraceAbort, void(int64_t, AbortReason));
 };
 
-struct StandardEntryWrapper {
-  StandardEntryWrapper(StandardEntry& standard_entry)
-      : entry(standard_entry), output(precomputeTraceOutput(entry)) {}
-
-  static std::string precomputeTraceOutput(
-      const StandardEntry& standard_entry) {
-    outstream().str("");
-    visitor().visit(standard_entry);
-    return outstream().str();
-  }
-
-  static std::stringstream& outstream() {
-    static std::stringstream ss{};
-    return ss;
-  }
-
-  static EntryVisitor& visitor() {
-    // Replicating part of visitor chain to get the expected output
-    static PrintEntryVisitor printVisitor(outstream());
-    static DeltaEncodingVisitor deltaVisitor(printVisitor);
-    static TimestampTruncatingVisitor timestampVisitor(deltaVisitor, 6);
-    return timestampVisitor;
-  }
-
-  StandardEntry entry;
-  std::string output;
-};
-
 class MmapBufferTraceWriterTest : public ::testing::Test {
  protected:
   MmapBufferTraceWriterTest()
       : ::testing::Test(),
         loggedEntries_(),
         temp_dump_file_("test_dump"),
-        temp_trace_folder_(kTraceFolder) {
+        temp_trace_folder_(kTraceFolder),
+        temp_mappings_file_("maps", temp_dump_file_.path().parent_path()) {
     std::srand(std::time(nullptr));
-  }
-
-  int dumpFd() {
-    return temp_dump_file_.fd();
   }
 
   const std::string& dumpPath() {
@@ -166,13 +141,22 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
   }
 
   void writeRandomEntries(TraceBuffer& buf, int records_count) {
+    std::stringstream outstream{};
+    PrintEntryVisitor printVisitor(outstream);
+    DeltaEncodingVisitor deltaVisitor(printVisitor);
+    TimestampTruncatingVisitor visitor(deltaVisitor, 6);
+
     Logger logger([&buf]() -> PacketBuffer& { return buf; });
     // Write the main service entry before the main content
     auto serviceEntry = generateTraceBackwardsEntry();
-    loggedEntries_.push_back(StandardEntryWrapper(serviceEntry));
+    outstream.str("");
+    visitor.visit(serviceEntry);
+    loggedEntries_.push_back(outstream.str());
     while (records_count > 0) {
       auto entry = generateRandomEntry();
-      loggedEntries_.push_back(StandardEntryWrapper(entry));
+      outstream.str("");
+      visitor.visit(entry);
+      loggedEntries_.push_back(outstream.str());
       logger.write(std::move(entry));
       --records_count;
     }
@@ -182,13 +166,20 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     writeTraceWithRandomEntries(records_count, records_count);
   }
 
-  void writeTraceWithRandomEntries(int records_count, int buffer_size) {
+  void writeTraceWithRandomEntries(
+      int records_count,
+      int buffer_size,
+      bool set_mappings_file = false) {
     MmapBufferManager bufManager{};
     MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
     bool res = bufManager.allocateBuffer(buffer_size, dumpPath(), 1, 1);
+    ASSERT_EQ(res, true) << "Unable to allocate the buffer";
     bufManager.updateHeader(0, kQplId, kTraceId);
     bufManager.updateId("272c3f80-f076-5a89-e265-60dcf407373b");
-    ASSERT_EQ(res, true) << "Unable to allocate the buffer";
+    if (set_mappings_file) {
+      bufManager.updateMemoryMappingFilename(
+          temp_mappings_file_.path().filename().generic_string());
+    }
     TraceBufferHolder ringBuffer = TraceBuffer::allocateAt(
         buffer_size, bufManagerAccessor.mmapBufferPointer());
     writeRandomEntries(*ringBuffer, records_count);
@@ -196,6 +187,15 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
         bufManagerAccessor.mmapPointer(), bufManagerAccessor.size(), MS_SYNC);
     ASSERT_EQ(msync_res, 0)
         << "Unable to msync the buffer: " << strerror(errno);
+  }
+
+  void writeMemoryMappingsFile() {
+    // use output stream to write the content
+    std::ofstream mappingsFile(temp_mappings_file_.path().generic_string());
+    for (const std::string& map : kMappings) {
+      mappingsFile << map << std::endl;
+    }
+    mappingsFile.close();
   }
 
   fs::path getOnlyTraceFile() {
@@ -227,16 +227,24 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
 
   void verifyLogEntriesFromTraceFile() {
     auto traceContents = getOnlyTraceFileContents();
-    for (auto entry : loggedEntries_) {
+    for (std::string& entry : loggedEntries_) {
       // Compare entry output ignoring first entry id (before "|")
-      auto entryOutput = entry.output.substr(entry.output.find("|"));
+      auto entryOutput = entry.substr(entry.find("|"));
       EXPECT_STRING_CONTAINS(traceContents, entryOutput);
     }
   }
 
-  std::vector<StandardEntryWrapper> loggedEntries_;
+  void verifyMemoryMappingEntries() {
+    auto traceContents = getOnlyTraceFileContents();
+    for (const std::string& map : kMappings) {
+      EXPECT_STRING_CONTAINS(traceContents, map);
+    }
+  }
+
+  std::vector<std::string> loggedEntries_;
   test::TemporaryFile temp_dump_file_;
   test::TemporaryDirectory temp_trace_folder_;
+  test::TemporaryFile temp_mappings_file_;
 };
 
 TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
@@ -255,6 +263,28 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
+}
+
+TEST_F(
+    MmapBufferTraceWriterTest,
+    testDumpWriteAndRecollectEndToEndWithMappings) {
+  using ::testing::_;
+  writeTraceWithRandomEntries(10, 10, true);
+  writeMemoryMappingsFile();
+
+  std::string testFolder(traceFolderPath());
+  std::string testTracePrefix(kTracePrefix);
+  auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
+  MmapBufferTraceWriter traceWriter(
+      testFolder, testTracePrefix, 0, mockCallbacks);
+
+  EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0, _));
+  EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId));
+
+  traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
+
+  verifyLogEntriesFromTraceFile();
+  verifyMemoryMappingEntries();
 }
 
 TEST_F(

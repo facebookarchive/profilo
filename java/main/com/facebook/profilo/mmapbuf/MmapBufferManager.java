@@ -21,6 +21,9 @@ import com.facebook.jni.HybridData;
 import com.facebook.jni.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
@@ -58,6 +61,18 @@ public class MmapBufferManager {
 
   public @Nullable String getCurrentMmapFilename() {
     return mMmapFileName;
+  }
+
+  public List<String> getCurrentFilenames() {
+    if (mMmapFileName == null) {
+      return Collections.emptyList();
+    }
+    ArrayList<String> filenames = new ArrayList<>(2);
+    filenames.add(mMmapFileName);
+    if (mMemoryMappingsFile != null) {
+      filenames.add(mMemoryMappingsFile.getName());
+    }
+    return filenames;
   }
 
   public boolean isEnabled() {

@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <cstring>
+#include <fstream>
 #include <stdexcept>
 
 #include <profilo/entries/EntryType.h>
@@ -42,6 +43,7 @@ using namespace facebook::profilo::mmapbuf::header;
 namespace {
 
 constexpr int64_t kTriggerEventFlag = 0x0002000000000000L; // 1 << 49
+static constexpr char kMemoryMappingKey[] = "l:s:u:o:s";
 
 void loggerWrite(
     Logger& logger,
@@ -186,6 +188,37 @@ bool copyBufferEntries(TraceBuffer& source, TraceBuffer& dest) {
   }
   return processed_count > 0;
 }
+
+void processMemoryMappingsFile(
+    Logger& logger,
+    std::string& file_path,
+    int64_t timestamp) {
+  std::ifstream mappingsFile(file_path);
+  if (!mappingsFile.is_open()) {
+    return;
+  }
+
+  int32_t tid = threadID();
+  std::string mappingLine;
+  while (std::getline(mappingsFile, mappingLine)) {
+    auto mappingId = logger.write(entries::StandardEntry{
+        .type = EntryType::MAPPING,
+        .tid = tid,
+        .timestamp = timestamp,
+    });
+    auto keyId = logger.writeBytes(
+        EntryType::STRING_KEY,
+        mappingId,
+        reinterpret_cast<const uint8_t*>(kMemoryMappingKey),
+        sizeof(kMemoryMappingKey));
+    logger.writeBytes(
+        EntryType::STRING_VALUE,
+        keyId,
+        reinterpret_cast<const uint8_t*>(mappingLine.c_str()),
+        mappingLine.size());
+  }
+}
+
 } // namespace
 
 MmapBufferTraceWriter::MmapBufferTraceWriter(
@@ -234,11 +267,12 @@ int64_t MmapBufferTraceWriter::writeTrace(
 
   auto entriesCount = mapBufferPrefix->header.size;
   // Number of additional records we need to log in addition to entries from the
-  // buffer file + some buffer for long string entries.
-  constexpr auto kServiceRecordCount = 11 + 10 /* extra buffer */;
+  // buffer file + memory mappings file records + some buffer for long string
+  // entries.
+  constexpr auto kExtraRecordCount = 4096;
 
   TraceBufferHolder bufferHolder =
-      TraceBuffer::allocate(entriesCount + kServiceRecordCount);
+      TraceBuffer::allocate(entriesCount + kExtraRecordCount);
   TraceBuffer::Cursor startCursor = bufferHolder->currentHead();
   Logger logger(
       [&bufferHolder]() -> logger::PacketBuffer& { return *bufferHolder; });
@@ -287,6 +321,14 @@ int64_t MmapBufferTraceWriter::writeTrace(
       std::string(mapBufferPrefix->header.sessionId));
   loggerWriteQplTriggerAnnotation(
       logger, qpl_marker_id, "type", type, timestamp);
+
+  const char* mapsFilename = mapBufferPrefix->header.memoryMapsFilename;
+  if (mapsFilename[0] != '\0') {
+    auto lastSlashIdx = dump_path.rfind("/");
+    std::string mapsPath = dump_path.substr(0, lastSlashIdx + 1) + mapsFilename;
+    processMemoryMappingsFile(logger, mapsPath, timestamp);
+  }
+
   loggerWrite(logger, EntryType::TRACE_END, 0, 0, trace_id, timestamp);
 
   TraceWriter writer(
