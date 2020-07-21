@@ -20,7 +20,10 @@ unwindc_tracer_library("8.0.0")
 
 unwindc_tracer_library("8.1.0")
 
-unwindc_tracer_library("9.0.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "9.0.0",
+)
 
 fb_xplat_cxx_library(
     name = "constants",

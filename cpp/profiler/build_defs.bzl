@@ -1,7 +1,7 @@
 load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-def unwindc_tracer_library(version):
+def unwindc_tracer_library(version, allow_64bit = False):
     version_num = version.replace(".", "")
     android_version = "android_{}".format(version_num)
 
@@ -33,17 +33,21 @@ def unwindc_tracer_library(version):
         force_static = True,
         labels = ["supermodule:android/default/loom.core"],
         platform_headers = [
-            ("^android-x86", {
-                # intentionally also covers x86_64
+            ("^android-x86$", {
                 "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),
             }),
-            ("^android-arm", {
-                # intentionally also covers arm64
+            ("^android-armv7$", {
                 "unwindc/unwinder.h": "unwindc/{}/arm/unwinder.h".format(android_version),
+            }),
+            ("^android-x86_64$", {
+                "unwindc/unwinder.h": "unwindc/{}/x86_64/unwinder.h".format(android_version) if allow_64bit else "unwindc/unwindc_empty.h",
+            }),
+            ("^android-arm64$", {
+                "unwindc/unwinder.h": "unwindc/{}/arm64/unwinder.h".format(android_version) if allow_64bit else "unwindc/unwindc_empty.h",
             }),
             ("^(?!android-.*$).*$", {
                 # none-android platforms still need a header, any header, to build
-                "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),
+                "unwindc/unwinder.h": "unwindc/unwindc_empty.h",
             }),
         ],
         preprocessor_flags = [

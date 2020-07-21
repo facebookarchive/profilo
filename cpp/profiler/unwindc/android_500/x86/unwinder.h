@@ -1,23 +1,23 @@
 // @nolint
 // @generated
 struct OatMethod {
-  uintptr_t begin_p;
-  uint32_t offset_u32;
+  uintptr_t begin_uintptr;
+  uintptr_t offset_uintptr;
   bool success_b;
 };
 struct OatClass {
-  uintptr_t oat_file_p;
-  int32_t status_i32;
-  uint32_t type_u32;
-  uint32_t bitmap_size_u32;
-  uintptr_t bitmap_ptr_p;
-  uintptr_t methods_ptr_p;
+  uintptr_t oat_file_uintptr;
+  intptr_t status_intptr;
+  uintptr_t type_uintptr;
+  uintptr_t bitmap_size_uintptr;
+  uintptr_t bitmap_ptr_uintptr;
+  uintptr_t methods_ptr_uintptr;
   bool success_b;
 };
 struct ArraySlice {
-  uintptr_t array_p;
-  uint32_t size_u32;
-  uint32_t element_size_u32;
+  uintptr_t array_uintptr;
+  uintptr_t size_uintptr;
+  uintptr_t element_size_uintptr;
 };
 auto get_runtime_from_thread(uintptr_t thread) {
   uint32_t jni_env = Read4(AccessField(AccessField(thread, 120U), 32U));
@@ -45,8 +45,8 @@ auto get_dexfile_string_by_idx(uintptr_t dexfile, uintptr_t idx) {
   uint32_t string_data_off = Read4(AccessField(id, 0U));
   uintptr_t ptr = AdvancePointer(begin, (string_data_off * 1U));
   uintptr_t val = ptr;
-  uint32_t length = 0U;
-  uint32_t index = 0U;
+  uintptr_t length = 0U;
+  uintptr_t index = 0U;
   bool proceed = true;
   while (proceed) {
     uint8_t byte = Read1(AccessArrayItem(val, index, 1U));
@@ -127,7 +127,7 @@ auto is_runtime_method(uintptr_t method) {
 auto is_proxy_method(uintptr_t method) {
   auto declaring_class = get_declaring_class(method);
   uint32_t class_access_flags = Read4(AccessField(declaring_class, 60U));
-  uint32_t kAccClassIsProxy = 262144U;
+  uintptr_t kAccClassIsProxy = 262144U;
   if ((class_access_flags & kAccClassIsProxy)) {
     return true;
   } else {
@@ -136,7 +136,7 @@ auto is_proxy_method(uintptr_t method) {
 }
 
 auto is_static_method(uintptr_t method) {
-  uint32_t kAccStatic = 8U;
+  uintptr_t kAccStatic = 8U;
   if ((get_method_access_flags(method) & kAccStatic)) {
     return true;
   } else {
@@ -145,9 +145,9 @@ auto is_static_method(uintptr_t method) {
 }
 
 auto is_direct_method(uintptr_t method) {
-  uint32_t kAccStatic = 8U;
-  uint32_t kAccPrivate = 2U;
-  uint32_t kAccConstructor = 65536U;
+  uintptr_t kAccStatic = 8U;
+  uintptr_t kAccPrivate = 2U;
+  uintptr_t kAccConstructor = 65536U;
   if ((get_method_access_flags(method) &
        ((kAccStatic | kAccPrivate) | kAccConstructor))) {
     return true;
@@ -157,7 +157,7 @@ auto is_direct_method(uintptr_t method) {
 }
 
 auto is_native_method(uintptr_t method) {
-  uint32_t kAccNative = 256U;
+  uintptr_t kAccNative = 256U;
   if ((get_method_access_flags(method) & kAccNative)) {
     return true;
   } else {
@@ -207,7 +207,7 @@ auto get_quick_entry_point_from_compiled_code(uintptr_t method) {
 auto get_oat_method_header_from_entry_point(uintptr_t entry_point) {
   entry_point = entry_point;
   entry_point = (entry_point & (~1U));
-  uint32_t header_offset = 24U;
+  uintptr_t header_offset = 24U;
   uintptr_t oat_method_header = (entry_point - header_offset);
   return oat_method_header;
 }
@@ -224,7 +224,7 @@ auto round_up(uintptr_t x, uintptr_t n) {
 }
 
 auto is_abstract_method(uintptr_t method) {
-  uint32_t kAccAbstract = 1024U;
+  uintptr_t kAccAbstract = 1024U;
   return (get_method_access_flags(method) & kAccAbstract);
 }
 
@@ -238,10 +238,10 @@ auto get_frame_size(
   uint32_t size = 0U;
   uintptr_t callee_save_methods = AccessField(runtime_obj, 0U);
   uintptr_t callee_save_infos = AccessField(runtime_obj, 36U);
-  uint32_t kSaveAll = 0U;
-  uint32_t kRefsOnly = 1U;
-  uint32_t kRefsAndArgs = 2U;
-  uint32_t method_info = 0U;
+  uintptr_t kSaveAll = 0U;
+  uintptr_t kRefsOnly = 1U;
+  uintptr_t kRefsAndArgs = 2U;
+  uintptr_t method_info = 0U;
   if (is_abstract_method(method)) {
     method_info = AccessArrayItem(callee_save_infos, kRefsAndArgs, 12U);
     size = Read4(AccessField(method_info, 0U));
@@ -271,7 +271,7 @@ auto get_frame_size(
       return size;
     }
   }
-  uint32_t code = 0U;
+  uintptr_t code = 0U;
   bool is_native = false;
   if ((is_quick_resolution_stub(entry_point, runtime_obj, thread_obj) ||
        is_quick_to_interpreter_bridge(entry_point, runtime_obj, thread_obj))) {
@@ -286,14 +286,14 @@ auto get_frame_size(
     uintptr_t callee_info =
         AccessArrayItem(callee_save_infos, kRefsAndArgs, 12U);
     uint32_t callee_info_size = Read4(AccessField(callee_info, 0U));
-    uint32_t voidptr_size = 4U;
-    uint32_t artmethodptr_size = 4U;
+    uintptr_t voidptr_size = 4U;
+    uintptr_t artmethodptr_size = 4U;
     auto num_refs = (get_number_of_refs_without_receiver(method) + 1U);
-    uint32_t handle_scope_size = (8U + (4U * num_refs));
+    uintptr_t handle_scope_size = (8U + (4U * num_refs));
     size =
         (((callee_info_size - voidptr_size) + artmethodptr_size) +
          handle_scope_size);
-    uint32_t kStackAlignment = 16U;
+    uintptr_t kStackAlignment = 16U;
     size = round_up(size, kStackAlignment);
     return size;
   }
@@ -319,9 +319,9 @@ auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
     quick_frame = quick_frame;
     uint32_t shadow_frame = Read4(AccessField(mstack, 4U));
     shadow_frame = shadow_frame;
-    uint32_t pc = 0U;
-    uint32_t kMaxFrames = 1024U;
-    uint32_t depth = 0U;
+    uintptr_t pc = 0U;
+    uintptr_t kMaxFrames = 1024U;
+    uintptr_t depth = 0U;
     if ((quick_frame != 0U)) {
       while (((quick_frame != 0U) && (depth < kMaxFrames))) {
         uint32_t frameptr = Read4(quick_frame);

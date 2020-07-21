@@ -1,23 +1,23 @@
 // @nolint
 // @generated
 struct OatMethod {
-  uintptr_t begin_p;
-  uint32_t offset_u32;
+  uintptr_t begin_uintptr;
+  uintptr_t offset_uintptr;
   bool success_b;
 };
 struct OatClass {
-  uintptr_t oat_file_p;
-  int32_t status_i32;
-  uint32_t type_u32;
-  uint32_t bitmap_size_u32;
-  uintptr_t bitmap_ptr_p;
-  uintptr_t methods_ptr_p;
+  uintptr_t oat_file_uintptr;
+  intptr_t status_intptr;
+  uintptr_t type_uintptr;
+  uintptr_t bitmap_size_uintptr;
+  uintptr_t bitmap_ptr_uintptr;
+  uintptr_t methods_ptr_uintptr;
   bool success_b;
 };
 struct ArraySlice {
-  uintptr_t array_p;
-  uint32_t size_u32;
-  uint32_t element_size_u32;
+  uintptr_t array_uintptr;
+  uintptr_t size_uintptr;
+  uintptr_t element_size_uintptr;
 };
 auto get_runtime_from_thread(uintptr_t thread) {
   uint32_t jni_env = Read4(AccessField(AccessField(thread, 136U), 28U));
@@ -45,8 +45,8 @@ auto get_dexfile_string_by_idx(uintptr_t dexfile, uintptr_t idx) {
   uint32_t string_data_off = Read4(AccessField(id, 0U));
   uintptr_t ptr = AdvancePointer(begin, (string_data_off * 1U));
   uintptr_t val = ptr;
-  uint32_t length = 0U;
-  uint32_t index = 0U;
+  uintptr_t length = 0U;
+  uintptr_t index = 0U;
   bool proceed = true;
   while (proceed) {
     uint8_t byte = Read1(AccessArrayItem(val, index, 1U));
@@ -132,7 +132,7 @@ auto is_runtime_method(uintptr_t method) {
 auto is_proxy_method(uintptr_t method) {
   auto declaring_class = get_declaring_class(method);
   uint32_t class_access_flags = Read4(AccessField(declaring_class, 64U));
-  uint32_t kAccClassIsProxy = 262144U;
+  uintptr_t kAccClassIsProxy = 262144U;
   if ((class_access_flags & kAccClassIsProxy)) {
     return true;
   } else {
@@ -141,7 +141,7 @@ auto is_proxy_method(uintptr_t method) {
 }
 
 auto is_static_method(uintptr_t method) {
-  uint32_t kAccStatic = 8U;
+  uintptr_t kAccStatic = 8U;
   if ((get_method_access_flags(method) & kAccStatic)) {
     return true;
   } else {
@@ -150,9 +150,9 @@ auto is_static_method(uintptr_t method) {
 }
 
 auto is_direct_method(uintptr_t method) {
-  uint32_t kAccStatic = 8U;
-  uint32_t kAccPrivate = 2U;
-  uint32_t kAccConstructor = 65536U;
+  uintptr_t kAccStatic = 8U;
+  uintptr_t kAccPrivate = 2U;
+  uintptr_t kAccConstructor = 65536U;
   if ((get_method_access_flags(method) &
        ((kAccStatic | kAccPrivate) | kAccConstructor))) {
     return true;
@@ -162,7 +162,7 @@ auto is_direct_method(uintptr_t method) {
 }
 
 auto is_native_method(uintptr_t method) {
-  uint32_t kAccNative = 256U;
+  uintptr_t kAccNative = 256U;
   if ((get_method_access_flags(method) & kAccNative)) {
     return true;
   } else {
@@ -213,7 +213,7 @@ auto get_quick_entry_point_from_compiled_code(uintptr_t method) {
 auto get_oat_method_header_from_entry_point(uintptr_t entry_point) {
   entry_point = entry_point;
   entry_point = (entry_point & (~1U));
-  uint32_t header_offset = 24U;
+  uintptr_t header_offset = 24U;
   uintptr_t oat_method_header = (entry_point - header_offset);
   return oat_method_header;
 }
@@ -226,15 +226,15 @@ auto get_quick_frame_info_from_entry_point(uintptr_t entry_point) {
 auto method_header_contains(uintptr_t method_header, uintptr_t pc) {
   uintptr_t code = AccessField(method_header, 24U);
   uint32_t code_size = Read4(AccessField(method_header, 20U));
-  uint32_t kCodeSizeMask = (~2147483648U);
+  uintptr_t kCodeSizeMask = (~2147483648U);
   code_size = (code_size & kCodeSizeMask);
   return ((code <= pc) && (pc <= (code + code_size)));
 }
 
 auto is_resolved(uintptr_t cls) {
   uintptr_t status = AccessField(cls, 112U);
-  uint32_t kStatusResolved = 4U;
-  int32_t kStatusErrorResolved = (-2U);
+  uintptr_t kStatusResolved = 4U;
+  intptr_t kStatusErrorResolved = (-2U);
   return ((status >= 4U) || (status == kStatusErrorResolved));
 }
 
@@ -250,21 +250,21 @@ auto get_oat_class(uintptr_t oat_dex_file, uintptr_t class_def_idx) {
 
   uintptr_t status_pointer = oat_class_pointer;
   uint16_t status = Read2(status_pointer);
-  uint32_t kStatusMax = 12U;
+  uintptr_t kStatusMax = 12U;
 
   uintptr_t type_pointer = AdvancePointer(status_pointer, (2U * 1U));
 
   uint16_t oat_type = Read2(type_pointer);
-  uint32_t kOatClassMax = 3U;
+  uintptr_t kOatClassMax = 3U;
 
   uintptr_t after_type_pointer = AdvancePointer(type_pointer, (2U * 1U));
 
-  uint32_t bitmap_size = 0U;
-  uint32_t bitmap_pointer = 0U;
-  uint32_t methods_pointer = 0U;
-  uint32_t kOatClassNoneCompiled = 2U;
+  uintptr_t bitmap_size = 0U;
+  uintptr_t bitmap_pointer = 0U;
+  uintptr_t methods_pointer = 0U;
+  uintptr_t kOatClassNoneCompiled = 2U;
   if ((oat_type != kOatClassNoneCompiled)) {
-    uint32_t kOatClassSomeCompiled = 1U;
+    uintptr_t kOatClassSomeCompiled = 1U;
     if ((oat_type == kOatClassSomeCompiled)) {
       bitmap_size = Read4(after_type_pointer);
       bitmap_pointer = AdvancePointer(after_type_pointer, (4U * 1U));
@@ -275,12 +275,12 @@ auto get_oat_class(uintptr_t oat_dex_file, uintptr_t class_def_idx) {
     }
   }
   return OatClass{
-      .oat_file_p = oat_file,
-      .status_i32 = status,
-      .type_u32 = oat_type,
-      .bitmap_size_u32 = bitmap_size,
-      .bitmap_ptr_p = bitmap_pointer,
-      .methods_ptr_p = methods_pointer,
+      .oat_file_uintptr = oat_file,
+      .status_intptr = status,
+      .type_uintptr = oat_type,
+      .bitmap_size_uintptr = bitmap_size,
+      .bitmap_ptr_uintptr = bitmap_pointer,
+      .methods_ptr_uintptr = methods_pointer,
       .success_b = true,
   };
 }
@@ -288,17 +288,17 @@ auto get_oat_class(uintptr_t oat_dex_file, uintptr_t class_def_idx) {
 auto find_oat_class(uintptr_t cls) {
   auto dex_file = get_class_dexfile(cls);
   uint32_t class_def_idx = Read4(AccessField(cls, 80U));
-  uint32_t kDexNoIndex16 = 65535U;
+  uintptr_t kDexNoIndex16 = 65535U;
 
   uint32_t oat_dex_file = Read4(AccessField(dex_file, 76U));
   if (((oat_dex_file == 0U) || (Read4(AccessField(oat_dex_file, 0U)) == 0U))) {
     return OatClass{
-        .oat_file_p = 0,
-        .status_i32 = -1,
-        .type_u32 = 2,
-        .bitmap_size_u32 = 0,
-        .bitmap_ptr_p = 0,
-        .methods_ptr_p = 0,
+        .oat_file_uintptr = 0,
+        .status_intptr = -1,
+        .type_uintptr = 2,
+        .bitmap_size_uintptr = 0,
+        .bitmap_ptr_uintptr = 0,
+        .methods_ptr_uintptr = 0,
         .success_b = false,
     };
   } else {
@@ -307,7 +307,7 @@ auto find_oat_class(uintptr_t cls) {
 }
 
 auto count_bits_in_word(uintptr_t word) {
-  uint32_t count = 0U;
+  uintptr_t count = 0U;
   while ((word > 0U)) {
     if ((word & 1U)) {
       count = (count + 1U);
@@ -320,24 +320,24 @@ auto count_bits_in_word(uintptr_t word) {
 auto get_oat_method_offsets(
     struct OatClass const& struct_OatClass,
     uintptr_t method_index) {
-  uintptr_t methods_ptr = struct_OatClass.methods_ptr_p;
-  uint32_t oc_type = struct_OatClass.type_u32;
-  uintptr_t bitmap_ptr = struct_OatClass.bitmap_ptr_p;
+  uintptr_t methods_ptr = struct_OatClass.methods_ptr_uintptr;
+  uintptr_t oc_type = struct_OatClass.type_uintptr;
+  uintptr_t bitmap_ptr = struct_OatClass.bitmap_ptr_uintptr;
   if ((methods_ptr == 0U)) {
-    uint32_t kOatClassNoneCompiled = 2U;
+    uintptr_t kOatClassNoneCompiled = 2U;
 
     return methods_ptr;
   }
-  uint32_t methods_pointer_index = 0U;
+  uintptr_t methods_pointer_index = 0U;
   if ((bitmap_ptr == 0U)) {
-    uint32_t kOatClassAllCompiled = 0U;
+    uintptr_t kOatClassAllCompiled = 0U;
 
     methods_pointer_index = method_index;
   } else {
-    uint32_t kOatClassSomeCompiled = 1U;
+    uintptr_t kOatClassSomeCompiled = 1U;
 
     uintptr_t word_index = (method_index >> 5U);
-    uint32_t bit_mask = (1U << (method_index & 31U));
+    uintptr_t bit_mask = (1U << (method_index & 31U));
     uintptr_t is_bit_set = AdvancePointer(bitmap_ptr, (word_index * 4U));
     is_bit_set = Read4(is_bit_set);
     is_bit_set = ((is_bit_set & bit_mask) != 0U);
@@ -346,9 +346,9 @@ auto get_oat_method_offsets(
     }
     uintptr_t word_end = (method_index >> 5U);
     uintptr_t partial_word_bits = (method_index & 31U);
-    uint32_t count = 0U;
-    uint32_t word = 0U;
-    uint32_t elem = 0U;
+    uintptr_t count = 0U;
+    uintptr_t word = 0U;
+    uintptr_t elem = 0U;
     while ((word < word_end)) {
       elem = AdvancePointer(bitmap_ptr, (word * 4U));
       elem = Read4(elem);
@@ -385,29 +385,29 @@ auto get_oat_method(
       get_oat_method_offsets(struct_OatClass, oat_method_index);
   if ((oat_method_offsets == 0U)) {
     return OatMethod{
-        .begin_p = 0,
-        .offset_u32 = 0,
+        .begin_uintptr = 0,
+        .offset_uintptr = 0,
         .success_b = true,
     };
   }
   uintptr_t runtime_current = get_runtime();
-  uint32_t begin_p = 0U;
-  uintptr_t oat_file = struct_OatClass.oat_file_p;
+  uintptr_t begin_uintptr = 0U;
+  uintptr_t oat_file = struct_OatClass.oat_file_uintptr;
   if ((Read1(AccessField(oat_file, 44U)) ||
        ((runtime_current == 0U) ||
         runtime_is_aot_compiler(runtime_current, runtime_current)))) {
-    begin_p = Read4(AccessField(oat_file, 20U));
-    uint32_t offset_u32 = Read4(AccessField(oat_method_offsets, 0U));
+    begin_uintptr = Read4(AccessField(oat_file, 20U));
+    uint32_t offset_uintptr = Read4(AccessField(oat_method_offsets, 0U));
     return OatMethod{
-        .begin_p = begin_p,
-        .offset_u32 = offset_u32,
+        .begin_uintptr = begin_uintptr,
+        .offset_uintptr = offset_uintptr,
         .success_b = true,
     };
   }
-  begin_p = Read4(AccessField(oat_file, 20U));
+  begin_uintptr = Read4(AccessField(oat_file, 20U));
   return OatMethod{
-      .begin_p = begin_p,
-      .offset_u32 = 0,
+      .begin_uintptr = begin_uintptr,
+      .offset_uintptr = 0,
       .success_b = true,
   };
 }
@@ -425,7 +425,7 @@ auto length_prefixed_array_at(
     uintptr_t alignment) {
   uintptr_t ptr = array;
 
-  uint32_t data_offset = 4U;
+  uintptr_t data_offset = 4U;
   auto element_offset = round_up(data_offset, alignment);
   element_offset = (element_offset + (idx * element_size));
   uintptr_t ret = (ptr + element_offset);
@@ -436,59 +436,59 @@ auto get_virtual_methods(
     uintptr_t method,
     uintptr_t cls,
     uintptr_t start_offset) {
-  uint32_t ptr_size = 4U;
-  uint32_t num_methods = 0U;
+  uintptr_t ptr_size = 4U;
+  uintptr_t num_methods = 0U;
   uint64_t methods_ptr = Read8(AccessField(cls, 48U));
   if ((methods_ptr == 0U)) {
     num_methods = 0U;
   } else {
     num_methods = Read4(AccessField(methods_ptr, 0U));
   }
-  uint32_t end_offset = num_methods;
+  uintptr_t end_offset = num_methods;
 
-  uint32_t size = (end_offset - start_offset);
+  uintptr_t size = (end_offset - start_offset);
   if ((size == 0U)) {
     return ArraySlice{
-        .array_p = 0,
-        .size_u32 = 0,
-        .element_size_u32 = 0,
+        .array_uintptr = 0,
+        .size_uintptr = 0,
+        .element_size_uintptr = 0,
     };
   }
 
-  uint32_t method_size = 20U;
+  uintptr_t method_size = 20U;
   method_size = round_up(method_size, ptr_size);
   method_size = (method_size + 12U);
-  uint32_t method_alignment = ptr_size;
+  uintptr_t method_alignment = ptr_size;
   auto array_method =
       length_prefixed_array_at(methods_ptr, 0U, method_size, method_alignment);
-  uint32_t size_u32 = Read4(AccessField(methods_ptr, 0U));
+  uint32_t size_uintptr = Read4(AccessField(methods_ptr, 0U));
   auto array_slice = ArraySlice{
-      .array_p = array_method,
-      .size_u32 = size_u32,
-      .element_size_u32 = method_size,
+      .array_uintptr = array_method,
+      .size_uintptr = size_uintptr,
+      .element_size_uintptr = method_size,
   };
 
-  uintptr_t tmp = array_slice.array_p;
-  tmp = (tmp + (start_offset * array_slice.element_size_u32));
+  uintptr_t tmp = array_slice.array_uintptr;
+  tmp = (tmp + (start_offset * array_slice.element_size_uintptr));
   return ArraySlice{
-      .array_p = tmp,
-      .size_u32 = size,
-      .element_size_u32 = array_slice.element_size_u32,
+      .array_uintptr = tmp,
+      .size_uintptr = size,
+      .element_size_uintptr = array_slice.element_size_uintptr,
   };
 }
 
 auto find_oat_method_for(uintptr_t method, uintptr_t runtime_obj) {
-  uint32_t oat_method_index = 0U;
+  uintptr_t oat_method_index = 0U;
   auto cls = get_declaring_class(method);
   if ((is_static_method(method) || is_direct_method(method))) {
     oat_method_index = Read2(AccessField(method, 16U));
   } else {
     oat_method_index = Read2(AccessField(cls, 118U));
     auto virtual_methods = get_virtual_methods(method, cls, oat_method_index);
-    uintptr_t iterator = virtual_methods.array_p;
+    uintptr_t iterator = virtual_methods.array_uintptr;
     uintptr_t end =
         (iterator +
-         (virtual_methods.size_u32 * virtual_methods.element_size_u32));
+         (virtual_methods.size_uintptr * virtual_methods.element_size_uintptr));
     bool found_virtual = false;
     while ((iterator != end)) {
       uintptr_t art_method = iterator;
@@ -498,14 +498,14 @@ auto find_oat_method_for(uintptr_t method, uintptr_t runtime_obj) {
         break;
       }
       oat_method_index = (oat_method_index + 1U);
-      iterator = (iterator + virtual_methods.element_size_u32);
+      iterator = (iterator + virtual_methods.element_size_uintptr);
     }
   }
   auto oat_class = find_oat_class(cls);
   if ((!oat_class.success_b)) {
     return OatMethod{
-        .begin_p = 0,
-        .offset_u32 = 0,
+        .begin_uintptr = 0,
+        .offset_uintptr = 0,
         .success_b = false,
     };
   }
@@ -518,20 +518,20 @@ auto get_oat_pointer(
   if ((offset == 0U)) {
     return offset;
   }
-  uintptr_t begin = struct_OatMethod.begin_p;
+  uintptr_t begin = struct_OatMethod.begin_uintptr;
   return AdvancePointer(begin, (offset * 1U));
 }
 
 auto get_code_offset(struct OatMethod const& struct_OatMethod) {
-  uint32_t oat_method_offset = struct_OatMethod.offset_u32;
+  uintptr_t oat_method_offset = struct_OatMethod.offset_uintptr;
   auto code = get_oat_pointer(struct_OatMethod, oat_method_offset);
   code = (code & (~1U));
   if ((code == 0U)) {
     return 0U;
   }
-  uint32_t method_header_size = 24U;
+  uintptr_t method_header_size = 24U;
   code = (code - method_header_size);
-  uint32_t kCodeSizeMask = (~2147483648U);
+  uintptr_t kCodeSizeMask = (~2147483648U);
   uint32_t code_size = Read4(AccessField(code, 20U));
   code_size = (code_size & kCodeSizeMask);
   if ((code_size == 0U)) {
@@ -560,7 +560,7 @@ auto get_oat_quick_method_header(
           existing_entry_point, runtime_obj, thread_obj)) {
     return 0U;
   }
-  uint32_t method_header = 0U;
+  uintptr_t method_header = 0U;
   if (((!is_quick_generic_jni_stub(
            existing_entry_point, runtime_obj, thread_obj)) &&
        (!is_quick_resolution_stub(
@@ -594,7 +594,7 @@ auto get_oat_quick_method_header(
 }
 
 auto is_abstract_method(uintptr_t method) {
-  uint32_t kAccAbstract = 1024U;
+  uintptr_t kAccAbstract = 1024U;
   return (get_method_access_flags(method) & kAccAbstract);
 }
 
@@ -613,10 +613,10 @@ auto get_frame_size(
   uint32_t size = 0U;
   uintptr_t callee_save_methods = AccessField(runtime_obj, 0U);
   uintptr_t callee_save_infos = AccessField(runtime_obj, 60U);
-  uint32_t kSaveAll = 0U;
-  uint32_t kRefsOnly = 1U;
-  uint32_t kRefsAndArgs = 2U;
-  uint32_t method_info = 0U;
+  uintptr_t kSaveAll = 0U;
+  uintptr_t kRefsOnly = 1U;
+  uintptr_t kRefsAndArgs = 2U;
+  uintptr_t method_info = 0U;
   if (is_abstract_method(method)) {
     method_info = AccessArrayItem(callee_save_infos, kRefsAndArgs, 12U);
     size = Read4(AccessField(method_info, 0U));
@@ -648,7 +648,7 @@ auto get_frame_size(
       return size;
     }
   }
-  uint32_t code = 0U;
+  uintptr_t code = 0U;
   bool is_native = false;
   if ((is_quick_resolution_stub(entry_point, runtime_obj, thread_obj) ||
        is_quick_to_interpreter_bridge(entry_point, runtime_obj, thread_obj))) {
@@ -663,14 +663,14 @@ auto get_frame_size(
     uintptr_t callee_info =
         AccessArrayItem(callee_save_infos, kRefsAndArgs, 12U);
     uint32_t callee_info_size = Read4(AccessField(callee_info, 0U));
-    uint32_t voidptr_size = 4U;
-    uint32_t artmethodptr_size = 4U;
+    uintptr_t voidptr_size = 4U;
+    uintptr_t artmethodptr_size = 4U;
     auto num_refs = (get_number_of_refs_without_receiver(method) + 1U);
-    uint32_t handle_scope_size = (8U + (4U * num_refs));
+    uintptr_t handle_scope_size = (8U + (4U * num_refs));
     size =
         (((callee_info_size - voidptr_size) + artmethodptr_size) +
          handle_scope_size);
-    uint32_t kStackAlignment = 16U;
+    uintptr_t kStackAlignment = 16U;
     size = round_up(size, kStackAlignment);
     return size;
   }
@@ -696,9 +696,9 @@ auto unwind(unwind_callback_t __unwind_callback, void* __unwind_data) {
     quick_frame = quick_frame;
     uint32_t shadow_frame = Read4(AccessField(mstack, 8U));
     shadow_frame = shadow_frame;
-    uint32_t pc = 0U;
-    uint32_t kMaxFrames = 1024U;
-    uint32_t depth = 0U;
+    uintptr_t pc = 0U;
+    uintptr_t kMaxFrames = 1024U;
+    uintptr_t depth = 0U;
     if ((quick_frame != 0U)) {
       while (((quick_frame != 0U) && (depth < kMaxFrames))) {
         uint32_t frameptr = Read4(quick_frame);
