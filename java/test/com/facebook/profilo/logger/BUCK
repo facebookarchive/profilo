@@ -13,7 +13,7 @@ fb_core_android_library(
         profilo_path("facebook/java/test/com/facebook/profilo/instrumentation_tests/..."),
     ],
     deps = [
-        profilo_path("deps/third-party/java/powermock:powermock"),
+        profilo_path("deps/third-party/java/powermock:powermock2"),
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/proguard:annotations"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
@@ -34,6 +34,6 @@ fb_native.robolectric_test(
         profilo_path("deps/third-party/java/assertj:assertj-core"),
         profilo_path("deps/third-party/java/guava:guava"),
         profilo_path("deps/third-party/java/junit:junit"),
-        profilo_path("deps/third-party/java/powermock:powermock"),
+        profilo_path("deps/third-party/java/powermock:powermock2"),
     ],
 )
