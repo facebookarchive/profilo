@@ -141,7 +141,7 @@ public final class TraceInternal {
 
   private static @Nullable Object invoke(final Method method, final Object... args) {
     try {
-      return method.invoke(null, (Object[]) args);
+      return method.invoke(null, args);
     } catch (IllegalAccessException e) {
       // This shouldn't happen, but if it does something is horribly wrong. Fall back to assuming
       // we have no Trace support.
