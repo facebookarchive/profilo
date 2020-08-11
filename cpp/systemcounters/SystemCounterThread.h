@@ -51,7 +51,7 @@ class SystemCounterThread
   SystemCounterThread() = default;
 
   ThreadCounters threadCounters_;
-  ProcessCounters<TaskSchedFile, Logger> processCounters_;
+  ProcessCounters processCounters_;
   SystemCounters<Logger> systemCounters_;
 
   int32_t extraAvailableCounters_;

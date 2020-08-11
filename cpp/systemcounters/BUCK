@@ -25,9 +25,6 @@ fb_xplat_cxx_library(
     ],
     labels = ["supermodule:android/default/loom.core"],
     soname = "libprofilo_systemcounters.$(ext)",
-    tests = [
-        profilo_path("cpp/test/systemcounters:processcounters"),
-    ],
     visibility = [
         profilo_path("cpp/test/systemcounters/..."),
         profilo_path("java/main/com/facebook/profilo/provider/systemcounters:"),
