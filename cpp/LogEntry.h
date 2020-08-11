@@ -22,7 +22,6 @@
 #include <type_traits>
 
 #include <profilo/entries/Entry.h>
-#include <util/common.h>
 
 namespace facebook {
 namespace profilo {

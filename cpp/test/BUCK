@@ -186,6 +186,7 @@ profilo_cxx_test(
         profilo_path("deps/fb:fb"),
         profilo_path("cpp/profiler:profiler"),
         profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/util:util"),
     ],
 )
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <util/SysFs.h>
+#include "SysFs.h"
 
 #include <fcntl.h>
 #include <stdlib.h>
@@ -26,7 +26,7 @@
 
 namespace facebook {
 namespace profilo {
-namespace util {
+namespace counters {
 
 namespace {
 
@@ -115,6 +115,6 @@ int64_t CpuFrequencyStats::refresh(int8_t cpu) {
   return cur_frequency;
 }
 
-} // namespace util
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

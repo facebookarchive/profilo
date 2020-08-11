@@ -19,13 +19,13 @@
 #include <sys/resource.h>
 #include <sys/time.h>
 
-#include <util/ProcFs.h>
+#include <counters/ProcFs.h>
+#include <util/common.h>
 #include "common.h"
-
-using facebook::profilo::util::StatType;
 
 namespace facebook {
 namespace profilo {
+namespace counters {
 
 namespace {
 
@@ -59,7 +59,7 @@ template <
     typename TaskSchedFile,
     typename Logger,
     typename GetRusageStats = DefaultGetRusageStatsProvider,
-    typename StatmFile = util::ProcStatmFile>
+    typename StatmFile = ProcStatmFile>
 class ProcessCounters {
  public:
   void logCounters() {
@@ -124,7 +124,7 @@ class ProcessCounters {
     }
 
     auto prevInfo = schedStats_->getInfo();
-    util::SchedInfo currInfo;
+    SchedInfo currInfo;
     try {
       currInfo = schedStats_->refresh();
       extraAvailableCounters_ |= schedStats_->availableStatsMask;
@@ -186,8 +186,8 @@ class ProcessCounters {
       statmStats_.reset(new StatmFile());
     }
 
-    util::StatmInfo prevInfo = statmStats_->getInfo();
-    util::StatmInfo currInfo = statmStats_->refresh();
+    StatmInfo prevInfo = statmStats_->getInfo();
+    StatmInfo currInfo = statmStats_->refresh();
 
     auto tid = threadID();
     auto time = monotonicTime();
@@ -214,8 +214,10 @@ class ProcessCounters {
   int32_t extraAvailableCounters_;
   GetRusageStats getRusageStats_;
   std::unique_ptr<StatmFile> statmStats_;
+
   friend class ProcessCountersTestAccessor;
 };
 
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

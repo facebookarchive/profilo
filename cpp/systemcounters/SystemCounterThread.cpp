@@ -26,6 +26,7 @@ using facebook::jni::local_ref;
 
 namespace facebook {
 namespace profilo {
+namespace counters {
 
 namespace {
 
@@ -123,5 +124,6 @@ void SystemCounterThread::logTraceAnnotations() {
           threadCounters_.getAvailableCounters());
 }
 
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

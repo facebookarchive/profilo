@@ -20,6 +20,8 @@
 #include <chrono>
 #include <cstring>
 
+#include <util/common.h>
+
 namespace facebook {
 namespace profilo {
 

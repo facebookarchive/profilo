@@ -23,6 +23,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
+#include <util/common.h>
 
 using namespace facebook::profilo;
 

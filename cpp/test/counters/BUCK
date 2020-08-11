@@ -16,7 +16,7 @@ profilo_cxx_binary(
         "-pie",
     ],
     deps = [
-        profilo_path("cpp/util:util"),
+        profilo_path("cpp/counters:counters"),
     ],
 )
 
@@ -37,7 +37,29 @@ profilo_cxx_test(
     ],
     deps = [
         "//xplat/folly:experimental_test_util",
-        "//xplat/third-party/linker_lib:pthread",
-        profilo_path("cpp/util:util"),
+        profilo_path("cpp/counters:counters"),
+        profilo_path("cpp/logger:logger_static"),
+    ],
+)
+
+profilo_cxx_test(
+    name = "counter",
+    srcs = [
+        "CounterTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-ldl",
+    ],
+    deps = [
+        "//xplat/folly:experimental_test_util",
+        "//xplat/third-party/gmock:gmock",
+        profilo_path("cpp/counters:counters"),
     ],
 )

@@ -16,9 +16,9 @@
 
 #pragma once
 
+#include <counters/ProcFs.h>
 #include <fbjni/fbjni.h>
 #include <profilo/Logger.h>
-#include <util/ProcFs.h>
 
 #include "ProcessCounters.h"
 #include "SystemCounters.h"
@@ -26,6 +26,7 @@
 
 namespace facebook {
 namespace profilo {
+namespace counters {
 
 class SystemCounterThread
     : public facebook::jni::HybridClass<SystemCounterThread> {
@@ -39,15 +40,18 @@ class SystemCounterThread
   static void registerNatives();
 
   void logCounters();
+
   void logHighFrequencyThreadCounters();
+
   void logTraceAnnotations();
 
  private:
   friend HybridBase;
+
   SystemCounterThread() = default;
 
-  ThreadCounters<util::ThreadCache, Logger> threadCounters_;
-  ProcessCounters<util::TaskSchedFile, Logger> processCounters_;
+  ThreadCounters threadCounters_;
+  ProcessCounters<TaskSchedFile, Logger> processCounters_;
   SystemCounters<Logger> systemCounters_;
 
   int32_t extraAvailableCounters_;
@@ -58,5 +62,6 @@ class SystemCounterThread
   }
 };
 
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

@@ -35,5 +35,10 @@ std::string get_system_property(const char* key);
 // intermediate directories
 void mkdirs(char const* dir);
 
+// Custom parse for unsinged long values, ignores minus sign and skips blank
+// spaces in front. Such narrowly specialized method is faster than the standard
+// strtoull.
+uint64_t parse_ull(char* str, char** end);
+
 } // namespace profilo
 } // namespace facebook

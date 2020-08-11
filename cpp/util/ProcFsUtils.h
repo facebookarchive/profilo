@@ -16,40 +16,24 @@
 
 #pragma once
 
-#include <util/BaseStatFile.h>
-
-#include <map>
-#include <memory>
-#include <tuple>
-#include <vector>
+#include <sys/types.h>
+#include <string>
+#include <unordered_set>
 
 namespace facebook {
 namespace profilo {
 namespace util {
 
-typedef int64_t CpuFrequency;
+using ThreadList = std::unordered_set<uint32_t>;
+ThreadList threadListFromProcFs();
 
-class CpuCurrentFrequencyStatFile : public BaseStatFile<CpuFrequency> {
- public:
-  explicit CpuCurrentFrequencyStatFile(int cpu);
+using FdList = std::unordered_set<uint32_t>;
+FdList fdListFromProcFs();
 
-  CpuFrequency doRead(int fd, uint32_t requested_stats_mask) override;
-};
+using PidList = std::unordered_set<uint32_t>;
+PidList pidListFromProcFs();
 
-class CpuFrequencyStats {
- public:
-  CpuFrequencyStats(int8_t cores)
-      : max_cpu_freq_(cores), cpu_freq_files_(cores), cache_(cores) {}
-
-  int64_t getCachedCpuFrequency(int8_t cpu);
-  int64_t getMaxCpuFrequency(int8_t cpu);
-  int64_t refresh(int8_t cpu);
-
- private:
-  std::vector<int64_t> max_cpu_freq_;
-  std::vector<std::unique_ptr<CpuCurrentFrequencyStatFile>> cpu_freq_files_;
-  std::vector<int64_t> cache_;
-};
+std::string getThreadName(uint32_t tid);
 
 } // namespace util
 } // namespace profilo

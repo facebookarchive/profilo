@@ -26,7 +26,7 @@
 
 namespace facebook {
 namespace profilo {
-namespace util {
+namespace counters {
 
 enum StatType : int32_t {
   CPU_TIME = 1,
@@ -124,6 +124,6 @@ class BaseStatFile {
   StatInfo last_info_;
 };
 
-} // namespace util
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

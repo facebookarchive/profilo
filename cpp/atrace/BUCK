@@ -35,6 +35,7 @@ fb_xplat_cxx_library(
         profilo_path("deps/linker:linker"),
         profilo_path("deps/sigmux:sigmux"),
         profilo_path("cpp/util:hooks"),
+        profilo_path("cpp/util:util"),
         profilo_path("deps/breakpad:abort-with-reason"),
     ],
 )

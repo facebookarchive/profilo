@@ -27,6 +27,7 @@
 #include <profilo/Logger.h>
 #include <profilo/jni/NativeTraceWriter.h>
 #include <profilo/logger/buffer/RingBuffer.h>
+#include <util/common.h>
 #include "TraceProviders.h"
 
 namespace fbjni = facebook::jni;

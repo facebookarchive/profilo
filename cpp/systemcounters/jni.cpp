@@ -20,7 +20,7 @@
 
 #include "SystemCounterThread.h"
 
-using namespace facebook::profilo;
+using namespace facebook::profilo::counters;
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return facebook::xplat::initialize(

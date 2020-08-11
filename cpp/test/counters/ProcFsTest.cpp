@@ -19,7 +19,7 @@
 
 #include <fstream>
 
-#include <util/ProcFs.h>
+#include <counters/ProcFs.h>
 #include <util/common.h>
 
 namespace fs = boost::filesystem;
@@ -27,7 +27,7 @@ namespace test = folly::test;
 
 namespace facebook {
 namespace profilo {
-namespace util {
+namespace counters {
 
 constexpr auto ALL_STATS_MASK = 0xffffffff;
 
@@ -266,6 +266,6 @@ TEST_F(ProcFsTest, testMeminfoFile) {
   EXPECT_EQ(statInfo.inactiveKB, 5855820);
 }
 
-} // namespace util
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

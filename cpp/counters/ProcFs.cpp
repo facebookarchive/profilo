@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-#include <util/ProcFs.h>
+#include "ProcFs.h"
 
 #include <sys/types.h>
 #include <unistd.h>
-#include <util/common.h>
 #include <algorithm>
 #include <array>
 #include <climits>
@@ -26,124 +25,39 @@
 
 namespace facebook {
 namespace profilo {
-namespace util {
+namespace counters {
 
 static constexpr int kMaxProcFileLength = 64;
 
-// Custom parse for unsinged long values, ignores minus sign and skips blank
-// spaces in front. Such narrowly specialized method is faster than the standard
-// strtoull.
-uint64_t parse_ull(char* str, char** end) {
-  static constexpr int kMaxDigits = 20;
-
-  char* cur = str;
-  while (*cur == ' ') {
-    ++cur;
-  }
-
-  uint64_t result = 0;
-  uint8_t len = 0;
-  while (*cur >= '0' && *cur <= '9' && len <= kMaxDigits) {
-    result *= 10;
-    result += (*cur - '0');
-    ++len;
-    ++cur;
-  }
-
-  *end = cur;
-  return result;
-}
-
-// Return all the numeric items in the folder passed as parameter.
-// Non-numeric items are ignored.
-static std::unordered_set<uint32_t> numericFolderItems(const char* folder) {
-  DIR* dir = opendir(folder);
-  if (dir == nullptr) {
-    throw std::system_error(errno, std::system_category());
-  }
-  std::unordered_set<uint32_t> items;
-  dirent* result = nullptr;
-  errno = 0;
-  while ((result = readdir(dir)) != nullptr) {
-    // Skip navigation entries
-    if (strcmp(".", result->d_name) == 0 || strcmp("..", result->d_name) == 0) {
-      continue;
-    }
-
-    errno = 0;
-    char* endptr = nullptr;
-    uint32_t item = strtoul(result->d_name, &endptr, /*base*/ 10);
-    if (errno != 0 || *endptr != '\0') {
-      continue; // unable to parse item
-    }
-    items.emplace(item);
-  }
-  if (closedir(dir) != 0) {
-    throw std::system_error(errno, std::system_category(), "closedir");
-  }
-  return items;
-}
-
-ThreadList threadListFromProcFs() {
-  return ThreadList(numericFolderItems("/proc/self/task/"));
-}
-
-FdList fdListFromProcFs() {
-  return FdList(numericFolderItems("/proc/self/fd/"));
-}
-
-PidList pidListFromProcFs() {
-  return PidList(numericFolderItems("/proc/"));
-}
-
-std::string getThreadName(uint32_t thread_id) {
-  char threadNamePath[kMaxProcFileLength]{};
-  int bytesWritten = snprintf(
-      &threadNamePath[0],
-      kMaxProcFileLength,
-      "/proc/self/task/%d/comm",
-      thread_id);
-  if (bytesWritten < 0 || bytesWritten >= kMaxProcFileLength) {
-    errno = 0;
-    return "";
-  }
-  FILE* threadNameFile = fopen(threadNamePath, "r");
-  if (threadNameFile == nullptr) {
-    errno = 0;
-    return "";
-  }
-
-  char threadName[16]{};
-  char* res = fgets(threadName, 16, threadNameFile);
-  fclose(threadNameFile);
-  errno = 0;
-  if (res == nullptr) {
-    return "";
-  }
-
-  return std::string(threadName);
-}
-
-TaskStatInfo getStatInfo(uint32_t tid) {
+TaskStatInfo getStatInfo(int32_t tid) {
   return TaskStatFile(tid).refresh();
 }
 
-ThreadStatInfo::ThreadStatInfo()
-    : monotonicStatTime(0),
-      cpuTimeMs(),
-      state(ThreadState::TS_UNKNOWN),
-      majorFaults(),
-      cpuNum(-1),
-      kernelCpuTimeMs(),
-      minorFaults(),
-      threadPriority(999),
-      highPrecisionCpuTimeMs(),
-      waitToRunTimeMs(),
-      nrVoluntarySwitches(),
-      nrInvoluntarySwitches(),
-      iowaitSum(),
-      iowaitCount(),
-      availableStatsMask(0) {}
+ThreadStatInfo ThreadStatInfo::createThreadStatInfo(int32_t tid) {
+  return ThreadStatInfo{
+      .cpuTimeMs = TraceCounter(QuickLogConstants::THREAD_CPU_TIME, tid),
+      .state = TraceCounter(QuickLogConstants::THREAD_STATE, tid),
+      .majorFaults =
+          TraceCounter(QuickLogConstants::QL_THREAD_FAULTS_MAJOR, tid),
+      .cpuNum = TraceCounter(QuickLogConstants::THREAD_CPU_NUM, tid),
+      .kernelCpuTimeMs =
+          TraceCounter(QuickLogConstants::THREAD_KERNEL_CPU_TIME, tid),
+      .minorFaults =
+          TraceCounter(QuickLogConstants::THREAD_SW_FAULTS_MINOR, tid),
+      .threadPriority = TraceCounter(QuickLogConstants::THREAD_PRIORITY, tid),
+      .highPrecisionCpuTimeMs =
+          TraceCounter(QuickLogConstants::THREAD_CPU_TIME, tid),
+      .waitToRunTimeMs =
+          TraceCounter(QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME, tid),
+      .nrVoluntarySwitches =
+          TraceCounter(QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY, tid),
+      .nrInvoluntarySwitches =
+          TraceCounter(QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY, tid),
+      .iowaitSum = TraceCounter(QuickLogConstants::IOWAIT_TIME, tid),
+      .iowaitCount = TraceCounter(QuickLogConstants::IOWAIT_COUNT, tid),
+      .availableStatsMask = 0,
+  };
+}
 
 SchedstatInfo::SchedstatInfo() : cpuTimeMs(0), waitToRunTimeMs(0) {}
 
@@ -351,7 +265,7 @@ TaskStatInfo parseStatFile(char* data, size_t size, uint32_t stats_mask) {
   return info;
 }
 
-std::string tidToStatPath(uint32_t tid, const char* stat_name) {
+std::string tidToStatPath(int32_t tid, const char* stat_name) {
   char threadStatPath[kMaxProcFileLength]{};
 
   int bytesWritten = snprintf(
@@ -409,7 +323,7 @@ StatmInfo parseStatmFile(char* data, size_t size) {
 
 } // namespace
 
-TaskStatFile::TaskStatFile(uint32_t tid)
+TaskStatFile::TaskStatFile(int32_t tid)
     : BaseStatFile<TaskStatInfo>(tidToStatPath(tid, "stat")) {}
 
 TaskStatInfo TaskStatFile::doRead(int fd, uint32_t requested_stats_mask) {
@@ -429,7 +343,7 @@ TaskStatInfo TaskStatFile::doRead(int fd, uint32_t requested_stats_mask) {
   return parseStatFile(buffer, bytes_read, requested_stats_mask);
 }
 
-TaskSchedstatFile::TaskSchedstatFile(uint32_t tid)
+TaskSchedstatFile::TaskSchedstatFile(int32_t tid)
     : BaseStatFile<SchedstatInfo>(tidToStatPath(tid, "schedstat")) {}
 
 SchedstatInfo TaskSchedstatFile::doRead(int fd, uint32_t requested_stats_mask) {
@@ -449,7 +363,7 @@ SchedstatInfo TaskSchedstatFile::doRead(int fd, uint32_t requested_stats_mask) {
   return parseSchedstatFile(buffer, bytes_read);
 }
 
-TaskSchedFile::TaskSchedFile(uint32_t tid)
+TaskSchedFile::TaskSchedFile(int32_t tid)
     : BaseStatFile<SchedInfo>(tidToStatPath(tid, "sched")),
       value_offsets_(),
       initialized_(false),
@@ -672,55 +586,19 @@ StatmInfo ProcStatmFile::doRead(int fd, uint32_t requested_stats_mask) {
   return parseStatmFile(buffer, bytes_read);
 }
 
-ThreadStatHolder::ThreadStatHolder(uint32_t tid)
+ThreadStatHolder::ThreadStatHolder(int32_t tid)
     : stat_file_(),
       schedstat_file_(),
       sched_file_(),
-      last_info_(),
+      last_info_(ThreadStatInfo::createThreadStatInfo(tid)),
       availableStatFilesMask_(0xff),
       availableStatsMask_(0),
       tid_(tid) {}
 
-ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
-  last_info_.statChangeMask = 0;
-  // Assuming that /proc/self/<tid>/stat is always available.
-  if (kFileStats[StatFileType::STAT] & requested_stats_mask) {
-    if (stat_file_.get() == nullptr) {
-      stat_file_ = std::make_unique<TaskStatFile>(tid_);
-    }
-    auto statInfo = stat_file_->refresh(requested_stats_mask);
-    last_info_.statChangeMask |=
-        (last_info_.cpuTimeMs != statInfo.cpuTime) ? StatType::CPU_TIME : 0;
-    last_info_.cpuTimeMs = statInfo.cpuTime;
-    last_info_.statChangeMask |=
-        (last_info_.state != statInfo.state) ? StatType::STATE : 0;
-    last_info_.state = statInfo.state;
-    last_info_.statChangeMask |=
-        (last_info_.majorFaults != statInfo.majorFaults)
-        ? StatType::MAJOR_FAULTS
-        : 0;
-    last_info_.majorFaults = statInfo.majorFaults;
-    last_info_.statChangeMask |=
-        (last_info_.cpuNum != statInfo.cpuNum) ? StatType::CPU_NUM : 0;
-    last_info_.cpuNum = statInfo.cpuNum;
-    last_info_.statChangeMask |=
-        (last_info_.kernelCpuTimeMs != statInfo.kernelCpuTimeMs)
-        ? StatType::KERNEL_CPU_TIME
-        : 0;
-    last_info_.kernelCpuTimeMs = statInfo.kernelCpuTimeMs;
-    last_info_.statChangeMask |=
-        (last_info_.minorFaults != statInfo.minorFaults)
-        ? StatType::MINOR_FAULTS
-        : 0;
-    last_info_.minorFaults = statInfo.minorFaults;
-    last_info_.statChangeMask |=
-        (last_info_.threadPriority != statInfo.threadPriority)
-        ? StatType::THREAD_PRIORITY
-        : 0;
-    last_info_.threadPriority = statInfo.threadPriority;
-    availableStatsMask_ |=
-        kFileStats[StatFileType::STAT] & requested_stats_mask;
-  }
+void ThreadStatHolder::sampleAndLog(
+    uint32_t requested_stats_mask,
+    int32_t tid) {
+  int64_t timestamp = monotonicTime();
   // If /proc/self/<tid>/schedstat is requested, we will try to read it.
   // If we get exception on first read the availableStatFilesMask will be
   // updated respectively. The second time this stat file will be ignored.
@@ -731,22 +609,31 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     }
     try {
       auto schedstatInfo = schedstat_file_->refresh(requested_stats_mask);
-      last_info_.statChangeMask |=
-          (last_info_.waitToRunTimeMs != schedstatInfo.waitToRunTimeMs)
-          ? StatType::WAIT_TO_RUN_TIME
-          : 0;
-      last_info_.waitToRunTimeMs = schedstatInfo.waitToRunTimeMs;
-      last_info_.highPrecisionCpuTimeMs |=
-          (last_info_.highPrecisionCpuTimeMs != schedstatInfo.cpuTimeMs)
-          ? StatType::HIGH_PRECISION_CPU_TIME
-          : 0;
-      last_info_.highPrecisionCpuTimeMs = schedstatInfo.cpuTimeMs;
+      last_info_.waitToRunTimeMs.record(
+          schedstatInfo.waitToRunTimeMs, timestamp);
+      last_info_.highPrecisionCpuTimeMs.record(
+          schedstatInfo.cpuTimeMs, timestamp);
       availableStatsMask_ |= kFileStats[StatFileType::SCHEDSTAT];
     } catch (const std::system_error& e) {
       // If 'schedstat' file is absent do not attempt the second time
       availableStatFilesMask_ ^= StatFileType::SCHEDSTAT;
       schedstat_file_.reset(nullptr);
     }
+  }
+  // Assuming that /proc/self/<tid>/stat is always available.
+  if (kFileStats[StatFileType::STAT] & requested_stats_mask) {
+    if (stat_file_.get() == nullptr) {
+      stat_file_ = std::make_unique<TaskStatFile>(tid_);
+    }
+    auto statInfo = stat_file_->refresh(requested_stats_mask);
+    if (!(availableStatsMask_ & StatType::HIGH_PRECISION_CPU_TIME)) {
+      last_info_.cpuTimeMs.record(statInfo.cpuTime, timestamp);
+    }
+    last_info_.state.record(statInfo.state, timestamp);
+    last_info_.cpuNum.record(statInfo.cpuNum, timestamp);
+    last_info_.kernelCpuTimeMs.record(statInfo.kernelCpuTimeMs, timestamp);
+    last_info_.minorFaults.record(statInfo.minorFaults, timestamp);
+    last_info_.threadPriority.record(statInfo.threadPriority, timestamp);
   }
   // If /proc/self/<tid>/sched is requested, we will try to read it.
   // If we get exception on first read the availableStatFilesMask will be
@@ -758,24 +645,12 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     }
     try {
       auto schedInfo = sched_file_->refresh(requested_stats_mask);
-      last_info_.statChangeMask |=
-          (last_info_.nrVoluntarySwitches != schedInfo.nrVoluntarySwitches)
-          ? StatType::NR_VOLUNTARY_SWITCHES
-          : 0;
-      last_info_.nrVoluntarySwitches = schedInfo.nrVoluntarySwitches;
-      last_info_.statChangeMask |=
-          (last_info_.nrInvoluntarySwitches != schedInfo.nrInvoluntarySwitches)
-          ? StatType::NR_INVOLUNTARY_SWITCHES
-          : 0;
-      last_info_.nrInvoluntarySwitches = schedInfo.nrInvoluntarySwitches;
-      last_info_.statChangeMask |= (last_info_.iowaitSum != schedInfo.iowaitSum)
-          ? StatType::IOWAIT_SUM
-          : 0;
-      last_info_.iowaitSum = schedInfo.iowaitSum;
-      last_info_.iowaitCount |= (last_info_.iowaitSum != schedInfo.iowaitCount)
-          ? StatType::IOWAIT_COUNT
-          : 0;
-      last_info_.iowaitCount = schedInfo.iowaitCount;
+      last_info_.nrVoluntarySwitches.record(
+          schedInfo.nrVoluntarySwitches, timestamp);
+      last_info_.nrInvoluntarySwitches.record(
+          schedInfo.nrInvoluntarySwitches, timestamp);
+      last_info_.iowaitSum.record(schedInfo.iowaitSum, timestamp);
+      last_info_.iowaitCount.record(schedInfo.iowaitCount, timestamp);
       availableStatsMask_ |= sched_file_->availableStatsMask;
     } catch (const std::exception& e) {
       // If 'schedstat' file is absent do not attempt the second time
@@ -784,20 +659,17 @@ ThreadStatInfo ThreadStatHolder::refresh(uint32_t requested_stats_mask) {
     }
   }
   last_info_.availableStatsMask = availableStatsMask_;
-  last_info_.monotonicStatTime = monotonicTime();
+}
+
+ThreadStatInfo& ThreadStatHolder::getInfo() {
   return last_info_;
 }
 
-ThreadStatInfo ThreadStatHolder::getInfo() {
-  return last_info_;
-}
-
-void ThreadCache::forEach(
-    stats_callback_fn callback,
+void ThreadCache::sampleAndLogForEach(
     uint32_t requested_stats_mask,
     const std::unordered_set<int32_t>* black_list) {
   try {
-    const auto& threads = util::threadListFromProcFs();
+    const auto& threads = threadListFromProcFs();
 
     // Delete cached data for gone threads.
     for (auto iter = cache_.begin(); iter != cache_.end();) {
@@ -812,7 +684,7 @@ void ThreadCache::forEach(
       if (black_list != nullptr && black_list->find(tid) != black_list->end()) {
         continue;
       }
-      forThread(tid, callback, requested_stats_mask);
+      sampleAndLogForThread(tid, requested_stats_mask);
     }
   } catch (const std::system_error& e) {
     // threadListFromProcFs can throw an error. Ignore it.
@@ -820,38 +692,20 @@ void ThreadCache::forEach(
   }
 }
 
-void ThreadCache::forThread(
-    uint32_t tid,
-    stats_callback_fn callback,
+void ThreadCache::sampleAndLogForThread(
+    int32_t tid,
     uint32_t requested_stats_mask) {
   auto statIter = cache_.find(tid);
   if (statIter == cache_.end()) {
     cache_.emplace(std::make_pair(tid, ThreadStatHolder(tid)));
   }
   auto& statHolder = cache_.at(tid);
-
-  auto prevInfo = statHolder.getInfo();
-  util::ThreadStatInfo currInfo;
-
   try {
-    currInfo = statHolder.refresh(requested_stats_mask);
-  } catch (const std::system_error& e) {
-    return;
-  } catch (const std::runtime_error& e) {
-    return;
+    statHolder.sampleAndLog(requested_stats_mask, tid);
+  } catch (const std::system_error&) {
+  } catch (const std::runtime_error&) {
   }
-
-  /*
-  Do refresh and staff right here
-  */
-  callback(tid, prevInfo, currInfo);
-}
-
-ThreadStatInfo ThreadCache::getRecentStats(int32_t tid) {
-  if (getStatsAvailabililty(tid) == 0) {
-    throw new std::runtime_error("Cache is empty");
-  }
-  return cache_.at(tid).getInfo();
+  return;
 }
 
 int32_t ThreadCache::getStatsAvailabililty(int32_t tid) {
@@ -866,6 +720,6 @@ void ThreadCache::clear() {
   cache_.clear();
 }
 
-} // namespace util
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

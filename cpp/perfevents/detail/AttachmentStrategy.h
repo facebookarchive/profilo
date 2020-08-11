@@ -28,7 +28,7 @@
 #include <perfevents/detail/RLimits.h>
 #include <perfevents/detail/make_unique.h>
 
-#include <util/ProcFs.h>
+#include <util/ProcFsUtils.h>
 
 namespace facebook {
 namespace perfevents {

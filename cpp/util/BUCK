@@ -1,14 +1,6 @@
 load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-UTIL_EXPORTED_HEADERS = [
-    "common.h",
-    "ProcFs.h",
-    "SysFs.h",
-    "BaseStatFile.h",
-    "hooks.h",
-]
-
 fb_xplat_cxx_library(
     name = "hooks",
     srcs = [
@@ -41,17 +33,15 @@ fb_xplat_cxx_library(
 
 fb_xplat_cxx_library(
     name = "util",
-    srcs = glob([
+    srcs = [
+        "ProcFsUtils.cpp",
         "common.cpp",
-        "ProcFs.cpp",
-        "SysFs.cpp",
-    ]),
-    headers = glob(
-        ["*.h"],
-        exclude = UTIL_EXPORTED_HEADERS,
-    ),
+    ],
     header_namespace = "util",
-    exported_headers = UTIL_EXPORTED_HEADERS,
+    exported_headers = [
+        "ProcFsUtils.h",
+        "common.h",
+    ],
     compiler_flags = [
         "-fexceptions",
         "-frtti",
@@ -62,9 +52,6 @@ fb_xplat_cxx_library(
     ],
     labels = ["supermodule:android/default/loom.core"],
     soname = "libprofilo_util.$(ext)",
-    tests = [
-        profilo_path("cpp/util/test:procfs"),
-    ],
     visibility = [
         "PUBLIC",
     ],

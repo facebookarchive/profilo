@@ -21,6 +21,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 #include <profilo/mappings/mappings.h>
+#include <util/common.h>
 
 #include <sys/types.h>
 #include <unistd.h>

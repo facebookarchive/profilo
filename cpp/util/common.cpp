@@ -158,5 +158,26 @@ void mkdirs(char const* dir) {
   }
 }
 
+uint64_t parse_ull(char* str, char** end) {
+  static constexpr int kMaxDigits = 20;
+
+  char* cur = str;
+  while (*cur == ' ') {
+    ++cur;
+  }
+
+  uint64_t result = 0;
+  uint8_t len = 0;
+  while (*cur >= '0' && *cur <= '9' && len <= kMaxDigits) {
+    result *= 10;
+    result += (*cur - '0');
+    ++len;
+    ++cur;
+  }
+
+  *end = cur;
+  return result;
+}
+
 } // namespace profilo
 } // namespace facebook

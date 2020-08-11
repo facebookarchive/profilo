@@ -27,6 +27,7 @@
 #include <profiler/SamplingProfiler.h>
 #include <profilo/LogEntry.h>
 #include <profilo/test/TestSequencer.h>
+#include <util/common.h>
 
 namespace facebook {
 namespace profilo {

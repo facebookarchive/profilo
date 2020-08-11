@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
+#include <errno.h>
+#include <sys/resource.h>
 #include <cstring>
 
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 #include <profilo/threadmetadata/ThreadMetadata.h>
-#include <util/ProcFs.h>
+#include <util/ProcFsUtils.h>
 #include <util/common.h>
-
-#include <sys/resource.h>
 
 namespace facebook {
 namespace profilo {

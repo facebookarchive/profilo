@@ -58,7 +58,6 @@
 #include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
 
-#include <util/ProcFs.h>
 #include <util/common.h>
 
 using namespace facebook::jni;

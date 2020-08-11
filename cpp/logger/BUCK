@@ -21,6 +21,7 @@ fb_xplat_cxx_library(
     deps = [
         profilo_path("cpp:constants"),
         profilo_path("cpp/logger/buffer:buffer"),
+        profilo_path("cpp/util:util"),
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -59,5 +60,6 @@ fb_xplat_cxx_library(
         profilo_path("cpp/generated:cpp"),
         profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("deps/fb:fb"),
+        profilo_path("cpp/util:util"),
     ],
 )

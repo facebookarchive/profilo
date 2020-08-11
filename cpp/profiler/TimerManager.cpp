@@ -26,11 +26,10 @@
 #include <sys/time.h>
 
 #include <fb/log.h>
-#include <util/common.h>
 #include <random>
 #include <stdexcept>
 
-#include <util/ProcFs.h>
+#include <util/ProcFsUtils.h>
 #include <util/common.h>
 
 namespace facebook {

@@ -18,19 +18,17 @@
 
 #include "common.h"
 
+#include <counters/SysFs.h>
 #include <fb/log.h>
-#include <util/SysFs.h>
 
 #include <malloc.h>
 #include <sys/syscall.h>
 #include <sys/sysinfo.h>
 #include <unistd.h>
 
-using facebook::profilo::util::CpuFrequencyStats;
-using facebook::profilo::util::StatType;
-
 namespace facebook {
 namespace profilo {
+namespace counters {
 
 namespace {
 
@@ -155,7 +153,7 @@ class SystemCounters {
     try {
       auto& logger = Logger::get();
       if (!cpuFrequencyStats_) {
-        cpuFrequencyStats_.reset(new util::CpuFrequencyStats(cpu_cores));
+        cpuFrequencyStats_.reset(new CpuFrequencyStats(cpu_cores));
         // Log max frequency only once
         for (int core = 0; core < cpu_cores; ++core) {
           int64_t maxFrequency = cpuFrequencyStats_->getMaxCpuFrequency(core);
@@ -194,11 +192,11 @@ class SystemCounters {
       return;
     }
     if (!vmStats_) {
-      vmStats_.reset(new util::VmStatFile());
+      vmStats_.reset(new VmStatFile());
     }
 
     auto prevInfo = vmStats_->getInfo();
-    util::VmStatInfo currInfo;
+    VmStatInfo currInfo;
     try {
       currInfo = vmStats_->refresh();
       extraAvailableCounters_ |= kVmStatCountersMask;
@@ -261,11 +259,11 @@ class SystemCounters {
       return;
     }
     if (!meminfo_) {
-      meminfo_.reset(new util::MeminfoFile());
+      meminfo_.reset(new MeminfoFile());
     }
 
     auto prevInfo = meminfo_->getInfo();
-    util::MeminfoInfo currInfo;
+    MeminfoInfo currInfo;
     try {
       currInfo = meminfo_->refresh();
       extraAvailableCounters_ |= kMeminfoCountersMask;
@@ -325,8 +323,8 @@ class SystemCounters {
   }
 
   std::unique_ptr<CpuFrequencyStats> cpuFrequencyStats_;
-  std::unique_ptr<util::VmStatFile> vmStats_;
-  std::unique_ptr<util::MeminfoFile> meminfo_;
+  std::unique_ptr<VmStatFile> vmStats_;
+  std::unique_ptr<MeminfoFile> meminfo_;
   bool vmStatsTracingDisabled_;
   bool meminfoTracingDisabled_;
   int32_t extraAvailableCounters_;
@@ -348,5 +346,6 @@ class SystemCounters {
   }
 };
 
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

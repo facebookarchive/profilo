@@ -16,15 +16,14 @@
 
 #pragma once
 
-#include <util/ProcFs.h>
+#include <counters/ProcFs.h>
 #include "common.h"
 
 #include <mutex>
 
-using facebook::profilo::util::StatType;
-
 namespace facebook {
 namespace profilo {
+namespace counters {
 
 namespace {
 
@@ -40,192 +39,16 @@ constexpr auto kHighFreqStatsMask = StatType::CPU_TIME | StatType::STATE |
 
 } // namespace
 
-template <typename ThreadCache, typename Logger>
 class ThreadCounters {
- private:
-  int32_t extraAvailableCounters_;
-  std::mutex mtx_; // Guards cache_
-  ThreadCache cache_;
-
-  static void threadCountersCallback(
-      uint32_t tid,
-      util::ThreadStatInfo& prevInfo,
-      util::ThreadStatInfo& currInfo) {
-    Logger& logger = Logger::get();
-
-    if (prevInfo.highPrecisionCpuTimeMs != 0 &&
-        (currInfo.availableStatsMask & StatType::HIGH_PRECISION_CPU_TIME)) {
-      // Don't log the initial value
-      logMonotonicCounter<Logger>(
-          prevInfo.highPrecisionCpuTimeMs,
-          currInfo.highPrecisionCpuTimeMs,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_CPU_TIME,
-          logger,
-          (prevInfo.statChangeMask & StatType::HIGH_PRECISION_CPU_TIME) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    } else if (
-        prevInfo.cpuTimeMs != 0 &&
-        (currInfo.availableStatsMask & StatType::CPU_TIME)) {
-      // Don't log the initial value
-      logMonotonicCounter<Logger>(
-          prevInfo.cpuTimeMs,
-          currInfo.cpuTimeMs,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_CPU_TIME,
-          logger,
-          (prevInfo.statChangeMask & StatType::CPU_TIME) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (prevInfo.waitToRunTimeMs != 0 &&
-        (currInfo.availableStatsMask & StatType::WAIT_TO_RUN_TIME)) {
-      logMonotonicCounter<Logger>(
-          prevInfo.waitToRunTimeMs,
-          currInfo.waitToRunTimeMs,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME,
-          logger,
-          (prevInfo.statChangeMask & StatType::WAIT_TO_RUN_TIME) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::MAJOR_FAULTS) {
-      logMonotonicCounter<Logger>(
-          prevInfo.majorFaults,
-          currInfo.majorFaults,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::QL_THREAD_FAULTS_MAJOR,
-          logger,
-          (prevInfo.statChangeMask & StatType::MAJOR_FAULTS) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::NR_VOLUNTARY_SWITCHES) {
-      logMonotonicCounter<Logger>(
-          prevInfo.nrVoluntarySwitches,
-          currInfo.nrVoluntarySwitches,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY,
-          logger,
-          (prevInfo.statChangeMask & StatType::NR_VOLUNTARY_SWITCHES) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::NR_INVOLUNTARY_SWITCHES) {
-      logMonotonicCounter<Logger>(
-          prevInfo.nrInvoluntarySwitches,
-          currInfo.nrInvoluntarySwitches,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY,
-          logger,
-          (prevInfo.statChangeMask & StatType::NR_INVOLUNTARY_SWITCHES) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::IOWAIT_SUM) {
-      logMonotonicCounter<Logger>(
-          prevInfo.iowaitSum,
-          currInfo.iowaitSum,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::IOWAIT_TIME,
-          logger,
-          (prevInfo.statChangeMask & StatType::IOWAIT_SUM) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::IOWAIT_COUNT) {
-      logMonotonicCounter<Logger>(
-          prevInfo.iowaitCount,
-          currInfo.iowaitCount,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::IOWAIT_COUNT,
-          logger,
-          (prevInfo.statChangeMask & StatType::IOWAIT_COUNT) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::CPU_NUM) {
-      logNonMonotonicCounter<Logger>(
-          prevInfo.cpuNum,
-          currInfo.cpuNum,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_CPU_NUM,
-          logger);
-    }
-    if (currInfo.availableStatsMask & StatType::KERNEL_CPU_TIME) {
-      logMonotonicCounter<Logger>(
-          prevInfo.kernelCpuTimeMs,
-          currInfo.kernelCpuTimeMs,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_KERNEL_CPU_TIME,
-          logger,
-          (prevInfo.statChangeMask & StatType::KERNEL_CPU_TIME) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::MINOR_FAULTS) {
-      logMonotonicCounter<Logger>(
-          prevInfo.minorFaults,
-          currInfo.minorFaults,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_SW_FAULTS_MINOR,
-          logger,
-          (prevInfo.statChangeMask & StatType::MINOR_FAULTS) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::THREAD_PRIORITY) {
-      logNonMonotonicCounter<Logger>(
-          prevInfo.threadPriority,
-          currInfo.threadPriority,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_PRIORITY,
-          logger,
-          (prevInfo.statChangeMask & StatType::THREAD_PRIORITY) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-    if (currInfo.availableStatsMask & StatType::STATE) {
-      logNonMonotonicCounter<Logger>(
-          prevInfo.state,
-          currInfo.state,
-          tid,
-          currInfo.monotonicStatTime,
-          QuickLogConstants::THREAD_STATE,
-          logger,
-          (prevInfo.statChangeMask & StatType::STATE) == 0
-              ? prevInfo.monotonicStatTime
-              : 0);
-    }
-  }
-
  public:
   ThreadCounters() = default;
-  // For Tests
-  ThreadCounters(ThreadCache cache) : cache_(cache) {}
 
   void logCounters(
       bool highFrequencyMode,
       std::unordered_set<int32_t>& ignoredTids) {
     std::lock_guard<std::mutex> lock(mtx_);
-    cache_.forEach(
-        &threadCountersCallback,
-        kAllThreadsStatsMask,
-        highFrequencyMode ? &ignoredTids : nullptr);
+    cache_.sampleAndLogForEach(
+        kAllThreadsStatsMask, highFrequencyMode ? &ignoredTids : nullptr);
   }
 
   int32_t getAvailableCounters() {
@@ -237,11 +60,16 @@ class ThreadCounters {
     // Whitelist thread profiling mode
     std::lock_guard<std::mutex> lockC(mtx_);
     for (int32_t tid : tids) {
-      cache_.forThread(
-          tid, &ThreadCounters::threadCountersCallback, kHighFreqStatsMask);
+      cache_.sampleAndLogForThread(tid, kHighFreqStatsMask);
     }
   }
+
+ private:
+  int32_t extraAvailableCounters_;
+  std::mutex mtx_; // Guards cache_
+  ThreadCache cache_;
 };
 
+} // namespace counters
 } // namespace profilo
 } // namespace facebook

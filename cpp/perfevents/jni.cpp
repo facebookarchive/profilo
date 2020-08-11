@@ -27,6 +27,7 @@
 #include <perfevents/detail/FileBackedMappingsList.h>
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
+#include <util/common.h>
 
 namespace fbjni = facebook::jni;
 
