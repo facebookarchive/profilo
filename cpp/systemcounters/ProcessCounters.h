@@ -19,7 +19,6 @@
 #include <counters/Counter.h>
 #include <counters/ProcFs.h>
 #include <unistd.h>
-#include "common.h"
 
 namespace facebook {
 namespace profilo {

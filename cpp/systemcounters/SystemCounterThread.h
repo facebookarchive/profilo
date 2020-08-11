@@ -18,7 +18,6 @@
 
 #include <counters/ProcFs.h>
 #include <fbjni/fbjni.h>
-#include <profilo/Logger.h>
 
 #include "ProcessCounters.h"
 #include "SystemCounters.h"
@@ -52,7 +51,7 @@ class SystemCounterThread
 
   ThreadCounters threadCounters_;
   ProcessCounters processCounters_;
-  SystemCounters<Logger> systemCounters_;
+  SystemCounters systemCounters_;
 
   int32_t extraAvailableCounters_;
   bool highFrequencyMode_;

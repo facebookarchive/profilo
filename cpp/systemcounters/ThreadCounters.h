@@ -17,8 +17,6 @@
 #pragma once
 
 #include <counters/ProcFs.h>
-#include "common.h"
-
 #include <mutex>
 
 namespace facebook {
