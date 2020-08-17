@@ -185,6 +185,16 @@ public final class TraceControl {
     return null;
   }
 
+  @Nullable
+  public TraceContext getTraceContextByTrigger(
+      int controllerMask, long longContext, @Nullable Object context) {
+    TraceContext tcx = findCurrentTraceByContext(controllerMask, longContext, context);
+    if (tcx == null) {
+      return null;
+    }
+    return new TraceContext(tcx);
+  }
+
   // Notion of a trigger with a unique identifier would help a lot.
   @Nullable
   private TraceContext findCurrentTraceByContext(
@@ -526,7 +536,6 @@ public final class TraceControl {
     return ctx.encodedTraceId;
   }
 
-  @Nullable
   public long getCurrentTraceIdByTrigger(
       int controller, long longContext, @Nullable Object context) {
     TraceContext ctx = findCurrentTraceByContext(controller, longContext, context);
