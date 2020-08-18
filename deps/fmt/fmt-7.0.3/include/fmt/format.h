@@ -144,7 +144,8 @@ FMT_END_NAMESPACE
 #  if FMT_USE_USER_DEFINED_LITERALS &&                         \
       (!defined(__EDG_VERSION__) || __EDG_VERSION__ >= 501) && \
       ((FMT_GCC_VERSION >= 604 && __cplusplus >= 201402L) ||   \
-       FMT_CLANG_VERSION >= 304)
+       FMT_CLANG_VERSION >= 304) &&                            \
+       !defined(__PGI) && !defined(__NVCC__)
 #    define FMT_USE_UDL_TEMPLATE 1
 #  else
 #    define FMT_USE_UDL_TEMPLATE 0
@@ -1578,7 +1579,8 @@ template <typename OutputIt, typename Char, typename UInt> struct int_writer {
     format_decimal(digits, abs_value, num_digits);
     basic_memory_buffer<Char> buffer;
     size += prefix_size;
-    buffer.resize(size);
+    const auto usize = to_unsigned(size);
+    buffer.resize(usize);
     basic_string_view<Char> s(&sep, sep_size);
     // Index of a decimal digit with the least significant digit having index 0.
     int digit_index = 0;
@@ -1598,9 +1600,8 @@ template <typename OutputIt, typename Char, typename UInt> struct int_writer {
                               make_checked(p, s.size()));
     }
     if (prefix_size != 0) p[-1] = static_cast<Char>('-');
-    using iterator = remove_reference_t<decltype(reserve(out, 0))>;
     auto data = buffer.data();
-    out = write_padded<align::right>(out, specs, size, size, [=](iterator it) {
+    out = write_padded<align::right>(out, specs, usize, usize, [=](iterator it) {
       return copy_str<Char>(data, data + size, it);
     });
   }
@@ -2662,17 +2663,17 @@ FMT_CONSTEXPR_DECL FMT_INLINE void parse_format_string(
     return;
   }
   struct writer {
-    FMT_CONSTEXPR void operator()(const Char* begin, const Char* end) {
-      if (begin == end) return;
+    FMT_CONSTEXPR void operator()(const Char* pbegin, const Char* pend) {
+      if (pbegin == pend) return;
       for (;;) {
         const Char* p = nullptr;
-        if (!find<IS_CONSTEXPR>(begin, end, '}', p))
-          return handler_.on_text(begin, end);
+        if (!find<IS_CONSTEXPR>(pbegin, pend, '}', p))
+          return handler_.on_text(pbegin, pend);
         ++p;
-        if (p == end || *p != '}')
+        if (p == pend || *p != '}')
           return handler_.on_error("unmatched '}' in format string");
-        handler_.on_text(begin, p);
-        begin = p + 1;
+        handler_.on_text(pbegin, p);
+        pbegin = p + 1;
       }
     }
     Handler& handler_;
