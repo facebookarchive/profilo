@@ -23,10 +23,6 @@ public interface TraceOrchestratorListener
         BackgroundUploadService.BackgroundUploadListener,
         LoggerCallbacks {
 
-  void onListenerAdded();
-
-  void onListenerRemoved();
-
   void onTraceStart(TraceContext context);
 
   void onTraceStop(TraceContext context);

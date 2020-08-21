@@ -299,12 +299,10 @@ public final class TraceOrchestrator
 
   public void addListener(TraceOrchestratorListener listener) {
     mListenerManager.addEventListener(listener);
-    listener.onListenerAdded();
   }
 
   public synchronized void removeListener(TraceOrchestratorListener listener) {
     mListenerManager.removeEventListener(listener);
-    listener.onListenerRemoved();
   }
 
   @Override
