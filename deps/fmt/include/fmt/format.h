@@ -37,11 +37,16 @@
 #include <cerrno>
 #include <cmath>
 #include <cstdint>
+#include <cstring>
 #include <limits>
 #include <memory>
 #include <stdexcept>
 
 #include "core.h"
+
+#ifndef FMT_DEPRECATED_N_SPECIFIER
+#  define FMT_DEPRECATED_N_SPECIFIER
+#endif
 
 #ifdef __INTEL_COMPILER
 #  define FMT_ICC_VERSION __INTEL_COMPILER
