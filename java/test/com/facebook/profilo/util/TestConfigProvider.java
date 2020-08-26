@@ -15,6 +15,7 @@ package com.facebook.profilo.util;
 
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigProvider;
+import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.config.DefaultConfigProvider;
 import com.facebook.profilo.config.SystemControlConfig;
@@ -47,6 +48,12 @@ public final class TestConfigProvider implements ConfigProvider {
   @Override
   public Config getFullConfig() {
     return new Config() {
+
+      @Override
+      public ConfigV2 getConfigV2() {
+        return null;
+      }
+
       @Override
       public RootControllerConfig getControllersConfig() {
         return new RootControllerConfig() {

@@ -31,6 +31,12 @@ public class DefaultConfigProvider implements ConfigProvider {
 
         private final ControllerConfig mControllerConfig = new ControllerConfig() {};
 
+        @Nullable
+        @Override
+        public ConfigV2 getConfigV2() {
+          return null;
+        }
+
         @Override
         public RootControllerConfig getControllersConfig() {
           return new RootControllerConfig() {

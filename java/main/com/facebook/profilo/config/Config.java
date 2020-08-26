@@ -17,6 +17,9 @@ import javax.annotation.Nullable;
 
 public interface Config {
 
+  @Nullable
+  ConfigV2 getConfigV2();
+
   RootControllerConfig getControllersConfig();
 
   SystemControlConfig getSystemControl();
