@@ -36,6 +36,8 @@ import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigImpl;
+import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
@@ -50,6 +52,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -138,6 +141,13 @@ public class TraceOrchestratorTest extends PowerMockTest {
     }
   }
 
+  private Config buildConfigWithTimedOutSampleRate(int rate) {
+    ConfigParams systemConfig = new ConfigParams();
+    systemConfig.intParams = new TreeMap<>();
+    systemConfig.intParams.put(ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, rate);
+    return new ConfigImpl(0, systemConfig);
+  }
+
   @Before
   public void setUp() throws Exception {
     mockStatic(Log.class, Logger.class, TraceControl.class, Process.class);
@@ -154,7 +164,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mContext = mock(Context.class);
     mFileManager = mock(FileManager.class);
     mUploadService = mock(BackgroundUploadService.class);
-    mConfigProvider = new TestConfigProvider(true);
+    mConfigProvider = new TestConfigProvider();
     mTraceContext =
         new TraceContext(
             0xFACEB00C, // traceId
@@ -266,6 +276,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
   @Test
   public void testConfigChangeInstallsNewConfig() {
     reset(mTraceControl);
+    mConfigProvider = new TestConfigProvider(new ConfigImpl(0, new ConfigParams()));
     mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
 
     assertThatAllProvidersDisabled();
@@ -352,9 +363,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
 
   @Test
   public void testTraceUploadOnTimeout() throws Exception {
-    TestConfigProvider provider = new TestConfigProvider(true);
-    provider.setTimedOutUploadSampleRate(1);
-    mOrchestrator.setConfigProvider(provider);
+    mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(1)));
 
     final long traceId = 0xFACEB00C;
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
@@ -370,7 +379,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
   public void testTraceIsDiscardedOnTimeout() throws Exception {
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
-    mConfigProvider.setTimedOutUploadSampleRate(0);
+    mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
@@ -381,7 +390,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
 
   @Test
   public void testTraceMemoryOnlyTraceAddedToUploadsAsNotTrimmable() throws Exception {
-    mConfigProvider.setTimedOutUploadSampleRate(1);
+    mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(1)));
     final long traceId = 0xFACEB00C;
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
@@ -405,7 +414,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
   public void testWriterCallbacksLifecycleOnTimeout() throws IOException {
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
-    mConfigProvider.setTimedOutUploadSampleRate(0);
+    mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
@@ -419,7 +428,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     Whitebox.setInternalState(mOrchestrator, "mIsMainProcess", false);
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
-    mConfigProvider.setTimedOutUploadSampleRate(0);
+    mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());

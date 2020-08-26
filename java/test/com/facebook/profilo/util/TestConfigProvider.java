@@ -17,33 +17,25 @@ import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigImpl;
 import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.config.ConfigProvider;
-import com.facebook.profilo.core.ProfiloConstants;
-import java.util.TreeMap;
 
 public final class TestConfigProvider implements ConfigProvider {
 
-  private static final int TEST_TRACE_TIMEOUT_MS = 30000;
-  private int mTimedOutUploadSampleRate;
-  private final boolean mAllowConfigV2;
+  private Config mConfig;
 
   public TestConfigProvider() {
-    this(false);
+    this(new ConfigImpl(0, new ConfigParams()));
   }
 
-  public TestConfigProvider(boolean allowConfigV2) {
-    mAllowConfigV2 = allowConfigV2;
+  public TestConfigProvider(Config config) {
+    mConfig = config;
   }
 
-  public void setTimedOutUploadSampleRate(int timedOutUploadSampleRate) {
-    mTimedOutUploadSampleRate = timedOutUploadSampleRate;
+  public void setConfig(Config config) {
+    mConfig = config;
   }
 
   @Override
   public Config getFullConfig() {
-    ConfigParams systemConfig = new ConfigParams();
-    systemConfig.intParams = new TreeMap<>();
-    systemConfig.intParams.put(
-        ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, mTimedOutUploadSampleRate);
-    return new ConfigImpl(0, systemConfig);
+    return mConfig;
   }
 }
