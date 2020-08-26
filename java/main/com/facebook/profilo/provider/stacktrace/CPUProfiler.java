@@ -22,7 +22,7 @@ import com.facebook.soloader.SoLoader;
 @DoNotStrip
 public class CPUProfiler {
 
-  public static final int DEFAULT_PROFILER_SAMPLING_RATE_MS = 11;
+  public static final int DEFAULT_PROFILER_SAMPLING_RATE_MS = 23; // TODO_YM T74020064
   public static final int DEFAULT_THREAD_DETECT_INTERVAL_MS = 23;
 
   private static volatile boolean sInitialized = false;
@@ -129,7 +129,6 @@ public class CPUProfiler {
   public static synchronized boolean startProfiling(
       int requestedTracers,
       int samplingRateMs,
-      boolean useThreadSpecificProfiler,
       int threadDetectIntervalMs,
       boolean wallClockModeEnabled) {
     // We always trace the main thread.
@@ -137,11 +136,7 @@ public class CPUProfiler {
 
     return sInitialized
         && nativeStartProfiling(
-            requestedTracers,
-            samplingRateMs,
-            useThreadSpecificProfiler,
-            threadDetectIntervalMs,
-            wallClockModeEnabled);
+            requestedTracers, samplingRateMs, threadDetectIntervalMs, wallClockModeEnabled);
   }
 
   public static void loggerLoop() {
@@ -164,11 +159,7 @@ public class CPUProfiler {
 
   @DoNotStrip
   private static native boolean nativeStartProfiling(
-      int providers,
-      int samplingRateMs,
-      boolean useThreadSpecificProfiler,
-      int threadDetectIntervalMs,
-      boolean wallClockModeEnabled);
+      int providers, int samplingRateMs, int threadDetectIntervalMs, boolean wallClockModeEnabled);
 
   @DoNotStrip
   private static native void nativeStopProfiling();

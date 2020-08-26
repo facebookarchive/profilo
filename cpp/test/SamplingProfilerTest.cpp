@@ -38,7 +38,6 @@ constexpr auto kMicrosecondsInMillisecond = 1000;
 constexpr auto kHalfHourInMilliseconds = 1800 * 1000;
 
 constexpr bool kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
-constexpr bool kDefaultUseThreadSpecificProfilerSetting = true;
 constexpr bool kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
 constexpr bool kDefaultUseWallClockSetting = false;
 
@@ -215,7 +214,6 @@ void SamplingProfilerTest::runLoggingTest(
   ASSERT_TRUE(profiler.startProfiling(
       kTestTracer,
       kDefaultSampleIntervalMs,
-      kDefaultUseThreadSpecificProfilerSetting,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseWallClockSetting));
 
@@ -383,7 +381,6 @@ void SamplingProfilerTest::runSampleCountTest(
   ASSERT_TRUE(profiler.startProfiling(
       kTestTracer,
       sample_interval_ms,
-      true,
       thread_detect_interval_ms,
       enable_wall_time_sampling));
   struct timespec start_time, end_time;
@@ -472,7 +469,6 @@ void SamplingProfilerTest::runThreadDetectTest(
   ASSERT_TRUE(profiler.startProfiling(
       kTestTracer,
       sample_interval_ms,
-      true,
       thread_detect_interval_ms,
       enable_wall_time_sampling));
   sequencer.advance(RUN_WORKERS);
@@ -636,7 +632,6 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
     ASSERT_TRUE(profiler.startProfiling(
         kTestTracer,
         kDefaultSampleIntervalMs,
-        kDefaultUseThreadSpecificProfilerSetting,
         kDefaultThreadDetectIntervalMs,
         kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
@@ -751,7 +746,6 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
     ASSERT_TRUE(profiler.startProfiling(
         kTestTracer,
         kDefaultSampleIntervalMs,
-        kDefaultUseThreadSpecificProfilerSetting,
         kDefaultThreadDetectIntervalMs,
         kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
@@ -846,7 +840,6 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
   ASSERT_TRUE(profiler.startProfiling(
       kTestTracer,
       kDefaultSampleIntervalMs,
-      kDefaultUseThreadSpecificProfilerSetting,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseWallClockSetting));
 
@@ -1013,7 +1006,6 @@ TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
   ASSERT_TRUE(profiler.startProfiling(
       kTestTracer,
       kDefaultSampleIntervalMs,
-      kDefaultUseThreadSpecificProfilerSetting,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseWallClockSetting));
   profiler.stopProfiling();

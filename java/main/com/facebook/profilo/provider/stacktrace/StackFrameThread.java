@@ -99,10 +99,7 @@ public final class StackFrameThread extends BaseTraceProvider {
   }
 
   private synchronized boolean enableInternal(
-      int sampleRateMs,
-      boolean useThreadSpecificProfiler,
-      int threadDetectIntervalMs,
-      int enabledProviders) {
+      int sampleRateMs, int threadDetectIntervalMs, int enabledProviders) {
     if (!initProfiler()) {
       return false;
     }
@@ -128,12 +125,10 @@ public final class StackFrameThread extends BaseTraceProvider {
     }
     // For now, we'll just keep an eye on the main thread. Eventually we
     // might want to pass a list of all the interesting threads.
-    // To use the setitimer logic, pass false into useThreadSpecificProfiler.
     boolean started =
         CPUProfiler.startProfiling(
             providersToTracers(enabledProviders),
             sampleRateMs,
-            useThreadSpecificProfiler,
             threadDetectIntervalMs,
             wallClockModeEnabled);
     if (!started) {
@@ -174,8 +169,6 @@ public final class StackFrameThread extends BaseTraceProvider {
         enableInternal(
             context.mTraceConfigExtras.getIntParam(
                 ProfiloConstants.CPU_SAMPLING_RATE_CONFIG_PARAM, 0),
-            context.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.PROVIDER_PARAM_STACK_TRACE_USE_THREAD_SPECIFIC_PROFILER, false),
             context.mTraceConfigExtras.getIntParam(
                 ProfiloConstants.PROVIDER_PARAM_STACK_TRACE_THREAD_DETECT_INTERVAL_MS, 0),
             context.enabledProviders);
