@@ -15,13 +15,13 @@ package com.facebook.profilo.ipc;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.facebook.profilo.config.ConfigV2;
+import com.facebook.profilo.config.Config;
 import javax.annotation.Nullable;
 
 public final class TraceContext implements Parcelable {
 
   // Not synced to secondary processes
-  @Nullable public ConfigV2 configv2;
+  @Nullable public Config config;
   // Every time context which is shared via a Parcelable changes it's required to update
   // Action's version in {@see ProfiloBroadcastReceiver}.
   public long traceId;
@@ -52,7 +52,7 @@ public final class TraceContext implements Parcelable {
   public TraceContext(
       long traceId,
       String encodedTraceId,
-      @Nullable ConfigV2 config,
+      @Nullable Config config,
       int controller,
       @Nullable Object controllerObject,
       @Nullable Object context,
@@ -64,7 +64,7 @@ public final class TraceContext implements Parcelable {
       TraceConfigExtras traceConfigExtras) {
     this.traceId = traceId;
     this.encodedTraceId = encodedTraceId;
-    this.configv2 = config;
+    this.config = config;
     this.controller = controller;
     this.controllerObject = controllerObject;
     this.context = context;
@@ -79,7 +79,7 @@ public final class TraceContext implements Parcelable {
   public TraceContext(
       long traceId,
       String encodedTraceId,
-      ConfigV2 config,
+      Config config,
       int controller,
       Object controllerObject,
       Object context,
@@ -107,7 +107,7 @@ public final class TraceContext implements Parcelable {
     this(
         traceContext.traceId,
         traceContext.encodedTraceId,
-        traceContext.configv2,
+        traceContext.config,
         traceContext.controller,
         traceContext.controllerObject,
         traceContext.context,
@@ -123,7 +123,7 @@ public final class TraceContext implements Parcelable {
     this(
         traceContext.traceId,
         traceContext.encodedTraceId,
-        traceContext.configv2,
+        traceContext.config,
         traceContext.controller,
         traceContext.controllerObject,
         traceContext.context,
@@ -136,10 +136,7 @@ public final class TraceContext implements Parcelable {
   }
 
   public TraceContext(
-      TraceContext traceContext,
-      @Nullable ConfigV2 config,
-      int controller,
-      Object controllerObject) {
+      TraceContext traceContext, @Nullable Config config, int controller, Object controllerObject) {
     this(
         traceContext.traceId,
         traceContext.encodedTraceId,

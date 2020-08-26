@@ -15,7 +15,7 @@ package com.facebook.profilo.config;
 
 import javax.annotation.Nullable;
 
-public interface ConfigV2 {
+public interface Config {
 
   // System config parameters
   int getSystemConfigParamInt(String key);
@@ -107,7 +107,7 @@ public interface ConfigV2 {
       int traceconfigIdx, String triggerType, String triggerAction, String key);
 
   /** Only use when serializing a TraceConfig. The explicit accessors are much faster. */
-  ConfigV2Params getTraceConfigParams(int traceConfigIdx);
+  ConfigParams getTraceConfigParams(int traceConfigIdx);
 
   // Misc
   boolean isDisablingConfig();

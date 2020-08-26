@@ -5,8 +5,8 @@ package com.facebook.profilo.ipc;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.facebook.profilo.config.ConfigV2;
-import com.facebook.profilo.config.ConfigV2Params;
+import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigParams;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
@@ -21,11 +21,11 @@ public final class TraceConfigExtras implements Parcelable {
   private final @Nullable TreeMap<String, Boolean> mBoolParams;
   private final @Nullable TreeMap<String, int[]> mIntArrayParams;
 
-  private final @Nullable ConfigV2 mConfigV2;
+  private final @Nullable Config mConfig;
   private final int mTraceConfigIdx;
 
   TraceConfigExtras(Parcel in) {
-    mConfigV2 = null;
+    mConfig = null;
     mTraceConfigIdx = -1;
 
     Bundle intParamsBundle = in.readBundle(getClass().getClassLoader());
@@ -62,8 +62,8 @@ public final class TraceConfigExtras implements Parcelable {
     }
   }
 
-  public TraceConfigExtras(ConfigV2 configV2, int traceConfigIdx) {
-    mConfigV2 = configV2;
+  public TraceConfigExtras(Config config, int traceConfigIdx) {
+    mConfig = config;
     mTraceConfigIdx = traceConfigIdx;
     mIntParams = null;
     mIntArrayParams = null;
@@ -76,8 +76,8 @@ public final class TraceConfigExtras implements Parcelable {
     TreeMap<String, Boolean> boolParams = mBoolParams;
     TreeMap<String, int[]> intArrayParams = mIntArrayParams;
 
-    if (mTraceConfigIdx >= 0 && mConfigV2 != null) {
-      ConfigV2Params params = mConfigV2.getTraceConfigParams(mTraceConfigIdx);
+    if (mTraceConfigIdx >= 0 && mConfig != null) {
+      ConfigParams params = mConfig.getTraceConfigParams(mTraceConfigIdx);
       intParams = params.intParams;
       boolParams = params.boolParams;
       intArrayParams = params.intListParams;
@@ -113,13 +113,13 @@ public final class TraceConfigExtras implements Parcelable {
     mIntParams = intParams;
     mBoolParams = boolParams;
     mIntArrayParams = intArrayParams;
-    mConfigV2 = null;
+    mConfig = null;
     mTraceConfigIdx = -1;
   }
 
   public int getIntParam(String key, int defaultValue) {
-    if (mConfigV2 != null) {
-      return mConfigV2.optTraceConfigParamInt(mTraceConfigIdx, key, defaultValue);
+    if (mConfig != null) {
+      return mConfig.optTraceConfigParamInt(mTraceConfigIdx, key, defaultValue);
     }
     if (mIntParams == null) {
       return defaultValue;
@@ -129,8 +129,8 @@ public final class TraceConfigExtras implements Parcelable {
   }
 
   public boolean getBoolParam(String key, boolean defaultValue) {
-    if (mConfigV2 != null) {
-      return mConfigV2.optTraceConfigParamBool(mTraceConfigIdx, key, defaultValue);
+    if (mConfig != null) {
+      return mConfig.optTraceConfigParamBool(mTraceConfigIdx, key, defaultValue);
     }
     if (mBoolParams == null) {
       return defaultValue;
@@ -141,8 +141,8 @@ public final class TraceConfigExtras implements Parcelable {
 
   @Nullable
   public int[] getIntArrayParam(String key) {
-    if (mConfigV2 != null) {
-      return mConfigV2.optTraceConfigParamIntList(mTraceConfigIdx, key);
+    if (mConfig != null) {
+      return mConfig.optTraceConfigParamIntList(mTraceConfigIdx, key);
     }
     if (mIntArrayParams == null) {
       return null;

@@ -16,9 +16,9 @@ package com.facebook.profilo.core;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 import android.os.Parcel;
-import com.facebook.profilo.config.ConfigV2;
-import com.facebook.profilo.config.ConfigV2Impl;
-import com.facebook.profilo.config.ConfigV2Params;
+import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigImpl;
+import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
@@ -58,11 +58,11 @@ public class TraceContextTest {
   }
 
   private TraceContext mContext;
-  private ConfigV2 mConfig;
+  private Config mConfig;
 
   @Before
   public void setUp() {
-    mConfig = new ConfigV2Impl(0, new ConfigV2Params());
+    mConfig = new ConfigImpl(0, new ConfigParams());
     mContext =
         new TraceContext(
             TRACE_ID,
@@ -83,7 +83,7 @@ public class TraceContextTest {
   public void testGetterMethods() {
     assertThat(mContext.traceId).isEqualTo(TRACE_ID);
     assertThat(mContext.encodedTraceId).isEqualTo(ENCODED_TRACE_ID);
-    assertThat(mContext.configv2).isEqualTo(mConfig);
+    assertThat(mContext.config).isEqualTo(mConfig);
     assertThat(mContext.controller).isEqualTo(CONTROLLER);
     assertThat(mContext.controllerObject).isEqualTo(CONTROLLER_OBJECT);
     assertThat(mContext.context).isEqualTo(CONTEXT);

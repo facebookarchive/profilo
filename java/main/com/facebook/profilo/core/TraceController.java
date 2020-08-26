@@ -13,7 +13,7 @@
  */
 package com.facebook.profilo.core;
 
-import com.facebook.profilo.config.ConfigV2;
+import com.facebook.profilo.config.Config;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import javax.annotation.Nullable;
 
@@ -33,7 +33,7 @@ public abstract class TraceController {
    */
   public abstract int evaluateConfig(long longContext, @Nullable Object context);
 
-  public int findTraceConfigIdx(long longContext, @Nullable Object context, ConfigV2 config) {
+  public int findTraceConfigIdx(long longContext, @Nullable Object context, Config config) {
     return RESULT_FALLBACK_CONFIG_V1;
   }
 

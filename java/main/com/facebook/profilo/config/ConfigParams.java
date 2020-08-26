@@ -18,8 +18,8 @@ import java.util.TreeMap;
 import javax.annotation.Nullable;
 
 @DoNotStripAny
-public class ConfigV2Params {
-  static final ConfigV2Params EMPTY = new ConfigV2Params();
+public class ConfigParams {
+  static final ConfigParams EMPTY = new ConfigParams();
 
   @Nullable public TreeMap<String, Integer> intParams;
   @Nullable public TreeMap<String, Boolean> boolParams;

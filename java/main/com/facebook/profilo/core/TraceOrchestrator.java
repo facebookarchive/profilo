@@ -19,8 +19,8 @@ import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.file.zip.ZipHelper;
+import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigProvider;
-import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.DefaultConfigProvider;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
@@ -126,7 +126,7 @@ public final class TraceOrchestrator
 
   @GuardedBy("this")
   @Nullable
-  private volatile ConfigV2 mConfig;
+  private volatile Config mConfig;
 
   @GuardedBy("this")
   private FileManager mFileManager;
@@ -193,16 +193,16 @@ public final class TraceOrchestrator
   })
   // VisibleForTesting
   /*package*/ void bind(Context context, SparseArray<TraceController> controllers) {
-    ConfigV2 initialConfigV2;
+    Config initialConfig;
     synchronized (this) {
-      initialConfigV2 = mConfigProvider.getFullConfig();
-      if (initialConfigV2 == null) {
+      initialConfig = mConfigProvider.getFullConfig();
+      if (initialConfig == null) {
         throw new IllegalArgumentException("We only support v2 configs now!");
       }
     }
 
     // Install the available TraceControllers
-    TraceControl.initialize(controllers, this, initialConfigV2);
+    TraceControl.initialize(controllers, this, initialConfig);
 
     File folder;
     synchronized (this) {
@@ -211,7 +211,7 @@ public final class TraceOrchestrator
       int bufferSize;
       if (mIsMainProcess) {
         bufferSize =
-            initialConfigV2.optSystemConfigParamInt(
+            initialConfig.optSystemConfigParamInt(
                 "system_config.buffer_size", RING_BUFFER_SIZE_MAIN_PROCESS);
       } else {
         bufferSize = RING_BUFFER_SIZE_SECONDARY_PROCESS;
@@ -219,12 +219,12 @@ public final class TraceOrchestrator
 
       boolean useMmapBuffer =
           mIsMainProcess
-              && initialConfigV2.optSystemConfigParamBool("system_config.mmap_buffer", false);
+              && initialConfig.optSystemConfigParamBool("system_config.mmap_buffer", false);
       // Register hooks to trace lifecycle to control mmaped buffer.
       if (useMmapBuffer) {
         mMmapBufferManager =
             new MmapBufferManager(
-                initialConfigV2.getID(), mFileManager.getMmapBufferFolder(), context);
+                initialConfig.getID(), mFileManager.getMmapBufferFolder(), context);
         addListener(new MmapBufferTraceListener(mMmapBufferManager));
       }
 
@@ -232,7 +232,7 @@ public final class TraceOrchestrator
       Logger.initialize(bufferSize, folder, mProcessName, this, this, mMmapBufferManager);
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
-      performConfigTransition(initialConfigV2);
+      performConfigTransition(initialConfig);
 
       // Prepare the FileManager and start the worker thread
       // TODO: get these out of the config
@@ -244,7 +244,7 @@ public final class TraceOrchestrator
   }
 
   @GuardedBy("this")
-  public ConfigV2 getConfig() {
+  public Config getConfig() {
     return mConfig;
   }
 
@@ -312,7 +312,7 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onConfigUpdated(ConfigV2 config) {
+  public void onConfigUpdated(Config config) {
     mListenerManager.onNewConfigAvailable();
     synchronized (this) {
       performConfigTransition(config);
@@ -329,7 +329,7 @@ public final class TraceOrchestrator
   }
 
   @GuardedBy("this")
-  private void performConfigTransition(ConfigV2 newConfig) {
+  private void performConfigTransition(Config newConfig) {
     if (newConfig.equals(mConfig)) {
       return;
     }
@@ -443,7 +443,7 @@ public final class TraceOrchestrator
           ProfiloConstants.NONE,
           Identifiers.CONFIG_ID,
           ProfiloConstants.NONE,
-          context.configv2 == null ? 0 : context.configv2.getID());
+          context.config == null ? 0 : context.config.getID());
     }
 
     int tracingProviders = 0;
@@ -589,7 +589,7 @@ public final class TraceOrchestrator
 
     boolean uploadTrace = false;
 
-    ConfigV2 config;
+    Config config;
     synchronized (this) {
       config = mConfig;
     }

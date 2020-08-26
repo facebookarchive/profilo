@@ -17,13 +17,13 @@ import java.util.Arrays;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
 
-public class ConfigV2Impl implements ConfigV2 {
+public class ConfigImpl implements Config {
 
   private final long mId;
-  private final ConfigV2Params mSystemConfig;
-  private final ConfigV2TraceConfig[] mTraceConfigs;
+  private final ConfigParams mSystemConfig;
+  private final ConfigTraceConfig[] mTraceConfigs;
 
-  public ConfigV2Impl(long id, ConfigV2Params systemConfig, ConfigV2TraceConfig... traceConfigs) {
+  public ConfigImpl(long id, ConfigParams systemConfig, ConfigTraceConfig... traceConfigs) {
     mId = id;
     mSystemConfig = systemConfig;
     mTraceConfigs = traceConfigs;
@@ -45,17 +45,17 @@ public class ConfigV2Impl implements ConfigV2 {
     return defaultValue;
   }
 
-  private ConfigV2Params getTriggerParams(int traceConfigIdx, String type, String action) {
-    @Nullable ConfigV2TraceConfig.Trigger[] triggers = mTraceConfigs[traceConfigIdx].triggers;
+  private ConfigParams getTriggerParams(int traceConfigIdx, String type, String action) {
+    @Nullable ConfigTraceConfig.Trigger[] triggers = mTraceConfigs[traceConfigIdx].triggers;
     if (triggers == null) {
-      return ConfigV2Params.EMPTY;
+      return ConfigParams.EMPTY;
     }
-    for (ConfigV2TraceConfig.Trigger trigger : triggers) {
+    for (ConfigTraceConfig.Trigger trigger : triggers) {
       if (trigger.type.equals(type) && trigger.action.equals(action)) {
         return trigger.params;
       }
     }
-    return ConfigV2Params.EMPTY;
+    return ConfigParams.EMPTY;
   }
 
   @Override
@@ -117,11 +117,11 @@ public class ConfigV2Impl implements ConfigV2 {
 
     for (int idx = 0; idx < mTraceConfigs.length; idx++) {
       boolean pass = false;
-      @Nullable ConfigV2TraceConfig.Trigger[] triggers = mTraceConfigs[idx].triggers;
+      @Nullable ConfigTraceConfig.Trigger[] triggers = mTraceConfigs[idx].triggers;
       if (triggers == null) {
         continue;
       }
-      for (ConfigV2TraceConfig.Trigger trigger : triggers) {
+      for (ConfigTraceConfig.Trigger trigger : triggers) {
         if (trigger.type.equals(triggerType) && trigger.action.equals(triggerAction)) {
           pass = true;
         }
@@ -271,7 +271,7 @@ public class ConfigV2Impl implements ConfigV2 {
   }
 
   @Override
-  public ConfigV2Params getTraceConfigParams(int traceConfigIdx) {
+  public ConfigParams getTraceConfigParams(int traceConfigIdx) {
     return getTraceConfigParams(traceConfigIdx);
   }
 

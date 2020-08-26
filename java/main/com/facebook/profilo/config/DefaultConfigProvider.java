@@ -25,10 +25,10 @@ public class DefaultConfigProvider implements ConfigProvider {
   public static final int DEFAULT_BUFFER_SIZE = -1;
   public static final boolean DEFAULT_IS_MMAP_BUFFER = false;
 
-  public static final ConfigV2 DEFAULT_CONFIG = new ConfigV2Impl(0, new ConfigV2Params());
+  public static final Config DEFAULT_CONFIG = new ConfigImpl(0, new ConfigParams());
 
   @Override
-  public ConfigV2 getFullConfig() {
+  public Config getFullConfig() {
     return DEFAULT_CONFIG;
   }
 }

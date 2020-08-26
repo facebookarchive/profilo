@@ -17,7 +17,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
-import com.facebook.profilo.config.ConfigV2;
+import com.facebook.profilo.config.Config;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
@@ -94,7 +94,7 @@ public final class TraceControl {
   /*package*/ static void initialize(
       SparseArray<TraceController> controllers,
       @Nullable TraceControlListener listener,
-      @Nullable ConfigV2 initialConfig) {
+      @Nullable Config initialConfig) {
 
     // Use double-checked locking to avoid using AtomicReference and thus increasing the
     // overhead of each read by adding a virtual call to it.
@@ -119,7 +119,7 @@ public final class TraceControl {
   private final SparseArray<TraceController> mControllers;
 
   private final AtomicReferenceArray<TraceContext> mCurrentTraces;
-  private final AtomicReference<ConfigV2> mCurrentConfig;
+  private final AtomicReference<Config> mCurrentConfig;
   private final AtomicInteger mCurrentTracesMask;
   @Nullable private final TraceControlListener mListener;
   @Nullable private TraceControlHandler mTraceControlHandler;
@@ -127,7 +127,7 @@ public final class TraceControl {
   // VisibleForTesting
   /*package*/ TraceControl(
       SparseArray<TraceController> controllers,
-      @Nullable ConfigV2 config,
+      @Nullable Config config,
       @Nullable TraceControlListener listener) {
     mControllers = controllers;
     mCurrentConfig = new AtomicReference<>(config);
@@ -136,8 +136,8 @@ public final class TraceControl {
     mListener = listener;
   }
 
-  public void setConfig(@Nullable ConfigV2 config) {
-    ConfigV2 oldConfig = mCurrentConfig.get();
+  public void setConfig(@Nullable Config config) {
+    Config oldConfig = mCurrentConfig.get();
     if (!mCurrentConfig.compareAndSet(oldConfig, config)) {
       Log.d(LOG_TAG, "Tried to update the config and failed due to CAS");
     }
@@ -275,18 +275,18 @@ public final class TraceControl {
       return false;
     }
 
-    ConfigV2 configV2 = mCurrentConfig.get();
+    Config config = mCurrentConfig.get();
     int traceConfigIdx = -1;
     int providers = 0;
 
     if (!traceController.isConfigurable()) {
       // Special path for non-configurable controllers
       providers = traceController.evaluateConfig(longContext, context);
-    } else if (configV2 != null) {
-      int result = traceController.findTraceConfigIdx(longContext, context, configV2);
+    } else if (config != null) {
+      int result = traceController.findTraceConfigIdx(longContext, context, config);
       if (result >= 0) {
         traceConfigIdx = result;
-        String[] providerStrings = configV2.getTraceConfigProviders(traceConfigIdx);
+        String[] providerStrings = config.getTraceConfigProviders(traceConfigIdx);
         providers = ProvidersRegistry.getBitMaskFor(Arrays.asList(providerStrings));
       } else {
         return false;
@@ -301,8 +301,8 @@ public final class TraceControl {
     Log.w(LOG_TAG, "START PROFILO_TRACEID: " + FbTraceId.encode(traceId));
 
     final TraceConfigExtras traceConfigExtras;
-    if (configV2 != null && traceConfigIdx >= 0) {
-      traceConfigExtras = new TraceConfigExtras(configV2, traceConfigIdx);
+    if (config != null && traceConfigIdx >= 0) {
+      traceConfigExtras = new TraceConfigExtras(config, traceConfigIdx);
     } else {
       // non-configurable controller path
       traceConfigExtras = traceController.getTraceConfigExtras(longContext, context);
@@ -312,7 +312,7 @@ public final class TraceControl {
         new TraceContext(
             traceId,
             FbTraceId.encode(traceId),
-            configV2,
+            config,
             controller,
             traceController,
             context,
@@ -623,7 +623,7 @@ public final class TraceControl {
     return Arrays.copyOf(traceIds, index);
   }
 
-  public ConfigV2 getConfig() {
+  public Config getConfig() {
     return mCurrentConfig.get();
   }
 

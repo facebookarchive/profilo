@@ -15,19 +15,19 @@ package com.facebook.profilo.config;
 
 import javax.annotation.Nullable;
 
-public class ConfigV2TraceConfig {
+public class ConfigTraceConfig {
 
   public static class Trigger {
     public String type;
     public String action;
-    public @Nullable ConfigV2Params params;
+    public @Nullable ConfigParams params;
   }
 
-  public ConfigV2TraceConfig() {
-    this.params = new ConfigV2Params();
+  public ConfigTraceConfig() {
+    this.params = new ConfigParams();
   }
 
-  public ConfigV2Params params;
+  public ConfigParams params;
   @Nullable public Trigger[] triggers;
   @Nullable public String[] enabledProviders;
 }

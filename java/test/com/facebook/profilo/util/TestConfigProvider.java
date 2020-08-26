@@ -13,10 +13,10 @@
  */
 package com.facebook.profilo.util;
 
+import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigImpl;
+import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.config.ConfigProvider;
-import com.facebook.profilo.config.ConfigV2;
-import com.facebook.profilo.config.ConfigV2Impl;
-import com.facebook.profilo.config.ConfigV2Params;
 import com.facebook.profilo.core.ProfiloConstants;
 import java.util.TreeMap;
 
@@ -39,11 +39,11 @@ public final class TestConfigProvider implements ConfigProvider {
   }
 
   @Override
-  public ConfigV2 getFullConfig() {
-    ConfigV2Params systemConfig = new ConfigV2Params();
+  public Config getFullConfig() {
+    ConfigParams systemConfig = new ConfigParams();
     systemConfig.intParams = new TreeMap<>();
     systemConfig.intParams.put(
         ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, mTimedOutUploadSampleRate);
-    return new ConfigV2Impl(0, systemConfig);
+    return new ConfigImpl(0, systemConfig);
   }
 }

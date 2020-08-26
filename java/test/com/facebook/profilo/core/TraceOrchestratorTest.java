@@ -35,7 +35,7 @@ import android.content.Context;
 import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
-import com.facebook.profilo.config.ConfigV2;
+import com.facebook.profilo.config.Config;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
@@ -258,8 +258,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
   public void testInitialBindInstallsProviders() {
     verifyStatic(TraceControl.class);
     //noinspection unchecked
-    TraceControl.initialize(
-        notNull(SparseArray.class), same(mOrchestrator), notNull(ConfigV2.class));
+    TraceControl.initialize(notNull(SparseArray.class), same(mOrchestrator), notNull(Config.class));
 
     assertThat(TraceEvents.isEnabled(DEFAULT_TRACING_PROVIDERS)).isFalse();
   }
@@ -270,7 +269,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
 
     assertThatAllProvidersDisabled();
-    verify(mTraceControl).setConfig(any(ConfigV2.class));
+    verify(mTraceControl).setConfig(any(Config.class));
   }
 
   @Test

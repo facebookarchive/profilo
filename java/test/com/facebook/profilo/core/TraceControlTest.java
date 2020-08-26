@@ -31,7 +31,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
-import com.facebook.profilo.config.ConfigV2;
+import com.facebook.profilo.config.Config;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
@@ -66,7 +66,7 @@ public class TraceControlTest extends PowerMockTest {
   private TraceControlHandler mTraceControlHandler;
   private TraceContext mTraceContext;
   private final TestConfigProvider mTraceConfigProvider = new TestConfigProvider();
-  private final ConfigV2 mConfig = mTraceConfigProvider.getFullConfig();
+  private final Config mConfig = mTraceConfigProvider.getFullConfig();
 
   @Before
   public void setUp() throws Exception {
