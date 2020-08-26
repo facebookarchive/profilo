@@ -15,7 +15,6 @@ package com.facebook.profilo.controllers.external;
 
 import static com.facebook.profilo.core.ProfiloConstants.CPU_SAMPLING_RATE_CONFIG_PARAM;
 
-import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TriggerRegistry;
 import com.facebook.profilo.ipc.TraceConfigExtras;
@@ -33,13 +32,12 @@ public class ExternalController extends TraceController {
   }
 
   @Override
-  public int evaluateConfig(long longContext, @Nullable Object context, ControllerConfig ignored) {
+  public int evaluateConfig(long longContext, @Nullable Object context) {
     return getConfigFromContext(context).providers;
   }
 
   @Override
-  public TraceConfigExtras getTraceConfigExtras(
-      long longContext, @Nullable Object context, @Nullable ControllerConfig config) {
+  public TraceConfigExtras getTraceConfigExtras(long longContext, @Nullable Object context) {
     if (context == null) {
       return TraceConfigExtras.EMPTY;
     }

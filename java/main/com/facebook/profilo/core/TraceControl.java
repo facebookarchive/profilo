@@ -281,7 +281,7 @@ public final class TraceControl {
 
     if (!traceController.isConfigurable()) {
       // Special path for non-configurable controllers
-      providers = traceController.evaluateConfig(longContext, context, null);
+      providers = traceController.evaluateConfig(longContext, context);
     } else if (configV2 != null) {
       int result = traceController.findTraceConfigIdx(longContext, context, configV2);
       if (result >= 0) {
@@ -305,7 +305,7 @@ public final class TraceControl {
       traceConfigExtras = new TraceConfigExtras(configV2, traceConfigIdx);
     } else {
       // non-configurable controller path
-      traceConfigExtras = traceController.getTraceConfigExtras(longContext, context, null);
+      traceConfigExtras = traceController.getTraceConfigExtras(longContext, context);
     }
 
     TraceContext nextContext =

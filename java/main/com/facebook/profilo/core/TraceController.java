@@ -14,7 +14,6 @@
 package com.facebook.profilo.core;
 
 import com.facebook.profilo.config.ConfigV2;
-import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import javax.annotation.Nullable;
 
@@ -29,12 +28,10 @@ public abstract class TraceController {
    *
    * @param context the trace context object passed to {@link TraceControl#startTrace(int, int,
    *     Object, long)}
-   * @param config the current config for this controller
    * @return 0 if a trace is not allowed, a non-0 mask of PROVIDER_ constants otherwise. These
    *     providers will be enabled for the duration of the trace.
    */
-  public abstract int evaluateConfig(
-      long longContext, @Nullable Object context, ControllerConfig config);
+  public abstract int evaluateConfig(long longContext, @Nullable Object context);
 
   public int findTraceConfigIdx(long longContext, @Nullable Object context, ConfigV2 config) {
     return RESULT_FALLBACK_CONFIG_V1;
@@ -45,11 +42,9 @@ public abstract class TraceController {
    *
    * @param context the trace context object passed to {@link TraceControl#startTrace(int, int,
    *     Object, long)}
-   * @param config the current config for this controller, if any. Nullable only if isConfigurable
-   *     is false, otherwise guaranteed to exist.
    */
   public abstract TraceConfigExtras getTraceConfigExtras(
-      long longContext, @Nullable Object context, @Nullable ControllerConfig config);
+      long longContext, @Nullable Object context);
 
   public abstract boolean contextsEqual(
       long fstLong, @Nullable Object fst, long sndLong, @Nullable Object snd);
