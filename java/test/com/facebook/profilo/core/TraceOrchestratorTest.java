@@ -36,6 +36,7 @@ import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.profilo.config.Config;
+import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
@@ -166,7 +167,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             DEFAULT_TRACING_PROVIDERS,
             1, // flags
             0,
-            TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mSecondTraceContext =
         new TraceContext(
             0xFACEB000, // traceId
@@ -179,7 +180,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             SECOND_TRACE_TRACING_PROVIDERS,
             1, // flags
             0,
-            TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY); // mTraceConfigExtras
 
     whenNew(SparseArray.class)
         .withAnyArguments()
@@ -474,7 +475,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             DEFAULT_TRACING_PROVIDERS,
             1, // flags
             1,
-            TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mOrchestrator.onTraceStartSync(anotherContext);
     mOrchestrator.onTraceStartAsync(anotherContext);
     verify(mBaseTraceProvider, never()).disable();
@@ -505,7 +506,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             enabledProvidersMask, // enabled providers mask
             1,
             0,
-            TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -555,7 +556,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             enabledProvidersMask, // enabled providers mask
             1,
             0,
-            TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);

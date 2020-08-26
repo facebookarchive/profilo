@@ -21,6 +21,7 @@ import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.entries.EntryType;
+import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
@@ -315,6 +316,17 @@ public final class TraceControl {
 
     long traceId = nextTraceID();
     Log.w(LOG_TAG, "START PROFILO_TRACEID: " + FbTraceId.encode(traceId));
+
+    final TraceConfigExtras traceConfigExtras;
+    if (configV2 != null && traceConfigIdx >= 0) {
+      traceConfigExtras = new TraceConfigExtras(configV2, traceConfigIdx);
+    } else if (controllerConfig != null) {
+      traceConfigExtras =
+          traceController.getTraceConfigExtras(longContext, context, controllerConfig);
+    } else {
+      traceConfigExtras = TraceConfigExtras.EMPTY;
+    }
+
     TraceContext nextContext =
         new TraceContext(
             traceId,
@@ -327,9 +339,7 @@ public final class TraceControl {
             providers,
             flags,
             traceConfigIdx,
-            controllerConfig == null
-                ? TraceContext.TraceConfigExtras.EMPTY
-                : traceController.getTraceConfigExtras(longContext, context, controllerConfig));
+            traceConfigExtras);
 
     return startTraceInternal(flags, nextContext);
   }

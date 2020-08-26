@@ -17,6 +17,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.testing.powermock.PowerMockTest;
@@ -26,17 +27,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-@PrepareForTest({TraceContext.TraceConfigExtras.class})
+@PrepareForTest({TraceConfigExtras.class})
 @RunWith(WithTestDefaultsRunner.class)
 public class TraceConditionManagerTest extends PowerMockTest {
   private final int DUMMY_TRACE_ID = 1234;
 
-  private TraceContext.TraceConfigExtras mExtras;
+  private TraceConfigExtras mExtras;
   private TraceContext mTraceContext;
 
   @Before
   public void setUp() {
-    mExtras = mock(TraceContext.TraceConfigExtras.class);
+    mExtras = mock(TraceConfigExtras.class);
     mTraceContext =
         new TraceContext(
             DUMMY_TRACE_ID,

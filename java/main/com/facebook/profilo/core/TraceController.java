@@ -15,7 +15,7 @@ package com.facebook.profilo.core;
 
 import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.ControllerConfig;
-import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.ipc.TraceConfigExtras;
 import javax.annotation.Nullable;
 
 public abstract class TraceController {
@@ -48,7 +48,7 @@ public abstract class TraceController {
    * @param config the current config for this controller
    * @return sampling rate in milliseconds, 0 if not configured
    */
-  public abstract TraceContext.TraceConfigExtras getTraceConfigExtras(
+  public abstract TraceConfigExtras getTraceConfigExtras(
       long longContext, @Nullable Object context, ControllerConfig config);
 
   public abstract boolean contextsEqual(

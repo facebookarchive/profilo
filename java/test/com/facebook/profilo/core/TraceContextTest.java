@@ -17,6 +17,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 import android.os.Parcel;
 import com.facebook.profilo.config.Config;
+import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
@@ -42,7 +43,7 @@ public class TraceContextTest {
   private static final TreeMap<String, Integer> intExtraParams = new TreeMap<>();
   private static final TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
   private static final TreeMap<String, int[]> intArrayExtraParams = new TreeMap<>();
-  private static final TraceContext.TraceConfigExtras PROVIDER_EXTRAS;
+  private static final TraceConfigExtras PROVIDER_EXTRAS;
 
   static {
     TreeMap<String, Integer> intExtraParams = new TreeMap<>();
@@ -52,8 +53,7 @@ public class TraceContextTest {
     boolExtraParams.put("bool_param_1", true);
     boolExtraParams.put("bool_param_2", false);
     intArrayExtraParams.put("int_arr_param_1", new int[] {22, 19});
-    PROVIDER_EXTRAS =
-        new TraceContext.TraceConfigExtras(intExtraParams, boolExtraParams, intArrayExtraParams);
+    PROVIDER_EXTRAS = new TraceConfigExtras(intExtraParams, boolExtraParams, intArrayExtraParams);
   }
 
   private TraceContext mContext;
@@ -117,7 +117,7 @@ public class TraceContextTest {
   }
 
   static void verifyProviderIntExtras(
-      TraceContext.TraceConfigExtras testExtras, TreeMap<String, Integer> intParams) {
+      TraceConfigExtras testExtras, TreeMap<String, Integer> intParams) {
     for (TreeMap.Entry<String, Integer> nextEntry : intParams.entrySet()) {
       assertThat(testExtras.getIntParam(nextEntry.getKey(), Integer.MIN_VALUE))
           .isEqualTo(nextEntry.getValue());
@@ -125,7 +125,7 @@ public class TraceContextTest {
   }
 
   static void verifyProviderBooleanExtras(
-      TraceContext.TraceConfigExtras testExtras, TreeMap<String, Boolean> boolParams) {
+      TraceConfigExtras testExtras, TreeMap<String, Boolean> boolParams) {
     for (TreeMap.Entry<String, Boolean> nextEntry : boolParams.entrySet()) {
       assertThat(testExtras.getBoolParam(nextEntry.getKey(), !nextEntry.getValue()))
           .isEqualTo(nextEntry.getValue());
@@ -133,7 +133,7 @@ public class TraceContextTest {
   }
 
   static void verifyProviderIntArrayExtras(
-      TraceContext.TraceConfigExtras testExtras, TreeMap<String, int[]> intArrayParams) {
+      TraceConfigExtras testExtras, TreeMap<String, int[]> intArrayParams) {
     for (TreeMap.Entry<String, int[]> nextEntry : intArrayParams.entrySet()) {
       assertThat(testExtras.getIntArrayParam(nextEntry.getKey()))
           .containsExactly(nextEntry.getValue());

@@ -18,7 +18,7 @@ import static com.facebook.profilo.core.ProfiloConstants.CPU_SAMPLING_RATE_CONFI
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TriggerRegistry;
-import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.ipc.TraceConfigExtras;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
 
@@ -38,15 +38,15 @@ public class ExternalController extends TraceController {
   }
 
   @Override
-  public TraceContext.TraceConfigExtras getTraceConfigExtras(
+  public TraceConfigExtras getTraceConfigExtras(
       long longContext, @Nullable Object context, ControllerConfig config) {
     if (context == null) {
-      return TraceContext.TraceConfigExtras.EMPTY;
+      return TraceConfigExtras.EMPTY;
     }
     TreeMap<String, Integer> extraIntMap = new TreeMap<>();
     extraIntMap.put(
         CPU_SAMPLING_RATE_CONFIG_PARAM, getConfigFromContext(context).cpuSamplingRateMs);
-    return new TraceContext.TraceConfigExtras(extraIntMap, null, null);
+    return new TraceConfigExtras(extraIntMap, null, null);
   }
 
   private Config getConfigFromContext(Object context) {

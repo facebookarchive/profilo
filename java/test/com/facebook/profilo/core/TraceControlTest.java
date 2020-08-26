@@ -33,6 +33,7 @@ import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ControllerConfig;
+import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
@@ -86,7 +87,7 @@ public class TraceControlTest extends PowerMockTest {
         .thenReturn(true);
     when(mController.isConfigurable()).thenReturn(true);
     when(mController.getTraceConfigExtras(anyLong(), anyObject(), same(mControllerConfig)))
-        .thenReturn(TraceContext.TraceConfigExtras.EMPTY);
+        .thenReturn(TraceConfigExtras.EMPTY);
     //noinspection unchecked
     mControllers = mock(SparseArray.class);
     when(mControllers.get(eq(TRACE_CONTROLLER_ID))).thenReturn(mController);
@@ -111,7 +112,7 @@ public class TraceControlTest extends PowerMockTest {
             PROVIDER_TEST,
             1,
             222,
-            TraceContext.TraceConfigExtras.EMPTY);
+            TraceConfigExtras.EMPTY);
   }
 
   @Test
