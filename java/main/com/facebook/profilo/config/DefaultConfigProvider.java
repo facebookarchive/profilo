@@ -14,7 +14,6 @@
 package com.facebook.profilo.config;
 
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nullable;
 
 public class DefaultConfigProvider implements ConfigProvider {
 
@@ -26,20 +25,10 @@ public class DefaultConfigProvider implements ConfigProvider {
   public static final int DEFAULT_BUFFER_SIZE = -1;
   public static final boolean DEFAULT_IS_MMAP_BUFFER = false;
 
-  public static final Config DEFAULT_CONFIG =
-      new Config() {
-
-        private final ControllerConfig mControllerConfig = new ControllerConfig() {};
-
-        @Nullable
-        @Override
-        public ConfigV2 getConfigV2() {
-          return new ConfigV2Impl(0, new ConfigV2Params());
-        }
-      };
+  public static final ConfigV2 DEFAULT_CONFIG = new ConfigV2Impl(0, new ConfigV2Params());
 
   @Override
-  public Config getFullConfig() {
+  public ConfigV2 getFullConfig() {
     return DEFAULT_CONFIG;
   }
 }

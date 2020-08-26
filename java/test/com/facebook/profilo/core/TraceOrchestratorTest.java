@@ -159,7 +159,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB00C, // traceId
             "FACEBOOOK", // encodedTraceId
-            mConfigProvider.getFullConfig().getConfigV2(), // config
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -172,7 +172,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
-            mConfigProvider.getFullConfig().getConfigV2(), // config
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -353,7 +353,10 @@ public class TraceOrchestratorTest extends PowerMockTest {
 
   @Test
   public void testTraceUploadOnTimeout() throws Exception {
-    mConfigProvider.setTimedOutUploadSampleRate(1);
+    TestConfigProvider provider = new TestConfigProvider(true);
+    provider.setTimedOutUploadSampleRate(1);
+    mOrchestrator.setConfigProvider(provider);
+
     final long traceId = 0xFACEB00C;
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
@@ -468,7 +471,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB001, // traceId
             "FACEBOOO1", // encodedTraceId
-            mConfigProvider.getFullConfig().getConfigV2(), // config
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -499,7 +502,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
-            mConfigProvider.getFullConfig().getConfigV2(), // config
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -549,7 +552,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
-            mConfigProvider.getFullConfig().getConfigV2(), // config
+            mConfigProvider.getFullConfig(), // config
             0, // controller
             null, // controllerObject
             null, // context

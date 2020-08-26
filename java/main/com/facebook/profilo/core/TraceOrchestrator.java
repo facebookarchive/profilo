@@ -19,7 +19,6 @@ import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.file.zip.ZipHelper;
-import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigProvider;
 import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.DefaultConfigProvider;
@@ -127,7 +126,7 @@ public final class TraceOrchestrator
 
   @GuardedBy("this")
   @Nullable
-  private volatile Config mConfig;
+  private volatile ConfigV2 mConfig;
 
   @GuardedBy("this")
   private FileManager mFileManager;
@@ -194,12 +193,10 @@ public final class TraceOrchestrator
   })
   // VisibleForTesting
   /*package*/ void bind(Context context, SparseArray<TraceController> controllers) {
-    Config initialConfig;
     ConfigV2 initialConfigV2;
     synchronized (this) {
-      initialConfig = mConfigProvider.getFullConfig();
-      initialConfigV2 = initialConfig.getConfigV2();
-      if (initialConfig == null || initialConfigV2 == null) {
+      initialConfigV2 = mConfigProvider.getFullConfig();
+      if (initialConfigV2 == null) {
         throw new IllegalArgumentException("We only support v2 configs now!");
       }
     }
@@ -235,7 +232,7 @@ public final class TraceOrchestrator
       Logger.initialize(bufferSize, folder, mProcessName, this, this, mMmapBufferManager);
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
-      performConfigTransition(initialConfig);
+      performConfigTransition(initialConfigV2);
 
       // Prepare the FileManager and start the worker thread
       // TODO: get these out of the config
@@ -247,7 +244,7 @@ public final class TraceOrchestrator
   }
 
   @GuardedBy("this")
-  public Config getConfig() {
+  public ConfigV2 getConfig() {
     return mConfig;
   }
 
@@ -289,7 +286,7 @@ public final class TraceOrchestrator
     }
     mBackgroundUploadService = uploadService;
     if (mBackgroundUploadService != null && mConfig != null) {
-      mBackgroundUploadService.updateConstraints(mConfig.getConfigV2());
+      mBackgroundUploadService.updateConstraints(mConfig);
     }
     if (triggerUpload) {
       triggerUpload();
@@ -315,7 +312,7 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onConfigUpdated(Config config) {
+  public void onConfigUpdated(ConfigV2 config) {
     mListenerManager.onNewConfigAvailable();
     synchronized (this) {
       performConfigTransition(config);
@@ -332,14 +329,9 @@ public final class TraceOrchestrator
   }
 
   @GuardedBy("this")
-  private void performConfigTransition(Config newConfig) {
+  private void performConfigTransition(ConfigV2 newConfig) {
     if (newConfig.equals(mConfig)) {
       return;
-    }
-
-    ConfigV2 newConfigV2 = newConfig.getConfigV2();
-    if (newConfigV2 == null) {
-      throw new IllegalArgumentException("New config must have a v2 version!");
     }
 
     mConfig = newConfig;
@@ -349,12 +341,12 @@ public final class TraceOrchestrator
       throw new IllegalStateException(
           "Performing config change before TraceControl has been initialized");
     }
-    traceControl.setConfig(newConfigV2);
+    traceControl.setConfig(newConfig);
 
     BackgroundUploadService backgroundUploadService = getUploadService(true /* triggerUpload */);
 
     if (backgroundUploadService != null) {
-      backgroundUploadService.updateConstraints(newConfigV2);
+      backgroundUploadService.updateConstraints(newConfig);
     }
   }
 
@@ -597,15 +589,14 @@ public final class TraceOrchestrator
 
     boolean uploadTrace = false;
 
-    Config config;
+    ConfigV2 config;
     synchronized (this) {
       config = mConfig;
     }
 
     if (config != null && abortReason == ProfiloConstants.ABORT_REASON_TIMEOUT) {
-      ConfigV2 configv2 = config.getConfigV2();
       int sampleRate =
-          configv2.optSystemConfigParamInt(
+          config.optSystemConfigParamInt(
               ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, 0);
       uploadTrace = sampleRate != 0 && mRandom.nextInt(sampleRate) == 0;
     }

@@ -13,7 +13,6 @@
  */
 package com.facebook.profilo.util;
 
-import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigProvider;
 import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.ConfigV2Impl;
@@ -51,21 +50,11 @@ public final class TestConfigProvider implements ConfigProvider {
   }
 
   @Override
-  public Config getFullConfig() {
-    return new Config() {
-
-      @Override
-      public ConfigV2 getConfigV2() {
-        if (!mAllowConfigV2) {
-          return null;
-        }
-
-        ConfigV2Params systemConfig = new ConfigV2Params();
-        systemConfig.intParams = new TreeMap<>();
-        systemConfig.intParams.put(
-            ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, mTimedOutUploadSampleRate);
-        return new ConfigV2Impl(0, systemConfig);
-      }
-    };
+  public ConfigV2 getFullConfig() {
+    ConfigV2Params systemConfig = new ConfigV2Params();
+    systemConfig.intParams = new TreeMap<>();
+    systemConfig.intParams.put(
+        ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, mTimedOutUploadSampleRate);
+    return new ConfigV2Impl(0, systemConfig);
   }
 }

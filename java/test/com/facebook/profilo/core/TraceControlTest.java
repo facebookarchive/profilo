@@ -68,7 +68,7 @@ public class TraceControlTest extends PowerMockTest {
   private TraceContext mTraceContext;
   private final TestConfigProvider mTraceConfigProvider =
       new TestConfigProvider().setControllers(TRACE_CONTROLLER_ID);
-  private final ConfigV2 mConfig = mTraceConfigProvider.getFullConfig().getConfigV2();
+  private final ConfigV2 mConfig = mTraceConfigProvider.getFullConfig();
 
   @Before
   public void setUp() throws Exception {
@@ -326,7 +326,7 @@ public class TraceControlTest extends PowerMockTest {
   @Test
   public void testConfigChangeOutsideTraceWritesNothing() {
     TestConfigProvider provider = new TestConfigProvider().setControllers(1, 2);
-    mTraceControl.setConfig(provider.getFullConfig().getConfigV2());
+    mTraceControl.setConfig(provider.getFullConfig());
 
     verifyStatic(Logger.class, never());
     Logger.postAbortTrace(anyLong());
@@ -338,7 +338,7 @@ public class TraceControlTest extends PowerMockTest {
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isTrue();
 
     TestConfigProvider provider = new TestConfigProvider().setControllers(1, 2);
-    mTraceControl.setConfig(provider.getFullConfig().getConfigV2());
+    mTraceControl.setConfig(provider.getFullConfig());
 
     assertTracing();
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, context, 0);

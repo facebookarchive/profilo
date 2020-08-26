@@ -15,8 +15,8 @@ package com.facebook.profilo.config;
 
 public interface ConfigProvider {
   interface ConfigUpdateListener {
-    void onConfigUpdated(Config config);
+    void onConfigUpdated(ConfigV2 config);
   }
 
-  Config getFullConfig();
+  ConfigV2 getFullConfig();
 }
