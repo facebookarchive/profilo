@@ -58,37 +58,6 @@ public class DefaultConfigProvider implements ConfigProvider {
             }
           };
         }
-
-        @Override
-        public SystemControlConfig getSystemControl() {
-          return new SystemControlConfig() {
-
-            @Override
-            public long getUploadMaxBytes() {
-              return DEFAULT_MAX_BYTES;
-            }
-
-            @Override
-            public long getUploadBytesPerUpdate() {
-              return DEFAULT_UPLOAD_BYTES_PER_UPDATE;
-            }
-
-            @Override
-            public long getUploadTimePeriodSec() {
-              return DEFAULT_UPLOAD_PERIOD_SEC;
-            }
-
-            @Override
-            public int getBufferSize() {
-              return DEFAULT_BUFFER_SIZE;
-            }
-
-            @Override
-            public boolean isMmapBuffer() {
-              return DEFAULT_IS_MMAP_BUFFER;
-            }
-          };
-        }
       };
 
   @Override

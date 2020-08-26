@@ -22,8 +22,6 @@ public interface Config {
 
   RootControllerConfig getControllersConfig();
 
-  SystemControlConfig getSystemControl();
-
   interface RootControllerConfig {
 
     @Nullable

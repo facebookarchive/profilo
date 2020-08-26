@@ -19,8 +19,6 @@ import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.ConfigV2Impl;
 import com.facebook.profilo.config.ConfigV2Params;
 import com.facebook.profilo.config.ControllerConfig;
-import com.facebook.profilo.config.DefaultConfigProvider;
-import com.facebook.profilo.config.SystemControlConfig;
 import com.facebook.profilo.core.ProfiloConstants;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -29,8 +27,6 @@ public final class TestConfigProvider implements ConfigProvider {
 
   private static final int TEST_TRACE_TIMEOUT_MS = 30000;
   private final HashMap<Integer, ControllerConfig> mControllers = new HashMap<>();
-  private SystemControlConfig mSystemControlConfig =
-      new DefaultConfigProvider().getFullConfig().getSystemControl();
   private int mTimedOutUploadSampleRate;
   private final boolean mAllowConfigV2;
 
@@ -48,10 +44,6 @@ public final class TestConfigProvider implements ConfigProvider {
       mControllers.put(c, new ControllerConfig() {});
     }
     return this;
-  }
-
-  public void setSystemControlConfig(SystemControlConfig systemControlConfig) {
-    mSystemControlConfig = systemControlConfig;
   }
 
   public void setTimedOutUploadSampleRate(int timedOutUploadSampleRate) {
@@ -94,11 +86,6 @@ public final class TestConfigProvider implements ConfigProvider {
             return mTimedOutUploadSampleRate;
           }
         };
-      }
-
-      @Override
-      public SystemControlConfig getSystemControl() {
-        return mSystemControlConfig;
       }
     };
   }
