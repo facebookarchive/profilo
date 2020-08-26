@@ -106,6 +106,9 @@ public interface ConfigV2 {
   String[] optTraceConfigTriggerParamStringList(
       int traceconfigIdx, String triggerType, String triggerAction, String key);
 
+  /** Only use when serializing a TraceConfig. The explicit accessors are much faster. */
+  ConfigV2Params getTraceConfigParams(int traceConfigIdx);
+
   // Misc
   boolean isDisablingConfig();
 

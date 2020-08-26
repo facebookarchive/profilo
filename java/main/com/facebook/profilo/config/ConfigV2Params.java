@@ -13,9 +13,11 @@
  */
 package com.facebook.profilo.config;
 
+import com.facebook.proguard.annotations.DoNotStripAny;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
 
+@DoNotStripAny
 public class ConfigV2Params {
   static final ConfigV2Params EMPTY = new ConfigV2Params();
 

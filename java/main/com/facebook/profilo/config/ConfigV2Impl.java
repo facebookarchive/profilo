@@ -271,6 +271,11 @@ public class ConfigV2Impl implements ConfigV2 {
   }
 
   @Override
+  public ConfigV2Params getTraceConfigParams(int traceConfigIdx) {
+    return getTraceConfigParams(traceConfigIdx);
+  }
+
+  @Override
   public boolean isDisablingConfig() {
     return false;
   }
