@@ -37,6 +37,7 @@ public class TraceContextTest {
   private static final int ENABLED_PROVIDERS = 33333;
   private static final int FLAGS = 1;
   private static final int ABORT_REASON = 1;
+  private static final int TRACE_CONFIG_IDX = 1;
 
   private static final TreeMap<String, Integer> intExtraParams = new TreeMap<>();
   private static final TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
@@ -73,6 +74,7 @@ public class TraceContextTest {
             ENABLED_PROVIDERS,
             FLAGS,
             ABORT_REASON,
+            TRACE_CONFIG_IDX,
             PROVIDER_EXTRAS);
   }
 
@@ -88,6 +90,7 @@ public class TraceContextTest {
     assertThat(mContext.enabledProviders).isEqualTo(ENABLED_PROVIDERS);
     assertThat(mContext.flags).isEqualTo(FLAGS);
     assertThat(mContext.abortReason).isEqualTo(ABORT_REASON);
+    assertThat(mContext.traceConfigIdx).isEqualTo(TRACE_CONFIG_IDX);
     verifyProviderIntExtras(mContext.mTraceConfigExtras, intExtraParams);
     verifyProviderBooleanExtras(mContext.mTraceConfigExtras, boolExtraParams);
     verifyProviderIntArrayExtras(mContext.mTraceConfigExtras, intArrayExtraParams);

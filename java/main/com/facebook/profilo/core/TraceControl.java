@@ -307,6 +307,7 @@ public final class TraceControl {
             longContext,
             providers,
             flags,
+            /*traceConfigIdx*/ 0,
             controllerConfig == null
                 ? TraceContext.TraceConfigExtras.EMPTY
                 : traceController.getTraceConfigExtras(longContext, context, controllerConfig));

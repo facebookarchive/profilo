@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigV2;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
@@ -145,6 +146,7 @@ public final class TraceContext implements Parcelable {
 
   // Not synced to secondary processes
   @Nullable public Config config;
+  @Nullable public ConfigV2 configv2;
   // Every time context which is shared via a Parcelable changes it's required to update
   // Action's version in {@see ProfiloBroadcastReceiver}.
   public long traceId;
@@ -156,6 +158,7 @@ public final class TraceContext implements Parcelable {
   public int enabledProviders;
   public int flags;
   public int abortReason;
+  public int traceConfigIdx;
   public TraceConfigExtras mTraceConfigExtras;
 
   public static final Parcelable.Creator<TraceContext> CREATOR =
@@ -182,6 +185,7 @@ public final class TraceContext implements Parcelable {
       int enabledProviders,
       int flags,
       int abortReason,
+      int traceConfigIdx,
       TraceConfigExtras traceConfigExtras) {
     this.traceId = traceId;
     this.encodedTraceId = encodedTraceId;
@@ -193,6 +197,7 @@ public final class TraceContext implements Parcelable {
     this.enabledProviders = enabledProviders;
     this.flags = flags;
     this.abortReason = abortReason;
+    this.traceConfigIdx = traceConfigIdx;
     this.mTraceConfigExtras = traceConfigExtras;
   }
 
@@ -206,6 +211,7 @@ public final class TraceContext implements Parcelable {
       long longContext,
       int enabledProviders,
       int flags,
+      int traceConfigIdx,
       TraceConfigExtras traceConfigExtras) {
     this(
         traceId,
@@ -218,6 +224,7 @@ public final class TraceContext implements Parcelable {
         enabledProviders,
         flags,
         (short) 0,
+        traceConfigIdx,
         traceConfigExtras);
   }
 
@@ -233,6 +240,7 @@ public final class TraceContext implements Parcelable {
         traceContext.enabledProviders,
         traceContext.flags,
         traceContext.abortReason,
+        traceContext.traceConfigIdx,
         traceContext.mTraceConfigExtras);
   }
 
@@ -248,6 +256,7 @@ public final class TraceContext implements Parcelable {
         traceContext.enabledProviders,
         traceContext.flags,
         abortReason,
+        traceContext.traceConfigIdx,
         traceContext.mTraceConfigExtras);
   }
 
@@ -264,6 +273,7 @@ public final class TraceContext implements Parcelable {
         traceContext.enabledProviders,
         traceContext.flags,
         traceContext.abortReason,
+        traceContext.traceConfigIdx,
         traceContext.mTraceConfigExtras);
   }
 
@@ -281,6 +291,7 @@ public final class TraceContext implements Parcelable {
     this.enabledProviders = src.readInt();
     this.flags = src.readInt();
     this.abortReason = src.readInt();
+    this.traceConfigIdx = src.readInt();
     this.mTraceConfigExtras = TraceConfigExtras.CREATOR.createFromParcel(src);
   }
 
@@ -298,6 +309,7 @@ public final class TraceContext implements Parcelable {
     dest.writeInt(enabledProviders);
     dest.writeInt(this.flags);
     dest.writeInt(abortReason);
+    dest.writeInt(traceConfigIdx);
     mTraceConfigExtras.writeToParcel(dest, flags);
   }
 }

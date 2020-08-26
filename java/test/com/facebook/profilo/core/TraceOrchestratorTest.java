@@ -165,6 +165,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0, // intContext
             DEFAULT_TRACING_PROVIDERS,
             1, // flags
+            0,
             TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mSecondTraceContext =
         new TraceContext(
@@ -177,6 +178,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0, // intContext
             SECOND_TRACE_TRACING_PROVIDERS,
             1, // flags
+            0,
             TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
 
     whenNew(SparseArray.class)
@@ -471,7 +473,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0, // intContext
             DEFAULT_TRACING_PROVIDERS,
             1, // flags
-            1, // configId
+            1,
             TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mOrchestrator.onTraceStartSync(anotherContext);
     mOrchestrator.onTraceStartAsync(anotherContext);
@@ -502,6 +504,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0, // intContext
             enabledProvidersMask, // enabled providers mask
             1,
+            0,
             TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 
@@ -551,6 +554,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0, // intContext
             enabledProvidersMask, // enabled providers mask
             1,
+            0,
             TraceContext.TraceConfigExtras.EMPTY); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 
