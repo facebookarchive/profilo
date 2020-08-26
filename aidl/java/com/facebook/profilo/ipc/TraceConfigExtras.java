@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.facebook.profilo.config.ConfigV2;
+import com.facebook.profilo.config.ConfigV2Params;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
@@ -71,23 +72,34 @@ public final class TraceConfigExtras implements Parcelable {
 
   @Override
   public void writeToParcel(Parcel dest, int flags) {
+    TreeMap<String, Integer> intParams = mIntParams;
+    TreeMap<String, Boolean> boolParams = mBoolParams;
+    TreeMap<String, int[]> intArrayParams = mIntArrayParams;
+
+    if (mTraceConfigIdx >= 0 && mConfigV2 != null) {
+      ConfigV2Params params = mConfigV2.getTraceConfigParams(mTraceConfigIdx);
+      intParams = params.intParams;
+      boolParams = params.boolParams;
+      intArrayParams = params.intListParams;
+    }
+
     Bundle intParamsBundle = new Bundle();
-    if (mIntParams != null) {
-      for (TreeMap.Entry<String, Integer> entry : mIntParams.entrySet()) {
+    if (intParams != null) {
+      for (TreeMap.Entry<String, Integer> entry : intParams.entrySet()) {
         intParamsBundle.putInt(entry.getKey(), entry.getValue());
       }
     }
     dest.writeBundle(intParamsBundle);
     Bundle boolParamsBundle = new Bundle();
-    if (mBoolParams != null) {
-      for (TreeMap.Entry<String, Boolean> entry : mBoolParams.entrySet()) {
+    if (boolParams != null) {
+      for (TreeMap.Entry<String, Boolean> entry : boolParams.entrySet()) {
         boolParamsBundle.putBoolean(entry.getKey(), entry.getValue());
       }
     }
     dest.writeBundle(boolParamsBundle);
     Bundle intArrayParamsBundle = new Bundle();
-    if (mIntArrayParams != null) {
-      for (TreeMap.Entry<String, int[]> entry : mIntArrayParams.entrySet()) {
+    if (intArrayParams != null) {
+      for (TreeMap.Entry<String, int[]> entry : intArrayParams.entrySet()) {
         intArrayParamsBundle.putIntArray(entry.getKey(), entry.getValue());
       }
     }
