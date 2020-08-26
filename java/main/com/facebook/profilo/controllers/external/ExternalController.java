@@ -39,7 +39,7 @@ public class ExternalController extends TraceController {
 
   @Override
   public TraceConfigExtras getTraceConfigExtras(
-      long longContext, @Nullable Object context, ControllerConfig config) {
+      long longContext, @Nullable Object context, @Nullable ControllerConfig config) {
     if (context == null) {
       return TraceConfigExtras.EMPTY;
     }

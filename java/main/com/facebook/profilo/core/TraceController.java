@@ -45,11 +45,11 @@ public abstract class TraceController {
    *
    * @param context the trace context object passed to {@link TraceControl#startTrace(int, int,
    *     Object, long)}
-   * @param config the current config for this controller
-   * @return sampling rate in milliseconds, 0 if not configured
+   * @param config the current config for this controller, if any. Nullable only if isConfigurable
+   *     is false, otherwise guaranteed to exist.
    */
   public abstract TraceConfigExtras getTraceConfigExtras(
-      long longContext, @Nullable Object context, ControllerConfig config);
+      long longContext, @Nullable Object context, @Nullable ControllerConfig config);
 
   public abstract boolean contextsEqual(
       long fstLong, @Nullable Object fst, long sndLong, @Nullable Object snd);

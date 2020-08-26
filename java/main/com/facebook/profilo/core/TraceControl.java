@@ -320,11 +320,9 @@ public final class TraceControl {
     final TraceConfigExtras traceConfigExtras;
     if (configV2 != null && traceConfigIdx >= 0) {
       traceConfigExtras = new TraceConfigExtras(configV2, traceConfigIdx);
-    } else if (controllerConfig != null) {
+    } else {
       traceConfigExtras =
           traceController.getTraceConfigExtras(longContext, context, controllerConfig);
-    } else {
-      traceConfigExtras = TraceConfigExtras.EMPTY;
     }
 
     TraceContext nextContext =
