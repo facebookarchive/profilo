@@ -13,12 +13,14 @@
  */
 package com.facebook.profilo.core;
 
+import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.ipc.TraceContext;
 import javax.annotation.Nullable;
 
 public abstract class TraceController {
 
+  public static int RESULT_FALLBACK_CONFIG_V1 = Integer.MIN_VALUE;
   /**
    * Determine if the configuration allows for a trace to start.
    *
@@ -30,6 +32,10 @@ public abstract class TraceController {
    */
   public abstract int evaluateConfig(
       long longContext, @Nullable Object context, ControllerConfig config);
+
+  public int findTraceConfigIdx(long longContext, @Nullable Object context, ConfigV2 config) {
+    return RESULT_FALLBACK_CONFIG_V1;
+  }
 
   /**
    * Determine current configuration extra parameters for providers.

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
 import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
@@ -289,7 +290,22 @@ public final class TraceControl {
       return false;
     }
 
-    int providers = traceController.evaluateConfig(longContext, context, controllerConfig);
+    ConfigV2 configV2 = rootConfig.getConfigV2();
+    int traceConfigIdx = -1;
+    int providers = 0;
+    if (configV2 != null) {
+      int result = traceController.findTraceConfigIdx(longContext, context, configV2);
+      if (result >= 0) {
+        traceConfigIdx = result;
+        String[] providerStrings = configV2.getTraceConfigProviders(traceConfigIdx);
+        providers = ProvidersRegistry.getBitMaskFor(Arrays.asList(providerStrings));
+      } else if (result == TraceController.RESULT_FALLBACK_CONFIG_V1) {
+        providers = traceController.evaluateConfig(longContext, context, controllerConfig);
+      }
+    } else {
+      providers = traceController.evaluateConfig(longContext, context, controllerConfig);
+    }
+
     if (providers == 0) {
       return false;
     }
@@ -307,7 +323,7 @@ public final class TraceControl {
             longContext,
             providers,
             flags,
-            /*traceConfigIdx*/ 0,
+            traceConfigIdx,
             controllerConfig == null
                 ? TraceContext.TraceConfigExtras.EMPTY
                 : traceController.getTraceConfigExtras(longContext, context, controllerConfig));
