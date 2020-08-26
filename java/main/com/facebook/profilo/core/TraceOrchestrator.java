@@ -227,7 +227,7 @@ public final class TraceOrchestrator
       if (useMmapBuffer) {
         mMmapBufferManager =
             new MmapBufferManager(
-                initialConfig.getConfigID(), mFileManager.getMmapBufferFolder(), context);
+                initialConfigV2.getID(), mFileManager.getMmapBufferFolder(), context);
         addListener(new MmapBufferTraceListener(mMmapBufferManager));
       }
 

@@ -100,11 +100,6 @@ public final class TestConfigProvider implements ConfigProvider {
       public SystemControlConfig getSystemControl() {
         return mSystemControlConfig;
       }
-
-      @Override
-      public long getConfigID() {
-        return 0xFACEB00C;
-      }
     };
   }
 }

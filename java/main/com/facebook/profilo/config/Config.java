@@ -24,9 +24,6 @@ public interface Config {
 
   SystemControlConfig getSystemControl();
 
-  /** @return a numeric identifier that represents this configuration */
-  long getConfigID();
-
   interface RootControllerConfig {
 
     @Nullable

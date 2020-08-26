@@ -89,11 +89,6 @@ public class DefaultConfigProvider implements ConfigProvider {
             }
           };
         }
-
-        @Override
-        public long getConfigID() {
-          return 0;
-        }
       };
 
   @Override
