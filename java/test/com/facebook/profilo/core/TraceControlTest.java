@@ -19,8 +19,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,7 +33,9 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
-import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigImpl;
+import com.facebook.profilo.config.ConfigParams;
+import com.facebook.profilo.config.ConfigTraceConfig;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
@@ -39,6 +43,7 @@ import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.testing.powermock.PowerMockTest;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
+import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +56,7 @@ import org.powermock.reflect.Whitebox;
 @PrepareForTest({
   Logger.class,
   TraceControl.class,
+  ProvidersRegistry.class,
 })
 @SuppressStaticInitializationFor("com.facebook.profilo.logger.Logger")
 public class TraceControlTest extends PowerMockTest {
@@ -59,40 +65,62 @@ public class TraceControlTest extends PowerMockTest {
   private static final long TEST_TRACE_ID = 10000l;
 
   private static final int PROVIDER_TEST = ProvidersRegistry.newProvider("test");
+  private static final String TEST_INT_PARAM_KEY = "TEST_KEY";
+  private static final int TEST_INT_PARAM_VALUE = 0x100;
 
   private TraceControl mTraceControl;
   private SparseArray<TraceController> mControllers;
-  private TraceController mController;
+  private TraceController mNonconfigurableController;
+  private TraceController mConfigurableController;
   private TraceControlHandler mTraceControlHandler;
   private TraceContext mTraceContext;
-  private final TestConfigProvider mTraceConfigProvider = new TestConfigProvider();
-  private final Config mConfig = mTraceConfigProvider.getFullConfig();
+  private final ConfigTraceConfig mTraceConfig = new ConfigTraceConfig();
+  private final ConfigImpl mConfig = new ConfigImpl(0, new ConfigParams(), mTraceConfig);
 
   @Before
   public void setUp() throws Exception {
     mockStatic(Logger.class);
+    mockStatic(ProvidersRegistry.class);
 
-    mController = mock(TraceController.class);
+    mNonconfigurableController = mock(TraceController.class);
 
-    when(mController.isConfigurable()).thenReturn(false);
+    when(mNonconfigurableController.isConfigurable()).thenReturn(false);
 
     // Register both null and non-null context param
-    when(mController.evaluateConfig(anyLong(), any(Object.class))).thenReturn(PROVIDER_TEST);
-    when(mController.evaluateConfig(anyLong(), isNull(Object.class))).thenReturn(PROVIDER_TEST);
+    when(mNonconfigurableController.evaluateConfig(anyLong(), any(Object.class)))
+        .thenReturn(PROVIDER_TEST);
+    when(mNonconfigurableController.evaluateConfig(anyLong(), isNull(Object.class)))
+        .thenReturn(PROVIDER_TEST);
 
-    when(mController.contextsEqual(anyLong(), any(Object.class), anyLong(), any(Object.class)))
+    when(mNonconfigurableController.contextsEqual(
+            anyLong(), any(Object.class), anyLong(), any(Object.class)))
         .thenReturn(true);
-    when(mController.contextsEqual(anyLong(), isNull(), anyLong(), isNull())).thenReturn(true);
+    when(mNonconfigurableController.contextsEqual(anyLong(), isNull(), anyLong(), isNull()))
+        .thenReturn(true);
 
-    when(mController.getTraceConfigExtras(anyLong(), any(Object.class)))
+    when(mNonconfigurableController.getTraceConfigExtras(anyLong(), any(Object.class)))
         .thenReturn(TraceConfigExtras.EMPTY);
-    when(mController.getTraceConfigExtras(anyLong(), isNull(Object.class)))
+    when(mNonconfigurableController.getTraceConfigExtras(anyLong(), isNull(Object.class)))
         .thenReturn(TraceConfigExtras.EMPTY);
-    //noinspection unchecked
+
+    mConfigurableController = mock(TraceController.class);
+    when(mConfigurableController.isConfigurable()).thenReturn(true);
+    when(mConfigurableController.contextsEqual(
+            anyLong(), any(Object.class), anyLong(), any(Object.class)))
+        .thenReturn(true);
+    when(mConfigurableController.contextsEqual(anyLong(), isNull(), anyLong(), isNull()))
+        .thenReturn(true);
+
+    mTraceConfig.params = new ConfigParams();
+    mTraceConfig.params.intParams = new TreeMap<>();
+    mTraceConfig.params.intParams.put(TEST_INT_PARAM_KEY, TEST_INT_PARAM_VALUE);
+    mTraceConfig.enabledProviders = new String[] {"test_provider"};
+
+    when(ProvidersRegistry.getBitMaskFor(anyString())).thenReturn(1);
+    when(ProvidersRegistry.getBitMaskFor(any(Iterable.class))).thenReturn(1);
+
     mControllers = mock(SparseArray.class);
-    when(mControllers.get(eq(TRACE_CONTROLLER_ID))).thenReturn(mController);
-    when(mControllers.get(eq(TRACE_CONTROLLER_ID), any(TraceController.class)))
-        .thenReturn(mController);
+    setController(mNonconfigurableController);
 
     mTraceControl =
         new TraceControl(mControllers, mConfig, mock(TraceControl.TraceControlListener.class));
@@ -115,6 +143,12 @@ public class TraceControlTest extends PowerMockTest {
             TraceConfigExtras.EMPTY);
   }
 
+  private void setController(TraceController controller) {
+    when(mControllers.get(eq(TRACE_CONTROLLER_ID))).thenReturn(controller);
+    when(mControllers.get(eq(TRACE_CONTROLLER_ID), any(TraceController.class)))
+        .thenReturn(controller);
+  }
+
   @Test
   public void testStartWithExistingTraceContext() {
     assertThat(mTraceControl.adoptContext(TRACE_CONTROLLER_ID, 0, mTraceContext)).isTrue();
@@ -125,7 +159,7 @@ public class TraceControlTest extends PowerMockTest {
     assertThat(currContext.traceId).isEqualTo(mTraceContext.traceId);
     assertThat(currContext.encodedTraceId).isEqualTo(mTraceContext.encodedTraceId);
     assertThat(currContext.controller).isEqualTo(TRACE_CONTROLLER_ID);
-    assertThat(currContext.controllerObject).isEqualTo(mController);
+    assertThat(currContext.controllerObject).isEqualTo(mNonconfigurableController);
     assertThat(currContext.context).isEqualTo(mTraceContext.context);
     assertThat(currContext.longContext).isEqualTo(mTraceContext.longContext);
     assertThat(currContext.enabledProviders).isEqualTo(mTraceContext.enabledProviders);
@@ -187,14 +221,45 @@ public class TraceControlTest extends PowerMockTest {
   }
 
   @Test
-  public void testStartChecksController() {
-    when(mController.evaluateConfig(anyLong(), anyObject())).thenReturn(0);
+  public void testStartChecksControllerNonconfigurable() {
+    when(mNonconfigurableController.evaluateConfig(anyLong(), anyObject())).thenReturn(0);
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isFalse();
     assertNotTracing();
 
-    when(mController.evaluateConfig(anyLong(), anyObject())).thenReturn(PROVIDER_TEST);
+    when(mNonconfigurableController.evaluateConfig(anyLong(), anyObject()))
+        .thenReturn(PROVIDER_TEST);
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isTrue();
     assertTracing();
+  }
+
+  @Test
+  public void testStartChecksControllerConfigurable() {
+    Object context = new Object();
+    setController(mConfigurableController);
+
+    when(mConfigurableController.findTraceConfigIdx(anyLong(), same(context), same(mConfig)))
+        .thenReturn(TraceController.RESULT_COINFLIP_MISS);
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isFalse();
+    assertNotTracing();
+
+    when(mConfigurableController.findTraceConfigIdx(anyLong(), same(context), same(mConfig)))
+        .thenReturn(TraceController.RESULT_NO_TRACE_CONFIG);
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isFalse();
+    assertNotTracing();
+
+    when(mConfigurableController.findTraceConfigIdx(anyLong(), same(context), same(mConfig)))
+        .thenReturn(0);
+
+    assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isTrue();
+    assertTracing();
+
+    TraceContext traceContext =
+        mTraceControl.getTraceContextByTrigger(TRACE_CONTROLLER_ID, 0, context);
+    assertThat(traceContext).isNotNull();
+    assertThat(traceContext.traceConfigIdx).isEqualTo(0);
+    assertThat(traceContext.config).isSameAs(mConfig);
+    assertThat(traceContext.mTraceConfigExtras.getIntParam(TEST_INT_PARAM_KEY, 0))
+        .isEqualTo(TEST_INT_PARAM_VALUE);
   }
 
   @Test
@@ -204,13 +269,13 @@ public class TraceControlTest extends PowerMockTest {
     assertTracing();
 
     // Different context doesn't stop the trace..
-    when(mController.contextsEqual(anyLong(), anyObject(), anyLong(), anyObject()))
+    when(mNonconfigurableController.contextsEqual(anyLong(), anyObject(), anyLong(), anyObject()))
         .thenReturn(false);
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, new Object(), 0);
     assertTracing();
 
     // ..but the right context does
-    when(mController.contextsEqual(anyLong(), anyObject(), anyLong(), anyObject()))
+    when(mNonconfigurableController.contextsEqual(anyLong(), anyObject(), anyLong(), anyObject()))
         .thenReturn(true);
     mTraceControl.stopTrace(TRACE_CONTROLLER_ID, context, 0);
     assertNotTracing();
@@ -267,8 +332,10 @@ public class TraceControlTest extends PowerMockTest {
   public void testMultipleTracesStartStop() {
     long flag1 = 1;
     long flag2 = 2;
-    when(mController.contextsEqual(eq(flag1), isNull(), eq(flag2), isNull())).thenReturn(false);
-    when(mController.contextsEqual(eq(flag2), isNull(), eq(flag1), isNull())).thenReturn(false);
+    when(mNonconfigurableController.contextsEqual(eq(flag1), isNull(), eq(flag2), isNull()))
+        .thenReturn(false);
+    when(mNonconfigurableController.contextsEqual(eq(flag2), isNull(), eq(flag1), isNull()))
+        .thenReturn(false);
 
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, flag1)).isTrue();
     assertNormalTracing();
@@ -364,8 +431,10 @@ public class TraceControlTest extends PowerMockTest {
   public void testNormalAndMemoryOnlyConcurrentTracesAreAllowed() {
     long flag1 = 1;
     long flag2 = 2;
-    when(mController.contextsEqual(eq(flag1), any(), eq(flag2), any())).thenReturn(false);
-    when(mController.contextsEqual(eq(flag2), any(), eq(flag1), any())).thenReturn(false);
+    when(mNonconfigurableController.contextsEqual(eq(flag1), any(), eq(flag2), any()))
+        .thenReturn(false);
+    when(mNonconfigurableController.contextsEqual(eq(flag2), any(), eq(flag1), any()))
+        .thenReturn(false);
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, Trace.FLAG_MEMORY_ONLY, null, flag1))
         .isTrue();
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, null, flag2)).isTrue();
