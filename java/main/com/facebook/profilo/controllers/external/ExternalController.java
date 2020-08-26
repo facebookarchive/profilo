@@ -32,12 +32,13 @@ public class ExternalController extends TraceController {
   }
 
   @Override
-  public int evaluateConfig(long longContext, @Nullable Object context) {
+  public int getNonConfigurableProviders(long longContext, @Nullable Object context) {
     return getConfigFromContext(context).providers;
   }
 
   @Override
-  public TraceConfigExtras getTraceConfigExtras(long longContext, @Nullable Object context) {
+  public TraceConfigExtras getNonConfigurableTraceConfigExtras(
+      long longContext, @Nullable Object context) {
     if (context == null) {
       return TraceConfigExtras.EMPTY;
     }

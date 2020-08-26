@@ -281,7 +281,7 @@ public final class TraceControl {
 
     if (!traceController.isConfigurable()) {
       // Special path for non-configurable controllers
-      providers = traceController.evaluateConfig(longContext, context);
+      providers = traceController.getNonConfigurableProviders(longContext, context);
     } else if (config != null) {
       int result = traceController.findTraceConfigIdx(longContext, context, config);
       if (result >= 0) {
@@ -301,11 +301,11 @@ public final class TraceControl {
     Log.w(LOG_TAG, "START PROFILO_TRACEID: " + FbTraceId.encode(traceId));
 
     final TraceConfigExtras traceConfigExtras;
-    if (config != null && traceConfigIdx >= 0) {
+    if (traceController.isConfigurable()) {
       traceConfigExtras = new TraceConfigExtras(config, traceConfigIdx);
     } else {
       // non-configurable controller path
-      traceConfigExtras = traceController.getTraceConfigExtras(longContext, context);
+      traceConfigExtras = traceController.getNonConfigurableTraceConfigExtras(longContext, context);
     }
 
     TraceContext nextContext =

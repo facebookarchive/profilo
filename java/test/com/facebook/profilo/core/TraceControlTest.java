@@ -87,9 +87,9 @@ public class TraceControlTest extends PowerMockTest {
     when(mNonconfigurableController.isConfigurable()).thenReturn(false);
 
     // Register both null and non-null context param
-    when(mNonconfigurableController.evaluateConfig(anyLong(), any(Object.class)))
+    when(mNonconfigurableController.getNonConfigurableProviders(anyLong(), any(Object.class)))
         .thenReturn(PROVIDER_TEST);
-    when(mNonconfigurableController.evaluateConfig(anyLong(), isNull(Object.class)))
+    when(mNonconfigurableController.getNonConfigurableProviders(anyLong(), isNull(Object.class)))
         .thenReturn(PROVIDER_TEST);
 
     when(mNonconfigurableController.contextsEqual(
@@ -98,9 +98,11 @@ public class TraceControlTest extends PowerMockTest {
     when(mNonconfigurableController.contextsEqual(anyLong(), isNull(), anyLong(), isNull()))
         .thenReturn(true);
 
-    when(mNonconfigurableController.getTraceConfigExtras(anyLong(), any(Object.class)))
+    when(mNonconfigurableController.getNonConfigurableTraceConfigExtras(
+            anyLong(), any(Object.class)))
         .thenReturn(TraceConfigExtras.EMPTY);
-    when(mNonconfigurableController.getTraceConfigExtras(anyLong(), isNull(Object.class)))
+    when(mNonconfigurableController.getNonConfigurableTraceConfigExtras(
+            anyLong(), isNull(Object.class)))
         .thenReturn(TraceConfigExtras.EMPTY);
 
     mConfigurableController = mock(TraceController.class);
@@ -169,7 +171,7 @@ public class TraceControlTest extends PowerMockTest {
   @Test
   public void testStartFiltersOutControllers() {
     TraceController secondController = mock(TraceController.class);
-    when(secondController.evaluateConfig(anyLong(), anyObject())).thenReturn(0);
+    when(secondController.getNonConfigurableProviders(anyLong(), anyObject())).thenReturn(0);
     when(secondController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
     when(secondController.isConfigurable()).thenReturn(false);
@@ -194,7 +196,8 @@ public class TraceControlTest extends PowerMockTest {
   @Test
   public void testNonConfigurableControllerTraceStart() {
     TraceController noConfController = mock(TraceController.class);
-    when(noConfController.evaluateConfig(anyLong(), anyObject())).thenReturn(PROVIDER_TEST);
+    when(noConfController.getNonConfigurableProviders(anyLong(), anyObject()))
+        .thenReturn(PROVIDER_TEST);
     when(noConfController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
     when(noConfController.isConfigurable()).thenReturn(false);
@@ -206,7 +209,8 @@ public class TraceControlTest extends PowerMockTest {
   @Test
   public void testStartFromInsideTraceFails() {
     TraceController secondController = mock(TraceController.class);
-    when(secondController.evaluateConfig(anyLong(), anyObject())).thenReturn(PROVIDER_TEST);
+    when(secondController.getNonConfigurableProviders(anyLong(), anyObject()))
+        .thenReturn(PROVIDER_TEST);
     when(secondController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
     when(secondController.isConfigurable()).thenReturn(true);
@@ -222,11 +226,12 @@ public class TraceControlTest extends PowerMockTest {
 
   @Test
   public void testStartChecksControllerNonconfigurable() {
-    when(mNonconfigurableController.evaluateConfig(anyLong(), anyObject())).thenReturn(0);
+    when(mNonconfigurableController.getNonConfigurableProviders(anyLong(), anyObject()))
+        .thenReturn(0);
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isFalse();
     assertNotTracing();
 
-    when(mNonconfigurableController.evaluateConfig(anyLong(), anyObject()))
+    when(mNonconfigurableController.getNonConfigurableProviders(anyLong(), anyObject()))
         .thenReturn(PROVIDER_TEST);
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isTrue();
     assertTracing();
