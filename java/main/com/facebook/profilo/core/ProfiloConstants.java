@@ -36,6 +36,8 @@ public final class ProfiloConstants {
   // Sampling rate config parameter for the call stacks provider.
   public static final String CPU_SAMPLING_RATE_CONFIG_PARAM =
       "provider.stack_trace.cpu_sampling_rate_ms";
+  public static final String SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE =
+      "system_config.timed_out_upload_sample_rate";
 
   public static int packRemoteAbortReason(int abortReason) {
     return (abortReason | REMOTE_PROCESS_BIT);

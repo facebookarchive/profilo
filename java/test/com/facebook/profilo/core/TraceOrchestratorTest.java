@@ -154,7 +154,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mContext = mock(Context.class);
     mFileManager = mock(FileManager.class);
     mUploadService = mock(BackgroundUploadService.class);
-    mConfigProvider = new TestConfigProvider();
+    mConfigProvider = new TestConfigProvider(true);
     mTraceContext =
         new TraceContext(
             0xFACEB00C, // traceId

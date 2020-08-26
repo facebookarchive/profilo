@@ -34,7 +34,7 @@ public class DefaultConfigProvider implements ConfigProvider {
         @Nullable
         @Override
         public ConfigV2 getConfigV2() {
-          return null;
+          return new ConfigV2Impl(0, new ConfigV2Params());
         }
 
         @Override

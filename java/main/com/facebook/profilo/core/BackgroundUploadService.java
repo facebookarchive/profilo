@@ -13,7 +13,7 @@
  */
 package com.facebook.profilo.core;
 
-import com.facebook.profilo.config.SystemControlConfig;
+import com.facebook.profilo.config.ConfigV2;
 import java.io.File;
 import java.util.List;
 
@@ -39,5 +39,5 @@ public interface BackgroundUploadService {
 
   public boolean canUpload();
 
-  public void updateConstraints(SystemControlConfig systemControl);
+  public void updateConstraints(ConfigV2 config);
 }

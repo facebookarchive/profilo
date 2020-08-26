@@ -16,10 +16,14 @@ package com.facebook.profilo.util;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigProvider;
 import com.facebook.profilo.config.ConfigV2;
+import com.facebook.profilo.config.ConfigV2Impl;
+import com.facebook.profilo.config.ConfigV2Params;
 import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.config.DefaultConfigProvider;
 import com.facebook.profilo.config.SystemControlConfig;
+import com.facebook.profilo.core.ProfiloConstants;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public final class TestConfigProvider implements ConfigProvider {
 
@@ -28,6 +32,15 @@ public final class TestConfigProvider implements ConfigProvider {
   private SystemControlConfig mSystemControlConfig =
       new DefaultConfigProvider().getFullConfig().getSystemControl();
   private int mTimedOutUploadSampleRate;
+  private final boolean mAllowConfigV2;
+
+  public TestConfigProvider() {
+    this(false);
+  }
+
+  public TestConfigProvider(boolean allowConfigV2) {
+    mAllowConfigV2 = allowConfigV2;
+  }
 
   public TestConfigProvider setControllers(Integer... controllers) {
     mControllers.clear();
@@ -35,10 +48,6 @@ public final class TestConfigProvider implements ConfigProvider {
       mControllers.put(c, new ControllerConfig() {});
     }
     return this;
-  }
-
-  public void setSystemControlConfig(SystemControlConfig systemControlConfig) {
-    mSystemControlConfig = systemControlConfig;
   }
 
   public void setTimedOutUploadSampleRate(int timedOutUploadSampleRate) {
@@ -51,7 +60,15 @@ public final class TestConfigProvider implements ConfigProvider {
 
       @Override
       public ConfigV2 getConfigV2() {
-        return null;
+        if (!mAllowConfigV2) {
+          return null;
+        }
+
+        ConfigV2Params systemConfig = new ConfigV2Params();
+        systemConfig.intParams = new TreeMap<>();
+        systemConfig.intParams.put(
+            ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, mTimedOutUploadSampleRate);
+        return new ConfigV2Impl(0, systemConfig);
       }
 
       @Override

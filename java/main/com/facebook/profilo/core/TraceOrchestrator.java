@@ -21,6 +21,7 @@ import android.util.SparseArray;
 import com.facebook.file.zip.ZipHelper;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigProvider;
+import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.config.DefaultConfigProvider;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
@@ -194,8 +195,13 @@ public final class TraceOrchestrator
   // VisibleForTesting
   /*package*/ void bind(Context context, SparseArray<TraceController> controllers) {
     Config initialConfig;
+    ConfigV2 initialConfigV2;
     synchronized (this) {
       initialConfig = mConfigProvider.getFullConfig();
+      initialConfigV2 = initialConfig.getConfigV2();
+      if (initialConfig == null || initialConfigV2 == null) {
+        throw new IllegalArgumentException("We only support v2 configs now!");
+      }
     }
 
     // Install the available TraceControllers
@@ -207,13 +213,16 @@ public final class TraceOrchestrator
 
       int bufferSize;
       if (mIsMainProcess) {
-        int configBufferSize = initialConfig.getSystemControl().getBufferSize();
-        bufferSize = configBufferSize != -1 ? configBufferSize : RING_BUFFER_SIZE_MAIN_PROCESS;
+        bufferSize =
+            initialConfigV2.optSystemConfigParamInt(
+                "system_config.buffer_size", RING_BUFFER_SIZE_MAIN_PROCESS);
       } else {
         bufferSize = RING_BUFFER_SIZE_SECONDARY_PROCESS;
       }
 
-      boolean useMmapBuffer = mIsMainProcess && initialConfig.getSystemControl().isMmapBuffer();
+      boolean useMmapBuffer =
+          mIsMainProcess
+              && initialConfigV2.optSystemConfigParamBool("system_config.mmap_buffer", false);
       // Register hooks to trace lifecycle to control mmaped buffer.
       if (useMmapBuffer) {
         mMmapBufferManager =
@@ -280,7 +289,7 @@ public final class TraceOrchestrator
     }
     mBackgroundUploadService = uploadService;
     if (mBackgroundUploadService != null && mConfig != null) {
-      mBackgroundUploadService.updateConstraints(mConfig.getSystemControl());
+      mBackgroundUploadService.updateConstraints(mConfig.getConfigV2());
     }
     if (triggerUpload) {
       triggerUpload();
@@ -328,7 +337,13 @@ public final class TraceOrchestrator
       return;
     }
 
+    ConfigV2 newConfigV2 = newConfig.getConfigV2();
+    if (newConfigV2 == null) {
+      throw new IllegalArgumentException("New config must have a v2 version!");
+    }
+
     mConfig = newConfig;
+
     TraceControl traceControl = TraceControl.get();
     if (traceControl == null) {
       throw new IllegalStateException(
@@ -339,7 +354,7 @@ public final class TraceOrchestrator
     BackgroundUploadService backgroundUploadService = getUploadService(true /* triggerUpload */);
 
     if (backgroundUploadService != null) {
-      backgroundUploadService.updateConstraints(newConfig.getSystemControl());
+      backgroundUploadService.updateConstraints(newConfigV2);
     }
   }
 
@@ -588,7 +603,10 @@ public final class TraceOrchestrator
     }
 
     if (config != null && abortReason == ProfiloConstants.ABORT_REASON_TIMEOUT) {
-      int sampleRate = config.getControllersConfig().getTimedOutUploadSampleRate();
+      ConfigV2 configv2 = config.getConfigV2();
+      int sampleRate =
+          configv2.optSystemConfigParamInt(
+              ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, 0);
       uploadTrace = sampleRate != 0 && mRandom.nextInt(sampleRate) == 0;
     }
 
