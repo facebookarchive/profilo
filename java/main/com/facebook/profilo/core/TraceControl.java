@@ -293,14 +293,17 @@ public final class TraceControl {
     ConfigV2 configV2 = rootConfig.getConfigV2();
     int traceConfigIdx = -1;
     int providers = 0;
+
     if (configV2 != null) {
       int result = traceController.findTraceConfigIdx(longContext, context, configV2);
-      if (result >= 0) {
+      if (result == TraceController.RESULT_FALLBACK_CONFIG_V1) {
+        providers = traceController.evaluateConfig(longContext, context, controllerConfig);
+      } else if (result >= 0) {
         traceConfigIdx = result;
         String[] providerStrings = configV2.getTraceConfigProviders(traceConfigIdx);
         providers = ProvidersRegistry.getBitMaskFor(Arrays.asList(providerStrings));
-      } else if (result == TraceController.RESULT_FALLBACK_CONFIG_V1) {
-        providers = traceController.evaluateConfig(longContext, context, controllerConfig);
+      } else {
+        return false;
       }
     } else {
       providers = traceController.evaluateConfig(longContext, context, controllerConfig);

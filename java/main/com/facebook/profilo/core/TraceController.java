@@ -21,6 +21,9 @@ import javax.annotation.Nullable;
 public abstract class TraceController {
 
   public static int RESULT_FALLBACK_CONFIG_V1 = Integer.MIN_VALUE;
+  public static int RESULT_NO_TRACE_CONFIG = -100;
+  public static int RESULT_COINFLIP_MISS = -101;
+
   /**
    * Determine if the configuration allows for a trace to start.
    *
