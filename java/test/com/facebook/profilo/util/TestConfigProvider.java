@@ -66,27 +66,6 @@ public final class TestConfigProvider implements ConfigProvider {
             ProfiloConstants.SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE, mTimedOutUploadSampleRate);
         return new ConfigV2Impl(0, systemConfig);
       }
-
-      @Override
-      public RootControllerConfig getControllersConfig() {
-        return new RootControllerConfig() {
-
-          @Override
-          public ControllerConfig getConfigForController(int controller) {
-            return mControllers.get(controller);
-          }
-
-          @Override
-          public int getTraceTimeoutMs() {
-            return TEST_TRACE_TIMEOUT_MS;
-          }
-
-          @Override
-          public int getTimedOutUploadSampleRate() {
-            return mTimedOutUploadSampleRate;
-          }
-        };
-      }
     };
   }
 }

@@ -20,8 +20,6 @@ public interface Config {
   @Nullable
   ConfigV2 getConfigV2();
 
-  RootControllerConfig getControllersConfig();
-
   interface RootControllerConfig {
 
     @Nullable

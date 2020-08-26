@@ -36,28 +36,6 @@ public class DefaultConfigProvider implements ConfigProvider {
         public ConfigV2 getConfigV2() {
           return new ConfigV2Impl(0, new ConfigV2Params());
         }
-
-        @Override
-        public RootControllerConfig getControllersConfig() {
-          return new RootControllerConfig() {
-
-            @Override
-            @Nullable
-            public ControllerConfig getConfigForController(int controller) {
-              return null;
-            }
-
-            @Override
-            public int getTraceTimeoutMs() {
-              return DEFAULT_TRACE_TIMEOUT_MS;
-            }
-
-            @Override
-            public int getTimedOutUploadSampleRate() {
-              return DEFAULT_TIMED_OUT_UPLOAD_SAMPLE_RATE;
-            }
-          };
-        }
       };
 
   @Override

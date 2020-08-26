@@ -21,7 +21,6 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -69,11 +68,6 @@ public class TraceControlTest extends PowerMockTest {
   private TraceContext mTraceContext;
   private final TestConfigProvider mTraceConfigProvider =
       new TestConfigProvider().setControllers(TRACE_CONTROLLER_ID);
-  private final ControllerConfig mControllerConfig =
-      mTraceConfigProvider
-          .getFullConfig()
-          .getControllersConfig()
-          .getConfigForController(TRACE_CONTROLLER_ID);
   private final ConfigV2 mConfig = mTraceConfigProvider.getFullConfig().getConfigV2();
 
   @Before
@@ -174,7 +168,7 @@ public class TraceControlTest extends PowerMockTest {
   @Test
   public void testNonConfigurableControllerTraceStart() {
     TraceController noConfController = mock(TraceController.class);
-    when(noConfController.evaluateConfig(anyLong(), anyObject(), same(mControllerConfig)))
+    when(noConfController.evaluateConfig(anyLong(), anyObject(), isNull(ControllerConfig.class)))
         .thenReturn(PROVIDER_TEST);
     when(noConfController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
@@ -187,7 +181,7 @@ public class TraceControlTest extends PowerMockTest {
   @Test
   public void testStartFromInsideTraceFails() {
     TraceController secondController = mock(TraceController.class);
-    when(secondController.evaluateConfig(anyLong(), anyObject(), same(mControllerConfig)))
+    when(secondController.evaluateConfig(anyLong(), anyObject(), isNull(ControllerConfig.class)))
         .thenReturn(PROVIDER_TEST);
     when(secondController.contextsEqual(anyInt(), anyObject(), anyInt(), anyObject()))
         .thenReturn(true);
