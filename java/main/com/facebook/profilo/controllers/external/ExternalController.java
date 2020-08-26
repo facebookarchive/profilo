@@ -22,7 +22,7 @@ import com.facebook.profilo.ipc.TraceContext;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
 
-public class ExternalController implements TraceController {
+public class ExternalController extends TraceController {
 
   public static final int TRIGGER_EXTERNAL = TriggerRegistry.newTrigger("external");
 
