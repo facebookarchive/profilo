@@ -50,6 +50,10 @@ public final class TestConfigProvider implements ConfigProvider {
     return this;
   }
 
+  public void setSystemControlConfig(SystemControlConfig systemControlConfig) {
+    mSystemControlConfig = systemControlConfig;
+  }
+
   public void setTimedOutUploadSampleRate(int timedOutUploadSampleRate) {
     mTimedOutUploadSampleRate = timedOutUploadSampleRate;
   }

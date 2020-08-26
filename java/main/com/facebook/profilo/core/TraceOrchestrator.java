@@ -205,7 +205,7 @@ public final class TraceOrchestrator
     }
 
     // Install the available TraceControllers
-    TraceControl.initialize(controllers, this, initialConfig);
+    TraceControl.initialize(controllers, this, initialConfigV2);
 
     File folder;
     synchronized (this) {
@@ -349,7 +349,7 @@ public final class TraceOrchestrator
       throw new IllegalStateException(
           "Performing config change before TraceControl has been initialized");
     }
-    traceControl.setConfig(newConfig);
+    traceControl.setConfig(newConfigV2);
 
     BackgroundUploadService backgroundUploadService = getUploadService(true /* triggerUpload */);
 
@@ -451,7 +451,7 @@ public final class TraceOrchestrator
           ProfiloConstants.NONE,
           Identifiers.CONFIG_ID,
           ProfiloConstants.NONE,
-          context.config == null ? 0 : context.config.getConfigID());
+          context.configv2 == null ? 0 : context.configv2.getID());
     }
 
     int tracingProviders = 0;

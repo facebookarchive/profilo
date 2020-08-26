@@ -17,9 +17,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
-import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigV2;
-import com.facebook.profilo.config.ControllerConfig;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
@@ -96,7 +94,7 @@ public final class TraceControl {
   /*package*/ static void initialize(
       SparseArray<TraceController> controllers,
       @Nullable TraceControlListener listener,
-      @Nullable Config initialConfig) {
+      @Nullable ConfigV2 initialConfig) {
 
     // Use double-checked locking to avoid using AtomicReference and thus increasing the
     // overhead of each read by adding a virtual call to it.
@@ -121,7 +119,7 @@ public final class TraceControl {
   private final SparseArray<TraceController> mControllers;
 
   private final AtomicReferenceArray<TraceContext> mCurrentTraces;
-  private final AtomicReference<Config> mCurrentConfig;
+  private final AtomicReference<ConfigV2> mCurrentConfig;
   private final AtomicInteger mCurrentTracesMask;
   @Nullable private final TraceControlListener mListener;
   @Nullable private TraceControlHandler mTraceControlHandler;
@@ -129,7 +127,7 @@ public final class TraceControl {
   // VisibleForTesting
   /*package*/ TraceControl(
       SparseArray<TraceController> controllers,
-      @Nullable Config config,
+      @Nullable ConfigV2 config,
       @Nullable TraceControlListener listener) {
     mControllers = controllers;
     mCurrentConfig = new AtomicReference<>(config);
@@ -138,8 +136,8 @@ public final class TraceControl {
     mListener = listener;
   }
 
-  public void setConfig(@Nullable Config config) {
-    Config oldConfig = mCurrentConfig.get();
+  public void setConfig(@Nullable ConfigV2 config) {
+    ConfigV2 oldConfig = mCurrentConfig.get();
     if (!mCurrentConfig.compareAndSet(oldConfig, config)) {
       Log.d(LOG_TAG, "Tried to update the config and failed due to CAS");
     }
@@ -271,43 +269,28 @@ public final class TraceControl {
       throw new IllegalArgumentException("Unregistered controller for id = " + controller);
     }
 
-    Config rootConfig = mCurrentConfig.get();
-    if (rootConfig == null) {
-      return false;
-    }
-
-    ControllerConfig controllerConfig = null;
-    if (traceController.isConfigurable()) {
-      controllerConfig = rootConfig.getControllersConfig().getConfigForController(controller);
-      if (controllerConfig == null) {
-        // We need a config but don't have one
-        return false;
-      }
-    }
-
     TraceContext traceContext = findCurrentTraceByContext(controller, longContext, context);
     if (traceContext != null) {
       // Attempted start during a trace with the same Id
       return false;
     }
 
-    ConfigV2 configV2 = rootConfig.getConfigV2();
+    ConfigV2 configV2 = mCurrentConfig.get();
     int traceConfigIdx = -1;
     int providers = 0;
 
-    if (configV2 != null) {
+    if (!traceController.isConfigurable()) {
+      // Special path for non-configurable controllers
+      providers = traceController.evaluateConfig(longContext, context, null);
+    } else if (configV2 != null) {
       int result = traceController.findTraceConfigIdx(longContext, context, configV2);
-      if (result == TraceController.RESULT_FALLBACK_CONFIG_V1) {
-        providers = traceController.evaluateConfig(longContext, context, controllerConfig);
-      } else if (result >= 0) {
+      if (result >= 0) {
         traceConfigIdx = result;
         String[] providerStrings = configV2.getTraceConfigProviders(traceConfigIdx);
         providers = ProvidersRegistry.getBitMaskFor(Arrays.asList(providerStrings));
       } else {
         return false;
       }
-    } else {
-      providers = traceController.evaluateConfig(longContext, context, controllerConfig);
     }
 
     if (providers == 0) {
@@ -321,15 +304,15 @@ public final class TraceControl {
     if (configV2 != null && traceConfigIdx >= 0) {
       traceConfigExtras = new TraceConfigExtras(configV2, traceConfigIdx);
     } else {
-      traceConfigExtras =
-          traceController.getTraceConfigExtras(longContext, context, controllerConfig);
+      // non-configurable controller path
+      traceConfigExtras = traceController.getTraceConfigExtras(longContext, context, null);
     }
 
     TraceContext nextContext =
         new TraceContext(
             traceId,
             FbTraceId.encode(traceId),
-            rootConfig,
+            configV2,
             controller,
             traceController,
             context,
@@ -640,14 +623,13 @@ public final class TraceControl {
     return Arrays.copyOf(traceIds, index);
   }
 
-  /** @return current controller config for the specified controller. */
+  public ConfigV2 getConfig() {
+    return mCurrentConfig.get();
+  }
+
   @Nullable
-  public ControllerConfig getControllerConfig(int controller) {
-    Config config = mCurrentConfig.get();
-    if (config == null) {
-      return null;
-    }
-    return config.getControllersConfig().getConfigForController(controller);
+  public TraceController getController(int controller) {
+    return mControllers.get(controller);
   }
 
   /** @return current fbtrace encoded trace ID or 'AAAAAAAAAAA' (encoded 0) if not inside a trace */

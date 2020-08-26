@@ -35,7 +35,7 @@ import android.content.Context;
 import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
-import com.facebook.profilo.config.Config;
+import com.facebook.profilo.config.ConfigV2;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
@@ -159,7 +159,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB00C, // traceId
             "FACEBOOOK", // encodedTraceId
-            mConfigProvider.getFullConfig(), // config
+            mConfigProvider.getFullConfig().getConfigV2(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -172,7 +172,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
-            mConfigProvider.getFullConfig(), // config
+            mConfigProvider.getFullConfig().getConfigV2(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -258,7 +258,8 @@ public class TraceOrchestratorTest extends PowerMockTest {
   public void testInitialBindInstallsProviders() {
     verifyStatic(TraceControl.class);
     //noinspection unchecked
-    TraceControl.initialize(notNull(SparseArray.class), same(mOrchestrator), notNull(Config.class));
+    TraceControl.initialize(
+        notNull(SparseArray.class), same(mOrchestrator), notNull(ConfigV2.class));
 
     assertThat(TraceEvents.isEnabled(DEFAULT_TRACING_PROVIDERS)).isFalse();
   }
@@ -269,7 +270,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.onConfigUpdated(mConfigProvider.getFullConfig());
 
     assertThatAllProvidersDisabled();
-    verify(mTraceControl).setConfig(any(Config.class));
+    verify(mTraceControl).setConfig(any(ConfigV2.class));
   }
 
   @Test
@@ -467,7 +468,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB001, // traceId
             "FACEBOOO1", // encodedTraceId
-            mConfigProvider.getFullConfig(), // config
+            mConfigProvider.getFullConfig().getConfigV2(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -498,7 +499,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
-            mConfigProvider.getFullConfig(), // config
+            mConfigProvider.getFullConfig().getConfigV2(), // config
             0, // controller
             null, // controllerObject
             null, // context
@@ -548,7 +549,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new TraceContext(
             0xFACEB000, // traceId
             "FACEBOOO0", // encodedTraceId
-            mConfigProvider.getFullConfig(), // config
+            mConfigProvider.getFullConfig().getConfigV2(), // config
             0, // controller
             null, // controllerObject
             null, // context
