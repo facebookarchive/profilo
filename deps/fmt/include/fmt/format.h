@@ -1792,7 +1792,7 @@ OutputIt write(OutputIt out, const Char* value) {
     const Char null[] = {
       Char('('), Char('n'), Char('u'), Char('l'), Char('l'), Char(')')
     };
-    out = write(out, null);
+    out = write(out, basic_string_view<Char>(null, sizeof(null) / sizeof(Char)));
   } else {
     auto length = std::char_traits<Char>::length(value);
     out = write(out, basic_string_view<Char>(value, length));
