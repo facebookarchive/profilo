@@ -1,4 +1,4 @@
-// @generated SignedSource<<15bfb82ff976b2cfeacdfd0c07d6c397>>
+// @generated SignedSource<<c08ffd9d162ca398e532186e776e1b97>>
 
 package com.facebook.profilo.entries;
 
@@ -104,6 +104,11 @@ public class EntryType {
   public static final int NATIVE_FREE = 97;
   public static final int NATIVE_ALLOC_FAILURE = 98;
   public static final int NATIVE_STACK_FRAME = 99;
+  public static final int MEMORY_MAPPED = 100;
+  public static final int MEMORY_UNMAPPED = 101;
+  public static final int ION_MEMORY_ALLOC = 102;
+  public static final int ION_MEMORY_FREE = 103;
+  public static final int ION_MEMORY_MAPPED = 104;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -206,5 +211,10 @@ public class EntryType {
     "NATIVE_FREE",
     "NATIVE_ALLOC_FAILURE",
     "NATIVE_STACK_FRAME",
+    "MEMORY_MAPPED",
+    "MEMORY_UNMAPPED",
+    "ION_MEMORY_ALLOC",
+    "ION_MEMORY_FREE",
+    "ION_MEMORY_MAPPED",
   };
 }

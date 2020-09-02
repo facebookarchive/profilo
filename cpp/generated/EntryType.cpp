@@ -1,4 +1,4 @@
-// @generated SignedSource<<4a93e2d2cc2604d6d810cae8eefa2aad>>
+// @generated SignedSource<<10dce1bd6d102af77b6424ae46c35c9c>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -109,6 +109,11 @@ const char* to_string(EntryType type) {
     case EntryType::NATIVE_FREE: return "NATIVE_FREE";
     case EntryType::NATIVE_ALLOC_FAILURE: return "NATIVE_ALLOC_FAILURE";
     case EntryType::NATIVE_STACK_FRAME: return "NATIVE_STACK_FRAME";
+    case EntryType::MEMORY_MAPPED: return "MEMORY_MAPPED";
+    case EntryType::MEMORY_UNMAPPED: return "MEMORY_UNMAPPED";
+    case EntryType::ION_MEMORY_ALLOC: return "ION_MEMORY_ALLOC";
+    case EntryType::ION_MEMORY_FREE: return "ION_MEMORY_FREE";
+    case EntryType::ION_MEMORY_MAPPED: return "ION_MEMORY_MAPPED";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

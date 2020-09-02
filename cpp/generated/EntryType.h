@@ -1,4 +1,4 @@
-// @generated SignedSource<<ec48922e65b8784837dddbf002b59f64>>
+// @generated SignedSource<<6938e76fc1a2f4dd6254170aac607b8f>>
 
 #pragma once
 
@@ -106,6 +106,11 @@ enum class EntryType {
   NATIVE_FREE = 97,
   NATIVE_ALLOC_FAILURE = 98,
   NATIVE_STACK_FRAME = 99,
+  MEMORY_MAPPED = 100,
+  MEMORY_UNMAPPED = 101,
+  ION_MEMORY_ALLOC = 102,
+  ION_MEMORY_FREE = 103,
+  ION_MEMORY_MAPPED = 104,
 };
 
 
