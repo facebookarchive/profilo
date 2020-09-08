@@ -212,6 +212,37 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "signal_handler",
+    srcs = [
+        "SignalHandler.cpp",
+    ],
+    header_namespace = "profiler",
+    exported_headers = [
+        "SignalHandler.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-std=gnu++14",
+    ],
+    force_static = True,
+    labels = ["supermodule:android/default/loom.core"],
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/Signal\"",
+    ],
+    soname = "libprofilo_signal_handler.so",
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("deps/breakpad:abort-with-reason"),
+    ],
+    exported_deps = [
+        profilo_path("deps/sigmux:phaser"),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "profiler",
     srcs = [
         "SamplingProfiler.cpp",
@@ -247,6 +278,7 @@ fb_xplat_cxx_library(
         ":external_tracer",
         ":external_tracer_manager",
         ":js_tracer",
+        ":signal_handler",
         ":unwindc-tracer-5.0.0",
         ":unwindc-tracer-5.1.0",
         ":unwindc-tracer-6.0.0",
@@ -274,6 +306,5 @@ fb_xplat_cxx_library(
         ":constants",
         profilo_path("cpp/api:external_api_glue"),
         profilo_path("deps/fbjni:fbjni"),
-        profilo_path("deps/sigmux:sigmux"),
     ],
 )
