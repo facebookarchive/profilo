@@ -16,6 +16,8 @@
 
 #include "PacketLogger.h"
 
+#include <stdexcept>
+
 namespace facebook {
 namespace profilo {
 namespace logger {

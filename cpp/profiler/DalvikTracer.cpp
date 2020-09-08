@@ -18,6 +18,7 @@
 
 #include <dlfcn.h>
 #include <unistd.h>
+#include <stdexcept>
 
 #include "profilo/LogEntry.h"
 #include "profilo/Logger.h"
