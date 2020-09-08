@@ -120,8 +120,8 @@ void SamplingProfiler::FaultHandler(
 
   ProfileState& state = ((SamplingProfiler*)scope.GetData())->state_;
 
-  int32_t tid = threadID();
-  uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
+  uint64_t tid = threadID();
+  uint64_t targetBusyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
 
   // Find the most recent slot occupied by this thread.
   // This allows us to handle crashes during nested unwinding from
@@ -158,13 +158,13 @@ void SamplingProfiler::maybeSignalReader() {
 // Finds the next FREE slot and atomically sets its state to BUSY, so that
 // the acquiring thread can safely write to it, and returns the index via
 // <outSlot>. Returns true if a FREE slot was found, false otherwise.
-bool getSlotIndex(ProfileState& state_, uint32_t tid, uint32_t& outSlot) {
+bool getSlotIndex(ProfileState& state_, uint64_t tid, uint32_t& outSlot) {
   auto slotIndex = state_.currentSlot.fetch_add(1);
   for (int i = 0; i < MAX_STACKS_COUNT; i++) {
     auto nextSlotIndex = (slotIndex + i) % MAX_STACKS_COUNT;
     auto& slot = state_.stacks[nextSlotIndex];
-    uint32_t expected = StackSlotState::FREE;
-    uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
+    uint64_t expected = StackSlotState::FREE;
+    uint64_t targetBusyState = (tid << 16) | StackSlotState::BUSY;
     if (slot.state.compare_exchange_strong(expected, targetBusyState)) {
       outSlot = nextSlotIndex;
 
@@ -197,8 +197,8 @@ void SamplingProfiler::UnwindStackHandler(
   SamplingProfiler& profiler = *(SamplingProfiler*)scope.GetData();
   ProfileState& state = profiler.state_;
 
-  auto tid = threadID();
-  uint32_t busyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
+  uint64_t tid = threadID();
+  uint64_t busyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
 
   for (const auto& tracerEntry : state.tracersMap) {
     auto tracerType = tracerEntry.first;
@@ -345,8 +345,8 @@ void SamplingProfiler::flushStackTraces(
   for (size_t i = 0; i < MAX_STACKS_COUNT; i++) {
     auto& slot = state_.stacks[i];
 
-    uint32_t slotStateCombo = slot.state.load();
-    uint32_t slotState = slotStateCombo & 0xffff;
+    uint64_t slotStateCombo = slot.state.load();
+    uint16_t slotState = slotStateCombo & 0xffff;
     if (slotState == StackSlotState::FREE ||
         slotState == StackSlotState::BUSY ||
         slotState == StackSlotState::BUSY_WITH_METADATA) {
@@ -403,7 +403,7 @@ void SamplingProfiler::flushStackTraces(
       }
     }
 
-    uint32_t expected = slotStateCombo;
+    uint64_t expected = slotStateCombo;
     // Release the slot
     if (!slot.state.compare_exchange_strong(expected, StackSlotState::FREE)) {
       // Slot was re-used in the middle of the processing by another thread.

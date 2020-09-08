@@ -59,7 +59,7 @@ enum StackSlotState {
 //   FREE -> BUSY -> BUSY_WITH_METADATA -> {StackCollectionRetcode}
 //
 struct StackSlot {
-  std::atomic<uint32_t> state;
+  std::atomic<uint64_t> state;
   uint8_t depth;
   int64_t time;
   sigjmp_buf sig_jmp_buf;
