@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <cinttypes>
 #include <sys/types.h>
 #include <functional>
 

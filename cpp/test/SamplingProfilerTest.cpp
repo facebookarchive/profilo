@@ -135,9 +135,8 @@ class SamplingProfilerTest : public ::testing::Test {
       : ::testing::Test(), tracer_(std::make_shared<TestTracer>()) {}
 
   static void SetUpTestCase() {
-    struct sigaction act {
-      .sa_handler = SIG_DFL,
-    };
+    struct sigaction act {};
+    act.sa_handler = SIG_DFL;
     ASSERT_EQ(sigaction(SIGPROF, &act, nullptr), 0);
   }
 
@@ -995,9 +994,8 @@ TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
   // granularity, we observe that from the point of view of SamplingProfiler,
   // this is equivalent to a signal sent-and-delivered entirely after
   // stopProfiling.
-  struct sigaction act {
-    .sa_handler = SIG_DFL,
-  };
+  struct sigaction act {};
+  act.sa_handler = SIG_DFL;
   ASSERT_EQ(sigmux_sigaction(SIGPROF, &act, nullptr), 0);
 
   // SIG_DFL for SIGPROF is Term, we should die on SIGPROF.

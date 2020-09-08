@@ -378,9 +378,8 @@ void SamplingProfiler::unregisterSignalHandlers() {
 
   if (original_sigaction.sa_handler == SIG_DFL) {
     FBLOGV("Replacing default disposition for profiling signal with IGN");
-    struct sigaction ign_sigaction {
-      .sa_handler = SIG_IGN,
-    };
+    struct sigaction ign_sigaction {};
+    ign_sigaction.sa_handler = SIG_IGN;
     if (sigmux_sigaction(SIGPROF, &ign_sigaction, nullptr)) {
       throw_errno("Could not change disposition for profiling signal to IGN");
     }

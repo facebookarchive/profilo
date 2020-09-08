@@ -101,8 +101,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeFramesEntry) {
       .timestamp = 123,
       .tid = 0,
       .matchid = 10,
-      .frames.values = frames,
-      .frames.size = 3,
+      .frames = {.values = frames, .size = 3},
   });
 
   EXPECT_EQ(
@@ -130,8 +129,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
       .id = 11,
       .type = EntryType::STRING_KEY,
       .matchid = 10,
-      .bytes.values = key,
-      .bytes.size = 3,
+      .bytes = {.values = key, .size = 3},
   });
 
   uint8_t value[] = {'v', 'a', 'l', 'u', 'e'};
@@ -139,8 +137,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
       .id = 12,
       .type = EntryType::STRING_VALUE,
       .matchid = 11,
-      .bytes.values = value,
-      .bytes.size = 5,
+      .bytes = {.values = value, .size = 5},
   });
 
   delta.visit(StandardEntry{.id = 13,
@@ -158,8 +155,7 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
       .timestamp = 125,
       .tid = 0,
       .matchid = 10,
-      .frames.values = frames,
-      .frames.size = 3,
+      .frames = {.values = frames, .size = 3},
   });
 
   EXPECT_EQ(

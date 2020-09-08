@@ -97,8 +97,7 @@ TEST(EntryCodegen, testPackUnpackBytesEntry) {
       .id = 10,
       .type = EntryType::STRING_KEY,
       .matchid = 1,
-      .bytes.values = bytes,
-      .bytes.size = 3,
+      .bytes = {.values = bytes, .size = 3},
   };
 
   char buffer[sizeof(input) * 2]{};
@@ -124,8 +123,7 @@ TEST(EntryCodegen, testPrintBytesEntry) {
       .id = 10,
       .type = EntryType::STRING_KEY,
       .matchid = 1,
-      .bytes.values = bytes,
-      .bytes.size = 3,
+      .bytes = {.values = bytes, .size = 3},
   };
 
   char buffer[sizeof(input) * 2]{};
@@ -145,8 +143,7 @@ TEST(EntryCodegen, testPackUnpackFramesEntry) {
       .type = EntryType::STACK_FRAME,
       .timestamp = 123,
       .tid = 1,
-      .frames.values = frames,
-      .frames.size = 3,
+      .frames = {.values = frames, .size = 3},
   };
 
   char buffer[sizeof(input) * 2]{};
@@ -174,8 +171,7 @@ TEST(EntryCodegen, testPrintFramesEntry) {
       .type = EntryType::STACK_FRAME,
       .timestamp = 123,
       .tid = 1,
-      .frames.values = frames,
-      .frames.size = 3,
+      .frames = {.values = frames, .size = 3},
   };
 
   char buffer[sizeof(input) * 2]{};
