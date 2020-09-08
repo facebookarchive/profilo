@@ -294,7 +294,6 @@ fb_xplat_cxx_library(
         profilo_path("cpp:providers"),
         profilo_path("cpp/api:external_api_header"),
         profilo_path("cpp/logger:logger"),
-        profilo_path("cpp/sigmuxsetup:sigmuxsetup"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/breakpad:abort-with-reason"),
         profilo_path("deps/dalvik:dalvik-subset-headers"),

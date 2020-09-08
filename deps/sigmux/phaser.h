@@ -17,6 +17,7 @@
 #pragma once
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 /**
 * DESCRIPTION
@@ -237,6 +238,11 @@ void phaser_exit(phaser_t* ph, phaser_phase phase);
  * point.
  */
 void phaser_drain(phaser_t* ph);
+
+/**
+ * Test facility to inspect if a phaser has active phaser_drain calls.
+ */
+bool phaser_is_draining(phaser_t* ph);
 
 #ifdef __cplusplus
 } // extern "C"

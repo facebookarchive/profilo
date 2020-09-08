@@ -248,3 +248,13 @@ phaser_drain(phaser_t* ph)
     __atomic_thread_fence(__ATOMIC_SEQ_CST);
   }
 }
+
+bool
+phaser_is_draining(phaser_t* ph) {
+  for (phaser_phase i = 0; i < ARRAY_SIZE(ph->counter); ++i) {
+    if (__atomic_load_n(&ph->counter[i], __ATOMIC_RELAXED) & DRAINING) {
+      return true;
+    }
+  }
+  return false;
+}

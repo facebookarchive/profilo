@@ -19,12 +19,15 @@
 #include <gtest/gtest.h>
 
 #include <fb/log.h>
-#include <inttypes.h>
 #include <signal.h>
 #include <atomic>
+#include <cinttypes>
+#include <memory>
 #include <thread>
 
+#include <phaser.h>
 #include <profiler/SamplingProfiler.h>
+#include <profiler/SignalHandler.h>
 #include <profilo/LogEntry.h>
 #include <profilo/test/TestSequencer.h>
 #include <util/common.h>
@@ -37,8 +40,9 @@ constexpr auto kMicrosecondsInSecond = 1000 * 1000;
 constexpr auto kMicrosecondsInMillisecond = 1000;
 constexpr auto kHalfHourInMilliseconds = 1800 * 1000;
 
-constexpr bool kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
-constexpr bool kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
+constexpr auto kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
+constexpr bool kDefaultUseThreadSpecificProfilerSetting = true;
+constexpr auto kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
 constexpr bool kDefaultUseWallClockSetting = false;
 
 /* Scopes all access to private data from the SamplingProfiler instance*/
@@ -68,6 +72,21 @@ class SamplingProfilerTestAccessor {
 
  private:
   SamplingProfiler& profiler_;
+};
+
+class SignalHandlerTestAccessor {
+ public:
+  static void AndroidAwareSigaction(
+      int signum,
+      SignalHandler::HandlerPtr handler,
+      struct sigaction* oldact) {
+    SignalHandler::AndroidAwareSigaction(signum, handler, oldact);
+  }
+
+  static bool isPhaserDraining(int signum) {
+    return phaser_is_draining(
+        &SignalHandler::globalRegisteredSignalHandlers[signum].load()->phaser_);
+  }
 };
 
 long getTimeDifferenceUsec(timespec t1, timespec t2) {
@@ -174,6 +193,26 @@ class SamplingProfilerTest : public ::testing::Test {
   void runSampleCountTest(bool use_wall_time_profiling);
 
   void runThreadDetectTest(bool use_wall_time_profiling);
+
+  void assertStopProfilingIsBlockingOnSignalHandler() {
+    while (!access.isLoggerLoopDone()) {
+      // Give the control thread a chance to enter stopProfiling(),
+      // isLoggerLoopDone becoming true is part of the tear down, before we're
+      // supposed to block.
+      std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
+
+    // We inspect multiple signals, we want to be block on one of them.
+    // Otherwise, we'd have to encode the order in which stopProfiling calls
+    // SignalHandler::Disable here as well.
+    bool sigsegv = SignalHandlerTestAccessor::isPhaserDraining(SIGSEGV);
+    bool sigprof = SignalHandlerTestAccessor::isPhaserDraining(SIGPROF);
+
+    ASSERT_TRUE(sigsegv || sigprof)
+        << "Mandatory wait for signal handler to complete";
+
+    ASSERT_TRUE(access.isProfiling());
+  }
 
   SamplingProfiler profiler;
   SamplingProfilerTestAccessor access{profiler};
@@ -660,34 +699,37 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
 
   sequencer.waitFor(REGISTER_FAULT_HANDLER);
 
-  // Register a SIGSEGV handler that participates in the global test order.
-  // This relies on a sigmux implementation detail - handlers are
-  // prepended to the list. Therefore, we need to register this handler
-  // *after* profiling has started to execute *before* the fault handler from
+  // Register a SIGSEGV handler that takes over the signal slot
+  // by calling sigaction directly.
+  //
+  // We need to register this handler *after* profiling has
+  // started to be able to execute *before* the fault handler from
   // SamplingProfiler.
   struct fault_handler_state {
-    test::TestSequencer& testSequencer;
-  } handler_state{
-      .testSequencer = sequencer,
+    test::TestSequencer* testSequencer;
+    struct sigaction oldaction;
+  };
+  // This needs to be static to be accessible from the
+  // non-capturing lambda that serves as a signal handler below.
+  static struct fault_handler_state handler_state {};
+  handler_state = fault_handler_state{
+      .testSequencer = &sequencer,
   };
 
-  sigset_t sigsegv{};
-  sigaddset(&sigsegv, SIGSEGV);
-  auto sigmux_registration = sigmux_register(
-      &sigsegv,
-      +[](sigmux_siginfo*, void* data) {
-        auto state = (fault_handler_state*)data;
-        state->testSequencer.waitAndAdvance(
+  SignalHandlerTestAccessor::AndroidAwareSigaction(
+      SIGSEGV,
+      +[](int signum, siginfo_t* siginfo, void* ucontext) {
+        handler_state.testSequencer->waitAndAdvance(
             START_FAULT_HANDLER, INSPECT_PRE_STOP);
 
-        state->testSequencer.waitAndAdvance(
+        handler_state.testSequencer->waitAndAdvance(
             END_FAULT_HANDLER, HAS_STOPPED_PROFILING);
-        return SIGMUX_CONTINUE_SEARCH;
-      },
-      &handler_state,
-      0);
 
-  ASSERT_NE(sigmux_registration, nullptr);
+        // Call SamplingProfiler's handler
+        handler_state.oldaction.sa_sigaction(signum, siginfo, ucontext);
+      },
+      &handler_state.oldaction);
+
   sequencer.advance(SEND_PROFILING_SIGNAL);
 
   sequencer.waitFor(SEND_PROFILING_SIGNAL);
@@ -699,8 +741,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
   sequencer.advance(STOP_PROFILING);
 
   sequencer.waitFor(INSPECT_MIDDLE_OF_STOP);
-  ASSERT_TRUE(access.isProfiling())
-      << "Still profiling as we haven't exited the tracer loop";
+  assertStopProfilingIsBlockingOnSignalHandler();
 
   // Commenting out this line should block the test forever
   sequencer.advance(END_FAULT_HANDLER);
@@ -712,7 +753,8 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
   control_thread.join();
   worker_thread.join();
 
-  sigmux_unregister(sigmux_registration);
+  SignalHandlerTestAccessor::AndroidAwareSigaction(
+      SIGSEGV, handler_state.oldaction.sa_sigaction, nullptr);
 }
 
 TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
@@ -781,16 +823,9 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
   ASSERT_TRUE(access.isProfiling());
   sequencer.advance(STOP_PROFILING);
 
-  while (!access.isLoggerLoopDone()) {
-    // Give the control thread a chance to enter stopProfiling(),
-    // isLoggerLoopDone becoming true is part of the tear down, before we're
-    // supposed to block.
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
-  }
-
   sequencer.waitFor(INSPECT_MIDDLE_OF_STOP);
-  ASSERT_TRUE(access.isProfiling())
-      << "Still profiling as we haven't exited the tracer loop";
+
+  assertStopProfilingIsBlockingOnSignalHandler();
 
   // Commenting out this line should block the test forever
   sequencer.advance(END_TRACER_CALL);
@@ -878,27 +913,29 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
       });
   SetTracer(std::move(tracer_implementation));
 
-  // Register a SIGSEGV handler that participates in the global test order.
-  // This relies on a sigmux implementation detail - handlers are
-  // prepended to the list. Therefore, we need to register this handler
-  // *after* profiling has started to execute *before* the fault handler from
+  // Register a SIGSEGV handler that takes over the signal slot
+  // by calling sigaction directly.
+  //
+  // We need to register this handler *after* profiling has
+  // started to be able to execute *before* the fault handler from
   // SamplingProfiler.
+  //
   struct fault_handler_state {
-    test::TestSequencer& testSequencer;
-    std::atomic_int& num_started_tracer_calls;
+    test::TestSequencer* testSequencer;
+    std::atomic_int* num_started_tracer_calls;
     std::atomic_int num_started_fault_handlers;
-  } handler_state{
-      .testSequencer = sequencer,
-      .num_started_tracer_calls = num_started_tracers,
+    struct sigaction oldaction;
   };
+  // This needs to be static to be accessible from the
+  // non-capturing lambda that serves as a signal handler below.
+  static struct fault_handler_state handler_state {};
+  handler_state.testSequencer = &sequencer;
+  handler_state.num_started_tracer_calls = &num_started_tracers;
 
-  sigset_t sigsegv{};
-  sigaddset(&sigsegv, SIGSEGV);
-  auto sigmux_registration = sigmux_register(
-      &sigsegv,
-      +[](sigmux_siginfo*, void* data) {
-        auto state = (fault_handler_state*)data;
-        auto handler_idx = state->num_started_fault_handlers++;
+  SignalHandlerTestAccessor::AndroidAwareSigaction(
+      SIGSEGV,
+      [](int signum, siginfo_t* siginfo, void* ucontext) {
+        auto handler_idx = handler_state.num_started_fault_handlers++;
 
         auto start_turn = 0;
         auto end_turn = 0;
@@ -911,7 +948,7 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
 
             end_turn = END_FAULT_HANDLER_1;
             end_advance_to_turn = STOP_PROFILING;
-            EXPECT_EQ(state->num_started_tracer_calls.load(), 1);
+            EXPECT_EQ(handler_state.num_started_tracer_calls->load(), 1);
             break;
           }
           case 1: {
@@ -920,7 +957,7 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
 
             end_turn = END_FAULT_HANDLER_2;
             end_advance_to_turn = END_FAULT_HANDLER_1;
-            EXPECT_EQ(state->num_started_tracer_calls.load(), 2);
+            EXPECT_EQ(handler_state.num_started_tracer_calls->load(), 2);
             break;
           }
           case 2: {
@@ -929,24 +966,25 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
 
             end_turn = END_FAULT_HANDLER_3;
             end_advance_to_turn = END_FAULT_HANDLER_2;
-            EXPECT_EQ(state->num_started_tracer_calls.load(), 3);
+            EXPECT_EQ(handler_state.num_started_tracer_calls->load(), 3);
             break;
           }
         }
-        state->testSequencer.waitAndAdvance(start_turn, start_advance_to_turn);
+        handler_state.testSequencer->waitAndAdvance(
+            start_turn, start_advance_to_turn);
         //
         // We want the exit times from the fault handler to be at least 1 ms
         // apart, so we can use strict inequality comparisons when examining the
         // timestamps.
         //
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        state->testSequencer.waitAndAdvance(end_turn, end_advance_to_turn);
-        return SIGMUX_CONTINUE_SEARCH;
-      },
-      &handler_state,
-      0);
+        handler_state.testSequencer->waitAndAdvance(
+            end_turn, end_advance_to_turn);
 
-  ASSERT_NE(sigmux_registration, nullptr);
+        // Call SamplingProfiler's handler
+        handler_state.oldaction.sa_sigaction(signum, siginfo, ucontext);
+      },
+      &handler_state.oldaction);
 
   // Begin the test here.
   sequencer.advance(START_WORKER_THREAD);
@@ -983,7 +1021,8 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
 
   worker_thread.join();
 
-  sigmux_unregister(sigmux_registration);
+  SignalHandlerTestAccessor::AndroidAwareSigaction(
+      SIGSEGV, handler_state.oldaction.sa_sigaction, nullptr);
 }
 
 TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
@@ -994,12 +1033,6 @@ TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
   // granularity, we observe that from the point of view of SamplingProfiler,
   // this is equivalent to a signal sent-and-delivered entirely after
   // stopProfiling.
-  struct sigaction act {};
-  act.sa_handler = SIG_DFL;
-  ASSERT_EQ(sigmux_sigaction(SIGPROF, &act, nullptr), 0);
-
-  // SIG_DFL for SIGPROF is Term, we should die on SIGPROF.
-  ASSERT_DEATH(pthread_kill(pthread_self(), SIGPROF), "");
 
   ASSERT_TRUE(profiler.startProfiling(
       kTestTracer,

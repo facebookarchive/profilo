@@ -20,7 +20,6 @@
 
 #include <semaphore.h>
 #include <setjmp.h>
-#include <sigmux.h>
 #include <mutex>
 #include <thread>
 #include <unordered_map>
@@ -33,6 +32,7 @@
 #include <fbjni/fbjni.h>
 #include <profiler/BaseTracer.h>
 #include <profiler/Constants.h>
+#include <profiler/SignalHandler.h>
 #include <profilo/ExternalApiGlue.h>
 
 namespace fbjni = facebook::jni;
@@ -62,7 +62,7 @@ struct StackSlot {
   std::atomic<uint32_t> state;
   uint8_t depth;
   int64_t time;
-  jmp_buf sig_jmp_buf;
+  sigjmp_buf sig_jmp_buf;
   uint32_t profilerType;
   int64_t frames[MAX_STACK_DEPTH]; // frame pointer addresses
   char const* method_names[MAX_STACK_DEPTH];
@@ -125,7 +125,7 @@ class SamplingProfiler {
  public:
   static SamplingProfiler& getInstance();
 
-  SamplingProfiler() : state_(), sigmux_state() {
+  SamplingProfiler() : state_() {
     state_.whitelist = std::make_shared<Whitelist>();
   }
 
@@ -155,9 +155,10 @@ class SamplingProfiler {
  private:
   ProfileState state_;
   struct {
-    sigmux_registration* profiling_registration;
-    sigmux_registration* fault_registration;
-  } sigmux_state;
+    SignalHandler* sigsegv;
+    SignalHandler* sigbus;
+    SignalHandler* sigprof;
+  } signal_handlers_;
 
   // Profiling timer management
   bool startProfilingTimers();
@@ -170,8 +171,8 @@ class SamplingProfiler {
   void maybeSignalReader();
   void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet);
 
-  static sigmux_action FaultHandler(sigmux_siginfo*, void*);
-  static sigmux_action UnwindStackHandler(sigmux_siginfo*, void*);
+  static void FaultHandler(int, siginfo_t*, void*);
+  static void UnwindStackHandler(int, siginfo_t*, void*);
 
   friend class SamplingProfilerTestAccessor;
 };

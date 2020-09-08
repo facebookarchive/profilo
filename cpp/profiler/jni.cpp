@@ -17,7 +17,6 @@
 #include <jni.h>
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
-#include <sigmuxsetup/sigmuxsetup.h>
 
 #include "SamplingProfiler.h"
 #include "profiler/ArtCompatibility.h"
@@ -82,8 +81,6 @@ static void nativeRemoveFromWhitelist(fbjni::alias_ref<jobject>, jint tid) {
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return facebook::xplat::initialize(vm, [] {
-    sigmuxsetup::EnsureSigmuxOverridesArtFaultHandler();
-
     fbjni::registerNatives(
         CPUProfilerType,
         {

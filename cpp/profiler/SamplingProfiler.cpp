@@ -95,11 +95,6 @@ EntryType errorToTraceEntry(StackCollectionRetcode error) {
 
 #pragma clang diagnostic pop
 }
-
-static void throw_errno(const char* error) {
-  throw std::system_error(errno, std::system_category(), error);
-}
-
 } // namespace
 
 SamplingProfiler& SamplingProfiler::getInstance() {
@@ -113,11 +108,17 @@ SamplingProfiler& SamplingProfiler::getInstance() {
   return profiler;
 }
 
-sigmux_action SamplingProfiler::FaultHandler(
-    struct sigmux_siginfo* siginfo,
-    void* handler_data) {
-  ProfileState& state =
-      reinterpret_cast<SamplingProfiler*>(handler_data)->state_;
+void SamplingProfiler::FaultHandler(
+    int signum,
+    siginfo_t* siginfo,
+    void* ucontext) {
+  auto scope = SignalHandler::EnterHandler(signum);
+  if (!scope.IsEnabled()) {
+    scope.CallPreviousHandler(signum, siginfo, ucontext);
+    return;
+  }
+
+  ProfileState& state = ((SamplingProfiler*)scope.GetData())->state_;
 
   int32_t tid = threadID();
   uint32_t targetBusyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
@@ -138,10 +139,10 @@ sigmux_action SamplingProfiler::FaultHandler(
 
   if (max_idx >= 0) {
     state.errSigCrashes.fetch_add(1);
-    sigmux_longjmp(siginfo, state.stacks[max_idx].sig_jmp_buf, 1);
+    scope.siglongjmp(state.stacks[max_idx].sig_jmp_buf, 1);
+  } else {
+    scope.CallPreviousHandler(signum, siginfo, ucontext);
   }
-
-  return SIGMUX_CONTINUE_SEARCH;
 }
 
 void SamplingProfiler::maybeSignalReader() {
@@ -184,11 +185,17 @@ bool getSlotIndex(ProfileState& state_, uint32_t tid, uint32_t& outSlot) {
   return false;
 }
 
-sigmux_action SamplingProfiler::UnwindStackHandler(
-    struct sigmux_siginfo* siginfo,
-    void* handler_data) {
-  auto profiler = reinterpret_cast<SamplingProfiler*>(handler_data);
-  auto& state = profiler->state_;
+void SamplingProfiler::UnwindStackHandler(
+    int signum,
+    siginfo_t* siginfo,
+    void* ucontext) {
+  auto scope = SignalHandler::EnterHandler(signum);
+  if (!scope.IsEnabled()) {
+    return;
+  }
+
+  SamplingProfiler& profiler = *(SamplingProfiler*)scope.GetData();
+  ProfileState& state = profiler.state_;
 
   auto tid = threadID();
   uint32_t busyState = (tid << 16) | StackSlotState::BUSY_WITH_METADATA;
@@ -225,7 +232,7 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
       if (JavaBaseTracer::isJavaTracer(tracerType)) {
         ret = reinterpret_cast<JavaBaseTracer*>(tracerEntry.second.get())
                   ->collectJavaStack(
-                      (ucontext_t*)siginfo->context,
+                      (ucontext_t*)ucontext,
                       slot.frames,
                       slot.method_names,
                       slot.class_descriptors,
@@ -233,7 +240,7 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
                       (uint8_t)MAX_STACK_DEPTH);
       } else {
         ret = tracerEntry.second->collectStack(
-            (ucontext_t*)siginfo->context,
+            (ucontext_t*)ucontext,
             slot.frames,
             slot.depth,
             (uint8_t)MAX_STACK_DEPTH);
@@ -262,7 +269,7 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
             "Invariant violation - BUSY_WITH_METADATA to return code failed");
       }
 
-      profiler->maybeSignalReader();
+      profiler.maybeSignalReader();
       continue;
     } else {
       // We came from the longjmp in sigcatch_handler.
@@ -279,72 +286,28 @@ sigmux_action SamplingProfiler::UnwindStackHandler(
       break;
     }
   }
-
-  return SIGMUX_CONTINUE_EXECUTION;
 }
 
 void SamplingProfiler::registerSignalHandlers() {
   //
-  // Register a handler for SIGPROF, trusting that sigmux will internally use
-  // SA_RESTART.
+  // Register a handler for SIGPROF.
   //
   // Also, register a handler for SIGSEGV and SIGBUS, so that we can safely
   // jump away in the case of a crash in our SIGPROF handler.
   //
+  signal_handlers_.sigprof =
+      &SignalHandler::Initialize(SIGPROF, UnwindStackHandler);
+  signal_handlers_.sigsegv = &SignalHandler::Initialize(SIGSEGV, FaultHandler);
+  signal_handlers_.sigbus = &SignalHandler::Initialize(SIGBUS, FaultHandler);
 
-  // Signal to be be handled when collecting stack traces
-  static constexpr const int kAccessSignals[] = {SIGSEGV, SIGBUS};
-  static constexpr auto kNumAccessSignals =
-      sizeof(kAccessSignals) / sizeof(*kAccessSignals);
+  signal_handlers_.sigbus->SetData(this);
+  signal_handlers_.sigbus->Enable();
 
-  if (sigmux_init(SIGPROF)) {
-    throw_errno("Couldn't init sigmux for SIGPROF");
-  }
+  signal_handlers_.sigsegv->SetData(this);
+  signal_handlers_.sigsegv->Enable();
 
-  sigset_t prof_set;
-  if (sigemptyset(&prof_set)) {
-    throw_errno("sigemptyset");
-  }
-
-  if (sigaddset(&prof_set, SIGPROF)) {
-    throw_errno("sigaddset");
-  }
-
-  sigmux_state.profiling_registration =
-      sigmux_register(&prof_set, UnwindStackHandler, this, 0);
-  if (!sigmux_state.profiling_registration) {
-    throw_errno("sigmux_register for SIGPROF");
-  }
-
-  // register handler to ignore potentially sigsegv/sigbus
-  sigset_t sigset;
-  if (sigemptyset(&sigset)) {
-    throw_errno("Couldn't sigemptyset");
-  }
-
-  for (size_t i = 0; i < kNumAccessSignals; i++) {
-    int signum = kAccessSignals[i];
-    if (sigaddset(&sigset, signum)) {
-      FBLOGE("Failed to add signal %d to sigset: %s", signum, strerror(errno));
-      throw_errno("Couldn't add signal for SIGSEGV/SIGBUS");
-    }
-
-    if (sigmux_init(signum)) {
-      FBLOGE(
-          "Failed to init sigmux with signal %d: %s", signum, strerror(errno));
-      throw_errno("Couldn't init sigmux for SIGSEGV/SIGBUS");
-    }
-  }
-
-  sigmux_state.fault_registration =
-      sigmux_register(&sigset, FaultHandler, this, 0);
-  if (!sigmux_state.fault_registration) {
-    sigmux_unregister(sigmux_state.profiling_registration);
-    sigmux_state.profiling_registration = nullptr;
-
-    FBLOGE("Failed to register sigmux: %s", strerror(errno));
-    throw_errno("Couldn't register sigmux for SIGSEGV/SIGBUS signal jail");
-  }
+  signal_handlers_.sigprof->SetData(this);
+  signal_handlers_.sigprof->Enable();
 }
 
 void SamplingProfiler::unregisterSignalHandlers() {
@@ -361,39 +324,19 @@ void SamplingProfiler::unregisterSignalHandlers() {
   //     FAULT_LONGJMP
   //   PROF_EXIT
   //
-  // By waiting for all profiling handlers to finish (which sigmux_unregister
+  // By waiting for all profiling handlers to finish (which Disable
   // does internally), we solve a), c), and d) (pending fault signals during a
   // profiling signal means we won't exit the corresponding profiling handler
   // until we've handled the fault).
   //
-  // To solve b), we change the signal disposition for SIGPROF from SIG_DFL to
-  // SIG_IGN. We only do this if the original handler before sigmux seized it
-  // was SIG_DFL.
+  // We solve b) by never unregistering our signal handler.
+  // Once registered, we will bail out on the HandlerScope::IsEnabled check and
+  // all will be well on the normal path.
   //
 
-  struct sigaction original_sigaction;
-  if (sigmux_sigaction(SIGPROF, nullptr, &original_sigaction)) {
-    throw_errno("Could not read original sigaction for profiling signal");
-  }
-
-  if (original_sigaction.sa_handler == SIG_DFL) {
-    FBLOGV("Replacing default disposition for profiling signal with IGN");
-    struct sigaction ign_sigaction {};
-    ign_sigaction.sa_handler = SIG_IGN;
-    if (sigmux_sigaction(SIGPROF, &ign_sigaction, nullptr)) {
-      throw_errno("Could not change disposition for profiling signal to IGN");
-    }
-  }
-
-  if (sigmux_state.profiling_registration) {
-    sigmux_unregister(sigmux_state.profiling_registration);
-    sigmux_state.profiling_registration = nullptr;
-  }
-
-  if (sigmux_state.fault_registration) {
-    sigmux_unregister(sigmux_state.fault_registration);
-    sigmux_state.fault_registration = nullptr;
-  }
+  signal_handlers_.sigprof->Disable();
+  signal_handlers_.sigbus->Disable();
+  signal_handlers_.sigsegv->Disable();
 }
 
 void SamplingProfiler::flushStackTraces(
