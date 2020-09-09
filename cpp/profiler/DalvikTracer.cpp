@@ -99,8 +99,13 @@ StackCollectionRetcode DalvikTracer::collectJavaStack(
     }
 
     if (method_names != nullptr && class_descriptors != nullptr) {
-      method_names[depth] = method->name;
-      class_descriptors[depth] = method->clazz->descriptor;
+      auto name = method->name;
+      auto descriptor = method->clazz->descriptor;
+      if (name == nullptr || descriptor == nullptr) {
+        continue;
+      }
+      method_names[depth] = name;
+      class_descriptors[depth] = descriptor;
     }
 
     frames[depth] = dalvikGetMethodIdForSymbolication(method);
