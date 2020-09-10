@@ -50,14 +50,14 @@ class SignalHandler {
  public:
   using HandlerPtr = void (*)(int, siginfo_t*, void*);
 
-  // 
+  //
   // Enable processing of signals by this SignalHandler.
   // Installs the signal handler, if not yet installed.
   // Calls to HandlerScope::IsEnabled will return true after this.
   //
   void Enable();
 
-  // 
+  //
   // Disables processing of signals by this SignalHandler.
   // Blocks until all signal handlers running at the time of this call
   // exit their respective HandlerScopes.
