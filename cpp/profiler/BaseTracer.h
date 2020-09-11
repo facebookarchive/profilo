@@ -54,11 +54,11 @@ class BaseTracer {
   virtual StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
-      uint8_t& depth,
-      uint8_t max_depth) = 0;
+      uint16_t& depth,
+      uint16_t max_depth) = 0;
 
   virtual void
-  flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_) = 0;
+  flushStack(int64_t* frames, uint16_t depth, int tid, int64_t time_) = 0;
 
   virtual void startTracing() = 0;
 

@@ -109,7 +109,7 @@ void burnCpuMs(int workMilliseconds, float* f) {
 }
 
 using TracerStdFunction = std::function<
-    StackCollectionRetcode(ucontext_t*, int64_t*, uint8_t&, uint8_t)>;
+    StackCollectionRetcode(ucontext_t*, int64_t*, uint16_t&, uint16_t)>;
 
 class TestTracer : public BaseTracer {
  public:
@@ -122,8 +122,8 @@ class TestTracer : public BaseTracer {
   virtual StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
-      uint8_t& depth,
-      uint8_t max_depth) {
+      uint16_t& depth,
+      uint16_t max_depth) {
     if (!collectStack_) {
       EXPECT_FALSE(true)
           << "Profiling callback hit before a tracer implementation has been registered";
@@ -133,7 +133,7 @@ class TestTracer : public BaseTracer {
   }
 
   virtual void
-  flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_) {}
+  flushStack(int64_t* frames, uint16_t depth, int tid, int64_t time_) {}
 
   virtual void startTracing() {}
 
@@ -262,8 +262,8 @@ void SamplingProfilerTest::runLoggingTest(
   auto tracer_wrapper =
       std::make_unique<TracerStdFunction>([&](ucontext_t* ucontext,
                                               int64_t* frames,
-                                              uint8_t& depth,
-                                              uint8_t max_depth) {
+                                              uint16_t& depth,
+                                              uint16_t max_depth) {
         sequencer.waitAndAdvance(START_TRACER, END_WORKER_THREAD);
         return tracer(ucontext, frames, depth, max_depth);
       });
@@ -289,7 +289,7 @@ void SamplingProfilerTest::runLoggingTest(
 TracerStdFunction signalCountTracerFunction(
     std::vector<int32_t>& tids,
     std::vector<int>& signal_cnt) {
-  return [&signal_cnt, &tids](ucontext_t*, int64_t*, uint8_t&, uint8_t) {
+  return [&signal_cnt, &tids](ucontext_t*, int64_t*, uint16_t&, uint16_t) {
     auto tid = threadID();
     for (int worker = 0; worker < tids.size(); worker++) {
       if (tid == tids[worker]) { // assumes tid != 0
@@ -567,7 +567,7 @@ void SamplingProfilerTest::runThreadDetectTest(
 
 TEST_F(SamplingProfilerTest, errorLoggingFaultDuringTracing) {
   runLoggingTest(
-      [](ucontext_t*, int64_t*, uint8_t&, uint8_t) {
+      [](ucontext_t*, int64_t*, uint16_t&, uint16_t) {
         raise(SIGSEGV);
         return StackCollectionRetcode::SUCCESS;
       },
@@ -576,7 +576,7 @@ TEST_F(SamplingProfilerTest, errorLoggingFaultDuringTracing) {
 
 TEST_F(SamplingProfilerTest, errorLoggingEmptyStack) {
   runLoggingTest(
-      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+      [](ucontext_t*, int64_t*, uint16_t& depth, uint16_t) {
         return StackCollectionRetcode::EMPTY_STACK;
       },
       StackCollectionRetcode::EMPTY_STACK);
@@ -584,7 +584,7 @@ TEST_F(SamplingProfilerTest, errorLoggingEmptyStack) {
 
 TEST_F(SamplingProfilerTest, errorLoggingNoStackForThread) {
   runLoggingTest(
-      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+      [](ucontext_t*, int64_t*, uint16_t& depth, uint16_t) {
         return StackCollectionRetcode::NO_STACK_FOR_THREAD;
       },
       StackCollectionRetcode::NO_STACK_FOR_THREAD);
@@ -592,7 +592,7 @@ TEST_F(SamplingProfilerTest, errorLoggingNoStackForThread) {
 
 TEST_F(SamplingProfilerTest, errorLoggingStackOverflow) {
   runLoggingTest(
-      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+      [](ucontext_t*, int64_t*, uint16_t& depth, uint16_t) {
         return StackCollectionRetcode::STACK_OVERFLOW;
       },
       StackCollectionRetcode::STACK_OVERFLOW);
@@ -600,7 +600,7 @@ TEST_F(SamplingProfilerTest, errorLoggingStackOverflow) {
 
 TEST_F(SamplingProfilerTest, noErrorLoggingForTracerDisabled) {
   runLoggingTest(
-      [](ucontext_t*, int64_t*, uint8_t& depth, uint8_t) {
+      [](ucontext_t*, int64_t*, uint16_t& depth, uint16_t) {
         return StackCollectionRetcode::TRACER_DISABLED;
       },
       StackCollectionRetcode::TRACER_DISABLED,
@@ -610,7 +610,7 @@ TEST_F(SamplingProfilerTest, noErrorLoggingForTracerDisabled) {
 TEST_F(SamplingProfilerTest, basicStackLogging) {
   constexpr int64_t MAGIC_FRAME = 0xfaceb00c;
   runLoggingTest(
-      [](ucontext_t*, int64_t* frames, uint8_t& depth, uint8_t max_depth) {
+      [](ucontext_t*, int64_t* frames, uint16_t& depth, uint16_t max_depth) {
         for (int i = 0; i < max_depth; ++i) {
           frames[i] = MAGIC_FRAME;
         }
@@ -688,7 +688,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
 
   // Tracer implementation that just raises SIGSEGV.
   auto tracer_implementation = std::make_unique<TracerStdFunction>(
-      [&](ucontext_t*, int64_t*, uint8_t&, uint8_t) {
+      [&](ucontext_t*, int64_t*, uint16_t&, uint16_t) {
         raise(SIGSEGV);
         return SUCCESS;
       });
@@ -804,7 +804,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
   });
 
   auto tracer_implementation = std::make_unique<TracerStdFunction>(
-      [&](ucontext_t*, int64_t*, uint8_t&, uint8_t) {
+      [&](ucontext_t*, int64_t*, uint16_t&, uint16_t) {
         sequencer.waitAndAdvance(START_TRACER_CALL, INSPECT_PRE_STOP);
 
         sequencer.waitAndAdvance(END_TRACER_CALL, HAS_STOPPED_PROFILING);
@@ -887,7 +887,7 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
   std::atomic_int num_started_tracers{0};
   // Tracer implementation that just spins on an atomic variable.
   auto tracer_implementation = std::make_unique<TracerStdFunction>(
-      [&](ucontext_t*, int64_t*, uint8_t&, uint8_t) {
+      [&](ucontext_t*, int64_t*, uint16_t&, uint16_t) {
         auto tracer_idx = num_started_tracers++;
         auto turn = 0, next = 0;
         switch (tracer_idx) {

@@ -73,7 +73,7 @@ class Logger {
       int32_t tid,
       int64_t time,
       const int64_t* methods,
-      uint8_t depth,
+      uint16_t depth,
       int32_t matchid = 0,
       EntryType entry_type = EntryType::STACK_FRAME);
 

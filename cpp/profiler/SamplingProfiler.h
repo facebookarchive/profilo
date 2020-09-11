@@ -60,7 +60,7 @@ enum StackSlotState {
 //
 struct StackSlot {
   std::atomic<uint64_t> state;
-  uint8_t depth;
+  uint16_t depth;
   int64_t time;
   sigjmp_buf sig_jmp_buf;
   uint32_t profilerType;

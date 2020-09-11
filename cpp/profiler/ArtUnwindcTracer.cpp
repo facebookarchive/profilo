@@ -70,8 +70,8 @@ struct unwinder_data {
   int64_t* frames;
   char const** method_names;
   char const** class_descriptors;
-  uint8_t depth;
-  uint8_t max_depth;
+  uint16_t depth;
+  uint16_t max_depth;
 };
 
 bool unwind_cb(uintptr_t frame, void* data) {
@@ -105,8 +105,8 @@ StackCollectionRetcode ArtUnwindcTracer<kVersion>::collectJavaStack(
     int64_t* frames,
     char const** method_names,
     char const** class_descriptors,
-    uint8_t& depth,
-    uint8_t max_depth) {
+    uint16_t& depth,
+    uint16_t max_depth) {
   unwinder_data data{
       .ucontext = ucontext,
       .frames = frames,
@@ -131,15 +131,15 @@ template <>
 StackCollectionRetcode ArtUnwindcTracer<kVersion>::collectStack(
     ucontext_t* ucontext,
     int64_t* frames,
-    uint8_t& depth,
-    uint8_t max_depth) {
+    uint16_t& depth,
+    uint16_t max_depth) {
   return collectJavaStack(ucontext, frames, nullptr, nullptr, depth, max_depth);
 }
 
 template <>
 void ArtUnwindcTracer<kVersion>::flushStack(
     int64_t* frames,
-    uint8_t depth,
+    uint16_t depth,
     int tid,
     int64_t time_) {
   Logger::get().writeStackFrames(

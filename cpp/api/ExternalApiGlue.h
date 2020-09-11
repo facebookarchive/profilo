@@ -52,8 +52,8 @@ typedef bool (*profilo_int_is_enabled)(const char* provider);
 typedef StackCollectionRetcode (*profilo_int_collect_stack_fn)(
     ucontext_t* ucontext,
     int64_t* frames,
-    uint8_t* depth,
-    uint8_t max_depth);
+    uint16_t* depth,
+    uint16_t max_depth);
 typedef bool (*profilo_int_register_external_tracer_callback)(
     int tracerType,
     profilo_int_collect_stack_fn callback);

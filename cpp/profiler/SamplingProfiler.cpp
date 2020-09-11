@@ -237,13 +237,13 @@ void SamplingProfiler::UnwindStackHandler(
                       slot.method_names,
                       slot.class_descriptors,
                       slot.depth,
-                      (uint8_t)MAX_STACK_DEPTH);
+                      MAX_STACK_DEPTH);
       } else {
         ret = tracerEntry.second->collectStack(
             (ucontext_t*)ucontext,
             slot.frames,
             slot.depth,
-            (uint8_t)MAX_STACK_DEPTH);
+            MAX_STACK_DEPTH);
       }
 
       slot.profilerType = tracerType;

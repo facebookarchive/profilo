@@ -20,7 +20,7 @@
  * The number of method entries in the stack trace per a single stack trace to
  * report
  */
-#define MAX_STACK_DEPTH 255
+#define MAX_STACK_DEPTH 512
 
 /**
  * The maximum number of frames to track stack traces

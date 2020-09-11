@@ -45,18 +45,18 @@ class ArtUnwindcTracer : public JavaBaseTracer {
   StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
-      uint8_t& depth,
-      uint8_t max_depth) override;
+      uint16_t& depth,
+      uint16_t max_depth) override;
 
   StackCollectionRetcode collectJavaStack(
       ucontext_t* ucontext,
       int64_t* frames,
       char const** method_names,
       char const** class_descriptors,
-      uint8_t& depth,
-      uint8_t max_depth) override;
+      uint16_t& depth,
+      uint16_t max_depth) override;
 
-  void flushStack(int64_t* frames, uint8_t depth, int tid, int64_t time_)
+  void flushStack(int64_t* frames, uint16_t depth, int tid, int64_t time_)
       override;
 
   void prepare() override;

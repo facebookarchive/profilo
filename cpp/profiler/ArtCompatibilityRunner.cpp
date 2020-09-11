@@ -177,7 +177,7 @@ std::vector<JavaFrame> getJavaStackTrace(
 size_t getCppStackTrace(
     profiler::JavaBaseTracer* tracer,
     std::array<JavaFrame, kStackSize>& result) {
-  uint8_t depth = 0;
+  uint16_t depth = 0;
 
   int64_t ints[kStackSize];
   char const* method_names[kStackSize];

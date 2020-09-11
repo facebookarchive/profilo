@@ -24,14 +24,14 @@ namespace profiler {
 StackCollectionRetcode JSTracer::collectStack(
     ucontext_t* ucontext,
     int64_t* frames,
-    uint8_t& depth,
-    uint8_t max_depth) {
+    uint16_t& depth,
+    uint16_t max_depth) {
   return ExternalTracer::collectStack(ucontext, frames, depth, max_depth);
 }
 
 void JSTracer::flushStack(
     int64_t* frames,
-    uint8_t depth,
+    uint16_t depth,
     int tid,
     int64_t time_) {
   Logger::get().writeStackFrames(

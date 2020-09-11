@@ -37,8 +37,8 @@ class JavaBaseTracer : public BaseTracer {
       int64_t* frames,
       char const** method_names,
       char const** class_descriptors,
-      uint8_t& depth,
-      uint8_t max_depth) = 0;
+      uint16_t& depth,
+      uint16_t max_depth) = 0;
 
   static bool isFramework(char const* name) {
     static constexpr framework_prefix prefixes[]{{"Ljava", 5},

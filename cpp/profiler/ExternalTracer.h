@@ -56,8 +56,8 @@ class ExternalTracer : public BaseTracer {
   StackCollectionRetcode collectStack(
       ucontext_t* ucontext,
       int64_t* frames,
-      uint8_t& depth,
-      uint8_t max_depth) override;
+      uint16_t& depth,
+      uint16_t max_depth) override;
 
   bool isEnabled() const;
 
