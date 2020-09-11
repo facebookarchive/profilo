@@ -244,6 +244,26 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "retcode",
+    srcs = [
+        "Retcode.cpp",
+    ],
+    header_namespace = "profiler",
+    exported_headers = [
+        "Retcode.h",
+    ],
+    force_static = True,
+    labels = ["supermodule:android/default/loom.core"],
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("cpp/api:external_api_header"),
+        profilo_path("cpp/logger:logger"),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "profiler",
     srcs = [
         "SamplingProfiler.cpp",
@@ -282,6 +302,7 @@ fb_xplat_cxx_library(
         ":external_tracer",
         ":external_tracer_manager",
         ":js_tracer",
+        ":retcode",
         ":signal_handler",
         ":unwindc-tracer-5.0.0",
         ":unwindc-tracer-5.1.0",

@@ -48,6 +48,7 @@
 #include <profiler/ExternalTracerManager.h>
 #include <profiler/JSTracer.h>
 #include <profiler/JavaBaseTracer.h>
+#include <profiler/Retcode.h>
 #include <profilo/ExternalApi.h>
 
 #if HAS_NATIVE_TRACER
@@ -65,38 +66,6 @@ using namespace facebook::jni;
 namespace facebook {
 namespace profilo {
 namespace profiler {
-
-namespace {
-EntryType errorToTraceEntry(StackCollectionRetcode error) {
-#pragma clang diagnostic push
-#pragma clang diagnostic error "-Wswitch"
-
-  switch (error) {
-    case StackCollectionRetcode::EMPTY_STACK:
-      return EntryType::STKERR_EMPTYSTACK;
-
-    case StackCollectionRetcode::STACK_OVERFLOW:
-      return EntryType::STKERR_STACKOVERFLOW;
-
-    case StackCollectionRetcode::NO_STACK_FOR_THREAD:
-      return EntryType::STKERR_NOSTACKFORTHREAD;
-
-    case StackCollectionRetcode::SIGNAL_INTERRUPT:
-      return EntryType::STKERR_SIGNALINTERRUPT;
-
-    case StackCollectionRetcode::NESTED_UNWIND:
-      return EntryType::STKERR_NESTEDUNWIND;
-
-    case StackCollectionRetcode::TRACER_DISABLED:
-    case StackCollectionRetcode::SUCCESS:
-    case StackCollectionRetcode::IGNORE:
-    case StackCollectionRetcode::MAXVAL:
-      return EntryType::UNKNOWN_TYPE;
-  }
-
-#pragma clang diagnostic pop
-}
-} // namespace
 
 SamplingProfiler& SamplingProfiler::getInstance() {
   //
@@ -367,13 +336,8 @@ void SamplingProfiler::flushStackTraces(
       if (StackCollectionRetcode::SUCCESS == slotState) {
         tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
       } else {
-        StandardEntry entry{};
-        entry.type =
-            errorToTraceEntry(static_cast<StackCollectionRetcode>(slotState));
-        entry.timestamp = slot.time;
-        entry.tid = tid;
-        entry.extra = slot.profilerType;
-        Logger::get().write(std::move(entry));
+        StackCollectionEntryConverter::logRetcode(
+            slotState, tid, slot.time, slot.profilerType);
       }
 
       if (JavaBaseTracer::isJavaTracer(slot.profilerType)) {

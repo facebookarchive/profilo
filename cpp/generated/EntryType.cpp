@@ -1,4 +1,4 @@
-// @generated SignedSource<<10dce1bd6d102af77b6424ae46c35c9c>>
+// @generated SignedSource<<1f8210933de2a8ca8b07b1a700ebca69>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -102,6 +102,9 @@ const char* to_string(EntryType type) {
     case EntryType::STKERR_NOSTACKFORTHREAD: return "STKERR_NOSTACKFORTHREAD";
     case EntryType::STKERR_SIGNALINTERRUPT: return "STKERR_SIGNALINTERRUPT";
     case EntryType::STKERR_NESTEDUNWIND: return "STKERR_NESTEDUNWIND";
+    case EntryType::STKERR_PARTIALSTACK: return "STKERR_PARTIALSTACK";
+    case EntryType::STKERR_STACKCOPYFAILED: return "STKERR_STACKCOPYFAILED";
+    case EntryType::STKERR_QUEUEOVERFLOW: return "STKERR_QUEUEOVERFLOW";
     case EntryType::MAPPING: return "MAPPING";
     case EntryType::LOGGER_PRIORITY: return "LOGGER_PRIORITY";
     case EntryType::CONDITIONAL_UPLOAD_RATE: return "CONDITIONAL_UPLOAD_RATE";

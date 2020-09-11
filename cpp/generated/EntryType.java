@@ -1,4 +1,4 @@
-// @generated SignedSource<<c08ffd9d162ca398e532186e776e1b97>>
+// @generated SignedSource<<6165d7e5ef8235a2c9975c4fb2830ded>>
 
 package com.facebook.profilo.entries;
 
@@ -97,18 +97,21 @@ public class EntryType {
   public static final int STKERR_NOSTACKFORTHREAD = 90;
   public static final int STKERR_SIGNALINTERRUPT = 91;
   public static final int STKERR_NESTEDUNWIND = 92;
-  public static final int MAPPING = 93;
-  public static final int LOGGER_PRIORITY = 94;
-  public static final int CONDITIONAL_UPLOAD_RATE = 95;
-  public static final int NATIVE_ALLOC = 96;
-  public static final int NATIVE_FREE = 97;
-  public static final int NATIVE_ALLOC_FAILURE = 98;
-  public static final int NATIVE_STACK_FRAME = 99;
-  public static final int MEMORY_MAPPED = 100;
-  public static final int MEMORY_UNMAPPED = 101;
-  public static final int ION_MEMORY_ALLOC = 102;
-  public static final int ION_MEMORY_FREE = 103;
-  public static final int ION_MEMORY_MAPPED = 104;
+  public static final int STKERR_PARTIALSTACK = 93;
+  public static final int STKERR_STACKCOPYFAILED = 94;
+  public static final int STKERR_QUEUEOVERFLOW = 95;
+  public static final int MAPPING = 96;
+  public static final int LOGGER_PRIORITY = 97;
+  public static final int CONDITIONAL_UPLOAD_RATE = 98;
+  public static final int NATIVE_ALLOC = 99;
+  public static final int NATIVE_FREE = 100;
+  public static final int NATIVE_ALLOC_FAILURE = 101;
+  public static final int NATIVE_STACK_FRAME = 102;
+  public static final int MEMORY_MAPPED = 103;
+  public static final int MEMORY_UNMAPPED = 104;
+  public static final int ION_MEMORY_ALLOC = 105;
+  public static final int ION_MEMORY_FREE = 106;
+  public static final int ION_MEMORY_MAPPED = 107;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -204,6 +207,9 @@ public class EntryType {
     "STKERR_NOSTACKFORTHREAD",
     "STKERR_SIGNALINTERRUPT",
     "STKERR_NESTEDUNWIND",
+    "STKERR_PARTIALSTACK",
+    "STKERR_STACKCOPYFAILED",
+    "STKERR_QUEUEOVERFLOW",
     "MAPPING",
     "LOGGER_PRIORITY",
     "CONDITIONAL_UPLOAD_RATE",

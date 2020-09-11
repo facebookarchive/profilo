@@ -32,6 +32,9 @@ typedef enum {
   NESTED_UNWIND = 5,
   TRACER_DISABLED = 6,
   IGNORE = 7,
+  PARTIAL_STACK = 8,
+  STACK_COPY_FAILED = 9,
+  UNWINDER_QUEUE_OVERFLOW = 10,
   MAXVAL,
 } StackCollectionRetcode;
 
