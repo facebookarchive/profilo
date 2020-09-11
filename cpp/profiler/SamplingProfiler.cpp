@@ -89,6 +89,7 @@ EntryType errorToTraceEntry(StackCollectionRetcode error) {
 
     case StackCollectionRetcode::TRACER_DISABLED:
     case StackCollectionRetcode::SUCCESS:
+    case StackCollectionRetcode::IGNORE:
     case StackCollectionRetcode::MAXVAL:
       return EntryType::UNKNOWN_TYPE;
   }
@@ -262,14 +263,22 @@ void SamplingProfiler::UnwindStackHandler(
         continue;
       }
 
-      if (!slot.state.compare_exchange_strong(busyState, (tid << 16) | ret)) {
+      auto nextSlotState = (tid << 16) | ret;
+      // In case if a Tracer class handles collection on it's own the slot is
+      // freed after the signal is processed.
+      if (ret == StackCollectionRetcode::IGNORE) {
+        nextSlotState = StackSlotState::FREE;
+      }
+
+      if (!slot.state.compare_exchange_strong(busyState, nextSlotState)) {
         // Slot was overwritten by another thread.
         // This is an ordering violation, so abort.
         abortWithReason(
             "Invariant violation - BUSY_WITH_METADATA to return code failed");
       }
-
-      profiler.maybeSignalReader();
+      if (nextSlotState != StackSlotState::FREE) {
+        profiler.maybeSignalReader();
+      }
       continue;
     } else {
       // We came from the longjmp in sigcatch_handler.

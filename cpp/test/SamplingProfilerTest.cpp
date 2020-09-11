@@ -70,6 +70,10 @@ class SamplingProfilerTestAccessor {
     return profiler_.state_.stacks;
   }
 
+  std::atomic<uint32_t>& getFullSlotsCounter() {
+    return profiler_.state_.fullSlotsCounter;
+  }
+
  private:
   SamplingProfiler& profiler_;
 };
@@ -605,6 +609,17 @@ TEST_F(SamplingProfilerTest, noErrorLoggingForTracerDisabled) {
       },
       StackCollectionRetcode::TRACER_DISABLED,
       0);
+}
+
+TEST_F(SamplingProfilerTest, noErrorLoggingForTracerIgnoreRetcode) {
+  auto& fullStacksBefore = access.getFullSlotsCounter();
+  runLoggingTest(
+      [](ucontext_t*, int64_t*, uint16_t& depth, uint16_t) {
+        return StackCollectionRetcode::IGNORE;
+      },
+      StackCollectionRetcode::IGNORE,
+      0);
+  ASSERT_EQ(access.getFullSlotsCounter().load(), fullStacksBefore.load());
 }
 
 TEST_F(SamplingProfilerTest, basicStackLogging) {

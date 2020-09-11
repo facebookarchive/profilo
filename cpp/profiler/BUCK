@@ -269,6 +269,9 @@ fb_xplat_cxx_library(
     labels = ["supermodule:android/default/loom.core"],
     soname = "libprofilo_stacktrace.$(ext)",
     supported_platforms_regex = "^(android-|linux|gcc|platform)",
+    tests = [
+        profilo_path("cpp/test:sampling_profiler"),
+    ],
     visibility = [
         "PUBLIC",
     ],

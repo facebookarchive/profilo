@@ -31,6 +31,7 @@ typedef enum {
   SIGNAL_INTERRUPT = 4,
   NESTED_UNWIND = 5,
   TRACER_DISABLED = 6,
+  IGNORE = 7,
   MAXVAL,
 } StackCollectionRetcode;
 
