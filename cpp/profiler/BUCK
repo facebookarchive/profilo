@@ -35,6 +35,7 @@ fb_xplat_cxx_library(
     visibility = [
         profilo_path("cpp/writer/..."),
         profilo_path("cpp/test/..."),
+        profilo_path("facebook/cpp/profiler/..."),
     ],
 )
 
@@ -263,7 +264,7 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Profilo/Profiler\"",
         "-Wno-format-security",
         "-Wno-unknown-attributes",
-        #"-DFBLOG_NDEBUG=0", # verbose logging
+        #"-DFBLOG_NDEBUG=0",  # verbose logging
         "-std=gnu++14",
     ] + profilo_maybe_hidden_visibility(),
     labels = ["supermodule:android/default/loom.core"],

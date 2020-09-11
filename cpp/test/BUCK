@@ -176,13 +176,13 @@ profilo_cxx_test(
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
     linker_flags = [
-        "-pthread",
         "-ldl",
         "-lrt",
     ],
     deps = [
         ":test_sequencer",
         profilo_path("deps/fb:fb"),
+        profilo_path("deps/sigmux:phaser"),
         profilo_path("cpp/profiler:profiler"),
         profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/util:util"),

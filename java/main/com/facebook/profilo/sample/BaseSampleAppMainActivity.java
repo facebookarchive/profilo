@@ -134,7 +134,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     List<String> allProviders = ProvidersRegistry.getRegisteredProviders();
     ArrayList<String> validProviders = new ArrayList<>();
     for (String prov : allProviders) {
-      if (prov.equals("wall_time_stack_trace") || prov.equals("native_stack_trace")) {
+      if (prov.equals("wall_time_stack_trace")) {
         continue;
       }
       validProviders.add(prov);

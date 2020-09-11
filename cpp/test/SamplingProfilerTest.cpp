@@ -20,6 +20,7 @@
 
 #include <fb/log.h>
 #include <signal.h>
+#include <array>
 #include <atomic>
 #include <cinttypes>
 #include <memory>
@@ -41,7 +42,6 @@ constexpr auto kMicrosecondsInMillisecond = 1000;
 constexpr auto kHalfHourInMilliseconds = 1800 * 1000;
 
 constexpr auto kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
-constexpr bool kDefaultUseThreadSpecificProfilerSetting = true;
 constexpr auto kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
 constexpr bool kDefaultUseWallClockSetting = false;
 

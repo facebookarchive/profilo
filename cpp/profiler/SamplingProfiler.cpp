@@ -241,10 +241,7 @@ void SamplingProfiler::UnwindStackHandler(
                       MAX_STACK_DEPTH);
       } else {
         ret = tracerEntry.second->collectStack(
-            (ucontext_t*)ucontext,
-            slot.frames,
-            slot.depth,
-            MAX_STACK_DEPTH);
+            (ucontext_t*)ucontext, slot.frames, slot.depth, MAX_STACK_DEPTH);
       }
 
       slot.profilerType = tracerType;
@@ -609,7 +606,7 @@ SamplingProfiler::ComputeAvailableTracers(uint32_t available_tracers) {
     tracers[tracers::DALVIK] = std::make_shared<DalvikTracer>();
   }
 
-#if HAS_NATIVE_TRACER && __arm__
+#if HAS_NATIVE_TRACER
   if (available_tracers & tracers::NATIVE) {
     tracers[tracers::NATIVE] = std::make_shared<NativeTracer>();
   }

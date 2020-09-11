@@ -95,10 +95,7 @@ public class CPUProfiler {
       }
     }
     tracers |= TRACER_JAVASCRIPT;
-
-    String arch = System.getProperty("os.arch");
-    // Native tracing is only available on ARM. Assuming ARM by default.
-    if (arch == null || arch.startsWith("arm")) {
+    if (Build.VERSION.SDK_INT >= 26 /* 8.0.0 */) {
       tracers |= TRACER_NATIVE;
     }
 
