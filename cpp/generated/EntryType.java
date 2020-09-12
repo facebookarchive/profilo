@@ -1,4 +1,4 @@
-// @generated SignedSource<<6165d7e5ef8235a2c9975c4fb2830ded>>
+// @generated SignedSource<<3244097388cbfd5f54547b9348970130>>
 
 package com.facebook.profilo.entries;
 
@@ -92,26 +92,27 @@ public class EntryType {
   public static final int BINDER_START = 85;
   public static final int BINDER_END = 86;
   public static final int MEMORY_ALLOCATION = 87;
-  public static final int STKERR_EMPTYSTACK = 88;
-  public static final int STKERR_STACKOVERFLOW = 89;
-  public static final int STKERR_NOSTACKFORTHREAD = 90;
-  public static final int STKERR_SIGNALINTERRUPT = 91;
-  public static final int STKERR_NESTEDUNWIND = 92;
-  public static final int STKERR_PARTIALSTACK = 93;
-  public static final int STKERR_STACKCOPYFAILED = 94;
-  public static final int STKERR_QUEUEOVERFLOW = 95;
-  public static final int MAPPING = 96;
-  public static final int LOGGER_PRIORITY = 97;
-  public static final int CONDITIONAL_UPLOAD_RATE = 98;
-  public static final int NATIVE_ALLOC = 99;
-  public static final int NATIVE_FREE = 100;
-  public static final int NATIVE_ALLOC_FAILURE = 101;
-  public static final int NATIVE_STACK_FRAME = 102;
-  public static final int MEMORY_MAPPED = 103;
-  public static final int MEMORY_UNMAPPED = 104;
-  public static final int ION_MEMORY_ALLOC = 105;
-  public static final int ION_MEMORY_FREE = 106;
-  public static final int ION_MEMORY_MAPPED = 107;
+  public static final int MEMORY_DEALLOCATION = 88;
+  public static final int STKERR_EMPTYSTACK = 89;
+  public static final int STKERR_STACKOVERFLOW = 90;
+  public static final int STKERR_NOSTACKFORTHREAD = 91;
+  public static final int STKERR_SIGNALINTERRUPT = 92;
+  public static final int STKERR_NESTEDUNWIND = 93;
+  public static final int STKERR_PARTIALSTACK = 94;
+  public static final int STKERR_STACKCOPYFAILED = 95;
+  public static final int STKERR_QUEUEOVERFLOW = 96;
+  public static final int MAPPING = 97;
+  public static final int LOGGER_PRIORITY = 98;
+  public static final int CONDITIONAL_UPLOAD_RATE = 99;
+  public static final int NATIVE_ALLOC = 100;
+  public static final int NATIVE_FREE = 101;
+  public static final int NATIVE_ALLOC_FAILURE = 102;
+  public static final int NATIVE_STACK_FRAME = 103;
+  public static final int MEMORY_MAPPED = 104;
+  public static final int MEMORY_UNMAPPED = 105;
+  public static final int ION_MEMORY_ALLOC = 106;
+  public static final int ION_MEMORY_FREE = 107;
+  public static final int ION_MEMORY_MAPPED = 108;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -202,6 +203,7 @@ public class EntryType {
     "BINDER_START",
     "BINDER_END",
     "MEMORY_ALLOCATION",
+    "MEMORY_DEALLOCATION",
     "STKERR_EMPTYSTACK",
     "STKERR_STACKOVERFLOW",
     "STKERR_NOSTACKFORTHREAD",

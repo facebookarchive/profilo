@@ -1,4 +1,4 @@
-// @generated SignedSource<<1f8210933de2a8ca8b07b1a700ebca69>>
+// @generated SignedSource<<8ebeeee9e5c46c99fd9df0120aeeca13>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -97,6 +97,7 @@ const char* to_string(EntryType type) {
     case EntryType::BINDER_START: return "BINDER_START";
     case EntryType::BINDER_END: return "BINDER_END";
     case EntryType::MEMORY_ALLOCATION: return "MEMORY_ALLOCATION";
+    case EntryType::MEMORY_DEALLOCATION: return "MEMORY_DEALLOCATION";
     case EntryType::STKERR_EMPTYSTACK: return "STKERR_EMPTYSTACK";
     case EntryType::STKERR_STACKOVERFLOW: return "STKERR_STACKOVERFLOW";
     case EntryType::STKERR_NOSTACKFORTHREAD: return "STKERR_NOSTACKFORTHREAD";

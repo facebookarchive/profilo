@@ -150,6 +150,7 @@ NAMES = [
     'BINDER_END',
 
     'MEMORY_ALLOCATION',
+    'MEMORY_DEALLOCATION',
 
     # Stack collection errors
     'STKERR_EMPTYSTACK',
