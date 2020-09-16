@@ -72,6 +72,21 @@ PidList pidListFromProcFs() {
   return PidList(numericFolderItems("/proc/"));
 }
 
+std::string processName() {
+  FILE* cmdFile = fopen("/proc/self/cmdline", "r");
+  if (cmdFile == nullptr) {
+    return "";
+  }
+  char procName[255]{};
+  char* res = fgets(procName, 255, cmdFile);
+  fclose(cmdFile);
+  if (res == nullptr) {
+    return "";
+  }
+
+  return std::string(procName);
+}
+
 std::string getThreadName(uint32_t thread_id) {
   char threadNamePath[kMaxProcFileLength]{};
   int bytesWritten = snprintf(

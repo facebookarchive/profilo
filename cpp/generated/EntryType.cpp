@@ -1,4 +1,4 @@
-// @generated SignedSource<<8ebeeee9e5c46c99fd9df0120aeeca13>>
+// @generated SignedSource<<1fe1e9d2994a139a7a582085cc4bd607>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -113,6 +113,7 @@ const char* to_string(EntryType type) {
     case EntryType::NATIVE_FREE: return "NATIVE_FREE";
     case EntryType::NATIVE_ALLOC_FAILURE: return "NATIVE_ALLOC_FAILURE";
     case EntryType::NATIVE_STACK_FRAME: return "NATIVE_STACK_FRAME";
+    case EntryType::NATIVE_FRAME_NAME: return "NATIVE_FRAME_NAME";
     case EntryType::MEMORY_MAPPED: return "MEMORY_MAPPED";
     case EntryType::MEMORY_UNMAPPED: return "MEMORY_UNMAPPED";
     case EntryType::ION_MEMORY_ALLOC: return "ION_MEMORY_ALLOC";

@@ -35,6 +35,8 @@ PidList pidListFromProcFs();
 
 std::string getThreadName(uint32_t tid);
 
+std::string processName();
+
 } // namespace util
 } // namespace profilo
 } // namespace facebook
