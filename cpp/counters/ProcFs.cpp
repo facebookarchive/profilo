@@ -632,6 +632,7 @@ void ThreadStatHolder::sampleAndLog(
     last_info_.state.record(statInfo.state, timestamp);
     last_info_.cpuNum.record(statInfo.cpuNum, timestamp);
     last_info_.kernelCpuTimeMs.record(statInfo.kernelCpuTimeMs, timestamp);
+    last_info_.majorFaults.record(statInfo.majorFaults, timestamp);
     last_info_.minorFaults.record(statInfo.minorFaults, timestamp);
     last_info_.threadPriority.record(statInfo.threadPriority, timestamp);
   }
