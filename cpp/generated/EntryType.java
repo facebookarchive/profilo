@@ -1,4 +1,4 @@
-// @generated SignedSource<<417fe670410ef554b22bcf06950c5870>>
+// @generated SignedSource<<0fb00a9b0fde6b0f4dc480a961bfae82>>
 
 package com.facebook.profilo.entries;
 
@@ -114,6 +114,8 @@ public class EntryType {
   public static final int ION_MEMORY_ALLOC = 107;
   public static final int ION_MEMORY_FREE = 108;
   public static final int ION_MEMORY_MAPPED = 109;
+  public static final int GPU_MEMORY_ALLOC = 110;
+  public static final int GPU_MEMORY_FREE = 111;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -226,5 +228,7 @@ public class EntryType {
     "ION_MEMORY_ALLOC",
     "ION_MEMORY_FREE",
     "ION_MEMORY_MAPPED",
+    "GPU_MEMORY_ALLOC",
+    "GPU_MEMORY_FREE",
   };
 }
