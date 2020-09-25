@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
@@ -28,16 +30,21 @@ import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceController;
 import com.facebook.profilo.core.TraceOrchestrator;
+import com.facebook.profilo.logger.Trace;
 import com.facebook.soloader.SoLoader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class BaseSampleAppMainActivity extends Activity {
 
+  private static final int TRACING_BUTTON_ID = 0x100;
   private WorkloadThread mWorkerThread;
   private ToggleButton mTracingButton;
   private ProgressBar mProgressBar;
+  private CheckBox mMemoryOnlyCheckbox;
+  private HashMap<String, CheckBox> mProviderCheckboxes;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +60,13 @@ public abstract class BaseSampleAppMainActivity extends Activity {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
+            boolean memoryOnly = mMemoryOnlyCheckbox.isChecked();
             if (mTracingButton.isChecked()) {
-              ExternalTraceControl.startTrace(getProvidersToEnable(), /*cpuSamplingRateMs*/ 10);
+              int flags = Trace.FLAG_MANUAL | (memoryOnly ? Trace.FLAG_MEMORY_ONLY : 0);
+              ExternalTraceControl.startTrace(
+                  calculateEnabledProviders(),
+                  10, // cpuSamplingRate
+                  flags);
               mProgressBar.setVisibility(View.VISIBLE);
             } else {
               ExternalTraceControl.stopTrace();
@@ -79,7 +91,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
         null, /* ConfigProvider */
         TraceOrchestrator.MAIN_PROCESS_NAME,
         true, /* isMainProcess */
-        calculateProviders(),
+        calculateAvailableProviders(),
         controllers,
         null /* traceFolder */);
   }
@@ -89,12 +101,10 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     ToggleButton traceButton = new ToggleButton(this);
     ProgressBar progressBar = new ProgressBar(this);
 
-    final int BUTTON_ID = 0x100;
-
     traceButton.setTextOff("Start tracing");
     traceButton.setTextOn("Stop tracing");
     traceButton.setChecked(false); // force the string to update
-    traceButton.setId(0x100);
+    traceButton.setId(TRACING_BUTTON_ID);
 
     progressBar.setIndeterminate(true);
     progressBar.setVisibility(View.INVISIBLE);
@@ -102,7 +112,9 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     RelativeLayout.LayoutParams buttonParams =
         new RelativeLayout.LayoutParams(
             ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-    buttonParams.addRule(RelativeLayout.CENTER_IN_PARENT, 1);
+    buttonParams.setMargins(20, 20, 20, 20);
+    buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 1);
+    buttonParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
 
     layout.addView(traceButton, buttonParams);
 
@@ -110,36 +122,73 @@ public abstract class BaseSampleAppMainActivity extends Activity {
         new RelativeLayout.LayoutParams(
             ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
     spinnerParams.setMargins(20, 20, 20, 20);
-    spinnerParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
-    spinnerParams.addRule(RelativeLayout.BELOW, BUTTON_ID);
+    spinnerParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 1);
+    spinnerParams.addRule(RelativeLayout.RIGHT_OF, TRACING_BUTTON_ID);
 
     layout.addView(progressBar, spinnerParams);
+
+    LinearLayout traceConfigLayout = new LinearLayout(this);
+    traceConfigLayout.setOrientation(LinearLayout.VERTICAL);
+
+    RelativeLayout.LayoutParams traceConfigParams =
+        new RelativeLayout.LayoutParams(
+            ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+    traceConfigParams.setMargins(20, 20, 20, 20);
+    traceConfigParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
+    traceConfigParams.addRule(RelativeLayout.BELOW, TRACING_BUTTON_ID);
+
+    CheckBox memoryOnlyCheckbox = new CheckBox(this);
+    memoryOnlyCheckbox.setText("In-memory trace");
+
+    traceConfigLayout.addView(
+        memoryOnlyCheckbox,
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT);
+    HashMap<String, CheckBox> providerViews = createProviderViews(traceConfigLayout);
+
+    layout.addView(traceConfigLayout, traceConfigParams);
 
     setContentView(layout);
 
     mTracingButton = traceButton;
     mProgressBar = progressBar;
+    mMemoryOnlyCheckbox = memoryOnlyCheckbox;
+    mProviderCheckboxes = providerViews;
   }
 
-  private BaseTraceProvider[] calculateProviders() {
+  private HashMap<String, CheckBox> createProviderViews(LinearLayout layout) {
+    List<String> allProviders = ProvidersRegistry.getRegisteredProviders();
+    Collections.sort(allProviders);
+
+    HashMap<String, CheckBox> checkboxes = new HashMap<>();
+    for (String provider : allProviders) {
+      CheckBox box = new CheckBox(layout.getContext());
+      box.setText(provider);
+      box.setChecked(true);
+
+      layout.addView(box);
+      checkboxes.put(provider, box);
+    }
+    return checkboxes;
+  }
+
+  private int calculateEnabledProviders() {
+    int mask = 0;
+    for (HashMap.Entry<String, CheckBox> provider : mProviderCheckboxes.entrySet()) {
+      if (provider.getValue().isChecked()) {
+        mask |= ProvidersRegistry.getBitMaskFor(provider.getKey());
+      }
+    }
+    return mask;
+  }
+
+  private BaseTraceProvider[] calculateAvailableProviders() {
     BaseTraceProvider[] result = new BaseTraceProvider[BuildConfig.PROVIDERS.length];
     int idx = 0;
     for (String provider : BuildConfig.PROVIDERS) {
       result[idx++] = createProvider(provider);
     }
     return result;
-  }
-
-  protected int getProvidersToEnable() {
-    List<String> allProviders = ProvidersRegistry.getRegisteredProviders();
-    ArrayList<String> validProviders = new ArrayList<>();
-    for (String prov : allProviders) {
-      if (prov.equals("wall_time_stack_trace")) {
-        continue;
-      }
-      validProviders.add(prov);
-    }
-    return ProvidersRegistry.getBitMaskFor(validProviders);
   }
 
   protected BaseTraceProvider createProvider(String providerName) {
