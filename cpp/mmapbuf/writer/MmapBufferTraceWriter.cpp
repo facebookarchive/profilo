@@ -203,8 +203,8 @@ void processMemoryMappingsFile(
   while (std::getline(mappingsFile, mappingLine)) {
     auto mappingId = logger.write(entries::StandardEntry{
         .type = EntryType::MAPPING,
-        .tid = tid,
         .timestamp = timestamp,
+        .tid = tid,
     });
     auto keyId = logger.writeBytes(
         EntryType::STRING_KEY,
