@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.util.List;
 import javax.annotation.Nullable;
 
-class MmapBufferFileHelper {
+public class MmapBufferFileHelper {
 
-  interface FileDeletionBlacklist {
+  public interface FileDeletionBlacklist {
     List<String> getFilenames();
   }
 
@@ -31,7 +31,7 @@ class MmapBufferFileHelper {
   private final File mMmapFilesFolder;
   public static final Object DUMP_FILES_LOCK = new Object();
 
-  MmapBufferFileHelper(File mmapFilesFolder) {
+  public MmapBufferFileHelper(File mmapFilesFolder) {
     mMmapFilesFolder = mmapFilesFolder;
   }
 
