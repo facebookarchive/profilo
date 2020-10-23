@@ -5,6 +5,7 @@ robolectric4_test(
     name = "core",
     srcs = glob(["*Test.java"]),
     contacts = ["oncall+loom@xmail.facebook.com"],
+    use_binary_resources = False,
     deps = [
         "//fbandroid/java/com/facebook/testing/inject:inject",
         "//fbandroid/java/com/facebook/testing/util:util",
