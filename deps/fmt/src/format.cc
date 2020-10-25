@@ -5,6 +5,7 @@
 //
 // For the license information refer to format.h.
 
+#ifndef __wasm__
 #include "fmt/format-inl.h"
 
 FMT_BEGIN_NAMESPACE
@@ -67,3 +68,4 @@ template FMT_API wchar_t detail::decimal_point_impl(locale_ref);
 template FMT_API void detail::buffer<wchar_t>::append(const wchar_t*,
                                                       const wchar_t*);
 FMT_END_NAMESPACE
+#endif
