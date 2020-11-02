@@ -9,7 +9,7 @@ fb_core_android_library(
         exclude = ["*Test.java"],
     ),
     visibility = [
-        profilo_path("java/test/com/facebook/profilo/core:core"),
+        profilo_path("java/test/com/facebook/profilo/core:"),
         profilo_path("facebook/java/test/com/facebook/profilo/instrumentation_tests/..."),
     ],
     deps = [
