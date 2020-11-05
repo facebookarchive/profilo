@@ -181,6 +181,12 @@ __attribute__((always_inline)) inline uintptr_t AccessField(
   return addr + offset;
 }
 
+__attribute__((always_inline)) inline uintptr_t AccessFieldDesc(
+        uintptr_t addr,
+        uint32_t offset) {
+    return addr - offset;
+}
+
 __attribute__((always_inline)) inline uintptr_t
 AccessArrayItem(uintptr_t addr, uint32_t item_size, uint32_t item) {
   return addr + (item_size * item);

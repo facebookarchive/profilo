@@ -76,7 +76,8 @@ public final class StackFrameThread extends BaseTraceProvider {
               | CPUProfiler.TRACER_ART_UNWINDC_5_1
               | CPUProfiler.TRACER_ART_UNWINDC_8_0_0
               | CPUProfiler.TRACER_ART_UNWINDC_8_1_0
-              | CPUProfiler.TRACER_ART_UNWINDC_9_0_0;
+              | CPUProfiler.TRACER_ART_UNWINDC_9_0_0
+              | CPUProfiler.TRACER_ART_UNWINDC_10_0_0;
     }
     if ((providers & PROVIDER_NATIVE_STACK_TRACE) != 0) {
       tracers |= CPUProfiler.TRACER_NATIVE;

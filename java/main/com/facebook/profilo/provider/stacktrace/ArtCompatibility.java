@@ -59,6 +59,10 @@ public class ArtCompatibility {
         result = readCompatFile(file);
       } else {
         switch (Build.VERSION.RELEASE) {
+          case "10":
+          case "10.0":
+            result = nativeCheck(CPUProfiler.TRACER_ART_UNWINDC_10_0_0);
+            break;
           case "9":
           case "9.0":
           case "9.0.0":

@@ -44,6 +44,7 @@ enum Tracer : uint32_t {
   ART_UNWINDC_8_0_0 = 1 << 12,
   ART_UNWINDC_8_1_0 = 1 << 13,
   ART_UNWINDC_9_0_0 = 1 << 14,
+  ART_UNWINDC_10_0_0 = 1 << 15,
 };
 }
 
