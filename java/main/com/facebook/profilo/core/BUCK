@@ -17,6 +17,9 @@ CONTROL = [
     "TraceControlHandler.java",
     "TraceControlThreadHolder.java",
     "TraceConditionManager.java",
+    "DurationCondition.java",
+    "TraceCondition.java",
+    "AnnotationCondition.java",
 ]
 
 REGISTRY = [

@@ -27,6 +27,7 @@ public final class ProfiloConstants {
   public static final int ABORT_REASON_TIMEOUT = 4;
   public static final int ABORT_REASON_NEW_START = 5;
   public static final int ABORT_REASON_CONDITION_NOT_MET = 6;
+  public static final int ABORT_REASON_MALFORMED_CONDITION = 7;
 
   // Things in the remote process can go wrong for the same reason as in the
   // main process. Thus, just mark if the reason is "remote" by using a single
@@ -67,6 +68,8 @@ public final class ProfiloConstants {
         return "new_start";
       case ABORT_REASON_CONDITION_NOT_MET:
         return "condition_not_met";
+      case ABORT_REASON_MALFORMED_CONDITION:
+        return "malformed_condition";
     }
     return "UNKNOWN REASON " + abortReason;
   }
@@ -79,7 +82,17 @@ public final class ProfiloConstants {
   public static final int TRACE_CONFIG_PARAM_POST_TRACE_EXTENSION_MSEC_DEFAULT = 0;
   public static final String TRACE_CONFIG_PARAM_BLACKBOX_PAUSE_IN_BG =
       "trace_config.should_pause_in_background";
-  public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";
   public static final String PROVIDER_PARAM_STACK_TRACE_THREAD_DETECT_INTERVAL_MS =
       "provider.stack_trace.thread_detect_interval_ms";
+
+  // Keys to query conditions in a config
+  public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";
+  public static final String TRACE_CONFIG_STRING_LIST_CONDITION =
+      "trace_config.string_list_condition";
+  public static final String TRACE_CONFIG_STRING_LIST_CONDITION_FALLBACK_SAMPLING_RATE =
+      "trace_config.fallback_sampling_rate_for_string_list_condition";
+
+  // Constants for max upload sampling rate (1:1) and for no upload (0)
+  public static final int UPLOAD_SAMPLE_RATE_ALWAYS = 1;
+  public static final int UPLOAD_SAMPLE_RATE_NEVER = 0;
 }
