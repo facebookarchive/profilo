@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigParams;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.annotation.Nullable;
@@ -15,11 +16,12 @@ import javax.annotation.Nullable;
 // The granularity of these extras applies to everything within the trace
 // config, which means that they apply to all the providers.
 public final class TraceConfigExtras implements Parcelable {
-  public static final TraceConfigExtras EMPTY = new TraceConfigExtras(null, null, null);
+  public static final TraceConfigExtras EMPTY = new TraceConfigExtras(null, null, null, null);
 
   private final @Nullable TreeMap<String, Integer> mIntParams;
   private final @Nullable TreeMap<String, Boolean> mBoolParams;
   private final @Nullable TreeMap<String, int[]> mIntArrayParams;
+  private final @Nullable TreeMap<String, ArrayList<String>> mStringArrayParams;
 
   private final @Nullable Config mConfig;
   private final int mTraceConfigIdx;
@@ -60,6 +62,17 @@ public final class TraceConfigExtras implements Parcelable {
     } else {
       mIntArrayParams = null;
     }
+
+    Bundle stringArrayParamsBundle = in.readBundle(getClass().getClassLoader());
+    Set<String> stringArrayParamKeys = stringArrayParamsBundle.keySet();
+    if (!stringArrayParamKeys.isEmpty()) {
+      mStringArrayParams = new TreeMap<>();
+      for (String key : stringArrayParamKeys) {
+        mStringArrayParams.put(key, stringArrayParamsBundle.getStringArrayList(key));
+      }
+    } else {
+      mStringArrayParams = null;
+    }
   }
 
   public TraceConfigExtras(Config config, int traceConfigIdx) {
@@ -68,6 +81,7 @@ public final class TraceConfigExtras implements Parcelable {
     mIntParams = null;
     mIntArrayParams = null;
     mBoolParams = null;
+    mStringArrayParams = null;
   }
 
   @Override
@@ -75,6 +89,7 @@ public final class TraceConfigExtras implements Parcelable {
     TreeMap<String, Integer> intParams = mIntParams;
     TreeMap<String, Boolean> boolParams = mBoolParams;
     TreeMap<String, int[]> intArrayParams = mIntArrayParams;
+    TreeMap<String, ArrayList<String>> stringArrayParams = mStringArrayParams;
 
     if (mTraceConfigIdx >= 0 && mConfig != null) {
       ConfigParams params = mConfig.getTraceConfigParams(mTraceConfigIdx);
@@ -104,15 +119,24 @@ public final class TraceConfigExtras implements Parcelable {
       }
     }
     dest.writeBundle(intArrayParamsBundle);
+    Bundle stringArrayParamsBundle = new Bundle();
+    if (stringArrayParams != null) {
+      for (TreeMap.Entry<String, ArrayList<String>> entry : stringArrayParams.entrySet()) {
+        stringArrayParamsBundle.putStringArrayList(entry.getKey(), entry.getValue());
+      }
+    }
+    dest.writeBundle(stringArrayParamsBundle);
   }
 
   public TraceConfigExtras(
       @Nullable TreeMap<String, Integer> intParams,
       @Nullable TreeMap<String, Boolean> boolParams,
-      @Nullable TreeMap<String, int[]> intArrayParams) {
+      @Nullable TreeMap<String, int[]> intArrayParams,
+      @Nullable TreeMap<String, ArrayList<String>> stringArrayParams) {
     mIntParams = intParams;
     mBoolParams = boolParams;
     mIntArrayParams = intArrayParams;
+    mStringArrayParams = stringArrayParams;
     mConfig = null;
     mTraceConfigIdx = -1;
   }
@@ -148,6 +172,22 @@ public final class TraceConfigExtras implements Parcelable {
       return null;
     }
     return mIntArrayParams.get(key);
+  }
+
+  @Nullable
+  public String[] getStringArrayParam(String key) {
+    if (mConfig != null) {
+      return mConfig.optTraceConfigParamStringList(mTraceConfigIdx, key);
+    }
+    if (mStringArrayParams == null) {
+      return null;
+    }
+    ArrayList<String> stringArrayList = mStringArrayParams.get(key);
+    if (stringArrayList == null) {
+      return null;
+    }
+    String[] returnArray = new String[stringArrayList.size()];
+    return stringArrayList.toArray(returnArray);
   }
 
   public static final Creator<TraceConfigExtras> CREATOR =

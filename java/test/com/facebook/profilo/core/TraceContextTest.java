@@ -22,6 +22,7 @@ import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
+import java.util.ArrayList;
 import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,17 +45,25 @@ public class TraceContextTest {
   private static final TreeMap<String, Integer> intExtraParams = new TreeMap<>();
   private static final TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
   private static final TreeMap<String, int[]> intArrayExtraParams = new TreeMap<>();
+  private static final TreeMap<String, ArrayList<String>> stringArrayExtraParams = new TreeMap<>();
   private static final TraceConfigExtras PROVIDER_EXTRAS;
 
   static {
     TreeMap<String, Integer> intExtraParams = new TreeMap<>();
     TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
     TreeMap<String, int[]> intArrayExtraParams = new TreeMap<>();
+    TreeMap<String, ArrayList<String>> stringArrayExtraParams = new TreeMap<>();
     intExtraParams.put("int_param_1", 2);
     boolExtraParams.put("bool_param_1", true);
     boolExtraParams.put("bool_param_2", false);
     intArrayExtraParams.put("int_arr_param_1", new int[] {22, 19});
-    PROVIDER_EXTRAS = new TraceConfigExtras(intExtraParams, boolExtraParams, intArrayExtraParams);
+    ArrayList<String> stringList = new ArrayList<>();
+    stringList.add("foo");
+    stringList.add("bar");
+    stringArrayExtraParams.put("string_arr_param_1", stringList);
+    PROVIDER_EXTRAS =
+        new TraceConfigExtras(
+            intExtraParams, boolExtraParams, intArrayExtraParams, stringArrayExtraParams);
   }
 
   private TraceContext mContext;
@@ -95,6 +104,7 @@ public class TraceContextTest {
     verifyProviderIntExtras(mContext.mTraceConfigExtras, intExtraParams);
     verifyProviderBooleanExtras(mContext.mTraceConfigExtras, boolExtraParams);
     verifyProviderIntArrayExtras(mContext.mTraceConfigExtras, intArrayExtraParams);
+    verifyProviderStringArrayExtras(mContext.mTraceConfigExtras, stringArrayExtraParams);
   }
 
   @Test
@@ -139,5 +149,11 @@ public class TraceContextTest {
       assertThat(testExtras.getIntArrayParam(nextEntry.getKey()))
           .containsExactly(nextEntry.getValue());
     }
+  }
+
+  static void verifyProviderStringArrayExtras(
+      TraceConfigExtras testExtras, TreeMap<String, ArrayList<String>> stringArrayParams) {
+    assertThat(testExtras.getStringArrayParam("string_arr_param_1"))
+        .isEqualTo(new String[] {"foo", "bar"});
   }
 }
