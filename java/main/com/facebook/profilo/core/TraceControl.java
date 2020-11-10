@@ -399,7 +399,19 @@ public final class TraceControl {
     }
   }
 
-  public boolean stopTraceWithCondition(
+  public void processAnnotation(
+      int controllerMask, @Nullable Object context, long longContext, String annotation) {
+    TraceContext traceContext = findCurrentTraceByContext(controllerMask, longContext, context);
+    if (traceContext == null) {
+      return;
+    }
+    synchronized (this) {
+      ensureHandlerInitialized();
+      mTraceControlHandler.processAnnotation(traceContext, annotation);
+    }
+  }
+
+  public boolean conditionalTraceStop(
       int controllerMask, @Nullable Object context, long longContext) {
     TraceContext traceContext = findCurrentTraceByContext(controllerMask, longContext, context);
     if (traceContext == null) {

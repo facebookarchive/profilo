@@ -37,6 +37,16 @@ import javax.annotation.concurrent.GuardedBy;
 })
 public class TraceControlHandler extends Handler {
 
+  private static class AnnotationContext {
+    public TraceContext mTraceContext;
+    public String mAnnotation;
+
+    public AnnotationContext(TraceContext context, String annotation) {
+      mTraceContext = context;
+      mAnnotation = annotation;
+    }
+  }
+
   private static final String LOG_TAG = "Profilo/TraceControlThread";
   private static final int MSG_TIMEOUT_TRACE = 0;
   private static final int MSG_START_TRACE = 1;
@@ -47,6 +57,7 @@ public class TraceControlHandler extends Handler {
   // Messages related to upload condition management
   private static final int MSG_EVENT_DURATION = 5;
   private static final int MSG_CONDITIONAL_TRACE_STOP = 6;
+  private static final int MSG_EVENT_QPL_ANNOTATION = 7;
 
   // Set this system property to enable logs.
   private static final String PROFILO_LOG_LEVEL_SYSTEM_PROPERTY = "com.facebook.profilo.log";
@@ -79,7 +90,10 @@ public class TraceControlHandler extends Handler {
 
   @Override
   public void handleMessage(Message msg) {
-    TraceContext traceContext = (TraceContext) msg.obj;
+    TraceContext traceContext = null;
+    if (msg.what != MSG_EVENT_QPL_ANNOTATION) {
+      traceContext = (TraceContext) msg.obj;
+    }
     switch (msg.what) {
       case MSG_TIMEOUT_TRACE:
         timeoutTrace(traceContext.traceId);
@@ -101,6 +115,10 @@ public class TraceControlHandler extends Handler {
         break;
       case MSG_CONDITIONAL_TRACE_STOP:
         conditionalTraceStop(traceContext);
+        break;
+      case MSG_EVENT_QPL_ANNOTATION:
+        AnnotationContext annotationContext = (AnnotationContext) msg.obj;
+        processAnnotationEvent(annotationContext.mTraceContext, annotationContext.mAnnotation);
         break;
       default:
         break;
@@ -127,9 +145,7 @@ public class TraceControlHandler extends Handler {
 
   protected void conditionalTraceStop(TraceContext context) {
     int uploadSampleRate = 0;
-    synchronized (mTraceConditionManager) {
-      uploadSampleRate = mTraceConditionManager.getUploadSampleRate(context.traceId);
-    }
+    uploadSampleRate = mTraceConditionManager.getUploadSampleRate(context.traceId);
     if (uploadSampleRate == 0 || mRandom.nextInt(uploadSampleRate) != 0) {
       Logger.postAbortTrace(context.traceId);
       onTraceAbort(new TraceContext(context, ProfiloConstants.ABORT_REASON_CONDITION_NOT_MET));
@@ -139,15 +155,15 @@ public class TraceControlHandler extends Handler {
       onTraceStop(context);
     }
 
-    synchronized (mTraceConditionManager) {
-      mTraceConditionManager.unregisterTrace(context);
-    }
+    mTraceConditionManager.unregisterTrace(context);
   }
 
   protected void processDurationEvent(TraceContext context, long duration) {
-    synchronized (mTraceConditionManager) {
-      mTraceConditionManager.processDurationEvent(context.traceId, duration);
-    }
+    mTraceConditionManager.processDurationEvent(context.traceId, duration);
+  }
+
+  protected void processAnnotationEvent(TraceContext context, String annotation) {
+    mTraceConditionManager.processAnnotationEvent(context.traceId, annotation);
   }
 
   protected void endTrace(TraceContext context) {
@@ -197,14 +213,27 @@ public class TraceControlHandler extends Handler {
     sendMessage(eventDurationMessage);
   }
 
+  public synchronized void processAnnotation(TraceContext context, String annotation) {
+    AnnotationContext annotationContext = new AnnotationContext(context, annotation);
+    Message annotationMessage =
+        obtainMessage(MSG_EVENT_QPL_ANNOTATION, /* what */ annotationContext /* obj */);
+    sendMessage(annotationMessage);
+  }
+
   public synchronized void onConditionalTraceStop(TraceContext context) {
     Message stopMessage = obtainMessage(MSG_CONDITIONAL_TRACE_STOP, context);
     sendMessage(stopMessage);
   }
 
   public synchronized void onTraceStart(TraceContext context, final int timeoutMillis) {
-    synchronized (mTraceConditionManager) {
-      mTraceConditionManager.registerTrace(context);
+    boolean traceRegistered = mTraceConditionManager.registerTrace(context);
+
+    if (!traceRegistered) {
+      // The only way this can happen is if one of the conditions in the config
+      // is malformed. Let's abort the trace in this case.
+      Logger.postAbortTrace(context.traceId);
+      onTraceAbort(new TraceContext(context, ProfiloConstants.ABORT_REASON_MALFORMED_CONDITION));
+      return;
     }
 
     mTraceContexts.add(context.traceId);
@@ -236,13 +265,15 @@ public class TraceControlHandler extends Handler {
       mTraceContexts.remove(context.traceId);
     }
     if (LogLevel.LOG_DEBUG_MESSAGE) {
+      int unpackedAbortReason = ProfiloConstants.unpackRemoteAbortReason(context.abortReason);
       Log.d(
           LOG_TAG,
           "Aborted trace "
               + context.encodedTraceId
               + " for reason "
-              + ProfiloConstants.unpackRemoteAbortReason(context.abortReason)
-              + (ProfiloConstants.isRemoteAbort(context.abortReason) ? " (remote process)" : ""));
+              + unpackedAbortReason
+              + (ProfiloConstants.isRemoteAbort(context.abortReason) ? " (remote process) " : " ")
+              + ProfiloConstants.abortReasonName(unpackedAbortReason));
     }
   }
 }

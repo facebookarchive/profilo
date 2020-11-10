@@ -361,7 +361,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
 
   @Test
   public void testMalformedDurationConditionNegativeSampleRate() {
-    int[] durationConfig = new int[] {-1000, -16, 1500, 8, 2000, 4, 2500, 2, 3000, 1};
+    int[] durationConfig = new int[] {1000, -16, 1500, 8, 2000, 4, 2500, 2, 3000, 1};
     when(mExtras.getIntArrayParam(ProfiloConstants.TRACE_CONFIG_DURATION_CONDITION))
         .thenReturn(durationConfig);
 
