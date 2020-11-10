@@ -321,6 +321,8 @@ int64_t MmapBufferTraceWriter::writeTrace(
       std::string(mapBufferPrefix->header.sessionId));
   loggerWriteQplTriggerAnnotation(
       logger, qpl_marker_id, "type", type, timestamp);
+  loggerWriteQplTriggerAnnotation(
+      logger, qpl_marker_id, "collection_method", "persistent", timestamp);
 
   const char* mapsFilename = mapBufferPrefix->header.memoryMapsFilename;
   if (mapsFilename[0] != '\0') {
