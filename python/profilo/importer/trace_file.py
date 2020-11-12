@@ -17,11 +17,12 @@ limitations under the License.
 
 from collections import namedtuple
 
+
 class TraceEntry(object):
     @staticmethod
     def construct(line):
-        line = line.split('|')
-        if line[1] in ['STRING_KEY', 'STRING_VALUE', 'STRING_NAME']:
+        line = line.split("|")
+        if line[1] in ["STRING_KEY", "STRING_VALUE", "STRING_NAME"]:
             return BytesEntry(
                 id=int(line[0]),
                 type=line[1],
@@ -39,22 +40,28 @@ class TraceEntry(object):
                 arg3=int(line[6]),
             )
 
-class StandardEntry(TraceEntry,
+
+class StandardEntry(
+    TraceEntry,
     namedtuple(
-        'StandardEntry',
-        ['id', 'type', 'timestamp', 'tid', 'arg1', 'arg2', 'arg3'],
-    )):
+        "StandardEntry",
+        ["id", "type", "timestamp", "tid", "arg1", "arg2", "arg3"],
+    ),
+):
     pass
 
-class BytesEntry(TraceEntry,
+
+class BytesEntry(
+    TraceEntry,
     namedtuple(
-        'BytesEntry',
-        ['id', 'type', 'arg1', 'data'],
-    )):
+        "BytesEntry",
+        ["id", "type", "arg1", "data"],
+    ),
+):
     pass
+
 
 class TraceFile(object):
-
     def __init__(self, headers={}, entries=[]):
         super(TraceFile, self).__init__()
         self.headers = headers
@@ -63,14 +70,16 @@ class TraceFile(object):
     @staticmethod
     def __do64bitAddition(a, b):
         val = a + b
-        if not -0x8000000000000000 <= val <= 0x7fffffffffffffff:
-            val = (val + (0x8000000000000000)) % (2 * (0x8000000000000000)) - 0x8000000000000000
+        if not -0x8000000000000000 <= val <= 0x7FFFFFFFFFFFFFFF:
+            val = (val + (0x8000000000000000)) % (
+                2 * (0x8000000000000000)
+            ) - 0x8000000000000000
         return val
 
     @staticmethod
     def __do32bitAddition(a, b):
         val = a + b
-        if not -0x80000000 <= val <= 0x7fffffff:
+        if not -0x80000000 <= val <= 0x7FFFFFFF:
             val = (val + (0x80000000)) % (2 * (0x80000000)) - 0x80000000
         return val
 
@@ -78,7 +87,7 @@ class TraceFile(object):
     def __delta_decode_entries(headers, delta_encoded):
         # Timestamp precision for all standard entry timestamps is in the
         # headers. Maximum precision is 9 for 10^-9, i.e. nanoseconds.
-        precision = int(headers.get('prec', 0))
+        precision = int(headers.get("prec", 0))
         # Figure out the multiplication factor from the precision to nanos.
         timestamp_multiplier = pow(10, (9 - precision))
 
@@ -109,11 +118,13 @@ class TraceFile(object):
             delta_entry = StandardEntry(
                 id=TraceFile.__do32bitAddition(last_entry.id, entry.id),
                 type=entry.type,
-                timestamp=TraceFile.__do64bitAddition(last_entry.timestamp, (entry.timestamp * timestamp_multiplier)),
+                timestamp=TraceFile.__do64bitAddition(
+                    last_entry.timestamp, (entry.timestamp * timestamp_multiplier)
+                ),
                 tid=TraceFile.__do32bitAddition(last_entry.tid, entry.tid),
                 arg1=TraceFile.__do32bitAddition(last_entry.arg1, entry.arg1),
                 arg2=TraceFile.__do32bitAddition(last_entry.arg2, entry.arg2),
-                arg3=TraceFile.__do64bitAddition(last_entry.arg3, entry.arg3)
+                arg3=TraceFile.__do64bitAddition(last_entry.arg3, entry.arg3),
             )
             entries.append(delta_entry)
             last_entry = delta_entry
@@ -132,7 +143,11 @@ class TraceFile(object):
 
         # Don't materialize the full list of delta-encoded entries,
         # generate them on demand.
-        gen_entries = (TraceEntry.construct(line) for line in data.split("\n") if len(line.strip()) > 0)
+        gen_entries = (
+            TraceEntry.construct(line)
+            for line in data.split("\n")
+            if len(line.strip()) > 0
+        )
         entries = TraceFile.__delta_decode_entries(headers, gen_entries)
 
         return TraceFile(headers=headers, entries=entries)
@@ -143,9 +158,11 @@ class TraceFile(object):
             data = fd.read().decode("utf-8")
             return TraceFile.from_string(data)
 
+
 if __name__ == "__main__":
-    import sys
     import gzip
+    import sys
+
     with gzip.open(sys.argv[1]) as f:
         trace = TraceFile.from_file(f)
         for entry in trace.entries:

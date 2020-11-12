@@ -21,12 +21,11 @@ from __future__ import unicode_literals
 
 from ..codegen import Codegen
 from ..codegen import SIGNED_SOURCE
-
 from ..types import DynamicArrayType
 from .type_converter import TypeConverter
 
-class CppEntryStructsCodegen(Codegen):
 
+class CppEntryStructsCodegen(Codegen):
     def __init__(self, entries):
         super(CppEntryStructsCodegen, self).__init__()
 
@@ -34,7 +33,7 @@ class CppEntryStructsCodegen(Codegen):
         self.unique_types = {x.memory_format.typename: x.memory_format for x in entries}
 
     def preferred_filename(self):
-        return 'Entry.h'
+        return "Entry.h"
 
     def generate(self):
         template = """
@@ -62,14 +61,15 @@ uint8_t peek_type(const void* src, size_t len);
 """.lstrip()
 
         enum = self._generate_entries_structs()
-        template = template.replace('%%ENTRIES_STRUCTS%%', enum)
-        template = template.replace('%%SIGNED_SOURCE%%', SIGNED_SOURCE)
+        template = template.replace("%%ENTRIES_STRUCTS%%", enum)
+        template = template.replace("%%SIGNED_SOURCE%%", SIGNED_SOURCE)
         return template
 
     def _generate_entries_structs(self):
 
-        structs = [self._generate_entry_struct(fmt) for fmt in
-                   self.unique_types.values()]
+        structs = [
+            self._generate_entry_struct(fmt) for fmt in self.unique_types.values()
+        ]
 
         structs = "\n".join(structs)
 
@@ -97,16 +97,16 @@ struct __attribute__((packed)) %%TYPENAME%% {
         fields = "\n".join(fields)
         fields = Codegen.indent(fields)
 
-        template = template.replace('%%TYPENAME%%', fmt.typename)
-        template = template.replace('%%TYPE_ID%%', str(fmt.type_id))
-        template = template.replace('%%FIELDS%%', fields)
+        template = template.replace("%%TYPENAME%%", fmt.typename)
+        template = template.replace("%%TYPE_ID%%", str(fmt.type_id))
+        template = template.replace("%%FIELDS%%", fields)
 
         return template
 
-        template = template.replace('%%TYPENAME%%', fmt.typename)
+        template = template.replace("%%TYPENAME%%", fmt.typename)
+
 
 class CppEntryStructsCppCodegen(Codegen):
-
     def __init__(self, entries):
         super(CppEntryStructsCppCodegen, self).__init__()
 
@@ -114,7 +114,7 @@ class CppEntryStructsCppCodegen(Codegen):
         self.unique_types = {x.memory_format.typename: x.memory_format for x in entries}
 
     def preferred_filename(self):
-        return 'Entry.cpp'
+        return "Entry.cpp"
 
     def generate(self):
         template = """
@@ -141,14 +141,15 @@ uint8_t peek_type(const void* src, size_t len) {
 """.lstrip()
 
         code = self._generate_entries_code()
-        template = template.replace('%%ENTRIES_CODE%%', code)
-        template = template.replace('%%SIGNED_SOURCE%%', SIGNED_SOURCE)
+        template = template.replace("%%ENTRIES_CODE%%", code)
+        template = template.replace("%%SIGNED_SOURCE%%", SIGNED_SOURCE)
         return template
 
     def _generate_entries_code(self):
 
-        structs = [self._generate_entry_struct(fmt) for fmt in
-                   self.unique_types.values()]
+        structs = [
+            self._generate_entry_struct(fmt) for fmt in self.unique_types.values()
+        ]
 
         structs = "\n".join(structs)
 
@@ -167,9 +168,9 @@ uint8_t peek_type(const void* src, size_t len) {
         unpack_code = self._generate_unpack_code(fmt)
         calcsize_code = self._generate_calcsize_code(fmt)
 
-        template = template.replace('%%PACKCODE%%', pack_code)
-        template = template.replace('%%UNPACKCODE%%', unpack_code)
-        template = template.replace('%%CALCULATESIZECODE%%', calcsize_code)
+        template = template.replace("%%PACKCODE%%", pack_code)
+        template = template.replace("%%UNPACKCODE%%", unpack_code)
+        template = template.replace("%%CALCULATESIZECODE%%", calcsize_code)
 
         return template
 
@@ -197,8 +198,9 @@ void %%TYPENAME%%::pack(const %%TYPENAME%%& entry, void* dst, size_t size) {
             if isinstance(ftype, DynamicArrayType) and idx != len(fmt.fields) - 1:
                 # HACK: figure out how to propagate dynamic offsets in the
                 # packing/unpacking code
-                raise ValueError("DynamicArrayType entries are only allowed"
-                    " as the last member")
+                raise ValueError(
+                    "DynamicArrayType entries are only allowed" " as the last member"
+                )
 
             memcpy = TypeConverter.get(ftype).generate_pack_code(
                 from_expression="entry.{name}".format(name=name),
@@ -209,8 +211,8 @@ void %%TYPENAME%%::pack(const %%TYPENAME%%& entry, void* dst, size_t size) {
         memcopies = "\n".join(memcopies)
         memcopies = Codegen.indent(memcopies)
 
-        template = template.replace('%%TYPENAME%%', fmt.typename)
-        template = template.replace('%%MEMCOPIES%%', memcopies)
+        template = template.replace("%%TYPENAME%%", fmt.typename)
+        template = template.replace("%%MEMCOPIES%%", memcopies)
         return template
 
     def _generate_unpack_code(self, fmt):
@@ -241,8 +243,8 @@ void %%TYPENAME%%::unpack(%%TYPENAME%%& entry, const void* src, size_t size) {
 
         memcopies = Codegen.indent(memcopies)
 
-        template = template.replace('%%TYPENAME%%', fmt.typename)
-        template = template.replace('%%MEMCOPIES%%', memcopies)
+        template = template.replace("%%TYPENAME%%", fmt.typename)
+        template = template.replace("%%MEMCOPIES%%", memcopies)
         return template
 
     def _generate_calcsize_code(self, fmt):
@@ -259,11 +261,12 @@ size_t %%TYPENAME%%::calculateSize(%%TYPENAME%% const& entry) {
                 "entry",
                 fname,
                 "offset",
-            ) for fname, ftype in fmt.fields
+            )
+            for fname, ftype in fmt.fields
         ]
         expressions = "\n".join(expressions)
         expressions = Codegen.indent(expressions)
 
-        template = template.replace('%%TYPENAME%%', fmt.typename)
-        template = template.replace('%%EXPRESSIONS%%', expressions)
+        template = template.replace("%%TYPENAME%%", fmt.typename)
+        template = template.replace("%%EXPRESSIONS%%", expressions)
         return template

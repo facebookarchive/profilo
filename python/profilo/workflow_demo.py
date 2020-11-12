@@ -15,18 +15,18 @@ limitations under the License.
 """
 
 
-from .importer.trace_file import TraceFile
-from .importer.interpreter import TraceFileInterpreter
-from .model import ttypes as tt
-from .symbols.apk_symbols import extract_apk_symbols
-
+import argparse
+import zipfile
 from collections import defaultdict
 from collections import namedtuple
 
 import numpy as np
-import argparse
 import pandas as pd
-import zipfile
+
+from .importer.interpreter import TraceFileInterpreter
+from .importer.trace_file import TraceFile
+from .model import ttypes as tt
+from .symbols.apk_symbols import extract_apk_symbols
 
 
 def blocks(tracefile, args):
@@ -46,14 +46,14 @@ def blocks(tracefile, args):
     main_thread = -1
 
     for unit in trace.executionUnits.values():
-        tid = int(unit.properties.customProps['tid'])
-        name = unit.properties.coreProps['name']
-        if 'Main' in name:
+        tid = int(unit.properties.customProps["tid"])
+        name = unit.properties.coreProps["name"]
+        if "Main" in name:
             main_thread = tid
         thread_blocks[tid] = []
         for block_id in unit.blocks:
             block = trace.blocks[block_id]
-            name = block.properties.coreProps.get('name')
+            name = block.properties.coreProps.get("name")
             if not name:
                 continue
             time_start = block.begin_point.timestamp
@@ -61,13 +61,13 @@ def blocks(tracefile, args):
             thread_blocks[tid].append([name, time_end - time_start])
 
     # Group block durations by function name
-    thread_functions = {}   # tid -> block_name -> [counts]
+    thread_functions = {}  # tid -> block_name -> [counts]
     for tid, blocks in thread_blocks.items():
         thread_functions[tid] = defaultdict(lambda: [])
         for block in blocks:
             thread_functions[tid][block[0]].append(block[1])
 
-    Statistics = namedtuple('Statistics', ['hits', 'mean', 'median', 'std'])
+    Statistics = namedtuple("Statistics", ["hits", "mean", "median", "std"])
 
     stats = defaultdict(lambda: {})  # tid -> block_name -> Statistics
 
@@ -76,24 +76,35 @@ def blocks(tracefile, args):
             mean = np.mean(counts)
             median = np.median(counts)
             std = np.std(counts)
-            stats[tid][func] = Statistics(hits=len(counts), mean=mean, median=median, std=std)
+            stats[tid][func] = Statistics(
+                hits=len(counts), mean=mean, median=median, std=std
+            )
 
     # DataFrame dictionary
-    df_dict = {'IsMain': [], 'tid': [], 'event': [], 'hits': [], 'mean': [],
-        'median': [], 'std': []}
+    df_dict = {
+        "IsMain": [],
+        "tid": [],
+        "event": [],
+        "hits": [],
+        "mean": [],
+        "median": [],
+        "std": [],
+    }
 
     for tid, functions in stats.items():
         for func, stat in functions.items():
-            df_dict['IsMain'].append('True' if tid == main_thread else 'False')
-            df_dict['tid'].append(tid)
-            df_dict['event'].append(func)
-            df_dict['mean'].append(stat.mean)
-            df_dict['median'].append(stat.median)
-            df_dict['std'].append(stat.std)
-            df_dict['hits'].append(stat.hits)
+            df_dict["IsMain"].append("True" if tid == main_thread else "False")
+            df_dict["tid"].append(tid)
+            df_dict["event"].append(func)
+            df_dict["mean"].append(stat.mean)
+            df_dict["median"].append(stat.median)
+            df_dict["std"].append(stat.std)
+            df_dict["hits"].append(stat.hits)
 
-    dataframe = pd.DataFrame(data=df_dict, columns=['IsMain', 'tid',
-                             'event', 'hits', 'mean', 'median', 'std'])
+    dataframe = pd.DataFrame(
+        data=df_dict,
+        columns=["IsMain", "tid", "event", "hits", "mean", "median", "std"],
+    )
 
     print(dataframe.to_csv())
 
@@ -116,7 +127,7 @@ def syscounters(tracefile, args):
     Parse system counter information from a trace file, sort by increasing
     timestamp order, and plot as a time series.
     """
-    plotdir = os.path.join(args.plotdir, '')
+    plotdir = os.path.join(args.plotdir, "")
     # Validate output directory actually exists
     if not os.path.exists(args.plotdir):
         print("syscounters: {plt}: no such file or directory".format(plt=args.plotdir))
@@ -145,13 +156,18 @@ def syscounters(tracefile, args):
     # of them. Plotting other time series is just a matter of adding here
     # any counter from the list in python/profilo/importer/constants.py
     import matplotlib.pyplot as plt
-    test_counters = ['NUM_PROCS', 'PROC_CPU_TIME', 'GLOBAL_ALLOC_SIZE',
-                     'ALLOC_FREE_BYTES']
+
+    test_counters = [
+        "NUM_PROCS",
+        "PROC_CPU_TIME",
+        "GLOBAL_ALLOC_SIZE",
+        "ALLOC_FREE_BYTES",
+    ]
 
     for tc in test_counters:
         data = counters[tc]
         x, y = list(zip(*data))
-        plt.xlabel('time')
+        plt.xlabel("time")
         plt.ylabel(tc.lower())
         plt.plot(x, y)
         plt.axis([min(x), max(x), min(y), max(y)])
@@ -177,13 +193,13 @@ def stacks(tracefile, args):
     symbols = extract_apk_symbols(args.apk)
     interpreter = TraceFileInterpreter(tracefile, symbols)
     trace = interpreter.interpret()
-    stacks = defaultdict(int)   # [frame] -> int (count)
+    stacks = defaultdict(int)  # [frame] -> int (count)
 
     for unit in trace.executionUnits.values():
         for block_id in unit.blocks:
             block = trace.blocks[block_id]
             for point in block.points:
-                stackObject = point.properties.stackTraces.get('stacks', None)
+                stackObject = point.properties.stackTraces.get("stacks", None)
                 if not stackObject:
                     continue
                 stackFrames = stackObject.frames
@@ -202,9 +218,9 @@ def stacks(tracefile, args):
     for k, v in stacks.items():
         for frame in k:
             if str(frame).isdigit():
-                print("_", frame, sep='')
+                print("_", frame, sep="")
             else:
-                print(frame, sep='')
+                print(frame, sep="")
         print(v)
         print("\n")
 
@@ -217,32 +233,33 @@ if __name__ == "__main__":
         -> Blocks
         -> System counters
     """
-    import sys
     import gzip
     import os
+    import sys
 
     # Top level parser. The trace file is common for all types of demos,
     # so parse it here.
     parser = argparse.ArgumentParser(description="Profilo workflow demo")
-    parser.add_argument('trace', type=str, help="Path to downloaded trace")
+    parser.add_argument("trace", type=str, help="Path to downloaded trace")
 
     subparsers = parser.add_subparsers(help="Demo types")
 
     # Parser for stack-specific arguments
-    stack_parser = subparsers.add_parser('stacks', help="Analyze stacks")
-    stack_parser.add_argument('apk', type=str,
-                              help="Path to apk (for symbolication")
+    stack_parser = subparsers.add_parser("stacks", help="Analyze stacks")
+    stack_parser.add_argument("apk", type=str, help="Path to apk (for symbolication")
     stack_parser.set_defaults(func=stacks)
 
     # Parser for block-specific arguments
-    block_parser = subparsers.add_parser('blocks', help="Analyze blocks")
+    block_parser = subparsers.add_parser("blocks", help="Analyze blocks")
     block_parser.set_defaults(func=blocks)
 
     # Parser for syscounter-specific arguments
-    syscounter_parser = subparsers.add_parser('syscounters',
-                                              help="Analyze system counters")
-    syscounter_parser.add_argument('plotdir', type=str,
-                                   help="Path where plots will be generated")
+    syscounter_parser = subparsers.add_parser(
+        "syscounters", help="Analyze system counters"
+    )
+    syscounter_parser.add_argument(
+        "plotdir", type=str, help="Path where plots will be generated"
+    )
     syscounter_parser.set_defaults(func=syscounters)
 
     args = parser.parse_args()

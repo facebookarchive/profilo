@@ -19,8 +19,8 @@ import unittest
 
 from ..intervals import IntervalTree, Interval
 
-class IntervalTests(unittest.TestCase):
 
+class IntervalTests(unittest.TestCase):
     def setUp(self):
         self.tree = IntervalTree()
 

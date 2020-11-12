@@ -15,22 +15,19 @@ limitations under the License.
 """
 
 
-from . import ttypes as tt
-
-from .intervals import IntervalTree
-
 import random
 import string
-BASE64_ALPHABET = (
-    string.ascii_uppercase +
-    string.ascii_lowercase +
-    string.digits + '+/'
-)
+
+from . import ttypes as tt
+from .intervals import IntervalTree
+
+BASE64_ALPHABET = string.ascii_uppercase + string.ascii_lowercase + string.digits + "+/"
+
 
 def new_id():
     num = random.randrange(1, 0xFFFFFFFFFFFFFFFF)
 
-    data = ['A'] * 11  # 11 chars in a 64-bit num, 'A' is 0
+    data = ["A"] * 11  # 11 chars in a 64-bit num, 'A' is 0
     idx = len(data) - 1  # last char
     while num:
         denom = num % 64
@@ -39,26 +36,49 @@ def new_id():
         idx -= 1
     return "".join(data)
 
+
 class StackFrame(tt.StackFrame):
     def __init__(self, **kwargs):
         super(StackFrame, self).__init__(**kwargs)
+
 
 class StackTrace(tt.StackTrace):
     def __init__(self):
         super(StackTrace, self).__init__(frames=[])
 
     def append(self, identifier, symbol=None, code_location=None, line_number=None):
-        self.frames.append(StackFrame(
-            identifier=identifier,
-            symbol=symbol,
-            codeLocation=code_location,
-            lineNumber=line_number,
-        ))
+        self.frames.append(
+            StackFrame(
+                identifier=identifier,
+                symbol=symbol,
+                codeLocation=code_location,
+                lineNumber=line_number,
+            )
+        )
 
 
 class Properties(tt.Properties):
-    def __init__(self, coreProps=None, customProps=None, counterProps=None, errors=None, sets=None, stacktraces=None, stacktraceHashes=None, stacktraceHashResolvers=None,):
-        super(Properties, self).__init__(coreProps, customProps, counterProps, errors, sets, stacktraces, stacktraceHashes, stacktraceHashResolvers)
+    def __init__(
+        self,
+        coreProps=None,
+        customProps=None,
+        counterProps=None,
+        errors=None,
+        sets=None,
+        stacktraces=None,
+        stacktraceHashes=None,
+        stacktraceHashResolvers=None,
+    ):
+        super(Properties, self).__init__(
+            coreProps,
+            customProps,
+            counterProps,
+            errors,
+            sets,
+            stacktraces,
+            stacktraceHashes,
+            stacktraceHashResolvers,
+        )
         self.coreProps = coreProps if coreProps else {}
         self.customProps = customProps if customProps else {}
         self.counterProps = counterProps if counterProps else {}
@@ -69,6 +89,7 @@ class Properties(tt.Properties):
     def add_counter(self, name, value, counter_unit=tt.CounterUnit.ITEMS):
         self.counterProps.setdefault(counter_unit, {})[name] = value
 
+
 class Edge(tt.Edge):
     def __init__(self, trace, sourcePoint=None, targetPoint=None):
         super(Edge, self).__init__(
@@ -76,6 +97,7 @@ class Edge(tt.Edge):
             targetPoint=targetPoint,
             properties=Properties(),
         )
+
 
 class Point(tt.Point):
     def __init__(self, trace, unit, block, timestamp=0, sequenceNumber=0):
@@ -91,15 +113,18 @@ class Point(tt.Point):
         self.block = block
 
     def __repr__(self):
-        return ("<Point ({id}): {timestamp} \"{name}\">".format(
+        return '<Point ({id}): {timestamp} "{name}">'.format(
             id=self.id,
             timestamp=self.timestamp,
-            name=self.properties.coreProps.get('name', "<None>"),
-        ))
+            name=self.properties.coreProps.get("name", "<None>"),
+        )
+
 
 class Block(tt.Block):
     def __init__(self, trace, unit, begin=None, end=None):
-        super(Block, self).__init__(new_id(), begin, end, otherPoints=[], properties=Properties())
+        super(Block, self).__init__(
+            new_id(), begin, end, otherPoints=[], properties=Properties()
+        )
         self.trace = trace
         self.unit = unit
         self.begin_point = None
@@ -134,8 +159,12 @@ class Block(tt.Block):
         assert not child.parent
         call_time = child.begin_point.timestamp
         return_time = child.end_point.timestamp
-        assert (self.begin_point.timestamp
-            <= call_time <= return_time <= self.end_point.timestamp)
+        assert (
+            self.begin_point.timestamp
+            <= call_time
+            <= return_time
+            <= self.end_point.timestamp
+        )
 
         call_from = self.add_point(call_time)
         call_to = child.add_point(call_time)
@@ -164,18 +193,18 @@ class Block(tt.Block):
     def points(self):
         all_point_ids = [self.begin] + self.otherPoints + [self.end]
         return [
-            self.trace.points[pt_id] for pt_id in all_point_ids
-                if pt_id is not None
+            self.trace.points[pt_id] for pt_id in all_point_ids if pt_id is not None
         ]
 
     def __repr__(self):
-        return ("<Block ({id}): {start} to {end} \"{name}\"; {points} points>".format(
+        return '<Block ({id}): {start} to {end} "{name}"; {points} points>'.format(
             id=self.id,
-            start=self.begin_point.timestamp if self.begin_point else 'Missing',
-            end=self.end_point.timestamp if self.end_point else 'Missing',
-            name=self.properties.coreProps.get('name', "<None>"),
+            start=self.begin_point.timestamp if self.begin_point else "Missing",
+            end=self.end_point.timestamp if self.end_point else "Missing",
+            name=self.properties.coreProps.get("name", "<None>"),
             points=len(self.points),
-        ))
+        )
+
 
 class ExecutionUnit(tt.ExecutionUnit):
     def __init__(self, trace):
@@ -266,11 +295,12 @@ class ExecutionUnit(tt.ExecutionUnit):
             self.__assign_parent_child_blocks(child)
 
     def __repr__(self):
-        return ("<ExecutionUnit ({id}): \"{name}\"; {blocks} blocks>".format(
+        return '<ExecutionUnit ({id}): "{name}"; {blocks} blocks>'.format(
             id=self.id,
-            name=self.properties.coreProps.get('name', "<None>"),
+            name=self.properties.coreProps.get("name", "<None>"),
             blocks=len(self.blocks),
-        ))
+        )
+
 
 class Trace(tt.Trace):
     def __init__(self, begin, end, id=None):

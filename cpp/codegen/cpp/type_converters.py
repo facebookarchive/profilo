@@ -19,6 +19,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import abc
+
 from ..codegen import Codegen
 from ..types import ArrayType
 from ..types import CompoundType
@@ -26,8 +28,6 @@ from ..types import DynamicArrayType
 from ..types import EntryTypeEnum
 from ..types import IntegerType
 from ..types import PointerType
-
-import abc
 
 
 class CppTypeConverter(object):
@@ -41,13 +41,11 @@ class CppTypeConverter(object):
         pass
 
     @abc.abstractmethod
-    def generate_pack_code(
-        self, from_expression, to_expression, offset_expression):
+    def generate_pack_code(self, from_expression, to_expression, offset_expression):
         pass
 
     @abc.abstractmethod
-    def generate_unpack_code(
-        self, from_expression, to_expression, offset_expression):
+    def generate_unpack_code(self, from_expression, to_expression, offset_expression):
         pass
 
     def generate_runtime_size_code(
@@ -88,7 +86,6 @@ std::memcpy(&({to}), ({from_}) + {offset}, sizeof(({to})));
 
 
 class IntegerTypeConverter(PrimitiveTypeConverter):
-
     def __init__(self, abstract_type):
         super(IntegerTypeConverter, self).__init__(abstract_type)
 
@@ -115,14 +112,11 @@ class IntegerTypeConverter(PrimitiveTypeConverter):
 
 
 class EntryTypeEnumConverter(IntegerTypeConverter):
-
     def __init__(self, abstract_type):
         super(EntryTypeEnumConverter, self).__init__(abstract_type)
 
         if not isinstance(self.abstract_type, EntryTypeEnum):
-            raise ValueError(
-                "abstract_type must be an instance of EntryTypeEnum"
-            )
+            raise ValueError("abstract_type must be an instance of EntryTypeEnum")
 
     def generate_declaration(self, name):
         return "EntryType {name};".format(
@@ -136,7 +130,7 @@ std::memcpy(({to}) + {offset}, &({from_tmp}), sizeof(({from_tmp})));
 {offset} += sizeof(({from_tmp}));
 """.format(
             int_type=self.map_type(),
-            from_tmp=from_expression.replace('.', '_') + '_tmp',
+            from_tmp=from_expression.replace(".", "_") + "_tmp",
             from_=from_expression,
             to=to_expression,
             offset=offset_expr,
@@ -150,7 +144,7 @@ std::memcpy(&({to_tmp}), ({from_}) + {offset}, sizeof(({to_tmp})));
 {to} = static_cast<EntryType>({to_tmp});
 """.format(
             int_type=self.map_type(),
-            to_tmp=to_expression.replace('.', '_') + '_tmp',
+            to_tmp=to_expression.replace(".", "_") + "_tmp",
             from_=from_expression,
             to=to_expression,
             offset=offset_expr,
@@ -158,7 +152,6 @@ std::memcpy(&({to_tmp}), ({from_}) + {offset}, sizeof(({to_tmp})));
 
 
 class ArrayTypeConverter(PrimitiveTypeConverter):
-
     def __init__(self, abstract_type):
         super(ArrayTypeConverter, self).__init__(abstract_type)
 
@@ -181,7 +174,6 @@ class ArrayTypeConverter(PrimitiveTypeConverter):
 
 
 class PointerTypeConverter(CppTypeConverter):
-
     def __init__(self, abstract_type):
         super(PointerTypeConverter, self).__init__(abstract_type)
 
@@ -189,8 +181,7 @@ class PointerTypeConverter(CppTypeConverter):
             raise ValueError("abstract_type must be an instance of PointerType")
 
         if not isinstance(self.abstract_type.pointed_to_type, IntegerType):
-            raise ValueError(
-                "pointed_to_type must be an instance of IntegerType")
+            raise ValueError("pointed_to_type must be an instance of IntegerType")
 
     def generate_declaration(self, name):
         member_type = IntegerTypeConverter(
@@ -204,24 +195,26 @@ class PointerTypeConverter(CppTypeConverter):
 
     def generate_pack_code(self, *args):
         raise RuntimeError(
-            "Cannot generate packing code for PointerType, use in DynamicArrayType")
+            "Cannot generate packing code for PointerType, use in DynamicArrayType"
+        )
 
     def generate_unpack_code(self, *args):
         raise RuntimeError(
-            "Cannot generate unpacking code for PointerType, use in DynamicArrayType")
+            "Cannot generate unpacking code for PointerType, use in DynamicArrayType"
+        )
 
     def generate_runtime_size_code(self, *args):
         raise RuntimeError(
-            "Cannot generate runtime size code for PointerType, use in DynamicArrayType")
+            "Cannot generate runtime size code for PointerType, use in DynamicArrayType"
+        )
+
 
 class CompoundTypeConverter(CppTypeConverter):
-
     def __init__(self, abstract_type):
         super(CompoundTypeConverter, self).__init__(abstract_type)
 
         if not isinstance(self.abstract_type, CompoundType):
-            raise ValueError(
-                "abstract_type must be an instance of CompoundType")
+            raise ValueError("abstract_type must be an instance of CompoundType")
 
     def generate_declaration(self, name):
         template = """struct {{
@@ -230,9 +223,9 @@ class CompoundTypeConverter(CppTypeConverter):
 
         field_declarations = []
         for field_name, field_type in self.abstract_type.members.items():
-            decl = CONVERTERS[field_type.__class__](
-                field_type
-            ).generate_declaration(field_name)
+            decl = CONVERTERS[field_type.__class__](field_type).generate_declaration(
+                field_name
+            )
             field_declarations.append(decl)
 
         field_declarations = "\n".join(field_declarations)
@@ -253,7 +246,6 @@ class CompoundTypeConverter(CppTypeConverter):
 
 
 class DynamicArrayTypeConverter(CompoundTypeConverter):
-
     def __init__(self, abstract_type):
         super(DynamicArrayTypeConverter, self).__init__(abstract_type)
 
@@ -304,7 +296,7 @@ std::memcpy(&({to}).{size_field}, ({from_} + {offset}), (_{size_field}_size));
             offset=offset_expr,
             values_field=DynamicArrayType.MEMBER_VALUES,
             size_field=DynamicArrayType.MEMBER_SIZE,
-            member_type=self.abstract_type.member_type
+            member_type=self.abstract_type.member_type,
         )
 
     def generate_runtime_size_code(
@@ -327,6 +319,7 @@ std::memcpy(&({to}).{size_field}, ({from_} + {offset}), (_{size_field}_size));
             size=DynamicArrayType.MEMBER_SIZE,
             values=DynamicArrayType.MEMBER_VALUES,
         )
+
 
 CONVERTERS = {
     ArrayType: ArrayTypeConverter,

@@ -24,7 +24,6 @@ from ..codegen import SIGNED_SOURCE
 
 
 class CppEntryTypesCodegen(Codegen):
-
     def __init__(self, entries):
         super(CppEntryTypesCodegen, self).__init__()
         self.entries = entries
@@ -35,7 +34,7 @@ class CppEntryTypesCodegen(Codegen):
             )
 
     def preferred_filename(self):
-        return 'EntryType.h'
+        return "EntryType.h"
 
     def generate(self):
         template = """
@@ -54,8 +53,8 @@ const char* to_string(EntryType type);
 } // namespace facebook
 """.lstrip()
 
-        template = template.replace('%%ENTRIES_ENUM%%', self._generate_entries_enum())
-        template = template.replace('%%SIGNED_SOURCE%%', SIGNED_SOURCE)
+        template = template.replace("%%ENTRIES_ENUM%%", self._generate_entries_enum())
+        template = template.replace("%%SIGNED_SOURCE%%", SIGNED_SOURCE)
 
         return template
 
@@ -66,22 +65,22 @@ enum class EntryType {
 };
 """.lstrip()
 
-        name_id_entries = ['{0.name} = {0.id},'.format(x) for x in self.entries]
-        name_id_entries = '\n'.join(name_id_entries)
+        name_id_entries = ["{0.name} = {0.id},".format(x) for x in self.entries]
+        name_id_entries = "\n".join(name_id_entries)
 
         name_id_entries = Codegen.indent(name_id_entries)
 
-        template = template.replace('%%NAME_TO_ID_ENTRIES%%', name_id_entries)
+        template = template.replace("%%NAME_TO_ID_ENTRIES%%", name_id_entries)
         return template
 
-class CppEntryTypesCppCodegen(Codegen):
 
+class CppEntryTypesCppCodegen(Codegen):
     def __init__(self, entries):
         super(CppEntryTypesCppCodegen, self).__init__()
         self.entries = entries
 
     def preferred_filename(self):
-        return 'EntryType.cpp'
+        return "EntryType.cpp"
 
     def generate(self):
         template = """
@@ -100,8 +99,8 @@ namespace entries {
 } // namespace facebook
 """.lstrip()
 
-        template = template.replace('%%TO_STRING%%', self._generate_to_string())
-        template = template.replace('%%SIGNED_SOURCE%%', SIGNED_SOURCE)
+        template = template.replace("%%TO_STRING%%", self._generate_to_string())
+        template = template.replace("%%SIGNED_SOURCE%%", SIGNED_SOURCE)
         return template
 
     def _generate_to_string(self):
@@ -114,11 +113,14 @@ const char* to_string(EntryType type) {
 }
 """.lstrip()
 
-        cases = ['case EntryType::{0.name}: return "{0.name}";'.format(x) for x in self.entries]
-        cases = '\n'.join(cases)
+        cases = [
+            'case EntryType::{0.name}: return "{0.name}";'.format(x)
+            for x in self.entries
+        ]
+        cases = "\n".join(cases)
 
         cases = Codegen.indent(cases)
         cases = Codegen.indent(cases)
 
-        template = template.replace('%%CASES%%', cases)
+        template = template.replace("%%CASES%%", cases)
         return template

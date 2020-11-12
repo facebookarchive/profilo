@@ -42,8 +42,8 @@ class PrimitiveType(Type):
     def constant_size(self):
         return self.size
 
-class IntegerType(PrimitiveType):
 
+class IntegerType(PrimitiveType):
     def __init__(self, size, signed):
         super(IntegerType, self).__init__(size)
         self.signed = signed
@@ -55,8 +55,8 @@ class EntryTypeEnum(IntegerType):
     def __init__(self):
         super(EntryTypeEnum, self).__init__(size=1, signed=False)
 
-class ArrayType(PrimitiveType):
 
+class ArrayType(PrimitiveType):
     def __init__(self, member_type, count):
         super(ArrayType, self).__init__(size=member_type.constant_size * count)
         self.member_type = member_type
@@ -88,15 +88,18 @@ class CompoundType(Type):
 
 class DynamicArrayType(CompoundType):
 
-    MEMBER_VALUES = 'values'
-    MEMBER_SIZE = 'size'
+    MEMBER_VALUES = "values"
+    MEMBER_SIZE = "size"
 
     def __init__(self, member_type):
-        super(DynamicArrayType, self).__init__(members={
-            DynamicArrayType.MEMBER_VALUES: PointerType(member_type),
-            DynamicArrayType.MEMBER_SIZE: Types.uint16,
-        })
+        super(DynamicArrayType, self).__init__(
+            members={
+                DynamicArrayType.MEMBER_VALUES: PointerType(member_type),
+                DynamicArrayType.MEMBER_SIZE: Types.uint16,
+            }
+        )
         self.member_type = member_type
+
 
 class Types(object):
     __metaclass__ = abc.ABCMeta

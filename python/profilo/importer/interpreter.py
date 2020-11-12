@@ -15,11 +15,12 @@ limitations under the License.
 """
 
 
-from ..model.build import Trace, StackTrace
-from .trace_file import StandardEntry, BytesEntry
-from .constants import COUNTER_NAMES
-
 from functools import cmp_to_key
+
+from ..model.build import Trace, StackTrace
+from .constants import COUNTER_NAMES
+from .trace_file import StandardEntry, BytesEntry
+
 
 def entry_compare(x, y):
     """Comparison function for two StandardEntries.
@@ -32,6 +33,7 @@ def entry_compare(x, y):
         return x.id - y.id
     else:
         return x.timestamp - y.timestamp
+
 
 def block_compare(x, y):
     xs, xe = x.begin_point, x.end_point
@@ -61,13 +63,14 @@ def block_compare(x, y):
         assert xs is not None and ys is not None
         return entry_compare(xs, ys)
 
+
 class BlockEntries(object):
     def __init__(self, begin=None, end=None):
         self.begin = begin
         self.end = end
 
-class TraceFileInterpreter(object):
 
+class TraceFileInterpreter(object):
     def __init__(self, trace_file, symbols=None):
         self.trace_file = trace_file
         self.units = {}
@@ -81,7 +84,7 @@ class TraceFileInterpreter(object):
         children = {}  # entry -> [entry]
 
         ignore_parent_entries = {
-            "CPU_COUNTER",   # arg2 == "core number"
+            "CPU_COUNTER",  # arg2 == "core number"
         }
 
         for entry in self.trace_file.entries:
@@ -106,18 +109,24 @@ class TraceFileInterpreter(object):
         self.parents, self.children = self.__calculate_parents_children()
 
         self.trace = Trace(
-            begin = min(
-                (x.timestamp for x in self.trace_file.entries
-                    if hasattr(x, 'timestamp'))
+            begin=min(
+                (
+                    x.timestamp
+                    for x in self.trace_file.entries
+                    if hasattr(x, "timestamp")
+                )
             ),
-            end = max(
-                (x.timestamp for x in self.trace_file.entries
-                    if hasattr(x, 'timestamp'))
+            end=max(
+                (
+                    x.timestamp
+                    for x in self.trace_file.entries
+                    if hasattr(x, "timestamp")
+                )
             ),
-            id=self.trace_file.headers.get('id'),
+            id=self.trace_file.headers.get("id"),
         )
         thread_items = {}
-        framework_frames = {}   # method_id -> full name
+        framework_frames = {}  # method_id -> full name
         for entry in self.trace_file.entries:
             if entry.type == "JAVA_FRAME_NAME":
                 for child in self.children[entry]:
@@ -133,9 +142,7 @@ class TraceFileInterpreter(object):
         THREAD_METADATA_ENTRIES = ["TRACE_THREAD_NAME", "TRACE_THREAD_PRI"]
 
         for tid, items in thread_items.items():
-            entries = list(
-                sorted(items, key=cmp_to_key(entry_compare))
-            )
+            entries = list(sorted(items, key=cmp_to_key(entry_compare)))
             unit = self.ensure_unit(tid)
 
             stacks = {}  # timestamp -> [addresses]
@@ -145,12 +152,10 @@ class TraceFileInterpreter(object):
                 block = None
                 if entry.type in BLOCK_START_ENTRIES:
                     block = unit.push_block(entry.timestamp)
-                    self.block_entries.setdefault(
-                        block, BlockEntries()).begin = entry
+                    self.block_entries.setdefault(block, BlockEntries()).begin = entry
                 elif entry.type in BLOCK_END_ENTRIES:
                     block = unit.pop_block(entry.timestamp)
-                    self.block_entries.setdefault(
-                        block, BlockEntries()).end = entry
+                    self.block_entries.setdefault(block, BlockEntries()).end = entry
                 elif entry.type == "STACK_FRAME":
                     # While we're here, build the stack trace maps.
                     stacks.setdefault(entry.timestamp, []).append(entry.arg3)
@@ -159,10 +164,13 @@ class TraceFileInterpreter(object):
 
                 if block:
                     block_entries = self.block_entries[block]
-                    self.assign_name(block, entries=[
-                        block_entries.begin,
-                        block_entries.end,
-                    ])
+                    self.assign_name(
+                        block,
+                        entries=[
+                            block_entries.begin,
+                            block_entries.end,
+                        ],
+                    )
 
             unit.normalize_blocks()
 
@@ -186,16 +194,12 @@ class TraceFileInterpreter(object):
                         value=entry.arg3,
                     )
 
-                    self.assign_name(item, entries=[
-                        entry
-                    ])
+                    self.assign_name(item, entries=[entry])
                 elif entry.type == "STACK_FRAME":
                     if entry.timestamp in stacks:
                         # we haven't written this stack trace yet, proceed
                         item = unit.add_point(entry.timestamp)
-                        self.assign_name(item, entries=[
-                            entry
-                        ])
+                        self.assign_name(item, entries=[entry])
                         stacktrace = StackTrace()
                         for frame in stacks[entry.timestamp]:
                             symbol = None
@@ -206,9 +210,11 @@ class TraceFileInterpreter(object):
                                     symbol = framework_frames.get(frame, None)
                             stacktrace.append(identifier=frame, symbol=symbol)
 
-                        item.properties.stackTraces.update({
-                            'stacks': stacktrace,
-                        })
+                        item.properties.stackTraces.update(
+                            {
+                                "stacks": stacktrace,
+                            }
+                        )
 
                         # clear the entry in the map so we don't add a point
                         # for every frame
@@ -221,7 +227,7 @@ class TraceFileInterpreter(object):
         assert isinstance(entry, StandardEntry)
         if entry.type == "TRACE_THREAD_PRI":
             unit = self.ensure_unit(entry.tid)
-            unit.properties.coreProps['priority'] = entry.arg3
+            unit.properties.coreProps["priority"] = entry.arg3
         elif entry.type == "TRACE_THREAD_NAME":
             key_child = self.children.get(entry, [])
             assert len(key_child) == 1
@@ -236,16 +242,15 @@ class TraceFileInterpreter(object):
             tname = value_child.data
 
             unit = self.ensure_unit(tid)
-            currname = unit.properties.coreProps['name']
-            if 'Main' in currname:
-                unit.properties.coreProps['name'] = "(Main) {tname}".format(tname=tname)
+            currname = unit.properties.coreProps["name"]
+            if "Main" in currname:
+                unit.properties.coreProps["name"] = "(Main) {tname}".format(tname=tname)
             else:
-                unit.properties.coreProps['name'] = "{tname}".format(tname=tname)
-
+                unit.properties.coreProps["name"] = "{tname}".format(tname=tname)
 
     def ensure_unit(self, tid):
         tid = str(tid)
-        if tid == self.trace_file.headers.get('pid', None):
+        if tid == self.trace_file.headers.get("pid", None):
             name = "Main Thread_{}".format(tid)
         else:
             name = "Thread_{}".format(tid)
@@ -253,18 +258,19 @@ class TraceFileInterpreter(object):
         unit = self.units.get(name)
         if not unit:
             unit = self.trace.add_unit()
-            unit.properties.coreProps['name'] = name
-            unit.properties.customProps['tid'] = tid
-            unit.properties.coreProps['priority'] = 0
+            unit.properties.coreProps["name"] = name
+            unit.properties.customProps["tid"] = tid
+            unit.properties.coreProps["priority"] = 0
             self.units[name] = unit
         return unit
 
     def __find_name_by_string_key_value(self, entry):
         # Look for a STRING_KEY == "__name".
         # Name is in the chained STRING_VALUE.
-        keys = (x for x in self.children.get(entry, [])
-                if entry and x.type == 'STRING_KEY')
-        keys = [x for x in keys if x.data == '__name']
+        keys = (
+            x for x in self.children.get(entry, []) if entry and x.type == "STRING_KEY"
+        )
+        keys = [x for x in keys if x.data == "__name"]
         assert len(keys) <= 1
 
         if not keys:
@@ -282,13 +288,14 @@ class TraceFileInterpreter(object):
         assert len(self.children[key]) == 1
         value = self.children[key][0]
 
-        assert value.type == 'STRING_VALUE'
+        assert value.type == "STRING_VALUE"
         return value.data
 
     def __find_name_by_string_name(self, entry):
         # Look for a STRING_NAME child.
-        children = [x for x in self.children.get(entry, [])
-                    if entry and x.type == 'STRING_NAME']
+        children = [
+            x for x in self.children.get(entry, []) if entry and x.type == "STRING_NAME"
+        ]
         assert len(children) <= 1
 
         if not children:
@@ -324,4 +331,4 @@ class TraceFileInterpreter(object):
             name = [x.type for x in name_entries if x]
             name = " to ".join(name)
 
-        trace_element.properties.coreProps['name'] = pattern.format(name)
+        trace_element.properties.coreProps["name"] = pattern.format(name)

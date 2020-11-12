@@ -49,29 +49,35 @@ class CodegenProgram(object):
 
     # hide the pattern from tools
     SIGNED_SOURCE_PATTERN = re.compile(
-        r''.join([r'@', r'generated', r' ', r'SignedSource', r'<<.*>>']))
+        r"".join([r"@", r"generated", r" ", r"SignedSource", r"<<.*>>"])
+    )
 
     # hide the pattern from tools
-    SIGNED_SOURCE_REPLACE_PATTERN = ''.join(
-        [r'@', r'generated', r' ', r'SignedSource', r'<<{0}>>'])
-    SIGNED_SOURCE_TOKEN = ''.join(['@', 'generated', ' ', '<<SignedSource::*O*zOeWoEQle#+L!plEphiEmie@IsG>>'])
+    SIGNED_SOURCE_REPLACE_PATTERN = "".join(
+        [r"@", r"generated", r" ", r"SignedSource", r"<<{0}>>"]
+    )
+    SIGNED_SOURCE_TOKEN = "".join(
+        ["@", "generated", " ", "<<SignedSource::*O*zOeWoEQle#+L!plEphiEmie@IsG>>"]
+    )
 
     def __init__(self, lang, mode, entries):
-        known_codegen = set([
-            y for x in CodegenProgram.SUPPORTED_CODEGEN.values()
-              for y in x.keys()])
+        known_codegen = set(
+            [y for x in CodegenProgram.SUPPORTED_CODEGEN.values() for y in x.keys()]
+        )
 
         if mode not in known_codegen:
-            raise ValueError('Unknown mode {}'.format(mode))
+            raise ValueError("Unknown mode {}".format(mode))
 
         if not Language.is_valid(lang):
-            raise ValueError('Unknown language {}'.format(lang))
+            raise ValueError("Unknown language {}".format(lang))
 
         codegen_class = CodegenProgram.SUPPORTED_CODEGEN.get(lang, {}).get(mode, None)
 
         if codegen_class is None:
-            raise ValueError('The combination (lang: {}, mode: {}) is not '
-                             'currently supported'.format(lang, mode))
+            raise ValueError(
+                "The combination (lang: {}, mode: {}) is not "
+                "currently supported".format(lang, mode)
+            )
 
         self.lang = lang
         self.mode = mode
@@ -88,8 +94,10 @@ class CodegenProgram(object):
     @staticmethod
     def sign_source(text):
 
-        in_text_pattern = CodegenProgram.SIGNED_SOURCE_REPLACE_PATTERN.format('')
-        fixed_token_text = text.replace(in_text_pattern, CodegenProgram.SIGNED_SOURCE_TOKEN)
+        in_text_pattern = CodegenProgram.SIGNED_SOURCE_REPLACE_PATTERN.format("")
+        fixed_token_text = text.replace(
+            in_text_pattern, CodegenProgram.SIGNED_SOURCE_TOKEN
+        )
 
         digest = hashlib.md5(fixed_token_text).hexdigest()
 

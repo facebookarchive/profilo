@@ -15,16 +15,16 @@ limitations under the License.
 """
 
 
-import re
 import bisect
+import re
 
 
 def indent(text):
-    return re.sub(r'^', '  ', text, flags=re.MULTILINE)
+    return re.sub(r"^", "  ", text, flags=re.MULTILINE)
 
 
 class Interval(object):
-    __slots__ = ('begin', 'end', 'data', 'children', '__children_begins')
+    __slots__ = ("begin", "end", "data", "children", "__children_begins")
 
     def __init__(self, begin, end, data=None):
         assert begin <= end

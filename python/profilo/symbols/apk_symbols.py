@@ -17,8 +17,8 @@ limitations under the License.
 
 import struct
 import sys
-import zipfile
 import tempfile
+import zipfile
 from collections import namedtuple
 
 DEX_FILE_VERSION_MAX = 38
@@ -31,29 +31,29 @@ def parse_dex_id(signature):
 
 def parse_type_signature(s):
     primitives = {
-        ord('V'): b'void',
-        ord('Z'): b'boolean',
-        ord('B'): b'byte',
-        ord('S'): b'short',
-        ord('C'): b'char',
-        ord('I'): b'int',
-        ord('J'): b'long',
-        ord('F'): b'float',
-        ord('D'): b'double',
+        ord("V"): b"void",
+        ord("Z"): b"boolean",
+        ord("B"): b"byte",
+        ord("S"): b"short",
+        ord("C"): b"char",
+        ord("I"): b"int",
+        ord("J"): b"long",
+        ord("F"): b"float",
+        ord("D"): b"double",
     }
     array_order = 0
     type_name = None
     for i, c in enumerate(s):
         if c in primitives:
             type_name = primitives[c]
-        elif c == b'[':
+        elif c == b"[":
             array_order += 1
-        elif c == ord('L'):
-            type_name = s[i + 1:-1].replace(b'/', b'.')
+        elif c == ord("L"):
+            type_name = s[i + 1 : -1].replace(b"/", b".")
             break
     try:
         type_name = type_name.decode("ascii")
-        return type_name + '[]' * array_order
+        return type_name + "[]" * array_order
     except UnicodeDecodeError:
         # Non-ASCII == garbage
         return None
@@ -67,7 +67,7 @@ def uleb128_decode(f):
     shift = 0
     while True:
         b = ord(f.read(1))
-        result |= (b & 0x7f) << shift
+        result |= (b & 0x7F) << shift
         if b & 0x80 == 0:
             break
         shift += 7
@@ -76,6 +76,7 @@ def uleb128_decode(f):
 
 class StructReader(struct.Struct):
     """Struct helper with attributes"""
+
     def __init__(self, prefix, field_spec, f=None):
         self.__fmt = prefix
         self.__indices = {}
@@ -99,45 +100,49 @@ class StructReader(struct.Struct):
             raise AttributeError(name)
 
     @classmethod
-    def get(cls, field_spec, prefix='<'):
+    def get(cls, field_spec, prefix="<"):
         return lambda f: cls(prefix, field_spec, f)
 
 
-DexHeader = StructReader.get([
-    ('dex_file_magic', '8s'),
-    ('checksum', 'I'),
-    ('signature', '20s'),
-    ('file_size', 'I'),
-    ('header_size', 'I'),
-    ('endian_tag', 'I'),
-    ('link_size', 'I'),
-    ('link_off', 'I'),
-    ('map_off', 'I'),
-    ('string_ids_size', 'I'),
-    ('string_ids_off', 'I'),
-    ('type_ids_size', 'I'),
-    ('type_ids_off', 'I'),
-    ('proto_ids_size', 'I'),
-    ('proto_ids_off', 'I'),
-    ('field_ids_size', 'I'),
-    ('field_ids_off', 'I'),
-    ('method_ids_size', 'I'),
-    ('method_ids_off', 'I'),
-    ('class_defs_size', 'I'),
-    ('class_defs_off', 'I'),
-    ('data_size', 'I'),
-    ('data_off', 'I'),
-])
+DexHeader = StructReader.get(
+    [
+        ("dex_file_magic", "8s"),
+        ("checksum", "I"),
+        ("signature", "20s"),
+        ("file_size", "I"),
+        ("header_size", "I"),
+        ("endian_tag", "I"),
+        ("link_size", "I"),
+        ("link_off", "I"),
+        ("map_off", "I"),
+        ("string_ids_size", "I"),
+        ("string_ids_off", "I"),
+        ("type_ids_size", "I"),
+        ("type_ids_off", "I"),
+        ("proto_ids_size", "I"),
+        ("proto_ids_off", "I"),
+        ("field_ids_size", "I"),
+        ("field_ids_off", "I"),
+        ("method_ids_size", "I"),
+        ("method_ids_off", "I"),
+        ("class_defs_size", "I"),
+        ("class_defs_off", "I"),
+        ("data_size", "I"),
+        ("data_off", "I"),
+    ]
+)
 
-MethodIdItem = StructReader.get([
-    ('class_idx', 'H'),
-    ('proto_idx', 'H'),
-    ('name_idx', 'I'),
-])
+MethodIdItem = StructReader.get(
+    [
+        ("class_idx", "H"),
+        ("proto_idx", "H"),
+        ("name_idx", "I"),
+    ]
+)
 
-StringIdItem = StructReader.get([('string_data_off', 'I')])
+StringIdItem = StructReader.get([("string_data_off", "I")])
 
-TypeIdItem = StructReader.get([('descriptor_idx', 'I')])
+TypeIdItem = StructReader.get([("descriptor_idx", "I")])
 
 
 class StringDataItem(object):
@@ -160,13 +165,15 @@ class Dex(object):
     def __init__(self, f):
         self.header = DexHeader(f)
         dex_version = int(self.header.dex_file_magic[4:7])
-        assert(dex_version <= DEX_FILE_VERSION_MAX)
+        assert dex_version <= DEX_FILE_VERSION_MAX
         self.dex_id = parse_dex_id(self.header.signature)
         self.bytes = self._read_bytes(f)
         self.method_ids = self._read(
-            f, self.header.method_ids_off, self.header.method_ids_size, MethodIdItem)
+            f, self.header.method_ids_off, self.header.method_ids_size, MethodIdItem
+        )
         self.type_ids = self._read(
-            f, self.header.type_ids_off, self.header.type_ids_size, TypeIdItem)
+            f, self.header.type_ids_off, self.header.type_ids_size, TypeIdItem
+        )
 
     def _read_bytes(self, f):
         offsets = []
@@ -194,15 +201,17 @@ class Dex(object):
         methods_map = {}
         for method_idx, m in self.method_ids:
             class_name = parse_type_signature(
-                self.bytes[self.type_ids[m.class_idx][1].descriptor_idx])
+                self.bytes[self.type_ids[m.class_idx][1].descriptor_idx]
+            )
             if not class_name:
                 continue
             try:
                 method_name = self.bytes[m.name_idx].decode("ascii")
             except UnicodeDecodeError:
                 continue
-            methods_map[self._global_id(method_idx)] = \
-                "{}::{}".format(class_name, method_name)
+            methods_map[self._global_id(method_idx)] = "{}::{}".format(
+                class_name, method_name
+            )
         return methods_map
 
     def get_classes_map(self):
@@ -237,24 +246,34 @@ def extract_apk_symbols(apk_path):
 
     with zipfile.ZipFile(apk_path) as apk_file:
         tempdir = tempfile.mkdtemp()
-        assert("classes.dex" in apk_file.namelist())
+        assert "classes.dex" in apk_file.namelist()
         index = 1
         dex_file_format = "classes{}.dex"
         dex_file = dex_file_format.format("")
         while dex_file in apk_file.namelist():
             dex_path = apk_file.extract(dex_file, tempdir)
-            with open(dex_path, 'rb') as dex_file:
+            with open(dex_path, "rb") as dex_file:
                 dex = Dex(dex_file)
                 class_index.update(dex.get_classes_map())
                 method_index.update(dex.get_methods_map())
             index += 1
             dex_file = dex_file_format.format(index)
 
-    return namedtuple('ApkSymbols', ['class_index', 'method_index'])(class_index, method_index)
+    return namedtuple("ApkSymbols", ["class_index", "method_index"])(
+        class_index, method_index
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import json
+
     apk_path = sys.argv[1]
     symbols = extract_apk_symbols(apk_path)
-    print(json.dumps({"class_index": symbols.class_index, "method_index": symbols.method_index, }))
+    print(
+        json.dumps(
+            {
+                "class_index": symbols.class_index,
+                "method_index": symbols.method_index,
+            }
+        )
+    )

@@ -19,7 +19,6 @@ limitations under the License.
 # @partially-generated
 
 
-
 class CounterUnit(object):
     BYTES = 0
     SECONDS = 1
@@ -43,143 +42,143 @@ class CounterUnit(object):
 
 class StackTrace(object):
     """
-  Attributes:
-   - frames
-  """
+    Attributes:
+     - frames
+    """
 
     __init__ = None
 
 
 class StackFrame(object):
     """
-  Attributes:
-   - identifier
-   - symbol
-   - codeLocation
-   - lineNumber
-  """
+    Attributes:
+     - identifier
+     - symbol
+     - codeLocation
+     - lineNumber
+    """
 
     __init__ = None
 
 
 class PathDefinition(object):
     """
-  Attributes:
-   - begin
-   - end
-   - name
-  """
+    Attributes:
+     - begin
+     - end
+     - name
+    """
 
     __init__ = None
 
 
 class CriticalPathData(object):
     """
-  Attributes:
-   - points
-   - totalCost
-   - name
-  """
+    Attributes:
+     - points
+     - totalCost
+     - name
+    """
 
     __init__ = None
 
 
 class Event(object):
     """
-  Attributes:
-   - traceID
-   - type
-   - id1
-   - id2
-   - timestamp
-   - annotations
-   - sequenceNumber
-  """
+    Attributes:
+     - traceID
+     - type
+     - id1
+     - id2
+     - timestamp
+     - annotations
+     - sequenceNumber
+    """
 
     __init__ = None
 
 
 class Properties(object):
     """
-  Attributes:
-   - coreProps
-   - customProps
-   - counterProps
-   - errors
-   - sets
-   - stacktraces
-   - stacktraceHashes
-   - stacktraceHashResolvers
-  """
+    Attributes:
+     - coreProps
+     - customProps
+     - counterProps
+     - errors
+     - sets
+     - stacktraces
+     - stacktraceHashes
+     - stacktraceHashResolvers
+    """
 
     __init__ = None
 
 
 class Point(object):
     """
-  Attributes:
-   - id
-   - timestamp: Timestamps are in units of microseconds.  This is the timestamp after clocks have been aligned
-   - unalignedTimestamp: Timestamps are in units of microseconds.  This is the original timestamp before any correction has been applied
-   - properties
-   - sequenceNumber
-  """
+    Attributes:
+     - id
+     - timestamp: Timestamps are in units of microseconds.  This is the timestamp after clocks have been aligned
+     - unalignedTimestamp: Timestamps are in units of microseconds.  This is the original timestamp before any correction has been applied
+     - properties
+     - sequenceNumber
+    """
 
     __init__ = None
 
 
 class Block(object):
     """
-  Attributes:
-   - id
-   - begin
-   - end
-   - otherPoints
-   - properties
-  """
+    Attributes:
+     - id
+     - begin
+     - end
+     - otherPoints
+     - properties
+    """
 
     __init__ = None
 
 
 class Edge(object):
     """
-  Edges express causal relationship between points: sourcePoint being the cause and targetPoint the effect.
+    Edges express causal relationship between points: sourcePoint being the cause and targetPoint the effect.
 
-  Attributes:
-   - sourcePoint
-   - targetPoint
-   - properties
-  """
+    Attributes:
+     - sourcePoint
+     - targetPoint
+     - properties
+    """
 
     __init__ = None
 
 
 class Trace(object):
     """
-  IDs for a single object type are unique within a trace.
+    IDs for a single object type are unique within a trace.
 
-  Attributes:
-   - id
-   - executionUnits
-   - blocks
-   - points
-   - version
-   - edges
-   - properties
-  """
+    Attributes:
+     - id
+     - executionUnits
+     - blocks
+     - points
+     - version
+     - edges
+     - properties
+    """
 
     __init__ = None
 
 
 class ExecutionUnit(object):
     """
-  Timestamps within a single Execution Unit are considered to be in sync.
+    Timestamps within a single Execution Unit are considered to be in sync.
 
-  Attributes:
-   - id
-   - blocks
-   - properties
-  """
+    Attributes:
+     - id
+     - blocks
+     - properties
+    """
 
     __init__ = None
 

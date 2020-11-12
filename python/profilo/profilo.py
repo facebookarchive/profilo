@@ -16,9 +16,10 @@ limitations under the License.
 
 
 import argparse
+
 from .device.device import pull_last_trace, pull_all_traces, pull_n_traces
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Profilo commandline utility!")
     subparsers = parser.add_subparsers(help="Subparsers")
 
@@ -28,7 +29,11 @@ if __name__ == '__main__':
     group.add_argument("--all", action="store_true", help="Pull all existing traces")
     group.add_argument("--count", type=int, help="Pull the last COUNT traces")
 
-    parser.add_argument("package", type=str, help="Specify the package name using Profilo, e.g. com.foo.bar")
+    parser.add_argument(
+        "package",
+        type=str,
+        help="Specify the package name using Profilo, e.g. com.foo.bar",
+    )
 
     args = parser.parse_args()
 
