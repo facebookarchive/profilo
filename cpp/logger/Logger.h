@@ -35,10 +35,10 @@ class Logger {
   const int32_t NO_MATCH = 0;
 
  public:
-  const size_t kMaxVariableLengthEntry = 1024;
+  static constexpr size_t kMaxVariableLengthEntry = 1024;
   // Start first entry shifted to allow safely adding extra entries to the trace
   // after completion.
-  static const int32_t kInitialEntryId = 512;
+  static constexpr int32_t kInitialEntryId = 512;
 
   PROFILOEXPORT static Logger& get();
 
