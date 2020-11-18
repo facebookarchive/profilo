@@ -71,8 +71,8 @@ void logMemoryMappings(JNIEnv*, jobject) {
 
     auto mappingId = logger.write(StandardEntry{
         .type = EntryType::MAPPING,
-        .tid = tid,
         .timestamp = time,
+        .tid = tid,
     });
     auto keyId = logger.writeBytes(
         EntryType::STRING_KEY,
