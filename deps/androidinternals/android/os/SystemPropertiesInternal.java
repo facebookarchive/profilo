@@ -24,6 +24,9 @@ public final class SystemPropertiesInternal {
   /** android.os.SystemProperties#get(String) */
   private static final @Nullable Method sGetEmptyDefault;
 
+  /** android.os.SystemProperties#getBoolean(String, boolean) */
+  private static final @Nullable Method sGetBoolean;
+
   /** android.os.SystemProperties#getLong(String, long) */
   private static final @Nullable Method sGetLong;
 
@@ -38,6 +41,7 @@ public final class SystemPropertiesInternal {
   private static class SystemPropertiesHiddenMembers {
     public final @Nullable Method addChangeCallback;
     public final Method getEmptyDefault;
+    public final Method getBoolean;
     public final Method getLong;
     public final Method set;
 
@@ -46,6 +50,8 @@ public final class SystemPropertiesInternal {
         final Class systemProperties = Class.forName("android.os.SystemProperties");
 
         final Method getEmptyDefault = systemProperties.getMethod("get", String.class);
+        final Method getBoolean =
+            systemProperties.getMethod("getBoolean", String.class, boolean.class);
         final Method getLong = systemProperties.getMethod("getLong", String.class, long.class);
         final Method set = systemProperties.getMethod("set", String.class, String.class);
         final Method addChangeCallback =
@@ -53,7 +59,8 @@ public final class SystemPropertiesInternal {
                 ? systemProperties.getMethod("addChangeCallback", Runnable.class)
                 : null;
 
-        return new SystemPropertiesHiddenMembers(addChangeCallback, getEmptyDefault, getLong, set);
+        return new SystemPropertiesHiddenMembers(
+            addChangeCallback, getEmptyDefault, getBoolean, getLong, set);
       } catch (ClassNotFoundException e) {
         return null;
       } catch (NoSuchMethodException e) {
@@ -64,10 +71,12 @@ public final class SystemPropertiesInternal {
     private SystemPropertiesHiddenMembers(
         final @Nullable Method addChangeCallback,
         final Method getEmptyDefault,
+        final Method getBoolean,
         final Method getLong,
         final Method set) {
       this.addChangeCallback = addChangeCallback;
       this.getEmptyDefault = getEmptyDefault;
+      this.getBoolean = getBoolean;
       this.getLong = getLong;
       this.set = set;
     }
@@ -79,12 +88,14 @@ public final class SystemPropertiesInternal {
     if (hiddenMembers != null) {
       sAddChangeCallback = hiddenMembers.addChangeCallback;
       sGetEmptyDefault = hiddenMembers.getEmptyDefault;
+      sGetBoolean = hiddenMembers.getBoolean;
       sGetLong = hiddenMembers.getLong;
       sSet = hiddenMembers.set;
       sHiddenMembersEnabled = true;
     } else {
       sAddChangeCallback = null;
       sGetEmptyDefault = null;
+      sGetBoolean = null;
       sGetLong = null;
       sSet = null;
       sHiddenMembersEnabled = false;
@@ -109,6 +120,15 @@ public final class SystemPropertiesInternal {
   public static String get(final String key, String def) {
     final String result = get(key);
     return result != null && !result.isEmpty() ? result : def;
+  }
+
+  public static boolean getBoolean(final String key, final boolean def) {
+    if (!sHiddenMembersEnabled) {
+      return def;
+    }
+
+    final Boolean booleanObj = (Boolean) invoke(sGetBoolean, key, def);
+    return booleanObj != null ? booleanObj.booleanValue() : def;
   }
 
   public static long getLong(final String key, final long def) {
