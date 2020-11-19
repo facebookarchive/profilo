@@ -36,17 +36,23 @@ MmapBufferManager::allocateBufferAnonymousForJava(int32_t buffer_size) {
 
 std::shared_ptr<Buffer> MmapBufferManager::allocateBufferAnonymous(
     int32_t buffer_size) {
+  std::shared_ptr<Buffer> buffer = nullptr;
   try {
-    buffer_ = std::make_shared<Buffer>((size_t)buffer_size);
+    buffer = std::make_shared<Buffer>((size_t)buffer_size);
   } catch (std::exception& ex) {
     FBLOGE("%s", ex.what());
     return nullptr;
   }
 
-  // Pass the buffer to the global singleton.
-  RingBuffer::init(*buffer_);
+  {
+    WriterLock lock(&buffers_lock_);
+    buffers_.push_back(buffer);
+  }
 
-  return buffer_;
+  // Pass the buffer to the global singleton.
+  RingBuffer::init(*buffer);
+
+  return buffer;
 }
 
 fbjni::local_ref<JBuffer::javaobject>
@@ -67,21 +73,27 @@ std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
     const std::string& path,
     int32_t version_code,
     int64_t config_id) {
+  std::shared_ptr<Buffer> buffer = nullptr;
   try {
-    buffer_ = std::make_shared<Buffer>(path, (size_t)buffer_size);
+    buffer = std::make_shared<Buffer>(path, (size_t)buffer_size);
   } catch (std::system_error& ex) {
     FBLOGE("%s", ex.what());
     return nullptr;
   }
 
-  buffer_->prefix->header.bufferVersion = RingBuffer::kVersion;
-  buffer_->prefix->header.size = (size_t)buffer_size;
-  buffer_->prefix->header.versionCode = version_code;
-  buffer_->prefix->header.configId = config_id;
+  buffer->prefix->header.bufferVersion = RingBuffer::kVersion;
+  buffer->prefix->header.size = (size_t)buffer_size;
+  buffer->prefix->header.versionCode = version_code;
+  buffer->prefix->header.configId = config_id;
+
+  {
+    WriterLock lock(&buffers_lock_);
+    buffers_.push_back(buffer);
+  }
 
   // Pass the buffer to the global singleton
-  RingBuffer::init(*buffer_);
-  return buffer_;
+  RingBuffer::init(*buffer);
+  return buffer;
 }
 
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
@@ -94,11 +106,20 @@ bool MmapBufferManager::deallocateBufferForJava(JBuffer* buffer) {
 }
 
 bool MmapBufferManager::deallocateBuffer(std::shared_ptr<Buffer> buffer) {
-  if (buffer_ == buffer) {
-    buffer_ = nullptr;
-    return true;
+  WriterLock lock(&buffers_lock_);
+  auto iter = std::find(buffers_.begin(), buffers_.end(), buffer);
+  if (iter == buffers_.end()) {
+    return false;
   }
-  return false;
+  buffers_.erase(iter);
+  return true;
+}
+
+void MmapBufferManager::forEachBuffer(std::function<void(Buffer&)> fn) {
+  ReaderLock lock(&buffers_lock_);
+  for (auto& buf : buffers_) {
+    fn(*buf);
+  }
 }
 
 void MmapBufferManager::registerNatives() {

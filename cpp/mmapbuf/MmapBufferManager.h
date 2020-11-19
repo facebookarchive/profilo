@@ -19,11 +19,15 @@
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
 #include <jni.h>
+#include <pthread.h>
 
+#include <linker/locks.h>
 #include <profilo/mmapbuf/Buffer.h>
 #include <profilo/mmapbuf/JBuffer.h>
+#include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace fbjni = facebook::jni;
 
@@ -66,10 +70,13 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
   bool deallocateBufferForJava(JBuffer* buffer);
   bool deallocateBuffer(std::shared_ptr<Buffer> buffer);
 
+  void forEachBuffer(std::function<void(Buffer&)> fn);
+
   static void registerNatives();
 
  private:
-  std::shared_ptr<Buffer> buffer_ = nullptr;
+  pthread_rwlock_t buffers_lock_ = PTHREAD_RWLOCK_INITIALIZER;
+  std::vector<std::shared_ptr<Buffer>> buffers_;
 
   friend class MmapBufferManagerTestAccessor;
 };

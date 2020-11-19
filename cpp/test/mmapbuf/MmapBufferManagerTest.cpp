@@ -161,6 +161,23 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
   munmap(res_mmap, expectedFileSize);
 }
 
+TEST(MmapBufferManagerTestBasics, testAllocateMultipleBuffers) {
+  MmapBufferManager manager{};
+
+  std::weak_ptr<Buffer> first_weak, second_weak;
+  first_weak = manager.allocateBufferAnonymous(100);
+  EXPECT_FALSE(first_weak.expired());
+
+  second_weak = manager.allocateBufferAnonymous(100);
+  EXPECT_FALSE(second_weak.expired());
+
+  manager.deallocateBuffer(first_weak.lock());
+  EXPECT_TRUE(first_weak.expired());
+
+  manager.deallocateBuffer(second_weak.lock());
+  EXPECT_TRUE(second_weak.expired());
+}
+
 } // namespace mmapbuf
 } // namespace profilo
 } // namespace facebook
