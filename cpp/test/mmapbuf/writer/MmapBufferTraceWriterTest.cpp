@@ -123,7 +123,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     DeltaEncodingVisitor deltaVisitor(printVisitor);
     TimestampTruncatingVisitor visitor(deltaVisitor, 6);
 
-    Logger logger([&buf]() -> PacketBuffer& { return buf; });
+    Logger logger([&buf]() -> TraceBuffer& { return buf; });
     // Write the main service entry before the main content
     auto serviceEntry = generateTraceBackwardsEntry();
     outstream.str("");
@@ -156,9 +156,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
       manager_.updateMemoryMappingFilename(
           temp_mappings_file_.path().filename().generic_string());
     }
-    TraceBufferHolder ringBuffer = TraceBuffer::allocateAt(
-        buffer_size, bufManagerAccessor.mmapBufferPointer());
-    writeRandomEntries(*ringBuffer, records_count);
+    writeRandomEntries(bufManagerAccessor.ringBuffer(), records_count);
     int msync_res = msync(
         bufManagerAccessor.mmapPointer(), bufManagerAccessor.size(), MS_SYNC);
     ASSERT_EQ(msync_res, 0)

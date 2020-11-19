@@ -24,8 +24,6 @@ namespace profilo {
 
 using TraceBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
 using TraceBufferSlot = logger::lfrb::detail::RingBufferSlot<logger::Packet>;
-using TraceBufferHolder =
-    logger::lfrb::LockFreeRingBufferHolder<logger::Packet>;
 
 } // namespace profilo
 } // namespace facebook

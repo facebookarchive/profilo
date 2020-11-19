@@ -38,6 +38,10 @@ class MmapBufferManagerTestAccessor {
     return bufferManager_.buffer_->totalByteSize;
   }
 
+  TraceBuffer& ringBuffer() {
+    return bufferManager_.buffer_->ringBuffer();
+  }
+
  private:
   MmapBufferManager& bufferManager_;
 };

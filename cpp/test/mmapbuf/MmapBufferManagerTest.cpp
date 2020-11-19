@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <climits>
 
+#include <profilo/logger/buffer/Packet.h>
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
@@ -38,6 +39,10 @@ namespace test = folly::test;
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
+
+using Packet = logger::Packet;
+
+constexpr auto kPayloadSize = sizeof(Packet::data);
 
 class MmapBufferManagerTest : public ::testing::Test {
  protected:
@@ -56,20 +61,8 @@ class MmapBufferManagerTest : public ::testing::Test {
   test::TemporaryFile temp_dump_file_;
 };
 
-const int kPayloadSize = sizeof(logger::Packet);
-
-struct __attribute__((packed)) TestPacket {
-  char payload[kPayloadSize];
-};
-
-namespace lfrb = logger::lfrb;
-
-using TestBuffer = lfrb::LockFreeRingBuffer<TestPacket>;
-using TestBufferSlot = lfrb::detail::RingBufferSlot<TestPacket>;
-using TestBufferHolder = lfrb::LockFreeRingBufferHolder<TestPacket>;
-
 uint32_t
-writeRandomEntries(TestBuffer& buf, int records_count, int buffer_size) {
+writeRandomEntries(TraceBuffer& buf, int records_count, int buffer_size) {
   // CRC is computed for the last buffer_size packets.
   auto start_crc_index = records_count - buffer_size;
   if (start_crc_index < 0) {
@@ -86,17 +79,11 @@ writeRandomEntries(TestBuffer& buf, int records_count, int buffer_size) {
     }
     crc = crc32(
         crc, reinterpret_cast<const unsigned char*>(payload), kPayloadSize);
-    alignas(4) TestPacket packet{.payload = {}};
-    std::memcpy(packet.payload, static_cast<char*>(payload), kPayloadSize);
+    alignas(4) Packet packet{.data = {}};
+    std::memcpy(packet.data, static_cast<char*>(payload), kPayloadSize);
     buf.write(packet);
   }
   return crc;
-}
-
-uint32_t calculateBufferSizeBytes(uint32_t buffer_size) {
-  const auto testBufferSize =
-      sizeof(TestBuffer) + buffer_size * sizeof(TestBufferSlot);
-  return sizeof(MmapBufferPrefix) + testBufferSize;
 }
 
 TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
@@ -108,11 +95,10 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
 
   ASSERT_EQ(res, true) << "Unable to allocate the buffer";
 
-  TestBufferHolder ringBuffer = TestBuffer::allocateAt(
-      kBufferSize, bufManagerAccessor.mmapBufferPointer());
-  auto crc = writeRandomEntries(*ringBuffer, kBufferSize, kBufferSize);
-
-  const auto expectedFileSize = calculateBufferSizeBytes(kBufferSize);
+  auto crc = writeRandomEntries(
+      bufManagerAccessor.ringBuffer(), kBufferSize, kBufferSize);
+  const auto expectedFileSize = sizeof(MmapBufferPrefix) +
+      TraceBuffer::calculateAllocationSize(kBufferSize);
 
   struct stat fileStat;
   fstat(fd(), &fileStat);
@@ -128,15 +114,16 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
 
   ASSERT_EQ(sizeRead, expectedFileSize);
 
-  char* ptr = buf + sizeof(MmapBufferPrefix) + sizeof(TestBuffer);
+  char* ptr = buf + sizeof(MmapBufferPrefix) + sizeof(TraceBuffer);
   auto crc_after = crc32(0L, Z_NULL, 0);
   for (int i = 0; i < kBufferSize; ++i) {
     crc_after = crc32(
         crc_after,
         reinterpret_cast<const unsigned char*>(
-            ptr + sizeof(lfrb::TurnSequencer<std::atomic>)),
-        sizeof(TestPacket));
-    ptr += sizeof(TestBufferSlot);
+            ptr + sizeof(logger::lfrb::TurnSequencer<std::atomic>) +
+            offsetof(Packet, data)),
+        kPayloadSize);
+    ptr += sizeof(logger::lfrb::detail::RingBufferSlot<Packet>);
   }
 
   EXPECT_EQ(crc, crc_after);
@@ -145,7 +132,8 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
 
 TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
   const auto kBufferSize = 1000;
-  const auto expectedFileSize = calculateBufferSizeBytes(kBufferSize);
+  const auto expectedFileSize = sizeof(MmapBufferPrefix) +
+      TraceBuffer::calculateAllocationSize(kBufferSize);
   void* bufAddress = nullptr;
   {
     MmapBufferManager bufManager{};

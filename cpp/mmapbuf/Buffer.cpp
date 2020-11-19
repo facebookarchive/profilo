@@ -37,8 +37,8 @@ namespace mmapbuf {
 namespace {
 
 static size_t calculateBufferSize(size_t entryCount) {
-  return sizeof(MmapBufferPrefix) + sizeof(TraceBuffer) +
-      entryCount * sizeof(TraceBufferSlot);
+  return sizeof(MmapBufferPrefix) +
+      TraceBuffer::calculateAllocationSize(entryCount);
 }
 
 } // namespace

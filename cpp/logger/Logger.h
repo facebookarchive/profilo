@@ -81,7 +81,7 @@ class Logger {
 
   // This constructor is for internal framework use.
   // Client code should use Logger::get() method instead.
-  Logger(logger::PacketBufferProvider provider, int32_t start_entry_id = 0)
+  Logger(logger::TraceBufferProvider provider, int32_t start_entry_id = 0)
       : entryID_(start_entry_id), logger_(provider) {}
 
  private:

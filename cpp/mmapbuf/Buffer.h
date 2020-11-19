@@ -62,7 +62,7 @@ struct Buffer {
 
  private:
   bool file_backed_ = false;
-  TraceBufferHolder lfrb_;
+  TraceBuffer* lfrb_;
 };
 
 namespace {
