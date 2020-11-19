@@ -1,8 +1,6 @@
 load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-PROVIDER_EXPORTED_HEADERS = ["TraceProviders.h"]
-
 fb_xplat_cxx_library(
     name = "providers",
     srcs = [
@@ -10,10 +8,9 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
-        exclude = PROVIDER_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
-    exported_headers = PROVIDER_EXPORTED_HEADERS,
+    exported_headers = ["TraceProviders.h"],
     allow_jni_merging = False,
     compiler_flags = [
         "-fexceptions",
@@ -87,10 +84,6 @@ fb_xplat_cxx_library(
     ],
 )
 
-PROFILO_EXPORTED_HEADERS = [
-    "log.h",
-] + PROVIDER_EXPORTED_HEADERS
-
 fb_xplat_cxx_library(
     name = "profilo",
     srcs = [
@@ -99,10 +92,9 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
-        exclude = PROFILO_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
-    exported_headers = PROFILO_EXPORTED_HEADERS,
+    exported_headers = ["log.h"],
     allow_jni_merging = True,
     compiler_flags = [
         "-fexceptions",
