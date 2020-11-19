@@ -94,7 +94,7 @@ fbjni::local_ref<fbjni::JString> JBuffer::getMemoryMappingFileName() {
 void JBuffer::registerNatives() {
   registerHybrid({
       makeNativeMethod("updateHeader", JBuffer::updateHeader),
-      makeNativeMethod("updateId", JBuffer::updateId),
+      makeNativeMethod("nativeUpdateId", JBuffer::updateId),
       makeNativeMethod("updateFilePath", JBuffer::updateFilePath),
       makeNativeMethod(
           "updateMemoryMappingFilename", JBuffer::updateMemoryMappingFilename),

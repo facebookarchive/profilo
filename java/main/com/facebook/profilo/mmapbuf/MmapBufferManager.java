@@ -16,7 +16,6 @@ package com.facebook.profilo.mmapbuf;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
 import com.facebook.jni.HybridData;
 import com.facebook.jni.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
@@ -81,7 +80,6 @@ public class MmapBufferManager {
       if (mmapBufferPath == null) {
         return null;
       }
-
       mBuffer = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
       return mBuffer;
     } else {
@@ -95,50 +93,6 @@ public class MmapBufferManager {
       return false;
     }
     return true; // cannot actually deallocate the buffer yet
-  }
-
-  public static void updateId(Buffer buffer, String id) {
-    if (buffer == null || buffer.getFilePath() == null) {
-      return;
-    }
-    File containingFolder = getBufferContainingFolder(buffer);
-
-    String fileName = MmapBufferFileHelper.getBufferFilename(id);
-    MmapBufferFileHelper helper = new MmapBufferFileHelper(containingFolder);
-    String filePath = helper.ensureFilePath(fileName);
-    if (filePath == null) {
-      return;
-    }
-
-    try {
-      buffer.updateId(id);
-      buffer.updateFilePath(filePath);
-    } catch (Exception ex) {
-      Log.e(LOG_TAG, "Id update failed", ex);
-    }
-  }
-
-  @Nullable
-  public static synchronized String generateMemoryMappingFilePath(Buffer buffer) {
-    if (buffer == null || buffer.getFilePath() == null) {
-      return null;
-    }
-    File containingFolder = getBufferContainingFolder(buffer);
-
-    String fileName = MmapBufferFileHelper.getMemoryMappingFilename(UUID.randomUUID().toString());
-    MmapBufferFileHelper helper = new MmapBufferFileHelper(containingFolder);
-    String filePath = helper.ensureFilePath(fileName);
-    if (filePath == null) {
-      return null;
-    }
-
-    buffer.updateMemoryMappingFilename(fileName);
-    return filePath;
-  }
-
-  private static File getBufferContainingFolder(Buffer buffer) {
-    File bufferFilePath = new File(buffer.getFilePath());
-    return bufferFilePath.getParentFile();
   }
 
   @DoNotStrip
