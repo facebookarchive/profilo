@@ -117,6 +117,13 @@ public class MmapBufferManager {
     }
   }
 
+  public synchronized boolean deallocateBuffer(Buffer buffer) {
+    if (buffer != mBuffer) {
+      return false;
+    }
+    return true; // cannot actually deallocate the buffer yet
+  }
+
   public synchronized void updateId(String id) {
     if (mBuffer == null) {
       return;
@@ -176,4 +183,7 @@ public class MmapBufferManager {
   @DoNotStrip
   @Nullable
   private native Buffer nativeAllocateBuffer(int size, String path, int buildId, long configId);
+
+  @DoNotStrip
+  private native boolean nativeDeallocateBuffer(Buffer buffer);
 }

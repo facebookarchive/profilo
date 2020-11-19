@@ -63,6 +63,9 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
       int32_t version_code,
       int64_t config_id);
 
+  bool deallocateBufferForJava(JBuffer* buffer);
+  bool deallocateBuffer(std::shared_ptr<Buffer> buffer);
+
   static void registerNatives();
 
  private:

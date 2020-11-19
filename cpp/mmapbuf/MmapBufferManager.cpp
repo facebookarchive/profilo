@@ -89,6 +89,18 @@ fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
   return makeCxxInstance();
 }
 
+bool MmapBufferManager::deallocateBufferForJava(JBuffer* buffer) {
+  return deallocateBuffer(buffer->get());
+}
+
+bool MmapBufferManager::deallocateBuffer(std::shared_ptr<Buffer> buffer) {
+  if (buffer_ == buffer) {
+    buffer_ = nullptr;
+    return true;
+  }
+  return false;
+}
+
 void MmapBufferManager::registerNatives() {
   registerHybrid({
       makeNativeMethod("initHybrid", MmapBufferManager::initHybrid),
@@ -97,6 +109,8 @@ void MmapBufferManager::registerNatives() {
       makeNativeMethod(
           "nativeAllocateBuffer",
           MmapBufferManager::allocateBufferAnonymousForJava),
+      makeNativeMethod(
+          "nativeDeallocateBuffer", MmapBufferManager::deallocateBufferForJava),
   });
 }
 
