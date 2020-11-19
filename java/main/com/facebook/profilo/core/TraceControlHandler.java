@@ -224,8 +224,10 @@ public class TraceControlHandler extends Handler {
     try {
       thread =
           new LoggerWorkerThread(
+              context.traceId,
               new NativeTraceWriter(
-                  context.buffer, context.folder.getCanonicalPath(), context.prefix, mCallbacks));
+                  context.buffer, context.folder.getCanonicalPath(), context.prefix, mCallbacks),
+              mCallbacks);
     } catch (IOException e) {
       throw new IllegalArgumentException(
           "Could not get canonical path of trace directory " + context.folder, e);

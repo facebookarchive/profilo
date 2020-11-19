@@ -26,7 +26,6 @@ import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
-import com.facebook.profilo.logger.LoggerCallbacks;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.MmapBufferManager;
 import com.facebook.profilo.mmapbuf.MmapBufferTraceListener;
@@ -52,7 +51,6 @@ public final class TraceOrchestrator
         ConfigProvider.ConfigUpdateListener,
         TraceControl.TraceControlListener,
         BackgroundUploadService.BackgroundUploadListener,
-        LoggerCallbacks,
         BaseTraceProvider.ExtraDataFileProvider {
 
   public static final String EXTRA_DATA_FOLDER_NAME = "extra";
@@ -601,6 +599,13 @@ public final class TraceOrchestrator
     uploadTrace(logFile, logFile, parent, trace.getFlags(), traceId);
   }
 
+  @Override
+  public void onTraceWriteException(long traceId, Throwable t) {
+    Log.e(TAG, "Write exception", t);
+    mListenerManager.onTraceWriteException(traceId, t);
+    onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_WRITER_EXCEPTION);
+  }
+
   private void uploadTrace(
       File logFile, File uploadFile, File parent, int traceFlags, long traceId) {
     FileManager.FileManagerStatistics fStats;
@@ -628,11 +633,6 @@ public final class TraceOrchestrator
       mFileManager.handleSuccessfulUpload(file);
     }
     mListenerManager.onUploadSuccessful(file);
-  }
-
-  @Override
-  public void onLoggerException(Throwable t) {
-    mListenerManager.onLoggerException(t);
   }
 
   @Override

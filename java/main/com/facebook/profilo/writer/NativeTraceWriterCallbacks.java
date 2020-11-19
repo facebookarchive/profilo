@@ -26,4 +26,7 @@ public interface NativeTraceWriterCallbacks {
 
   @DoNotStrip
   void onTraceWriteAbort(long traceId, int abortReason);
+
+  @DoNotStrip
+  void onTraceWriteException(long traceId, Throwable t);
 }

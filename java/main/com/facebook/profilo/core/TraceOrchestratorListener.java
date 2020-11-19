@@ -14,14 +14,11 @@
 package com.facebook.profilo.core;
 
 import com.facebook.profilo.ipc.TraceContext;
-import com.facebook.profilo.logger.LoggerCallbacks;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 
 public interface TraceOrchestratorListener
-    extends NativeTraceWriterCallbacks,
-        BackgroundUploadService.BackgroundUploadListener,
-        LoggerCallbacks {
+    extends NativeTraceWriterCallbacks, BackgroundUploadService.BackgroundUploadListener {
 
   void onTraceStart(TraceContext context);
 
