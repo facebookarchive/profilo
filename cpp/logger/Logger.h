@@ -19,7 +19,6 @@
 #include <profilo/LogEntry.h>
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryType.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 
 #include "PacketLogger.h"
 

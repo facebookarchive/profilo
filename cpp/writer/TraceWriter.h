@@ -27,7 +27,6 @@
 
 #include <profilo/LogEntry.h>
 #include <profilo/entries/EntryParser.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/Buffer.h>
 #include <profilo/writer/PacketReassembler.h>
 #include <profilo/writer/TraceCallbacks.h>

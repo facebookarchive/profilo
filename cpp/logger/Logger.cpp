@@ -21,6 +21,7 @@
 #include <cstring>
 #include <stdexcept>
 
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <util/common.h>
 
 namespace facebook {

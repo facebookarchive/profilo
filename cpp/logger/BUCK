@@ -20,7 +20,7 @@ fb_xplat_cxx_library(
     ],
     deps = [
         profilo_path("cpp:constants"),
-        profilo_path("cpp/logger/buffer:buffer"),
+        profilo_path("cpp/logger/buffer:trace_buffer"),
         profilo_path("cpp/util:util"),
     ],
     exported_deps = [
@@ -49,6 +49,7 @@ fb_xplat_cxx_library(
     ],
     force_static = True,
     labels = ["supermodule:android/default/loom.core"],
+    link_whole = True,
     tests = [
         profilo_path("cpp/test:packet_logger"),
     ],

@@ -15,7 +15,7 @@
  */
 
 #include <profilo/entries/EntryParser.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/logger/buffer/TraceBuffer.h>
 
 namespace facebook {
 namespace profilo {

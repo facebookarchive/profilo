@@ -17,7 +17,6 @@
 #pragma once
 
 #include <profilo/logger/buffer/Packet.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/buffer/TraceBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <functional>
