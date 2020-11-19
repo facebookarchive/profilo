@@ -114,11 +114,6 @@ static void refreshProviderNames(
   TraceProviders::get().initProviderNames(std::move(provider_names_vec));
 }
 
-static void initRingBuffer(JNIEnv* env, jobject cls, jint size) {
-  auto* buffer = new mmapbuf::Buffer(static_cast<size_t>(size));
-  RingBuffer::init(*buffer);
-}
-
 } // namespace profilo
 } // namespace facebook
 
@@ -150,7 +145,6 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
             makeNativeMethod(
                 "loggerWriteAndWakeupTraceWriter",
                 profilo::loggerWriteAndWakeupTraceWriter),
-            makeNativeMethod("nativeInitRingBuffer", profilo::initRingBuffer),
             makeNativeMethod("stopTraceWriter", profilo::stopTraceWriter),
         });
 

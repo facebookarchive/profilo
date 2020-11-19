@@ -147,7 +147,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
       int records_count,
       int buffer_size,
       bool set_mappings_file = false) {
-    auto buffer = manager_.allocateBuffer(buffer_size, dumpPath(), 1, 1);
+    auto buffer = manager_.allocateBufferFile(buffer_size, dumpPath(), 1, 1);
     ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
     buffer->prefix->header.providers = 0;
     buffer->prefix->header.longContext = kQplId;

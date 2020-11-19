@@ -37,16 +37,7 @@ TraceBuffer& getBuffer() {
 }
 
 void initBuffer(mmapbuf::Buffer& newBuffer) {
-  if (buffer.load() != &noop_buffer) {
-    // Already initialized
-    return;
-  }
-
-  auto expected = &noop_buffer;
-  // We expect the update succeed only once from noop_buffer to newBuffer
-  if (!buffer.compare_exchange_strong(expected, &newBuffer)) {
-    throw std::invalid_argument("Concurrent initialization of RingBuffer");
-  }
+  buffer.store(&newBuffer);
 }
 
 } // namespace

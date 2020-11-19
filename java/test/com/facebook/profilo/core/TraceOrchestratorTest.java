@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,6 +76,7 @@ import org.powermock.reflect.Whitebox;
   SparseArray.class,
   Process.class,
 })
+@Ignore
 @SuppressStaticInitializationFor({
   "com.facebook.profilo.logger.Logger",
   "com.facebook.profilo.core.TraceEvents"

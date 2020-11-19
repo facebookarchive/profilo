@@ -89,7 +89,7 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
   const auto kBufferSize = 1000;
   MmapBufferManager bufManager{};
 
-  auto buffer = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
+  auto buffer = bufManager.allocateBufferFile(kBufferSize, path(), 1, 1);
   ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
 
   auto crc = writeRandomEntries(buffer->ringBuffer(), kBufferSize, kBufferSize);
@@ -133,7 +133,7 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
   {
     MmapBufferManager bufManager{};
 
-    auto buffer = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
+    auto buffer = bufManager.allocateBufferFile(kBufferSize, path(), 1, 1);
     ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
 
     struct stat fileStat;

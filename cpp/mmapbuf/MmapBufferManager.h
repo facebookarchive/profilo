@@ -38,18 +38,26 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
 
   static fbjni::local_ref<MmapBufferManager::jhybriddata> initHybrid(
       fbjni::alias_ref<jclass>);
+  //
+  // Allocates TraceBuffer according to the passed parameters in a file.
+  // Returns a non-null reference if successful, nullptr if not.
+  //
+  std::shared_ptr<Buffer> allocateBufferAnonymous(int32_t buffer_slots_size);
+
+  fbjni::local_ref<JBuffer::javaobject> allocateBufferAnonymousForJava(
+      int32_t buffer_slots_size);
 
   //
   // Allocates TraceBuffer according to the passed parameters in a file.
-  // Returns a non-null pointer if successful.
+  // Returns a non-null reference if successful, nullptr if not.
   //
-  std::shared_ptr<Buffer> allocateBuffer(
+  std::shared_ptr<Buffer> allocateBufferFile(
       int32_t buffer_slots_size,
       const std::string& path,
       int32_t version_code,
       int64_t config_id);
 
-  fbjni::local_ref<JBuffer::javaobject> allocateBufferForJava(
+  fbjni::local_ref<JBuffer::javaobject> allocateBufferFileForJava(
       int32_t buffer_slots_size,
       const std::string& path,
       int32_t version_code,

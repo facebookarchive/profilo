@@ -220,16 +220,16 @@ public final class TraceOrchestrator
       boolean useMmapBuffer =
           mIsMainProcess
               && initialConfig.optSystemConfigParamBool("system_config.mmap_buffer", false);
+      mMmapBufferManager =
+          new MmapBufferManager(initialConfig.getID(), mFileManager.getMmapBufferFolder(), context);
       // Register hooks to trace lifecycle to control mmaped buffer.
       if (useMmapBuffer) {
-        mMmapBufferManager =
-            new MmapBufferManager(
-                initialConfig.getID(), mFileManager.getMmapBufferFolder(), context);
         addListener(new MmapBufferTraceListener(mMmapBufferManager));
       }
 
       // using process name as a unique prefix for each process
-      Logger.initialize(bufferSize, folder, mProcessName, this, this, mMmapBufferManager);
+      Logger.initialize(
+          bufferSize, folder, mProcessName, this, this, mMmapBufferManager, useMmapBuffer);
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
       performConfigTransition(initialConfig);

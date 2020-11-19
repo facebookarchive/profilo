@@ -17,6 +17,7 @@ import android.annotation.SuppressLint;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.TraceEvents;
 import com.facebook.profilo.entries.EntryType;
+import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.profilo.mmapbuf.MmapBufferManager;
 import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
@@ -46,7 +47,8 @@ public final class Logger {
   private static NativeTraceWriterCallbacks sNativeTraceWriterCallbacks;
   private static LoggerCallbacks sLoggerCallbacks;
   private static int sRingBufferSize;
-  private static @Nullable MmapBufferManager sMmapBufferManager;
+  private static MmapBufferManager sMmapBufferManager;
+  private static boolean sMmappedBuffer;
 
   public static void initialize(
       int ringBufferSize,
@@ -54,7 +56,8 @@ public final class Logger {
       String filePrefix,
       NativeTraceWriterCallbacks nativeTraceWriterCallbacks,
       LoggerCallbacks loggerCallbacks,
-      @Nullable MmapBufferManager mmapBufferManager) {
+      MmapBufferManager mmapBufferManager,
+      boolean fileBackedBuffer) {
     SoLoader.loadLibrary("profilo");
     TraceEvents.sInitialized = true;
 
@@ -66,6 +69,7 @@ public final class Logger {
     sRingBufferSize = ringBufferSize;
     sWorker = new AtomicReference<>(null);
     sMmapBufferManager = mmapBufferManager;
+    sMmappedBuffer = fileBackedBuffer;
   }
 
   public static void stopTraceWriter() {
@@ -116,15 +120,14 @@ public final class Logger {
       return;
     }
 
-    boolean useDefaultInit = true;
-    if (sMmapBufferManager != null) {
+    Buffer buffer = null;
+    if (sMmappedBuffer) {
       // If mmap buffer mode is enabled but allocation fails Ring Buffer will be initialized
       // using default initializer.
-      useDefaultInit = sMmapBufferManager.allocateBuffer(sRingBufferSize) == null;
+      buffer = sMmapBufferManager.allocateBuffer(sRingBufferSize, true);
     }
-
-    if (useDefaultInit) {
-      nativeInitRingBuffer(sRingBufferSize);
+    if (buffer == null) {
+      sMmapBufferManager.allocateBuffer(sRingBufferSize, false);
     }
 
     // Do not trigger trace writer for memory-only trace
@@ -247,6 +250,4 @@ public final class Logger {
 
     thread.start();
   }
-
-  private static native void nativeInitRingBuffer(int size);
 }

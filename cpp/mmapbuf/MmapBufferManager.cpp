@@ -29,19 +29,40 @@ namespace facebook {
 namespace profilo {
 namespace mmapbuf {
 
-fbjni::local_ref<JBuffer::javaobject> MmapBufferManager::allocateBufferForJava(
+fbjni::local_ref<JBuffer::javaobject>
+MmapBufferManager::allocateBufferAnonymousForJava(int32_t buffer_size) {
+  return JBuffer::makeJBuffer(allocateBufferAnonymous(buffer_size));
+}
+
+std::shared_ptr<Buffer> MmapBufferManager::allocateBufferAnonymous(
+    int32_t buffer_size) {
+  try {
+    buffer_ = std::make_shared<Buffer>((size_t)buffer_size);
+  } catch (std::exception& ex) {
+    FBLOGE("%s", ex.what());
+    return nullptr;
+  }
+
+  // Pass the buffer to the global singleton.
+  RingBuffer::init(*buffer_);
+
+  return buffer_;
+}
+
+fbjni::local_ref<JBuffer::javaobject>
+MmapBufferManager::allocateBufferFileForJava(
     int32_t buffer_size,
     const std::string& path,
     int32_t version_code,
     int64_t config_id) {
-  auto buffer = allocateBuffer(buffer_size, path, version_code, config_id);
+  auto buffer = allocateBufferFile(buffer_size, path, version_code, config_id);
   if (buffer == nullptr) {
     throw std::invalid_argument("Could not allocate file-backed buffer");
   }
   return JBuffer::makeJBuffer(buffer);
 }
 
-std::shared_ptr<Buffer> MmapBufferManager::allocateBuffer(
+std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
     int32_t buffer_size,
     const std::string& path,
     int32_t version_code,
@@ -77,7 +98,10 @@ void MmapBufferManager::registerNatives() {
   registerHybrid({
       makeNativeMethod("initHybrid", MmapBufferManager::initHybrid),
       makeNativeMethod(
-          "nativeAllocateBuffer", MmapBufferManager::allocateBufferForJava),
+          "nativeAllocateBuffer", MmapBufferManager::allocateBufferFileForJava),
+      makeNativeMethod(
+          "nativeAllocateBuffer",
+          MmapBufferManager::allocateBufferAnonymousForJava),
       makeNativeMethod(
           "nativeDeallocateBuffer", MmapBufferManager::deallocateBuffer),
   });

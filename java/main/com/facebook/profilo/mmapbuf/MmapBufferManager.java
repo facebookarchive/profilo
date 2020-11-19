@@ -96,20 +96,25 @@ public class MmapBufferManager {
   }
 
   @Nullable
-  public Buffer allocateBuffer(int size) {
+  public Buffer allocateBuffer(int size, boolean filebacked) {
     if (!mAllocated.compareAndSet(false, true)) {
       return mBuffer;
     }
 
-    String fileName = MmapBufferFileHelper.getBufferFilename(UUID.randomUUID().toString());
-    String mmapBufferPath = mFileHelper.ensureFilePath(fileName);
-    if (mmapBufferPath == null) {
-      return null;
-    }
-    mMmapFileName = fileName;
+    if (filebacked) {
+      String fileName = MmapBufferFileHelper.getBufferFilename(UUID.randomUUID().toString());
+      String mmapBufferPath = mFileHelper.ensureFilePath(fileName);
+      if (mmapBufferPath == null) {
+        return null;
+      }
+      mMmapFileName = fileName;
 
-    mBuffer = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
-    return mBuffer;
+      mBuffer = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
+      return mBuffer;
+    } else {
+      mBuffer = nativeAllocateBuffer(size);
+      return mBuffer;
+    }
   }
 
   public synchronized void updateId(String id) {
@@ -163,6 +168,10 @@ public class MmapBufferManager {
     }
     mBuffer.updateHeader(providers, longContext, traceId);
   }
+
+  @DoNotStrip
+  @Nullable
+  private native Buffer nativeAllocateBuffer(int size);
 
   @DoNotStrip
   @Nullable
