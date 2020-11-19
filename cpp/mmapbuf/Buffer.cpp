@@ -15,7 +15,6 @@
  */
 
 #include "Buffer.h"
-#include <profilo/logger/buffer/RingBuffer.h>
 
 #include <system_error>
 

@@ -115,7 +115,8 @@ static void refreshProviderNames(
 }
 
 static void initRingBuffer(JNIEnv* env, jobject cls, jint size) {
-  RingBuffer::init(size);
+  auto* buffer = new mmapbuf::Buffer(static_cast<size_t>(size));
+  RingBuffer::init(*buffer);
 }
 
 } // namespace profilo

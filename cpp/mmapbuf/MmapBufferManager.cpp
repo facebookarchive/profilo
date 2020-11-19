@@ -46,7 +46,7 @@ bool MmapBufferManager::allocateBuffer(
   buffer_->prefix->header.configId = config_id;
 
   // Pass the buffer to the global singleton
-  RingBuffer::init(buffer_->buffer, buffer_->entryCount);
+  RingBuffer::init(*buffer_);
 
   return true;
 }

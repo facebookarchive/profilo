@@ -141,27 +141,29 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
 
   EXPECT_EQ(crc, crc_after);
   delete[] buf;
-  bufManager.deallocateBuffer();
 }
 
 TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
   const auto kBufferSize = 1000;
-  MmapBufferManager bufManager{};
-  MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
-
-  bool res = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
-
-  ASSERT_EQ(res, true) << "Unable to allocate the buffer";
-
   const auto expectedFileSize = calculateBufferSizeBytes(kBufferSize);
-  struct stat fileStat;
-  fstat(fd(), &fileStat);
-  EXPECT_EQ(fileStat.st_size, expectedFileSize);
+  void* bufAddress = nullptr;
+  {
+    MmapBufferManager bufManager{};
+    MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
 
-  close(fd());
+    bool res = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
 
-  auto bufAddress = bufManagerAccessor.mmapPointer();
-  bufManager.deallocateBuffer();
+    ASSERT_EQ(res, true) << "Unable to allocate the buffer";
+
+    struct stat fileStat;
+    fstat(fd(), &fileStat);
+    EXPECT_EQ(fileStat.st_size, expectedFileSize);
+
+    close(fd());
+
+    bufAddress = bufManagerAccessor.mmapPointer();
+    // bufManager destructor removes the buffer
+  }
 
   void* res_mmap = mmap(
       bufAddress,

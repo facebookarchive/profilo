@@ -19,7 +19,7 @@
 #include <string>
 #include <type_traits>
 
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/logger/buffer/TraceBuffer.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
 
 namespace facebook {

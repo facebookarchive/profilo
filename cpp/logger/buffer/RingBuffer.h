@@ -16,40 +16,26 @@
 
 #pragma once
 
-#include <profilo/logger/buffer/Packet.h>
-#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
+#include <profilo/logger/buffer/TraceBuffer.h>
+#include <profilo/mmapbuf/Buffer.h>
 
 #define PROFILOEXPORT __attribute__((visibility("default")))
 
 namespace facebook {
 namespace profilo {
 
-using TraceBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
-using TraceBufferSlot = logger::lfrb::detail::RingBufferSlot<logger::Packet>;
-using TraceBufferHolder =
-    logger::lfrb::LockFreeRingBufferHolder<logger::Packet>;
-
+//
+// A holder class for the singleton ring buffer. Must be initialized
+// by passing in an instance of a Buffer, the actual implementation.
+//
 class RingBuffer {
-  static const size_t DEFAULT_SLOT_COUNT = 1000;
-
-  PROFILOEXPORT static TraceBuffer& init(TraceBufferHolder* new_buffer);
-
  public:
   constexpr static auto kVersion = 1;
 
   //
-  // sz - number of buffer slots
+  // Set the passed-in buffer as The Buffer.
   //
-  PROFILOEXPORT static TraceBuffer& init(size_t sz = DEFAULT_SLOT_COUNT);
-  //
-  // Constructs the buffer at the specified address
-  // (for example in a memory mapped file)
-  // sz - number of buffer slots
-  // ptr - pointer to where allocate the buffer
-  //
-  PROFILOEXPORT static TraceBuffer& init(
-      void* ptr,
-      size_t sz = DEFAULT_SLOT_COUNT);
+  PROFILOEXPORT static void init(mmapbuf::Buffer& newBuffer);
 
   //
   // Cleans-up current buffer and reverts back to no-op mode.
