@@ -120,7 +120,7 @@ public final class Logger {
     if (sMmapBufferManager != null) {
       // If mmap buffer mode is enabled but allocation fails Ring Buffer will be initialized
       // using default initializer.
-      useDefaultInit = !sMmapBufferManager.allocateBuffer(sRingBufferSize);
+      useDefaultInit = sMmapBufferManager.allocateBuffer(sRingBufferSize) == null;
     }
 
     if (useDefaultInit) {

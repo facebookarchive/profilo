@@ -18,6 +18,7 @@
 #include <errno.h>
 #include <cstring>
 #include <memory>
+#include <stdexcept>
 #include <system_error>
 
 #include <fb/log.h>
@@ -28,7 +29,19 @@ namespace facebook {
 namespace profilo {
 namespace mmapbuf {
 
-bool MmapBufferManager::allocateBuffer(
+fbjni::local_ref<JBuffer::javaobject> MmapBufferManager::allocateBufferForJava(
+    int32_t buffer_size,
+    const std::string& path,
+    int32_t version_code,
+    int64_t config_id) {
+  auto buffer = allocateBuffer(buffer_size, path, version_code, config_id);
+  if (buffer == nullptr) {
+    throw std::invalid_argument("Could not allocate file-backed buffer");
+  }
+  return JBuffer::makeJBuffer(buffer);
+}
+
+std::shared_ptr<Buffer> MmapBufferManager::allocateBuffer(
     int32_t buffer_size,
     const std::string& path,
     int32_t version_code,
@@ -37,7 +50,7 @@ bool MmapBufferManager::allocateBuffer(
     buffer_ = std::make_shared<Buffer>(path, (size_t)buffer_size);
   } catch (std::system_error& ex) {
     FBLOGE("%s", ex.what());
-    return false;
+    return nullptr;
   }
 
   buffer_->prefix->header.bufferVersion = RingBuffer::kVersion;
@@ -47,8 +60,7 @@ bool MmapBufferManager::allocateBuffer(
 
   // Pass the buffer to the global singleton
   RingBuffer::init(*buffer_);
-
-  return true;
+  return buffer_;
 }
 
 void MmapBufferManager::deallocateBuffer() {
@@ -108,7 +120,7 @@ void MmapBufferManager::registerNatives() {
   registerHybrid({
       makeNativeMethod("initHybrid", MmapBufferManager::initHybrid),
       makeNativeMethod(
-          "nativeAllocateBuffer", MmapBufferManager::allocateBuffer),
+          "nativeAllocateBuffer", MmapBufferManager::allocateBufferForJava),
       makeNativeMethod(
           "nativeDeallocateBuffer", MmapBufferManager::deallocateBuffer),
       makeNativeMethod("nativeUpdateHeader", MmapBufferManager::updateHeader),

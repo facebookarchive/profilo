@@ -17,7 +17,6 @@
 #include <profilo/entries/Entry.h>
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
-#include <profilo/mmapbuf/MmapBufferManagerTestAccessor.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
 #include <profilo/mmapbuf/writer/MmapBufferTraceWriter.h>
 #include <profilo/writer/DeltaEncodingVisitor.h>
@@ -147,18 +146,20 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
       int records_count,
       int buffer_size,
       bool set_mappings_file = false) {
-    MmapBufferManagerTestAccessor bufManagerAccessor(manager_);
-    bool res = manager_.allocateBuffer(buffer_size, dumpPath(), 1, 1);
-    ASSERT_EQ(res, true) << "Unable to allocate the buffer";
-    manager_.updateHeader(0, kQplId, kTraceId);
-    manager_.updateId("272c3f80-f076-5a89-e265-60dcf407373b");
+    auto buffer = manager_.allocateBuffer(buffer_size, dumpPath(), 1, 1);
+    ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
+    buffer->prefix->header.providers = 0;
+    buffer->prefix->header.longContext = kQplId;
+    buffer->prefix->header.traceId = kTraceId;
     if (set_mappings_file) {
-      manager_.updateMemoryMappingFilename(
-          temp_mappings_file_.path().filename().generic_string());
+      auto path = temp_mappings_file_.path().filename().generic_string();
+      auto sz = std::min(
+          path.size(), sizeof(buffer->prefix->header.memoryMapsFilename) - 1);
+      ::memcpy(buffer->prefix->header.memoryMapsFilename, path.c_str(), sz);
+      buffer->prefix->header.memoryMapsFilename[sz] = 0;
     }
-    writeRandomEntries(bufManagerAccessor.ringBuffer(), records_count);
-    int msync_res = msync(
-        bufManagerAccessor.mmapPointer(), bufManagerAccessor.size(), MS_SYNC);
+    writeRandomEntries(buffer->ringBuffer(), records_count);
+    int msync_res = msync(buffer->prefix, buffer->totalByteSize, MS_SYNC);
     ASSERT_EQ(msync_res, 0)
         << "Unable to msync the buffer: " << strerror(errno);
   }

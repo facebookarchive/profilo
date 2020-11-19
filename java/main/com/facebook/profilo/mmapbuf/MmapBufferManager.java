@@ -45,7 +45,7 @@ public class MmapBufferManager {
   private final Context mContext;
   private final long mConfigId;
   private AtomicBoolean mAllocated;
-  private AtomicBoolean mEnabled;
+  private @Nullable Buffer mBuffer;
 
   @DoNotStrip
   private static native HybridData initHybrid();
@@ -54,7 +54,6 @@ public class MmapBufferManager {
     mConfigId = configId;
     mContext = context;
     mAllocated = new AtomicBoolean(false);
-    mEnabled = new AtomicBoolean(false);
     mFileHelper = new MmapBufferFileHelper(folder);
     mHybridData = initHybrid();
   }
@@ -76,7 +75,7 @@ public class MmapBufferManager {
   }
 
   public boolean isEnabled() {
-    return mEnabled.get();
+    return mBuffer != null;
   }
 
   private int getVersionCode() {
@@ -96,25 +95,25 @@ public class MmapBufferManager {
     return pi.versionCode;
   }
 
-  public boolean allocateBuffer(int size) {
+  @Nullable
+  public Buffer allocateBuffer(int size) {
     if (!mAllocated.compareAndSet(false, true)) {
-      return false;
+      return mBuffer;
     }
 
     String fileName = MmapBufferFileHelper.getBufferFilename(UUID.randomUUID().toString());
     String mmapBufferPath = mFileHelper.ensureFilePath(fileName);
     if (mmapBufferPath == null) {
-      return false;
+      return null;
     }
     mMmapFileName = fileName;
 
-    boolean res = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
-    mEnabled.set(res);
-    return res;
+    mBuffer = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
+    return mBuffer;
   }
 
   public synchronized void updateId(String id) {
-    if (!mEnabled.get()) {
+    if (mBuffer == null) {
       return;
     }
     if (id.equals(mId)) {
@@ -139,7 +138,7 @@ public class MmapBufferManager {
 
   @Nullable
   public synchronized String generateMemoryMappingFilePath() {
-    if (!mEnabled.get()) {
+    if (mBuffer == null) {
       return null;
     }
     if (mMemoryMappingsFile != null) {
@@ -159,7 +158,8 @@ public class MmapBufferManager {
   }
 
   @DoNotStrip
-  private native boolean nativeAllocateBuffer(int size, String path, int buildId, long configId);
+  @Nullable
+  private native Buffer nativeAllocateBuffer(int size, String path, int buildId, long configId);
 
   @DoNotStrip
   public native void nativeUpdateHeader(int providers, long longContext, long traceId);

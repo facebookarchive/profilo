@@ -21,6 +21,7 @@
 #include <jni.h>
 
 #include <profilo/mmapbuf/Buffer.h>
+#include <profilo/mmapbuf/JBuffer.h>
 #include <memory>
 #include <string>
 
@@ -40,9 +41,15 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
 
   //
   // Allocates TraceBuffer according to the passed parameters in a file.
-  // Returns true if the buffer was allocated and false otherwise.
+  // Returns a non-null pointer if successful.
   //
-  bool allocateBuffer(
+  std::shared_ptr<Buffer> allocateBuffer(
+      int32_t buffer_slots_size,
+      const std::string& path,
+      int32_t version_code,
+      int64_t config_id);
+
+  fbjni::local_ref<JBuffer::javaobject> allocateBufferForJava(
       int32_t buffer_slots_size,
       const std::string& path,
       int32_t version_code,

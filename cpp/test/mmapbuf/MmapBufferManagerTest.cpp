@@ -28,7 +28,6 @@
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
-#include <profilo/mmapbuf/MmapBufferManagerTestAccessor.h>
 #include <util/common.h>
 
 #include <zlib.h>
@@ -89,14 +88,11 @@ writeRandomEntries(TraceBuffer& buf, int records_count, int buffer_size) {
 TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
   const auto kBufferSize = 1000;
   MmapBufferManager bufManager{};
-  MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
 
-  bool res = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
+  auto buffer = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
+  ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
 
-  ASSERT_EQ(res, true) << "Unable to allocate the buffer";
-
-  auto crc = writeRandomEntries(
-      bufManagerAccessor.ringBuffer(), kBufferSize, kBufferSize);
+  auto crc = writeRandomEntries(buffer->ringBuffer(), kBufferSize, kBufferSize);
   const auto expectedFileSize = sizeof(MmapBufferPrefix) +
       TraceBuffer::calculateAllocationSize(kBufferSize);
 
@@ -105,8 +101,7 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
 
   EXPECT_EQ(fileStat.st_size, expectedFileSize);
 
-  int msync_res =
-      msync(bufManagerAccessor.mmapPointer(), expectedFileSize, MS_SYNC);
+  int msync_res = msync(buffer->prefix, expectedFileSize, MS_SYNC);
   ASSERT_EQ(msync_res, 0) << "Unable to msync the buffer: " << strerror(errno);
 
   char* buf = new char[expectedFileSize];
@@ -137,11 +132,9 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
   void* bufAddress = nullptr;
   {
     MmapBufferManager bufManager{};
-    MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
 
-    bool res = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
-
-    ASSERT_EQ(res, true) << "Unable to allocate the buffer";
+    auto buffer = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
+    ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
 
     struct stat fileStat;
     fstat(fd(), &fileStat);
@@ -149,7 +142,7 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
 
     close(fd());
 
-    bufAddress = bufManagerAccessor.mmapPointer();
+    bufAddress = buffer->prefix;
     // bufManager destructor removes the buffer
   }
 
