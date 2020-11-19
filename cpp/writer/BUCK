@@ -139,12 +139,10 @@ fb_xplat_cxx_library(
 fb_xplat_cxx_library(
     name = "writer",
     srcs = [
-        "MultiTraceLifecycleVisitor.cpp",
         "TraceLifecycleVisitor.cpp",
         "TraceWriter.cpp",
     ],
     headers = [
-        "MultiTraceLifecycleVisitor.h",
         "ScopedThreadPriority.h",
         "TraceLifecycleVisitor.h",
     ],

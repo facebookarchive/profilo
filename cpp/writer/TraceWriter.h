@@ -73,7 +73,7 @@ class TraceWriter {
   // with this method on a single Writer (and Buffer) instance, but not both.
   // Mixed mode usage is not safe.
   //
-  std::unordered_set<int64_t> processTrace(TraceBuffer::Cursor& cursor);
+  int64_t processTrace(int64_t trace_id, TraceBuffer::Cursor& cursor);
 
   //
   // Submit a trace ID for processing. Walk will start from `cursor`.
@@ -94,7 +94,8 @@ class TraceWriter {
  private:
   std::mutex wakeup_mutex_;
   std::condition_variable wakeup_cv_;
-  std::queue<std::pair<TraceBuffer::Cursor, int64_t>> wakeup_trace_ids_;
+  std::unique_ptr<std::pair<TraceBuffer::Cursor, int64_t>> wakeup_trace_id_;
+  bool stop_requested_;
 
   const std::string trace_folder_;
   const std::string trace_prefix_;

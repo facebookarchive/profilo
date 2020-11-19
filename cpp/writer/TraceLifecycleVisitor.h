@@ -18,6 +18,7 @@
 
 #include <errno.h>
 #include <deque>
+#include <functional>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -48,7 +49,9 @@ class TraceLifecycleVisitor : public EntryVisitor {
       const std::string& trace_prefix,
       std::shared_ptr<TraceCallbacks> callbacks,
       const std::vector<std::pair<std::string, std::string>>& headers,
-      int64_t trace_id);
+      int64_t trace_id,
+      std::function<void(TraceLifecycleVisitor& visitor)>
+          trace_backward_callback = nullptr);
 
   virtual void visit(const StandardEntry& entry) override;
   virtual void visit(const FramesEntry& entry) override;
@@ -58,6 +61,10 @@ class TraceLifecycleVisitor : public EntryVisitor {
 
   inline bool done() const {
     return done_;
+  }
+
+  inline int64_t getTraceID() const {
+    return expected_trace_;
   }
 
  private:
@@ -70,8 +77,10 @@ class TraceLifecycleVisitor : public EntryVisitor {
   std::deque<std::unique_ptr<EntryVisitor>> delegates_;
   int64_t expected_trace_;
   std::shared_ptr<TraceCallbacks> callbacks_;
+  bool started_;
   bool done_;
   std::unique_ptr<ScopedThreadPriority> thread_priority_;
+  std::function<void(TraceLifecycleVisitor& visitor)> trace_backward_callback_;
 
   inline bool hasDelegate() {
     return !delegates_.empty();

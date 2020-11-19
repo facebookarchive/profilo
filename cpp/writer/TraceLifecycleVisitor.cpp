@@ -37,7 +37,7 @@ using namespace facebook::profilo::entries;
 
 namespace {
 
-std::string getTraceID(int64_t trace_id) {
+std::string getTraceIDAsString(int64_t trace_id) {
   const char* kBase64Alphabet =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
       "abcdefghijklmnopqrstuvwxyz"
@@ -108,7 +108,8 @@ TraceLifecycleVisitor::TraceLifecycleVisitor(
     const std::string& trace_prefix,
     std::shared_ptr<TraceCallbacks> callbacks,
     const std::vector<std::pair<std::string, std::string>>& headers,
-    int64_t trace_id)
+    int64_t trace_id,
+    std::function<void(TraceLifecycleVisitor& visitor)> trace_backward_callback)
     :
 
       folder_(folder),
@@ -118,7 +119,9 @@ TraceLifecycleVisitor::TraceLifecycleVisitor(
       delegates_(),
       expected_trace_(trace_id),
       callbacks_(callbacks),
-      done_(false) {}
+      started_(false),
+      done_(false),
+      trace_backward_callback_(std::move(trace_backward_callback)) {}
 
 void TraceLifecycleVisitor::visit(const StandardEntry& entry) {
   auto type = static_cast<EntryType>(entry.type);
@@ -154,9 +157,17 @@ void TraceLifecycleVisitor::visit(const StandardEntry& entry) {
     }
     case EntryType::TRACE_BACKWARDS:
     case EntryType::TRACE_START: {
-      onTraceStart(entry.extra, entry.matchid);
+      int64_t trace_id = entry.extra;
+      if (trace_id != expected_trace_) {
+        return;
+      }
+      onTraceStart(trace_id, entry.matchid);
       if (hasDelegate()) {
         delegates_.back()->visit(entry);
+      }
+
+      if (type == EntryType::TRACE_BACKWARDS) {
+        trace_backward_callback_(*this);
       }
       break;
     }
@@ -194,10 +205,6 @@ void TraceLifecycleVisitor::abort(AbortReason reason) {
 }
 
 void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
-  if (trace_id != expected_trace_) {
-    return;
-  }
-
   if (output_ != nullptr) {
     // active trace with same ID, abort
     abort(AbortReason::NEW_START);
@@ -205,7 +212,7 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
   }
 
   std::stringstream path_stream;
-  std::string trace_id_string = getTraceID(trace_id);
+  std::string trace_id_string = getTraceIDAsString(trace_id);
   path_stream << folder_ << '/' << sanitize(trace_id_string);
 
   //
@@ -270,13 +277,14 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
     callbacks_->onTraceStart(trace_id, flags, trace_file);
   }
 
+  started_ = true;
   done_ = false;
 }
 
 void TraceLifecycleVisitor::onTraceAbort(int64_t trace_id, AbortReason reason) {
   done_ = true;
   cleanupState();
-  if (callbacks_.get() != nullptr) {
+  if (started_ && callbacks_.get() != nullptr) {
     callbacks_->onTraceAbort(trace_id, reason);
   }
 }
@@ -284,7 +292,7 @@ void TraceLifecycleVisitor::onTraceAbort(int64_t trace_id, AbortReason reason) {
 void TraceLifecycleVisitor::onTraceEnd(int64_t trace_id) {
   done_ = true;
   cleanupState();
-  if (callbacks_.get() != nullptr) {
+  if (started_ && callbacks_.get() != nullptr) {
     callbacks_->onTraceEnd(trace_id);
   }
 }
@@ -292,9 +300,11 @@ void TraceLifecycleVisitor::onTraceEnd(int64_t trace_id) {
 void TraceLifecycleVisitor::cleanupState() {
   delegates_.clear();
   thread_priority_ = nullptr;
-  output_->flush();
-  output_->close();
-  output_ = nullptr;
+  if (output_) {
+    output_->flush();
+    output_->close();
+    output_ = nullptr;
+  }
 }
 
 void TraceLifecycleVisitor::writeHeaders(std::ostream& output, std::string id) {

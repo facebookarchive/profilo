@@ -343,7 +343,7 @@ int64_t MmapBufferTraceWriter::writeTrace(
       calculateHeaders());
 
   try {
-    writer.processTrace(startCursor);
+    writer.processTrace(trace_id, startCursor);
   } catch (std::exception& e) {
     FBLOGE("Error during dump processing: %s", e.what());
     callbacks_->onTraceAbort(trace_id, AbortReason::UNKNOWN);

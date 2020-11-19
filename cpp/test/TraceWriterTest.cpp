@@ -46,7 +46,6 @@ namespace facebook {
 namespace profilo {
 
 const int64_t kTraceID = 1;
-const int64_t kSecondTraceID = 2;
 const char* kTraceIDString = "AAAAAAAAAAB";
 const char* kTracePrefix = "test-prefix";
 
@@ -203,7 +202,6 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   EXPECT_EQ(getFileCount(), 1) << "There should be only one real file.";
@@ -235,7 +233,6 @@ TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorPastStart, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   EXPECT_EQ(getFileCount(), 0);
@@ -253,7 +250,6 @@ TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorAtTraceStart, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   EXPECT_EQ(getFileCount(), 0);
@@ -268,7 +264,6 @@ void TraceWriterTest::testNoTraceStartCursorAtTail(
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorAtBeginning, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   //
@@ -296,7 +291,6 @@ TEST_F(TraceWriterTest, testHeadersPropagateToFile) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   auto trace = getOnlyTraceFileContents();
@@ -315,7 +309,6 @@ void TraceWriterTest::testCallbackCalls(std::function<void()> expectations) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(buffer_start, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 }
 
@@ -356,83 +349,6 @@ TEST_F(TraceWriterTest, testCallbacksMissedStart) {
       writeFillerEvent();
     }
   });
-}
-
-TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing) {
-  using ::testing::_;
-
-  auto buffer_start = buffer_->ringBuffer().currentHead();
-
-  EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
-
-  auto thread = std::thread([&] { writer_.loop(); });
-
-  writeTraceStart(kTraceID);
-  writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_->ringBuffer().currentHead();
-  writeTraceStart(kSecondTraceID);
-  writer_.submit(buffer_start, kSecondTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
-
-  writeTraceEnd(kTraceID);
-  writeTraceEnd(kSecondTraceID);
-
-  thread.join();
-}
-
-TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing2) {
-  using ::testing::_;
-
-  auto buffer_start = buffer_->ringBuffer().currentHead();
-
-  EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
-
-  auto thread = std::thread([&] { writer_.loop(); });
-
-  writeTraceStart(kTraceID);
-  writeTraceEnd(kTraceID);
-  writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_->ringBuffer().currentHead();
-  writeTraceStart(kSecondTraceID);
-  writeTraceEnd(kSecondTraceID);
-  writer_.submit(buffer_start, kSecondTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
-
-  thread.join();
-}
-
-TEST_F(TraceWriterTest, testCallbacksMultiTracingAbort) {
-  using ::testing::_;
-
-  auto buffer_start = buffer_->ringBuffer().currentHead();
-
-  EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(0);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceAbort(kSecondTraceID, _)).Times(0);
-  EXPECT_CALL(*callbacks_, onTraceAbort(kTraceID, _)).Times(1);
-
-  auto thread = std::thread([&] { writer_.loop(); });
-
-  writeTraceStart(kTraceID);
-  writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_->ringBuffer().currentHead();
-  writeTraceStart(kSecondTraceID);
-  writeTraceAbort(kTraceID);
-  writeTraceEnd(kSecondTraceID);
-  writer_.submit(buffer_start, kSecondTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
-
-  thread.join();
 }
 
 } // namespace profilo
