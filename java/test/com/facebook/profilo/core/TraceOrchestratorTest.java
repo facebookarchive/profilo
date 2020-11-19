@@ -17,7 +17,6 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.never;
@@ -27,7 +26,6 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
@@ -79,7 +77,8 @@ import org.powermock.reflect.Whitebox;
 @Ignore
 @SuppressStaticInitializationFor({
   "com.facebook.profilo.logger.Logger",
-  "com.facebook.profilo.core.TraceEvents"
+  "com.facebook.profilo.core.TraceEvents",
+  "com.facebook.profilo.mmapbuf.Buffer"
 })
 public class TraceOrchestratorTest extends PowerMockTest {
 
@@ -179,7 +178,10 @@ public class TraceOrchestratorTest extends PowerMockTest {
             DEFAULT_TRACING_PROVIDERS,
             1, // flags
             0,
-            TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY,
+            /*buffer*/ null,
+            new File("."),
+            "prefix-");
     mSecondTraceContext =
         new TraceContext(
             0xFACEB000, // traceId
@@ -192,7 +194,10 @@ public class TraceOrchestratorTest extends PowerMockTest {
             SECOND_TRACE_TRACING_PROVIDERS,
             1, // flags
             0,
-            TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY,
+            /*buffer*/ null,
+            new File("."),
+            "prefix-"); // mTraceConfigExtras
 
     whenNew(SparseArray.class)
         .withAnyArguments()
@@ -264,15 +269,6 @@ public class TraceOrchestratorTest extends PowerMockTest {
         .uploadInBackgroundSkipChecks(
             same(tracesListSkipChecks),
             any(BackgroundUploadService.BackgroundUploadListener.class));
-  }
-
-  @Test
-  public void testInitialBindInstallsProviders() {
-    verifyStatic(TraceControl.class);
-    //noinspection unchecked
-    TraceControl.initialize(notNull(SparseArray.class), same(mOrchestrator), notNull(Config.class));
-
-    assertThat(TraceEvents.isEnabled(DEFAULT_TRACING_PROVIDERS)).isFalse();
   }
 
   @Test
@@ -489,7 +485,10 @@ public class TraceOrchestratorTest extends PowerMockTest {
             DEFAULT_TRACING_PROVIDERS,
             1, // flags
             1,
-            TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY,
+            /*buffer*/ null,
+            new File("."),
+            "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStartSync(anotherContext);
     mOrchestrator.onTraceStartAsync(anotherContext);
     verify(mBaseTraceProvider, never()).disable();
@@ -520,7 +519,10 @@ public class TraceOrchestratorTest extends PowerMockTest {
             enabledProvidersMask, // enabled providers mask
             1,
             0,
-            TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY,
+            /*buffer*/ null,
+            new File("."),
+            "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -570,7 +572,10 @@ public class TraceOrchestratorTest extends PowerMockTest {
             enabledProvidersMask, // enabled providers mask
             1,
             0,
-            TraceConfigExtras.EMPTY); // mTraceConfigExtras
+            TraceConfigExtras.EMPTY,
+            /*buffer*/ null,
+            new File("."),
+            "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);

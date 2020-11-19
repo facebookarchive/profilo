@@ -70,8 +70,6 @@ public final class TraceOrchestrator
   public static final String MAIN_PROCESS_NAME = "main";
 
   private static final String TAG = "Profilo/TraceOrchestrator";
-  private static final int RING_BUFFER_SIZE_MAIN_PROCESS = 5000;
-  private static final int RING_BUFFER_SIZE_SECONDARY_PROCESS = 1000;
   private boolean mHasReadFromBridge = false;
 
   @GuardedBy("mTraces")
@@ -201,21 +199,9 @@ public final class TraceOrchestrator
       }
     }
 
-    // Install the available TraceControllers
-    TraceControl.initialize(controllers, this, initialConfig);
-
     File folder;
     synchronized (this) {
       folder = mFileManager.getFolder();
-
-      int bufferSize;
-      if (mIsMainProcess) {
-        bufferSize =
-            initialConfig.optSystemConfigParamInt(
-                "system_config.buffer_size", RING_BUFFER_SIZE_MAIN_PROCESS);
-      } else {
-        bufferSize = RING_BUFFER_SIZE_SECONDARY_PROCESS;
-      }
 
       boolean useMmapBuffer =
           mIsMainProcess
@@ -227,9 +213,11 @@ public final class TraceOrchestrator
         addListener(new MmapBufferTraceListener(mMmapBufferManager));
       }
 
-      // using process name as a unique prefix for each process
-      Logger.initialize(
-          bufferSize, folder, mProcessName, this, this, mMmapBufferManager, useMmapBuffer);
+      // process name is passed as the trace prefix
+      TraceControl.initialize(
+          controllers, this, initialConfig, mMmapBufferManager, folder, mProcessName, this);
+
+      Logger.initialize();
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
       performConfigTransition(initialConfig);
@@ -413,12 +401,13 @@ public final class TraceOrchestrator
   /** Asynchronous portion of trace start. Should include non-critical code for Trace startup. */
   @Override
   public void onTraceStartAsync(TraceContext context) {
-    mListenerManager.onTraceStart(context);
-
     BaseTraceProvider[] providers;
     synchronized (this) {
       providers = mNormalTraceProviders;
     }
+
+    mListenerManager.onTraceStart(context);
+
     for (BaseTraceProvider provider : providers) {
       provider.onEnable(context, this);
     }

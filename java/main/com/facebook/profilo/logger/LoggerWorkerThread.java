@@ -17,13 +17,17 @@ import android.os.Process;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.writer.NativeTraceWriter;
 
-class LoggerWorkerThread extends Thread {
+public class LoggerWorkerThread extends Thread {
 
   private final NativeTraceWriter mTraceWriter;
 
-  LoggerWorkerThread(NativeTraceWriter writer) {
+  public LoggerWorkerThread(NativeTraceWriter writer) {
     super("Prflo:Logger");
     mTraceWriter = writer;
+  }
+
+  public NativeTraceWriter getTraceWriter() {
+    return mTraceWriter;
   }
 
   public void run() {

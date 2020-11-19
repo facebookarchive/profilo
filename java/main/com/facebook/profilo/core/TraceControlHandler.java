@@ -20,9 +20,14 @@ import android.os.Message;
 import android.util.Log;
 import com.facebook.androidinternals.android.os.SystemPropertiesInternal;
 import com.facebook.common.build.BuildConstants;
+import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
+import com.facebook.profilo.logger.LoggerWorkerThread;
 import com.facebook.profilo.logger.Trace;
+import com.facebook.profilo.writer.NativeTraceWriter;
+import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Random;
 import javax.annotation.Nullable;
@@ -65,6 +70,8 @@ public class TraceControlHandler extends Handler {
   @GuardedBy("this")
   private final @Nullable TraceControl.TraceControlListener mListener;
 
+  private final NativeTraceWriterCallbacks mCallbacks;
+
   @GuardedBy("this")
   private final HashSet<Long> mTraceContexts;
 
@@ -80,9 +87,13 @@ public class TraceControlHandler extends Handler {
             || "debug".equals(SystemPropertiesInternal.get(PROFILO_LOG_LEVEL_SYSTEM_PROPERTY));
   }
 
-  public TraceControlHandler(@Nullable TraceControl.TraceControlListener listener, Looper looper) {
+  public TraceControlHandler(
+      @Nullable TraceControl.TraceControlListener listener,
+      Looper looper,
+      NativeTraceWriterCallbacks callbacks) {
     super(looper);
     mListener = listener;
+    mCallbacks = callbacks;
     mTraceContexts = new HashSet<>();
     mTraceConditionManager = new TraceConditionManager();
     mRandom = new Random();
@@ -130,9 +141,20 @@ public class TraceControlHandler extends Handler {
     removeMessages(MSG_TIMEOUT_TRACE, context);
 
     if ((context.flags & Trace.FLAG_MEMORY_ONLY) != 0) {
+      // In-memory trace, write the log priority then tell
+      // the worker thread to read backwards.
+
+      if (context.workerThread == null) {
+        throw new IllegalStateException("Trace stopped but never started");
+      }
+
+      context.workerThread.start();
+      writeLoggerPriority(context);
+
       // For in-memory trace everything in the tracing buffer trace is started and then immediately
       // stopped after dumping the contents of the buffer.
-      Logger.postCreateBackwardTrace(context.traceId, context.flags);
+      Logger.postCreateBackwardTrace(
+          context.workerThread.getTraceWriter(), context.buffer, context.traceId, context.flags);
     }
 
     // Schedule an optionally delayed *actual* end of the trace
@@ -198,9 +220,53 @@ public class TraceControlHandler extends Handler {
           LOG_TAG,
           "Started trace " + context.encodedTraceId + "  for controller " + context.controller);
     }
+    LoggerWorkerThread thread;
+    try {
+      thread =
+          new LoggerWorkerThread(
+              new NativeTraceWriter(
+                  context.buffer, context.folder.getCanonicalPath(), context.prefix, mCallbacks));
+    } catch (IOException e) {
+      throw new IllegalArgumentException(
+          "Could not get canonical path of trace directory " + context.folder, e);
+    }
+    context.workerThread = thread;
+
+    if ((context.flags & Trace.FLAG_MEMORY_ONLY) == 0) {
+      // Normal trace, start the thread now.
+      // For in-memory traces, see stopTrace.
+      thread.start();
+
+      Logger.postCreateTrace(
+          thread.getTraceWriter(),
+          context.buffer,
+          context.traceId,
+          context.flags,
+          TraceControl.getTimeoutFromContext(context));
+
+      writeLoggerPriority(context);
+    }
+
     if (mListener != null) {
       mListener.onTraceStartAsync(context);
     }
+  }
+
+  private void writeLoggerPriority(TraceContext context) {
+    int logger_priority =
+        context.mTraceConfigExtras.getIntParam(
+            ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY,
+            ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
+
+    Logger.writeStandardEntry(
+        ProfiloConstants.NONE,
+        Logger.FILL_TID | Logger.FILL_TIMESTAMP | Logger.SKIP_PROVIDER_CHECK,
+        EntryType.LOGGER_PRIORITY,
+        0,
+        0,
+        logger_priority,
+        0,
+        context.traceId);
   }
 
   public synchronized void processMarkerStop(TraceContext context, final int eventDuration) {

@@ -27,6 +27,7 @@
 #include <profilo/Logger.h>
 #include <profilo/jni/NativeTraceWriter.h>
 #include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/mmapbuf/JBuffer.h>
 #include <util/common.h>
 #include "TraceProviders.h"
 
@@ -45,6 +46,7 @@ const char* LoggerType = "com/facebook/profilo/logger/Logger";
 static jint loggerWriteAndWakeupTraceWriter(
     fbjni::alias_ref<jobject> cls,
     writer::NativeTraceWriter* writer,
+    mmapbuf::JBuffer* jbuffer,
     jlong traceId,
     jint type,
     jint arg1,
@@ -58,7 +60,11 @@ static jint loggerWriteAndWakeupTraceWriter(
   // We know the buffer is initialized, NativeTraceWriter is already using it.
   // Also, currentTail is only used because Cursor is not default constructible.
   //
-  TraceBuffer::Cursor cursor = RingBuffer::get().currentTail();
+  auto buffer = jbuffer->get();
+  if (buffer == nullptr) {
+    throw std::invalid_argument("buffer is null");
+  }
+  TraceBuffer::Cursor cursor = buffer->ringBuffer().currentTail();
   jint id = Logger::get().writeAndGetCursor(
       StandardEntry{
           .id = 0,
@@ -73,17 +79,6 @@ static jint loggerWriteAndWakeupTraceWriter(
 
   writer->submit(cursor, traceId);
   return id;
-}
-
-static void stopTraceWriter(
-    fbjni::alias_ref<jobject> cls,
-    writer::NativeTraceWriter* writer) {
-  if (writer == nullptr) {
-    throw std::invalid_argument("writer cannot be null (teardown)");
-  }
-
-  TraceBuffer::Cursor cursor = RingBuffer::get().currentTail();
-  writer->submit(cursor, writer::TraceWriter::kStopLoopTraceID);
 }
 
 static jint enableProviders(JNIEnv* env, jobject cls, jint providers) {
@@ -145,7 +140,6 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
             makeNativeMethod(
                 "loggerWriteAndWakeupTraceWriter",
                 profilo::loggerWriteAndWakeupTraceWriter),
-            makeNativeMethod("stopTraceWriter", profilo::stopTraceWriter),
         });
 
     profilo::writer::NativeTraceWriter::registerNatives();
