@@ -397,6 +397,9 @@ public final class TraceControl {
       }
     }
 
+    nextContext.buffer.updateHeader(
+        nextContext.enabledProviders, nextContext.longContext, nextContext.traceId);
+
     int timeout = getTimeoutFromContext(nextContext);
 
     synchronized (this) {

@@ -34,21 +34,3 @@ fb_core_android_library(
         profilo_path("deps/jsr-305:jsr-305"),
     ],
 )
-
-fb_core_android_library(
-    name = "listener",
-    srcs = [
-        "MmapBufferTraceListener.java",
-    ],
-    labels = ["supermodule:android/default/loom.core"],
-    visibility = [
-        profilo_path("..."),
-    ],
-    deps = [
-        ":mmapbuf",
-        profilo_path("java/main/com/facebook/profilo/core:control"),
-        profilo_path("java/main/com/facebook/profilo/core:listener"),
-        profilo_path("java/main/com/facebook/profilo/logger:logger"),
-        profilo_path("deps/jsr-305:jsr-305"),
-    ],
-)

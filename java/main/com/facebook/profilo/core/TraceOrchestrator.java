@@ -28,7 +28,6 @@ import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.MmapBufferManager;
-import com.facebook.profilo.mmapbuf.MmapBufferTraceListener;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 import java.text.DateFormat;
@@ -210,10 +209,6 @@ public final class TraceOrchestrator
               && initialConfig.optSystemConfigParamBool("system_config.mmap_buffer", false);
       mMmapBufferManager =
           new MmapBufferManager(initialConfig.getID(), mFileManager.getMmapBufferFolder(), context);
-      // Register hooks to trace lifecycle to control mmaped buffer.
-      if (useMmapBuffer) {
-        addListener(new MmapBufferTraceListener(mMmapBufferManager));
-      }
 
       // process name is passed as the trace prefix
       TraceControl.initialize(
