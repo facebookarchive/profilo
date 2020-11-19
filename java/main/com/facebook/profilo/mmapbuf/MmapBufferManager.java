@@ -127,8 +127,8 @@ public class MmapBufferManager {
     }
 
     try {
-      nativeUpdateId(id);
-      nativeUpdateFilePath(filePath);
+      mBuffer.updateId(id);
+      mBuffer.updateFilePath(filePath);
     } catch (Exception ex) {
       Log.e(LOG_TAG, "Id update failed", ex);
     }
@@ -151,24 +151,22 @@ public class MmapBufferManager {
       return null;
     }
 
-    nativeUpdateMemoryMappingFilename(fileName);
+    mBuffer.updateMemoryMappingFilename(fileName);
 
     mMemoryMappingsFile = new File(filePath);
     return filePath;
   }
 
+  public synchronized void updateHeader(int providers, long longContext, long traceId) {
+    if (mBuffer == null) {
+      return;
+    }
+    mBuffer.updateHeader(providers, longContext, traceId);
+  }
+
   @DoNotStrip
   @Nullable
   private native Buffer nativeAllocateBuffer(int size, String path, int buildId, long configId);
-
-  @DoNotStrip
-  public native void nativeUpdateHeader(int providers, long longContext, long traceId);
-
-  public native void nativeUpdateId(String sessionId);
-
-  public native void nativeUpdateFilePath(String filePath);
-
-  public native void nativeUpdateMemoryMappingFilename(String mappingFilePath);
 
   /**
    * De-allocates current memory mapped buffer and deletes the buffer file. This operation is unsafe

@@ -44,7 +44,7 @@ public class MmapBufferTraceListener extends DefaultTraceOrchestratorListener {
         break;
       }
     }
-    mMmapBufferManager.nativeUpdateHeader(providers, longContext, inMemoryTraceId);
+    mMmapBufferManager.updateHeader(providers, longContext, inMemoryTraceId);
   }
 
   @Override

@@ -68,49 +68,6 @@ void MmapBufferManager::deallocateBuffer() {
   buffer_ = nullptr;
 }
 
-void MmapBufferManager::updateHeader(
-    int32_t providers,
-    int64_t long_context,
-    int64_t trace_id) {
-  if (buffer_ == nullptr) {
-    return;
-  }
-  buffer_->prefix->header.providers = providers;
-  buffer_->prefix->header.longContext = long_context;
-  buffer_->prefix->header.traceId = trace_id;
-}
-
-void MmapBufferManager::updateId(const std::string& id) {
-  if (buffer_ == nullptr) {
-    return;
-  }
-  // Compare and if session id has not changed exit
-  auto sz = std::min(
-      id.size(), (size_t)header::MmapBufferHeader::kSessionIdLength - 1);
-  id.copy(buffer_->prefix->header.sessionId, sz);
-  buffer_->prefix->header.sessionId[sz] = 0;
-}
-
-void MmapBufferManager::updateFilePath(const std::string& file_path) {
-  if (buffer_ == nullptr) {
-    return;
-  }
-  buffer_->rename(file_path);
-}
-
-void MmapBufferManager::updateMemoryMappingFilename(
-    const std::string& maps_filename) {
-  if (buffer_ == nullptr) {
-    return;
-  }
-  // Compare and if session id has not changed exit
-  auto sz = std::min(
-      maps_filename.size(),
-      (size_t)header::MmapBufferHeader::kMemoryMapsFilenameLength - 1);
-  maps_filename.copy(buffer_->prefix->header.memoryMapsFilename, sz);
-  buffer_->prefix->header.memoryMapsFilename[sz] = 0;
-}
-
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
     fbjni::alias_ref<jclass>) {
   return makeCxxInstance();
@@ -123,13 +80,6 @@ void MmapBufferManager::registerNatives() {
           "nativeAllocateBuffer", MmapBufferManager::allocateBufferForJava),
       makeNativeMethod(
           "nativeDeallocateBuffer", MmapBufferManager::deallocateBuffer),
-      makeNativeMethod("nativeUpdateHeader", MmapBufferManager::updateHeader),
-      makeNativeMethod("nativeUpdateId", MmapBufferManager::updateId),
-      makeNativeMethod(
-          "nativeUpdateFilePath", MmapBufferManager::updateFilePath),
-      makeNativeMethod(
-          "nativeUpdateMemoryMappingFilename",
-          MmapBufferManager::updateMemoryMappingFilename),
   });
 }
 

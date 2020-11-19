@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <zlib.h>
 #include <zstr/zstr.hpp>
+#include <algorithm>
 #include <climits>
 #include <fstream>
 #include <ostream>
