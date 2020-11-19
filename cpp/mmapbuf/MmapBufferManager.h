@@ -16,13 +16,12 @@
 
 #pragma once
 
-#include <profilo/mmapbuf/header/MmapBufferHeader.h>
-
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
 #include <jni.h>
 
-#include <atomic>
+#include <profilo/mmapbuf/Buffer.h>
+#include <memory>
 #include <string>
 
 namespace fbjni = facebook::jni;
@@ -30,8 +29,6 @@ namespace fbjni = facebook::jni;
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
-
-using namespace facebook::profilo::mmapbuf::header;
 
 class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
  public:
@@ -67,12 +64,8 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
 
   static void registerNatives();
 
-  explicit MmapBufferManager();
-
  private:
-  std::string path_;
-  size_t size_;
-  std::atomic<MmapBufferPrefix*> buffer_prefix_;
+  std::shared_ptr<Buffer> buffer_ = nullptr;
 
   friend class MmapBufferManagerTestAccessor;
 };

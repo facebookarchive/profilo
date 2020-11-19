@@ -17,6 +17,7 @@
 #include <profilo/entries/Entry.h>
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
+#include <profilo/mmapbuf/MmapBufferManagerTestAccessor.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
 #include <profilo/mmapbuf/writer/MmapBufferTraceWriter.h>
 #include <profilo/writer/DeltaEncodingVisitor.h>
@@ -34,30 +35,6 @@ namespace fs = boost::filesystem;
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
-
-class MmapBufferManagerTestAccessor {
- public:
-  explicit MmapBufferManagerTestAccessor(MmapBufferManager& bufferManager)
-      : bufferManager_(bufferManager) {}
-
-  void* mmapBufferPointer() {
-    return reinterpret_cast<void*>(
-        reinterpret_cast<char*>(bufferManager_.buffer_prefix_.load()) +
-        sizeof(MmapBufferPrefix));
-  }
-
-  void* mmapPointer() {
-    return reinterpret_cast<void*>(bufferManager_.buffer_prefix_.load());
-  }
-
-  uint32_t size() {
-    return bufferManager_.size_;
-  }
-
- private:
-  MmapBufferManager& bufferManager_;
-};
-
 namespace writer {
 
 constexpr char kTraceFolder[] = "mmabbuf-test-trace-folder";
@@ -170,14 +147,13 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
       int records_count,
       int buffer_size,
       bool set_mappings_file = false) {
-    MmapBufferManager bufManager{};
-    MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
-    bool res = bufManager.allocateBuffer(buffer_size, dumpPath(), 1, 1);
+    MmapBufferManagerTestAccessor bufManagerAccessor(manager_);
+    bool res = manager_.allocateBuffer(buffer_size, dumpPath(), 1, 1);
     ASSERT_EQ(res, true) << "Unable to allocate the buffer";
-    bufManager.updateHeader(0, kQplId, kTraceId);
-    bufManager.updateId("272c3f80-f076-5a89-e265-60dcf407373b");
+    manager_.updateHeader(0, kQplId, kTraceId);
+    manager_.updateId("272c3f80-f076-5a89-e265-60dcf407373b");
     if (set_mappings_file) {
-      bufManager.updateMemoryMappingFilename(
+      manager_.updateMemoryMappingFilename(
           temp_mappings_file_.path().filename().generic_string());
     }
     TraceBufferHolder ringBuffer = TraceBuffer::allocateAt(
@@ -208,11 +184,12 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
         fs::recursive_directory_iterator(),
         is_file);
     // Ensures that at least one trace file was found.
-    EXPECT_NE(result, fs::recursive_directory_iterator());
+    EXPECT_NE(result, fs::recursive_directory_iterator()) << "No trace found";
     auto path = result->path();
     result++;
     // Ensures that only one trace file was found.
-    EXPECT_EQ(result, fs::recursive_directory_iterator());
+    EXPECT_EQ(result, fs::recursive_directory_iterator())
+        << "More than one trace found";
     return path;
   }
 
@@ -241,6 +218,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     }
   }
 
+  MmapBufferManager manager_;
   std::vector<std::string> loggedEntries_;
   test::TemporaryFile temp_dump_file_;
   test::TemporaryDirectory temp_trace_folder_;

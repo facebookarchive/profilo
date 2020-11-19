@@ -1,3 +1,4 @@
+load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
 
 profilo_cxx_test(
@@ -16,14 +17,28 @@ profilo_cxx_test(
         "-ldl",
     ],
     deps = [
+        ":test_accessor",
         "//xplat/folly:experimental_test_util",
         "//xplat/third-party/linker_lib:pthread",
         profilo_path("deps/zstr:zstr"),
         profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("cpp/logger/lfrb:lfrb"),
-        profilo_path("cpp/mmapbuf:mmapbuf"),
+        profilo_path("cpp/mmapbuf:manager"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "test_accessor",
+    header_namespace = "profilo/mmapbuf",
+    exported_headers = [
+        "MmapBufferManagerTestAccessor.h",
+    ],
+    labels = ["supermodule:android/default/loom.core"],
+    visibility = [profilo_path("cpp/test/...")],
+    exported_deps = [
+        profilo_path("cpp/mmapbuf:manager"),
     ],
 )

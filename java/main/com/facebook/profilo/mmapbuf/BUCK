@@ -13,7 +13,7 @@ fb_core_android_library(
     ],
     deps = [
         ":file_helper",
-        profilo_path("cpp/mmapbuf:mmapbuf"),
+        profilo_path("cpp/mmapbuf:manager"),
         profilo_path("deps/fbjni:fbjni-java"),
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/soloader:soloader"),

@@ -27,6 +27,7 @@
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
+#include <profilo/mmapbuf/MmapBufferManagerTestAccessor.h>
 #include <util/common.h>
 
 #include <zlib.h>
@@ -37,29 +38,6 @@ namespace test = folly::test;
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
-
-class MmapBufferManagerTestAccessor {
- public:
-  explicit MmapBufferManagerTestAccessor(MmapBufferManager& bufferManager)
-      : bufferManager_(bufferManager) {}
-
-  void* mmapBufferPointer() {
-    return reinterpret_cast<void*>(
-        reinterpret_cast<char*>(bufferManager_.buffer_prefix_.load()) +
-        sizeof(MmapBufferPrefix));
-  }
-
-  void* mmapPointer() {
-    return reinterpret_cast<void*>(bufferManager_.buffer_prefix_.load());
-  }
-
-  uint32_t size() {
-    return bufferManager_.size_;
-  }
-
- private:
-  MmapBufferManager& bufferManager_;
-};
 
 class MmapBufferManagerTest : public ::testing::Test {
  protected:
@@ -182,16 +160,18 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
 
   close(fd());
 
+  auto bufAddress = bufManagerAccessor.mmapPointer();
   bufManager.deallocateBuffer();
+
   void* res_mmap = mmap(
-      bufManagerAccessor.mmapPointer(),
+      bufAddress,
       expectedFileSize,
       MAP_FIXED,
       PROT_READ | MAP_ANONYMOUS,
       -1,
       0);
   // Already unmapped, expect mapping to succeed
-  EXPECT_EQ(bufManagerAccessor.mmapPointer(), res_mmap);
+  EXPECT_EQ(bufAddress, res_mmap);
   int res_open = open(path().c_str(), 0, O_RDONLY);
   EXPECT_EQ(-1, res_open);
   EXPECT_EQ(ENOENT, errno);

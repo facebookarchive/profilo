@@ -2,7 +2,7 @@ load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_librar
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 fb_xplat_cxx_library(
-    name = "mmapbuf",
+    name = "manager",
     srcs = [
         "MmapBufferManager.cpp",
         "jni.cpp",
@@ -30,6 +30,35 @@ fb_xplat_cxx_library(
         profilo_path("deps/fbjni:fbjni"),
     ],
     exported_deps = [
+        ":buffer",
         profilo_path("cpp/mmapbuf/header:header"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "buffer",
+    srcs = [
+        "Buffer.cpp",
+    ],
+    header_namespace = "profilo/mmapbuf",
+    exported_headers = [
+        "Buffer.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo/Buffer\"",
+    ],
+    labels = ["supermodule:android/default/loom.core"],
+    soname = "libprofilo_mmapbuf_buffer.$(ext)",
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("cpp/mmapbuf/header:header"),
+        profilo_path("cpp/logger/buffer:buffer"),
+        profilo_path("cpp:profilo"),
+        profilo_path("deps/fb:fb"),
     ],
 )
