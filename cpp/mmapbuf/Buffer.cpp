@@ -92,6 +92,7 @@ Buffer::Buffer(std::string const& path, size_t entryCount) {
   this->entryCount = entryCount;
   this->totalByteSize = totalSize;
   this->file_backed_ = true;
+  lfrb_ = TraceBuffer::allocateAt(entryCount, (void*)buffer);
 }
 
 Buffer::Buffer(size_t entryCount) {
@@ -103,6 +104,7 @@ Buffer::Buffer(size_t entryCount) {
   this->totalByteSize = totalSize;
   this->entryCount = entryCount;
   this->file_backed_ = false;
+  lfrb_ = TraceBuffer::allocateAt(entryCount, (void*)buffer);
 }
 
 Buffer::Buffer(Buffer&& other)
@@ -111,7 +113,8 @@ Buffer::Buffer(Buffer&& other)
       totalByteSize(other.totalByteSize),
       prefix(other.prefix),
       buffer(other.buffer),
-      file_backed_(other.file_backed_) {
+      file_backed_(other.file_backed_),
+      lfrb_(std::move(other.lfrb_)) {
   other.entryCount = 0;
   other.totalByteSize = 0;
   other.prefix = nullptr;
@@ -127,7 +130,7 @@ Buffer& Buffer::operator=(Buffer&& other) {
   totalByteSize = other.totalByteSize;
   prefix = other.prefix;
   buffer = other.buffer;
-  file_backed_ = other.file_backed_;
+  lfrb_ = std::move(other.lfrb_);
 
   other.buffer = other.prefix = nullptr;
   other.entryCount = other.totalByteSize = 0;
@@ -141,6 +144,7 @@ Buffer::~Buffer() {
   }
 
   prefix->~MmapBufferPrefix();
+
   if (file_backed_) {
     // mmap mode: remove the mapping and the file
     munmap(prefix, totalByteSize);

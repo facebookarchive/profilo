@@ -19,6 +19,7 @@
 #include <string>
 #include <type_traits>
 
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
 
 namespace facebook {
@@ -49,6 +50,10 @@ struct Buffer {
 
   void rename(std::string const& path);
 
+  TraceBuffer& ringBuffer() {
+    return *lfrb_;
+  }
+
   std::string path = "";
   size_t entryCount = 0;
   size_t totalByteSize = 0;
@@ -57,6 +62,7 @@ struct Buffer {
 
  private:
   bool file_backed_ = false;
+  TraceBufferHolder lfrb_;
 };
 
 namespace {

@@ -341,7 +341,7 @@ template <typename T, template <typename> class Atom>
 struct LockFreeRingBufferHolder {
   using Cursor = typename LockFreeRingBuffer<T, Atom>::Cursor;
 
-  LockFreeRingBufferHolder() = delete;
+  LockFreeRingBufferHolder() : buffer_(nullptr), isExternal_(true){};
   LockFreeRingBufferHolder(LockFreeRingBufferHolder const&) = delete;
   LockFreeRingBufferHolder& operator=(LockFreeRingBufferHolder const&) = delete;
 
