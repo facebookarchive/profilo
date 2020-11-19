@@ -33,18 +33,11 @@ public class MmapBufferTraceListener extends DefaultTraceOrchestratorListener {
       return;
     }
     List<TraceContext> currentTraces = tc.getCurrentTraces();
-    int longContext = 0;
-    int providers = 0;
-    long inMemoryTraceId = 0;
     for (TraceContext ctx : currentTraces) {
-      providers |= ctx.enabledProviders;
-      if ((ctx.flags & Trace.FLAG_MEMORY_ONLY) != 0) {
-        longContext = (int) ctx.longContext;
-        inMemoryTraceId = ctx.traceId;
-        break;
+      if ((ctx.flags & Trace.FLAG_MEMORY_ONLY) != 0 && ctx.buffer != null) {
+        ctx.buffer.updateHeader(ctx.enabledProviders, ctx.longContext, ctx.traceId);
       }
     }
-    mMmapBufferManager.updateHeader(providers, longContext, inMemoryTraceId);
   }
 
   @Override

@@ -21,9 +21,6 @@ import com.facebook.jni.HybridData;
 import com.facebook.jni.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
@@ -38,9 +35,6 @@ public class MmapBufferManager {
   }
 
   @DoNotStrip private final HybridData mHybridData;
-  private volatile @Nullable String mMmapFileName;
-  private @Nullable String mId;
-  private volatile @Nullable File mMemoryMappingsFile;
   private final MmapBufferFileHelper mFileHelper;
   private final Context mContext;
   private final long mConfigId;
@@ -56,26 +50,6 @@ public class MmapBufferManager {
     mAllocated = new AtomicBoolean(false);
     mFileHelper = new MmapBufferFileHelper(folder);
     mHybridData = initHybrid();
-  }
-
-  public @Nullable String getCurrentMmapFilename() {
-    return mMmapFileName;
-  }
-
-  public List<String> getCurrentFilenames() {
-    if (mMmapFileName == null) {
-      return Collections.emptyList();
-    }
-    ArrayList<String> filenames = new ArrayList<>(2);
-    filenames.add(mMmapFileName);
-    if (mMemoryMappingsFile != null) {
-      filenames.add(mMemoryMappingsFile.getName());
-    }
-    return filenames;
-  }
-
-  public @Nullable Buffer getBuffer() {
-    return mBuffer;
   }
 
   private int getVersionCode() {
@@ -107,7 +81,6 @@ public class MmapBufferManager {
       if (mmapBufferPath == null) {
         return null;
       }
-      mMmapFileName = fileName;
 
       mBuffer = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
       return mBuffer;
@@ -124,56 +97,48 @@ public class MmapBufferManager {
     return true; // cannot actually deallocate the buffer yet
   }
 
-  public synchronized void updateId(String id) {
-    if (mBuffer == null) {
+  public static void updateId(Buffer buffer, String id) {
+    if (buffer == null || buffer.getFilePath() == null) {
       return;
     }
-    if (id.equals(mId)) {
-      return;
-    }
+    File containingFolder = getBufferContainingFolder(buffer);
 
     String fileName = MmapBufferFileHelper.getBufferFilename(id);
-    String filePath = mFileHelper.ensureFilePath(fileName);
+    MmapBufferFileHelper helper = new MmapBufferFileHelper(containingFolder);
+    String filePath = helper.ensureFilePath(fileName);
     if (filePath == null) {
       return;
     }
 
     try {
-      mBuffer.updateId(id);
-      mBuffer.updateFilePath(filePath);
+      buffer.updateId(id);
+      buffer.updateFilePath(filePath);
     } catch (Exception ex) {
       Log.e(LOG_TAG, "Id update failed", ex);
     }
-    mId = id;
-    mMmapFileName = fileName;
   }
 
   @Nullable
-  public synchronized String generateMemoryMappingFilePath() {
-    if (mBuffer == null) {
+  public static synchronized String generateMemoryMappingFilePath(Buffer buffer) {
+    if (buffer == null || buffer.getFilePath() == null) {
       return null;
     }
-    if (mMemoryMappingsFile != null) {
-      return mMemoryMappingsFile.getAbsolutePath();
-    }
+    File containingFolder = getBufferContainingFolder(buffer);
 
     String fileName = MmapBufferFileHelper.getMemoryMappingFilename(UUID.randomUUID().toString());
-    String filePath = mFileHelper.ensureFilePath(fileName);
+    MmapBufferFileHelper helper = new MmapBufferFileHelper(containingFolder);
+    String filePath = helper.ensureFilePath(fileName);
     if (filePath == null) {
       return null;
     }
 
-    mBuffer.updateMemoryMappingFilename(fileName);
-
-    mMemoryMappingsFile = new File(filePath);
+    buffer.updateMemoryMappingFilename(fileName);
     return filePath;
   }
 
-  public synchronized void updateHeader(int providers, long longContext, long traceId) {
-    if (mBuffer == null) {
-      return;
-    }
-    mBuffer.updateHeader(providers, longContext, traceId);
+  private static File getBufferContainingFolder(Buffer buffer) {
+    File bufferFilePath = new File(buffer.getFilePath());
+    return bufferFilePath.getParentFile();
   }
 
   @DoNotStrip
