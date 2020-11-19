@@ -84,11 +84,6 @@ std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
   return buffer_;
 }
 
-void MmapBufferManager::deallocateBuffer() {
-  RingBuffer::destroy();
-  buffer_ = nullptr;
-}
-
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
     fbjni::alias_ref<jclass>) {
   return makeCxxInstance();
@@ -102,8 +97,6 @@ void MmapBufferManager::registerNatives() {
       makeNativeMethod(
           "nativeAllocateBuffer",
           MmapBufferManager::allocateBufferAnonymousForJava),
-      makeNativeMethod(
-          "nativeDeallocateBuffer", MmapBufferManager::deallocateBuffer),
   });
 }
 

@@ -176,12 +176,4 @@ public class MmapBufferManager {
   @DoNotStrip
   @Nullable
   private native Buffer nativeAllocateBuffer(int size, String path, int buildId, long configId);
-
-  /**
-   * De-allocates current memory mapped buffer and deletes the buffer file. This operation is unsafe
-   * and currently serve merely as stub for future dynamic buffer management extensions. All tracing
-   * should be disabled before this method can be called.
-   */
-  @DoNotStrip
-  public native void nativeDeallocateBuffer();
 }

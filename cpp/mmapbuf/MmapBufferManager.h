@@ -63,11 +63,6 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
       int32_t version_code,
       int64_t config_id);
 
-  //
-  // De-allocates previously allocated buffer and deletes the file.
-  //
-  void deallocateBuffer();
-
   static void registerNatives();
 
  private:
