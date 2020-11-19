@@ -53,6 +53,14 @@ class JBuffer final : public fbjni::HybridClass<JBuffer> {
     return newObjectCxxArgs(ptr);
   }
 
+  std::shared_ptr<Buffer> get() {
+    auto ptr = buffer_.lock();
+    if (ptr == nullptr) {
+      throw std::invalid_argument("Attempting to use a stale JBuffer!");
+    }
+    return ptr;
+  }
+
  private:
   // Our base class needs to be able to instantiate us.
   friend class fbjni::HybridClass<JBuffer>;

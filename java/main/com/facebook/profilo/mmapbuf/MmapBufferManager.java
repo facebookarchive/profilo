@@ -45,7 +45,7 @@ public class MmapBufferManager {
   private final Context mContext;
   private final long mConfigId;
   private AtomicBoolean mAllocated;
-  private @Nullable Buffer mBuffer;
+  private volatile @Nullable Buffer mBuffer;
 
   @DoNotStrip
   private static native HybridData initHybrid();
@@ -74,8 +74,8 @@ public class MmapBufferManager {
     return filenames;
   }
 
-  public boolean isEnabled() {
-    return mBuffer != null;
+  public @Nullable Buffer getBuffer() {
+    return mBuffer;
   }
 
   private int getVersionCode() {

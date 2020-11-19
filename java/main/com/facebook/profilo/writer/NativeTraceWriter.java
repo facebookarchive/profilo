@@ -14,6 +14,7 @@
 package com.facebook.profilo.writer;
 
 import com.facebook.jni.HybridData;
+import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 
@@ -26,12 +27,12 @@ public final class NativeTraceWriter {
   @DoNotStrip private HybridData mHybridData;
 
   public NativeTraceWriter(
-      String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks) {
-    mHybridData = initHybrid(traceFolder, tracePrefix, callbacks);
+      Buffer buffer, String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks) {
+    mHybridData = initHybrid(buffer, traceFolder, tracePrefix, callbacks);
   }
 
   private static native HybridData initHybrid(
-      String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks);
+      Buffer buffer, String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks);
 
   public native void loop();
 

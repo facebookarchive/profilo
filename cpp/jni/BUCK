@@ -25,6 +25,7 @@ fb_xplat_cxx_library(
         ":writer_callbacks",
     ],
     exported_deps = [
+        profilo_path("cpp/mmapbuf:buffer_jni"),
         profilo_path("cpp/writer:trace_backwards"),
         profilo_path("cpp/writer:trace_headers"),
         profilo_path("cpp/writer:writer"),

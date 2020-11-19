@@ -127,7 +127,7 @@ public final class Logger {
       buffer = sMmapBufferManager.allocateBuffer(sRingBufferSize, true);
     }
     if (buffer == null) {
-      sMmapBufferManager.allocateBuffer(sRingBufferSize, false);
+      buffer = sMmapBufferManager.allocateBuffer(sRingBufferSize, false);
     }
 
     // Do not trigger trace writer for memory-only trace
@@ -135,14 +135,14 @@ public final class Logger {
       return;
     }
 
-    startWorkerThreadIfNecessary();
+    startWorkerThreadIfNecessary(buffer);
     loggerWriteAndWakeupTraceWriter(
         sTraceWriter, traceId, EntryType.TRACE_START, timeoutMs, flags, traceId);
   }
 
   public static void postCreateBackwardTrace(long traceId, int flags) {
     if (sInitialized) {
-      startWorkerThreadIfNecessary();
+      startWorkerThreadIfNecessary(sMmapBufferManager.getBuffer());
 
       loggerWriteAndWakeupTraceWriter(
           sTraceWriter, traceId, EntryType.TRACE_BACKWARDS, 0, flags, traceId);
@@ -215,7 +215,7 @@ public final class Logger {
   }
 
   @SuppressLint("BadMethodUse-java.lang.Thread.start")
-  private static void startWorkerThreadIfNecessary() {
+  private static void startWorkerThreadIfNecessary(Buffer buffer) {
     if (sWorker.get() != null) {
       // race conditions make it possible to try to start a second thread. ignore the call.
       return;
@@ -225,7 +225,7 @@ public final class Logger {
     try {
       writer =
           new NativeTraceWriter(
-              sTraceDirectory.getCanonicalPath(), sFilePrefix, sNativeTraceWriterCallbacks);
+              buffer, sTraceDirectory.getCanonicalPath(), sFilePrefix, sNativeTraceWriterCallbacks);
     } catch (IOException e) {
       throw new IllegalArgumentException("Could not get canonical path of trace directory");
     }

@@ -41,7 +41,7 @@ namespace writer {
 TraceWriter::TraceWriter(
     const std::string&& folder,
     const std::string&& trace_prefix,
-    TraceBuffer& buffer,
+    std::shared_ptr<Buffer> buffer,
     std::shared_ptr<TraceCallbacks> callbacks,
     std::vector<std::pair<std::string, std::string>>&& headers,
     TraceBackwardsCallback trace_backwards_callback)
@@ -50,7 +50,7 @@ TraceWriter::TraceWriter(
       wakeup_trace_ids_(),
       trace_folder_(std::move(folder)),
       trace_prefix_(std::move(trace_prefix)),
-      buffer_(buffer),
+      buffer_(std::move(buffer)),
       trace_headers_(std::move(headers)),
       callbacks_(callbacks),
       trace_backwards_callback_(trace_backwards_callback) {}
@@ -66,7 +66,7 @@ std::unordered_set<int64_t> TraceWriter::processTrace(
         if (trace_backwards_callback_ == nullptr) {
           return;
         }
-        trace_backwards_callback_(visitor, buffer_, cursor);
+        trace_backwards_callback_(visitor, buffer_->ringBuffer(), cursor);
       });
 
   PacketReassembler reassembler([&visitor](const void* data, size_t size) {
@@ -75,7 +75,7 @@ std::unordered_set<int64_t> TraceWriter::processTrace(
 
   while (!visitor.done()) {
     alignas(4) Packet packet;
-    if (!buffer_.waitAndTryRead(packet, cursor)) {
+    if (!buffer_->ringBuffer().waitAndTryRead(packet, cursor)) {
       // Missed event, abort.
       visitor.abort(AbortReason::MISSED_EVENT);
       break;
@@ -91,7 +91,7 @@ void TraceWriter::loop() {
   while (true) {
     int64_t trace_id;
     // dummy call, no default constructor
-    TraceBuffer::Cursor cursor = buffer_.currentTail();
+    TraceBuffer::Cursor cursor = buffer_->ringBuffer().currentTail();
 
     {
       std::unique_lock<std::mutex> lock(wakeup_mutex_);
@@ -134,7 +134,7 @@ void TraceWriter::submit(TraceBuffer::Cursor cursor, int64_t trace_id) {
 }
 
 void TraceWriter::submit(int64_t trace_id) {
-  submit(buffer_.currentTail(), trace_id);
+  submit(buffer_->ringBuffer().currentTail(), trace_id);
 }
 
 } // namespace writer

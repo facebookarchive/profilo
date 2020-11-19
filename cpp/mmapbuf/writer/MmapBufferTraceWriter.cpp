@@ -273,8 +273,8 @@ int64_t MmapBufferTraceWriter::writeTrace(
   // entries.
   constexpr auto kExtraRecordCount = 4096;
 
-  std::unique_ptr<mmapbuf::Buffer> buffer =
-      std::make_unique<mmapbuf::Buffer>(entriesCount + kExtraRecordCount);
+  std::shared_ptr<mmapbuf::Buffer> buffer =
+      std::make_shared<mmapbuf::Buffer>(entriesCount + kExtraRecordCount);
   auto& ringBuffer = buffer->ringBuffer();
   TraceBuffer::Cursor startCursor = ringBuffer.currentHead();
   Logger logger([&]() -> TraceBuffer& { return ringBuffer; });
@@ -338,7 +338,7 @@ int64_t MmapBufferTraceWriter::writeTrace(
   TraceWriter writer(
       std::move(trace_folder_),
       std::move(trace_prefix_),
-      ringBuffer,
+      buffer,
       callbacks_,
       calculateHeaders());
 

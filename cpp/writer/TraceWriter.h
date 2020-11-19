@@ -28,12 +28,15 @@
 #include <profilo/LogEntry.h>
 #include <profilo/entries/EntryParser.h>
 #include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/mmapbuf/Buffer.h>
 #include <profilo/writer/PacketReassembler.h>
 #include <profilo/writer/TraceCallbacks.h>
 
 namespace facebook {
 namespace profilo {
 namespace writer {
+
+using Buffer = mmapbuf::Buffer;
 
 using TraceBackwardsCallback = std::function<
     void(entries::EntryVisitor&, TraceBuffer&, TraceBuffer::Cursor&)>;
@@ -52,7 +55,7 @@ class TraceWriter {
   TraceWriter(
       const std::string&& folder,
       const std::string&& trace_prefix,
-      TraceBuffer& buffer,
+      std::shared_ptr<Buffer> buffer,
       std::shared_ptr<TraceCallbacks> callbacks = nullptr,
       std::vector<std::pair<std::string, std::string>>&& headers =
           std::vector<std::pair<std::string, std::string>>(),
@@ -95,7 +98,7 @@ class TraceWriter {
 
   const std::string trace_folder_;
   const std::string trace_prefix_;
-  TraceBuffer& buffer_;
+  std::shared_ptr<Buffer> buffer_;
   std::vector<std::pair<std::string, std::string>> trace_headers_;
 
   std::shared_ptr<TraceCallbacks> callbacks_;

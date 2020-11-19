@@ -19,13 +19,16 @@
 #include <fbjni/fbjni.h>
 
 #include <profilo/jni/NativeTraceWriterCallbacks.h>
+#include <profilo/mmapbuf/Buffer.h>
+#include <profilo/mmapbuf/JBuffer.h>
 #include <profilo/writer/TraceWriter.h>
 
 namespace fbjni = facebook::jni;
-
 namespace facebook {
 namespace profilo {
 namespace writer {
+
+using namespace mmapbuf;
 
 class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
  public:
@@ -34,6 +37,7 @@ class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
 
   static fbjni::local_ref<jhybriddata> initHybrid(
       fbjni::alias_ref<jclass>,
+      JBuffer* buffer,
       std::string trace_folder,
       std::string trace_prefix,
       fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks);
@@ -48,6 +52,7 @@ class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
   friend HybridBase;
 
   NativeTraceWriter(
+      std::shared_ptr<Buffer> buffer,
       std::string trace_folder,
       std::string trace_prefix,
       fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks);
