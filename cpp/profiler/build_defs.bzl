@@ -60,7 +60,7 @@ def unwindc_tracer_library(version, allow_64bit = False):
         ],
         deps = [
             profilo_path("deps/fb:fb"),
-            profilo_path("cpp/logger:logger"),
+            profilo_path("cpp/logger/buffer:buffer"),
             profilo_path("cpp/profiler:base_tracer"),
         ],
     )

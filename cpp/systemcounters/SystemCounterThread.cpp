@@ -16,7 +16,7 @@
 
 #include "SystemCounterThread.h"
 
-#include <profilo/Logger.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <util/common.h>
 
 #include <unordered_set>
@@ -117,7 +117,7 @@ void SystemCounterThread::logHighFrequencyThreadCounters() {
 }
 
 void SystemCounterThread::logTraceAnnotations() {
-  Logger::get().writeTraceAnnotation(
+  RingBuffer::get().logger().writeTraceAnnotation(
       QuickLogConstants::AVAILABLE_COUNTERS,
       processCounters_.getAvailableCounters() |
           systemCounters_.getAvailableCounters() |

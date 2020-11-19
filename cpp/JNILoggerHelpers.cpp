@@ -20,6 +20,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
 #include <profilo/jni/NativeTraceWriter.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/JBuffer.h>
 #include <util/common.h>
 
@@ -47,7 +48,7 @@ static jint loggerWriteStandardEntry(
     tid = threadID();
   }
 
-  return Logger::get().write(StandardEntry{
+  return RingBuffer::get().logger().write(StandardEntry{
       .id = 0,
       .type = static_cast<decltype(StandardEntry::type)>(type),
       .timestamp = timestamp,
@@ -101,7 +102,7 @@ static jint loggerWriteBytesEntry(
       env->ReleaseStringChars(arg2, str);
     }
   }
-  return Logger::get().writeBytes(
+  return RingBuffer::get().logger().writeBytes(
       static_cast<EntryType>(type), arg1, bytes, len);
 }
 
@@ -127,7 +128,7 @@ static jint loggerWriteAndWakeupTraceWriter(
     throw std::invalid_argument("buffer is null");
   }
   TraceBuffer::Cursor cursor = buffer->ringBuffer().currentTail();
-  jint id = Logger::get().writeAndGetCursor(
+  jint id = RingBuffer::get().logger().writeAndGetCursor(
       StandardEntry{
           .id = 0,
           .type = static_cast<decltype(StandardEntry::type)>(type),

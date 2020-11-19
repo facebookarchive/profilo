@@ -19,6 +19,7 @@
 #include <string>
 #include <type_traits>
 
+#include <profilo/Logger.h>
 #include <profilo/logger/buffer/TraceBuffer.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
 
@@ -54,6 +55,10 @@ struct Buffer {
     return *lfrb_;
   }
 
+  Logger& logger() {
+    return logger_;
+  }
+
   std::string path = "";
   size_t entryCount = 0;
   size_t totalByteSize = 0;
@@ -62,7 +67,8 @@ struct Buffer {
 
  private:
   bool file_backed_ = false;
-  TraceBuffer* lfrb_;
+  TraceBuffer* lfrb_ = nullptr;
+  Logger logger_{{[this]() -> TraceBuffer& { return this->ringBuffer(); }}};
 };
 
 namespace {

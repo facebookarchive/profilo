@@ -37,8 +37,8 @@
 #include <util/hooks.h>
 
 #include <profilo/LogEntry.h>
-#include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 
 #include "Atrace.h"
 
@@ -125,7 +125,7 @@ void log_systrace(const void* buf, size_t count) {
       return;
   }
 
-  auto& logger = Logger::get();
+  auto& logger = RingBuffer::get().logger();
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();

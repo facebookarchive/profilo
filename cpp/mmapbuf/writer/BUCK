@@ -37,7 +37,7 @@ fb_xplat_cxx_library(
         profilo_path("cpp/util:util"),
         profilo_path("cpp/writer:trace_headers"),
         profilo_path("cpp/writer:writer"),
-        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("deps/fbjni:fbjni"),
         profilo_path("deps/fb:fb"),
     ],

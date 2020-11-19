@@ -80,7 +80,7 @@ fb_xplat_cxx_library(
     deps = [
         ":constants",
         profilo_path("cpp/jni:jni"),
-        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/logger/buffer:buffer"),
         profilo_path("cpp/mmapbuf:buffer_jni"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),
@@ -119,7 +119,7 @@ fb_xplat_cxx_library(
         ":providers",
         profilo_path("cpp/api:external_api_glue"),
         profilo_path("cpp/jni:jni"),
-        profilo_path("cpp/logger:logger_static"),
+        profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("cpp/mmapbuf:buffer"),
         profilo_path("cpp/profiler:external_tracer_manager"),
         profilo_path("cpp/util:util"),

@@ -19,6 +19,7 @@
 #include <fb/log.h>
 
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
+#include <profilo/mmapbuf/Buffer.h>
 #include <atomic>
 #include <memory>
 #include <stdexcept>
@@ -31,9 +32,8 @@ namespace {
 mmapbuf::Buffer noop_buffer{1};
 std::atomic<mmapbuf::Buffer*> buffer(&noop_buffer);
 
-TraceBuffer& getBuffer() {
-  auto bufferPtr = buffer.load();
-  return bufferPtr->ringBuffer();
+mmapbuf::Buffer& getBuffer() {
+  return *buffer.load();
 }
 
 void initBuffer(mmapbuf::Buffer& newBuffer) {
@@ -57,7 +57,7 @@ void RingBuffer::destroy() {
   }
 }
 
-TraceBuffer& RingBuffer::get() {
+mmapbuf::Buffer& RingBuffer::get() {
   return getBuffer();
 }
 

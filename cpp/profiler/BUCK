@@ -79,7 +79,7 @@ fb_xplat_cxx_library(
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
         profilo_path("deps/forkjail:forkjail"),
-        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/logger/buffer:buffer"),
     ],
 )
 
@@ -159,7 +159,7 @@ fb_xplat_cxx_library(
     deps = [
         ":external_tracer",
         profilo_path("deps/atomic:atomic"),
-        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/logger/buffer:buffer"),
     ],
 )
 
@@ -208,7 +208,7 @@ fb_xplat_cxx_library(
     deps = [
         ":base_tracer",
         ":tracer_utils",
-        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/logger/buffer:buffer"),
     ],
 )
 
@@ -259,7 +259,7 @@ fb_xplat_cxx_library(
     ],
     deps = [
         profilo_path("cpp/api:external_api_header"),
-        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/logger/buffer:buffer"),
     ],
 )
 
@@ -319,7 +319,7 @@ fb_xplat_cxx_library(
         profilo_path("cpp:providers"),
         profilo_path("cpp/api:external_api"),
         profilo_path("cpp/api:external_api_header"),
-        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/logger/buffer:buffer"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/breakpad:abort-with-reason"),
         profilo_path("deps/dalvik:dalvik-subset-headers"),

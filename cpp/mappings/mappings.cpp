@@ -19,7 +19,7 @@
 #include <fb/log.h>
 #include <procmaps.h>
 #include <profilo/LogEntry.h>
-#include <profilo/Logger.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mappings/mappings.h>
 #include <util/common.h>
 
@@ -39,7 +39,7 @@ void logMemoryMappings(JNIEnv*, jobject) {
     return;
   }
 
-  auto& logger = Logger::get();
+  auto& logger = RingBuffer::get().logger();
   auto tid = threadID();
   auto time = monotonicTime();
 

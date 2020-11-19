@@ -45,7 +45,7 @@ class RingBuffer {
   //
   PROFILOEXPORT static void destroy();
 
-  PROFILOEXPORT static TraceBuffer& get();
+  PROFILOEXPORT static mmapbuf::Buffer& get();
 };
 
 } // namespace profilo

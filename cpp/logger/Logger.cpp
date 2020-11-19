@@ -21,19 +21,12 @@
 #include <cstring>
 #include <stdexcept>
 
-#include <profilo/logger/buffer/RingBuffer.h>
 #include <util/common.h>
 
 namespace facebook {
 namespace profilo {
 
 using namespace entries;
-
-Logger& Logger::get() {
-  static Logger logger(
-      [&]() -> TraceBuffer& { return RingBuffer::get(); }, kInitialEntryId);
-  return logger;
-}
 
 int32_t Logger::writeBytes(
     EntryType type,
