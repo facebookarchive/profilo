@@ -14,36 +14,18 @@
  * limitations under the License.
  */
 
-#include <jni.h>
 #include <cstdint>
 
 namespace facebook {
 namespace profilo {
-namespace detail {
+namespace logger_jni {
 
 // These flags should match the ones from Logger.java
 static constexpr uint32_t FILL_TIMESTAMP = 1 << 1;
 static constexpr uint32_t FILL_TID = 1 << 2;
 
-jint loggerWriteStandardEntry(
-    JNIEnv* env,
-    jobject cls,
-    jint flags,
-    jint type,
-    jlong timestamp,
-    jint tid,
-    jint arg1,
-    jint arg2,
-    jlong arg3);
+void registerNatives();
 
-jint loggerWriteBytesEntry(
-    JNIEnv* env,
-    jobject cls,
-    jint flags,
-    jint type,
-    jint arg1,
-    jstring arg2);
-
-} // namespace detail
+} // namespace logger_jni
 } // namespace profilo
 } // namespace facebook

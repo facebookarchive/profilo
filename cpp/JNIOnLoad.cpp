@@ -36,50 +36,9 @@ namespace fbjni = facebook::jni;
 namespace facebook {
 namespace profilo {
 
-const char* TraceEventsType = "com/facebook/profilo/core/TraceEvents";
-const char* LoggerType = "com/facebook/profilo/logger/Logger";
-
 ///
 /// product write APIs
 ///
-
-static jint loggerWriteAndWakeupTraceWriter(
-    fbjni::alias_ref<jobject> cls,
-    writer::NativeTraceWriter* writer,
-    mmapbuf::JBuffer* jbuffer,
-    jlong traceId,
-    jint type,
-    jint arg1,
-    jint arg2,
-    jlong arg3) {
-  if (writer == nullptr) {
-    throw std::invalid_argument("writer cannot be null");
-  }
-
-  //
-  // We know the buffer is initialized, NativeTraceWriter is already using it.
-  // Also, currentTail is only used because Cursor is not default constructible.
-  //
-  auto buffer = jbuffer->get();
-  if (buffer == nullptr) {
-    throw std::invalid_argument("buffer is null");
-  }
-  TraceBuffer::Cursor cursor = buffer->ringBuffer().currentTail();
-  jint id = Logger::get().writeAndGetCursor(
-      StandardEntry{
-          .id = 0,
-          .type = static_cast<decltype(StandardEntry::type)>(type),
-          .timestamp = monotonicTime(),
-          .tid = threadID(),
-          .callid = arg1,
-          .matchid = arg2,
-          .extra = arg3,
-      },
-      cursor);
-
-  writer->submit(cursor, traceId);
-  return id;
-}
 
 static jint enableProviders(JNIEnv* env, jobject cls, jint providers) {
   return TraceProviders::get().enableProviders(
@@ -117,7 +76,7 @@ using namespace facebook;
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   return xplat::initialize(vm, [] {
     fbjni::registerNatives(
-        profilo::TraceEventsType,
+        "com/facebook/profilo/core/TraceEvents",
         {
             makeNativeMethod("nativeEnableProviders", profilo::enableProviders),
             makeNativeMethod(
@@ -128,20 +87,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
                 "nativeRefreshProviderNames", profilo::refreshProviderNames),
         });
 
-    fbjni::registerNatives(
-        profilo::LoggerType,
-        {
-            makeNativeMethod(
-                "loggerWriteStandardEntry",
-                profilo::detail::loggerWriteStandardEntry),
-            makeNativeMethod(
-                "loggerWriteBytesEntry",
-                profilo::detail::loggerWriteBytesEntry),
-            makeNativeMethod(
-                "loggerWriteAndWakeupTraceWriter",
-                profilo::loggerWriteAndWakeupTraceWriter),
-        });
-
     profilo::writer::NativeTraceWriter::registerNatives();
+    profilo::logger_jni::registerNatives();
   });
 }

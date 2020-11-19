@@ -14,18 +14,24 @@
  * limitations under the License.
  */
 
-#include <profilo/JNILoggerHelpers.h>
+#include "JNILoggerHelpers.h"
 #include <fb/Build.h>
+#include <fbjni/fbjni.h>
+#include <profilo/LogEntry.h>
 #include <profilo/Logger.h>
+#include <profilo/jni/NativeTraceWriter.h>
+#include <profilo/mmapbuf/JBuffer.h>
 #include <util/common.h>
+
+namespace fbjni = facebook::jni;
 
 namespace facebook {
 namespace profilo {
-namespace detail {
+namespace logger_jni {
 
-jint loggerWriteStandardEntry(
-    JNIEnv* env,
-    jobject cls,
+static jint loggerWriteStandardEntry(
+    fbjni::alias_ref<jobject>,
+    mmapbuf::JBuffer* jbuffer,
     jint flags,
     jint type,
     jlong timestamp,
@@ -52,9 +58,9 @@ jint loggerWriteStandardEntry(
   });
 }
 
-jint loggerWriteBytesEntry(
-    JNIEnv* env,
-    jobject cls,
+static jint loggerWriteBytesEntry(
+    fbjni::alias_ref<jobject>,
+    mmapbuf::JBuffer* jbuffer,
     jint flags,
     jint type,
     jint arg1,
@@ -65,6 +71,7 @@ jint loggerWriteBytesEntry(
   // before 8.0 and GetStringChars after.
   static bool jniUseCritical = build::Build::getAndroidSdk() < 26;
 
+  auto env = fbjni::Environment::current();
   constexpr auto kMaxJavaStringLength = 512;
   auto len = std::min(env->GetStringLength(arg2), kMaxJavaStringLength);
 
@@ -97,6 +104,56 @@ jint loggerWriteBytesEntry(
   return Logger::get().writeBytes(
       static_cast<EntryType>(type), arg1, bytes, len);
 }
-} // namespace detail
+
+static jint loggerWriteAndWakeupTraceWriter(
+    fbjni::alias_ref<jobject>,
+    writer::NativeTraceWriter* writer,
+    mmapbuf::JBuffer* jbuffer,
+    jlong traceId,
+    jint type,
+    jint arg1,
+    jint arg2,
+    jlong arg3) {
+  if (writer == nullptr) {
+    throw std::invalid_argument("writer cannot be null");
+  }
+
+  //
+  // We know the buffer is initialized, NativeTraceWriter is already using it.
+  // Also, currentTail is only used because Cursor is not default constructible.
+  //
+  auto buffer = jbuffer->get();
+  if (buffer == nullptr) {
+    throw std::invalid_argument("buffer is null");
+  }
+  TraceBuffer::Cursor cursor = buffer->ringBuffer().currentTail();
+  jint id = Logger::get().writeAndGetCursor(
+      StandardEntry{
+          .id = 0,
+          .type = static_cast<decltype(StandardEntry::type)>(type),
+          .timestamp = monotonicTime(),
+          .tid = threadID(),
+          .callid = arg1,
+          .matchid = arg2,
+          .extra = arg3,
+      },
+      cursor);
+
+  writer->submit(cursor, traceId);
+  return id;
+}
+
+void registerNatives() {
+  fbjni::registerNatives(
+      "com/facebook/profilo/logger/BufferLogger",
+      {
+          makeNativeMethod("writeStandardEntry", loggerWriteStandardEntry),
+          makeNativeMethod("writeBytesEntry", loggerWriteBytesEntry),
+          makeNativeMethod(
+              "writeAndWakeupTraceWriter", loggerWriteAndWakeupTraceWriter),
+      });
+}
+
+} // namespace logger_jni
 } // namespace profilo
 } // namespace facebook

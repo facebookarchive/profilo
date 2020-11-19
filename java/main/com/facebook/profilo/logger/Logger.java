@@ -18,18 +18,12 @@ import com.facebook.profilo.core.TraceEvents;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.profilo.writer.NativeTraceWriter;
-import com.facebook.proguard.annotations.DoNotStrip;
-import com.facebook.soloader.SoLoader;
 
-@DoNotStrip
 public final class Logger {
 
   private static volatile boolean sInitialized;
 
   public static void initialize() {
-    SoLoader.loadLibrary("profilo");
-    TraceEvents.sInitialized = true;
-
     sInitialized = true;
   }
 
@@ -47,7 +41,7 @@ public final class Logger {
       int arg2 /* matchid */,
       long arg3 /* extra */) {
     if (sInitialized && ((flags & SKIP_PROVIDER_CHECK) != 0 || TraceEvents.isEnabled(provider))) {
-      return loggerWriteStandardEntry(flags, type, timestamp, tid, arg1, arg2, arg3);
+      return BufferLogger.writeStandardEntry(null, flags, type, timestamp, tid, arg1, arg2, arg3);
     } else {
       return ProfiloConstants.TRACING_DISABLED;
     }
@@ -64,7 +58,7 @@ public final class Logger {
       arg2 = "null";
     }
     if (sInitialized && ((flags & SKIP_PROVIDER_CHECK) != 0 || TraceEvents.isEnabled(provider))) {
-      return loggerWriteBytesEntry(flags, type, arg1, arg2);
+      return BufferLogger.writeBytesEntry(null, flags, type, arg1, arg2);
     } else {
       return ProfiloConstants.TRACING_DISABLED;
     }
@@ -72,13 +66,13 @@ public final class Logger {
 
   public static void postCreateTrace(
       NativeTraceWriter writer, Buffer buffer, long traceId, int flags, int timeoutMs) {
-    loggerWriteAndWakeupTraceWriter(
+    BufferLogger.writeAndWakeupTraceWriter(
         writer, buffer, traceId, EntryType.TRACE_START, timeoutMs, flags, traceId);
   }
 
   public static void postCreateBackwardTrace(
       NativeTraceWriter writer, Buffer buffer, long traceId, int flags) {
-    loggerWriteAndWakeupTraceWriter(
+    BufferLogger.writeAndWakeupTraceWriter(
         writer, buffer, traceId, EntryType.TRACE_BACKWARDS, 0, flags, traceId);
   }
 
@@ -121,25 +115,4 @@ public final class Logger {
         ProfiloConstants.NONE,
         traceId);
   }
-
-  private static native int loggerWriteStandardEntry(
-      int flags,
-      int type,
-      long timestamp,
-      int tid,
-      int arg1 /* callid */,
-      int arg2 /* matchid */,
-      long arg3 /* extra */);
-
-  private static native int loggerWriteBytesEntry(
-      int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */);
-
-  private static native int loggerWriteAndWakeupTraceWriter(
-      NativeTraceWriter writer,
-      Buffer buffer,
-      long traceId,
-      int type,
-      int callid,
-      int matchid,
-      long extra);
 }
