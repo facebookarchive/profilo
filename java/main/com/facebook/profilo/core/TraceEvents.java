@@ -13,15 +13,16 @@
  */
 package com.facebook.profilo.core;
 
-import com.facebook.soloader.SoLoader;
 import java.util.List;
 
 /** Responsible for managing the currently allowed trace providers. */
 public final class TraceEvents {
 
-  static {
-    SoLoader.loadLibrary("profilo");
-  }
+  /**
+   * com.facebook.profilo.logger.Logger sets this field to true once it's safe to use native
+   * libraries.
+   */
+  public static boolean sInitialized;
 
   private static int sLastNameRefreshProvidersState;
   private static volatile int sProviders = 0;
@@ -50,6 +51,9 @@ public final class TraceEvents {
   }
 
   public static synchronized void refreshProviderNames() {
+    if (!sInitialized) {
+      throw new IllegalStateException("Native library is not initialized.");
+    }
     int currentBitmaskForAllEntries = ProvidersRegistry.getBitmaskForAllEntries();
     if (currentBitmaskForAllEntries == sLastNameRefreshProvidersState) {
       return;

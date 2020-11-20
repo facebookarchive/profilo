@@ -17,7 +17,7 @@
 #pragma once
 
 #include <profilo/LogEntry.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/Logger.h>
 #include <sys/types.h>
 #include <stdexcept>
 
@@ -63,7 +63,7 @@ class Counter {
   Counter(int32_t counterType, int32_t tid)
       : counterType_(counterType),
         point_(),
-        logger_(&RingBuffer::get().logger()),
+        logger_(&Logger::get()),
         tid_(tid) {}
 
   Counter(Logger* logger, int32_t counterType, int32_t tid)

@@ -15,35 +15,55 @@
  */
 
 #include "RingBuffer.h"
+#include "../lfrb/LockFreeRingBuffer.h"
 
 #include <fb/log.h>
 
-#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
-#include <profilo/mmapbuf/Buffer.h>
 #include <atomic>
 #include <memory>
-#include <stdexcept>
 
 namespace facebook {
 namespace profilo {
 
 namespace {
 
-mmapbuf::Buffer noop_buffer{1};
-std::atomic<mmapbuf::Buffer*> buffer(&noop_buffer);
-
-mmapbuf::Buffer& getBuffer() {
-  return *buffer.load();
-}
-
-void initBuffer(mmapbuf::Buffer& newBuffer) {
-  buffer.store(&newBuffer);
-}
+TraceBufferHolder noop_buffer = TraceBuffer::allocate(1);
+std::atomic<TraceBufferHolder*> buffer(&noop_buffer);
 
 } // namespace
 
-void RingBuffer::init(mmapbuf::Buffer& newBuffer) {
-  initBuffer(newBuffer);
+TraceBuffer& RingBuffer::init(size_t sz) {
+  if (buffer.load() != &noop_buffer) {
+    // Already initialized
+    return get();
+  }
+
+  return init(new TraceBufferHolder(TraceBuffer::allocate(sz)));
+}
+
+TraceBuffer& RingBuffer::init(void* ptr, size_t sz) {
+  if (buffer.load() != &noop_buffer) {
+    // Already initialized
+    return get();
+  }
+
+  return init(new TraceBufferHolder(TraceBuffer::allocateAt(sz, ptr)));
+}
+
+TraceBuffer& RingBuffer::init(TraceBufferHolder* new_buffer) {
+  if (buffer.load() != &noop_buffer) {
+    // Already initialized
+    return get();
+  }
+
+  auto expected = &noop_buffer;
+  // We expect the update succeed only once for noop_buffer
+  if (!buffer.compare_exchange_strong(expected, new_buffer)) {
+    delete new_buffer;
+    FBLOGE("Second attempt to init the TraceBuffer");
+  }
+
+  return get();
 }
 
 void RingBuffer::destroy() {
@@ -57,8 +77,8 @@ void RingBuffer::destroy() {
   }
 }
 
-mmapbuf::Buffer& RingBuffer::get() {
-  return getBuffer();
+TraceBuffer& RingBuffer::get() {
+  return **(buffer.load());
 }
 
 } // namespace profilo

@@ -21,8 +21,8 @@
 
 #include <profiler/ExternalTracerManager.h>
 #include <profilo/LogEntry.h>
+#include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 #include <util/common.h>
 
 using namespace facebook::profilo;
@@ -36,7 +36,7 @@ void internal_mark_start(
   if (msg == nullptr || !TraceProviders::get().isEnabled(provider)) {
     return;
   }
-  auto& logger = RingBuffer::get().logger();
+  auto& logger = Logger::get();
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
@@ -53,7 +53,7 @@ void internal_mark_end(const char* provider) {
   if (!TraceProviders::get().isEnabled(provider)) {
     return;
   }
-  auto& logger = RingBuffer::get().logger();
+  auto& logger = Logger::get();
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
@@ -66,7 +66,7 @@ void internal_log_classload_start(const char* provider) {
     return;
   }
 
-  auto& logger = RingBuffer::get().logger();
+  auto& logger = Logger::get();
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
@@ -80,7 +80,7 @@ void internal_log_classload_end(const char* provider, int64_t classid) {
     return;
   }
 
-  auto& logger = RingBuffer::get().logger();
+  auto& logger = Logger::get();
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
@@ -94,7 +94,7 @@ void internal_log_classload_failed(const char* provider) {
     return;
   }
 
-  auto& logger = RingBuffer::get().logger();
+  auto& logger = Logger::get();
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();

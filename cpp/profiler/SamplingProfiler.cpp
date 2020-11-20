@@ -56,8 +56,8 @@
 #endif
 
 #include <profilo/LogEntry.h>
+#include <profilo/Logger.h>
 #include <profilo/TraceProviders.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 
 #include <util/common.h>
 
@@ -355,11 +355,11 @@ void SamplingProfiler::flushStackTraces(
             entry.timestamp = slot.time;
             entry.type = EntryType::JAVA_FRAME_NAME;
             entry.extra = slot.frames[i];
-            int32_t id = RingBuffer::get().logger().write(std::move(entry));
+            int32_t id = Logger::get().write(std::move(entry));
 
             std::string full_name{slot.class_descriptors[i]};
             full_name += slot.method_names[i];
-            RingBuffer::get().logger().writeBytes(
+            Logger::get().writeBytes(
                 EntryType::STRING_VALUE,
                 id,
                 (const uint8_t*)full_name.c_str(),
@@ -388,7 +388,7 @@ void logProfilingErrAnnotation(int32_t key, uint16_t value) {
   if (value == 0) {
     return;
   }
-  RingBuffer::get().logger().writeTraceAnnotation(key, value);
+  Logger::get().writeTraceAnnotation(key, value);
 }
 
 /**

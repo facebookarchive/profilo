@@ -26,8 +26,6 @@ enum AbortReason {
   MISSED_EVENT = 3,
   TIMEOUT = 4,
   NEW_START = 5,
-  CONDITION_NOT_MET = 6,
-  WRITER_EXCEPTION = 7,
 };
 
 } // namespace writer

@@ -24,7 +24,6 @@
 #include <unistd.h>
 #include <climits>
 
-#include <profilo/logger/buffer/Packet.h>
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
@@ -39,9 +38,28 @@ namespace facebook {
 namespace profilo {
 namespace mmapbuf {
 
-using Packet = logger::Packet;
+class MmapBufferManagerTestAccessor {
+ public:
+  explicit MmapBufferManagerTestAccessor(MmapBufferManager& bufferManager)
+      : bufferManager_(bufferManager) {}
 
-constexpr auto kPayloadSize = sizeof(Packet::data);
+  void* mmapBufferPointer() {
+    return reinterpret_cast<void*>(
+        reinterpret_cast<char*>(bufferManager_.buffer_prefix_.load()) +
+        sizeof(MmapBufferPrefix));
+  }
+
+  void* mmapPointer() {
+    return reinterpret_cast<void*>(bufferManager_.buffer_prefix_.load());
+  }
+
+  uint32_t size() {
+    return bufferManager_.size_;
+  }
+
+ private:
+  MmapBufferManager& bufferManager_;
+};
 
 class MmapBufferManagerTest : public ::testing::Test {
  protected:
@@ -60,8 +78,20 @@ class MmapBufferManagerTest : public ::testing::Test {
   test::TemporaryFile temp_dump_file_;
 };
 
+const int kPayloadSize = sizeof(logger::Packet);
+
+struct __attribute__((packed)) TestPacket {
+  char payload[kPayloadSize];
+};
+
+namespace lfrb = logger::lfrb;
+
+using TestBuffer = lfrb::LockFreeRingBuffer<TestPacket>;
+using TestBufferSlot = lfrb::detail::RingBufferSlot<TestPacket>;
+using TestBufferHolder = lfrb::LockFreeRingBufferHolder<TestPacket>;
+
 uint32_t
-writeRandomEntries(TraceBuffer& buf, int records_count, int buffer_size) {
+writeRandomEntries(TestBuffer& buf, int records_count, int buffer_size) {
   // CRC is computed for the last buffer_size packets.
   auto start_crc_index = records_count - buffer_size;
   if (start_crc_index < 0) {
@@ -78,30 +108,41 @@ writeRandomEntries(TraceBuffer& buf, int records_count, int buffer_size) {
     }
     crc = crc32(
         crc, reinterpret_cast<const unsigned char*>(payload), kPayloadSize);
-    alignas(4) Packet packet{.data = {}};
-    std::memcpy(packet.data, static_cast<char*>(payload), kPayloadSize);
+    alignas(4) TestPacket packet{.payload = {}};
+    std::memcpy(packet.payload, static_cast<char*>(payload), kPayloadSize);
     buf.write(packet);
   }
   return crc;
 }
 
+uint32_t calculateBufferSizeBytes(uint32_t buffer_size) {
+  const auto testBufferSize =
+      sizeof(TestBuffer) + buffer_size * sizeof(TestBufferSlot);
+  return sizeof(MmapBufferPrefix) + testBufferSize;
+}
+
 TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
   const auto kBufferSize = 1000;
   MmapBufferManager bufManager{};
+  MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
 
-  auto buffer = bufManager.allocateBufferFile(kBufferSize, path(), 1, 1);
-  ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
+  bool res = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
 
-  auto crc = writeRandomEntries(buffer->ringBuffer(), kBufferSize, kBufferSize);
-  const auto expectedFileSize = sizeof(MmapBufferPrefix) +
-      TraceBuffer::calculateAllocationSize(kBufferSize);
+  ASSERT_EQ(res, true) << "Unable to allocate the buffer";
+
+  TestBufferHolder ringBuffer = TestBuffer::allocateAt(
+      kBufferSize, bufManagerAccessor.mmapBufferPointer());
+  auto crc = writeRandomEntries(*ringBuffer, kBufferSize, kBufferSize);
+
+  const auto expectedFileSize = calculateBufferSizeBytes(kBufferSize);
 
   struct stat fileStat;
   fstat(fd(), &fileStat);
 
   EXPECT_EQ(fileStat.st_size, expectedFileSize);
 
-  int msync_res = msync(buffer->prefix, expectedFileSize, MS_SYNC);
+  int msync_res =
+      msync(bufManagerAccessor.mmapPointer(), expectedFileSize, MS_SYNC);
   ASSERT_EQ(msync_res, 0) << "Unable to msync the buffer: " << strerror(errno);
 
   char* buf = new char[expectedFileSize];
@@ -109,73 +150,52 @@ TEST_F(MmapBufferManagerTest, testMmapBufferAllocationCorrectness) {
 
   ASSERT_EQ(sizeRead, expectedFileSize);
 
-  char* ptr = buf + sizeof(MmapBufferPrefix) + sizeof(TraceBuffer);
+  char* ptr = buf + sizeof(MmapBufferPrefix) + sizeof(TestBuffer);
   auto crc_after = crc32(0L, Z_NULL, 0);
   for (int i = 0; i < kBufferSize; ++i) {
     crc_after = crc32(
         crc_after,
         reinterpret_cast<const unsigned char*>(
-            ptr + sizeof(logger::lfrb::TurnSequencer<std::atomic>) +
-            offsetof(Packet, data)),
-        kPayloadSize);
-    ptr += sizeof(logger::lfrb::detail::RingBufferSlot<Packet>);
+            ptr + sizeof(lfrb::TurnSequencer<std::atomic>)),
+        sizeof(TestPacket));
+    ptr += sizeof(TestBufferSlot);
   }
 
   EXPECT_EQ(crc, crc_after);
   delete[] buf;
+  bufManager.deallocateBuffer();
 }
 
 TEST_F(MmapBufferManagerTest, testMmapBufferAllocateDeallocate) {
   const auto kBufferSize = 1000;
-  const auto expectedFileSize = sizeof(MmapBufferPrefix) +
-      TraceBuffer::calculateAllocationSize(kBufferSize);
-  void* bufAddress = nullptr;
-  {
-    MmapBufferManager bufManager{};
+  MmapBufferManager bufManager{};
+  MmapBufferManagerTestAccessor bufManagerAccessor(bufManager);
 
-    auto buffer = bufManager.allocateBufferFile(kBufferSize, path(), 1, 1);
-    ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
+  bool res = bufManager.allocateBuffer(kBufferSize, path(), 1, 1);
 
-    struct stat fileStat;
-    fstat(fd(), &fileStat);
-    EXPECT_EQ(fileStat.st_size, expectedFileSize);
+  ASSERT_EQ(res, true) << "Unable to allocate the buffer";
 
-    close(fd());
+  const auto expectedFileSize = calculateBufferSizeBytes(kBufferSize);
+  struct stat fileStat;
+  fstat(fd(), &fileStat);
+  EXPECT_EQ(fileStat.st_size, expectedFileSize);
 
-    bufAddress = buffer->prefix;
-    // bufManager destructor removes the buffer
-  }
+  close(fd());
 
+  bufManager.deallocateBuffer();
   void* res_mmap = mmap(
-      bufAddress,
+      bufManagerAccessor.mmapPointer(),
       expectedFileSize,
       MAP_FIXED,
       PROT_READ | MAP_ANONYMOUS,
       -1,
       0);
   // Already unmapped, expect mapping to succeed
-  EXPECT_EQ(bufAddress, res_mmap);
+  EXPECT_EQ(bufManagerAccessor.mmapPointer(), res_mmap);
   int res_open = open(path().c_str(), 0, O_RDONLY);
   EXPECT_EQ(-1, res_open);
   EXPECT_EQ(ENOENT, errno);
   munmap(res_mmap, expectedFileSize);
-}
-
-TEST(MmapBufferManagerTestBasics, testAllocateMultipleBuffers) {
-  MmapBufferManager manager{};
-
-  std::weak_ptr<Buffer> first_weak, second_weak;
-  first_weak = manager.allocateBufferAnonymous(100);
-  EXPECT_FALSE(first_weak.expired());
-
-  second_weak = manager.allocateBufferAnonymous(100);
-  EXPECT_FALSE(second_weak.expired());
-
-  manager.deallocateBuffer(first_weak.lock());
-  EXPECT_TRUE(first_weak.expired());
-
-  manager.deallocateBuffer(second_weak.lock());
-  EXPECT_TRUE(second_weak.expired());
 }
 
 } // namespace mmapbuf

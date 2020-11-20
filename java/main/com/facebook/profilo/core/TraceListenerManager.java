@@ -124,10 +124,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceWriteException(long traceId, Throwable t) {
+  public void onLoggerException(Throwable t) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteException(traceId, t);
+      iterator.next().onLoggerException(t);
     }
   }
 

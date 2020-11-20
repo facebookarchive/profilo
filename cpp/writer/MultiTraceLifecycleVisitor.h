@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-#pragma once
+#include <functional>
+#include <unordered_map>
+#include <unordered_set>
 
-#include <errno.h>
-#include <deque>
-#include <memory>
-#include <utility>
-#include <vector>
-
-#include <profilo/entries/Entry.h>
-#include <profilo/entries/EntryParser.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/writer/AbortReason.h>
-#include <profilo/writer/ScopedThreadPriority.h>
 #include <profilo/writer/TraceCallbacks.h>
-
-#include <zstr/zstr.hpp>
+#include <profilo/writer/TraceLifecycleVisitor.h>
 
 namespace facebook {
 namespace profilo {
@@ -36,52 +29,34 @@ namespace writer {
 
 using namespace facebook::profilo::entries;
 
-class TraceLifecycleVisitor : public EntryVisitor {
+class MultiTraceLifecycleVisitor : public EntryVisitor {
  public:
-  // Timestamp precision is microsec by default.
-  static const size_t kTimestampPrecision = 6;
-
-  static const size_t kTraceFormatVersion = 3;
-
-  TraceLifecycleVisitor(
+  MultiTraceLifecycleVisitor(
       const std::string& folder,
       const std::string& trace_prefix,
       std::shared_ptr<TraceCallbacks> callbacks,
       const std::vector<std::pair<std::string, std::string>>& headers,
-      int64_t trace_id);
-
+      std::function<void(TraceLifecycleVisitor& visitor)>
+          trace_backward_callback);
   virtual void visit(const StandardEntry& entry) override;
   virtual void visit(const FramesEntry& entry) override;
   virtual void visit(const BytesEntry& entry) override;
 
   void abort(AbortReason reason);
-
-  inline bool done() const {
-    return done_;
-  }
+  bool done();
+  std::unordered_set<int64_t> getConsumedTraces();
 
  private:
-  const std::string folder_;
-  const std::string trace_prefix_;
-  const std::vector<std::pair<std::string, std::string>> trace_headers_;
-  std::unique_ptr<std::ofstream> output_;
-
-  // chain of delegates
-  std::deque<std::unique_ptr<EntryVisitor>> delegates_;
-  int64_t expected_trace_;
+  const std::string& folder_;
+  const std::string& trace_prefix_;
   std::shared_ptr<TraceCallbacks> callbacks_;
+  const std::vector<std::pair<std::string, std::string>> trace_headers_;
+
+  std::unordered_map<int64_t, TraceLifecycleVisitor> visitors_;
+  std::unordered_set<int64_t> consumed_traces_;
+  std::function<void(TraceLifecycleVisitor& visitor)> trace_backward_callback_;
+
   bool done_;
-  std::unique_ptr<ScopedThreadPriority> thread_priority_;
-
-  inline bool hasDelegate() {
-    return !delegates_.empty();
-  }
-
-  void onTraceStart(int64_t trace_id, int32_t flags);
-  void onTraceAbort(int64_t trace_id, AbortReason reason);
-  void onTraceEnd(int64_t trace_id);
-  void cleanupState();
-  void writeHeaders(std::ostream& output, std::string id);
 };
 
 } // namespace writer

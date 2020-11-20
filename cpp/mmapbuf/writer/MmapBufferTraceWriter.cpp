@@ -24,12 +24,10 @@
 #include <sys/types.h>
 #include <cstring>
 #include <fstream>
-#include <memory>
 #include <stdexcept>
 
 #include <profilo/entries/EntryType.h>
 #include <profilo/logger/buffer/RingBuffer.h>
-#include <profilo/mmapbuf/Buffer.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
 #include <profilo/writer/TraceWriter.h>
 #include <profilo/writer/trace_headers.h>
@@ -273,11 +271,11 @@ int64_t MmapBufferTraceWriter::writeTrace(
   // entries.
   constexpr auto kExtraRecordCount = 4096;
 
-  std::shared_ptr<mmapbuf::Buffer> buffer =
-      std::make_shared<mmapbuf::Buffer>(entriesCount + kExtraRecordCount);
-  auto& ringBuffer = buffer->ringBuffer();
-  TraceBuffer::Cursor startCursor = ringBuffer.currentHead();
-  Logger logger([&]() -> TraceBuffer& { return ringBuffer; });
+  TraceBufferHolder bufferHolder =
+      TraceBuffer::allocate(entriesCount + kExtraRecordCount);
+  TraceBuffer::Cursor startCursor = bufferHolder->currentHead();
+  Logger logger(
+      [&bufferHolder]() -> logger::PacketBuffer& { return *bufferHolder; });
 
   // It's not technically backwards trace but that's what we use to denote Black
   // Box traces.
@@ -289,7 +287,7 @@ int64_t MmapBufferTraceWriter::writeTrace(
     TraceBuffer* historicBuffer = reinterpret_cast<TraceBuffer*>(
         reinterpret_cast<char*>(bufferFileMap.map_ptr) +
         sizeof(MmapBufferPrefix));
-    bool ok = copyBufferEntries(*historicBuffer, ringBuffer);
+    bool ok = copyBufferEntries(*historicBuffer, *bufferHolder);
     if (!ok) {
       throw std::runtime_error("Unable to read the file-backed buffer.");
     }
@@ -338,12 +336,12 @@ int64_t MmapBufferTraceWriter::writeTrace(
   TraceWriter writer(
       std::move(trace_folder_),
       std::move(trace_prefix_),
-      buffer,
+      *bufferHolder,
       callbacks_,
       calculateHeaders());
 
   try {
-    writer.processTrace(trace_id, startCursor);
+    writer.processTrace(startCursor);
   } catch (std::exception& e) {
     FBLOGE("Error during dump processing: %s", e.what());
     callbacks_->onTraceAbort(trace_id, AbortReason::UNKNOWN);

@@ -139,10 +139,12 @@ fb_xplat_cxx_library(
 fb_xplat_cxx_library(
     name = "writer",
     srcs = [
+        "MultiTraceLifecycleVisitor.cpp",
         "TraceLifecycleVisitor.cpp",
         "TraceWriter.cpp",
     ],
     headers = [
+        "MultiTraceLifecycleVisitor.h",
         "ScopedThreadPriority.h",
         "TraceLifecycleVisitor.h",
     ],
@@ -176,7 +178,6 @@ fb_xplat_cxx_library(
         ":stack_visitor",
         ":timestamp_truncating_visitor",
         profilo_path("cpp/logger:logger"),
-        profilo_path("cpp/mmapbuf:buffer"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/zstr:zstr"),
     ],

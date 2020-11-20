@@ -16,9 +16,6 @@ package com.facebook.profilo.ipc;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.facebook.profilo.config.Config;
-import com.facebook.profilo.logger.LoggerWorkerThread;
-import com.facebook.profilo.mmapbuf.Buffer;
-import java.io.File;
 import javax.annotation.Nullable;
 
 public final class TraceContext implements Parcelable {
@@ -38,10 +35,6 @@ public final class TraceContext implements Parcelable {
   public int abortReason;
   public int traceConfigIdx;
   public TraceConfigExtras mTraceConfigExtras;
-  public File folder;
-  public String prefix;
-  public Buffer buffer;
-  @Nullable public volatile LoggerWorkerThread workerThread;
 
   public static final Parcelable.Creator<TraceContext> CREATOR =
       new Parcelable.Creator<TraceContext>() {
@@ -68,10 +61,7 @@ public final class TraceContext implements Parcelable {
       int flags,
       int abortReason,
       int traceConfigIdx,
-      TraceConfigExtras traceConfigExtras,
-      Buffer buffer,
-      File folder,
-      String prefix) {
+      TraceConfigExtras traceConfigExtras) {
     this.traceId = traceId;
     this.encodedTraceId = encodedTraceId;
     this.config = config;
@@ -84,9 +74,6 @@ public final class TraceContext implements Parcelable {
     this.abortReason = abortReason;
     this.traceConfigIdx = traceConfigIdx;
     this.mTraceConfigExtras = traceConfigExtras;
-    this.buffer = buffer;
-    this.folder = folder;
-    this.prefix = prefix;
   }
 
   public TraceContext(
@@ -100,10 +87,7 @@ public final class TraceContext implements Parcelable {
       int enabledProviders,
       int flags,
       int traceConfigIdx,
-      TraceConfigExtras traceConfigExtras,
-      Buffer buffer,
-      File folder,
-      String prefix) {
+      TraceConfigExtras traceConfigExtras) {
     this(
         traceId,
         encodedTraceId,
@@ -116,10 +100,7 @@ public final class TraceContext implements Parcelable {
         flags,
         (short) 0,
         traceConfigIdx,
-        traceConfigExtras,
-        buffer,
-        folder,
-        prefix);
+        traceConfigExtras);
   }
 
   public TraceContext(TraceContext traceContext) {
@@ -135,10 +116,7 @@ public final class TraceContext implements Parcelable {
         traceContext.flags,
         traceContext.abortReason,
         traceContext.traceConfigIdx,
-        traceContext.mTraceConfigExtras,
-        traceContext.buffer,
-        traceContext.folder,
-        traceContext.prefix);
+        traceContext.mTraceConfigExtras);
   }
 
   public TraceContext(TraceContext traceContext, int abortReason) {
@@ -154,20 +132,11 @@ public final class TraceContext implements Parcelable {
         traceContext.flags,
         abortReason,
         traceContext.traceConfigIdx,
-        traceContext.mTraceConfigExtras,
-        traceContext.buffer,
-        traceContext.folder,
-        traceContext.prefix);
+        traceContext.mTraceConfigExtras);
   }
 
   public TraceContext(
-      TraceContext traceContext,
-      @Nullable Config config,
-      int controller,
-      Object controllerObject,
-      Buffer buffer,
-      File folder,
-      String prefix) {
+      TraceContext traceContext, @Nullable Config config, int controller, Object controllerObject) {
     this(
         traceContext.traceId,
         traceContext.encodedTraceId,
@@ -180,10 +149,7 @@ public final class TraceContext implements Parcelable {
         traceContext.flags,
         traceContext.abortReason,
         traceContext.traceConfigIdx,
-        traceContext.mTraceConfigExtras,
-        buffer,
-        folder,
-        prefix);
+        traceContext.mTraceConfigExtras);
   }
 
   public TraceContext(Parcel src) {

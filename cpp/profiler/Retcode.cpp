@@ -18,7 +18,7 @@
 
 #include <profilo/ExternalApi.h>
 #include <profilo/LogEntry.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/Logger.h>
 
 namespace facebook {
 namespace profilo {
@@ -70,7 +70,7 @@ void StackCollectionEntryConverter::logRetcode(
     int32_t tid,
     int64_t time,
     uint32_t profiler_type) {
-  RingBuffer::get().logger().write(StandardEntry{
+  Logger::get().write(StandardEntry{
       .type = errorToTraceEntry(static_cast<StackCollectionRetcode>(retcode)),
       .timestamp = time,
       .tid = tid,

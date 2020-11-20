@@ -18,14 +18,11 @@ import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
 import com.facebook.profilo.config.Config;
+import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
-import com.facebook.profilo.mmapbuf.Buffer;
-import com.facebook.profilo.mmapbuf.MmapBufferManager;
-import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -48,11 +45,10 @@ public final class TraceControl {
 
   public static final String LOG_TAG = "Profilo/TraceControl";
   public static final int MAX_TRACES = 2;
-  public static final int TRACE_TIMEOUT_MS = 30000; // 30s
+  private static final int TRACE_TIMEOUT_MS = 30000; // 30s
 
   private static final int NORMAL_TRACE_MASK = 0xfffe;
   private static final int MEMORY_TRACE_MASK = 0x1;
-  private static final int DEFAULT_RING_BUFFER_SIZE = 5000;
 
   @NotThreadSafe
   public interface TraceControlListener {
@@ -98,26 +94,14 @@ public final class TraceControl {
   /*package*/ static void initialize(
       SparseArray<TraceController> controllers,
       @Nullable TraceControlListener listener,
-      @Nullable Config initialConfig,
-      MmapBufferManager bufferManager,
-      File folder,
-      String processName,
-      NativeTraceWriterCallbacks callbacks) {
+      @Nullable Config initialConfig) {
 
     // Use double-checked locking to avoid using AtomicReference and thus increasing the
     // overhead of each read by adding a virtual call to it.
     if (sInstance == null) {
       synchronized (TraceControl.class) {
         if (sInstance == null) {
-          sInstance =
-              new TraceControl(
-                  controllers,
-                  initialConfig,
-                  listener,
-                  bufferManager,
-                  folder,
-                  processName,
-                  callbacks);
+          sInstance = new TraceControl(controllers, initialConfig, listener);
         } else {
           throw new IllegalStateException("TraceControl already initialized");
         }
@@ -136,10 +120,6 @@ public final class TraceControl {
 
   private final AtomicReferenceArray<TraceContext> mCurrentTraces;
   private final AtomicReference<Config> mCurrentConfig;
-  private final MmapBufferManager mBufferManager;
-  private final File mFolder;
-  private final String mProcessName;
-  private final NativeTraceWriterCallbacks mCallbacks;
   private final AtomicInteger mCurrentTracesMask;
   @Nullable private final TraceControlListener mListener;
   @Nullable private TraceControlHandler mTraceControlHandler;
@@ -148,17 +128,9 @@ public final class TraceControl {
   /*package*/ TraceControl(
       SparseArray<TraceController> controllers,
       @Nullable Config config,
-      @Nullable TraceControlListener listener,
-      MmapBufferManager bufferManager,
-      File folder,
-      String processName,
-      NativeTraceWriterCallbacks callbacks) {
+      @Nullable TraceControlListener listener) {
     mControllers = controllers;
     mCurrentConfig = new AtomicReference<>(config);
-    mBufferManager = bufferManager;
-    mFolder = folder;
-    mProcessName = processName;
-    mCallbacks = callbacks;
     mCurrentTraces = new AtomicReferenceArray<>(MAX_TRACES);
     mCurrentTracesMask = new AtomicInteger(0);
     mListener = listener;
@@ -348,10 +320,7 @@ public final class TraceControl {
             providers,
             flags,
             traceConfigIdx,
-            traceConfigExtras,
-            getBuffer(config),
-            mFolder,
-            mProcessName);
+            traceConfigExtras);
 
     return startTraceInternal(flags, nextContext);
   }
@@ -363,21 +332,7 @@ public final class TraceControl {
     }
 
     return startTraceInternal(
-        flags,
-        new TraceContext(
-            traceContext,
-            null,
-            controller,
-            traceController,
-            getBuffer(mCurrentConfig.get()),
-            mFolder,
-            mProcessName));
-  }
-
-  private Buffer getBuffer(Config config) {
-    return mBufferManager.allocateBuffer(
-        config.optSystemConfigParamInt("system_config.buffer_size", DEFAULT_RING_BUFFER_SIZE),
-        config.optSystemConfigParamBool("system_config.mmap_buffer", false));
+        flags, new TraceContext(traceContext, null, controller, traceController));
   }
 
   private boolean startTraceInternal(int flags, TraceContext nextContext) {
@@ -397,11 +352,30 @@ public final class TraceControl {
       }
     }
 
-    nextContext.buffer.updateHeader(
-        nextContext.enabledProviders, nextContext.longContext, nextContext.traceId);
+    int timeout;
+    if ((flags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) != 0) {
+      // manual and in-memory traces should not time out
+      timeout = Integer.MAX_VALUE;
+    } else {
+      timeout =
+          nextContext.mTraceConfigExtras.getIntParam(
+              ProfiloConstants.TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS, TRACE_TIMEOUT_MS);
+    }
+    Logger.postCreateTrace(nextContext.traceId, flags, timeout);
 
-    int timeout = getTimeoutFromContext(nextContext);
-
+    int logger_priority =
+        nextContext.mTraceConfigExtras.getIntParam(
+            ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY,
+            ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
+    Logger.writeStandardEntry(
+        ProfiloConstants.NONE,
+        Logger.FILL_TID | Logger.FILL_TIMESTAMP | Logger.SKIP_PROVIDER_CHECK,
+        EntryType.LOGGER_PRIORITY,
+        0,
+        0,
+        logger_priority,
+        0,
+        nextContext.traceId);
     synchronized (this) {
       ensureHandlerInitialized();
       // It's a guard if trace stop was initiated from another thread.
@@ -411,20 +385,6 @@ public final class TraceControl {
     }
 
     return true;
-  }
-
-  static int getTimeoutFromContext(TraceContext context) {
-    int flags = context.flags;
-    int timeout;
-    if ((flags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) != 0) {
-      // manual and in-memory traces should not time out
-      timeout = Integer.MAX_VALUE;
-    } else {
-      timeout =
-          context.mTraceConfigExtras.getIntParam(
-              ProfiloConstants.TRACE_CONFIG_PARAM_TRACE_TIMEOUT_MS, TRACE_TIMEOUT_MS);
-    }
-    return timeout;
   }
 
   public void processMarkerStop(
@@ -715,8 +675,7 @@ public final class TraceControl {
   private void ensureHandlerInitialized() {
     if (mTraceControlHandler == null) {
       mTraceControlHandler =
-          new TraceControlHandler(
-              mListener, TraceControlThreadHolder.getInstance().getLooper(), mCallbacks);
+          new TraceControlHandler(mListener, TraceControlThreadHolder.getInstance().getLooper());
     }
   }
 }

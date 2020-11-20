@@ -20,7 +20,6 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <climits>
-#include <memory>
 
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <util/common.h>
@@ -56,26 +55,7 @@ struct __attribute__((packed)) TestPacket {
 
 using TestBuffer = LockFreeRingBuffer<TestPacket>;
 using TestBufferSlot = detail::RingBufferSlot<TestPacket>;
-
-//
-// This test accessor primarily exists to avoid bringing in the Buffer
-// LFRB holder into these tests.
-//
-class LockFreeRingBufferTestAccessor {
- public:
-  static TestBuffer* allocate(size_t count) {
-    char* mem = new char[TestBuffer::calculateAllocationSize(count)];
-    return allocateAt(count, mem);
-  }
-  static TestBuffer* allocateAt(size_t count, void* ptr) {
-    return TestBuffer::allocateAt(count, ptr);
-  }
-
-  static void destroy(TestBuffer* buf) {
-    buf->~LockFreeRingBuffer();
-    delete[](char*) buf;
-  }
-};
+using TestBufferHolder = LockFreeRingBufferHolder<TestPacket>;
 
 uint32_t writeRandomEntries(
     LockFreeRingBuffer<TestPacket>& buf,
@@ -125,11 +105,9 @@ uint32_t readDumpCrc32(int fd, int records_count) {
 
 TEST_F(LockFreeRingBufferDumpTest, testEmptyBufDump) {
   const auto kBufferSize = 10;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
   int dumpFD = fd();
   buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
   struct stat dumpStat;
   fstat(dumpFD, &dumpStat);
 
@@ -138,12 +116,10 @@ TEST_F(LockFreeRingBufferDumpTest, testEmptyBufDump) {
 
 TEST_F(LockFreeRingBufferDumpTest, testDumpCorrectness) {
   const auto kBufferSize = 7;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
   auto crc = writeRandomEntries(*buf, kBufferSize, kBufferSize);
   int dumpFD = fd();
   buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
   auto crc_after = readDumpCrc32(dumpFD, kBufferSize);
 
   EXPECT_EQ(crc, crc_after);
@@ -151,13 +127,11 @@ TEST_F(LockFreeRingBufferDumpTest, testDumpCorrectness) {
 
 TEST_F(LockFreeRingBufferDumpTest, testSmallBufDump) {
   const auto kBufferSize = 10;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
   const auto kRecords = 5;
   auto crc = writeRandomEntries(*buf, kRecords, kBufferSize);
   int dumpFD = fd();
   buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
   auto crc_after = readDumpCrc32(dumpFD, kRecords);
 
   EXPECT_EQ(crc, crc_after);
@@ -165,26 +139,24 @@ TEST_F(LockFreeRingBufferDumpTest, testSmallBufDump) {
 
 TEST_F(LockFreeRingBufferDumpTest, testBufDumpAfterOverflow) {
   const auto kBufferSize = 10;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
+  TestBufferHolder buf = TestBuffer::allocate(kBufferSize);
   const auto kRecords = 25;
   auto crc = writeRandomEntries(*buf, kRecords, kBufferSize);
   int dumpFD = fd();
   buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
   auto crc_after = readDumpCrc32(dumpFD, kBufferSize);
 
   EXPECT_EQ(crc, crc_after);
 }
 
-TEST(LockFreeRingBufferTest, testAllocationCorrectness) {
+TEST(LockFreeRingBuffer, testAllocationCorrectness) {
   constexpr auto kBufferSize = 10;
   constexpr auto kBufferStructSize = sizeof(TestBuffer);
   constexpr auto kBufferSlotStructSize = sizeof(TestBufferSlot);
-  constexpr auto bufLen = TestBuffer::calculateAllocationSize(kBufferSize);
+  constexpr auto kBufferSlotsSize = kBufferSize * kBufferSlotStructSize;
+  constexpr auto bufLen = kBufferStructSize + kBufferSlotsSize;
   char buf[bufLen] = {0};
-  TestBuffer* ringBuffer =
-      LockFreeRingBufferTestAccessor::allocateAt(kBufferSize, buf);
+  TestBufferHolder ringBuffer = TestBuffer::allocateAt(kBufferSize, buf);
 
   auto crc = writeRandomEntries(*ringBuffer, kBufferSize, kBufferSize);
 
@@ -199,6 +171,12 @@ TEST(LockFreeRingBufferTest, testAllocationCorrectness) {
   }
 
   EXPECT_EQ(crc, crc_after);
+}
+
+// Expect not to send an error signal, such as SIGSEGV.
+TEST(LockFreeRingBuffer, testDeallocationAfterMove) {
+  TestBufferHolder ringBuffer = TestBuffer::allocate(10);
+  TestBufferHolder ringBufferMoved = std::move(ringBuffer);
 }
 
 } // namespace lfrb

@@ -94,7 +94,7 @@ profilo_cxx_test(
     deps = [
         "//xplat/third-party/gmock:gmock",
         "//xplat/third-party/linker_lib:pthread",
-        profilo_path("cpp/logger/buffer:buffer_static"),
+        profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/writer:packet_reassembler"),
     ],
 )
@@ -117,7 +117,7 @@ profilo_cxx_test(
     deps = [
         "//xplat/folly:experimental_test_util",
         "//xplat/third-party/gmock:gmock",
-        profilo_path("cpp/logger/buffer:buffer_static"),
+        profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/writer:writer"),
     ],
 )
@@ -184,7 +184,7 @@ profilo_cxx_test(
         profilo_path("deps/fb:fb"),
         profilo_path("deps/sigmux:phaser"),
         profilo_path("cpp/profiler:profiler"),
-        profilo_path("cpp/logger/buffer:buffer_static"),
+        profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/util:util"),
     ],
 )

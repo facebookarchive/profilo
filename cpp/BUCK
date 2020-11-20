@@ -1,6 +1,8 @@
 load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
+PROVIDER_EXPORTED_HEADERS = ["TraceProviders.h"]
+
 fb_xplat_cxx_library(
     name = "providers",
     srcs = [
@@ -8,9 +10,10 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
+        exclude = PROVIDER_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
-    exported_headers = ["TraceProviders.h"],
+    exported_headers = PROVIDER_EXPORTED_HEADERS,
     allow_jni_merging = False,
     compiler_flags = [
         "-fexceptions",
@@ -78,15 +81,15 @@ fb_xplat_cxx_library(
     soname = "libprofilo_jni_helpers.$(ext)",
     supported_platforms_regex = "^android-(armv7|arm64|x86|x86_64)$",
     deps = [
-        ":constants",
-        profilo_path("cpp/jni:jni"),
-        profilo_path("cpp/logger/buffer:buffer"),
-        profilo_path("cpp/mmapbuf:buffer_jni"),
+        profilo_path("cpp/logger:logger"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),
-        profilo_path("deps/fbjni:fbjni"),
     ],
 )
+
+PROFILO_EXPORTED_HEADERS = [
+    "log.h",
+] + PROVIDER_EXPORTED_HEADERS
 
 fb_xplat_cxx_library(
     name = "profilo",
@@ -96,9 +99,10 @@ fb_xplat_cxx_library(
     ],
     headers = glob(
         ["*.h"],
+        exclude = PROFILO_EXPORTED_HEADERS,
     ),
     header_namespace = "profilo",
-    exported_headers = ["log.h"],
+    exported_headers = PROFILO_EXPORTED_HEADERS,
     allow_jni_merging = True,
     compiler_flags = [
         "-fexceptions",
@@ -119,8 +123,7 @@ fb_xplat_cxx_library(
         ":providers",
         profilo_path("cpp/api:external_api_glue"),
         profilo_path("cpp/jni:jni"),
-        profilo_path("cpp/logger/buffer:buffer_static"),
-        profilo_path("cpp/mmapbuf:buffer"),
+        profilo_path("cpp/logger:logger_static"),
         profilo_path("cpp/profiler:external_tracer_manager"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/atomic:atomic"),

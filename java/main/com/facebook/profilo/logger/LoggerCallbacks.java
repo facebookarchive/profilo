@@ -11,19 +11,9 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.facebook.profilo.writer;
+package com.facebook.profilo.logger;
 
-import com.facebook.proguard.annotations.DoNotStrip;
+public interface LoggerCallbacks {
 
-@DoNotStrip
-public interface NativeTraceWriterCallbacks {
-
-  @DoNotStrip
-  void onTraceWriteStart(long traceId, int flags, String file);
-
-  @DoNotStrip
-  void onTraceWriteEnd(long traceId);
-
-  @DoNotStrip
-  void onTraceWriteAbort(long traceId, int abortReason);
+  void onLoggerException(Throwable t);
 }

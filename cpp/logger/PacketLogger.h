@@ -17,7 +17,7 @@
 #pragma once
 
 #include <profilo/logger/buffer/Packet.h>
-#include <profilo/logger/buffer/TraceBuffer.h>
+#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <functional>
 
@@ -29,21 +29,22 @@ class Logger;
 
 namespace logger {
 
-using TraceBufferProvider = std::function<TraceBuffer&()>;
+using PacketBuffer = TraceBuffer;
+using PacketBufferProvider = std::function<PacketBuffer&()>;
 
 class PacketLogger {
  public:
-  PacketLogger(TraceBufferProvider provider);
+  PacketLogger(PacketBufferProvider provider);
   PacketLogger(const PacketLogger& other) = delete;
 
   PROFILOEXPORT void write(void* payload, size_t size);
-  PROFILOEXPORT TraceBuffer::Cursor writeAndGetCursor(
+  PROFILOEXPORT PacketBuffer::Cursor writeAndGetCursor(
       void* payload,
       size_t size);
 
  private:
   std::atomic<uint32_t> streamID_;
-  TraceBufferProvider provider_;
+  PacketBufferProvider provider_;
 };
 
 } // namespace logger

@@ -19,7 +19,7 @@
 #include <cstring>
 
 #include <profilo/LogEntry.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/Logger.h>
 #include <profilo/threadmetadata/ThreadMetadata.h>
 #include <util/ProcFsUtils.h>
 #include <util/common.h>
@@ -89,7 +89,7 @@ static void logThreadPriority(Logger& logger, int32_t tid) {
 /* Log thread names and priorities. */
 void logThreadMetadata(JNIEnv*, jobject) {
   const auto& threads = util::threadListFromProcFs();
-  auto& logger = RingBuffer::get().logger();
+  auto& logger = Logger::get();
 
   for (auto& tid : threads) {
     logThreadName(logger, tid);

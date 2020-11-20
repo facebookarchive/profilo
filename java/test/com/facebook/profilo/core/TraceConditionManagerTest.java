@@ -25,7 +25,6 @@ import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.testing.powermock.PowerMockTest;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
-import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,10 +53,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
             0,
             0,
             0,
-            mExtras,
-            /*buffer*/ null,
-            new File("."),
-            "prefix-");
+            mExtras);
   }
 
   @Test

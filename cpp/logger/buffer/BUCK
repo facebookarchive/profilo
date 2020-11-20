@@ -5,30 +5,8 @@ fb_xplat_cxx_library(
     name = "buffer",
     header_namespace = "profilo/logger/buffer",
     exported_headers = [
-        "RingBuffer.h",
-    ],
-    compiler_flags = [
-        "-fexceptions",
-        "-frtti",
-        "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
-    ],
-    labels = ["supermodule:android/default/loom.core"],
-    visibility = [
-        profilo_path("..."),
-    ],
-    exported_deps = [
-        profilo_path("cpp/logger/buffer:trace_buffer"),
-        profilo_path("cpp/mmapbuf:buffer"),
-    ],
-)
-
-fb_xplat_cxx_library(
-    name = "trace_buffer",
-    header_namespace = "profilo/logger/buffer",
-    exported_headers = [
         "Packet.h",
-        "TraceBuffer.h",
+        "RingBuffer.h",
     ],
     compiler_flags = [
         "-fexceptions",
@@ -64,7 +42,6 @@ fb_xplat_cxx_library(
     ],
     force_static = True,
     labels = ["supermodule:android/default/loom.core"],
-    link_whole = True,
     tests = [
         profilo_path("cpp/test:packet_logger"),
     ],
@@ -73,7 +50,6 @@ fb_xplat_cxx_library(
     ],
     deps = [
         profilo_path("cpp/logger/lfrb:lfrb"),
-        profilo_path("cpp/mmapbuf:buffer"),
         profilo_path("deps/fb:fb"),
     ],
 )

@@ -15,7 +15,7 @@
  */
 
 #include "JSTracer.h"
-#include "profilo/logger/buffer/RingBuffer.h"
+#include "profilo/Logger.h"
 
 namespace facebook {
 namespace profilo {
@@ -34,7 +34,7 @@ void JSTracer::flushStack(
     uint16_t depth,
     int tid,
     int64_t time_) {
-  RingBuffer::get().logger().writeStackFrames(
+  Logger::get().writeStackFrames(
       tid, time_, frames, depth, 0, EntryType::JAVASCRIPT_STACK_FRAME);
 }
 

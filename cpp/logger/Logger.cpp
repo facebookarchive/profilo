@@ -28,6 +28,13 @@ namespace profilo {
 
 using namespace entries;
 
+Logger& Logger::get() {
+  static Logger logger(
+      [&]() -> logger::PacketBuffer& { return RingBuffer::get(); },
+      kInitialEntryId);
+  return logger;
+}
+
 int32_t Logger::writeBytes(
     EntryType type,
     int32_t arg1,

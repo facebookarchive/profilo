@@ -26,7 +26,7 @@
 #include <perfevents/detail/ClockOffsetMeasurement.h>
 #include <perfevents/detail/FileBackedMappingsList.h>
 #include <profilo/LogEntry.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/Logger.h>
 #include <util/common.h>
 
 namespace fbjni = facebook::jni;
@@ -95,7 +95,7 @@ class ProfiloWriterListener : public RecordListener {
 
     switch (type) {
       case EVENT_TYPE_MAJOR_FAULTS: {
-        profilo::RingBuffer::get().logger().write(StandardEntry{
+        profilo::Logger::get().write(StandardEntry{
             .id = 0,
             .type = EntryType::MAJOR_FAULT,
             .timestamp = ((int64_t)record.time()) + offset_,
@@ -112,7 +112,7 @@ class ProfiloWriterListener : public RecordListener {
           return;
         }
 
-        RingBuffer::get().logger().write(StandardEntry{
+        Logger::get().write(StandardEntry{
             .id = 0,
             .type = EntryType::MINOR_FAULT,
             .timestamp = ((int64_t)record.time()) + offset_,
@@ -133,7 +133,7 @@ class ProfiloWriterListener : public RecordListener {
   virtual void onForkExit(const RecordForkExit& record) {}
 
   virtual void onLost(const RecordLost& record) {
-    RingBuffer::get().logger().write(StandardEntry{
+    Logger::get().write(StandardEntry{
         .id = 0,
         .type = EntryType::PERFEVENTS_LOST,
         .timestamp = monotonicTime(),

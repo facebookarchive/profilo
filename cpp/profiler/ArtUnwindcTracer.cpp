@@ -19,7 +19,7 @@
 
 #include "profiler/ArtUnwindcTracer.h"
 #include "profiler/BaseTracer.h"
-#include "profilo/logger/buffer/RingBuffer.h"
+#include "profilo/Logger.h"
 
 #include "profiler/unwindc/runtime.h"
 
@@ -142,7 +142,7 @@ void ArtUnwindcTracer<kVersion>::flushStack(
     uint16_t depth,
     int tid,
     int64_t time_) {
-  RingBuffer::get().logger().writeStackFrames(
+  Logger::get().writeStackFrames(
       tid, static_cast<int64_t>(time_), frames, depth);
 }
 

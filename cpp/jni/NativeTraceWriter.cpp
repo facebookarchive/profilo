@@ -31,15 +31,16 @@ namespace profilo {
 namespace writer {
 
 NativeTraceWriter::NativeTraceWriter(
-    std::shared_ptr<Buffer> buffer,
     std::string trace_folder,
     std::string trace_prefix,
     fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks)
-    : callbacks_(std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks)),
+    :
+
+      callbacks_(std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks)),
       writer_(
           std::move(trace_folder),
           std::move(trace_prefix),
-          std::move(buffer),
+          RingBuffer::get(),
           callbacks_,
           calculateHeaders(),
           traceBackwards) {}
@@ -54,11 +55,10 @@ void NativeTraceWriter::submit(TraceBuffer::Cursor cursor, int64_t trace_id) {
 
 local_ref<NativeTraceWriter::jhybriddata> NativeTraceWriter::initHybrid(
     alias_ref<jclass>,
-    JBuffer* buffer,
     std::string trace_folder,
     std::string trace_prefix,
     fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks) {
-  return makeCxxInstance(buffer->get(), trace_folder, trace_prefix, callbacks);
+  return makeCxxInstance(trace_folder, trace_prefix, callbacks);
 }
 
 void NativeTraceWriter::registerNatives() {
