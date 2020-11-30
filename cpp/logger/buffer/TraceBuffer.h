@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-#include <cstdint>
+#pragma once
+
+#include <profilo/logger/buffer/Packet.h>
+#include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 
 namespace facebook {
 namespace profilo {
-namespace logger_jni {
 
-// These flags should match the ones from Logger.java
-static constexpr uint32_t FILL_TIMESTAMP = 1 << 1;
-static constexpr uint32_t FILL_TID = 1 << 2;
+using TraceBuffer = logger::lfrb::LockFreeRingBuffer<logger::Packet>;
+using TraceBufferSlot = logger::lfrb::detail::RingBufferSlot<logger::Packet>;
 
-void registerNatives();
-
-} // namespace logger_jni
 } // namespace profilo
 } // namespace facebook

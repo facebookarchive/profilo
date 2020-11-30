@@ -16,22 +16,24 @@
 
 #pragma once
 
-#include <profilo/mmapbuf/header/MmapBufferHeader.h>
-
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
 #include <jni.h>
+#include <pthread.h>
 
-#include <atomic>
+#include <linker/locks.h>
+#include <profilo/mmapbuf/Buffer.h>
+#include <profilo/mmapbuf/JBuffer.h>
+#include <functional>
+#include <memory>
 #include <string>
+#include <vector>
 
 namespace fbjni = facebook::jni;
 
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
-
-using namespace facebook::profilo::mmapbuf::header;
 
 class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
  public:
@@ -40,39 +42,41 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
 
   static fbjni::local_ref<MmapBufferManager::jhybriddata> initHybrid(
       fbjni::alias_ref<jclass>);
+  //
+  // Allocates TraceBuffer according to the passed parameters in a file.
+  // Returns a non-null reference if successful, nullptr if not.
+  //
+  std::shared_ptr<Buffer> allocateBufferAnonymous(int32_t buffer_slots_size);
+
+  fbjni::local_ref<JBuffer::javaobject> allocateBufferAnonymousForJava(
+      int32_t buffer_slots_size);
 
   //
   // Allocates TraceBuffer according to the passed parameters in a file.
-  // Returns true if the buffer was allocated and false otherwise.
+  // Returns a non-null reference if successful, nullptr if not.
   //
-  bool allocateBuffer(
+  std::shared_ptr<Buffer> allocateBufferFile(
       int32_t buffer_slots_size,
       const std::string& path,
       int32_t version_code,
       int64_t config_id);
 
-  //
-  // De-allocates previously allocated buffer and deletes the file.
-  //
-  void deallocateBuffer();
+  fbjni::local_ref<JBuffer::javaobject> allocateBufferFileForJava(
+      int32_t buffer_slots_size,
+      const std::string& path,
+      int32_t version_code,
+      int64_t config_id);
 
-  // Updates current tracing state
-  void updateHeader(int32_t providers, int64_t long_context, int64_t trace_id);
+  bool deallocateBufferForJava(JBuffer* buffer);
+  bool deallocateBuffer(std::shared_ptr<Buffer> buffer);
 
-  void updateId(const std::string& id);
-
-  void updateFilePath(const std::string& file_path);
-
-  void updateMemoryMappingFilename(const std::string& maps_file_path);
+  void forEachBuffer(std::function<void(Buffer&)> fn);
 
   static void registerNatives();
 
-  explicit MmapBufferManager();
-
  private:
-  std::string path_;
-  size_t size_;
-  std::atomic<MmapBufferPrefix*> buffer_prefix_;
+  pthread_rwlock_t buffers_lock_ = PTHREAD_RWLOCK_INITIALIZER;
+  std::vector<std::shared_ptr<Buffer>> buffers_;
 
   friend class MmapBufferManagerTestAccessor;
 };

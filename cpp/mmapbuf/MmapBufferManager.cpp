@@ -15,137 +15,85 @@
  */
 
 #include "MmapBufferManager.h"
-
-#include <profilo/logger/buffer/RingBuffer.h>
-
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
+#include <errno.h>
 #include <cstring>
 #include <memory>
+#include <stdexcept>
+#include <system_error>
 
-#include <errno.h>
 #include <fb/log.h>
+#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/mmapbuf/header/MmapBufferHeader.h>
 
 namespace facebook {
 namespace profilo {
 namespace mmapbuf {
 
-MmapBufferManager::MmapBufferManager()
-    : path_(""), size_(0), buffer_prefix_(nullptr) {}
+fbjni::local_ref<JBuffer::javaobject>
+MmapBufferManager::allocateBufferAnonymousForJava(int32_t buffer_size) {
+  return JBuffer::makeJBuffer(allocateBufferAnonymous(buffer_size));
+}
 
-bool MmapBufferManager::allocateBuffer(
+std::shared_ptr<Buffer> MmapBufferManager::allocateBufferAnonymous(
+    int32_t buffer_size) {
+  std::shared_ptr<Buffer> buffer = nullptr;
+  try {
+    buffer = std::make_shared<Buffer>((size_t)buffer_size);
+  } catch (std::exception& ex) {
+    FBLOGE("%s", ex.what());
+    return nullptr;
+  }
+
+  {
+    WriterLock lock(&buffers_lock_);
+    buffers_.push_back(buffer);
+  }
+
+  // Pass the buffer to the global singleton.
+  RingBuffer::init(*buffer);
+
+  return buffer;
+}
+
+fbjni::local_ref<JBuffer::javaobject>
+MmapBufferManager::allocateBufferFileForJava(
     int32_t buffer_size,
     const std::string& path,
     int32_t version_code,
     int64_t config_id) {
-  int fd = open(path.c_str(), O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
-  if (fd == -1) {
-    FBLOGE("Cannot open the file \"%s\": %s", path.c_str(), strerror(errno));
-    return false;
+  auto buffer = allocateBufferFile(buffer_size, path, version_code, config_id);
+  if (buffer == nullptr) {
+    throw std::invalid_argument("Could not allocate file-backed buffer");
   }
-
-  size_t totalSizeBytes = sizeof(MmapBufferPrefix) + sizeof(TraceBuffer) +
-      buffer_size * sizeof(TraceBufferSlot);
-
-  // In order to allocate file size of N bytes we seek to (N-1)th position and
-  // just write single byte at the end. This allows us to avoid filling the
-  // whole file before mmap() call.
-  auto res = lseek(fd, totalSizeBytes - 1, SEEK_SET);
-  if (res == -1) {
-    FBLOGE("Lseek failed: %s", strerror(errno));
-    close(fd);
-    return false;
-  }
-
-  char byte = 0x00;
-  res = write(fd, &byte, 1);
-  if (res == -1) {
-    FBLOGE("Single byte write failed: %s", strerror(errno));
-    close(fd);
-    return false;
-  }
-
-  void* map_ptr =
-      mmap(nullptr, totalSizeBytes, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-  if (map_ptr == MAP_FAILED) {
-    FBLOGE("Mmap failed: %s", strerror(errno));
-    close(fd);
-    return false;
-  }
-
-  close(fd);
-
-  size_ = totalSizeBytes;
-  path_ = path;
-  // Initialize MmapBuffer in the created mmap area.
-  MmapBufferPrefix* mmapBufferPrefix =
-      new (reinterpret_cast<char*>(map_ptr)) MmapBufferPrefix();
-  buffer_prefix_.store(mmapBufferPrefix);
-
-  mmapBufferPrefix->header.bufferVersion = RingBuffer::kVersion;
-  mmapBufferPrefix->header.size = (uint32_t)buffer_size;
-  mmapBufferPrefix->header.versionCode = version_code;
-  mmapBufferPrefix->header.configId = config_id;
-
-  // Buffer initialization
-  RingBuffer::init(
-      reinterpret_cast<char*>(map_ptr) + sizeof(MmapBufferPrefix), buffer_size);
-
-  return true;
+  return JBuffer::makeJBuffer(buffer);
 }
 
-void MmapBufferManager::deallocateBuffer() {
-  RingBuffer::destroy();
-  munmap(buffer_prefix_.load(), size_);
-  unlink(path_.c_str());
-}
-
-void MmapBufferManager::updateHeader(
-    int32_t providers,
-    int64_t long_context,
-    int64_t trace_id) {
-  MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
-  if (bufferPrefix == nullptr) {
-    return;
+std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
+    int32_t buffer_size,
+    const std::string& path,
+    int32_t version_code,
+    int64_t config_id) {
+  std::shared_ptr<Buffer> buffer = nullptr;
+  try {
+    buffer = std::make_shared<Buffer>(path, (size_t)buffer_size);
+  } catch (std::system_error& ex) {
+    FBLOGE("%s", ex.what());
+    return nullptr;
   }
-  bufferPrefix->header.providers = providers;
-  bufferPrefix->header.longContext = long_context;
-  bufferPrefix->header.traceId = trace_id;
-}
 
-void MmapBufferManager::updateId(const std::string& id) {
-  MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
-  if (bufferPrefix == nullptr) {
-    return;
-  }
-  // Compare and if session id has not changed exit
-  auto sz = std::min(id.size(), (size_t)MmapBufferHeader::kSessionIdLength - 1);
-  id.copy(bufferPrefix->header.sessionId, sz);
-  bufferPrefix->header.sessionId[sz] = 0;
-}
+  buffer->prefix->header.bufferVersion = RingBuffer::kVersion;
+  buffer->prefix->header.size = (size_t)buffer_size;
+  buffer->prefix->header.versionCode = version_code;
+  buffer->prefix->header.configId = config_id;
 
-void MmapBufferManager::updateFilePath(const std::string& file_path) {
-  if (rename(path_.c_str(), file_path.c_str())) {
-    throw std::runtime_error(
-        std::string("Failed to rename mmap file: ") + std::strerror(errno));
+  {
+    WriterLock lock(&buffers_lock_);
+    buffers_.push_back(buffer);
   }
-}
 
-void MmapBufferManager::updateMemoryMappingFilename(
-    const std::string& maps_filename) {
-  MmapBufferPrefix* bufferPrefix = buffer_prefix_.load();
-  if (bufferPrefix == nullptr) {
-    return;
-  }
-  // Compare and if session id has not changed exit
-  auto sz = std::min(
-      maps_filename.size(),
-      (size_t)MmapBufferHeader::kMemoryMapsFilenameLength - 1);
-  maps_filename.copy(bufferPrefix->header.memoryMapsFilename, sz);
-  bufferPrefix->header.memoryMapsFilename[sz] = 0;
+  // Pass the buffer to the global singleton
+  RingBuffer::init(*buffer);
+  return buffer;
 }
 
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
@@ -153,20 +101,37 @@ fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(
   return makeCxxInstance();
 }
 
+bool MmapBufferManager::deallocateBufferForJava(JBuffer* buffer) {
+  return deallocateBuffer(buffer->get());
+}
+
+bool MmapBufferManager::deallocateBuffer(std::shared_ptr<Buffer> buffer) {
+  WriterLock lock(&buffers_lock_);
+  auto iter = std::find(buffers_.begin(), buffers_.end(), buffer);
+  if (iter == buffers_.end()) {
+    return false;
+  }
+  buffers_.erase(iter);
+  return true;
+}
+
+void MmapBufferManager::forEachBuffer(std::function<void(Buffer&)> fn) {
+  ReaderLock lock(&buffers_lock_);
+  for (auto& buf : buffers_) {
+    fn(*buf);
+  }
+}
+
 void MmapBufferManager::registerNatives() {
   registerHybrid({
       makeNativeMethod("initHybrid", MmapBufferManager::initHybrid),
       makeNativeMethod(
-          "nativeAllocateBuffer", MmapBufferManager::allocateBuffer),
+          "nativeAllocateBuffer", MmapBufferManager::allocateBufferFileForJava),
       makeNativeMethod(
-          "nativeDeallocateBuffer", MmapBufferManager::deallocateBuffer),
-      makeNativeMethod("nativeUpdateHeader", MmapBufferManager::updateHeader),
-      makeNativeMethod("nativeUpdateId", MmapBufferManager::updateId),
+          "nativeAllocateBuffer",
+          MmapBufferManager::allocateBufferAnonymousForJava),
       makeNativeMethod(
-          "nativeUpdateFilePath", MmapBufferManager::updateFilePath),
-      makeNativeMethod(
-          "nativeUpdateMemoryMappingFilename",
-          MmapBufferManager::updateMemoryMappingFilename),
+          "nativeDeallocateBuffer", MmapBufferManager::deallocateBufferForJava),
   });
 }
 

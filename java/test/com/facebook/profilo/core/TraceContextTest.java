@@ -22,6 +22,7 @@ import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import org.junit.Before;
@@ -85,7 +86,10 @@ public class TraceContextTest {
             FLAGS,
             ABORT_REASON,
             TRACE_CONFIG_IDX,
-            PROVIDER_EXTRAS);
+            PROVIDER_EXTRAS,
+            /*buffer*/ null,
+            new File("."),
+            "prefix-");
   }
 
   @Test

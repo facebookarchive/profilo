@@ -11,30 +11,39 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.facebook.profilo.writer;
+package com.facebook.profilo.logger;
 
-import com.facebook.jni.HybridData;
 import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 
 @DoNotStrip
-public final class NativeTraceWriter {
+public final class BufferLogger {
+
   static {
     SoLoader.loadLibrary("profilo");
   }
 
-  @DoNotStrip private HybridData mHybridData;
+  public static native int writeStandardEntry(
+      Buffer buffer,
+      int flags,
+      int type,
+      long timestamp,
+      int tid,
+      int arg1 /* callid */,
+      int arg2 /* matchid */,
+      long arg3 /* extra */);
 
-  public NativeTraceWriter(
-      Buffer buffer, String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks) {
-    mHybridData = initHybrid(buffer, traceFolder, tracePrefix, callbacks);
-  }
+  public static native int writeBytesEntry(
+      Buffer buffer, int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */);
 
-  private static native HybridData initHybrid(
-      Buffer buffer, String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks);
-
-  public native void loop();
-
-  public native String getTraceFolder(long traceID);
+  static native int writeAndWakeupTraceWriter(
+      NativeTraceWriter writer,
+      Buffer buffer,
+      long traceId,
+      int type,
+      int callid,
+      int matchid,
+      long extra);
 }

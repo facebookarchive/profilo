@@ -16,19 +16,34 @@ package com.facebook.profilo.logger;
 import android.os.Process;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.writer.NativeTraceWriter;
+import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 
-class LoggerWorkerThread extends Thread {
+public class LoggerWorkerThread extends Thread {
 
+  private final long mTraceId;
   private final NativeTraceWriter mTraceWriter;
+  private final NativeTraceWriterCallbacks mCallbacks;
 
-  LoggerWorkerThread(NativeTraceWriter writer) {
+  public LoggerWorkerThread(
+      long traceId, NativeTraceWriter writer, NativeTraceWriterCallbacks callbacks) {
     super("Prflo:Logger");
+    mTraceId = traceId;
     mTraceWriter = writer;
+    mCallbacks = callbacks;
+  }
+
+  public NativeTraceWriter getTraceWriter() {
+    return mTraceWriter;
   }
 
   public void run() {
-    Process.setThreadPriority(ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
-
-    mTraceWriter.loop();
+    try {
+      Process.setThreadPriority(ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
+      mTraceWriter.loop();
+    } catch (RuntimeException ex) {
+      if (mCallbacks != null) {
+        mCallbacks.onTraceWriteException(mTraceId, ex);
+      }
+    }
   }
 }

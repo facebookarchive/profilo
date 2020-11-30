@@ -19,7 +19,6 @@
 #include <profilo/LogEntry.h>
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryType.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 
 #include "PacketLogger.h"
 
@@ -39,8 +38,6 @@ class Logger {
   // Start first entry shifted to allow safely adding extra entries to the trace
   // after completion.
   static constexpr int32_t kInitialEntryId = 512;
-
-  PROFILOEXPORT static Logger& get();
 
   template <class T>
   int32_t write(T&& entry, uint16_t id_step = 1) {
@@ -80,8 +77,10 @@ class Logger {
   PROFILOEXPORT void writeTraceAnnotation(int32_t key, int64_t value);
 
   // This constructor is for internal framework use.
-  // Client code should use Logger::get() method instead.
-  Logger(logger::PacketBufferProvider provider, int32_t start_entry_id = 0)
+  // Client code should use RingBuffer::get().logger() method instead.
+  Logger(
+      logger::TraceBufferProvider provider,
+      int32_t start_entry_id = kInitialEntryId)
       : entryID_(start_entry_id), logger_(provider) {}
 
  private:

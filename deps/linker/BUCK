@@ -38,3 +38,19 @@ profilo_oss_cxx_library(
         profilo_path("deps/sigmux:sigmux"),
     ],
 )
+
+profilo_oss_cxx_library(
+    name = "locks",
+    header_namespace = "linker",
+    exported_headers = [
+        "locks.h",
+        "log_assert.h",
+    ],
+    exported_linker_flags = ["-llog"],
+    preprocessor_flags = [
+        "-DLOG_TAG=\"Profilo/linker\"",
+    ],
+    visibility = [
+        "PUBLIC",
+    ],
+)

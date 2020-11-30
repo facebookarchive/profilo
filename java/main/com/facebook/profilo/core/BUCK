@@ -98,6 +98,8 @@ fb_core_android_library(
     deps = [
         ":constants",
         ":registry",
+        profilo_path("java/main/com/facebook/profilo/mmapbuf:mmapbuf"),
+        profilo_path("java/main/com/facebook/profilo/writer:writer"),
         profilo_path("deps/androidinternals:os"),
         profilo_path("deps/buildconstants:buildconstants"),
         profilo_path("deps/fbtrace:utils"),
@@ -176,7 +178,6 @@ fb_core_android_library(
         profilo_path("deps/soloader:soloader"),
         profilo_path("deps/zip:zip"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
-        profilo_path("java/main/com/facebook/profilo/mmapbuf:listener"),
         profilo_path("java/main/com/facebook/profilo/mmapbuf:mmapbuf"),
     ],
     exported_deps = [

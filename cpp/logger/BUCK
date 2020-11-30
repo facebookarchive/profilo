@@ -3,34 +3,6 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 fb_xplat_cxx_library(
     name = "logger",
-    header_namespace = "profilo",
-    exported_headers = [
-        "Logger.h",
-        "PacketLogger.h",
-    ],
-    compiler_flags = [
-        "-fexceptions",
-        "-frtti",
-        "-std=gnu++14",
-        "-DLOG_TAG=\"Profilo\"",
-    ],
-    labels = ["supermodule:android/default/loom.core"],
-    visibility = [
-        profilo_path("..."),
-    ],
-    deps = [
-        profilo_path("cpp:constants"),
-        profilo_path("cpp/logger/buffer:buffer"),
-        profilo_path("cpp/util:util"),
-    ],
-    exported_deps = [
-        profilo_path("cpp/generated:cpp"),
-        profilo_path("cpp/logger/lfrb:lfrb"),
-    ],
-)
-
-fb_xplat_cxx_library(
-    name = "logger_static",
     srcs = [
         "Logger.cpp",
         "PacketLogger.cpp",
@@ -47,8 +19,9 @@ fb_xplat_cxx_library(
         "-O3",
         "-DLOG_TAG=\"Profilo\"",
     ],
-    force_static = True,
     labels = ["supermodule:android/default/loom.core"],
+    link_whole = True,
+    soname = "libprofilo_logger.$(ext)",
     tests = [
         profilo_path("cpp/test:packet_logger"),
     ],
@@ -58,7 +31,7 @@ fb_xplat_cxx_library(
     deps = [
         profilo_path("cpp:constants"),
         profilo_path("cpp/generated:cpp"),
-        profilo_path("cpp/logger/buffer:buffer_static"),
+        profilo_path("cpp/logger/buffer:trace_buffer"),
         profilo_path("deps/fb:fb"),
         profilo_path("cpp/util:util"),
     ],

@@ -101,7 +101,7 @@ void SystemCounters::logCpuFrequencyInfo(int64_t time, int32_t tid) {
     return;
   }
   try {
-    auto& logger = Logger::get();
+    auto& logger = RingBuffer::get().logger();
     if (!cpuFrequencyStats_) {
       cpuFrequencyStats_.reset(new CpuFrequencyStats(cpu_cores));
       // Log max frequency only once

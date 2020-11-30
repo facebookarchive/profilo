@@ -32,6 +32,7 @@
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryType.h>
 #include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/mmapbuf/Buffer.h>
 #include <profilo/writer/TraceCallbacks.h>
 #include <profilo/writer/TraceWriter.h>
 
@@ -45,7 +46,6 @@ namespace facebook {
 namespace profilo {
 
 const int64_t kTraceID = 1;
-const int64_t kSecondTraceID = 2;
 const char* kTraceIDString = "AAAAAAAAAAB";
 const char* kTracePrefix = "test-prefix";
 
@@ -70,18 +70,18 @@ class TraceWriterTest : public ::testing::Test {
   TraceWriterTest()
       : ::testing::Test(),
         trace_dir_("trace-folder-"),
-        buffer_(TraceBuffer::allocate(kBufferSize)),
-        logger_([this]() -> PacketBuffer& { return *this->buffer_; }),
+        buffer_(std::make_shared<mmapbuf::Buffer>(kBufferSize)),
+        logger_([this]() -> TraceBuffer& { return buffer_->ringBuffer(); }),
         callbacks_(std::make_shared<::testing::NiceMock<MockCallbacks>>()),
         writer_(
             std::move(trace_dir_.path().generic_string()),
             "test-prefix",
-            *buffer_,
+            buffer_,
             callbacks_,
             generateHeaders()) {}
 
   test::TemporaryDirectory trace_dir_;
-  TraceBufferHolder buffer_;
+  std::shared_ptr<mmapbuf::Buffer> buffer_;
   PacketLogger logger_;
   std::shared_ptr<::testing::NiceMock<MockCallbacks>> callbacks_;
   TraceWriter writer_;
@@ -190,7 +190,8 @@ class TraceWriterTest : public ::testing::Test {
 TEST_F(TraceWriterTest, testLoopStop) {
   auto thread = std::thread([&] { writer_.loop(); });
 
-  writer_.submit(buffer_->currentTail(), TraceWriter::kStopLoopTraceID);
+  writer_.submit(
+      buffer_->ringBuffer().currentTail(), TraceWriter::kStopLoopTraceID);
   thread.join();
 }
 
@@ -201,7 +202,6 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   EXPECT_EQ(getFileCount(), 1) << "There should be only one real file.";
@@ -227,13 +227,12 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
 
 TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
   writeTraceStart();
-  auto cursorPastStart = buffer_->currentHead();
+  auto cursorPastStart = buffer_->ringBuffer().currentHead();
   writeTraceEnd();
 
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorPastStart, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   EXPECT_EQ(getFileCount(), 0);
@@ -241,7 +240,7 @@ TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
 
 TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
   writeTraceStart();
-  auto cursorAtTraceStart = buffer_->currentTail();
+  auto cursorAtTraceStart = buffer_->ringBuffer().currentTail();
 
   // force a wrap around
   for (int i = 0; i < kBufferSize; ++i) {
@@ -251,7 +250,6 @@ TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorAtTraceStart, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   EXPECT_EQ(getFileCount(), 0);
@@ -259,14 +257,13 @@ TEST_F(TraceWriterTest, testNoTraceSubmitCursorOutOfBounds) {
 
 void TraceWriterTest::testNoTraceStartCursorAtTail(
     std::function<void()> end_event_fn) {
-  auto cursorAtBeginning = buffer_->currentTail();
+  auto cursorAtBeginning = buffer_->ringBuffer().currentTail();
 
   end_event_fn();
 
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(cursorAtBeginning, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   //
@@ -294,7 +291,6 @@ TEST_F(TraceWriterTest, testHeadersPropagateToFile) {
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 
   auto trace = getOnlyTraceFileContents();
@@ -306,14 +302,13 @@ TEST_F(TraceWriterTest, testHeadersPropagateToFile) {
 void TraceWriterTest::testCallbackCalls(std::function<void()> expectations) {
   ::testing::InSequence dummy_;
 
-  auto buffer_start = buffer_->currentHead();
+  auto buffer_start = buffer_->ringBuffer().currentHead();
 
   expectations();
 
   auto thread = std::thread([&] { writer_.loop(); });
 
   writer_.submit(buffer_start, kTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
   thread.join();
 }
 
@@ -354,83 +349,6 @@ TEST_F(TraceWriterTest, testCallbacksMissedStart) {
       writeFillerEvent();
     }
   });
-}
-
-TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing) {
-  using ::testing::_;
-
-  auto buffer_start = buffer_->currentHead();
-
-  EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
-
-  auto thread = std::thread([&] { writer_.loop(); });
-
-  writeTraceStart(kTraceID);
-  writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_->currentHead();
-  writeTraceStart(kSecondTraceID);
-  writer_.submit(buffer_start, kSecondTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
-
-  writeTraceEnd(kTraceID);
-  writeTraceEnd(kSecondTraceID);
-
-  thread.join();
-}
-
-TEST_F(TraceWriterTest, testCallbacksSuccessMultiTracing2) {
-  using ::testing::_;
-
-  auto buffer_start = buffer_->currentHead();
-
-  EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
-
-  auto thread = std::thread([&] { writer_.loop(); });
-
-  writeTraceStart(kTraceID);
-  writeTraceEnd(kTraceID);
-  writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_->currentHead();
-  writeTraceStart(kSecondTraceID);
-  writeTraceEnd(kSecondTraceID);
-  writer_.submit(buffer_start, kSecondTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
-
-  thread.join();
-}
-
-TEST_F(TraceWriterTest, testCallbacksMultiTracingAbort) {
-  using ::testing::_;
-
-  auto buffer_start = buffer_->currentHead();
-
-  EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceStart(kSecondTraceID, _, _)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID)).Times(0);
-  EXPECT_CALL(*callbacks_, onTraceEnd(kSecondTraceID)).Times(1);
-  EXPECT_CALL(*callbacks_, onTraceAbort(kSecondTraceID, _)).Times(0);
-  EXPECT_CALL(*callbacks_, onTraceAbort(kTraceID, _)).Times(1);
-
-  auto thread = std::thread([&] { writer_.loop(); });
-
-  writeTraceStart(kTraceID);
-  writer_.submit(buffer_start, kTraceID);
-  buffer_start = buffer_->currentHead();
-  writeTraceStart(kSecondTraceID);
-  writeTraceAbort(kTraceID);
-  writeTraceEnd(kSecondTraceID);
-  writer_.submit(buffer_start, kSecondTraceID);
-  writer_.submit(TraceWriter::kStopLoopTraceID);
-
-  thread.join();
 }
 
 } // namespace profilo

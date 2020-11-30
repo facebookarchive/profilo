@@ -22,14 +22,14 @@ namespace facebook {
 namespace profilo {
 namespace logger {
 
-PacketLogger::PacketLogger(PacketBufferProvider provider)
+PacketLogger::PacketLogger(TraceBufferProvider provider)
     : streamID_(0), provider_(provider) {}
 
 void PacketLogger::write(void* payload, size_t size) {
   writeAndGetCursor(payload, size);
 }
 
-PacketBuffer::Cursor PacketLogger::writeAndGetCursor(
+TraceBuffer::Cursor PacketLogger::writeAndGetCursor(
     void* payload,
     size_t size) {
   if (size == 0) {
@@ -42,7 +42,7 @@ PacketBuffer::Cursor PacketLogger::writeAndGetCursor(
 
   auto& buffer = provider_();
 
-  PacketBuffer::Cursor cursor = buffer.currentTail();
+  TraceBuffer::Cursor cursor = buffer.currentTail();
   bool cursor_set = false;
 
   StreamID stream_id = streamID_.fetch_add(1, std::memory_order_relaxed);

@@ -13,6 +13,7 @@ robolectric4_test(
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/soloader:soloader"),
         profilo_path("java/main/com/facebook/profilo/core:core"),
+        profilo_path("java/main/com/facebook/profilo/writer:writer"),
         profilo_path("java/test/com/facebook/profilo/logger:utils"),
         profilo_path("java/test/com/facebook/profilo/util:util"),
         "//fbandroid/third-party/java/assertj:assertj-android",

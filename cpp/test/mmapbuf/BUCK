@@ -21,7 +21,7 @@ profilo_cxx_test(
         profilo_path("deps/zstr:zstr"),
         profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("cpp/logger/lfrb:lfrb"),
-        profilo_path("cpp/mmapbuf:mmapbuf"),
+        profilo_path("cpp/mmapbuf:manager"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
