@@ -37,7 +37,7 @@ class Logger {
   static constexpr size_t kMaxVariableLengthEntry = 1024;
   // Start first entry shifted to allow safely adding extra entries to the trace
   // after completion.
-  static constexpr int32_t kInitialEntryId = 512;
+  static constexpr int32_t kDefaultInitialID = 512;
 
   template <class T>
   int32_t write(T&& entry, uint16_t id_step = 1) {
@@ -78,9 +78,7 @@ class Logger {
 
   // This constructor is for internal framework use.
   // Client code should use RingBuffer::get().logger() method instead.
-  Logger(
-      logger::TraceBufferProvider provider,
-      int32_t start_entry_id = kInitialEntryId)
+  Logger(logger::TraceBufferProvider provider, int32_t start_entry_id)
       : entryID_(start_entry_id), logger_(provider) {}
 
  private:

@@ -277,7 +277,9 @@ int64_t MmapBufferTraceWriter::writeTrace(
       std::make_shared<mmapbuf::Buffer>(entriesCount + kExtraRecordCount);
   auto& ringBuffer = buffer->ringBuffer();
   TraceBuffer::Cursor startCursor = ringBuffer.currentHead();
-  Logger logger([&]() -> TraceBuffer& { return ringBuffer; });
+  Logger logger(
+      [&]() -> TraceBuffer& { return ringBuffer; },
+      /*initial ID*/ 1);
 
   // It's not technically backwards trace but that's what we use to denote Black
   // Box traces.
