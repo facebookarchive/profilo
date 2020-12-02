@@ -220,32 +220,11 @@ public class TraceControlHandler extends Handler {
           LOG_TAG,
           "Started trace " + context.encodedTraceId + "  for controller " + context.controller);
     }
-    LoggerWorkerThread thread;
-    try {
-      thread =
-          new LoggerWorkerThread(
-              context.traceId,
-              new NativeTraceWriter(
-                  context.buffer, context.folder.getCanonicalPath(), context.prefix, mCallbacks),
-              mCallbacks);
-    } catch (IOException e) {
-      throw new IllegalArgumentException(
-          "Could not get canonical path of trace directory " + context.folder, e);
-    }
-    context.workerThread = thread;
 
     if ((context.flags & Trace.FLAG_MEMORY_ONLY) == 0) {
       // Normal trace, start the thread now.
       // For in-memory traces, see stopTrace.
-      thread.start();
-
-      Logger.postCreateTrace(
-          thread.getTraceWriter(),
-          context.buffer,
-          context.traceId,
-          context.flags,
-          TraceControl.getTimeoutFromContext(context));
-
+      context.workerThread.start();
       writeLoggerPriority(context);
     }
 
@@ -302,6 +281,32 @@ public class TraceControlHandler extends Handler {
       Logger.postAbortTrace(context.traceId);
       onTraceAbort(new TraceContext(context, ProfiloConstants.ABORT_REASON_MALFORMED_CONDITION));
       return;
+    }
+
+    LoggerWorkerThread thread;
+    try {
+      thread =
+          new LoggerWorkerThread(
+              context.traceId,
+              new NativeTraceWriter(
+                  context.buffer, context.folder.getCanonicalPath(), context.prefix, mCallbacks),
+              mCallbacks);
+    } catch (IOException e) {
+      throw new IllegalArgumentException(
+          "Could not get canonical path of trace directory " + context.folder, e);
+    }
+    context.workerThread = thread;
+
+    if ((context.flags & Trace.FLAG_MEMORY_ONLY) == 0) {
+      // We want to write TRACE_START while we're still synchronously in the startTrace call.
+      // This way we can be sure that the worker thread will not miss any entries, as it starts
+      // reading from TRACE_START.
+      Logger.postCreateTrace(
+          thread.getTraceWriter(),
+          context.buffer,
+          context.traceId,
+          context.flags,
+          TraceControl.getTimeoutFromContext(context));
     }
 
     mTraceContexts.add(context.traceId);
