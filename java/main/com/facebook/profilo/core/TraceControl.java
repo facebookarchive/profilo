@@ -381,6 +381,16 @@ public final class TraceControl {
   }
 
   private boolean startTraceInternal(int flags, TraceContext nextContext) {
+    if (nextContext.buffer == null) {
+      // Something has gone wrong, fail this startTrace request.
+      Log.e(
+          LOG_TAG,
+          "No buffer was allocated for trace "
+              + nextContext.encodedTraceId
+              + ", failing startTrace");
+      return false;
+    }
+
     while (true) { // Store new trace in CAS manner
       int currentMask = mCurrentTracesMask.get();
       int freeBit = findLowestFreeBit(currentMask, MAX_TRACES, flags);
