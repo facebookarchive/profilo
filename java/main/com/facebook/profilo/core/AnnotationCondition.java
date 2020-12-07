@@ -59,8 +59,8 @@ public class AnnotationCondition {
         context.mTraceConfigExtras.getStringArrayParam(
             ProfiloConstants.TRACE_CONFIG_STRING_LIST_CONDITION);
     if (arr != null && arr.length > 0) {
-      // Let's see if this is even a qpl_annotation condition
-      if (arr[0].equals("qpl_annotation")) {
+      // Let's see if this is even an annotation condition
+      if (arr[0].equals("annotation")) {
         int fallbackSamplingRate =
             context.mTraceConfigExtras.getIntParam(
                 ProfiloConstants.TRACE_CONFIG_STRING_LIST_CONDITION_FALLBACK_SAMPLING_RATE,

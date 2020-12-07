@@ -27,7 +27,6 @@ public final class ProfiloConstants {
   public static final int ABORT_REASON_TIMEOUT = 4;
   public static final int ABORT_REASON_NEW_START = 5;
   public static final int ABORT_REASON_CONDITION_NOT_MET = 6;
-  public static final int ABORT_REASON_MALFORMED_CONDITION = 7;
   public static final int ABORT_REASON_WRITER_EXCEPTION = 8;
 
   // Things in the remote process can go wrong for the same reason as in the
@@ -69,8 +68,6 @@ public final class ProfiloConstants {
         return "new_start";
       case ABORT_REASON_CONDITION_NOT_MET:
         return "condition_not_met";
-      case ABORT_REASON_MALFORMED_CONDITION:
-        return "malformed_condition";
       case ABORT_REASON_WRITER_EXCEPTION:
         return "writer_exception";
     }

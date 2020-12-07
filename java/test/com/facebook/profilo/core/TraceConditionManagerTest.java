@@ -202,7 +202,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
 
   @Test
   public void testAnnotationConditionAny() {
-    String[] config = new String[] {"qpl_annotation", "any", "KEY:VAL1", "KEY:VAL2"};
+    String[] config = new String[] {"annotation", "any", "KEY:VAL1", "KEY:VAL2"};
     when(mExtras.getStringArrayParam(ProfiloConstants.TRACE_CONFIG_STRING_LIST_CONDITION))
         .thenReturn(config);
 
@@ -225,7 +225,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
 
   @Test
   public void testAnnotationConditionAll() {
-    String[] config = new String[] {"qpl_annotation", "all", "KEY:VAL1", "KEY:VAL2"};
+    String[] config = new String[] {"annotation", "all", "KEY:VAL1", "KEY:VAL2"};
     when(mExtras.getStringArrayParam(ProfiloConstants.TRACE_CONFIG_STRING_LIST_CONDITION))
         .thenReturn(config);
 
@@ -248,7 +248,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
 
   @Test
   public void testFallbackSamplingRateForAnnotations() {
-    String[] config = new String[] {"qpl_annotation", "all", "KEY:VAL1", "KEY:VAL2"};
+    String[] config = new String[] {"annotation", "all", "KEY:VAL1", "KEY:VAL2"};
     when(mExtras.getStringArrayParam(ProfiloConstants.TRACE_CONFIG_STRING_LIST_CONDITION))
         .thenReturn(config);
     when(mExtras.getIntParam(
@@ -268,7 +268,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
     // This should behave exactly as testFallbackSamplingRateForAnnotations,
     // even though this scenario also has a duration condition and neither
     // the duration nor the annotation conditions were met
-    String[] config = new String[] {"qpl_annotation", "all", "KEY:VAL1", "KEY:VAL2"};
+    String[] config = new String[] {"annotation", "all", "KEY:VAL1", "KEY:VAL2"};
     int[] durationConfig = new int[] {1000, 16, 1500, 8, 2000, 4, 2500, 2, 3000, 1};
     when(mExtras.getIntArrayParam(ProfiloConstants.TRACE_CONFIG_DURATION_CONDITION))
         .thenReturn(durationConfig);
@@ -288,7 +288,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
 
   @Test
   public void testMixedAnnotationsAndDurations() {
-    String[] annotationsConfig = new String[] {"qpl_annotation", "any", "KEY:VAL1", "KEY:VAL2"};
+    String[] annotationsConfig = new String[] {"annotation", "any", "KEY:VAL1", "KEY:VAL2"};
     int[] durationConfig = new int[] {1000, 16, 1500, 8, 2000, 4, 2500, 2, 3000, 1};
     when(mExtras.getIntArrayParam(ProfiloConstants.TRACE_CONFIG_DURATION_CONDITION))
         .thenReturn(durationConfig);
@@ -329,8 +329,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
   @Test
   public void testMalformedAnnotationConditionNotEnoughParameters() {
     // Fewer than 3 parameters. Trace registration should fail
-    String[] annotationsConfig =
-        new String[] {"qpl_annotation", "any" /*, "KEY:VAL1", "KEY:VAL2"*/};
+    String[] annotationsConfig = new String[] {"annotation", "any" /*, "KEY:VAL1", "KEY:VAL2"*/};
     when(mExtras.getStringArrayParam(ProfiloConstants.TRACE_CONFIG_STRING_LIST_CONDITION))
         .thenReturn(annotationsConfig);
 
@@ -341,7 +340,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
   @Test
   public void testMalformedAnnotationConditionNegativeFallbackSampleRate() {
     // Fewer than 3 parameters. Trace registration should fail
-    String[] annotationsConfig = new String[] {"qpl_annotation", "any", "KEY:VAL1", "KEY:VAL2"};
+    String[] annotationsConfig = new String[] {"annotation", "any", "KEY:VAL1", "KEY:VAL2"};
     when(mExtras.getStringArrayParam(ProfiloConstants.TRACE_CONFIG_STRING_LIST_CONDITION))
         .thenReturn(annotationsConfig);
     when(mExtras.getIntParam(

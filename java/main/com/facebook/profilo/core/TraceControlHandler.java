@@ -272,15 +272,13 @@ public class TraceControlHandler extends Handler {
     sendMessage(stopMessage);
   }
 
-  public synchronized void onTraceStart(TraceContext context, final int timeoutMillis) {
+  public synchronized boolean onTraceStart(TraceContext context, final int timeoutMillis) {
     boolean traceRegistered = mTraceConditionManager.registerTrace(context);
 
     if (!traceRegistered) {
       // The only way this can happen is if one of the conditions in the config
       // is malformed. Let's abort the trace in this case.
-      Logger.postAbortTrace(context.traceId);
-      onTraceAbort(new TraceContext(context, ProfiloConstants.ABORT_REASON_MALFORMED_CONDITION));
-      return;
+      return false;
     }
 
     LoggerWorkerThread thread;
@@ -318,6 +316,7 @@ public class TraceControlHandler extends Handler {
 
     Message timeoutMessage = obtainMessage(MSG_TIMEOUT_TRACE, context);
     sendMessageDelayed(timeoutMessage, timeoutMillis);
+    return true;
   }
 
   public synchronized void onTraceStop(TraceContext context) {

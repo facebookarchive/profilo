@@ -412,15 +412,26 @@ public final class TraceControl {
 
     int timeout = getTimeoutFromContext(nextContext);
 
+    boolean trace_started = true;
+
     synchronized (this) {
       ensureHandlerInitialized();
       // It's a guard if trace stop was initiated from another thread.
       if (findCurrentTraceByTraceId(nextContext.traceId) != null) {
-        mTraceControlHandler.onTraceStart(nextContext, timeout);
+        trace_started = mTraceControlHandler.onTraceStart(nextContext, timeout);
       }
     }
 
-    return true;
+    if (!trace_started) {
+      Log.e(
+          LOG_TAG,
+          "Failed to start trace "
+              + nextContext.encodedTraceId
+              + " due to malformed config for context "
+              + nextContext.longContext);
+    }
+
+    return trace_started;
   }
 
   static int getTimeoutFromContext(TraceContext context) {
