@@ -19,7 +19,9 @@ import com.facebook.profilo.core.MetadataTraceProvider;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
+import com.facebook.profilo.mmapbuf.Buffer;
 import java.util.List;
 
 public final class ProcessMetadataProvider extends MetadataTraceProvider {
@@ -32,15 +34,15 @@ public final class ProcessMetadataProvider extends MetadataTraceProvider {
 
   @Override
   protected void logOnTraceStart(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    logProcessList();
+    logProcessList(context.buffer);
   }
 
   @Override
   protected void logOnTraceEnd(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    logProcessList();
+    logProcessList(context.buffer);
   }
 
-  private void logProcessList() {
+  private void logProcessList(Buffer buffer) {
     List<ActivityManager.RunningAppProcessInfo> infos;
     try {
       ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
@@ -73,29 +75,19 @@ public final class ProcessMetadataProvider extends MetadataTraceProvider {
       processes = "PROCESS_METADATA_PROVIDER_FAILED_TO_GET_PROCESS_LIST";
     }
     int returnedMatchID =
-        Logger.writeStandardEntry(
-            ProfiloConstants.NONE,
-            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        BufferLogger.writeStandardEntry(
+            buffer,
+            Logger.FILL_TIMESTAMP | Logger.FILL_TID,
             EntryType.PROCESS_LIST,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE);
-    if ("processes" != null) {
-      returnedMatchID =
-          Logger.writeBytesEntry(
-              ProfiloConstants.NONE,
-              Logger.SKIP_PROVIDER_CHECK,
-              EntryType.STRING_KEY,
-              returnedMatchID,
-              "processes");
-    }
-    Logger.writeBytesEntry(
-        ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK,
-        EntryType.STRING_VALUE,
-        returnedMatchID,
-        processes);
+    returnedMatchID =
+        BufferLogger.writeBytesEntry(
+            buffer, ProfiloConstants.NONE, EntryType.STRING_KEY, returnedMatchID, "processes");
+    BufferLogger.writeBytesEntry(
+        buffer, ProfiloConstants.NONE, EntryType.STRING_VALUE, returnedMatchID, processes);
   }
 }
