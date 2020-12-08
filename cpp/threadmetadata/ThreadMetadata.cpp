@@ -87,9 +87,10 @@ static void logThreadPriority(Logger& logger, int32_t tid) {
 }
 
 /* Log thread names and priorities. */
-void logThreadMetadata(JNIEnv*, jobject) {
+void logThreadMetadata(fbjni::alias_ref<jobject>, JBuffer* buffer) {
   const auto& threads = util::threadListFromProcFs();
-  auto& logger = RingBuffer::get().logger();
+  auto buf = buffer->get();
+  auto& logger = buf->logger();
 
   for (auto& tid : threads) {
     logThreadName(logger, tid);

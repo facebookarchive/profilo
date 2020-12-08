@@ -16,14 +16,18 @@
 
 #pragma once
 
-#include <jni.h>
+#include <fbjni/fbjni.h>
+#include <profilo/mmapbuf/JBuffer.h>
 #include <sys/types.h>
+
+using namespace facebook::profilo::mmapbuf;
+namespace fbjni = facebook::jni;
 
 namespace facebook {
 namespace profilo {
 namespace threadmetadata {
 
-void logThreadMetadata(JNIEnv*, jobject);
+void logThreadMetadata(fbjni::alias_ref<jobject>, JBuffer* buffer);
 
 } // namespace threadmetadata
 } // namespace profilo

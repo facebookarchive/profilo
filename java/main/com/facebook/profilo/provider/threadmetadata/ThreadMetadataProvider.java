@@ -15,6 +15,7 @@ package com.facebook.profilo.provider.threadmetadata;
 
 import com.facebook.profilo.core.MetadataTraceProvider;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.mmapbuf.Buffer;
 
 public final class ThreadMetadataProvider extends MetadataTraceProvider {
 
@@ -24,9 +25,9 @@ public final class ThreadMetadataProvider extends MetadataTraceProvider {
 
   @Override
   protected void logOnTraceEnd(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    nativeLogThreadMetadata();
+    nativeLogThreadMetadata(context.buffer);
   }
 
   /* Log thread names and priorities. */
-  private static native void nativeLogThreadMetadata();
+  private static native void nativeLogThreadMetadata(Buffer buffer);
 }
