@@ -10,6 +10,7 @@ import com.facebook.profilo.core.MetadataTraceProvider;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
 import javax.annotation.Nullable;
 
@@ -57,9 +58,9 @@ public class PackageInfoProvider extends MetadataTraceProvider {
     }
 
     int returnedMatchID =
-        Logger.writeStandardEntry(
-            ProfiloConstants.NONE,
-            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        BufferLogger.writeStandardEntry(
+            context.buffer,
+            Logger.FILL_TIMESTAMP | Logger.FILL_TID,
             EntryType.TRACE_ANNOTATION,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE,
@@ -68,23 +69,23 @@ public class PackageInfoProvider extends MetadataTraceProvider {
             (long) 0);
     if ("App version" != null) {
       returnedMatchID =
-          Logger.writeBytesEntry(
+          BufferLogger.writeBytesEntry(
+              context.buffer,
               ProfiloConstants.NONE,
-              Logger.SKIP_PROVIDER_CHECK,
               EntryType.STRING_KEY,
               returnedMatchID,
               "App version");
     }
-    Logger.writeBytesEntry(
+    BufferLogger.writeBytesEntry(
+        context.buffer,
         ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK,
         EntryType.STRING_VALUE,
         returnedMatchID,
         mVersionName);
 
-    Logger.writeStandardEntry(
-        ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+    BufferLogger.writeStandardEntry(
+        context.buffer,
+        Logger.FILL_TIMESTAMP | Logger.FILL_TID,
         EntryType.TRACE_ANNOTATION,
         ProfiloConstants.NONE,
         ProfiloConstants.NONE,
