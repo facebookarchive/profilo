@@ -36,5 +36,4 @@ fb_native.robolectric_test(
         profilo_path("deps/third-party/java/junit:junit"),
         profilo_path("deps/third-party/java/powermock:powermock2"),
     ],
-    use_binary_resources = False,
 )
