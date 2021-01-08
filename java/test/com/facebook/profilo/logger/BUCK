@@ -1,4 +1,4 @@
-load("//tools/build_defs:fb_native_wrapper.bzl", "fb_native")
+load("@fbsource//tools/build_defs/android:robolectric4_test.bzl", "robolectric4_test")
 load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
@@ -21,7 +21,7 @@ fb_core_android_library(
     ],
 )
 
-fb_native.robolectric_test(
+robolectric4_test(
     name = "logger",
     srcs = glob(["*Test.java"]),
     contacts = ["oncall+loom@xmail.facebook.com"],
