@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.ToggleButton;
 import com.facebook.profilo.BuildConfig;
 import com.facebook.profilo.controllers.external.ExternalController;
@@ -40,6 +41,8 @@ import java.util.List;
 public abstract class BaseSampleAppMainActivity extends Activity {
 
   private static final int TRACING_BUTTON_ID = 0x100;
+  protected static final int RELATIVE_LAYOUT_ID = 0x101;
+  protected static final int TRACE_CONFIG_LAYOUT_ID = 0x102;
   private WorkloadThread mWorkerThread;
   private ToggleButton mTracingButton;
   private ProgressBar mProgressBar;
@@ -100,6 +103,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     RelativeLayout layout = new RelativeLayout(this);
     ToggleButton traceButton = new ToggleButton(this);
     ProgressBar progressBar = new ProgressBar(this);
+    layout.setId(RELATIVE_LAYOUT_ID);
 
     traceButton.setTextOff("Start tracing");
     traceButton.setTextOn("Stop tracing");
@@ -128,14 +132,19 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     layout.addView(progressBar, spinnerParams);
 
     LinearLayout traceConfigLayout = new LinearLayout(this);
+    traceConfigLayout.setId(TRACE_CONFIG_LAYOUT_ID);
     traceConfigLayout.setOrientation(LinearLayout.VERTICAL);
 
-    RelativeLayout.LayoutParams traceConfigParams =
+    ScrollView.LayoutParams traceConfigParams =
+        new ScrollView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+    RelativeLayout.LayoutParams scrollViewParams =
         new RelativeLayout.LayoutParams(
             ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-    traceConfigParams.setMargins(20, 20, 20, 20);
-    traceConfigParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
-    traceConfigParams.addRule(RelativeLayout.BELOW, TRACING_BUTTON_ID);
+    scrollViewParams.setMargins(20, 20, 20, 20);
+    scrollViewParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
+    scrollViewParams.addRule(RelativeLayout.BELOW, TRACING_BUTTON_ID);
 
     CheckBox memoryOnlyCheckbox = new CheckBox(this);
     memoryOnlyCheckbox.setText("In-memory trace");
@@ -146,7 +155,10 @@ public abstract class BaseSampleAppMainActivity extends Activity {
         LinearLayout.LayoutParams.WRAP_CONTENT);
     HashMap<String, CheckBox> providerViews = createProviderViews(traceConfigLayout);
 
-    layout.addView(traceConfigLayout, traceConfigParams);
+    ScrollView scrollView = new ScrollView(this);
+    scrollView.addView(traceConfigLayout, traceConfigParams);
+
+    layout.addView(scrollView, scrollViewParams);
 
     setContentView(layout);
 
