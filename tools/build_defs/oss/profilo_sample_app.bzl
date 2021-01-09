@@ -56,6 +56,9 @@ def profilo_sample_app(srcs, app_manifest, aar_manifest, providers, deps = [], p
                 ",".join(["\"{}\"".format(provider) for provider in (providers if providers else [])]),
             ),
         ],
+        visibility = [
+            profilo_path("..."),
+        ],
     )
 
     # We want all providers on the compile path but only package the ones that

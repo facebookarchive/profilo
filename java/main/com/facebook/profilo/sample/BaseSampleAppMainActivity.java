@@ -76,7 +76,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
         });
   }
 
-  private void initializeProfilo() {
+  protected void initializeProfilo() {
     try {
       SoLoader.init(this.getApplicationContext(), 0);
     } catch (IOException e) {
@@ -182,7 +182,7 @@ public abstract class BaseSampleAppMainActivity extends Activity {
     return mask;
   }
 
-  private BaseTraceProvider[] calculateAvailableProviders() {
+  protected BaseTraceProvider[] calculateAvailableProviders() {
     BaseTraceProvider[] result = new BaseTraceProvider[BuildConfig.PROVIDERS.length];
     int idx = 0;
     for (String provider : BuildConfig.PROVIDERS) {
