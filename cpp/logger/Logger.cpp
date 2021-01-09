@@ -40,11 +40,13 @@ int32_t Logger::writeBytes(
     throw std::invalid_argument("arg2 is null");
   }
 
-  BytesEntry entry{.id = 0,
-                   .type = type,
-                   .matchid = arg1,
-                   .bytes = {.values = const_cast<uint8_t*>(arg2),
-                             .size = static_cast<uint16_t>(len)}};
+  BytesEntry entry{
+      .id = 0,
+      .type = type,
+      .matchid = arg1,
+      .bytes = {
+          .values = const_cast<uint8_t*>(arg2),
+          .size = static_cast<uint16_t>(len)}};
 
   return write(std::move(entry));
 }

@@ -34,13 +34,14 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeStandardEntry) {
   PrintEntryVisitor print(stream);
   DeltaEncodingVisitor delta(print);
 
-  delta.visit(StandardEntry{.id = 10,
-                            .type = EntryType::TRACE_START,
-                            .timestamp = 123,
-                            .tid = 0,
-                            .callid = 1,
-                            .matchid = 2,
-                            .extra = 3});
+  delta.visit(StandardEntry{
+      .id = 10,
+      .type = EntryType::TRACE_START,
+      .timestamp = 123,
+      .tid = 0,
+      .callid = 1,
+      .matchid = 2,
+      .extra = 3});
 
   delta.visit(StandardEntry{
       .id = 11,
@@ -116,13 +117,14 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
   PrintEntryVisitor print(stream);
   DeltaEncodingVisitor delta(print);
 
-  delta.visit(StandardEntry{.id = 10,
-                            .type = EntryType::QPL_START,
-                            .timestamp = 123,
-                            .tid = 0,
-                            .callid = 65545, // 0xFFFF + 10
-                            .matchid = 2,
-                            .extra = 3});
+  delta.visit(StandardEntry{
+      .id = 10,
+      .type = EntryType::QPL_START,
+      .timestamp = 123,
+      .tid = 0,
+      .callid = 65545, // 0xFFFF + 10
+      .matchid = 2,
+      .extra = 3});
 
   uint8_t key[] = {'k', 'e', 'y'};
   delta.visit(BytesEntry{
@@ -140,13 +142,14 @@ TEST(DeltaEncodingVisitorTest, testDeltaEncodeMixedEntries) {
       .bytes = {.values = value, .size = 5},
   });
 
-  delta.visit(StandardEntry{.id = 13,
-                            .type = EntryType::QPL_END,
-                            .timestamp = 124,
-                            .tid = 0,
-                            .callid = 65545,
-                            .matchid = 2,
-                            .extra = 3});
+  delta.visit(StandardEntry{
+      .id = 13,
+      .type = EntryType::QPL_END,
+      .timestamp = 124,
+      .tid = 0,
+      .callid = 65545,
+      .matchid = 2,
+      .extra = 3});
 
   int64_t frames[] = {1000, 2000, 3000};
   delta.visit(FramesEntry{

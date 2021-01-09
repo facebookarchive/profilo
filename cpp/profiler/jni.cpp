@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#include <jni.h>
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
+#include <jni.h>
 
 #include "SamplingProfiler.h"
 #include "profiler/ArtCompatibility.h"

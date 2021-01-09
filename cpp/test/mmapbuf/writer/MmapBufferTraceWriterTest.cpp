@@ -105,15 +105,16 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
   }
 
   StandardEntry generateRandomEntry() {
-    StandardEntry entry{.id = 0,
-                        /* First 10 entries as they don't have trace control
-                           entries among them. */
-                        .type = static_cast<EntryType>(std::rand() % 10),
-                        .timestamp = std::rand() % INT64_MAX,
-                        .tid = std::rand() % INT32_MAX,
-                        .callid = std::rand() % INT32_MAX,
-                        .matchid = std::rand() % INT32_MAX,
-                        .extra = std::rand() % INT64_MAX};
+    StandardEntry entry{
+        .id = 0,
+        /* First 10 entries as they don't have trace control
+           entries among them. */
+        .type = static_cast<EntryType>(std::rand() % 10),
+        .timestamp = std::rand() % INT64_MAX,
+        .tid = std::rand() % INT32_MAX,
+        .callid = std::rand() % INT32_MAX,
+        .matchid = std::rand() % INT32_MAX,
+        .extra = std::rand() % INT64_MAX};
     return entry;
   }
 

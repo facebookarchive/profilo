@@ -55,11 +55,12 @@ TraceBuffer::Cursor PacketLogger::writeAndGetCursor(
     bool has_next = remaining > kOnePacketSize;
     uint8_t write_size = std::min(kOnePacketSize, remaining);
 
-    Packet packet{.stream = stream_id,
-                  .start = offset == 0,
-                  .next = has_next,
-                  .size = write_size,
-                  .data = {}};
+    Packet packet{
+        .stream = stream_id,
+        .start = offset == 0,
+        .next = has_next,
+        .size = write_size,
+        .data = {}};
 
     std::memcpy(packet.data, static_cast<char*>(payload) + offset, write_size);
 

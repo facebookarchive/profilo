@@ -107,10 +107,11 @@ TEST(TraceProviders, testClearAllProviders) {
 }
 
 TEST(TraceProviders, testLookupByName) {
-  std::vector<ProviderEntry> providers{{"other", 1},
-                                       {"qpl", 1 << 1},
-                                       {"fbsystrace", 1 << 2},
-                                       {"class_load", 1 << 3}};
+  std::vector<ProviderEntry> providers{
+      {"other", 1},
+      {"qpl", 1 << 1},
+      {"fbsystrace", 1 << 2},
+      {"class_load", 1 << 3}};
   auto& tp = TraceProviders::get();
   tp.clearAllProviders();
   tp.initProviderNames(std::move(providers));

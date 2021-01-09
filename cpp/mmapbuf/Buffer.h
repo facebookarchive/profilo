@@ -68,8 +68,9 @@ struct Buffer {
  private:
   bool file_backed_ = false;
   TraceBuffer* lfrb_ = nullptr;
-  Logger logger_{{[this]() -> TraceBuffer& { return this->ringBuffer(); }},
-                 Logger::kDefaultInitialID};
+  Logger logger_{
+      {[this]() -> TraceBuffer& { return this->ringBuffer(); }},
+      Logger::kDefaultInitialID};
 };
 
 namespace {

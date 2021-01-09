@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <profilo/writer/PrintEntryVisitor.h>
 #include <fmt/format.h>
+#include <profilo/writer/PrintEntryVisitor.h>
 
 namespace facebook {
 namespace profilo {

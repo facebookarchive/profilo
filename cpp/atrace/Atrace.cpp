@@ -205,8 +205,8 @@ std::vector<plt_hook_spec>& getFunctionHooks() {
 }
 
 plt_hook_spec& getSingleLibFunctionSpec() {
-  static plt_hook_spec spec{"__write_chk",
-                            reinterpret_cast<void*>(__write_chk_hook)};
+  static plt_hook_spec spec{
+      "__write_chk", reinterpret_cast<void*>(__write_chk_hook)};
   return spec;
 }
 

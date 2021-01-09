@@ -54,12 +54,13 @@ void DeltaEncodingVisitor::visit(const FramesEntry& entry) {
 
     int64_t frames[1] = {current_frame - last_values_.extra};
 
-    FramesEntry encoded{.id = entry.id - last_values_.id + idx,
-                        .type = entry.type,
-                        .timestamp = entry.timestamp - last_values_.timestamp,
-                        .tid = entry.tid - last_values_.tid,
-                        .matchid = entry.matchid - last_values_.matchid,
-                        .frames = {.values = frames, .size = 1}};
+    FramesEntry encoded{
+        .id = entry.id - last_values_.id + idx,
+        .type = entry.type,
+        .timestamp = entry.timestamp - last_values_.timestamp,
+        .tid = entry.tid - last_values_.tid,
+        .matchid = entry.matchid - last_values_.matchid,
+        .frames = {.values = frames, .size = 1}};
 
     last_values_ = {
         .id = entry.id + idx,

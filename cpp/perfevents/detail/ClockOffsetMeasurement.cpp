@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <perfevents/detail/ClockOffsetMeasurement.h>
 #include <perfevents/Session.h>
+#include <perfevents/detail/ClockOffsetMeasurement.h>
 
 #include <stdint.h>
 #include <atomic>

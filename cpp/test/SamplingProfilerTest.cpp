@@ -362,8 +362,8 @@ void SamplingProfilerTest::runSampleCountTest(
   test::TestSequencer sequencer{START, END};
 
   constexpr int num_workers = 2;
-  std::array<int, num_workers> thread_cpu_ms = {750,
-                                                350}; // how much CPU to burn
+  std::array<int, num_workers> thread_cpu_ms = {
+      750, 350}; // how much CPU to burn
   constexpr int post_sampling_thread_cpu_ms =
       100; // how much post-run CPU to burn
   constexpr int cpu_sample_interval_ms = 19;

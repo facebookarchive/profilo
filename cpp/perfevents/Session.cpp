@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <perfevents/Session.h>
 #include <fb/log.h>
+#include <perfevents/Session.h>
 #include <perfevents/detail/AttachmentStrategy.h>
 #include <perfevents/detail/make_unique.h>
 
