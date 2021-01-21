@@ -34,8 +34,13 @@ void JSTracer::flushStack(
     uint16_t depth,
     int tid,
     int64_t time_) {
-  RingBuffer::get().logger().writeStackFrames(
-      tid, time_, frames, depth, 0, EntryType::JAVASCRIPT_STACK_FRAME);
+  RingBuffer::get().logger().write(FramesEntry{
+      .id = 0,
+      .type = EntryType::JAVASCRIPT_STACK_FRAME,
+      .timestamp = time_,
+      .tid = tid,
+      .matchid = 0,
+      .frames = {.values = const_cast<int64_t*>(frames), .size = depth}});
 }
 
 void JSTracer::prepare() {}

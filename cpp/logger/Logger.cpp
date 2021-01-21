@@ -48,44 +48,13 @@ int32_t Logger::writeBytes(
     throw std::invalid_argument("arg2 is null");
   }
 
-  BytesEntry entry{
+  return write(BytesEntry{
       .id = 0,
       .type = type,
       .matchid = arg1,
       .bytes = {
           .values = const_cast<uint8_t*>(arg2),
-          .size = static_cast<uint16_t>(len)}};
-
-  return write(std::move(entry));
-}
-
-void Logger::writeStackFrames(
-    int32_t tid,
-    int64_t time,
-    const int64_t* methods,
-    uint16_t depth,
-    int32_t matchid,
-    EntryType entry_type) {
-  FramesEntry entry{
-      .id = 0,
-      .type = entry_type,
-      .timestamp = time,
-      .tid = tid,
-      .matchid = matchid,
-      .frames = {.values = const_cast<int64_t*>(methods), .size = depth}};
-  write(std::move(entry));
-}
-
-void Logger::writeTraceAnnotation(int32_t key, int64_t value) {
-  write(StandardEntry{
-      .id = 0,
-      .type = EntryType::TRACE_ANNOTATION,
-      .timestamp = monotonicTime(),
-      .tid = threadID(),
-      .callid = key,
-      .matchid = 0,
-      .extra = value,
-  });
+          .size = static_cast<uint16_t>(len)}});
 }
 
 } // namespace profilo

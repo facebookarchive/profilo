@@ -94,16 +94,6 @@ class Logger {
   PROFILOEXPORT int32_t
   writeBytes(EntryType type, int32_t arg1, const uint8_t* arg2, size_t len);
 
-  PROFILOEXPORT void writeStackFrames(
-      int32_t tid,
-      int64_t time,
-      const int64_t* methods,
-      uint16_t depth,
-      int32_t matchid = 0,
-      EntryType entry_type = EntryType::STACK_FRAME);
-
-  PROFILOEXPORT void writeTraceAnnotation(int32_t key, int64_t value);
-
   // This constructor is for internal framework use.
   // Client code should use RingBuffer::get().logger() method instead.
   Logger(logger::TraceBufferProvider provider, EntryIDCounter& counter);

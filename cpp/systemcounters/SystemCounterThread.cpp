@@ -117,11 +117,18 @@ void SystemCounterThread::logHighFrequencyThreadCounters() {
 }
 
 void SystemCounterThread::logTraceAnnotations() {
-  RingBuffer::get().logger().writeTraceAnnotation(
-      QuickLogConstants::AVAILABLE_COUNTERS,
-      processCounters_.getAvailableCounters() |
-          systemCounters_.getAvailableCounters() |
-          threadCounters_.getAvailableCounters());
+  int64_t value = processCounters_.getAvailableCounters() |
+      systemCounters_.getAvailableCounters() |
+      threadCounters_.getAvailableCounters();
+  RingBuffer::get().logger().write(StandardEntry{
+      .id = 0,
+      .type = EntryType::TRACE_ANNOTATION,
+      .timestamp = monotonicTime(),
+      .tid = threadID(),
+      .callid = QuickLogConstants::AVAILABLE_COUNTERS,
+      .matchid = 0,
+      .extra = value,
+  });
 }
 
 } // namespace counters
