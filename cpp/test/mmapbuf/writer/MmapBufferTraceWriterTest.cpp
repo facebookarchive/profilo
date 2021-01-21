@@ -124,7 +124,8 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     DeltaEncodingVisitor deltaVisitor(printVisitor);
     TimestampTruncatingVisitor visitor(deltaVisitor, 6);
 
-    Logger logger([&buf]() -> TraceBuffer& { return buf; }, 1);
+    Logger::EntryIDCounter counter{1};
+    Logger logger([&buf]() -> TraceBuffer& { return buf; }, counter);
     // Write the main service entry before the main content
     auto serviceEntry = generateTraceBackwardsEntry();
     outstream.str("");

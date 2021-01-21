@@ -19,6 +19,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/entries/Entry.h>
 #include <profilo/entries/EntryType.h>
+#include <atomic>
 
 #include "PacketLogger.h"
 
@@ -30,18 +31,43 @@ namespace profilo {
 using namespace entries;
 
 class Logger {
-  const int32_t TRACING_DISABLED = -1;
-  const int32_t NO_MATCH = 0;
-
  public:
+  struct EntryIDCounter {
+    EntryIDCounter(int32_t initialValue) : id_(initialValue) {}
+    EntryIDCounter(EntryIDCounter& copy) = delete;
+
+    int32_t next() {
+      int32_t value, newValue;
+
+      do {
+        value = id_.load();
+        if (value <= 0 || value == std::numeric_limits<int32_t>::max()) {
+          // explicitly handle overflow and skip negative IDs.
+          newValue = 1;
+        } else {
+          newValue = value + 1;
+        }
+      } while (!id_.compare_exchange_weak(value, newValue));
+
+      return value;
+    }
+
+   private:
+    std::atomic<int32_t> id_;
+  };
+
   static constexpr size_t kMaxVariableLengthEntry = 1024;
   // Start first entry shifted to allow safely adding extra entries to the trace
   // after completion.
   static constexpr int32_t kDefaultInitialID = 512;
 
+  static EntryIDCounter& getGlobalEntryID();
+
   template <class T>
-  int32_t write(T&& entry, uint16_t id_step = 1) {
-    entry.id = nextID(id_step);
+  int32_t write(T&& entry) {
+    if (entry.id == 0) {
+      entry.id = entryID_.next();
+    }
 
     auto size = T::calculateSize(entry);
     char payload[size];
@@ -53,7 +79,9 @@ class Logger {
 
   template <class T>
   int32_t writeAndGetCursor(T&& entry, TraceBuffer::Cursor& cursor) {
-    entry.id = nextID();
+    if (entry.id == 0) {
+      entry.id = entryID_.next();
+    }
 
     auto size = T::calculateSize(entry);
     char payload[size];
@@ -78,22 +106,13 @@ class Logger {
 
   // This constructor is for internal framework use.
   // Client code should use RingBuffer::get().logger() method instead.
-  Logger(logger::TraceBufferProvider provider, int32_t start_entry_id)
-      : entryID_(start_entry_id), logger_(provider) {}
+  Logger(logger::TraceBufferProvider provider, EntryIDCounter& counter);
 
  private:
-  std::atomic<int32_t> entryID_;
+  EntryIDCounter& entryID_;
   logger::PacketLogger logger_;
 
   Logger(const Logger& other) = delete;
-
-  inline int32_t nextID(uint16_t step = 1) {
-    int32_t id;
-    do {
-      id = entryID_.fetch_add(step);
-    } while (id == TRACING_DISABLED || id == NO_MATCH);
-    return id;
-  }
 };
 
 } // namespace profilo

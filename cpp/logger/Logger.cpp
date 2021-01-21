@@ -28,6 +28,14 @@ namespace profilo {
 
 using namespace entries;
 
+Logger::EntryIDCounter& Logger::getGlobalEntryID() {
+  static EntryIDCounter global_instance{kDefaultInitialID};
+  return global_instance;
+}
+
+Logger::Logger(logger::TraceBufferProvider provider, EntryIDCounter& counter)
+    : entryID_(counter), logger_(provider) {}
+
 int32_t Logger::writeBytes(
     EntryType type,
     int32_t arg1,

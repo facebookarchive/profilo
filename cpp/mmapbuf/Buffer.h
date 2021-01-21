@@ -70,7 +70,7 @@ struct Buffer {
   TraceBuffer* lfrb_ = nullptr;
   Logger logger_{
       {[this]() -> TraceBuffer& { return this->ringBuffer(); }},
-      Logger::kDefaultInitialID};
+      Logger::getGlobalEntryID()};
 };
 
 namespace {
