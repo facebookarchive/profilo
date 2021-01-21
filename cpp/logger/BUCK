@@ -20,7 +20,6 @@ fb_xplat_cxx_library(
         "-DLOG_TAG=\"Profilo\"",
     ],
     labels = ["supermodule:android/default/loom.core"],
-    link_whole = True,
     soname = "libprofilo_logger.$(ext)",
     tests = [
         profilo_path("cpp/test:packet_logger"),
@@ -32,7 +31,39 @@ fb_xplat_cxx_library(
         profilo_path("cpp:constants"),
         profilo_path("cpp/generated:cpp"),
         profilo_path("cpp/logger/buffer:trace_buffer"),
-        profilo_path("deps/fb:fb"),
         profilo_path("cpp/util:util"),
+        profilo_path("deps/fb:fb"),
+        profilo_path("deps/linker:locks"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "multi_buffer_logger",
+    srcs = [
+        "MultiBufferLogger.cpp",
+    ],
+    header_namespace = "profilo",
+    exported_headers = [
+        "MultiBufferLogger.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["supermodule:android/default/loom.core"],
+    soname = "libprofilo_multi_buffer_logger.$(ext)",
+    tests = [
+        profilo_path("cpp/test/logger:multi_buffer_logger_test"),
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/linker:locks"),
+    ],
+    exported_deps = [
+        profilo_path("cpp/mmapbuf:buffer"),
     ],
 )

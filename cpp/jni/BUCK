@@ -34,6 +34,39 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
+    name = "jmulti_buffer_logger",
+    srcs = [
+        "JMultiBufferLogger.cpp",
+    ],
+    header_namespace = "profilo/jni",
+    exported_headers = [
+        "JMultiBufferLogger.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo/Logger\"",
+    ],
+    labels = ["supermodule:android/default/loom.core"],
+    soname = "libprofilo_jmulti_buffer_logger.$(ext)",
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/linker:locks"),
+    ],
+    exported_deps = [
+        profilo_path("cpp:jni_logger_helpers"),
+        profilo_path("cpp/util:util"),
+        profilo_path("cpp/mmapbuf:buffer_jni"),
+        profilo_path("cpp/logger:logger"),
+        profilo_path("cpp/logger:multi_buffer_logger"),
+        profilo_path("deps/fbjni:fbjni"),
+    ],
+)
+
+fb_xplat_cxx_library(
     name = "writer_callbacks",
     srcs = [
         "NativeTraceWriterCallbacks.cpp",

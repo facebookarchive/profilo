@@ -25,6 +25,7 @@
 
 #include <profilo/JNILoggerHelpers.h>
 #include <profilo/Logger.h>
+#include <profilo/jni/JMultiBufferLogger.h>
 #include <profilo/jni/NativeTraceWriter.h>
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/JBuffer.h>
@@ -88,6 +89,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         });
 
     profilo::writer::NativeTraceWriter::registerNatives();
+    profilo::logger::JMultiBufferLogger::registerNatives();
     profilo::logger_jni::registerNatives();
   });
 }
