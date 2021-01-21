@@ -77,6 +77,9 @@ fb_xplat_cxx_library(
     preferred_linkage = "static",
     soname = "libprofilo_jni_helpers.$(ext)",
     supported_platforms_regex = "^android-(armv7|arm64|x86|x86_64)$",
+    visibility = [
+        profilo_path("cpp/..."),
+    ],
     deps = [
         ":constants",
         profilo_path("cpp/jni:jni"),

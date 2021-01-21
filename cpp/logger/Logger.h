@@ -69,9 +69,10 @@ class Logger {
       entry.id = entryID_.next();
     }
 
-    auto size = T::calculateSize(entry);
+    using U = std::decay_t<T>;
+    auto size = U::calculateSize(entry);
     char payload[size];
-    T::pack(entry, payload, size);
+    U::pack(entry, payload, size);
 
     logger_.write(payload, size);
     return entry.id;
@@ -83,9 +84,10 @@ class Logger {
       entry.id = entryID_.next();
     }
 
-    auto size = T::calculateSize(entry);
+    using U = std::decay_t<T>;
+    auto size = U::calculateSize(entry);
     char payload[size];
-    T::pack(entry, payload, size);
+    U::pack(entry, payload, size);
 
     cursor = logger_.writeAndGetCursor(payload, size);
     return entry.id;
