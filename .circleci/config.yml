@@ -89,11 +89,17 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache \
-              py-pip=9.0.0-r1
-            pip install \
-              docker-compose==1.12.0 \
-              awscli==1.11.76
+            sudo apt-get install docker-ce docker-ce-cli containerd.io
+      - build:
+          name: Build application Docker image
+          command: |
+            docker build -t profilo -f build/Dockerfile .
+      - test:
+          name: Run tests on Docker
+          command: |
+            docker run -t profilo /usr/bin/env TERM=dumb bash /repo/build/test.sh
+            docker run -t profilo /usr/bin/env TERM=dumb bash /repo/build/build.sh
+            build/copy_artifacts_to_host.sh
 
 
 
