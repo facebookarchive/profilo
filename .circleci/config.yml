@@ -110,7 +110,7 @@ jobs:
             go get -u github.com/tcnksm/ghr
             TAG_NAME="release-$(git rev-parse --short ${CIRCLE_SHA1})"
             set -x;
-            ghr -t Egj8XP3dXMaTKj2js7c6QwMwRdIMGd -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $TAG_NAME out/
+            ghr -t "${KEVIN_GITHUB_TOKEN}" -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $TAG_NAME out/
             set +x;
 
 
