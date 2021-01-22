@@ -90,11 +90,11 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get install docker-ce docker-ce-cli containerd.io
-      - run:
+      - docker-build:
           name: Build application Docker image
           command: |
             docker build -t profilo -f build/Dockerfile .
-      - run:
+      - docker-test:
           name: Run tests on Docker
           command: |
             docker run -t profilo /usr/bin/env TERM=dumb bash /repo/build/test.sh
