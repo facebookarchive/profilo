@@ -117,7 +117,7 @@ jobs:
             echo "$CIRCLE_PROJECT_USERNAME"
             echo "$CIRCLE_PROJECT_REPONAME"
             set -x;
-            ghr -t "${GITHUB_TOKEN}" -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} out/*
+            ghr -t "${GITHUB_TOKEN}" -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} out/.*
             set +x;
 
 
