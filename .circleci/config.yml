@@ -77,7 +77,7 @@ jobs:
 
   build-and-test:
     docker:
-      - image: circleci/golang:1.8
+      - image: cimg/base:2020.01
 
     working_directory: ~/profilo
 
@@ -89,7 +89,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get install docker-ce docker-ce-cli containerd.io
+            sudo apt-get install docker-ce docker-ce-cli containerd.io golang
       - run:
           name: Build application Docker image
           command: |
@@ -108,10 +108,10 @@ jobs:
             go get github.com/tcnksm/ghr
             VERSION=$(my-binary --version)
             echo "$VERSION"
+            echo "$CIRCLE_SHA1"
             echo "$GITHUB_TOKEN"
             echo "$CIRCLE_PROJECT_USERNAME"
             echo "$CIRCLE_PROJECT_REPONAME"
-            echo "$CIRCLE_SHA1"
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} out/*
 
 
