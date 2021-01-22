@@ -95,7 +95,6 @@ jobs:
             export GOPATH="$HOME/go"
             PATH="$GOPATH/bin:$PATH"
             go get -u github.com/tcnksm/ghr
-            ghr --help
       - run:
           name: Build application Docker image
           command: |
