@@ -93,6 +93,7 @@ jobs:
             sudo apt-get install docker-ce docker-ce-cli containerd.io --yes
             sudo apt install golang --yes
             go get -u github.com/tcnksm/ghr
+            ghr --help
       - run:
           name: Build application Docker image
           command: |
