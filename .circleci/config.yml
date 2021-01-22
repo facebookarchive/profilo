@@ -90,11 +90,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get install docker-ce docker-ce-cli containerd.io
-            wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz
-            sudo tar -xvf go1.15.2.linux-amd64.tar.gz
-            sudo mv go /usr/local
-            export GOROOT=/usr/local/go
-            export PATH=$GOROOT/bin:$PATH
+            sudo apt install golong
       - run:
           name: Build application Docker image
           command: |
