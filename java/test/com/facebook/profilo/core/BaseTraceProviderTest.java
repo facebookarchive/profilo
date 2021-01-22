@@ -30,7 +30,6 @@ import com.facebook.testing.powermock.PowerMockTest;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -43,7 +42,6 @@ import org.powermock.reflect.Whitebox;
   BaseTraceProvider.class,
 })
 @RunWith(WithTestDefaultsRunner.class)
-@Ignore
 public class BaseTraceProviderTest extends PowerMockTest {
 
   public static final TraceContext TRACE_CONTEXT = new TraceContext();
