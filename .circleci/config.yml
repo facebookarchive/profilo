@@ -89,7 +89,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get install docker-ce docker-ce-cli containerd.io golang
+            sudo apt-get install docker-ce docker-ce-cli containerd.io golang-go
       - run:
           name: Build application Docker image
           command: |
