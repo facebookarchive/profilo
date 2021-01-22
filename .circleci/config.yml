@@ -92,9 +92,6 @@ jobs:
             sudo apt update --yes
             sudo apt-get install docker-ce docker-ce-cli containerd.io --yes
             sudo apt install golang --yes
-            export GOPATH="$HOME/go"
-            PATH="$GOPATH/bin:$PATH"
-            go get -u github.com/tcnksm/ghr
       - run:
           name: Build application Docker image
           command: |
@@ -108,6 +105,9 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
+            export GOPATH="$HOME/go"
+            PATH="$GOPATH/bin:$PATH"
+            go get -u github.com/tcnksm/ghr
             git config --local user.name "Facebook Community Bot"
             git config --local user.email "nobody@nobody.com"
             VERSION=$(echo $CIRCLE_SHA1 | cut -c -7)
