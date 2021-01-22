@@ -90,16 +90,29 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get install docker-ce docker-ce-cli containerd.io
-      - docker-build:
+      - run:
           name: Build application Docker image
           command: |
             docker build -t profilo -f build/Dockerfile .
-      - docker-test:
+      - run:
           name: Run tests on Docker
           command: |
             docker run -t profilo /usr/bin/env TERM=dumb bash /repo/build/test.sh
             docker run -t profilo /usr/bin/env TERM=dumb bash /repo/build/build.sh
             build/copy_artifacts_to_host.sh
+      - run:
+        name: "Publish Release on GitHub"
+        command: |
+          git config --local user.name "Facebook Community Bot"
+          git config --local user.email "nobody@nobody.com"
+          go get github.com/tcnksm/ghr
+          VERSION=$(my-binary --version)
+          echo "$VERSION"
+          echo "$CIRCLE_SHA1"
+          echo "$GITHUB_TOKEN"
+          echo "$CIRCLE_PROJECT_USERNAME"
+          echo "$CIRCLE_PROJECT_REPONAME"
+          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} out/*
 
 
 
