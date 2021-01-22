@@ -107,13 +107,13 @@ jobs:
           command: |
             git config --local user.name "Facebook Community Bot"
             git config --local user.email "nobody@nobody.com"
-            go get github.com/tcnksm/ghr
             VERSION=$(my-binary --version)
             echo "$VERSION"
             echo "$CIRCLE_SHA1"
             echo "$GITHUB_TOKEN"
             echo "$CIRCLE_PROJECT_USERNAME"
             echo "$CIRCLE_PROJECT_REPONAME"
+            go get -u github.com/tcnksm/ghr
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} out/*
 
 
