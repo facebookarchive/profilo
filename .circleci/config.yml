@@ -108,16 +108,9 @@ jobs:
             export GOPATH="$HOME/go"
             PATH="$GOPATH/bin:$PATH"
             go get -u github.com/tcnksm/ghr
-            git config --local user.name "Facebook Community Bot"
-            git config --local user.email "nobody@nobody.com"
-            VERSION=$(echo $CIRCLE_SHA1 | cut -c -7)
-            echo "$VERSION"
-            echo "$CIRCLE_SHA1"
-            echo "$GITHUB_TOKEN"
-            echo "$CIRCLE_PROJECT_USERNAME"
-            echo "$CIRCLE_PROJECT_REPONAME"
+            TAG_NAME="release-$(git rev-parse --short ${CIRCLE_SHA1})"
             set -x;
-            ghr -t "${GITHUB_TOKEN}" -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} out/
+            ghr -t Egj8XP3dXMaTKj2js7c6QwMwRdIMGd -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $TAG_NAME out/
             set +x;
 
 
