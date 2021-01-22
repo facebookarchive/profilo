@@ -68,7 +68,8 @@ void JMultiBufferLogger::registerNatives() {
       makeNativeMethod("nativeRemoveBuffer", JMultiBufferLogger::removeBuffer),
       makeNativeMethod(
           "nativeWriteStandardEntry", JMultiBufferLogger::writeStandardEntry),
-      makeNativeMethod("nativeWriteBytesEntry", JMultiBufferLogger::writeBytesEntry),
+      makeNativeMethod(
+          "nativeWriteBytesEntry", JMultiBufferLogger::writeBytesEntry),
   });
 }
 } // namespace logger
