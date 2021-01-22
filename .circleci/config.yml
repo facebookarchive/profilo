@@ -77,7 +77,7 @@ jobs:
 
   build-and-test:
     docker:
-      - image: cimg/base:2020.01
+      - image: circleci/golang:1.8
 
     working_directory: ~/profilo
 
