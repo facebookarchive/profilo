@@ -126,4 +126,5 @@ workflows:
             - build-website
   build_and_test:
     jobs:
-      - build-and-test
+      - build-and-test:
+        filters: *filter-only-master
