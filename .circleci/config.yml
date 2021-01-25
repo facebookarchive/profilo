@@ -58,7 +58,6 @@ jobs:
     steps:
       - checkout
       - *restore-cache
-      
       - attach_workspace:
           at: website
 
@@ -73,8 +72,48 @@ jobs:
           name: Deploy Website
           command: |
             echo "Deploying website..."
-            cd website 
+            cd website
             GIT_USER=docusaurus-bot USE_SSH= yarn run deploy
+
+  build-and-test:
+    docker:
+      - image: cimg/base:2020.01
+
+    working_directory: ~/profilo
+
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt update --yes
+            sudo apt-get install docker-ce docker-ce-cli containerd.io --yes
+            sudo apt install golang --yes
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t profilo -f build/Dockerfile .
+      - run:
+          name: Run tests on Docker
+          command: |
+            docker run -t profilo /usr/bin/env TERM=dumb bash /repo/build/test.sh
+            docker run -t profilo /usr/bin/env TERM=dumb bash /repo/build/build.sh
+            build/copy_artifacts_to_host.sh
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            export GOPATH="$HOME/go"
+            PATH="$GOPATH/bin:$PATH"
+            go get -u github.com/tcnksm/ghr
+            TAG_NAME="release-$(git rev-parse --short ${CIRCLE_SHA1})"
+            set -x;
+            ghr -t "${KEVIN_GITHUB_TOKEN}" -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $TAG_NAME out/
+            set +x;
+
+
 
 workflows:
   version: 2
@@ -85,3 +124,7 @@ workflows:
           filters: *filter-only-master
           requires:
             - build-website
+  build_and_test:
+    jobs:
+      - build-and-test:
+        filters: *filter-only-master
