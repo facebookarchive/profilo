@@ -127,4 +127,4 @@ workflows:
   build_and_test:
     jobs:
       - build-and-test:
-        filters: *filter-only-master
+          filters: *filter-only-master
