@@ -20,7 +20,6 @@
 
 #include <build/build.h>
 
-#include <sys/system_properties.h>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <stdexcept>

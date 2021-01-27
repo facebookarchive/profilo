@@ -40,12 +40,12 @@ namespace perfevents {
 static std::vector<EventSpec> providersToSpecs(jboolean faults) {
   auto specs = std::vector<EventSpec>{};
   if (faults) {
-    EventSpec major_spec = {.type = EVENT_TYPE_MAJOR_FAULTS,
-                            .tid = EventSpec::kAllThreads};
+    EventSpec major_spec = {
+        .type = EVENT_TYPE_MAJOR_FAULTS, .tid = EventSpec::kAllThreads};
     specs.push_back(major_spec);
 
-    EventSpec minor_spec = {.type = EVENT_TYPE_MINOR_FAULTS,
-                            .tid = EventSpec::kAllThreads};
+    EventSpec minor_spec = {
+        .type = EVENT_TYPE_MINOR_FAULTS, .tid = EventSpec::kAllThreads};
     specs.push_back(minor_spec);
   }
   return specs;

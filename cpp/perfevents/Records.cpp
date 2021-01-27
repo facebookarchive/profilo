@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <perfevents/Records.h>
 #include <perfevents/Event.h>
+#include <perfevents/Records.h>
 #include <perfevents/detail/FileBackedMappingsList.h>
 
 #include <cstring>

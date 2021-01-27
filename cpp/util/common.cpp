@@ -47,7 +47,7 @@ int64_t monotonicTime() {
 }
 #endif
 
-#if defined(__linux__) || defined(ANDROID)
+#ifdef ANDROID
 typedef pid_t (*gettid_t)(pthread_t);
 // Returns any available bionic helper to get the tid from the
 // pthread_t. This helps us avoid a syscall on a pretty hot paths.
@@ -73,13 +73,17 @@ static gettid_t getBionicGetTid() {
   dlclose(handle);
   return result;
 }
+#endif
 
+#ifdef __linux__
 int32_t threadID() {
+#ifdef ANDROID
   static gettid_t bionicPthreadGetTid = getBionicGetTid();
 
   if (bionicPthreadGetTid) {
     return bionicPthreadGetTid(pthread_self());
   }
+#endif
   return static_cast<int32_t>(syscall(__NR_gettid));
 }
 #elif __MACH__

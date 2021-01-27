@@ -1,0 +1,23 @@
+load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
+
+profilo_cxx_test(
+    name = "multi_buffer_logger_test",
+    srcs = [
+        "MultiBufferLoggerTest.cpp",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["opt-in-sandcastle-sanitized-test"],
+    linker_flags = [
+        "-ldl",
+    ],
+    deps = [
+        "//xplat/folly:experimental_test_util",
+        profilo_path("cpp/logger:multi_buffer_logger"),
+        profilo_path("cpp/mmapbuf:buffer"),
+    ],
+)

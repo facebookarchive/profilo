@@ -22,6 +22,7 @@ import com.facebook.androidinternals.android.os.SystemPropertiesInternal;
 import com.facebook.common.build.BuildConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.LoggerWorkerThread;
 import com.facebook.profilo.logger.Trace;
@@ -239,9 +240,9 @@ public class TraceControlHandler extends Handler {
             ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY,
             ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
 
-    Logger.writeStandardEntry(
-        ProfiloConstants.NONE,
-        Logger.FILL_TID | Logger.FILL_TIMESTAMP | Logger.SKIP_PROVIDER_CHECK,
+    BufferLogger.writeStandardEntry(
+        context.buffer,
+        Logger.FILL_TID | Logger.FILL_TIMESTAMP,
         EntryType.LOGGER_PRIORITY,
         0,
         0,

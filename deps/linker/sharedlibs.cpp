@@ -19,11 +19,13 @@
 
 #include <build/build.h>
 
-#include <sys/system_properties.h>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <unordered_map>
 #include <libgen.h>
+#ifndef __ANDROID__
+char * basename(char const* path);
+#endif
 
 #define DT_GNU_HASH	0x6ffffef5	/* GNU-style hash table.  */
 

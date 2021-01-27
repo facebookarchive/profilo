@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <perfevents/Event.h>
 #include <fb/log.h>
+#include <perfevents/Event.h>
 
 namespace facebook {
 namespace perfevents {

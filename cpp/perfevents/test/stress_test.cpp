@@ -104,13 +104,13 @@ class PrintingListener : public RecordListener {
 
 void perf_thread() {
   std::cout << ">> Perf tid: " << gettid() << std::endl;
-  EventSpec spec_clock = {.type = EVENT_TYPE_TASK_CLOCK,
-                          .tid = EventSpec::kAllThreads};
+  EventSpec spec_clock = {
+      .type = EVENT_TYPE_TASK_CLOCK, .tid = EventSpec::kAllThreads};
   (void)spec_clock;
-  EventSpec spec_ctx = {.type = EVENT_TYPE_CONTEXT_SWITCHES,
-                        .tid = EventSpec::kAllThreads};
-  EventSpec spec_cpu_clock = {.type = EVENT_TYPE_CPU_CLOCK,
-                              .tid = EventSpec::kAllThreads};
+  EventSpec spec_ctx = {
+      .type = EVENT_TYPE_CONTEXT_SWITCHES, .tid = EventSpec::kAllThreads};
+  EventSpec spec_cpu_clock = {
+      .type = EVENT_TYPE_CPU_CLOCK, .tid = EventSpec::kAllThreads};
   auto session = std::unique_ptr<Session>(new Session(
       {spec_ctx, spec_cpu_clock},
       {

@@ -142,8 +142,13 @@ void ArtUnwindcTracer<kVersion>::flushStack(
     uint16_t depth,
     int tid,
     int64_t time_) {
-  RingBuffer::get().logger().writeStackFrames(
-      tid, static_cast<int64_t>(time_), frames, depth);
+  RingBuffer::get().logger().write(FramesEntry{
+      .id = 0,
+      .type = EntryType::STACK_FRAME,
+      .timestamp = static_cast<int64_t>(time_),
+      .tid = tid,
+      .matchid = 0,
+      .frames = {.values = const_cast<int64_t*>(frames), .size = depth}});
 }
 
 template <>

@@ -41,12 +41,13 @@ class JavaBaseTracer : public BaseTracer {
       uint16_t max_depth) = 0;
 
   static bool isFramework(char const* name) {
-    static constexpr framework_prefix prefixes[]{{"Ljava", 5},
-                                                 {"Landroid", 8},
-                                                 {"Ldalvik", 7},
-                                                 {"Lcom/android", 12},
-                                                 {"Lorg/apache", 11},
-                                                 {"Lcom/google", 11}};
+    static constexpr framework_prefix prefixes[]{
+        {"Ljava", 5},
+        {"Landroid", 8},
+        {"Ldalvik", 7},
+        {"Lcom/android", 12},
+        {"Lorg/apache", 11},
+        {"Lcom/google", 11}};
     constexpr int framework_prefixes_len = 6;
     for (int i = 0; i < framework_prefixes_len; i++) {
       auto& p = prefixes[i];

@@ -388,7 +388,15 @@ void logProfilingErrAnnotation(int32_t key, uint16_t value) {
   if (value == 0) {
     return;
   }
-  RingBuffer::get().logger().writeTraceAnnotation(key, value);
+  RingBuffer::get().logger().write(StandardEntry{
+      .id = 0,
+      .type = EntryType::TRACE_ANNOTATION,
+      .timestamp = monotonicTime(),
+      .tid = threadID(),
+      .callid = key,
+      .matchid = 0,
+      .extra = value,
+  });
 }
 
 /**

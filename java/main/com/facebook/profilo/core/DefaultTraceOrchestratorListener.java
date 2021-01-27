@@ -32,10 +32,10 @@ public abstract class DefaultTraceOrchestratorListener implements TraceOrchestra
   public void onConfigUpdated() {}
 
   @Override
-  public void onProvidersInitialized() {}
+  public void onProvidersInitialized(TraceContext traceContext) {}
 
   @Override
-  public void onProvidersStop(int activeProviders) {}
+  public void onProvidersStop(TraceContext traceContext, int activeProviders) {}
 
   @Override
   public void onUploadSuccessful(File file) {}

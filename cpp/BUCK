@@ -77,6 +77,9 @@ fb_xplat_cxx_library(
     preferred_linkage = "static",
     soname = "libprofilo_jni_helpers.$(ext)",
     supported_platforms_regex = "^android-(armv7|arm64|x86|x86_64)$",
+    visibility = [
+        profilo_path("cpp/..."),
+    ],
     deps = [
         ":constants",
         profilo_path("cpp/jni:jni"),
@@ -119,6 +122,7 @@ fb_xplat_cxx_library(
         ":providers",
         profilo_path("cpp/api:external_api_glue"),
         profilo_path("cpp/jni:jni"),
+        profilo_path("cpp/jni:jmulti_buffer_logger"),
         profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("cpp/mmapbuf:buffer"),
         profilo_path("cpp/profiler:external_tracer_manager"),

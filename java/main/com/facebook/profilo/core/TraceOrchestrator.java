@@ -24,6 +24,7 @@ import com.facebook.profilo.config.ConfigProvider;
 import com.facebook.profilo.config.DefaultConfigProvider;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
@@ -409,7 +410,7 @@ public final class TraceOrchestrator
     for (BaseTraceProvider provider : providers) {
       provider.onEnable(context, this);
     }
-    mListenerManager.onProvidersInitialized();
+    mListenerManager.onProvidersInitialized(context);
 
     synchronized (mTraceIdToContext) {
       mTraceIdToContext.put(context.traceId, context);
@@ -426,9 +427,9 @@ public final class TraceOrchestrator
     }
 
     if (mIsMainProcess) {
-      Logger.writeStandardEntry(
-          ProfiloConstants.NONE,
-          Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+      BufferLogger.writeStandardEntry(
+          context.buffer,
+          Logger.FILL_TIMESTAMP | Logger.FILL_TID,
           EntryType.TRACE_ANNOTATION,
           ProfiloConstants.NONE,
           ProfiloConstants.NONE,
@@ -456,7 +457,7 @@ public final class TraceOrchestrator
     for (BaseTraceProvider provider : normalProviders) {
       provider.onDisable(context, this);
     }
-    mListenerManager.onProvidersStop(tracingProviders);
+    mListenerManager.onProvidersStop(context, tracingProviders);
     mListenerManager.onTraceStop(context);
   }
 

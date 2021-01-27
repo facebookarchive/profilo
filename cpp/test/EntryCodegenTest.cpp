@@ -48,13 +48,14 @@ class TestVisitor : public EntryVisitor {
 };
 
 TEST(EntryCodegen, testPackUnpackStandardEntry) {
-  StandardEntry input{.id = 10,
-                      .type = EntryType::TRACE_START,
-                      .timestamp = 123,
-                      .tid = 0,
-                      .callid = 1,
-                      .matchid = 2,
-                      .extra = 3};
+  StandardEntry input{
+      .id = 10,
+      .type = EntryType::TRACE_START,
+      .timestamp = 123,
+      .tid = 0,
+      .callid = 1,
+      .matchid = 2,
+      .extra = 3};
 
   char buffer[sizeof(input) * 2]{};
   StandardEntry::pack(input, buffer, sizeof(buffer));
@@ -73,13 +74,14 @@ TEST(EntryCodegen, testPackUnpackStandardEntry) {
 }
 
 TEST(EntryCodegen, testPrintStandardEntry) {
-  StandardEntry input{.id = 10,
-                      .type = EntryType::TRACE_START,
-                      .timestamp = 123,
-                      .tid = 0,
-                      .callid = 1,
-                      .matchid = 2,
-                      .extra = 3};
+  StandardEntry input{
+      .id = 10,
+      .type = EntryType::TRACE_START,
+      .timestamp = 123,
+      .tid = 0,
+      .callid = 1,
+      .matchid = 2,
+      .extra = 3};
 
   char buffer[sizeof(StandardEntry) * 2]{};
   StandardEntry::pack(input, buffer, sizeof(buffer));

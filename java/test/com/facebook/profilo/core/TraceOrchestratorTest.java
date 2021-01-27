@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.same;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
@@ -526,7 +527,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
-    verify(listener).onProvidersStop(providerMaskCaptor.capture());
+    verify(listener).onProvidersStop(same(traceContext), providerMaskCaptor.capture());
     int tracingProviders = providerMaskCaptor.getValue();
     assertThat(tracingProviders)
         .isEqualTo(
@@ -579,7 +580,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.onTraceStop(traceContext);
 
     ArgumentCaptor<Integer> providerMaskCaptor = ArgumentCaptor.forClass(Integer.class);
-    verify(listener).onProvidersStop(providerMaskCaptor.capture());
+    verify(listener).onProvidersStop(same(traceContext), providerMaskCaptor.capture());
     int tracingProviders = providerMaskCaptor.getValue();
     assertThat(tracingProviders & enabledProvidersMask).isEqualTo(enabledProvidersMask);
   }

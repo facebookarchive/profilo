@@ -14,63 +14,57 @@
 package com.facebook.profilo.core;
 
 import com.facebook.profilo.entries.EntryType;
+import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
+import com.facebook.profilo.mmapbuf.Buffer;
 import java.util.Set;
 
 class CoreTraceListener extends DefaultTraceOrchestratorListener {
 
-  private static void addTraceAnnotation(int key, String stringKey, String stringValue) {
+  private static void addTraceAnnotation(
+      Buffer buffer, int key, String stringKey, String stringValue) {
 
     int returnedMatchID =
-        Logger.writeStandardEntry(
-            ProfiloConstants.NONE,
-            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        BufferLogger.writeStandardEntry(
+            buffer,
+            Logger.FILL_TIMESTAMP | Logger.FILL_TID,
             EntryType.TRACE_ANNOTATION,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE,
             key,
             ProfiloConstants.NO_MATCH,
             ProfiloConstants.NONE);
-    if (stringKey != null) {
-      returnedMatchID =
-          Logger.writeBytesEntry(
-              ProfiloConstants.NONE,
-              Logger.SKIP_PROVIDER_CHECK,
-              EntryType.STRING_KEY,
-              returnedMatchID,
-              stringKey);
-    }
-    Logger.writeBytesEntry(
-        ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK,
-        EntryType.STRING_VALUE,
-        returnedMatchID,
-        stringValue);
+    returnedMatchID =
+        BufferLogger.writeBytesEntry(
+            buffer, ProfiloConstants.NONE, EntryType.STRING_KEY, returnedMatchID, stringKey);
+    BufferLogger.writeBytesEntry(
+        buffer, ProfiloConstants.NONE, EntryType.STRING_VALUE, returnedMatchID, stringValue);
   }
 
   @Override
-  public void onProvidersInitialized() {
+  public void onProvidersInitialized(TraceContext traceContext) {
     // Writing a marker block to denote providers init finish
     long time = System.nanoTime();
     int pushId =
-        Logger.writeStandardEntry(
-            ProfiloConstants.NONE,
-            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TID,
+        BufferLogger.writeStandardEntry(
+            traceContext.buffer,
+            Logger.FILL_TID,
             EntryType.MARK_PUSH,
             time,
             ProfiloConstants.NONE,
             0,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE);
-    Logger.writeBytesEntry(
+    BufferLogger.writeBytesEntry(
+        traceContext.buffer,
         ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK,
         EntryType.STRING_NAME,
         pushId,
         "Profilo.ProvidersInitialized");
-    Logger.writeStandardEntry(
-        ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TID,
+    BufferLogger.writeStandardEntry(
+        traceContext.buffer,
+        Logger.FILL_TID,
         EntryType.MARK_POP,
         time,
         ProfiloConstants.NONE,
@@ -80,7 +74,7 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
   }
 
   @Override
-  public void onProvidersStop(int activeProviders) {
+  public void onProvidersStop(TraceContext traceContext, int activeProviders) {
     Set<String> activeProviderNames =
         ProvidersRegistry.getRegisteredProvidersByBitMask(activeProviders);
     StringBuilder activeProvidersStr = new StringBuilder();
@@ -92,6 +86,9 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
     }
 
     addTraceAnnotation(
-        Identifiers.ACTIVE_PROVIDERS, "Active providers", activeProvidersStr.toString());
+        traceContext.buffer,
+        Identifiers.ACTIVE_PROVIDERS,
+        "Active providers",
+        activeProvidersStr.toString());
   }
 }

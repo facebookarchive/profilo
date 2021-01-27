@@ -3,12 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __ANDROID__
 #include <sys/system_properties.h>
+#endif
 
 namespace facebook {
 namespace build {
 
 int getAndroidSdk() {
+#ifdef __ANDROID__
   static auto android_sdk = ([] {
      char sdk_version_str[PROP_VALUE_MAX];
      __system_property_get("ro.build.version.sdk", sdk_version_str);
@@ -16,9 +19,13 @@ int getAndroidSdk() {
   })();
 
   return android_sdk;
+#else
+  return 0;
+#endif
 }
 
 bool isArt() {
+#ifdef __ANDROID__
   int sdk = getAndroidSdk();
   if (sdk >= 21) { // Lollipop (5.0)
     return true;
@@ -33,6 +40,9 @@ bool isArt() {
 
     return running_art;
   }
+#else
+  return false;
+#endif
 }
 
 bool isDalvik() {

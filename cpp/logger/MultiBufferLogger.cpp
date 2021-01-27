@@ -14,48 +14,61 @@
  * limitations under the License.
  */
 
-#include "Logger.h"
-
-#include <algorithm>
-#include <chrono>
-#include <cstring>
-#include <stdexcept>
-
-#include <util/common.h>
+#include "MultiBufferLogger.h"
 
 namespace facebook {
 namespace profilo {
+namespace logger {
 
-using namespace entries;
+MultiBufferLogger::MultiBufferLogger(MultiBufferLogger::EntryIDCounter& counter)
+    : entryID_(counter) {}
 
-Logger::EntryIDCounter& Logger::getGlobalEntryID() {
-  static EntryIDCounter global_instance{kDefaultInitialID};
-  return global_instance;
+void MultiBufferLogger::addBuffer(std::shared_ptr<Buffer> buffer) {
+  WriterLock lock(&lock_);
+  buffers_.push_back(buffer);
 }
 
-Logger::Logger(logger::TraceBufferProvider provider, EntryIDCounter& counter)
-    : entryID_(counter), logger_(provider) {}
+void MultiBufferLogger::removeBuffer(std::shared_ptr<Buffer> buffer) {
+  WriterLock lock(&lock_);
+  auto iter = std::find(buffers_.begin(), buffers_.end(), buffer);
+  if (iter == buffers_.end()) {
+    return;
+  }
+  buffers_.erase(iter);
+}
 
-int32_t Logger::writeBytes(
+int32_t MultiBufferLogger::writeBytes(
     EntryType type,
     int32_t arg1,
     const uint8_t* arg2,
     size_t len) {
-  if (len > kMaxVariableLengthEntry) {
+  if (len > Logger::kMaxVariableLengthEntry) {
     throw std::overflow_error("len is bigger than kMaxVariableLengthEntry");
   }
   if (arg2 == nullptr) {
     throw std::invalid_argument("arg2 is null");
   }
 
-  return write(BytesEntry{
-      .id = 0,
+  // Maintain the same entry ID across all buffers
+  auto id = entryID_.next();
+
+  BytesEntry entry{
+      .id = id,
       .type = type,
       .matchid = arg1,
-      .bytes = {
-          .values = const_cast<uint8_t*>(arg2),
-          .size = static_cast<uint16_t>(len)}});
-}
+      .bytes =
+          {
+              .values = arg2,
+              .size = static_cast<uint16_t>(len),
+          },
+  };
 
+  ReaderLock lock(&lock_);
+  for (auto& buf : buffers_) {
+    buf->logger().write(entry);
+  }
+  return entry.id;
+}
+} // namespace logger
 } // namespace profilo
 } // namespace facebook

@@ -35,7 +35,7 @@ public interface TraceOrchestratorListener
   /** New updated config has been applied. */
   void onConfigUpdated();
 
-  void onProvidersInitialized();
+  void onProvidersInitialized(TraceContext traceContext);
 
-  void onProvidersStop(int activeProviders);
+  void onProvidersStop(TraceContext traceContext, int activeProviders);
 }
