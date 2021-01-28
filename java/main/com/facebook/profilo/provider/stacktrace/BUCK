@@ -1,18 +1,31 @@
 load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
+STACKTRACE_BASE_DEPS = [
+    profilo_path("deps/jsr-305:jsr-305"),
+    profilo_path("deps/proguard:annotations"),
+    profilo_path("deps/soloader:soloader"),
+    profilo_path("java/main/com/facebook/profilo/core:core"),
+    profilo_path("java/main/com/facebook/profilo/core:events"),
+    profilo_path("java/main/com/facebook/profilo/logger:logger"),
+]
+
 fb_core_android_library(
     name = "stacktrace",
     srcs = glob(["*.java"]),
     labels = ["supermodule:android/default/loom.core"],
     visibility = [profilo_path("...")],
-    deps = [
+    deps = STACKTRACE_BASE_DEPS + [
         profilo_path("cpp/profiler:profiler"),
-        profilo_path("deps/jsr-305:jsr-305"),
-        profilo_path("deps/proguard:annotations"),
-        profilo_path("deps/soloader:soloader"),
-        profilo_path("java/main/com/facebook/profilo/core:core"),
-        profilo_path("java/main/com/facebook/profilo/core:events"),
-        profilo_path("java/main/com/facebook/profilo/logger:logger"),
+    ],
+)
+
+fb_core_android_library(
+    name = "stacktrace_no_native_tracer",
+    srcs = glob(["*.java"]),
+    labels = ["supermodule:android/default/loom.core"],
+    visibility = [profilo_path("...")],
+    deps = STACKTRACE_BASE_DEPS + [
+        profilo_path("cpp/profiler:profiler_no_native_tracer"),
     ],
 )

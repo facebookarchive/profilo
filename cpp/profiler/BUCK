@@ -269,75 +269,114 @@ fb_xplat_cxx_library(
     ],
 )
 
+PROFILER_SRCS = [
+    "SamplingProfiler.cpp",
+    "ThreadTimer.cpp",
+    "TimerManager.cpp",
+    "jni.cpp",
+]
+
+PROFILER_HEADER_NAMESPACE = "profiler"
+
+PROFILER_EXPORTED_HEADERS = [
+    "SamplingProfiler.h",
+    "ThreadTimer.h",
+    "TimerManager.h",
+]
+
+PROFILER_ALLOW_JNI_MERGING = True
+
+PROFILER_COMPILER_FLAGS = [
+    "-fexceptions",
+    "-frtti",
+    "-DLOG_TAG=\"Profilo/Profiler\"",
+    "-Wno-format-security",
+    "-Wno-unknown-attributes",
+    #"-DFBLOG_NDEBUG=0",  # verbose logging
+    "-Wno-reorder-init-list",
+    "-Wno-unknown-warning-option",
+    "-std=gnu++14",
+] + profilo_maybe_hidden_visibility()
+
+PROFILER_SONAME = "libprofilo_stacktrace.$(ext)"
+
+PROFILER_SUPPORTED_PLATFORMS_REGEX = "^(android-|linux|gcc|platform)"
+
+PROFILER_TESTS = [
+    profilo_path("cpp/test:sampling_profiler"),
+]
+
+PROFILER_BASE_DEPS = [
+    ":artcompat",
+    ":dalvik_tracer",
+    ":external_tracer",
+    ":external_tracer_manager",
+    ":js_tracer",
+    ":retcode",
+    ":signal_handler",
+    ":unwindc-tracer-5.0.0",
+    ":unwindc-tracer-5.1.0",
+    ":unwindc-tracer-6.0.0",
+    ":unwindc-tracer-7.0.0",
+    ":unwindc-tracer-7.1.0",
+    ":unwindc-tracer-7.1.1",
+    ":unwindc-tracer-7.1.2",
+    ":unwindc-tracer-8.0.0",
+    ":unwindc-tracer-8.1.0",
+    ":unwindc-tracer-9.0.0",
+    profilo_path("cpp:constants"),
+    profilo_path("cpp:profilo"),
+    profilo_path("cpp:providers"),
+    profilo_path("cpp/api:external_api"),
+    profilo_path("cpp/api:external_api_header"),
+    profilo_path("cpp/logger/buffer:buffer"),
+    profilo_path("cpp/util:util"),
+    profilo_path("deps/breakpad:abort-with-reason"),
+    profilo_path("deps/dalvik:dalvik-subset-headers"),
+    profilo_path("deps/fbjni:fbjni"),
+]
+
+PROFILER_EXPORTED_DEPS = [
+    ":base_tracer",
+    ":constants",
+    profilo_path("cpp/api:external_api_glue"),
+    profilo_path("deps/fbjni:fbjni"),
+]
+
 fb_xplat_cxx_library(
     name = "profiler",
-    srcs = [
-        "SamplingProfiler.cpp",
-        "ThreadTimer.cpp",
-        "TimerManager.cpp",
-        "jni.cpp",
-    ],
-    header_namespace = "profiler",
-    exported_headers = [
-        "SamplingProfiler.h",
-        "ThreadTimer.h",
-        "TimerManager.h",
-    ],
-    allow_jni_merging = True,
-    compiler_flags = [
-        "-fexceptions",
-        "-frtti",
-        "-DLOG_TAG=\"Profilo/Profiler\"",
-        "-Wno-format-security",
-        "-Wno-unknown-attributes",
-        #"-DFBLOG_NDEBUG=0",  # verbose logging
-        "-Wno-reorder-init-list",
-        "-Wno-unknown-warning-option",
-        "-std=gnu++14",
-    ] + profilo_maybe_hidden_visibility(),
+    srcs = PROFILER_SRCS,
+    header_namespace = PROFILER_HEADER_NAMESPACE,
+    exported_headers = PROFILER_EXPORTED_HEADERS,
+    allow_jni_merging = PROFILER_ALLOW_JNI_MERGING,
+    compiler_flags = PROFILER_COMPILER_FLAGS,
     labels = ["supermodule:android/default/loom.core"],
-    soname = "libprofilo_stacktrace.$(ext)",
-    supported_platforms_regex = "^(android-|linux|gcc|platform)",
-    tests = [
-        profilo_path("cpp/test:sampling_profiler"),
-    ],
+    soname = PROFILER_SONAME,
+    supported_platforms_regex = PROFILER_SUPPORTED_PLATFORMS_REGEX,
+    tests = PROFILER_TESTS,
     visibility = [
         "PUBLIC",
     ],
-    deps = [
-        ":artcompat",
-        ":dalvik_tracer",
-        ":external_tracer",
-        ":external_tracer_manager",
-        ":js_tracer",
-        ":retcode",
-        ":signal_handler",
-        ":unwindc-tracer-5.0.0",
-        ":unwindc-tracer-5.1.0",
-        ":unwindc-tracer-6.0.0",
-        ":unwindc-tracer-7.0.0",
-        ":unwindc-tracer-7.1.0",
-        ":unwindc-tracer-7.1.1",
-        ":unwindc-tracer-7.1.2",
-        ":unwindc-tracer-8.0.0",
-        ":unwindc-tracer-8.1.0",
-        ":unwindc-tracer-9.0.0",
-        profilo_path("cpp:constants"),
-        profilo_path("cpp:profilo"),
-        profilo_path("cpp:providers"),
-        profilo_path("cpp/api:external_api"),
-        profilo_path("cpp/api:external_api_header"),
-        profilo_path("cpp/logger/buffer:buffer"),
-        profilo_path("cpp/util:util"),
-        profilo_path("deps/breakpad:abort-with-reason"),
-        profilo_path("deps/dalvik:dalvik-subset-headers"),
-        profilo_path("deps/fbjni:fbjni"),
+    deps = PROFILER_BASE_DEPS + [
         profilo_path("deps/profiler:native_tracer"),
     ],
-    exported_deps = [
-        ":base_tracer",
-        ":constants",
-        profilo_path("cpp/api:external_api_glue"),
-        profilo_path("deps/fbjni:fbjni"),
+    exported_deps = PROFILER_EXPORTED_DEPS,
+)
+
+fb_xplat_cxx_library(
+    name = "profiler_no_native_tracer",
+    srcs = PROFILER_SRCS,
+    header_namespace = PROFILER_HEADER_NAMESPACE,
+    exported_headers = PROFILER_EXPORTED_HEADERS,
+    allow_jni_merging = PROFILER_ALLOW_JNI_MERGING,
+    compiler_flags = PROFILER_COMPILER_FLAGS,
+    labels = ["supermodule:android/default/loom.core"],
+    soname = PROFILER_SONAME,
+    supported_platforms_regex = PROFILER_SUPPORTED_PLATFORMS_REGEX,
+    tests = PROFILER_TESTS,
+    visibility = [
+        "PUBLIC",
     ],
+    deps = PROFILER_BASE_DEPS,
+    exported_deps = PROFILER_EXPORTED_DEPS,
 )
