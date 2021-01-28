@@ -13,7 +13,9 @@
  */
 package com.facebook.profilo.core;
 
+import android.annotation.SuppressLint;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
 import javax.annotation.Nullable;
@@ -60,6 +62,9 @@ public abstract class BaseTraceProvider {
   @Nullable private String mSolib;
   private boolean mSolibInitialized;
 
+  private boolean mLoggerInitialized;
+  @Nullable private MultiBufferLogger mLogger;
+
   protected BaseTraceProvider() {
     this(null);
   }
@@ -80,6 +85,20 @@ public abstract class BaseTraceProvider {
         }
       }
     }
+  }
+
+  @SuppressLint("Return Not Nullable")
+  protected final MultiBufferLogger getLogger() {
+    if (mLoggerInitialized) {
+      return mLogger;
+    }
+    synchronized (this) {
+      if (!mLoggerInitialized) {
+        mLogger = new MultiBufferLogger();
+        mLoggerInitialized = true;
+      }
+    }
+    return mLogger;
   }
 
   public final void onEnable(TraceContext context, ExtraDataFileProvider dataFileProvider) {
@@ -113,9 +132,11 @@ public abstract class BaseTraceProvider {
     if (mSavedProviders != 0) {
       disable();
       mEnablingContext = null;
+      getLogger().removeBuffer(context.buffer);
     }
     // Current provider is on => enable
     if (providerMask != 0) {
+      getLogger().addBuffer(context.buffer);
       mEnablingContext = context;
       enable();
     }
