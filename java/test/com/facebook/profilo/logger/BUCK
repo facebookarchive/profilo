@@ -23,8 +23,6 @@ fb_core_android_library(
 
 robolectric4_test(
     name = "logger",
-    srcs = glob(["*Test.java"]),
-    autoglob = False,
     contacts = ["oncall+loom@xmail.facebook.com"],
     deps = [
         ":utils",
