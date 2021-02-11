@@ -33,6 +33,8 @@ fb_xplat_cxx_library(
     deps = [
         profilo_path("cpp:profilo"),
         profilo_path("cpp/counters:counters"),
+        profilo_path("cpp/jni:jmulti_buffer_logger"),
+        profilo_path("cpp/logger:multi_buffer_logger"),
         profilo_path("cpp/logger/buffer:buffer"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/fb:fb"),

@@ -18,7 +18,11 @@
 #include <gtest/gtest.h>
 
 #include <counters/Counter.h>
+#include <profilo/MultiBufferLogger.h>
 #include <vector>
+
+using facebook::profilo::logger::MultiBufferLogger;
+using facebook::profilo::mmapbuf::Buffer;
 
 namespace facebook {
 namespace profilo {
@@ -35,28 +39,35 @@ constexpr auto kTimestamp4 = 4;
 
 using namespace ::testing;
 
-class MockLogger {
- public:
-  MOCK_METHOD1(write, int32_t(StandardEntry&&));
-
-  MockLogger() {
-    ON_CALL(*this, write(_))
-        .WillByDefault(Invoke([this](StandardEntry&& entry) {
-          recordedEntries.push_back(std::move(entry));
-          return 0;
-        }));
-  }
-
-  std::vector<StandardEntry> recordedEntries;
-};
-
 class TracedCounterTest : public Test {
  protected:
   TracedCounterTest()
-      : mockLogger_(), counter_(&mockLogger_, kCounterType, kTid) {}
+      : buffer(std::make_shared<Buffer>(100)),
+        logger(),
+        counter_(logger, kCounterType, kTid) {
+    logger.addBuffer(buffer);
+  }
 
-  MockLogger mockLogger_;
-  Counter<MockLogger> counter_;
+  std::vector<StandardEntry> writtenEntries() {
+    auto& rb = buffer->ringBuffer();
+    auto cursor = rb.currentTail();
+
+    std::vector<StandardEntry> entries{};
+
+    logger::Packet packet{};
+    while (rb.tryRead(packet, cursor)) {
+      StandardEntry entry{};
+      StandardEntry::unpack(entry, packet.data, packet.size);
+      entries.emplace_back(entry);
+
+      cursor.moveForward();
+    }
+    return entries;
+  }
+
+  std::shared_ptr<Buffer> buffer;
+  MultiBufferLogger logger;
+  Counter counter_;
 };
 
 TEST_F(TracedCounterTest, testTimestampInvariantIsProtected) {
@@ -65,9 +76,10 @@ TEST_F(TracedCounterTest, testTimestampInvariantIsProtected) {
 }
 
 TEST_F(TracedCounterTest, testSinglePointLoggingCorrectness) {
-  EXPECT_CALL(mockLogger_, write(_)).Times(1);
   counter_.record(kValueA, kTimestamp1);
-  StandardEntry loggedEntry = mockLogger_.recordedEntries.front();
+  auto entries = writtenEntries();
+  EXPECT_EQ(entries.size(), 1);
+  StandardEntry& loggedEntry = entries.front();
   EXPECT_EQ(loggedEntry.type, EntryType::COUNTER);
   EXPECT_EQ(loggedEntry.timestamp, kTimestamp1);
   EXPECT_EQ(loggedEntry.tid, kTid);
@@ -76,10 +88,10 @@ TEST_F(TracedCounterTest, testSinglePointLoggingCorrectness) {
 }
 
 TEST_F(TracedCounterTest, testZeroInitalCounterValueIsLogged) {
-  EXPECT_CALL(mockLogger_, write(_)).Times(3);
   counter_.record(0, kTimestamp1);
   counter_.record(0, kTimestamp2);
   counter_.record(kValueA, kTimestamp3);
+  EXPECT_EQ(writtenEntries().size(), 3);
 }
 
 //
@@ -89,9 +101,9 @@ TEST_F(TracedCounterTest, testZeroInitalCounterValueIsLogged) {
 // [x] - skipped point
 //
 TEST_F(TracedCounterTest, testDuplicatePointsAreIgnored) {
-  EXPECT_CALL(mockLogger_, write(_)).Times(1);
   counter_.record(kValueA, kTimestamp1);
   counter_.record(kValueA, kTimestamp2);
+  EXPECT_EQ(writtenEntries().size(), 1);
 }
 
 //
@@ -100,13 +112,15 @@ TEST_F(TracedCounterTest, testDuplicatePointsAreIgnored) {
 //  *
 //
 TEST_F(TracedCounterTest, testMovingAdjacentValuesAreLogged) {
-  EXPECT_CALL(mockLogger_, write(_)).Times(2);
   counter_.record(kValueA, kTimestamp1);
   counter_.record(kValueB, kTimestamp2);
-  StandardEntry aEntry = mockLogger_.recordedEntries.front();
+
+  auto entries = writtenEntries();
+  EXPECT_EQ(entries.size(), 2);
+  StandardEntry& aEntry = entries.front();
   EXPECT_EQ(aEntry.timestamp, kTimestamp1);
   EXPECT_EQ(aEntry.extra, kValueA);
-  StandardEntry bEntry = mockLogger_.recordedEntries.back();
+  StandardEntry& bEntry = entries.back();
   EXPECT_EQ(bEntry.timestamp, kTimestamp2);
   EXPECT_EQ(bEntry.extra, kValueB);
 }
@@ -117,17 +131,19 @@ TEST_F(TracedCounterTest, testMovingAdjacentValuesAreLogged) {
 //  * --- *
 //
 TEST_F(TracedCounterTest, testThreePointsWithOneDuplicate) {
-  EXPECT_CALL(mockLogger_, write(_)).Times(3);
   counter_.record(kValueA, kTimestamp1);
   counter_.record(kValueA, kTimestamp2);
   counter_.record(kValueB, kTimestamp3);
-  StandardEntry aEntry = mockLogger_.recordedEntries.at(0);
+
+  auto entries = writtenEntries();
+  EXPECT_EQ(entries.size(), 3);
+  StandardEntry aEntry = entries.at(0);
   EXPECT_EQ(aEntry.timestamp, kTimestamp1);
   EXPECT_EQ(aEntry.extra, kValueA);
-  StandardEntry bEntry = mockLogger_.recordedEntries.at(1);
+  StandardEntry bEntry = entries.at(1);
   EXPECT_EQ(bEntry.timestamp, kTimestamp2);
   EXPECT_EQ(bEntry.extra, kValueA);
-  StandardEntry cEntry = mockLogger_.recordedEntries.at(2);
+  StandardEntry cEntry = entries.at(2);
   EXPECT_EQ(cEntry.timestamp, kTimestamp3);
   EXPECT_EQ(cEntry.extra, kValueB);
 }
@@ -138,18 +154,20 @@ TEST_F(TracedCounterTest, testThreePointsWithOneDuplicate) {
 //  * --- x --- *
 //
 TEST_F(TracedCounterTest, testFourPointsWithOneDuplicate) {
-  EXPECT_CALL(mockLogger_, write(_)).Times(3);
   counter_.record(kValueA, kTimestamp1);
   counter_.record(kValueA, kTimestamp2);
   counter_.record(kValueA, kTimestamp3);
   counter_.record(kValueB, kTimestamp4);
-  StandardEntry aEntry = mockLogger_.recordedEntries.at(0);
+
+  auto entries = writtenEntries();
+  EXPECT_EQ(entries.size(), 3);
+  StandardEntry aEntry = entries.at(0);
   EXPECT_EQ(aEntry.timestamp, kTimestamp1);
   EXPECT_EQ(aEntry.extra, kValueA);
-  StandardEntry bEntry = mockLogger_.recordedEntries.at(1);
+  StandardEntry bEntry = entries.at(1);
   EXPECT_EQ(bEntry.timestamp, kTimestamp3);
   EXPECT_EQ(bEntry.extra, kValueA);
-  StandardEntry cEntry = mockLogger_.recordedEntries.at(2);
+  StandardEntry cEntry = entries.at(2);
   EXPECT_EQ(cEntry.timestamp, kTimestamp4);
   EXPECT_EQ(cEntry.extra, kValueB);
 }

@@ -19,6 +19,7 @@ import com.facebook.profilo.core.Identifiers;
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.logger.Logger;
+import com.facebook.profilo.logger.MultiBufferLogger;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
@@ -28,6 +29,7 @@ public class SystemCounterLogger {
   private static final String GC_TIME_RUNTIME_STAT = "art.gc.gc-time";
   private static final String GC_BLOCKING_COUNT_RUNTIME_STAT = "art.gc.blocking-gc-count";
   private static final String GC_BLOCKING_TIME_RUNTIME_STAT = "art.gc.blocking-gc-time";
+  private final MultiBufferLogger mLogger;
 
   // Allocations
   private long mAllocSize;
@@ -42,6 +44,10 @@ public class SystemCounterLogger {
   private long mJavaFree;
   private long mJavaUsed;
   private long mJavaTotal;
+
+  SystemCounterLogger(MultiBufferLogger logger) {
+    mLogger = logger;
+  }
 
   public void logProcessCounters() {
     // Counters from android.os.Debug
@@ -108,23 +114,22 @@ public class SystemCounterLogger {
    * Logs the actual counter value when it moves. If a value doesn't change between the samples then
    * it's ignored.
    */
-  private static void logMonotonicProcessCounter(int key, long value, long prevValue) {
+  private void logMonotonicProcessCounter(int key, long value, long prevValue) {
     if (value <= prevValue) {
       return;
     }
     logProcessCounter(key, value);
   }
 
-  private static void logNonMonotonicProcessCounter(int key, long value, long prevValue) {
+  private void logNonMonotonicProcessCounter(int key, long value, long prevValue) {
     if (value == prevValue) {
       return;
     }
     logProcessCounter(key, value);
   }
 
-  private static void logProcessCounter(int key, long value) {
-    Logger.writeStandardEntry(
-        SystemCounterThread.PROVIDER_SYSTEM_COUNTERS,
+  private void logProcessCounter(int key, long value) {
+    mLogger.writeStandardEntry(
         Logger.FILL_TIMESTAMP | Logger.FILL_TID,
         EntryType.COUNTER,
         ProfiloConstants.NONE,

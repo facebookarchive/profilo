@@ -17,9 +17,11 @@
 #pragma once
 
 #include <profilo/LogEntry.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/MultiBufferLogger.h>
 #include <sys/types.h>
 #include <stdexcept>
+
+using facebook::profilo::logger::MultiBufferLogger;
 
 namespace facebook {
 namespace profilo {
@@ -57,16 +59,9 @@ struct CounterPoint {
 // Every call to recordAndLog() method moves the counter state and logs points
 // if necessary.
 //
-template <typename Logger>
 class Counter {
  public:
-  Counter(int32_t counterType, int32_t tid)
-      : counterType_(counterType),
-        point_(),
-        logger_(&RingBuffer::get().logger()),
-        tid_(tid) {}
-
-  Counter(Logger* logger, int32_t counterType, int32_t tid)
+  Counter(MultiBufferLogger& logger, int32_t counterType, int32_t tid)
       : counterType_(counterType), point_(), logger_(logger), tid_(tid) {}
 
   // Records and logs if necessary next counter value.
@@ -92,7 +87,7 @@ class Counter {
 
  private:
   void log() {
-    logger_->write(StandardEntry{
+    logger_.write(StandardEntry{
         .id = 0,
         .type = EntryType::COUNTER,
         .timestamp = point_.timestamp,
@@ -105,11 +100,11 @@ class Counter {
 
   int32_t counterType_;
   CounterPoint point_;
-  Logger* logger_;
+  MultiBufferLogger& logger_;
   int32_t tid_;
 };
 
-using TraceCounter = Counter<Logger>;
+using TraceCounter = Counter;
 
 } // namespace counters
 } // namespace profilo

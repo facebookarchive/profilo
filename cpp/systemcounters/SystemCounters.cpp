@@ -44,9 +44,8 @@ static inline int64_t loadDecimal(int64_t load) {
   return (load / kLoadShift) * 1000 + (load % kLoadShift) * 1000 / kLoadShift;
 }
 
-template <typename Logger>
 inline void logCpuCoreCounter(
-    Logger& logger,
+    MultiBufferLogger& logger,
     int32_t counter_name,
     int64_t value,
     int32_t core,
@@ -101,14 +100,13 @@ void SystemCounters::logCpuFrequencyInfo(int64_t time, int32_t tid) {
     return;
   }
   try {
-    auto& logger = RingBuffer::get().logger();
     if (!cpuFrequencyStats_) {
       cpuFrequencyStats_.reset(new CpuFrequencyStats(cpu_cores));
       // Log max frequency only once
       for (int core = 0; core < cpu_cores; ++core) {
         int64_t maxFrequency = cpuFrequencyStats_->getMaxCpuFrequency(core);
         logCpuCoreCounter(
-            logger,
+            logger_,
             QuickLogConstants::MAX_CPU_CORE_FREQUENCY,
             maxFrequency,
             core,
@@ -123,8 +121,13 @@ void SystemCounters::logCpuFrequencyInfo(int64_t time, int32_t tid) {
         continue;
       }
 
-      logCpuCoreCounter<Logger>(
-          logger, QuickLogConstants::CPU_CORE_FREQUENCY, curr, core, tid, time);
+      logCpuCoreCounter(
+          logger_,
+          QuickLogConstants::CPU_CORE_FREQUENCY,
+          curr,
+          core,
+          tid,
+          time);
     }
     extraAvailableCounters_ |= StatType::CPU_FREQ;
   } catch (std::exception const& e) {

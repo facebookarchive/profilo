@@ -24,6 +24,7 @@ import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.core.TraceEvents;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.DoNotOptimize;
 import com.facebook.soloader.SoLoader;
@@ -36,6 +37,10 @@ import javax.annotation.concurrent.GuardedBy;
  */
 @DoNotStrip
 public final class SystemCounterThread extends BaseTraceProvider {
+
+  public static interface CounterCollector {
+    void log(MultiBufferLogger logger);
+  }
 
   public static final int PROVIDER_SYSTEM_COUNTERS =
       ProvidersRegistry.newProvider("system_counters");
@@ -67,7 +72,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   @GuardedBy("this")
   @Nullable
-  private final Runnable mExtraRunnable;
+  private final CounterCollector mCounterCollector;
 
   @GuardedBy("this")
   private boolean mAllThreadsMode;
@@ -86,13 +91,13 @@ public final class SystemCounterThread extends BaseTraceProvider {
    * @param periodicWork - a Runnable that will execute on the same cadence as the rest of the
    *     system counters.
    */
-  public SystemCounterThread(@Nullable Runnable periodicWork) {
+  public SystemCounterThread(@Nullable CounterCollector periodicWork) {
     super("profilo_systemcounters");
-    mExtraRunnable = periodicWork;
-    mSystemCounterLogger = new SystemCounterLogger();
+    mCounterCollector = periodicWork;
+    mSystemCounterLogger = new SystemCounterLogger(getLogger());
   }
 
-  private static native HybridData initHybrid();
+  private native HybridData initHybrid(MultiBufferLogger logger);
 
   native void logCounters();
 
@@ -146,8 +151,8 @@ public final class SystemCounterThread extends BaseTraceProvider {
       case MSG_SYSTEM_COUNTERS:
         mSystemCounterLogger.logProcessCounters();
         logCounters();
-        if (mExtraRunnable != null) {
-          mExtraRunnable.run();
+        if (mCounterCollector != null) {
+          mCounterCollector.log(getLogger());
         }
         break;
       case MSG_HIGH_FREQ_THREAD_COUNTERS:
@@ -163,7 +168,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   @Override
   protected synchronized void enable() {
-    mHybridData = initHybrid();
+    mHybridData = initHybrid(getLogger());
     mEnabled = true;
     initHandler();
     final TraceContext traceContext = getEnablingTraceContext();

@@ -18,10 +18,15 @@
 
 #include <counters/ProcFs.h>
 #include <fbjni/fbjni.h>
+#include <profilo/MultiBufferLogger.h>
+#include <profilo/jni/JMultiBufferLogger.h>
 
 #include "ProcessCounters.h"
 #include "SystemCounters.h"
 #include "ThreadCounters.h"
+
+using facebook::profilo::logger::JMultiBufferLogger;
+using facebook::profilo::logger::MultiBufferLogger;
 
 namespace facebook {
 namespace profilo {
@@ -34,7 +39,8 @@ class SystemCounterThread
       "Lcom/facebook/profilo/provider/systemcounters/SystemCounterThread;";
 
   static facebook::jni::local_ref<jhybriddata> initHybrid(
-      facebook::jni::alias_ref<jclass>);
+      facebook::jni::alias_ref<jobject>,
+      JMultiBufferLogger* logger);
 
   static void registerNatives();
 
@@ -47,7 +53,9 @@ class SystemCounterThread
  private:
   friend HybridBase;
 
-  SystemCounterThread() = default;
+  SystemCounterThread(MultiBufferLogger& logger);
+
+  MultiBufferLogger& logger_;
 
   ThreadCounters threadCounters_;
   ProcessCounters processCounters_;

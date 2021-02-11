@@ -33,28 +33,32 @@ TaskStatInfo getStatInfo(int32_t tid) {
   return TaskStatFile(tid).refresh();
 }
 
-ThreadStatInfo ThreadStatInfo::createThreadStatInfo(int32_t tid) {
+ThreadStatInfo ThreadStatInfo::createThreadStatInfo(
+    MultiBufferLogger& logger,
+    int32_t tid) {
   return ThreadStatInfo{
-      .cpuTimeMs = TraceCounter(QuickLogConstants::THREAD_CPU_TIME, tid),
-      .state = TraceCounter(QuickLogConstants::THREAD_STATE, tid),
+      .cpuTimeMs =
+          TraceCounter(logger, QuickLogConstants::THREAD_CPU_TIME, tid),
+      .state = TraceCounter(logger, QuickLogConstants::THREAD_STATE, tid),
       .majorFaults =
-          TraceCounter(QuickLogConstants::QL_THREAD_FAULTS_MAJOR, tid),
-      .cpuNum = TraceCounter(QuickLogConstants::THREAD_CPU_NUM, tid),
+          TraceCounter(logger, QuickLogConstants::QL_THREAD_FAULTS_MAJOR, tid),
+      .cpuNum = TraceCounter(logger, QuickLogConstants::THREAD_CPU_NUM, tid),
       .kernelCpuTimeMs =
-          TraceCounter(QuickLogConstants::THREAD_KERNEL_CPU_TIME, tid),
+          TraceCounter(logger, QuickLogConstants::THREAD_KERNEL_CPU_TIME, tid),
       .minorFaults =
-          TraceCounter(QuickLogConstants::THREAD_SW_FAULTS_MINOR, tid),
-      .threadPriority = TraceCounter(QuickLogConstants::THREAD_PRIORITY, tid),
+          TraceCounter(logger, QuickLogConstants::THREAD_SW_FAULTS_MINOR, tid),
+      .threadPriority =
+          TraceCounter(logger, QuickLogConstants::THREAD_PRIORITY, tid),
       .highPrecisionCpuTimeMs =
-          TraceCounter(QuickLogConstants::THREAD_CPU_TIME, tid),
-      .waitToRunTimeMs =
-          TraceCounter(QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME, tid),
-      .nrVoluntarySwitches =
-          TraceCounter(QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY, tid),
-      .nrInvoluntarySwitches =
-          TraceCounter(QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY, tid),
-      .iowaitSum = TraceCounter(QuickLogConstants::IOWAIT_TIME, tid),
-      .iowaitCount = TraceCounter(QuickLogConstants::IOWAIT_COUNT, tid),
+          TraceCounter(logger, QuickLogConstants::THREAD_CPU_TIME, tid),
+      .waitToRunTimeMs = TraceCounter(
+          logger, QuickLogConstants::THREAD_WAIT_IN_RUNQUEUE_TIME, tid),
+      .nrVoluntarySwitches = TraceCounter(
+          logger, QuickLogConstants::CONTEXT_SWITCHES_VOLUNTARY, tid),
+      .nrInvoluntarySwitches = TraceCounter(
+          logger, QuickLogConstants::CONTEXT_SWITCHES_INVOLUNTARY, tid),
+      .iowaitSum = TraceCounter(logger, QuickLogConstants::IOWAIT_TIME, tid),
+      .iowaitCount = TraceCounter(logger, QuickLogConstants::IOWAIT_COUNT, tid),
       .availableStatsMask = 0,
   };
 }
@@ -586,11 +590,11 @@ StatmInfo ProcStatmFile::doRead(int fd, uint32_t requested_stats_mask) {
   return parseStatmFile(buffer, bytes_read);
 }
 
-ThreadStatHolder::ThreadStatHolder(int32_t tid)
+ThreadStatHolder::ThreadStatHolder(MultiBufferLogger& logger, int32_t tid)
     : stat_file_(),
       schedstat_file_(),
       sched_file_(),
-      last_info_(ThreadStatInfo::createThreadStatInfo(tid)),
+      last_info_(ThreadStatInfo::createThreadStatInfo(logger, tid)),
       availableStatFilesMask_(0xff),
       availableStatsMask_(0),
       tid_(tid) {}
@@ -666,6 +670,8 @@ ThreadStatInfo& ThreadStatHolder::getInfo() {
   return last_info_;
 }
 
+ThreadCache::ThreadCache(MultiBufferLogger& logger) : logger_(logger) {}
+
 void ThreadCache::sampleAndLogForEach(
     uint32_t requested_stats_mask,
     const std::unordered_set<int32_t>* black_list) {
@@ -698,7 +704,7 @@ void ThreadCache::sampleAndLogForThread(
     uint32_t requested_stats_mask) {
   auto statIter = cache_.find(tid);
   if (statIter == cache_.end()) {
-    cache_.emplace(std::make_pair(tid, ThreadStatHolder(tid)));
+    cache_.emplace(std::make_pair(tid, ThreadStatHolder(logger_, tid)));
   }
   auto& statHolder = cache_.at(tid);
   try {

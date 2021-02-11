@@ -17,7 +17,10 @@
 #pragma once
 
 #include <counters/ProcFs.h>
+#include <profilo/MultiBufferLogger.h>
 #include <mutex>
+
+using facebook::profilo::logger::MultiBufferLogger;
 
 namespace facebook {
 namespace profilo {
@@ -39,7 +42,7 @@ constexpr auto kHighFreqStatsMask = StatType::CPU_TIME | StatType::STATE |
 
 class ThreadCounters {
  public:
-  ThreadCounters() = default;
+  ThreadCounters(MultiBufferLogger& logger) : cache_(logger) {}
 
   void logCounters(
       bool highFrequencyMode,

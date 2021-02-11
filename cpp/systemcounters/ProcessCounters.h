@@ -18,7 +18,10 @@
 
 #include <counters/Counter.h>
 #include <counters/ProcFs.h>
+#include <profilo/MultiBufferLogger.h>
 #include <unistd.h>
+
+using facebook::profilo::logger::MultiBufferLogger;
 
 namespace facebook {
 namespace profilo {
@@ -39,32 +42,44 @@ struct ProcessStats {
 
 class ProcessCounters {
  public:
-  ProcessCounters(int32_t pid = getpid())
+  ProcessCounters(MultiBufferLogger& logger, int32_t pid = getpid())
       : schedStats_(),
         schedStatsTracingDisabled_(false),
         extraAvailableCounters_(0),
         statmStats_(),
         stats_(ProcessStats{
-            .cpuTimeMs = TraceCounter(QuickLogConstants::PROC_CPU_TIME, pid),
-            .kernelCpuTimeMs =
-                TraceCounter(QuickLogConstants::PROC_KERNEL_CPU_TIME, pid),
-            .majorFaults =
-                TraceCounter(QuickLogConstants::PROC_SW_FAULTS_MAJOR, pid),
-            .minorFaults =
-                TraceCounter(QuickLogConstants::PROC_SW_FAULTS_MINOR, pid),
+            .cpuTimeMs =
+                TraceCounter(logger, QuickLogConstants::PROC_CPU_TIME, pid),
+            .kernelCpuTimeMs = TraceCounter(
+                logger,
+                QuickLogConstants::PROC_KERNEL_CPU_TIME,
+                pid),
+            .majorFaults = TraceCounter(
+                logger,
+                QuickLogConstants::PROC_SW_FAULTS_MAJOR,
+                pid),
+            .minorFaults = TraceCounter(
+                logger,
+                QuickLogConstants::PROC_SW_FAULTS_MINOR,
+                pid),
             .nrVoluntarySwitches = TraceCounter(
+                logger,
                 QuickLogConstants::PROC_CONTEXT_SWITCHES_VOLUNTARY,
                 pid),
             .nrInvoluntarySwitches = TraceCounter(
+                logger,
                 QuickLogConstants::PROC_CONTEXT_SWITCHES_INVOLUNTARY,
                 pid),
-            .iowaitSum = TraceCounter(QuickLogConstants::PROC_IOWAIT_TIME, pid),
+            .iowaitSum =
+                TraceCounter(logger, QuickLogConstants::PROC_IOWAIT_TIME, pid),
             .iowaitCount =
-                TraceCounter(QuickLogConstants::PROC_IOWAIT_COUNT, pid),
-            .memResident =
-                TraceCounter(QuickLogConstants::PROC_STATM_RESIDENT, pid),
+                TraceCounter(logger, QuickLogConstants::PROC_IOWAIT_COUNT, pid),
+            .memResident = TraceCounter(
+                logger,
+                QuickLogConstants::PROC_STATM_RESIDENT,
+                pid),
             .memShared =
-                TraceCounter(QuickLogConstants::PROC_STATM_SHARED, pid),
+                TraceCounter(logger, QuickLogConstants::PROC_STATM_SHARED, pid),
         }) {}
 
   void logCounters();

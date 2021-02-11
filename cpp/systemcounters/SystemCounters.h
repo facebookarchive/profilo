@@ -21,10 +21,13 @@
 #include <counters/SysFs.h>
 #include <fb/log.h>
 #include <malloc.h>
+#include <profilo/MultiBufferLogger.h>
 #include <sys/syscall.h>
 #include <sys/sysinfo.h>
 #include <unistd.h>
 #include <util/common.h>
+
+using facebook::profilo::logger::MultiBufferLogger;
 
 namespace facebook {
 namespace profilo {
@@ -72,6 +75,7 @@ class SystemCounters {
 
   void logMeminfoCounters(int64_t time);
 
+  MultiBufferLogger& logger_;
   std::unique_ptr<CpuFrequencyStats> cpuFrequencyStats_;
   std::unique_ptr<VmStatFile> vmStats_;
   std::unique_ptr<MeminfoFile> meminfo_;
@@ -81,8 +85,9 @@ class SystemCounters {
   SystemStats stats_;
 
  public:
-  SystemCounters(int32_t pid = getpid())
-      : cpuFrequencyStats_(),
+  SystemCounters(MultiBufferLogger& logger, int32_t pid = getpid())
+      : logger_(logger),
+        cpuFrequencyStats_(),
         vmStats_(),
         meminfo_(),
         vmStatsTracingDisabled_(false),
@@ -90,38 +95,53 @@ class SystemCounters {
         extraAvailableCounters_(0),
         stats_(SystemStats{
             .allocMmapBytes =
-                TraceCounter(QuickLogConstants::ALLOC_MMAP_BYTES, pid),
+                TraceCounter(logger, QuickLogConstants::ALLOC_MMAP_BYTES, pid),
             .allocMaxBytes =
-                TraceCounter(QuickLogConstants::ALLOC_MAX_BYTES, pid),
+                TraceCounter(logger, QuickLogConstants::ALLOC_MAX_BYTES, pid),
             .allocTotalBytes =
-                TraceCounter(QuickLogConstants::ALLOC_TOTAL_BYTES, pid),
+                TraceCounter(logger, QuickLogConstants::ALLOC_TOTAL_BYTES, pid),
             .allocFreeBytes =
-                TraceCounter(QuickLogConstants::ALLOC_FREE_BYTES, pid),
-            .loadAvg1m = TraceCounter(QuickLogConstants::LOADAVG_1M, pid),
-            .loadAvg5m = TraceCounter(QuickLogConstants::LOADAVG_5M, pid),
-            .loadAvg15m = TraceCounter(QuickLogConstants::LOADAVG_15M, pid),
-            .numProcs = TraceCounter(QuickLogConstants::NUM_PROCS, pid),
-            .freeMem = TraceCounter(QuickLogConstants::FREE_MEM, pid),
-            .sharedMem = TraceCounter(QuickLogConstants::SHARED_MEM, pid),
-            .bufferMem = TraceCounter(QuickLogConstants::BUFFER_MEM, pid),
-            .pgPgIn = TraceCounter(QuickLogConstants::VMSTAT_PGPGIN, pid),
-            .pgPgOut = TraceCounter(QuickLogConstants::VMSTAT_PGPGOUT, pid),
+                TraceCounter(logger, QuickLogConstants::ALLOC_FREE_BYTES, pid),
+            .loadAvg1m =
+                TraceCounter(logger, QuickLogConstants::LOADAVG_1M, pid),
+            .loadAvg5m =
+                TraceCounter(logger, QuickLogConstants::LOADAVG_5M, pid),
+            .loadAvg15m =
+                TraceCounter(logger, QuickLogConstants::LOADAVG_15M, pid),
+            .numProcs = TraceCounter(logger, QuickLogConstants::NUM_PROCS, pid),
+            .freeMem = TraceCounter(logger, QuickLogConstants::FREE_MEM, pid),
+            .sharedMem =
+                TraceCounter(logger, QuickLogConstants::SHARED_MEM, pid),
+            .bufferMem =
+                TraceCounter(logger, QuickLogConstants::BUFFER_MEM, pid),
+            .pgPgIn =
+                TraceCounter(logger, QuickLogConstants::VMSTAT_PGPGIN, pid),
+            .pgPgOut =
+                TraceCounter(logger, QuickLogConstants::VMSTAT_PGPGOUT, pid),
             .pgMajFault =
-                TraceCounter(QuickLogConstants::VMSTAT_PGMAJFAULT, pid),
+                TraceCounter(logger, QuickLogConstants::VMSTAT_PGMAJFAULT, pid),
             .allocStall =
-                TraceCounter(QuickLogConstants::VMSTAT_ALLOCSTALL, pid),
+                TraceCounter(logger, QuickLogConstants::VMSTAT_ALLOCSTALL, pid),
             .pageOutrun =
-                TraceCounter(QuickLogConstants::VMSTAT_PAGEOUTRUN, pid),
-            .kswapdSteal =
-                TraceCounter(QuickLogConstants::VMSTAT_KSWAPD_STEAL, pid),
-            .freeBytes = TraceCounter(QuickLogConstants::MEMINFO_FREE, pid),
-            .dirtyBytes = TraceCounter(QuickLogConstants::MEMINFO_DIRTY, pid),
+                TraceCounter(logger, QuickLogConstants::VMSTAT_PAGEOUTRUN, pid),
+            .kswapdSteal = TraceCounter(
+                logger,
+                QuickLogConstants::VMSTAT_KSWAPD_STEAL,
+                pid),
+            .freeBytes =
+                TraceCounter(logger, QuickLogConstants::MEMINFO_FREE, pid),
+            .dirtyBytes =
+                TraceCounter(logger, QuickLogConstants::MEMINFO_DIRTY, pid),
             .writebackBytes =
-                TraceCounter(QuickLogConstants::MEMINFO_WRITEBACK, pid),
-            .cachedBytes = TraceCounter(QuickLogConstants::MEMINFO_CACHED, pid),
-            .activeBytes = TraceCounter(QuickLogConstants::MEMINFO_ACTIVE, pid),
-            .inactiveBytes =
-                TraceCounter(QuickLogConstants::MEMINFO_INACTIVE, pid)}) {}
+                TraceCounter(logger, QuickLogConstants::MEMINFO_WRITEBACK, pid),
+            .cachedBytes =
+                TraceCounter(logger, QuickLogConstants::MEMINFO_CACHED, pid),
+            .activeBytes =
+                TraceCounter(logger, QuickLogConstants::MEMINFO_ACTIVE, pid),
+            .inactiveBytes = TraceCounter(
+                logger,
+                QuickLogConstants::MEMINFO_INACTIVE,
+                pid)}) {}
 
   void logCounters();
 

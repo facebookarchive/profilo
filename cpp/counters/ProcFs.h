@@ -34,8 +34,11 @@
 
 #include <counters/BaseStatFile.h>
 #include <counters/Counter.h>
+#include <profilo/MultiBufferLogger.h>
 #include <util/ProcFsUtils.h>
 #include <util/common.h>
+
+using facebook::profilo::logger::MultiBufferLogger;
 
 namespace facebook {
 namespace profilo {
@@ -142,7 +145,9 @@ struct ThreadStatInfo {
 
   uint32_t availableStatsMask;
 
-  static ThreadStatInfo createThreadStatInfo(int32_t tid);
+  static ThreadStatInfo createThreadStatInfo(
+      MultiBufferLogger& logger,
+      int32_t tid);
 };
 
 TaskStatInfo getStatInfo(int32_t tid);
@@ -337,7 +342,7 @@ struct MeminfoFile : public OrderedKeyedStatFile<MeminfoInfo> {
 // Consolidated stat files manager class
 class ThreadStatHolder {
  public:
-  explicit ThreadStatHolder(int32_t tid);
+  explicit ThreadStatHolder(MultiBufferLogger& logger, int32_t tid);
 
   void sampleAndLog(uint32_t requested_stats_mask, int32_t tid);
   ThreadStatInfo& getInfo();
@@ -354,7 +359,7 @@ class ThreadStatHolder {
 
 class ThreadCache {
  public:
-  ThreadCache() = default;
+  ThreadCache(MultiBufferLogger& logger);
 
   // Execute `function` for all currently existing threads.
   void sampleAndLogForEach(
@@ -368,6 +373,7 @@ class ThreadCache {
   void clear();
 
  private:
+  MultiBufferLogger& logger_;
   std::unordered_map<uint32_t, ThreadStatHolder> cache_;
 };
 

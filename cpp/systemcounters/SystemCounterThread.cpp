@@ -66,9 +66,16 @@ void removeFromWhitelist(alias_ref<jclass>, int targetThread) {
 
 } // namespace
 
+SystemCounterThread::SystemCounterThread(MultiBufferLogger& logger)
+    : logger_(logger),
+      threadCounters_(logger),
+      processCounters_(logger),
+      systemCounters_(logger) {}
+
 local_ref<SystemCounterThread::jhybriddata> SystemCounterThread::initHybrid(
-    alias_ref<jclass>) {
-  return makeCxxInstance();
+    alias_ref<jobject>,
+    JMultiBufferLogger* logger) {
+  return makeCxxInstance(logger->nativeInstance());
 }
 
 void SystemCounterThread::registerNatives() {
@@ -120,7 +127,7 @@ void SystemCounterThread::logTraceAnnotations() {
   int64_t value = processCounters_.getAvailableCounters() |
       systemCounters_.getAvailableCounters() |
       threadCounters_.getAvailableCounters();
-  RingBuffer::get().logger().write(StandardEntry{
+  logger_.write(StandardEntry{
       .id = 0,
       .type = EntryType::TRACE_ANNOTATION,
       .timestamp = monotonicTime(),
