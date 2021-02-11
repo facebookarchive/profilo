@@ -26,7 +26,7 @@ public final class SystraceProvider extends BaseTraceProvider {
 
   @Override
   protected void enable() {
-    Atrace.enableSystrace();
+    Atrace.enableSystrace(getLogger());
   }
 
   @Override

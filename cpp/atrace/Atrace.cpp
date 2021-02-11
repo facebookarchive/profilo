@@ -38,9 +38,11 @@
 
 #include <profilo/LogEntry.h>
 #include <profilo/TraceProviders.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/jni/JMultiBufferLogger.h>
 
 #include "Atrace.h"
+
+namespace fbjni = facebook::jni;
 
 namespace facebook {
 namespace profilo {
@@ -53,6 +55,7 @@ std::atomic<uint64_t>* atrace_enabled_tags = nullptr;
 std::atomic<uint64_t> original_tags(UINT64_MAX);
 std::atomic<bool> systrace_installed;
 std::atomic<uint32_t> provider_mask;
+logger::JMultiBufferLogger* logger;
 bool first_enable = true;
 bool atrace_enabled;
 
@@ -125,13 +128,13 @@ void log_systrace(const void* buf, size_t count) {
       return;
   }
 
-  auto& logger = RingBuffer::get().logger();
   StandardEntry entry{};
   entry.tid = threadID();
   entry.timestamp = monotonicTime();
   entry.type = type;
 
-  int32_t id = logger.write(std::move(entry));
+  auto& nativeLogger = logger->nativeInstance();
+  int32_t id = nativeLogger.write(entry);
   if (type != EntryType::MARK_POP) {
     // Format is B|<pid>|<name>.
     // Skip "B|" trivially, find next '|' with memchr. We cannot use strchr
@@ -146,7 +149,7 @@ void log_systrace(const void* buf, size_t count) {
     name++; // skip '|' to the next character
     ssize_t len = msg + count - name;
     if (len > 0) {
-      logger.writeBytes(
+      nativeLogger.writeBytes(
           EntryType::STRING_NAME,
           id,
           (const uint8_t*)name,
@@ -343,7 +346,7 @@ void installSystraceSnooper(int providerMask) {
   provider_mask = providerMask;
 }
 
-void enableSystrace() {
+void enableSystrace(logger::JMultiBufferLogger* logger_instance) {
   if (!systrace_installed) {
     return;
   }
@@ -358,6 +361,7 @@ void enableSystrace() {
     }
   }
   first_enable = false;
+  logger = logger_instance;
 
   auto prev = atrace_enabled_tags->exchange(UINT64_MAX);
   if (prev != UINT64_MAX) { // if we somehow call this twice in a row, don't
@@ -399,19 +403,21 @@ bool installSystraceHook(int mask) {
 
 } // namespace
 
-bool JNI_installSystraceHook(JNIEnv*, jobject, jint mask) {
+bool JNI_installSystraceHook(fbjni::alias_ref<jobject>, jint mask) {
   return installSystraceHook(mask);
 }
 
-void JNI_enableSystraceNative(JNIEnv*, jobject) {
-  enableSystrace();
+void JNI_enableSystraceNative(
+    fbjni::alias_ref<jobject>,
+    logger::JMultiBufferLogger* logger) {
+  enableSystrace(logger);
 }
 
-void JNI_restoreSystraceNative(JNIEnv*, jobject) {
+void JNI_restoreSystraceNative(fbjni::alias_ref<jobject>) {
   restoreSystrace();
 }
 
-bool JNI_isEnabled(JNIEnv*, jobject) {
+bool JNI_isEnabled(fbjni::alias_ref<jobject>) {
   return atrace_enabled;
 }
 
@@ -421,13 +427,10 @@ void registerNatives() {
   fbjni::registerNatives(
       "com/facebook/profilo/provider/atrace/Atrace",
       {
-          makeNativeMethod(
-              "installSystraceHook", "(I)Z", JNI_installSystraceHook),
-          makeNativeMethod(
-              "enableSystraceNative", "()V", JNI_enableSystraceNative),
-          makeNativeMethod(
-              "restoreSystraceNative", "()V", JNI_restoreSystraceNative),
-          makeNativeMethod("isEnabled", "()Z", JNI_isEnabled),
+          makeNativeMethod("installSystraceHook", JNI_installSystraceHook),
+          makeNativeMethod("enableSystraceNative", JNI_enableSystraceNative),
+          makeNativeMethod("restoreSystraceNative", JNI_restoreSystraceNative),
+          makeNativeMethod("isEnabled", JNI_isEnabled),
       });
 }
 

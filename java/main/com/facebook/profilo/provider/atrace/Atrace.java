@@ -14,6 +14,7 @@
 package com.facebook.profilo.provider.atrace;
 
 import android.os.Trace;
+import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.proguard.annotations.DoNotStrip;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -37,12 +38,12 @@ public final class Atrace {
 
   private static native boolean installSystraceHook(int mask);
 
-  public static void enableSystrace() {
+  public static void enableSystrace(MultiBufferLogger logger) {
     if (!hasHacks()) {
       return;
     }
 
-    enableSystraceNative();
+    enableSystraceNative(logger);
 
     SystraceReflector.updateSystraceTags();
   }
@@ -57,7 +58,7 @@ public final class Atrace {
     SystraceReflector.updateSystraceTags();
   }
 
-  private static native void enableSystraceNative();
+  private static native void enableSystraceNative(MultiBufferLogger logger);
 
   private static native void restoreSystraceNative();
 
