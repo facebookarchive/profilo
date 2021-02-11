@@ -17,14 +17,18 @@
 #pragma once
 
 #include <inttypes.h>
+#include <profilo/MultiBufferLogger.h>
 
 namespace facebook {
 namespace profilo {
 namespace profiler {
 
+using logger::MultiBufferLogger;
+
 class StackCollectionEntryConverter {
  public:
   static void logRetcode(
+      MultiBufferLogger& logger,
       uint32_t retcode,
       int32_t tid,
       int64_t time,

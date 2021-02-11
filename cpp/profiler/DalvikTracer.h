@@ -21,7 +21,7 @@
 #include <dalvik-subset/internals.h>
 
 #include <profiler/JavaBaseTracer.h>
-#include <profilo/Logger.h>
+#include <profilo/MultiBufferLogger.h>
 
 namespace facebook {
 namespace profilo {
@@ -50,8 +50,12 @@ class DalvikTracer : public JavaBaseTracer {
       uint16_t& depth,
       uint16_t max_depth) override;
 
-  void flushStack(int64_t* frames, uint16_t depth, int tid, int64_t time_)
-      override;
+  void flushStack(
+      MultiBufferLogger& logger,
+      int64_t* frames,
+      uint16_t depth,
+      int tid,
+      int64_t time_) override;
 
   void prepare() override;
 

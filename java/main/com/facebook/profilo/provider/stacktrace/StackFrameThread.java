@@ -25,6 +25,7 @@ import com.facebook.profilo.core.ProvidersRegistry;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
+import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.proguard.annotations.DoNotStrip;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -91,7 +92,7 @@ public final class StackFrameThread extends BaseTraceProvider {
    */
   private synchronized boolean initProfiler() {
     try {
-      return CPUProfiler.init(mContext);
+      return CPUProfiler.init(mContext, getLogger());
     } catch (Exception ex) {
       Log.e(LOG_TAG, ex.getMessage(), ex);
       return false;
@@ -135,15 +136,15 @@ public final class StackFrameThread extends BaseTraceProvider {
       return false;
     }
 
-    Logger.writeStandardEntry(
-        ProfiloConstants.NONE,
-        Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
-        EntryType.TRACE_ANNOTATION,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        Identifiers.CPU_SAMPLING_INTERVAL_MS,
-        ProfiloConstants.NONE,
-        (long) sampleRateMs);
+    getLogger()
+        .writeStandardEntry(
+            Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            EntryType.TRACE_ANNOTATION,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            Identifiers.CPU_SAMPLING_INTERVAL_MS,
+            ProfiloConstants.NONE,
+            (long) sampleRateMs);
 
     mEnabled = true;
     return mEnabled;
@@ -206,22 +207,19 @@ public final class StackFrameThread extends BaseTraceProvider {
     }
   }
 
-  private static void logAnnotation(String key, String value) {
+  private void logAnnotation(String key, String value) {
+    MultiBufferLogger logger = getLogger();
     int match =
-        Logger.writeStandardEntry(
-            PROVIDER_STACK_FRAME,
-            Logger.SKIP_PROVIDER_CHECK | Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        logger.writeStandardEntry(
+            Logger.FILL_TIMESTAMP | Logger.FILL_TID,
             EntryType.TRACE_ANNOTATION,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE,
             ProfiloConstants.NONE,
             ProfiloConstants.NO_MATCH,
             ProfiloConstants.NONE);
-    match =
-        Logger.writeBytesEntry(
-            PROVIDER_STACK_FRAME, Logger.SKIP_PROVIDER_CHECK, EntryType.STRING_KEY, match, key);
-    Logger.writeBytesEntry(
-        PROVIDER_STACK_FRAME, Logger.SKIP_PROVIDER_CHECK, EntryType.STRING_VALUE, match, value);
+    match = logger.writeBytesEntry(ProfiloConstants.NONE, EntryType.STRING_KEY, match, key);
+    logger.writeBytesEntry(ProfiloConstants.NONE, EntryType.STRING_VALUE, match, value);
   }
 
   @Override

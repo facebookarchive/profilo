@@ -127,11 +127,12 @@ StackCollectionRetcode DalvikTracer::collectStack(
 }
 
 void DalvikTracer::flushStack(
+    MultiBufferLogger& logger,
     int64_t* frames,
     uint16_t depth,
     int tid,
     int64_t time_) {
-  RingBuffer::get().logger().write(FramesEntry{
+  logger.write(FramesEntry{
       .id = 0,
       .type = EntryType::STACK_FRAME,
       .timestamp = static_cast<int64_t>(time_),

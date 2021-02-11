@@ -34,8 +34,11 @@
 #include <profiler/Constants.h>
 #include <profiler/SignalHandler.h>
 #include <profilo/ExternalApiGlue.h>
+#include <profilo/MultiBufferLogger.h>
 
 namespace fbjni = facebook::jni;
+
+using facebook::profilo::logger::MultiBufferLogger;
 
 namespace facebook {
 namespace profilo {
@@ -81,6 +84,7 @@ struct Whitelist {
 
 struct ProfileState {
   pid_t processId;
+  MultiBufferLogger* logger;
   int availableTracers;
   int currentTracers;
   std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracersMap;
@@ -130,6 +134,7 @@ class SamplingProfiler {
   }
 
   bool initialize(
+      MultiBufferLogger& logger,
       int32_t available_tracers,
       std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers);
 
@@ -148,9 +153,6 @@ class SamplingProfiler {
   void removeFromWhitelist(int targetThread);
 
   void resetFrameworkNamesSet();
-
-  static std::unordered_map<int32_t, std::shared_ptr<BaseTracer>>
-  ComputeAvailableTracers(uint32_t available_tracers);
 
  private:
   ProfileState state_;

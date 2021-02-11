@@ -32,6 +32,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/test/TestSequencer.h>
 #include <util/common.h>
+#include "../logger/MultiBufferLogger.h"
 
 namespace facebook {
 namespace profilo {
@@ -136,8 +137,12 @@ class TestTracer : public BaseTracer {
     return (*collectStack_)(ucontext, frames, depth, max_depth);
   }
 
-  virtual void
-  flushStack(int64_t* frames, uint16_t depth, int tid, int64_t time_) {}
+  virtual void flushStack(
+      MultiBufferLogger& logger,
+      int64_t* frames,
+      uint16_t depth,
+      int tid,
+      int64_t time_) {}
 
   virtual void startTracing() {}
 
@@ -171,7 +176,7 @@ class SamplingProfilerTest : public ::testing::Test {
     // tracer_id
     auto tracer_id = kTestTracer;
     tracer_map[tracer_id] = tracer_;
-    ASSERT_TRUE(profiler.initialize(kTestTracer, tracer_map));
+    ASSERT_TRUE(profiler.initialize(logger, kTestTracer, tracer_map));
   }
 
   virtual void TearDown() {
@@ -219,6 +224,7 @@ class SamplingProfilerTest : public ::testing::Test {
   }
 
   SamplingProfiler profiler;
+  MultiBufferLogger logger;
   SamplingProfilerTestAccessor access{profiler};
 
  private:

@@ -18,11 +18,34 @@
 #include <fbjni/fbjni.h>
 #include <jni.h>
 
+#include <profiler/ArtCompatibility.h>
+#include <profiler/BaseTracer.h>
+#include <profilo/jni/JMultiBufferLogger.h>
+#include <util/common.h>
+
+#include <profiler/ArtUnwindcTracer_500.h>
+#include <profiler/ArtUnwindcTracer_510.h>
+#include <profiler/ArtUnwindcTracer_600.h>
+#include <profiler/ArtUnwindcTracer_700.h>
+#include <profiler/ArtUnwindcTracer_710.h>
+#include <profiler/ArtUnwindcTracer_711.h>
+#include <profiler/ArtUnwindcTracer_712.h>
+#include <profiler/ArtUnwindcTracer_800.h>
+#include <profiler/ArtUnwindcTracer_810.h>
+#include <profiler/ArtUnwindcTracer_900.h>
+#include <profiler/DalvikTracer.h>
+#include <profiler/ExternalTracerManager.h>
+#include <profiler/JSTracer.h>
+
+#if HAS_NATIVE_TRACER
+#include <profiler/NativeTracer.h>
+#endif
+
 #include "SamplingProfiler.h"
-#include "profiler/ArtCompatibility.h"
-#include "util/common.h"
 
 using namespace facebook::profilo;
+using namespace facebook::profilo::profiler;
+using facebook::profilo::logger::JMultiBufferLogger;
 
 const char* CPUProfilerType =
     "com/facebook/profilo/provider/stacktrace/CPUProfiler";
@@ -31,18 +54,91 @@ const char* StackFrameThreadType =
 const char* StackTraceWhitelist =
     "com/facebook/profilo/provider/stacktrace/StackTraceWhitelist";
 
-using facebook::profilo::profiler::SamplingProfiler;
 namespace {
 
 int32_t getSystemClockTickIntervalMs(facebook::jni::alias_ref<jobject>) {
   return systemClockTickIntervalMs();
 }
 
-static jboolean nativeInitialize(fbjni::alias_ref<jobject>, jint arg) {
+std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
+    MultiBufferLogger& logger,
+    uint32_t available_tracers) {
+  std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers;
+  if (available_tracers & tracers::DALVIK) {
+    tracers[tracers::DALVIK] = std::make_shared<DalvikTracer>();
+  }
+
+#if HAS_NATIVE_TRACER
+  if (available_tracers & tracers::NATIVE) {
+    tracers[tracers::NATIVE] = std::make_shared<NativeTracer>(logger);
+  }
+#endif
+
+  if (available_tracers & tracers::ART_UNWINDC_5_0) {
+    tracers[tracers::ART_UNWINDC_5_0] = std::make_shared<ArtUnwindcTracer50>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_5_1) {
+    tracers[tracers::ART_UNWINDC_5_1] = std::make_shared<ArtUnwindcTracer51>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_6_0) {
+    tracers[tracers::ART_UNWINDC_6_0] = std::make_shared<ArtUnwindcTracer60>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
+    tracers[tracers::ART_UNWINDC_7_0_0] =
+        std::make_shared<ArtUnwindcTracer700>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_0) {
+    tracers[tracers::ART_UNWINDC_7_1_0] =
+        std::make_shared<ArtUnwindcTracer710>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_1) {
+    tracers[tracers::ART_UNWINDC_7_1_1] =
+        std::make_shared<ArtUnwindcTracer711>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
+    tracers[tracers::ART_UNWINDC_7_1_2] =
+        std::make_shared<ArtUnwindcTracer712>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_8_0_0) {
+    tracers[tracers::ART_UNWINDC_8_0_0] =
+        std::make_shared<ArtUnwindcTracer800>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_8_1_0) {
+    tracers[tracers::ART_UNWINDC_8_1_0] =
+        std::make_shared<ArtUnwindcTracer810>();
+  }
+
+  if (available_tracers & tracers::ART_UNWINDC_9_0_0) {
+    tracers[tracers::ART_UNWINDC_9_0_0] =
+        std::make_shared<ArtUnwindcTracer900>();
+  }
+
+  if (available_tracers & tracers::JAVASCRIPT) {
+    auto jsTracer = std::make_shared<JSTracer>();
+    tracers[tracers::JAVASCRIPT] = jsTracer;
+    ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
+  }
+  return tracers;
+}
+
+static jboolean nativeInitialize(
+    fbjni::alias_ref<jobject>,
+    JMultiBufferLogger* jlogger,
+    jint arg) {
   auto available_tracers = static_cast<uint32_t>(arg);
+  auto& logger = jlogger->nativeInstance();
   return SamplingProfiler::getInstance().initialize(
+      logger,
       available_tracers,
-      SamplingProfiler::ComputeAvailableTracers(available_tracers));
+      makeAvailableTracers(logger, available_tracers));
 }
 
 static void nativeLoggerLoop(fbjni::alias_ref<jobject>) {

@@ -34,30 +34,13 @@
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
 
-#include <profiler/ArtUnwindcTracer_500.h>
-#include <profiler/ArtUnwindcTracer_510.h>
-#include <profiler/ArtUnwindcTracer_600.h>
-#include <profiler/ArtUnwindcTracer_700.h>
-#include <profiler/ArtUnwindcTracer_710.h>
-#include <profiler/ArtUnwindcTracer_711.h>
-#include <profiler/ArtUnwindcTracer_712.h>
-#include <profiler/ArtUnwindcTracer_800.h>
-#include <profiler/ArtUnwindcTracer_810.h>
-#include <profiler/ArtUnwindcTracer_900.h>
-#include <profiler/DalvikTracer.h>
-#include <profiler/ExternalTracerManager.h>
-#include <profiler/JSTracer.h>
+#include <profiler/ExternalTracer.h>
 #include <profiler/JavaBaseTracer.h>
 #include <profiler/Retcode.h>
 #include <profilo/ExternalApi.h>
 
-#if HAS_NATIVE_TRACER
-#include <profiler/NativeTracer.h>
-#endif
-
 #include <profilo/LogEntry.h>
 #include <profilo/TraceProviders.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 
 #include <util/common.h>
 
@@ -317,6 +300,7 @@ void SamplingProfiler::unregisterSignalHandlers() {
 void SamplingProfiler::flushStackTraces(
     std::unordered_set<uint64_t>& loggedFramesSet) {
   int processedCount = 0;
+  auto& logger = *state_.logger;
   for (size_t i = 0; i < MAX_STACKS_COUNT; i++) {
     auto& slot = state_.stacks[i];
 
@@ -334,10 +318,10 @@ void SamplingProfiler::flushStackTraces(
       auto tid = slotStateCombo >> 16;
 
       if (StackCollectionRetcode::SUCCESS == slotState) {
-        tracer->flushStack(slot.frames, slot.depth, tid, slot.time);
+        tracer->flushStack(logger, slot.frames, slot.depth, tid, slot.time);
       } else {
         StackCollectionEntryConverter::logRetcode(
-            slotState, tid, slot.time, slot.profilerType);
+            logger, slotState, tid, slot.time, slot.profilerType);
       }
 
       if (JavaBaseTracer::isJavaTracer(slot.profilerType)) {
@@ -355,11 +339,11 @@ void SamplingProfiler::flushStackTraces(
             entry.timestamp = slot.time;
             entry.type = EntryType::JAVA_FRAME_NAME;
             entry.extra = slot.frames[i];
-            int32_t id = RingBuffer::get().logger().write(std::move(entry));
+            int32_t id = logger.write(std::move(entry));
 
             std::string full_name{slot.class_descriptors[i]};
             full_name += slot.method_names[i];
-            RingBuffer::get().logger().writeBytes(
+            logger.writeBytes(
                 EntryType::STRING_VALUE,
                 id,
                 (const uint8_t*)full_name.c_str(),
@@ -384,11 +368,14 @@ void SamplingProfiler::flushStackTraces(
   }
 }
 
-void logProfilingErrAnnotation(int32_t key, uint16_t value) {
+void logProfilingErrAnnotation(
+    MultiBufferLogger& logger,
+    int32_t key,
+    uint16_t value) {
   if (value == 0) {
     return;
   }
-  RingBuffer::get().logger().write(StandardEntry{
+  logger.write(StandardEntry{
       .id = 0,
       .type = EntryType::TRACE_ANNOTATION,
       .timestamp = monotonicTime(),
@@ -404,9 +391,11 @@ void logProfilingErrAnnotation(int32_t key, uint16_t value) {
  * symbol which will collect traces and inits thread/process ids
  */
 bool SamplingProfiler::initialize(
+    MultiBufferLogger& logger,
     int32_t available_tracers,
     std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers) {
   state_.processId = getpid();
+  state_.logger = &logger;
   state_.availableTracers = available_tracers;
   state_.tracersMap = std::move(tracers);
   state_.timerManager.reset();
@@ -527,11 +516,17 @@ void SamplingProfiler::stopProfiling() {
 
   // Logging errors
   logProfilingErrAnnotation(
-      QuickLogConstants::PROF_ERR_SIG_CRASHES, state_.errSigCrashes);
+      *state_.logger,
+      QuickLogConstants::PROF_ERR_SIG_CRASHES,
+      state_.errSigCrashes);
   logProfilingErrAnnotation(
-      QuickLogConstants::PROF_ERR_SLOT_MISSES, state_.errSlotMisses);
+      *state_.logger,
+      QuickLogConstants::PROF_ERR_SLOT_MISSES,
+      state_.errSlotMisses);
   logProfilingErrAnnotation(
-      QuickLogConstants::PROF_ERR_STACK_OVERFLOWS, state_.errStackOverflows);
+      *state_.logger,
+      QuickLogConstants::PROF_ERR_STACK_OVERFLOWS,
+      state_.errStackOverflows);
 
   FBLOGV(
       "Stack overflows = %d, Sig crashes = %d, Slot misses = %d",
@@ -569,74 +564,6 @@ void SamplingProfiler::removeFromWhitelist(int targetThread) {
 void SamplingProfiler::resetFrameworkNamesSet() {
   // Let the logger loop know we should reset our cache of frames
   state_.resetFrameworkSymbols.store(true);
-}
-
-std::unordered_map<int32_t, std::shared_ptr<BaseTracer>>
-SamplingProfiler::ComputeAvailableTracers(uint32_t available_tracers) {
-  std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers;
-  if (available_tracers & tracers::DALVIK) {
-    tracers[tracers::DALVIK] = std::make_shared<DalvikTracer>();
-  }
-
-#if HAS_NATIVE_TRACER
-  if (available_tracers & tracers::NATIVE) {
-    tracers[tracers::NATIVE] = std::make_shared<NativeTracer>();
-  }
-#endif
-
-  if (available_tracers & tracers::ART_UNWINDC_5_0) {
-    tracers[tracers::ART_UNWINDC_5_0] = std::make_shared<ArtUnwindcTracer50>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_5_1) {
-    tracers[tracers::ART_UNWINDC_5_1] = std::make_shared<ArtUnwindcTracer51>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_6_0) {
-    tracers[tracers::ART_UNWINDC_6_0] = std::make_shared<ArtUnwindcTracer60>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_0_0) {
-    tracers[tracers::ART_UNWINDC_7_0_0] =
-        std::make_shared<ArtUnwindcTracer700>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_1_0) {
-    tracers[tracers::ART_UNWINDC_7_1_0] =
-        std::make_shared<ArtUnwindcTracer710>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_1_1) {
-    tracers[tracers::ART_UNWINDC_7_1_1] =
-        std::make_shared<ArtUnwindcTracer711>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_7_1_2) {
-    tracers[tracers::ART_UNWINDC_7_1_2] =
-        std::make_shared<ArtUnwindcTracer712>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_8_0_0) {
-    tracers[tracers::ART_UNWINDC_8_0_0] =
-        std::make_shared<ArtUnwindcTracer800>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_8_1_0) {
-    tracers[tracers::ART_UNWINDC_8_1_0] =
-        std::make_shared<ArtUnwindcTracer810>();
-  }
-
-  if (available_tracers & tracers::ART_UNWINDC_9_0_0) {
-    tracers[tracers::ART_UNWINDC_9_0_0] =
-        std::make_shared<ArtUnwindcTracer900>();
-  }
-
-  if (available_tracers & tracers::JAVASCRIPT) {
-    auto jsTracer = std::make_shared<JSTracer>();
-    tracers[tracers::JAVASCRIPT] = jsTracer;
-    ExternalTracerManager::getInstance().registerExternalTracer(jsTracer);
-  }
-  return tracers;
 }
 
 } // namespace profiler

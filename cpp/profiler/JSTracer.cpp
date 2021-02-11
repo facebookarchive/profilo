@@ -30,11 +30,12 @@ StackCollectionRetcode JSTracer::collectStack(
 }
 
 void JSTracer::flushStack(
+    MultiBufferLogger& logger,
     int64_t* frames,
     uint16_t depth,
     int tid,
     int64_t time_) {
-  RingBuffer::get().logger().write(FramesEntry{
+  logger.write(FramesEntry{
       .id = 0,
       .type = EntryType::JAVASCRIPT_STACK_FRAME,
       .timestamp = time_,

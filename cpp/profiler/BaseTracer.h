@@ -17,6 +17,7 @@
 #pragma once
 
 #include <profilo/ExternalApi.h>
+#include <profilo/MultiBufferLogger.h>
 #include <ucontext.h>
 #include <unistd.h>
 
@@ -24,6 +25,9 @@ static constexpr const uint32_t kSystemDexId = 0xFFFFFFFF;
 
 namespace facebook {
 namespace profilo {
+
+using logger::MultiBufferLogger;
+
 namespace profiler {
 
 namespace tracers {
@@ -57,8 +61,12 @@ class BaseTracer {
       uint16_t& depth,
       uint16_t max_depth) = 0;
 
-  virtual void
-  flushStack(int64_t* frames, uint16_t depth, int tid, int64_t time_) = 0;
+  virtual void flushStack(
+      MultiBufferLogger& logger,
+      int64_t* frames,
+      uint16_t depth,
+      int tid,
+      int64_t time_) = 0;
 
   virtual void startTracing() = 0;
 

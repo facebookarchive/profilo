@@ -99,6 +99,9 @@ fb_xplat_cxx_library(
     deps = [
         profilo_path("cpp/api:external_api_header"),
     ],
+    exported_deps = [
+        profilo_path("cpp/logger:multi_buffer_logger"),
+    ],
 )
 
 fb_xplat_cxx_library(
@@ -265,7 +268,7 @@ fb_xplat_cxx_library(
     ],
     deps = [
         profilo_path("cpp/api:external_api_header"),
-        profilo_path("cpp/logger/buffer:buffer"),
+        profilo_path("cpp/logger:multi_buffer_logger"),
     ],
 )
 
@@ -329,6 +332,7 @@ PROFILER_BASE_DEPS = [
     profilo_path("cpp:providers"),
     profilo_path("cpp/api:external_api"),
     profilo_path("cpp/api:external_api_header"),
+    profilo_path("cpp/jni:jmulti_buffer_logger"),
     profilo_path("cpp/logger/buffer:buffer"),
     profilo_path("cpp/util:util"),
     profilo_path("deps/breakpad:abort-with-reason"),
@@ -340,6 +344,7 @@ PROFILER_EXPORTED_DEPS = [
     ":base_tracer",
     ":constants",
     profilo_path("cpp/api:external_api_glue"),
+    profilo_path("cpp/logger:multi_buffer_logger"),
     profilo_path("deps/fbjni:fbjni"),
 ]
 

@@ -16,6 +16,7 @@ package com.facebook.profilo.provider.stacktrace;
 import android.content.Context;
 import android.os.Build;
 import android.os.Process;
+import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 
@@ -106,13 +107,14 @@ public class CPUProfiler {
     return sAvailableTracers;
   }
 
-  public static synchronized boolean init(Context context) throws Exception {
+  public static synchronized boolean init(Context context, MultiBufferLogger logger)
+      throws Exception {
     if (sInitialized) {
       return true;
     }
 
     sAvailableTracers = calculateTracers(context);
-    sInitialized = nativeInitialize(sAvailableTracers);
+    sInitialized = nativeInitialize(logger, sAvailableTracers);
     return sInitialized;
   }
 
@@ -152,7 +154,7 @@ public class CPUProfiler {
 
   /** Note: Init correctness is guaranteed for Main Thread only at this point. */
   @DoNotStrip
-  private static native boolean nativeInitialize(int availableTracers);
+  private static native boolean nativeInitialize(MultiBufferLogger logger, int availableTracers);
 
   @DoNotStrip
   private static native boolean nativeStartProfiling(

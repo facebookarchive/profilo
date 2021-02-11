@@ -19,7 +19,10 @@
 #include <util/common.h>
 #include <cstdint>
 
+#ifdef __ANDROID__
 #include <fb/Build.h>
+#endif
+
 #include <fbjni/fbjni.h>
 
 namespace fbjni = facebook::jni;
@@ -76,7 +79,11 @@ jint writeBytesEntryFromJNI(
   // causing them to be much slower than the always-copy GetStringChars
   // version. Therefore, we use GetStringCritical
   // before 8.0 and GetStringChars after.
+#ifdef __ANDROID__
   static bool jniUseCritical = build::Build::getAndroidSdk() < 26;
+#else
+  static bool jniUseCritical = true;
+#endif
 
   auto env = fbjni::Environment::current();
   constexpr auto kMaxJavaStringLength = 512;

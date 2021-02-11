@@ -18,6 +18,7 @@
 
 #include <profiler/ExternalTracer.h>
 
+#include <profilo/MultiBufferLogger.h>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -35,8 +36,12 @@ class JSTracer : public ExternalTracer {
       uint16_t& depth,
       uint16_t max_depth) override;
 
-  void flushStack(int64_t* frames, uint16_t depth, int tid, int64_t time_)
-      override;
+  void flushStack(
+      MultiBufferLogger& logger,
+      int64_t* frames,
+      uint16_t depth,
+      int tid,
+      int64_t time_) override;
 
   void prepare() override;
 
