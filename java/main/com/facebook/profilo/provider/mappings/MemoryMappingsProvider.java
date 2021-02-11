@@ -15,6 +15,7 @@ package com.facebook.profilo.provider.mappings;
 
 import com.facebook.profilo.core.BaseTraceProvider;
 import com.facebook.profilo.core.ProvidersRegistry;
+import com.facebook.profilo.logger.MultiBufferLogger;
 
 public final class MemoryMappingsProvider extends BaseTraceProvider {
 
@@ -29,7 +30,7 @@ public final class MemoryMappingsProvider extends BaseTraceProvider {
 
   @Override
   protected void disable() {
-    nativeLogMappings();
+    nativeLogMappings(getLogger());
   }
 
   @Override
@@ -37,7 +38,7 @@ public final class MemoryMappingsProvider extends BaseTraceProvider {
     return PROVIDER_MAPPINGS;
   }
 
-  private static native void nativeLogMappings();
+  private static native void nativeLogMappings(MultiBufferLogger logger);
 
   @Override
   protected int getTracingProviders() {

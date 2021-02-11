@@ -19,7 +19,7 @@
 #include <fb/log.h>
 #include <procmaps.h>
 #include <profilo/LogEntry.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/jni/JMultiBufferLogger.h>
 #include <profilo/mappings/mappings.h>
 #include <util/common.h>
 
@@ -31,20 +31,14 @@ namespace facebook {
 namespace profilo {
 namespace mappings {
 
+using logger::MultiBufferLogger;
+
 /* Log only interesting file-backed memory mappings. */
-void logMemoryMappings(JNIEnv*, jobject) {
-  auto memorymap = memorymap_snapshot(getpid());
-  if (memorymap == nullptr) {
-    FBLOGE("Could not read memory mappings");
-    return;
-  }
-
-  auto& logger = RingBuffer::get().logger();
-  auto tid = threadID();
-  auto time = monotonicTime();
-
-  FBLOGV("Num mappings: %zu", memorymap_size(memorymap));
-
+void logMemoryMappingsInternal(
+    struct memorymap* memorymap,
+    int32_t tid,
+    int64_t time,
+    MultiBufferLogger& logger) {
   std::stringstream stream;
   stream << std::hex;
 
@@ -85,6 +79,21 @@ void logMemoryMappings(JNIEnv*, jobject) {
         reinterpret_cast<const uint8_t*>(formatted_entry.data()),
         formatted_entry.size());
   }
+}
+
+void logMemoryMappings(alias_ref<jobject>, JMultiBufferLogger* logger) {
+  auto memorymap = memorymap_snapshot(getpid());
+  if (memorymap == nullptr) {
+    FBLOGE("Could not read memory mappings");
+    return;
+  }
+
+  auto tid = threadID();
+  auto time = monotonicTime();
+
+  FBLOGV("Num mappings: %zu", memorymap_size(memorymap));
+
+  logMemoryMappingsInternal(memorymap, tid, time, logger->nativeInstance());
 
   memorymap_destroy(memorymap);
 }

@@ -16,13 +16,17 @@
 
 #pragma once
 
-#include <jni.h>
+#include <fbjni/fbjni.h>
+#include <profilo/jni/JMultiBufferLogger.h>
 
 namespace facebook {
 namespace profilo {
 namespace mappings {
 
-void logMemoryMappings(JNIEnv*, jobject);
+using logger::JMultiBufferLogger;
+using namespace jni;
+
+void logMemoryMappings(alias_ref<jobject>, JMultiBufferLogger*);
 
 } // namespace mappings
 } // namespace profilo
