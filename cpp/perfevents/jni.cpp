@@ -26,7 +26,7 @@
 #include <perfevents/detail/ClockOffsetMeasurement.h>
 #include <perfevents/detail/FileBackedMappingsList.h>
 #include <profilo/LogEntry.h>
-#include <profilo/logger/buffer/RingBuffer.h>
+#include <profilo/jni/JMultiBufferLogger.h>
 #include <util/common.h>
 
 namespace fbjni = facebook::jni;
@@ -69,9 +69,11 @@ class ProfiloWriterListener : public RecordListener {
 
  public:
   ProfiloWriterListener(
+      JMultiBufferLogger& logger,
       int64_t clock_offset,
       std::vector<EventSpec> const& specs)
-      : offset_(clock_offset),
+      : logger_(logger),
+        offset_(clock_offset),
         file_mappings_(buildMappingsFromSpecs(specs)),
         have_filled_mappings_(false) {}
 
@@ -95,7 +97,7 @@ class ProfiloWriterListener : public RecordListener {
 
     switch (type) {
       case EVENT_TYPE_MAJOR_FAULTS: {
-        profilo::RingBuffer::get().logger().write(StandardEntry{
+        logger_.nativeInstance().write(StandardEntry{
             .id = 0,
             .type = EntryType::MAJOR_FAULT,
             .timestamp = ((int64_t)record.time()) + offset_,
@@ -112,7 +114,7 @@ class ProfiloWriterListener : public RecordListener {
           return;
         }
 
-        RingBuffer::get().logger().write(StandardEntry{
+        logger_.nativeInstance().write(StandardEntry{
             .id = 0,
             .type = EntryType::MINOR_FAULT,
             .timestamp = ((int64_t)record.time()) + offset_,
@@ -133,7 +135,7 @@ class ProfiloWriterListener : public RecordListener {
   virtual void onForkExit(const RecordForkExit& record) {}
 
   virtual void onLost(const RecordLost& record) {
-    RingBuffer::get().logger().write(StandardEntry{
+    logger_.nativeInstance().write(StandardEntry{
         .id = 0,
         .type = EntryType::PERFEVENTS_LOST,
         .timestamp = monotonicTime(),
@@ -148,6 +150,7 @@ class ProfiloWriterListener : public RecordListener {
   virtual void onReaderStop() {}
 
  private:
+  JMultiBufferLogger& logger_;
   int64_t offset_;
 
   // Contains file-backed mappings, kept up-to-date by
@@ -174,12 +177,12 @@ class ProfiloWriterListener : public RecordListener {
 } // namespace
 
 static jlong nativeAttach(
-    JNIEnv*,
-    jobject cls,
+    fbjni::alias_ref<jobject> cls,
     jboolean faults,
     jint fallbacks,
     jint maxIterations,
-    jfloat maxAttachedFdsRatio) {
+    jfloat maxAttachedFdsRatio,
+    JMultiBufferLogger* logger) {
   auto specs = providersToSpecs(faults);
   if (specs.empty()) {
     throw std::invalid_argument("Could not convert providers");
@@ -201,7 +204,7 @@ static jlong nativeAttach(
           .maxAttachedFdsRatio = maxAttachedFdsRatio,
       },
       std::unique_ptr<RecordListener>(
-          new ProfiloWriterListener(clockOffset, specs)));
+          new ProfiloWriterListener(*logger, clockOffset, specs)));
 
   if (!session->attach()) {
     delete session;

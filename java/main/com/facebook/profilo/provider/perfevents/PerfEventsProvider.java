@@ -40,7 +40,7 @@ public final class PerfEventsProvider extends BaseTraceProvider {
       mSession = session;
     }
 
-    if (session.attach(getEnablingTraceContext().enabledProviders)) {
+    if (session.attach(getEnablingTraceContext().enabledProviders, getLogger())) {
       mEnabled = true;
       session.start();
     }

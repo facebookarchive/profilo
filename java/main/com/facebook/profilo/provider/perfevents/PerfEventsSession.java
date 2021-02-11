@@ -16,6 +16,7 @@ package com.facebook.profilo.provider.perfevents;
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
 import static android.os.Process.setThreadPriority;
 
+import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.proguard.annotations.DoNotStrip;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -58,7 +59,7 @@ public class PerfEventsSession {
         };
   }
 
-  public synchronized boolean attach(int providers) {
+  public synchronized boolean attach(int providers, MultiBufferLogger logger) {
     if (mNativeHandle != 0) {
       throw new IllegalStateException("Already attached");
     }
@@ -66,7 +67,11 @@ public class PerfEventsSession {
     if (faults) {
       mNativeHandle =
           nativeAttach(
-              faults, FALLBACK_RAISE_RLIMIT, MAX_ATTACH_ITERATIONS, MAX_ATTACHED_FDS_OPEN_RATIO);
+              faults,
+              FALLBACK_RAISE_RLIMIT,
+              MAX_ATTACH_ITERATIONS,
+              MAX_ATTACHED_FDS_OPEN_RATIO,
+              logger);
     }
     return mNativeHandle != 0;
   }
@@ -123,7 +128,11 @@ public class PerfEventsSession {
   }
 
   private static native long nativeAttach(
-      boolean faults, int fallbacks, int maxAttachIterations, float maxAttachedFdsOpenRatio);
+      boolean faults,
+      int fallbacks,
+      int maxAttachIterations,
+      float maxAttachedFdsOpenRatio,
+      MultiBufferLogger logger);
 
   private static native void nativeDetach(long handle);
 
