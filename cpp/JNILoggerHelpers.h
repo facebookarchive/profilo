@@ -75,6 +75,13 @@ jint writeBytesEntryFromJNI(
     jint type,
     jint arg1,
     jstring arg2) {
+  if (arg2 == nullptr) {
+    constexpr uint8_t bytes[] = "null";
+    constexpr int bytesLen = 4;
+    return loggerLike.writeBytes(
+        static_cast<EntryType>(type), arg1, bytes, bytesLen);
+  }
+
   // Android 8.0 and above can issue syscalls during Get/ReleaseStringCritical,
   // causing them to be much slower than the always-copy GetStringChars
   // version. Therefore, we use GetStringCritical
