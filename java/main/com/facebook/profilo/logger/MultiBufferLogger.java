@@ -14,9 +14,11 @@
 package com.facebook.profilo.logger;
 
 import com.facebook.jni.HybridClassBase;
+import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.proguard.annotations.DoNotStripAny;
 import com.facebook.soloader.SoLoader;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * MultiBufferLogger allows entries to be written to one or more buffers at the same time.
@@ -28,8 +30,11 @@ import com.facebook.soloader.SoLoader;
 public final class MultiBufferLogger extends HybridClassBase {
 
   private boolean mLoaded;
+  private final AtomicInteger mBuffersCount;
 
-  public MultiBufferLogger() {}
+  public MultiBufferLogger() {
+    mBuffersCount = new AtomicInteger(0);
+  }
 
   private void ensureLoaded() {
     if (mLoaded) {
@@ -50,11 +55,13 @@ public final class MultiBufferLogger extends HybridClassBase {
   public void addBuffer(Buffer buffer) {
     ensureLoaded();
     nativeAddBuffer(buffer);
+    mBuffersCount.incrementAndGet();
   }
 
   public void removeBuffer(Buffer buffer) {
     ensureLoaded();
     nativeRemoveBuffer(buffer);
+    mBuffersCount.decrementAndGet();
   }
 
   public int writeStandardEntry(
@@ -65,11 +72,17 @@ public final class MultiBufferLogger extends HybridClassBase {
       int arg1 /* callid */,
       int arg2 /* matchid */,
       long arg3 /* extra */) {
+    if (mBuffersCount.intValue() == 0) {
+      return ProfiloConstants.NO_MATCH;
+    }
     ensureLoaded();
     return nativeWriteStandardEntry(flags, type, timestamp, tid, arg1, arg2, arg3);
   }
 
   public int writeBytesEntry(int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */) {
+    if (mBuffersCount.intValue() == 0) {
+      return ProfiloConstants.NO_MATCH;
+    }
     ensureLoaded();
     return nativeWriteBytesEntry(flags, type, arg1, arg2);
   }
