@@ -38,7 +38,7 @@ public final class BufferLogger {
   public static native int writeBytesEntry(
       Buffer buffer, int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */);
 
-  static native int writeAndWakeupTraceWriter(
+  public static native int writeAndWakeupTraceWriter(
       NativeTraceWriter writer,
       Buffer buffer,
       long traceId,

@@ -154,8 +154,14 @@ public class TraceControlHandler extends Handler {
 
       // For in-memory trace everything in the tracing buffer trace is started and then immediately
       // stopped after dumping the contents of the buffer.
-      Logger.postCreateBackwardTrace(
-          context.workerThread.getTraceWriter(), context.buffer, context.traceId, context.flags);
+      BufferLogger.writeAndWakeupTraceWriter(
+          context.workerThread.getTraceWriter(),
+          context.buffer,
+          context.traceId,
+          EntryType.TRACE_BACKWARDS,
+          ProfiloConstants.NONE,
+          context.flags,
+          context.traceId);
     }
 
     // Schedule an optionally delayed *actual* end of the trace
@@ -170,11 +176,35 @@ public class TraceControlHandler extends Handler {
     int uploadSampleRate = 0;
     uploadSampleRate = mTraceConditionManager.getUploadSampleRate(context.traceId);
     if (uploadSampleRate == 0 || mRandom.nextInt(uploadSampleRate) != 0) {
-      Logger.postAbortTrace(context.traceId);
+      BufferLogger.writeStandardEntry(
+          context.buffer,
+          Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+          EntryType.TRACE_ABORT,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          context.traceId);
       onTraceAbort(new TraceContext(context, ProfiloConstants.ABORT_REASON_CONDITION_NOT_MET));
     } else {
-      Logger.postConditionalUploadRate(uploadSampleRate);
-      Logger.postPreCloseTrace(context.traceId);
+      BufferLogger.writeStandardEntry(
+          context.buffer,
+          Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+          EntryType.CONDITIONAL_UPLOAD_RATE,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          uploadSampleRate);
+      BufferLogger.writeStandardEntry(
+          context.buffer,
+          Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+          EntryType.TRACE_PRE_END,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          ProfiloConstants.NONE,
+          context.traceId);
       onTraceStop(context);
     }
 
@@ -194,7 +224,15 @@ public class TraceControlHandler extends Handler {
     if (mListener != null) {
       mListener.onTraceStop(context);
     }
-    Logger.postCloseTrace(context.traceId);
+    BufferLogger.writeStandardEntry(
+        context.buffer,
+        Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        EntryType.TRACE_END,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        context.traceId);
   }
 
   protected void abortTrace(TraceContext context) {
@@ -300,12 +338,14 @@ public class TraceControlHandler extends Handler {
       // We want to write TRACE_START while we're still synchronously in the startTrace call.
       // This way we can be sure that the worker thread will not miss any entries, as it starts
       // reading from TRACE_START.
-      Logger.postCreateTrace(
+      BufferLogger.writeAndWakeupTraceWriter(
           thread.getTraceWriter(),
           context.buffer,
           context.traceId,
+          EntryType.TRACE_START,
+          TraceControl.getTimeoutFromContext(context),
           context.flags,
-          TraceControl.getTimeoutFromContext(context));
+          context.traceId);
     }
 
     mTraceContexts.add(context.traceId);

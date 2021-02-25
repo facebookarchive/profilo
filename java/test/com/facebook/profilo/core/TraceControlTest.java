@@ -37,8 +37,10 @@ import com.facebook.fbtrace.utils.FbTraceId;
 import com.facebook.profilo.config.ConfigImpl;
 import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.config.ConfigTraceConfig;
+import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.Buffer;
@@ -65,7 +67,7 @@ import org.powermock.reflect.Whitebox;
   ProvidersRegistry.class,
 })
 @SuppressStaticInitializationFor({
-  "com.facebook.profilo.logger.Logger",
+  "com.facebook.profilo.logger.BufferLogger",
   "com.facebook.profilo.mmapbuf.Buffer",
   "com.facebook.profilo.mmapbuf.MmapBufferManager",
 })
@@ -91,7 +93,7 @@ public class TraceControlTest extends PowerMockTest {
 
   @Before
   public void setUp() throws Exception {
-    mockStatic(Logger.class);
+    mockStatic(BufferLogger.class);
     mockStatic(ProvidersRegistry.class);
 
     mNonconfigurableController = mock(TraceController.class);
@@ -338,9 +340,16 @@ public class TraceControlTest extends PowerMockTest {
     int flags = 0xFACEB00C & ~Trace.FLAG_MEMORY_ONLY; // MEMORY_ONLY trace is special
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, flags, new Object(), 0)).isTrue();
 
-    verifyStatic(Logger.class);
-    Logger.postCreateTrace(
-        any(NativeTraceWriter.class), same(mBuffer), anyLong(), eq(flags), anyInt());
+    verifyStatic(BufferLogger.class);
+    long traceId = anyLong();
+    BufferLogger.writeAndWakeupTraceWriter(
+        any(NativeTraceWriter.class),
+        same(mBuffer),
+        traceId,
+        EntryType.TRACE_START,
+        anyInt(),
+        eq(flags),
+        traceId);
 
     verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), anyInt());
   }
@@ -350,12 +359,26 @@ public class TraceControlTest extends PowerMockTest {
     int flags = Trace.FLAG_MEMORY_ONLY;
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, flags, new Object(), 0)).isTrue();
 
-    verifyStatic(Logger.class, times(1));
-    Logger.postCreateTrace(
-        any(NativeTraceWriter.class), same(mBuffer), anyLong(), eq(flags), anyInt());
-    verifyStatic(Logger.class, never());
-    Logger.postCreateBackwardTrace(
-        any(NativeTraceWriter.class), same(mBuffer), anyLong(), eq(flags));
+    verifyStatic(BufferLogger.class, times(1));
+    long traceId = anyLong();
+    BufferLogger.writeAndWakeupTraceWriter(
+        any(NativeTraceWriter.class),
+        same(mBuffer),
+        traceId,
+        EntryType.TRACE_START,
+        anyInt(),
+        eq(flags),
+        traceId);
+    verifyStatic(BufferLogger.class, never());
+    long traceId1 = anyLong();
+    BufferLogger.writeAndWakeupTraceWriter(
+        any(NativeTraceWriter.class),
+        same(mBuffer),
+        traceId1,
+        EntryType.TRACE_BACKWARDS,
+        0,
+        eq(flags),
+        traceId1);
 
     verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), eq(Integer.MAX_VALUE));
     assertMemoryOnlyTracing();
@@ -405,8 +428,16 @@ public class TraceControlTest extends PowerMockTest {
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isTrue();
     mTraceControl.abortTrace(TRACE_CONTROLLER_ID, context, 0);
 
-    verifyStatic(Logger.class);
-    Logger.postAbortTrace(anyLong());
+    verifyStatic(BufferLogger.class);
+    BufferLogger.writeStandardEntry(
+        same(mBuffer),
+        anyInt(),
+        EntryType.TRACE_ABORT,
+        anyInt(),
+        anyInt(),
+        anyInt(),
+        anyInt(),
+        anyLong());
 
     verify(mTraceControlHandler).onTraceAbort(any(TraceContext.class));
   }
@@ -416,8 +447,9 @@ public class TraceControlTest extends PowerMockTest {
     TestConfigProvider provider = new TestConfigProvider();
     mTraceControl.setConfig(provider.getFullConfig());
 
-    verifyStatic(Logger.class, never());
-    Logger.postAbortTrace(anyLong());
+    verifyStatic(BufferLogger.class, never());
+    BufferLogger.writeStandardEntry(
+        any(Buffer.class), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyLong());
   }
 
   @Test
@@ -442,8 +474,16 @@ public class TraceControlTest extends PowerMockTest {
     assertNotTracing();
 
     verify(mTraceControlHandler).onTraceAbort(any(TraceContext.class));
-    verifyStatic(Logger.class, never());
-    Logger.postAbortTrace(anyLong());
+    verifyStatic(BufferLogger.class, never());
+    BufferLogger.writeStandardEntry(
+        any(Buffer.class),
+        anyInt(),
+        EntryType.TRACE_ABORT,
+        anyInt(),
+        anyInt(),
+        anyInt(),
+        anyInt(),
+        anyLong());
   }
 
   @Test

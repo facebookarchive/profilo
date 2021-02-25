@@ -18,8 +18,10 @@ import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
 import com.facebook.profilo.config.Config;
+import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.Buffer;
@@ -520,7 +522,16 @@ public final class TraceControl {
     if (traceContext == null) {
       return;
     }
-    Logger.postTimeoutTrace(traceId);
+    BufferLogger.writeStandardEntry(
+        traceContext.buffer,
+        Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+        EntryType.TRACE_TIMEOUT,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        ProfiloConstants.NONE,
+        traceContext.traceId);
+
     cleanupTraceContextByID(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
   }
 
@@ -543,11 +554,29 @@ public final class TraceControl {
       ensureHandlerInitialized();
       switch (stopReason) {
         case TraceStopReason.ABORT:
-          Logger.postAbortTrace(traceContext.traceId);
+          BufferLogger.writeStandardEntry(
+              traceContext.buffer,
+              Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+              EntryType.TRACE_ABORT,
+              ProfiloConstants.NONE,
+              ProfiloConstants.NONE,
+              ProfiloConstants.NONE,
+              ProfiloConstants.NONE,
+              traceContext.traceId);
+
           mTraceControlHandler.onTraceAbort(new TraceContext(traceContext, abortReason));
           break;
         case TraceStopReason.STOP:
-          Logger.postPreCloseTrace(traceContext.traceId);
+          BufferLogger.writeStandardEntry(
+              traceContext.buffer,
+              Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+              EntryType.TRACE_PRE_END,
+              ProfiloConstants.NONE,
+              ProfiloConstants.NONE,
+              ProfiloConstants.NONE,
+              ProfiloConstants.NONE,
+              traceContext.traceId);
+
           mTraceControlHandler.onTraceStop(traceContext);
           break;
       }

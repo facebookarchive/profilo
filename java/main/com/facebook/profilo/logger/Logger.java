@@ -15,9 +15,6 @@ package com.facebook.profilo.logger;
 
 import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.core.TraceEvents;
-import com.facebook.profilo.entries.EntryType;
-import com.facebook.profilo.mmapbuf.Buffer;
-import com.facebook.profilo.writer.NativeTraceWriter;
 
 public final class Logger {
 
@@ -54,57 +51,5 @@ public final class Logger {
     } else {
       return ProfiloConstants.TRACING_DISABLED;
     }
-  }
-
-  public static void postCreateTrace(
-      NativeTraceWriter writer, Buffer buffer, long traceId, int flags, int timeoutMs) {
-    BufferLogger.writeAndWakeupTraceWriter(
-        writer, buffer, traceId, EntryType.TRACE_START, timeoutMs, flags, traceId);
-  }
-
-  public static void postCreateBackwardTrace(
-      NativeTraceWriter writer, Buffer buffer, long traceId, int flags) {
-    BufferLogger.writeAndWakeupTraceWriter(
-        writer, buffer, traceId, EntryType.TRACE_BACKWARDS, 0, flags, traceId);
-  }
-
-  public static void postConditionalUploadRate(int uploadRate) {
-    writeStandardEntry(
-        ProfiloConstants.NONE,
-        SKIP_PROVIDER_CHECK | FILL_TIMESTAMP | FILL_TID,
-        EntryType.CONDITIONAL_UPLOAD_RATE,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        uploadRate);
-  }
-
-  public static void postPreCloseTrace(long traceId) {
-    postFinishTrace(EntryType.TRACE_PRE_END, traceId);
-  }
-
-  public static void postCloseTrace(long traceId) {
-    postFinishTrace(EntryType.TRACE_END, traceId);
-  }
-
-  public static void postAbortTrace(long traceId) {
-    postFinishTrace(EntryType.TRACE_ABORT, traceId);
-  }
-
-  public static void postTimeoutTrace(long traceId) {
-    postFinishTrace(EntryType.TRACE_TIMEOUT, traceId);
-  }
-
-  private static void postFinishTrace(int entryType, long traceId) {
-    writeStandardEntry(
-        ProfiloConstants.NONE,
-        SKIP_PROVIDER_CHECK | FILL_TIMESTAMP | FILL_TID,
-        entryType,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        ProfiloConstants.NONE,
-        traceId);
   }
 }
