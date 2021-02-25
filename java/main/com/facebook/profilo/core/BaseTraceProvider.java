@@ -62,7 +62,7 @@ public abstract class BaseTraceProvider {
   @Nullable private String mSolib;
   private boolean mSolibInitialized;
 
-  private boolean mLoggerInitialized;
+  private volatile boolean mLoggerInitialized;
   @Nullable private MultiBufferLogger mLogger;
 
   protected BaseTraceProvider() {
@@ -99,6 +99,10 @@ public abstract class BaseTraceProvider {
       }
     }
     return mLogger;
+  }
+
+  protected boolean isLoggerInitialized() {
+    return mLoggerInitialized;
   }
 
   public final void onEnable(TraceContext context, ExtraDataFileProvider dataFileProvider) {
