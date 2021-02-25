@@ -21,7 +21,6 @@ import com.facebook.jni.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
 
 @DoNotStrip
@@ -37,8 +36,6 @@ public class MmapBufferManager {
   private final MmapBufferFileHelper mFileHelper;
   private final Context mContext;
   private final long mConfigId;
-  private AtomicBoolean mAllocated;
-  private volatile @Nullable Buffer mBuffer;
 
   @DoNotStrip
   private static native HybridData initHybrid();
@@ -46,7 +43,6 @@ public class MmapBufferManager {
   public MmapBufferManager(long configId, File folder, Context context) {
     mConfigId = configId;
     mContext = context;
-    mAllocated = new AtomicBoolean(false);
     mFileHelper = new MmapBufferFileHelper(folder);
     mHybridData = initHybrid();
   }
@@ -70,29 +66,20 @@ public class MmapBufferManager {
 
   @Nullable
   public Buffer allocateBuffer(int size, boolean filebacked) {
-    if (!mAllocated.compareAndSet(false, true)) {
-      return mBuffer;
-    }
-
     if (filebacked) {
       String fileName = MmapBufferFileHelper.getBufferFilename(UUID.randomUUID().toString());
       String mmapBufferPath = mFileHelper.ensureFilePath(fileName);
       if (mmapBufferPath == null) {
         return null;
       }
-      mBuffer = nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
-      return mBuffer;
+      return nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
     } else {
-      mBuffer = nativeAllocateBuffer(size);
-      return mBuffer;
+      return nativeAllocateBuffer(size);
     }
   }
 
   public synchronized boolean deallocateBuffer(Buffer buffer) {
-    if (buffer != mBuffer) {
-      return false;
-    }
-    return true; // cannot actually deallocate the buffer yet
+    return nativeDeallocateBuffer(buffer);
   }
 
   @DoNotStrip

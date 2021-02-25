@@ -111,6 +111,9 @@ public abstract class BaseTraceProvider {
       return;
     }
     ensureSolibLoaded();
+    if ((context.enabledProviders & getSupportedProviders()) != 0) {
+      getLogger().addBuffer(context.buffer);
+    }
     processStateChange(context);
     onTraceStarted(context, dataFileProvider);
   }
@@ -123,6 +126,9 @@ public abstract class BaseTraceProvider {
     ensureSolibLoaded();
     onTraceEnded(context, dataFileProvider);
     processStateChange(context);
+    if ((context.enabledProviders & getSupportedProviders()) != 0) {
+      getLogger().removeBuffer(context.buffer);
+    }
   }
 
   private void processStateChange(TraceContext context) {
@@ -136,11 +142,9 @@ public abstract class BaseTraceProvider {
     if (mSavedProviders != 0) {
       disable();
       mEnablingContext = null;
-      getLogger().removeBuffer(context.buffer);
     }
     // Current provider is on => enable
     if (providerMask != 0) {
-      getLogger().addBuffer(context.buffer);
       mEnablingContext = context;
       enable();
     }
