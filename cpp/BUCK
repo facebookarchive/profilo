@@ -92,31 +92,6 @@ fb_xplat_cxx_library(
 )
 
 fb_xplat_cxx_library(
-    name = "external_api_impl",
-    srcs = [
-        "ExternalApiImpl.cpp",
-    ],
-    header_namespace = "profilo/api",
-    allow_jni_merging = True,
-    compiler_flags = [
-        "-fexceptions",
-        "-frtti",
-        "-DLOG_TAG=\"Profilo\"",
-        "-std=gnu++14",
-    ],
-    labels = ["supermodule:android/default/loom.core"],
-    preferred_linkage = "static",
-    soname = "libprofilo_externalapi.$(ext)",
-    deps = [
-        ":providers",
-        profilo_path("cpp/api:external_api_glue"),
-        profilo_path("cpp/logger/buffer:buffer"),
-        profilo_path("cpp/logger:multi_buffer_logger"),
-        profilo_path("cpp/profiler:external_tracer_manager"),
-    ],
-)
-
-fb_xplat_cxx_library(
     name = "profilo",
     srcs = [
         "JNIOnLoad.cpp",
@@ -142,7 +117,6 @@ fb_xplat_cxx_library(
     ],
     deps = [
         ":constants",
-        ":external_api_impl",
         ":jni_logger_helpers",
         ":providers",
         profilo_path("cpp/jni:jni"),
