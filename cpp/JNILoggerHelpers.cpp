@@ -25,16 +25,6 @@ namespace facebook {
 namespace profilo {
 namespace logger_jni {
 
-static Logger& getBufferLoggerOrGlobal(mmapbuf::JBuffer* jbuffer) {
-  Logger* logger = nullptr;
-  if (jbuffer != nullptr) {
-    logger = &jbuffer->get()->logger();
-  } else {
-    logger = &RingBuffer::get().logger();
-  }
-  return *logger;
-}
-
 static jint loggerWriteStandardEntry(
     fbjni::alias_ref<jobject>,
     mmapbuf::JBuffer* jbuffer,
@@ -46,14 +36,7 @@ static jint loggerWriteStandardEntry(
     jint arg2,
     jlong arg3) {
   return writeStandardEntryFromJNI(
-      getBufferLoggerOrGlobal(jbuffer),
-      flags,
-      type,
-      timestamp,
-      tid,
-      arg1,
-      arg2,
-      arg3);
+      jbuffer->get()->logger(), flags, type, timestamp, tid, arg1, arg2, arg3);
 }
 
 static jint loggerWriteBytesEntry(
@@ -64,7 +47,7 @@ static jint loggerWriteBytesEntry(
     jint arg1,
     jstring arg2) {
   return writeBytesEntryFromJNI(
-      getBufferLoggerOrGlobal(jbuffer), flags, type, arg1, arg2);
+      jbuffer->get()->logger(), flags, type, arg1, arg2);
 }
 
 static jint loggerWriteAndWakeupTraceWriter(
