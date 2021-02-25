@@ -19,7 +19,6 @@ profilo_cxx_test(
         "//xplat/folly:experimental_test_util",
         "//xplat/third-party/linker_lib:pthread",
         profilo_path("deps/zstr:zstr"),
-        profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("cpp/logger/lfrb:lfrb"),
         profilo_path("cpp/mmapbuf:manager"),
         profilo_path("cpp/util:util"),

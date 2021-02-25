@@ -24,28 +24,9 @@
 namespace facebook {
 namespace profilo {
 
-//
-// A holder class for the singleton ring buffer. Must be initialized
-// by passing in an instance of a Buffer, the actual implementation.
-//
 class RingBuffer {
  public:
   constexpr static auto kVersion = 1;
-
-  //
-  // Set the passed-in buffer as The Buffer.
-  //
-  PROFILOEXPORT static void init(mmapbuf::Buffer& newBuffer);
-
-  //
-  // Cleans-up current buffer and reverts back to no-op mode.
-  // DO NOTE USE: This operation is unsafe and currently serve merely as stub
-  // for future dynamic buffer management extensions. All tracing should be
-  // disabled before this method can be called.
-  //
-  PROFILOEXPORT static void destroy();
-
-  PROFILOEXPORT static mmapbuf::Buffer& get();
 };
 
 } // namespace profilo

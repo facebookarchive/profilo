@@ -49,9 +49,6 @@ std::shared_ptr<Buffer> MmapBufferManager::allocateBufferAnonymous(
     buffers_.push_back(buffer);
   }
 
-  // Pass the buffer to the global singleton.
-  RingBuffer::init(*buffer);
-
   return buffer;
 }
 
@@ -92,7 +89,6 @@ std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
   }
 
   // Pass the buffer to the global singleton
-  RingBuffer::init(*buffer);
   return buffer;
 }
 

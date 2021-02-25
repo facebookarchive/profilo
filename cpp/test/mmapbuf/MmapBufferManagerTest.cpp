@@ -25,7 +25,6 @@
 #include <climits>
 
 #include <profilo/logger/buffer/Packet.h>
-#include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
 #include <util/common.h>

@@ -121,7 +121,6 @@ fb_xplat_cxx_library(
         ":providers",
         profilo_path("cpp/jni:jni"),
         profilo_path("cpp/jni:jmulti_buffer_logger"),
-        profilo_path("cpp/logger/buffer:buffer_static"),
         profilo_path("cpp/mmapbuf:buffer"),
         profilo_path("cpp/util:util"),
         profilo_path("deps/atomic:atomic"),

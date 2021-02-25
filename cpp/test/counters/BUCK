@@ -38,7 +38,6 @@ profilo_cxx_test(
     deps = [
         "//xplat/folly:experimental_test_util",
         profilo_path("cpp/counters:counters"),
-        profilo_path("cpp/logger/buffer:buffer_static"),
     ],
 )
 

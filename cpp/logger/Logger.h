@@ -97,7 +97,6 @@ class Logger {
   writeBytes(EntryType type, int32_t arg1, const uint8_t* arg2, size_t len);
 
   // This constructor is for internal framework use.
-  // Client code should use RingBuffer::get().logger() method instead.
   Logger(logger::TraceBufferProvider provider, EntryIDCounter& counter);
 
  private:
