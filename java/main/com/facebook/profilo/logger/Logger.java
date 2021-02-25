@@ -13,43 +13,8 @@
  */
 package com.facebook.profilo.logger;
 
-import com.facebook.profilo.core.ProfiloConstants;
-import com.facebook.profilo.core.TraceEvents;
-
 public final class Logger {
-
-  private static volatile boolean sInitialized;
-
-  public static void initialize() {
-    sInitialized = true;
-  }
-
   public static final int SKIP_PROVIDER_CHECK = 1 << 0;
   public static final int FILL_TIMESTAMP = 1 << 1;
   public static final int FILL_TID = 1 << 2;
-
-  public static int writeStandardEntry(
-      int provider,
-      int flags,
-      int type,
-      long timestamp,
-      int tid,
-      int arg1 /* callid */,
-      int arg2 /* matchid */,
-      long arg3 /* extra */) {
-    if (sInitialized && ((flags & SKIP_PROVIDER_CHECK) != 0 || TraceEvents.isEnabled(provider))) {
-      return BufferLogger.writeStandardEntry(null, flags, type, timestamp, tid, arg1, arg2, arg3);
-    } else {
-      return ProfiloConstants.TRACING_DISABLED;
-    }
-  }
-
-  public static int writeBytesEntry(
-      int provider, int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */) {
-    if (sInitialized && ((flags & SKIP_PROVIDER_CHECK) != 0 || TraceEvents.isEnabled(provider))) {
-      return BufferLogger.writeBytesEntry(null, flags, type, arg1, arg2);
-    } else {
-      return ProfiloConstants.TRACING_DISABLED;
-    }
-  }
 }

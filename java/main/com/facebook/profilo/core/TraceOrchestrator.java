@@ -215,7 +215,6 @@ public final class TraceOrchestrator
       TraceControl.initialize(
           controllers, this, initialConfig, mMmapBufferManager, folder, mProcessName, this);
 
-      Logger.initialize();
       TraceEvents.initialize();
 
       // Complete a normal config update; this is somewhat wasteful but ensures consistency
