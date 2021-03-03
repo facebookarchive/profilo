@@ -106,32 +106,30 @@ public abstract class BaseTraceProvider {
   }
 
   public final void onEnable(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    // Early exit if a provider is disabled
-    if (TraceEvents.enabledMask(getSupportedProviders()) == 0) {
+    // Early exit if this trace does not affect this provider
+    if ((context.enabledProviders & getSupportedProviders()) == 0) {
       return;
     }
     ensureSolibLoaded();
-    if ((context.enabledProviders & getSupportedProviders()) != 0) {
-      getLogger().addBuffer(context.buffer);
-    }
+    getLogger().addBuffer(context.buffer);
     processStateChange(context);
     onTraceStarted(context, dataFileProvider);
   }
 
   public final void onDisable(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    // Currently not tracing
-    if (mSavedProviders == 0) {
+    // Currently not tracing or trace does not affect provider
+    if (mSavedProviders == 0 || (context.enabledProviders & getSupportedProviders()) == 0) {
       return;
     }
     ensureSolibLoaded();
     onTraceEnded(context, dataFileProvider);
     processStateChange(context);
-    if ((context.enabledProviders & getSupportedProviders()) != 0) {
-      getLogger().removeBuffer(context.buffer);
-    }
+    getLogger().removeBuffer(context.buffer);
   }
 
   private void processStateChange(TraceContext context) {
+    // Get the enabled providers across all traces. We need to know which ones of the
+    // supported providers are enabled across all current traces.
     int providerMask = TraceEvents.enabledMask(getSupportedProviders());
 
     // Nothing changed - keep enabled
