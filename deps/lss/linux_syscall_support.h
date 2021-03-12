@@ -2707,7 +2707,7 @@ struct kernel_statfs {
             : "=r"(__res)
             : "r"(__stack), "r"(__flags), "r"(__ptid), "r"(__tls), "r"(__ctid),
               "i"(__NR_clone), "i"(__NR_exit)
-            : "cc", "lr", "memory", "r7"
+            : "cc", "ip", "lr", "memory", "r7"
             );
       }
       LSS_RETURN(int, __res);
