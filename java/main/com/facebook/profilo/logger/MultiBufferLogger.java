@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @DoNotStripAny
 public final class MultiBufferLogger extends HybridClassBase {
 
-  private boolean mLoaded;
+  private volatile boolean mLoaded;
   private final AtomicInteger mBuffersCount;
 
   public MultiBufferLogger() {
@@ -37,12 +37,14 @@ public final class MultiBufferLogger extends HybridClassBase {
   }
 
   private void ensureLoaded() {
-    if (mLoaded) {
+    boolean loaded = mLoaded;
+    if (loaded) {
       return;
     }
 
     synchronized (this) {
-      if (mLoaded) {
+      loaded = mLoaded;
+      if (loaded) {
         return;
       }
 
