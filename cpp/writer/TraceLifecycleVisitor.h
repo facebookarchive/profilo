@@ -45,7 +45,7 @@ class TraceLifecycleVisitor : public EntryVisitor {
   static const size_t kTraceFormatVersion = 3;
 
   TraceLifecycleVisitor(
-      const std::string& folder,
+      const std::string& trace_folder,
       const std::string& trace_prefix,
       std::shared_ptr<TraceCallbacks> callbacks,
       const std::vector<std::pair<std::string, std::string>>& headers,
@@ -68,7 +68,7 @@ class TraceLifecycleVisitor : public EntryVisitor {
   }
 
  private:
-  const std::string folder_;
+  const std::string trace_folder_;
   const std::string trace_prefix_;
   const std::vector<std::pair<std::string, std::string>> trace_headers_;
   std::unique_ptr<std::ofstream> output_;

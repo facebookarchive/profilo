@@ -29,6 +29,7 @@ import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.MmapBufferManager;
+import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 import java.text.DateFormat;
@@ -378,7 +379,7 @@ public final class TraceOrchestrator
     synchronized (this) {
       mainFolder = mFileManager.getFolder();
     }
-    String sanitizedTraceID = context.encodedTraceId.replaceAll("[^a-zA-Z0-9\\-_.]", "_");
+    String sanitizedTraceID = NativeTraceWriter.getSanitizedTraceFolderName(context.encodedTraceId);
     File extraFolder = new File(new File(mainFolder, sanitizedTraceID), EXTRA_DATA_FOLDER_NAME);
     if (!extraFolder.isDirectory() && !extraFolder.mkdirs()) {
       // If the main & other process try to call mkdirs() simultaneously, one of the mkdirs will

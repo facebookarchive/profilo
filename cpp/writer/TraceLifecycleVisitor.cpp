@@ -104,7 +104,7 @@ void ensureFolder(const char* folder) {
 } // namespace
 
 TraceLifecycleVisitor::TraceLifecycleVisitor(
-    const std::string& folder,
+    const std::string& trace_folder,
     const std::string& trace_prefix,
     std::shared_ptr<TraceCallbacks> callbacks,
     const std::vector<std::pair<std::string, std::string>>& headers,
@@ -112,7 +112,7 @@ TraceLifecycleVisitor::TraceLifecycleVisitor(
     std::function<void(TraceLifecycleVisitor& visitor)> trace_backward_callback)
     :
 
-      folder_(folder),
+      trace_folder_(trace_folder),
       trace_prefix_(trace_prefix),
       trace_headers_(headers),
       output_(nullptr),
@@ -211,40 +211,11 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
     return;
   }
 
+  ensureFolder(trace_folder_.c_str());
+
   std::stringstream path_stream;
-  std::string trace_id_string = getTraceIDAsString(trace_id);
-  path_stream << folder_ << '/' << sanitize(trace_id_string);
-
-  //
-  // Note that the construction of this path must match the computation in
-  // TraceOrchestrator.getSanitizedTraceFolder. Unfortunately, it's far too
-  // gnarly to share this code at the moment.
-  //
-  std::string trace_folder = path_stream.str();
-  try {
-    ensureFolder(trace_folder.c_str());
-  } catch (const std::system_error& ex) {
-    // Add more diagnostics to the exception.
-    // Namely, parent folder owner uid and gid, as
-    // well as our own uid and gid.
-    struct stat stat_out {};
-
-    std::stringstream error;
-    if (stat(folder_.c_str(), &stat_out)) {
-      error << "Could not stat(" << folder_
-            << ").\nOriginal exception: " << ex.what();
-      throw std::system_error(errno, std::system_category(), error.str());
-    }
-
-    error << "Could not create trace folder " << trace_folder
-          << ".\nOriginal exception: " << ex.what() << ".\nDebug info for "
-          << folder_ << ": uid=" << stat_out.st_uid
-          << "; gid=" << stat_out.st_gid << "; proc euid=" << geteuid()
-          << "; proc egid=" << getegid();
-    throw std::system_error(ex.code(), error.str());
-  }
-
-  path_stream << '/'
+  const std::string trace_id_string = getTraceIDAsString(trace_id);
+  path_stream << trace_folder_ << '/'
               << sanitize(getTraceFilename(trace_prefix_, trace_id_string));
 
   std::string trace_file = path_stream.str();

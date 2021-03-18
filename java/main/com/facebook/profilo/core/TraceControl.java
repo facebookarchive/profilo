@@ -26,6 +26,7 @@ import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.profilo.mmapbuf.MmapBufferManager;
+import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 import java.io.FileInputStream;
@@ -288,6 +289,10 @@ public final class TraceControl {
     return traces;
   }
 
+  private File getTraceFolder(String trace_id) {
+    return new File(mFolder, NativeTraceWriter.getSanitizedTraceFolderName(trace_id));
+  }
+
   public boolean startTrace(int controller, int flags, @Nullable Object context, long longContext) {
     if (findLowestFreeBit(mCurrentTracesMask.get(), MAX_TRACES, flags) == 0) {
       // Reached max traces
@@ -328,7 +333,8 @@ public final class TraceControl {
     }
 
     long traceId = nextTraceID();
-    Log.w(LOG_TAG, "START PROFILO_TRACEID: " + FbTraceId.encode(traceId));
+    String encodedTraceId = FbTraceId.encode(traceId);
+    Log.w(LOG_TAG, "START PROFILO_TRACEID: " + encodedTraceId);
 
     final TraceConfigExtras traceConfigExtras;
     if (traceController.isConfigurable()) {
@@ -341,7 +347,7 @@ public final class TraceControl {
     TraceContext nextContext =
         new TraceContext(
             traceId,
-            FbTraceId.encode(traceId),
+            encodedTraceId,
             config,
             controller,
             traceController,
@@ -352,7 +358,7 @@ public final class TraceControl {
             traceConfigIdx,
             traceConfigExtras,
             getBuffer(config),
-            mFolder,
+            getTraceFolder(encodedTraceId),
             mProcessName);
 
     return startTraceInternal(flags, nextContext);
@@ -372,7 +378,7 @@ public final class TraceControl {
             controller,
             traceController,
             getBuffer(mCurrentConfig.get()),
-            mFolder,
+            getTraceFolder(traceContext.encodedTraceId),
             mProcessName));
   }
 

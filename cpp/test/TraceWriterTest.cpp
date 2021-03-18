@@ -206,10 +206,6 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
   EXPECT_EQ(getFileCount(), 1) << "There should be only one real file.";
 
   auto file = getOnlyTraceFile();
-  auto folder_name = file.parent_path().filename().generic_string();
-  EXPECT_EQ(folder_name, kTraceIDString)
-      << "Containing folder must be called " << kTraceIDString;
-
   auto filename = file.filename().generic_string();
   auto expected = std::string("-") + kTraceIDString + ".";
   EXPECT_NE(filename.find(expected), std::string::npos)
