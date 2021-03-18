@@ -28,6 +28,7 @@ import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
+import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.profilo.mmapbuf.MmapBufferManager;
 import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
@@ -619,8 +620,12 @@ public final class TraceOrchestrator
     synchronized (mTraceIdToContext) {
       context = mTraceIdToContext.remove(traceId);
     }
-    if (context != null && !mMmapBufferManager.deallocateBuffer(context.mainBuffer)) {
-      Log.e(TAG, "Could not release memory for buffer for trace: " + context.encodedTraceId);
+    if (context != null) {
+      for (Buffer buffer : context.buffers) {
+        if (!mMmapBufferManager.deallocateBuffer(buffer)) {
+          Log.e(TAG, "Could not release memory for buffer for trace: " + context.encodedTraceId);
+        }
+      }
     }
   }
 

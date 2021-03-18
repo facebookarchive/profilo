@@ -344,7 +344,7 @@ public final class TraceControl {
       traceConfigExtras = traceController.getNonConfigurableTraceConfigExtras(longContext, context);
     }
 
-    Buffer buffer = getBuffer(config);
+    Buffer[] buffers = getBuffers(config, traceConfigExtras);
     TraceContext nextContext =
         new TraceContext(
             traceId,
@@ -358,8 +358,8 @@ public final class TraceControl {
             flags,
             traceConfigIdx,
             traceConfigExtras,
-            getBuffer(config),
-            new Buffer[] {buffer},
+            buffers[0],
+            buffers,
             getTraceFolder(encodedTraceId),
             mProcessName);
 
@@ -373,7 +373,7 @@ public final class TraceControl {
     }
 
     Config config = mCurrentConfig.get();
-    Buffer buffer = getBuffer(config);
+    Buffer[] buffers = getBuffers(config, traceContext.mTraceConfigExtras);
     return startTraceInternal(
         flags,
         new TraceContext(
@@ -389,16 +389,23 @@ public final class TraceControl {
             traceContext.abortReason,
             traceContext.traceConfigIdx,
             traceContext.mTraceConfigExtras,
-            buffer,
-            new Buffer[] {buffer},
+            buffers[0],
+            buffers,
             getTraceFolder(traceContext.encodedTraceId),
             mProcessName));
   }
 
-  private Buffer getBuffer(Config config) {
-    return mBufferManager.allocateBuffer(
-        config.optSystemConfigParamInt("system_config.buffer_size", DEFAULT_RING_BUFFER_SIZE),
-        config.optSystemConfigParamBool("system_config.mmap_buffer", false));
+  private Buffer[] getBuffers(Config config, TraceConfigExtras traceConfigExtras) {
+    int bufferCount = traceConfigExtras.getIntParam("trace_config.buffers", 1);
+    int size =
+        config.optSystemConfigParamInt("system_config.buffer_size", DEFAULT_RING_BUFFER_SIZE);
+    boolean filebacked = config.optSystemConfigParamBool("system_config.mmap_buffer", false);
+
+    Buffer[] buffers = new Buffer[bufferCount];
+    for (int idx = 0; idx < bufferCount; idx++) {
+      buffers[idx] = mBufferManager.allocateBuffer(size, filebacked);
+    }
+    return buffers;
   }
 
   private boolean startTraceInternal(int flags, TraceContext nextContext) {
@@ -430,8 +437,10 @@ public final class TraceControl {
       }
     }
 
-    nextContext.mainBuffer.updateHeader(
-        nextContext.enabledProviders, nextContext.longContext, nextContext.traceId);
+    for (Buffer buffer : nextContext.buffers) {
+      buffer.updateHeader(
+          nextContext.enabledProviders, nextContext.longContext, nextContext.traceId);
+    }
 
     int timeout = getTimeoutFromContext(nextContext);
 
