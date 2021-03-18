@@ -15,6 +15,7 @@ package com.facebook.profilo.logger;
 
 import android.os.Process;
 import com.facebook.profilo.core.ProfiloConstants;
+import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 
@@ -25,10 +26,14 @@ public class LoggerWorkerThread extends Thread {
   private final NativeTraceWriterCallbacks mCallbacks;
 
   public LoggerWorkerThread(
-      long traceId, NativeTraceWriter writer, NativeTraceWriterCallbacks callbacks) {
+      long traceId,
+      String folder,
+      String prefix,
+      Buffer[] buffers,
+      NativeTraceWriterCallbacks callbacks) {
     super("Prflo:Logger");
     mTraceId = traceId;
-    mTraceWriter = writer;
+    mTraceWriter = new NativeTraceWriter(buffers[0], folder, prefix, callbacks);
     mCallbacks = callbacks;
   }
 

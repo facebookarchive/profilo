@@ -26,7 +26,6 @@ import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.LoggerWorkerThread;
 import com.facebook.profilo.logger.Trace;
-import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.IOException;
 import java.util.HashSet;
@@ -325,11 +324,9 @@ public class TraceControlHandler extends Handler {
       thread =
           new LoggerWorkerThread(
               context.traceId,
-              new NativeTraceWriter(
-                  context.mainBuffer,
-                  context.folder.getCanonicalPath(),
-                  context.prefix,
-                  mCallbacks),
+              context.folder.getCanonicalPath(),
+              context.prefix,
+              context.buffers,
               mCallbacks);
     } catch (IOException e) {
       throw new IllegalArgumentException(
