@@ -16,11 +16,7 @@
 
 #include <errno.h>
 #include <stdio.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <util/common.h>
-#include <zlib.h>
-#include <sstream>
+
 #include <system_error>
 
 #include <profilo/writer/DeltaEncodingVisitor.h>
@@ -34,74 +30,6 @@ namespace profilo {
 namespace writer {
 
 using namespace facebook::profilo::entries;
-
-namespace {
-
-std::string getTraceIDAsString(int64_t trace_id) {
-  const char* kBase64Alphabet =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-      "abcdefghijklmnopqrstuvwxyz"
-      "0123456789+/";
-  const size_t kTraceIdStringLen = 11;
-
-  if (trace_id < 0) {
-    throw std::invalid_argument("trace_id must be non-negative");
-  }
-  char result[kTraceIdStringLen + 1]{};
-  for (ssize_t idx = kTraceIdStringLen - 1; idx >= 0; --idx) {
-    result[idx] = kBase64Alphabet[trace_id % 64];
-    trace_id /= 64;
-  }
-  return std::string(result);
-}
-
-std::string getTraceFilename(
-    const std::string& trace_prefix,
-    const std::string& trace_id) {
-  std::stringstream filename;
-  filename << trace_prefix << "-" << getpid() << "-";
-
-  auto now = time(nullptr);
-  struct tm localnow {};
-  if (localtime_r(&now, &localnow) == nullptr) {
-    throw std::runtime_error("Could not localtime_r(3)");
-  }
-
-  filename << (1900 + localnow.tm_year) << "-" << (1 + localnow.tm_mon) << "-"
-           << localnow.tm_mday << "T" << localnow.tm_hour << "-"
-           << localnow.tm_min << "-" << localnow.tm_sec;
-
-  filename << "-" << trace_id << ".tmp";
-  return filename.str();
-}
-
-std::string sanitize(std::string input) {
-  for (size_t idx = 0; idx < input.size(); ++idx) {
-    char ch = input[idx];
-    bool is_valid = (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') ||
-        (ch >= '0' && ch <= '9') || ch == '-' || ch == '_' || ch == '.';
-
-    if (!is_valid) {
-      input[idx] = '_';
-    }
-  }
-  return input;
-}
-
-void ensureFolder(const char* folder) {
-  struct stat stat_out {};
-  if (stat(folder, &stat_out)) {
-    if (errno != ENOENT) {
-      std::string error = std::string("Could not stat() folder ") + folder;
-      throw std::system_error(errno, std::system_category(), error);
-    }
-
-    // errno == ENOENT, folder needs creating
-    mkdirs(folder);
-  }
-}
-
-} // namespace
 
 TraceLifecycleVisitor::TraceLifecycleVisitor(
     const std::string& trace_folder,
@@ -211,37 +139,15 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
     return;
   }
 
-  ensureFolder(trace_folder_.c_str());
-
-  std::stringstream path_stream;
-  const std::string trace_id_string = getTraceIDAsString(trace_id);
-  path_stream << trace_folder_ << '/'
-              << sanitize(getTraceFilename(trace_prefix_, trace_id_string));
-
-  std::string trace_file = path_stream.str();
-
-  output_ = std::make_unique<std::ofstream>(
-      trace_file, std::ofstream::out | std::ofstream::binary);
-  output_->exceptions(std::ofstream::badbit | std::ofstream::failbit);
-
-  zstr::ostreambuf* output_buf_ = new zstr::ostreambuf(
-      output_->rdbuf(), // wrap the ofstream buffer
-      512 * 1024, // input and output buffers
-      3 // compression level
-  );
-
-  // Disable ofstream buffering
-  output_->rdbuf()->pubsetbuf(nullptr, 0);
-  // Replace ofstream buffer with the compressed one
-  output_->basic_ios<char>::rdbuf(output_buf_);
-
-  writeHeaders(*output_, trace_id_string);
+  output_ = TraceFileHelpers::openCompressedStream(
+      trace_id, trace_folder_, trace_prefix_);
+  TraceFileHelpers::writeHeaders(*output_, trace_id, trace_headers_);
 
   // outputTime = truncate(current) - truncate(prev)
   delegates_.emplace_back(new PrintEntryVisitor(*output_));
   delegates_.emplace_back(new DeltaEncodingVisitor(*delegates_.back()));
-  delegates_.emplace_back(
-      new TimestampTruncatingVisitor(*delegates_.back(), kTimestampPrecision));
+  delegates_.emplace_back(new TimestampTruncatingVisitor(
+      *delegates_.back(), TraceFileHelpers::kTimestampPrecision));
   delegates_.emplace_back(new StackTraceInvertingVisitor(*delegates_.back()));
 
   if (callbacks_.get() != nullptr) {
@@ -276,19 +182,6 @@ void TraceLifecycleVisitor::cleanupState() {
     output_->close();
     output_ = nullptr;
   }
-}
-
-void TraceLifecycleVisitor::writeHeaders(std::ostream& output, std::string id) {
-  output << "dt\n"
-         << "ver|" << kTraceFormatVersion << "\n"
-         << "id|" << id << "\n"
-         << "prec|" << kTimestampPrecision << "\n";
-
-  for (auto const& header : trace_headers_) {
-    output << header.first << '|' << header.second << '\n';
-  }
-
-  output << '\n';
 }
 
 } // namespace writer

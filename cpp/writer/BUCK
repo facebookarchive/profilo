@@ -175,10 +175,10 @@ fb_xplat_cxx_library(
         ":print_visitor",
         ":stack_visitor",
         ":timestamp_truncating_visitor",
+        ":trace_file_helpers",
         profilo_path("cpp/logger:logger"),
         profilo_path("cpp/mmapbuf:buffer"),
         profilo_path("cpp/util:util"),
-        profilo_path("deps/zstr:zstr"),
     ],
     exported_deps = [
         profilo_path("cpp/generated:cpp"),
@@ -233,5 +233,31 @@ fb_xplat_cxx_library(
     ],
     deps = [
         profilo_path("cpp/util:util"),
+    ],
+)
+
+fb_xplat_cxx_library(
+    name = "trace_file_helpers",
+    srcs = [
+        "TraceFileHelpers.cpp",
+    ],
+    header_namespace = "profilo/writer",
+    exported_headers = [
+        "TraceFileHelpers.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-DLOG_TAG=\"Profilo/Writer\"",
+    ],
+    labels = ["supermodule:android/default/loom.core"],
+    preferred_linkage = "static",
+    visibility = [
+        profilo_path("cpp/..."),
+        profilo_path("facebook/cpp/..."),
+    ],
+    deps = [
+        profilo_path("cpp/util:util"),
+        profilo_path("deps/zstr:zstr"),
     ],
 )

@@ -28,6 +28,7 @@
 #include <profilo/writer/AbortReason.h>
 #include <profilo/writer/ScopedThreadPriority.h>
 #include <profilo/writer/TraceCallbacks.h>
+#include <profilo/writer/TraceFileHelpers.h>
 
 #include <zstr/zstr.hpp>
 
@@ -39,11 +40,6 @@ using namespace facebook::profilo::entries;
 
 class TraceLifecycleVisitor : public EntryVisitor {
  public:
-  // Timestamp precision is microsec by default.
-  static const size_t kTimestampPrecision = 6;
-
-  static const size_t kTraceFormatVersion = 3;
-
   TraceLifecycleVisitor(
       const std::string& trace_folder,
       const std::string& trace_prefix,
@@ -90,7 +86,6 @@ class TraceLifecycleVisitor : public EntryVisitor {
   void onTraceAbort(int64_t trace_id, AbortReason reason);
   void onTraceEnd(int64_t trace_id);
   void cleanupState();
-  void writeHeaders(std::ostream& output, std::string id);
 };
 
 } // namespace writer
