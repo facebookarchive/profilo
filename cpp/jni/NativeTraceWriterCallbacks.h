@@ -30,7 +30,7 @@ struct JNativeTraceWriterCallbacks
   static constexpr const char* kJavaDescriptor =
       "Lcom/facebook/profilo/writer/NativeTraceWriterCallbacks;";
 
-  void onTraceStart(int64_t trace_id, int32_t flags, std::string file);
+  void onTraceStart(int64_t trace_id, int32_t flags);
   void onTraceEnd(int64_t trace_id);
   void onTraceAbort(int64_t trace_id, AbortReason abortReason);
 };
@@ -43,8 +43,7 @@ struct NativeTraceWriterCallbacksProxy : public TraceCallbacks {
   NativeTraceWriterCallbacksProxy(
       fbjni::alias_ref<JNativeTraceWriterCallbacks> javaCallbacks);
 
-  virtual void onTraceStart(int64_t trace_id, int32_t flags, std::string file)
-      override;
+  virtual void onTraceStart(int64_t trace_id, int32_t flags) override;
 
   virtual void onTraceEnd(int64_t trace_id) override;
 

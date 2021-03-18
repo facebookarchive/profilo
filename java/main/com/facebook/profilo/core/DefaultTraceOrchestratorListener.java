@@ -56,7 +56,7 @@ public abstract class DefaultTraceOrchestratorListener implements TraceOrchestra
   public void onTraceWriteException(long traceId, Throwable t) {}
 
   @Override
-  public void onTraceWriteStart(long traceId, int flags, String file) {}
+  public void onTraceWriteStart(long traceId, int flags) {}
 
   @Override
   public void onTraceWriteEnd(long traceId) {}

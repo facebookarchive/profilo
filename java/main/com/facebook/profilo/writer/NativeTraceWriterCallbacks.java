@@ -19,7 +19,7 @@ import com.facebook.proguard.annotations.DoNotStrip;
 public interface NativeTraceWriterCallbacks {
 
   @DoNotStrip
-  void onTraceWriteStart(long traceId, int flags, String file);
+  void onTraceWriteStart(long traceId, int flags);
 
   @DoNotStrip
   void onTraceWriteEnd(long traceId);

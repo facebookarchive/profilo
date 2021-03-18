@@ -24,13 +24,11 @@ namespace writer {
 
 void JNativeTraceWriterCallbacks::onTraceStart(
     int64_t trace_id,
-    int32_t flags,
-    std::string file) {
+    int32_t flags) {
   static auto onTraceStartMethod =
-      javaClassStatic()->getMethod<void(jlong, jint, std::string)>(
-          "onTraceWriteStart");
+      javaClassStatic()->getMethod<void(jlong, jint)>("onTraceWriteStart");
 
-  onTraceStartMethod(self(), trace_id, flags, file);
+  onTraceStartMethod(self(), trace_id, flags);
 }
 
 void JNativeTraceWriterCallbacks::onTraceEnd(int64_t trace_id) {
@@ -55,9 +53,8 @@ NativeTraceWriterCallbacksProxy::NativeTraceWriterCallbacksProxy(
 
 void NativeTraceWriterCallbacksProxy::onTraceStart(
     int64_t trace_id,
-    int32_t flags,
-    std::string file) {
-  javaCallbacks_->onTraceStart(trace_id, flags, file);
+    int32_t flags) {
+  javaCallbacks_->onTraceStart(trace_id, flags);
 }
 
 void NativeTraceWriterCallbacksProxy::onTraceEnd(int64_t trace_id) {

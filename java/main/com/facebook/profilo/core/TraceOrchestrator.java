@@ -480,8 +480,8 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onTraceWriteStart(long traceId, int flags, String file) {
-    mListenerManager.onTraceWriteStart(traceId, flags, file);
+  public void onTraceWriteStart(long traceId, int flags) {
+    mListenerManager.onTraceWriteStart(traceId, flags);
   }
 
   @Override

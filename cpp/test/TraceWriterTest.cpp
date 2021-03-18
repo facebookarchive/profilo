@@ -50,7 +50,7 @@ const char* kTracePrefix = "test-prefix";
 
 class MockCallbacks : public TraceCallbacks {
  public:
-  MOCK_METHOD3(onTraceStart, void(int64_t, int32_t, std::string));
+  MOCK_METHOD2(onTraceStart, void(int64_t, int32_t));
   MOCK_METHOD1(onTraceEnd, void(int64_t));
   MOCK_METHOD2(onTraceAbort, void(int64_t, AbortReason));
 };
@@ -310,7 +310,7 @@ void TraceWriterTest::testCallbackCalls(std::function<void()> expectations) {
 TEST_F(TraceWriterTest, testCallbacksInOrderSuccess) {
   using ::testing::_;
   testCallbackCalls([&] {
-    EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, 0, _));
+    EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, 0));
     EXPECT_CALL(*callbacks_, onTraceEnd(kTraceID));
     EXPECT_CALL(*callbacks_, onTraceAbort(_, _)).Times(0);
 
@@ -322,7 +322,7 @@ TEST_F(TraceWriterTest, testCallbacksInOrderSuccess) {
 TEST_F(TraceWriterTest, testCallbacksInOrderAbort) {
   using ::testing::_;
   testCallbackCalls([&] {
-    EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, 0, _));
+    EXPECT_CALL(*callbacks_, onTraceStart(kTraceID, 0));
     EXPECT_CALL(*callbacks_, onTraceEnd(_)).Times(0);
     EXPECT_CALL(
         *callbacks_, onTraceAbort(kTraceID, AbortReason::CONTROLLER_INITIATED));
@@ -335,7 +335,7 @@ TEST_F(TraceWriterTest, testCallbacksInOrderAbort) {
 TEST_F(TraceWriterTest, testCallbacksMissedStart) {
   using ::testing::_;
   testCallbackCalls([&] {
-    EXPECT_CALL(*callbacks_, onTraceStart(_, _, _)).Times(0);
+    EXPECT_CALL(*callbacks_, onTraceStart(_, _)).Times(0);
     EXPECT_CALL(*callbacks_, onTraceEnd(_)).Times(0);
     EXPECT_CALL(*callbacks_, onTraceAbort(kTraceID, _)).Times(0);
 

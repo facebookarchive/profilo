@@ -21,7 +21,6 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.same;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
@@ -340,7 +339,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
+    mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mTraceControl)
@@ -352,7 +351,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
   public void testAbortedNonexistentTraceCallAbortByID() throws IOException {
     /* This can happen if we never saw the trace start event and thus opened a real file. */
     final long traceId = 0xFACEB00C;
-    mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-profilo-test");
+    mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mTraceControl)
@@ -368,7 +367,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
+    mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
 
     verify(mFileManager).addFileToUploads(any(File.class), anyBoolean());
@@ -381,7 +380,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
+    mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mFileManager, never()).addFileToUploads(any(File.class), anyBoolean());
@@ -394,7 +393,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, Trace.FLAG_MEMORY_ONLY, traceFile.getPath());
+    mOrchestrator.onTraceWriteStart(traceId, Trace.FLAG_MEMORY_ONLY);
     mOrchestrator.onTraceWriteEnd(traceId);
 
     verify(mFileManager).addFileToUploads(any(File.class), eq(false));
@@ -403,9 +402,9 @@ public class TraceOrchestratorTest extends PowerMockTest {
   @Test
   public void testWriterCallbacksLifecycle() {
     final long traceId = 0xFACEB00C;
-    mOrchestrator.onTraceWriteStart(traceId, 0, "this-file-does-not-exist-profilo-test");
+    mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteEnd(traceId);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
+    mOrchestrator.onTraceWriteStart(traceId + 1, 0);
     // Assert that onTraceWriteStart doesn't throw
   }
 
@@ -416,9 +415,9 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
+    mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
+    mOrchestrator.onTraceWriteStart(traceId + 1, 0);
     // Assert that onTraceWriteStart doesn't throw
   }
 
@@ -430,9 +429,9 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
     final long traceId = 0xFACEB00C;
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0, traceFile.getPath());
+    mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteEnd(traceId);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0, "this-file-does-not-exist-profilo-test");
+    mOrchestrator.onTraceWriteStart(traceId + 1, 0);
     // Assert that onTraceWriteStart doesn't throw
   }
 

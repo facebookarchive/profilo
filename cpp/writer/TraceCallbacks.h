@@ -26,8 +26,7 @@ namespace writer {
 struct TraceCallbacks {
   virtual ~TraceCallbacks() {}
 
-  virtual void
-  onTraceStart(int64_t trace_id, int32_t flags, std::string trace_file) = 0;
+  virtual void onTraceStart(int64_t trace_id, int32_t flags) = 0;
 
   virtual void onTraceEnd(int64_t trace_id) = 0;
 

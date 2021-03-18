@@ -245,7 +245,7 @@ void TraceLifecycleVisitor::onTraceStart(int64_t trace_id, int32_t flags) {
   delegates_.emplace_back(new StackTraceInvertingVisitor(*delegates_.back()));
 
   if (callbacks_.get() != nullptr) {
-    callbacks_->onTraceStart(trace_id, flags, trace_file);
+    callbacks_->onTraceStart(trace_id, flags);
   }
 
   started_ = true;

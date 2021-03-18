@@ -100,10 +100,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceWriteStart(long traceId, int flags, String file) {
+  public void onTraceWriteStart(long traceId, int flags) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteStart(traceId, flags, file);
+      iterator.next().onTraceWriteStart(traceId, flags);
     }
   }
 
