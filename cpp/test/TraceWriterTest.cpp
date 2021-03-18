@@ -220,6 +220,27 @@ TEST_F(TraceWriterTest, testTraceFileCreatedSimple) {
       << "Filename " << filename << " does not contain pid";
 }
 
+TEST_F(TraceWriterTest, testTraceFileCreatedForDump) {
+  writeFillerEvent();
+  writer_.dump(kTraceID);
+
+  EXPECT_EQ(getFileCount(), 1) << "There should be only one real file.";
+
+  auto file = getOnlyTraceFile();
+  auto filename = file.filename().generic_string();
+  auto expected = std::string("-") + kTraceIDString + ".";
+  EXPECT_NE(filename.find(expected), std::string::npos)
+      << "Filename " << filename << " does not contain correct trace ID";
+
+  EXPECT_EQ(filename.find(kTracePrefix), 0)
+      << "Filename " << filename << " does not start with prefix";
+
+  std::stringstream pid_str;
+  pid_str << "-" << getpid() << "-";
+  EXPECT_NE(filename.find(pid_str.str()), std::string::npos)
+      << "Filename " << filename << " does not contain pid";
+}
+
 TEST_F(TraceWriterTest, testNoTraceSubmitPastStart) {
   writeTraceStart();
   auto cursorPastStart = buffer_->ringBuffer().currentHead();

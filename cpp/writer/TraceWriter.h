@@ -66,6 +66,11 @@ class TraceWriter {
   void loop();
 
   //
+  // Process the buffer from its current head position backwards and exit.
+  //
+  void dump(int64_t);
+
+  //
   // Implements synchronous single trace processing logic starting from the
   // given cursor. Can be used separately from the loop logic for single trace
   // processing. It's recommended to use either loop logic or direct processing

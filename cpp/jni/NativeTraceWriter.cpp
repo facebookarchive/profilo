@@ -48,6 +48,10 @@ void NativeTraceWriter::loop() {
   writer_.loop();
 }
 
+void NativeTraceWriter::dump(int64_t trace_id) {
+  writer_.dump(trace_id);
+}
+
 void NativeTraceWriter::submit(TraceBuffer::Cursor cursor, int64_t trace_id) {
   writer_.submit(cursor, trace_id);
 }
@@ -65,6 +69,7 @@ void NativeTraceWriter::registerNatives() {
   registerHybrid({
       makeNativeMethod("initHybrid", NativeTraceWriter::initHybrid),
       makeNativeMethod("loop", NativeTraceWriter::loop),
+      makeNativeMethod("dump", NativeTraceWriter::dump),
   });
 }
 

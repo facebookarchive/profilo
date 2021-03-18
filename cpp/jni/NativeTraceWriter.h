@@ -46,6 +46,8 @@ class NativeTraceWriter : public fbjni::HybridClass<NativeTraceWriter> {
 
   void loop();
 
+  void dump(int64_t trace_id);
+
   void submit(TraceBuffer::Cursor cursor, int64_t trace_id);
 
  private:

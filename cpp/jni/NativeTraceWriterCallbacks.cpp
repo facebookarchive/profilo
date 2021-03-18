@@ -54,17 +54,23 @@ NativeTraceWriterCallbacksProxy::NativeTraceWriterCallbacksProxy(
 void NativeTraceWriterCallbacksProxy::onTraceStart(
     int64_t trace_id,
     int32_t flags) {
-  javaCallbacks_->onTraceStart(trace_id, flags);
+  if (javaCallbacks_ != nullptr) {
+    javaCallbacks_->onTraceStart(trace_id, flags);
+  }
 }
 
 void NativeTraceWriterCallbacksProxy::onTraceEnd(int64_t trace_id) {
-  javaCallbacks_->onTraceEnd(trace_id);
+  if (javaCallbacks_ != nullptr) {
+    javaCallbacks_->onTraceEnd(trace_id);
+  }
 }
 
 void NativeTraceWriterCallbacksProxy::onTraceAbort(
     int64_t trace_id,
     AbortReason reason) {
-  javaCallbacks_->onTraceAbort(trace_id, reason);
+  if (javaCallbacks_ != nullptr) {
+    javaCallbacks_->onTraceAbort(trace_id, reason);
+  }
 }
 
 } // namespace writer

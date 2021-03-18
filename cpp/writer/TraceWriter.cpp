@@ -28,8 +28,12 @@
 #include <profilo/entries/EntryParser.h>
 #include <profilo/writer/DeltaEncodingVisitor.h>
 #include <profilo/writer/PacketReassembler.h>
+#include <profilo/writer/PrintEntryVisitor.h>
+#include <profilo/writer/StackTraceInvertingVisitor.h>
+#include <profilo/writer/TimestampTruncatingVisitor.h>
 #include <profilo/writer/TraceLifecycleVisitor.h>
 #include <profilo/writer/TraceWriter.h>
+#include <profilo/writer/trace_backwards.h>
 
 #include <profilo/LogEntry.h>
 
@@ -112,6 +116,30 @@ void TraceWriter::loop() {
   if (trace_id != 0) {
     processTrace(trace_id, cursor);
   }
+}
+
+void TraceWriter::dump(int64_t trace_id) {
+  auto output = TraceFileHelpers::openCompressedStream(
+      trace_id, trace_folder_, trace_prefix_);
+  TraceFileHelpers::writeHeaders(*output, trace_id, trace_headers_);
+
+  auto printVisitor = std::make_unique<PrintEntryVisitor>(*output);
+  auto deltaVisitor = std::make_unique<DeltaEncodingVisitor>(*printVisitor);
+  auto timestampVisitor = std::make_unique<TimestampTruncatingVisitor>(
+      *deltaVisitor, TraceFileHelpers::kTimestampPrecision);
+  auto stacktraceVisitor =
+      std::make_unique<StackTraceInvertingVisitor>(*timestampVisitor);
+
+  // First write that hasn't happened yet...
+  TraceBuffer::Cursor cursor = buffer_->ringBuffer().currentHead();
+  // ... minus one, i.e. last write that has happened.
+  // Also equivalent to .currentTail(1.0) but that's way less readable.
+  cursor.moveBackward();
+
+  traceBackwards(*stacktraceVisitor, buffer_->ringBuffer(), cursor);
+
+  output->flush();
+  output->close();
 }
 
 void TraceWriter::submit(TraceBuffer::Cursor cursor, int64_t trace_id) {

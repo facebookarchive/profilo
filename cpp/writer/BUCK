@@ -175,6 +175,7 @@ fb_xplat_cxx_library(
         ":print_visitor",
         ":stack_visitor",
         ":timestamp_truncating_visitor",
+        ":trace_backwards",
         ":trace_file_helpers",
         profilo_path("cpp/logger:logger"),
         profilo_path("cpp/mmapbuf:buffer"),

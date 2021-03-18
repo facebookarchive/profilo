@@ -17,6 +17,7 @@ import com.facebook.jni.HybridData;
 import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
+import javax.annotation.Nullable;
 
 @DoNotStrip
 public final class NativeTraceWriter {
@@ -31,14 +32,22 @@ public final class NativeTraceWriter {
   @DoNotStrip private HybridData mHybridData;
 
   public NativeTraceWriter(
-      Buffer buffer, String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks) {
+      Buffer buffer,
+      String traceFolder,
+      String tracePrefix,
+      @Nullable NativeTraceWriterCallbacks callbacks) {
     mHybridData = initHybrid(buffer, traceFolder, tracePrefix, callbacks);
   }
 
   private static native HybridData initHybrid(
-      Buffer buffer, String traceFolder, String tracePrefix, NativeTraceWriterCallbacks callbacks);
+      Buffer buffer,
+      String traceFolder,
+      String tracePrefix,
+      @Nullable NativeTraceWriterCallbacks callbacks);
 
   public native void loop();
+
+  public native void dump(long trace_id);
 
   public native String getTraceFolder(long traceID);
 }

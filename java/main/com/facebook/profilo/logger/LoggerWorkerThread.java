@@ -22,8 +22,11 @@ import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 public class LoggerWorkerThread extends Thread {
 
   private final long mTraceId;
-  private final NativeTraceWriter mTraceWriter;
-  private final NativeTraceWriterCallbacks mCallbacks;
+  private final String mFolder;
+  private final String mPrefix;
+  private final Buffer[] mBuffers;
+  private final CachingNativeTraceWriterCallbacks mCallbacks;
+  private final NativeTraceWriter mMainTraceWriter;
 
   public LoggerWorkerThread(
       long traceId,
@@ -33,22 +36,44 @@ public class LoggerWorkerThread extends Thread {
       NativeTraceWriterCallbacks callbacks) {
     super("Prflo:Logger");
     mTraceId = traceId;
-    mTraceWriter = new NativeTraceWriter(buffers[0], folder, prefix, callbacks);
-    mCallbacks = callbacks;
+    mFolder = folder;
+    mPrefix = prefix;
+    mBuffers = buffers;
+    boolean needsCachedCallbacks = buffers.length > 1;
+    mCallbacks = new CachingNativeTraceWriterCallbacks(needsCachedCallbacks, callbacks);
+    mMainTraceWriter = new NativeTraceWriter(buffers[0], folder, prefix, mCallbacks);
   }
 
   public NativeTraceWriter getTraceWriter() {
-    return mTraceWriter;
+    return mMainTraceWriter;
   }
 
   public void run() {
     try {
       Process.setThreadPriority(ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
-      mTraceWriter.loop();
-    } catch (RuntimeException ex) {
-      if (mCallbacks != null) {
-        mCallbacks.onTraceWriteException(mTraceId, ex);
+      mMainTraceWriter.loop();
+
+      if (mBuffers.length > 1) {
+        dumpSecondaryBuffers();
       }
+    } catch (RuntimeException ex) {
+      mCallbacks.onTraceWriteException(mTraceId, ex);
+    } finally {
+      mCallbacks.emit();
+    }
+  }
+
+  private void dumpSecondaryBuffers() {
+    StringBuilder prefixBuilder = new StringBuilder(mPrefix.length() + 2);
+    for (int idx = 1; idx < mBuffers.length; idx++) {
+      prefixBuilder.setLength(0);
+      prefixBuilder.append(mPrefix).append('-').append(idx);
+
+      // Additional buffers do not have trace control entries, so will not
+      // need to issue callbacks.
+      NativeTraceWriter bufferDumpWriter =
+          new NativeTraceWriter(mBuffers[idx], mFolder, prefixBuilder.toString(), null);
+      bufferDumpWriter.dump(mTraceId);
     }
   }
 }
