@@ -69,10 +69,6 @@ public final class TraceOrchestrator
   public static final String MAIN_PROCESS_NAME = "main";
 
   private static final String TAG = "Profilo/TraceOrchestrator";
-  private boolean mHasReadFromBridge = false;
-
-  @GuardedBy("mTraceIdToTrace")
-  private final HashMap<Long, Trace> mTraceIdToTrace;
 
   @GuardedBy("mTraceIdToContext")
   private final HashMap<Long, TraceContext> mTraceIdToContext;
@@ -171,7 +167,6 @@ public final class TraceOrchestrator
     mListenerManager = new TraceListenerManager();
     mProcessName = processName;
     mIsMainProcess = isMainProcess;
-    mTraceIdToTrace = new HashMap<>(2);
     mTraceIdToContext = new HashMap<>();
 
     ArrayList<BaseTraceProvider> syncProviderList = new ArrayList<>();
@@ -486,24 +481,14 @@ public final class TraceOrchestrator
 
   @Override
   public void onTraceWriteStart(long traceId, int flags, String file) {
-    Trace trace;
-    synchronized (mTraceIdToTrace) {
-      trace = mTraceIdToTrace.get(traceId);
-    }
-    if (trace != null) {
-      throw new IllegalStateException("Trace already registered on start");
-    }
     mListenerManager.onTraceWriteStart(traceId, flags, file);
-    synchronized (mTraceIdToTrace) {
-      mTraceIdToTrace.put(traceId, new Trace(traceId, flags, new File(file)));
-    }
   }
 
   @Override
   public void onTraceWriteEnd(long traceId) {
-    Trace trace;
-    synchronized (mTraceIdToTrace) {
-      trace = mTraceIdToTrace.get(traceId);
+    TraceContext trace;
+    synchronized (mTraceIdToContext) {
+      trace = mTraceIdToContext.get(traceId);
       if (trace == null) {
         throw new IllegalStateException(
             "onTraceWriteEnd can't be called without onTraceWriteStart");
@@ -512,8 +497,8 @@ public final class TraceOrchestrator
     try {
       mListenerManager.onTraceWriteEnd(traceId);
 
-      File logFile = trace.getLogFile();
-      if (!logFile.exists()) {
+      File traceFolder = trace.folder;
+      if (!traceFolder.exists()) {
         return;
       }
 
@@ -522,40 +507,62 @@ public final class TraceOrchestrator
         return;
       }
 
-      File parent = logFile.getParentFile();
-      File uploadFile;
-      if (ZipHelper.shouldZipDirectory(parent)) {
-        uploadFile =
-            ZipHelper.getCompressedFile(parent, ZipHelper.ZIP_SUFFIX + ZipHelper.TMP_SUFFIX);
-
-        // Add a timestamp to the file so that the FileManager's trimming rules
-        // work fine (see trimFolderByFileCount)
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", Locale.US);
-        String timestamp = dateFormat.format(new Date());
-        File fileWithTimestamp =
-            new File(uploadFile.getParentFile(), timestamp + "-" + uploadFile.getName());
-        if (uploadFile.renameTo(fileWithTimestamp)) {
-          uploadFile = fileWithTimestamp;
-        }
-        ZipHelper.deleteDirectory(parent);
-      } else {
-        uploadFile = logFile;
-      }
-      if (uploadFile == null) {
-        return;
-      }
-
-      uploadTrace(logFile, uploadFile, parent, trace.getFlags(), traceId);
+      handleZipAndUpload(trace);
     } finally {
       handleTraceWriteCompleted(traceId);
     }
   }
 
+  private void handleZipAndUpload(TraceContext trace) {
+    File uploadFile;
+    if (ZipHelper.shouldZipDirectory(trace.folder)) {
+      uploadFile =
+          ZipHelper.getCompressedFile(trace.folder, ZipHelper.ZIP_SUFFIX + ZipHelper.TMP_SUFFIX);
+
+      // Add a timestamp to the file so that the FileManager's trimming rules
+      // work fine (see trimFolderByFileCount)
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", Locale.US);
+      String timestamp = dateFormat.format(new Date());
+      File fileWithTimestamp =
+          new File(uploadFile.getParentFile(), timestamp + "-" + uploadFile.getName());
+      if (uploadFile.renameTo(fileWithTimestamp)) {
+        uploadFile = fileWithTimestamp;
+      }
+      ZipHelper.deleteDirectory(trace.folder);
+    } else {
+      File[] fileList = trace.folder.listFiles();
+      if (fileList == null || fileList.length == 0) {
+        return;
+      }
+      uploadFile = fileList[0];
+    }
+    if (uploadFile == null) {
+      return;
+    }
+
+    FileManager.FileManagerStatistics fStats;
+    synchronized (this) {
+      // Manual traces are untrimmable, everything else can be cleaned up
+      boolean trimmable = (trace.flags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) == 0;
+      mFileManager.addFileToUploads(uploadFile, trimmable);
+      triggerUpload();
+      fStats = mFileManager.getAndResetStatistics();
+    }
+
+    mListenerManager.onTraceFlushed(trace.folder, trace.traceId);
+    // This is as good a time to do some analytics as any.
+    mListenerManager.onTraceFlushedDoFileAnalytics(
+        fStats.getTotalErrors(),
+        fStats.getTrimmedDueToCount(),
+        fStats.getTrimmedDueToAge(),
+        fStats.getAddedFilesToUpload());
+  }
+
   @Override
   public void onTraceWriteAbort(long traceId, int abortReason) {
-    Trace trace;
-    synchronized (mTraceIdToTrace) {
-      trace = mTraceIdToTrace.get(traceId);
+    TraceContext trace;
+    synchronized (mTraceIdToContext) {
+      trace = mTraceIdToContext.get(traceId);
       if (trace == null) {
         throw new IllegalStateException(
             "onTraceWriteAbort can't be called without onTraceWriteStart");
@@ -576,12 +583,10 @@ public final class TraceOrchestrator
         return;
       }
 
-      File logFile = trace.getLogFile();
-      if (!logFile.exists()) {
+      File traceFolder = trace.folder;
+      if (!traceFolder.exists()) {
         return;
       }
-
-      File parent = logFile.getParentFile();
 
       boolean uploadTrace = false;
 
@@ -597,15 +602,12 @@ public final class TraceOrchestrator
         uploadTrace = sampleRate != 0 && mRandom.nextInt(sampleRate) == 0;
       }
 
-      if (!uploadTrace && !logFile.delete()) {
-        Log.e(TAG, "Could not delete aborted trace");
-      }
-
       if (!uploadTrace) {
-        ZipHelper.deleteDirectory(parent);
+        ZipHelper.deleteDirectory(traceFolder);
         return;
       }
-      uploadTrace(logFile, logFile, parent, trace.getFlags(), traceId);
+
+      handleZipAndUpload(trace);
     } finally {
       handleTraceWriteCompleted(traceId);
     }
@@ -620,9 +622,6 @@ public final class TraceOrchestrator
     if (context != null && !mMmapBufferManager.deallocateBuffer(context.buffer)) {
       Log.e(TAG, "Could not release memory for buffer for trace: " + context.encodedTraceId);
     }
-    synchronized (mTraceIdToTrace) {
-      mTraceIdToTrace.remove(traceId);
-    }
   }
 
   @Override
@@ -630,27 +629,6 @@ public final class TraceOrchestrator
     Log.e(TAG, "Write exception", t);
     mListenerManager.onTraceWriteException(traceId, t);
     onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_WRITER_EXCEPTION);
-  }
-
-  private void uploadTrace(
-      File logFile, File uploadFile, File parent, int traceFlags, long traceId) {
-    FileManager.FileManagerStatistics fStats;
-    synchronized (this) {
-      // Manual traces are untrimmable, everything else can be cleaned up
-      boolean trimmable = (traceFlags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) == 0;
-      mFileManager.addFileToUploads(uploadFile, trimmable);
-      triggerUpload();
-      fStats = mFileManager.getAndResetStatistics();
-    }
-    ZipHelper.deleteDirectory(parent);
-
-    mListenerManager.onTraceFlushed(logFile, traceId);
-    // This is as good a time to do some analytics as any.
-    mListenerManager.onTraceFlushedDoFileAnalytics(
-        fStats.getTotalErrors(),
-        fStats.getTrimmedDueToCount(),
-        fStats.getTrimmedDueToAge(),
-        fStats.getAddedFilesToUpload());
   }
 
   @Override
