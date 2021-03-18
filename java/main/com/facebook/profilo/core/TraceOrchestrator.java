@@ -423,7 +423,7 @@ public final class TraceOrchestrator
 
     if (mIsMainProcess) {
       BufferLogger.writeStandardEntry(
-          context.buffer,
+          context.mainBuffer,
           Logger.FILL_TIMESTAMP | Logger.FILL_TID,
           EntryType.TRACE_ANNOTATION,
           ProfiloConstants.NONE,
@@ -619,7 +619,7 @@ public final class TraceOrchestrator
     synchronized (mTraceIdToContext) {
       context = mTraceIdToContext.remove(traceId);
     }
-    if (context != null && !mMmapBufferManager.deallocateBuffer(context.buffer)) {
+    if (context != null && !mMmapBufferManager.deallocateBuffer(context.mainBuffer)) {
       Log.e(TAG, "Could not release memory for buffer for trace: " + context.encodedTraceId);
     }
   }

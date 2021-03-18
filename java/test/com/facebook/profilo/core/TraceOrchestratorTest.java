@@ -41,6 +41,7 @@ import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
+import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.profilo.util.TraceEventsFakeRule;
 import com.facebook.soloader.SoLoader;
@@ -180,6 +181,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0,
             TraceConfigExtras.EMPTY,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-");
     mSecondTraceContext =
@@ -196,6 +198,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0,
             TraceConfigExtras.EMPTY,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-"); // mTraceConfigExtras
 
@@ -487,6 +490,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             1,
             TraceConfigExtras.EMPTY,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStartSync(anotherContext);
@@ -521,6 +525,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0,
             TraceConfigExtras.EMPTY,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
@@ -574,6 +579,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
             0,
             TraceConfigExtras.EMPTY,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);

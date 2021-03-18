@@ -40,7 +40,8 @@ public final class TraceContext implements Parcelable {
   public TraceConfigExtras mTraceConfigExtras;
   public File folder;
   public String prefix;
-  public Buffer buffer;
+  public Buffer mainBuffer;
+  public Buffer[] buffers;
   @Nullable public volatile LoggerWorkerThread workerThread;
 
   public static final Parcelable.Creator<TraceContext> CREATOR =
@@ -69,7 +70,8 @@ public final class TraceContext implements Parcelable {
       int abortReason,
       int traceConfigIdx,
       TraceConfigExtras traceConfigExtras,
-      Buffer buffer,
+      Buffer mainBuffer,
+      Buffer[] buffers,
       File folder,
       String prefix) {
     this.traceId = traceId;
@@ -84,7 +86,8 @@ public final class TraceContext implements Parcelable {
     this.abortReason = abortReason;
     this.traceConfigIdx = traceConfigIdx;
     this.mTraceConfigExtras = traceConfigExtras;
-    this.buffer = buffer;
+    this.mainBuffer = mainBuffer;
+    this.buffers = buffers;
     this.folder = folder;
     this.prefix = prefix;
   }
@@ -101,7 +104,8 @@ public final class TraceContext implements Parcelable {
       int flags,
       int traceConfigIdx,
       TraceConfigExtras traceConfigExtras,
-      Buffer buffer,
+      Buffer mainBuffer,
+      Buffer[] buffers,
       File folder,
       String prefix) {
     this(
@@ -117,7 +121,8 @@ public final class TraceContext implements Parcelable {
         (short) 0,
         traceConfigIdx,
         traceConfigExtras,
-        buffer,
+        mainBuffer,
+        buffers,
         folder,
         prefix);
   }
@@ -136,7 +141,8 @@ public final class TraceContext implements Parcelable {
         traceContext.abortReason,
         traceContext.traceConfigIdx,
         traceContext.mTraceConfigExtras,
-        traceContext.buffer,
+        traceContext.mainBuffer,
+        traceContext.buffers,
         traceContext.folder,
         traceContext.prefix);
   }
@@ -155,35 +161,10 @@ public final class TraceContext implements Parcelable {
         abortReason,
         traceContext.traceConfigIdx,
         traceContext.mTraceConfigExtras,
-        traceContext.buffer,
+        traceContext.mainBuffer,
+        traceContext.buffers,
         traceContext.folder,
         traceContext.prefix);
-  }
-
-  public TraceContext(
-      TraceContext traceContext,
-      @Nullable Config config,
-      int controller,
-      Object controllerObject,
-      Buffer buffer,
-      File folder,
-      String prefix) {
-    this(
-        traceContext.traceId,
-        traceContext.encodedTraceId,
-        config,
-        controller,
-        controllerObject,
-        traceContext.context,
-        traceContext.longContext,
-        traceContext.enabledProviders,
-        traceContext.flags,
-        traceContext.abortReason,
-        traceContext.traceConfigIdx,
-        traceContext.mTraceConfigExtras,
-        buffer,
-        folder,
-        prefix);
   }
 
   public TraceContext(Parcel src) {

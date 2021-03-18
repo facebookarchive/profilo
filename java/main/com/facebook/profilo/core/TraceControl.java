@@ -344,6 +344,7 @@ public final class TraceControl {
       traceConfigExtras = traceController.getNonConfigurableTraceConfigExtras(longContext, context);
     }
 
+    Buffer buffer = getBuffer(config);
     TraceContext nextContext =
         new TraceContext(
             traceId,
@@ -358,6 +359,7 @@ public final class TraceControl {
             traceConfigIdx,
             traceConfigExtras,
             getBuffer(config),
+            new Buffer[] {buffer},
             getTraceFolder(encodedTraceId),
             mProcessName);
 
@@ -370,14 +372,25 @@ public final class TraceControl {
       throw new IllegalArgumentException("Unregistered controller for id = " + controller);
     }
 
+    Config config = mCurrentConfig.get();
+    Buffer buffer = getBuffer(config);
     return startTraceInternal(
         flags,
         new TraceContext(
-            traceContext,
+            traceContext.traceId,
+            traceContext.encodedTraceId,
             null,
             controller,
             traceController,
-            getBuffer(mCurrentConfig.get()),
+            traceContext.context,
+            traceContext.longContext,
+            traceContext.enabledProviders,
+            traceContext.flags,
+            traceContext.abortReason,
+            traceContext.traceConfigIdx,
+            traceContext.mTraceConfigExtras,
+            buffer,
+            new Buffer[] {buffer},
             getTraceFolder(traceContext.encodedTraceId),
             mProcessName));
   }
@@ -389,7 +402,9 @@ public final class TraceControl {
   }
 
   private boolean startTraceInternal(int flags, TraceContext nextContext) {
-    if (nextContext.buffer == null) {
+    if (nextContext.buffers == null
+        || nextContext.buffers.length == 0
+        || nextContext.mainBuffer == null) {
       // Something has gone wrong, fail this startTrace request.
       Log.e(
           LOG_TAG,
@@ -415,7 +430,7 @@ public final class TraceControl {
       }
     }
 
-    nextContext.buffer.updateHeader(
+    nextContext.mainBuffer.updateHeader(
         nextContext.enabledProviders, nextContext.longContext, nextContext.traceId);
 
     int timeout = getTimeoutFromContext(nextContext);
@@ -529,7 +544,7 @@ public final class TraceControl {
       return;
     }
     BufferLogger.writeStandardEntry(
-        traceContext.buffer,
+        traceContext.mainBuffer,
         Logger.FILL_TIMESTAMP | Logger.FILL_TID,
         EntryType.TRACE_TIMEOUT,
         ProfiloConstants.NONE,
@@ -561,7 +576,7 @@ public final class TraceControl {
       switch (stopReason) {
         case TraceStopReason.ABORT:
           BufferLogger.writeStandardEntry(
-              traceContext.buffer,
+              traceContext.mainBuffer,
               Logger.FILL_TIMESTAMP | Logger.FILL_TID,
               EntryType.TRACE_ABORT,
               ProfiloConstants.NONE,
@@ -574,7 +589,7 @@ public final class TraceControl {
           break;
         case TraceStopReason.STOP:
           BufferLogger.writeStandardEntry(
-              traceContext.buffer,
+              traceContext.mainBuffer,
               Logger.FILL_TIMESTAMP | Logger.FILL_TID,
               EntryType.TRACE_PRE_END,
               ProfiloConstants.NONE,

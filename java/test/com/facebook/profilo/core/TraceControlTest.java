@@ -168,6 +168,7 @@ public class TraceControlTest extends PowerMockTest {
             222,
             TraceConfigExtras.EMPTY,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-");
   }

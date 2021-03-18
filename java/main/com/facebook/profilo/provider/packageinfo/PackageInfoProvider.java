@@ -59,7 +59,7 @@ public class PackageInfoProvider extends MetadataTraceProvider {
 
     int returnedMatchID =
         BufferLogger.writeStandardEntry(
-            context.buffer,
+            context.mainBuffer,
             Logger.FILL_TIMESTAMP | Logger.FILL_TID,
             EntryType.TRACE_ANNOTATION,
             ProfiloConstants.NONE,
@@ -70,21 +70,21 @@ public class PackageInfoProvider extends MetadataTraceProvider {
     if ("App version" != null) {
       returnedMatchID =
           BufferLogger.writeBytesEntry(
-              context.buffer,
+              context.mainBuffer,
               ProfiloConstants.NONE,
               EntryType.STRING_KEY,
               returnedMatchID,
               "App version");
     }
     BufferLogger.writeBytesEntry(
-        context.buffer,
+        context.mainBuffer,
         ProfiloConstants.NONE,
         EntryType.STRING_VALUE,
         returnedMatchID,
         mVersionName);
 
     BufferLogger.writeStandardEntry(
-        context.buffer,
+        context.mainBuffer,
         Logger.FILL_TIMESTAMP | Logger.FILL_TID,
         EntryType.TRACE_ANNOTATION,
         ProfiloConstants.NONE,

@@ -48,7 +48,7 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
     long time = System.nanoTime();
     int pushId =
         BufferLogger.writeStandardEntry(
-            traceContext.buffer,
+            traceContext.mainBuffer,
             Logger.FILL_TID,
             EntryType.MARK_PUSH,
             time,
@@ -57,13 +57,13 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
             ProfiloConstants.NONE,
             ProfiloConstants.NONE);
     BufferLogger.writeBytesEntry(
-        traceContext.buffer,
+        traceContext.mainBuffer,
         ProfiloConstants.NONE,
         EntryType.STRING_NAME,
         pushId,
         "Profilo.ProvidersInitialized");
     BufferLogger.writeStandardEntry(
-        traceContext.buffer,
+        traceContext.mainBuffer,
         Logger.FILL_TID,
         EntryType.MARK_POP,
         time,
@@ -86,7 +86,7 @@ class CoreTraceListener extends DefaultTraceOrchestratorListener {
     }
 
     addTraceAnnotation(
-        traceContext.buffer,
+        traceContext.mainBuffer,
         Identifiers.ACTIVE_PROVIDERS,
         "Active providers",
         activeProvidersStr.toString());

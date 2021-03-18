@@ -34,12 +34,12 @@ public final class ProcessMetadataProvider extends MetadataTraceProvider {
 
   @Override
   protected void logOnTraceStart(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    logProcessList(context.buffer);
+    logProcessList(context.mainBuffer);
   }
 
   @Override
   protected void logOnTraceEnd(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    logProcessList(context.buffer);
+    logProcessList(context.mainBuffer);
   }
 
   private void logProcessList(Buffer buffer) {

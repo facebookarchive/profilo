@@ -111,7 +111,7 @@ public abstract class BaseTraceProvider {
       return;
     }
     ensureSolibLoaded();
-    getLogger().addBuffer(context.buffer);
+    getLogger().addBuffer(context.mainBuffer);
     processStateChange(context);
     onTraceStarted(context, dataFileProvider);
   }
@@ -124,7 +124,7 @@ public abstract class BaseTraceProvider {
     ensureSolibLoaded();
     onTraceEnded(context, dataFileProvider);
     processStateChange(context);
-    getLogger().removeBuffer(context.buffer);
+    getLogger().removeBuffer(context.mainBuffer);
   }
 
   private void processStateChange(TraceContext context) {

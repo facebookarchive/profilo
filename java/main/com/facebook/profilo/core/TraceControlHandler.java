@@ -156,7 +156,7 @@ public class TraceControlHandler extends Handler {
       // stopped after dumping the contents of the buffer.
       BufferLogger.writeAndWakeupTraceWriter(
           context.workerThread.getTraceWriter(),
-          context.buffer,
+          context.mainBuffer,
           context.traceId,
           EntryType.TRACE_BACKWARDS,
           ProfiloConstants.NONE,
@@ -177,7 +177,7 @@ public class TraceControlHandler extends Handler {
     uploadSampleRate = mTraceConditionManager.getUploadSampleRate(context.traceId);
     if (uploadSampleRate == 0 || mRandom.nextInt(uploadSampleRate) != 0) {
       BufferLogger.writeStandardEntry(
-          context.buffer,
+          context.mainBuffer,
           Logger.FILL_TIMESTAMP | Logger.FILL_TID,
           EntryType.TRACE_ABORT,
           ProfiloConstants.NONE,
@@ -188,7 +188,7 @@ public class TraceControlHandler extends Handler {
       onTraceAbort(new TraceContext(context, ProfiloConstants.ABORT_REASON_CONDITION_NOT_MET));
     } else {
       BufferLogger.writeStandardEntry(
-          context.buffer,
+          context.mainBuffer,
           Logger.FILL_TIMESTAMP | Logger.FILL_TID,
           EntryType.CONDITIONAL_UPLOAD_RATE,
           ProfiloConstants.NONE,
@@ -197,7 +197,7 @@ public class TraceControlHandler extends Handler {
           ProfiloConstants.NONE,
           uploadSampleRate);
       BufferLogger.writeStandardEntry(
-          context.buffer,
+          context.mainBuffer,
           Logger.FILL_TIMESTAMP | Logger.FILL_TID,
           EntryType.TRACE_PRE_END,
           ProfiloConstants.NONE,
@@ -225,7 +225,7 @@ public class TraceControlHandler extends Handler {
       mListener.onTraceStop(context);
     }
     BufferLogger.writeStandardEntry(
-        context.buffer,
+        context.mainBuffer,
         Logger.FILL_TIMESTAMP | Logger.FILL_TID,
         EntryType.TRACE_END,
         ProfiloConstants.NONE,
@@ -279,7 +279,7 @@ public class TraceControlHandler extends Handler {
             ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT);
 
     BufferLogger.writeStandardEntry(
-        context.buffer,
+        context.mainBuffer,
         Logger.FILL_TID | Logger.FILL_TIMESTAMP,
         EntryType.LOGGER_PRIORITY,
         0,
@@ -326,7 +326,10 @@ public class TraceControlHandler extends Handler {
           new LoggerWorkerThread(
               context.traceId,
               new NativeTraceWriter(
-                  context.buffer, context.folder.getCanonicalPath(), context.prefix, mCallbacks),
+                  context.mainBuffer,
+                  context.folder.getCanonicalPath(),
+                  context.prefix,
+                  mCallbacks),
               mCallbacks);
     } catch (IOException e) {
       throw new IllegalArgumentException(
@@ -340,7 +343,7 @@ public class TraceControlHandler extends Handler {
       // reading from TRACE_START.
       BufferLogger.writeAndWakeupTraceWriter(
           thread.getTraceWriter(),
-          context.buffer,
+          context.mainBuffer,
           context.traceId,
           EntryType.TRACE_START,
           TraceControl.getTimeoutFromContext(context),

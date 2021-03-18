@@ -25,7 +25,7 @@ public final class ThreadMetadataProvider extends MetadataTraceProvider {
 
   @Override
   protected void logOnTraceEnd(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    nativeLogThreadMetadata(context.buffer);
+    nativeLogThreadMetadata(context.mainBuffer);
   }
 
   /* Log thread names and priorities. */

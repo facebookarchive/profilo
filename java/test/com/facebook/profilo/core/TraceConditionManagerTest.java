@@ -23,6 +23,7 @@ import com.facebook.profilo.config.ConfigImpl;
 import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.testing.powermock.PowerMockTest;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;
@@ -56,6 +57,7 @@ public class TraceConditionManagerTest extends PowerMockTest {
             0,
             mExtras,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-");
   }

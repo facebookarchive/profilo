@@ -21,6 +21,7 @@ import com.facebook.profilo.config.ConfigImpl;
 import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;
 import java.util.ArrayList;
@@ -88,6 +89,7 @@ public class TraceContextTest {
             TRACE_CONFIG_IDX,
             PROVIDER_EXTRAS,
             /*buffer*/ null,
+            new Buffer[] {},
             new File("."),
             "prefix-");
   }
