@@ -564,10 +564,6 @@ public final class TraceOrchestrator
     TraceContext trace;
     synchronized (mTraceIdToContext) {
       trace = mTraceIdToContext.get(traceId);
-      if (trace == null) {
-        throw new IllegalStateException(
-            "onTraceWriteAbort can't be called without onTraceWriteStart");
-      }
     }
     try {
       mListenerManager.onTraceWriteAbort(traceId, abortReason);
@@ -578,6 +574,12 @@ public final class TraceOrchestrator
         throw new IllegalStateException("No TraceControl when cleaning up aborted trace");
       }
       traceControl.cleanupTraceContextByID(traceId, abortReason);
+
+      if (trace == null) {
+        // Primarily covers the case where a trace threw an exception before onTraceStartAsync even
+        // ran. We have done all we can (cleaned up the trace contexts above), let's bail out.
+        return;
+      }
 
       if (!mIsMainProcess) {
         // any file clean up will happen on the main process
