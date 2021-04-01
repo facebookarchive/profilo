@@ -289,7 +289,7 @@ public final class TraceControl {
     return traces;
   }
 
-  private File getTraceFolder(String trace_id) {
+  public File getTraceFolder(String trace_id) {
     return new File(mFolder, NativeTraceWriter.getSanitizedTraceFolderName(trace_id));
   }
 

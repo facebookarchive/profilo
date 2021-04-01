@@ -485,6 +485,12 @@ public final class TraceOrchestrator
     mListenerManager.onTraceWriteStart(traceId, flags);
   }
 
+  public void registerExternalContext(TraceContext traceContext) {
+    synchronized (mTraceIdToContext) {
+      mTraceIdToContext.put(traceContext.traceId, traceContext);
+    }
+  }
+
   @Override
   public void onTraceWriteEnd(long traceId) {
     TraceContext trace;
