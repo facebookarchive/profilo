@@ -25,6 +25,8 @@
 #include <profilo/jni/NativeTraceWriterCallbacks.h>
 #include <util/common.h>
 
+#include <profilo/mmapbuf/writer/BufferFileMapHolder.h>
+
 namespace fbjni = facebook::jni;
 
 using namespace facebook::profilo::writer;
@@ -40,37 +42,33 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
       "Lcom/facebook/profilo/mmapbuf/writer/MmapBufferTraceWriter;";
 
   static fbjni::local_ref<MmapBufferTraceWriter::jhybriddata> initHybrid(
-      fbjni::alias_ref<jclass>,
-      std::string trace_folder,
-      std::string trace_prefix,
-      int32_t trace_flags,
-      fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks);
+      fbjni::alias_ref<jclass>);
 
   static void registerNatives();
 
-  int64_t nativeWriteTrace(
-      const std::string& dump_path,
-      const std::string& type);
+  int64_t nativeInitAndVerify(const std::string& dump_path);
+
+  void nativeWriteTrace(
+      const std::string& type,
+      const std::string& trace_folder,
+      const std::string& trace_prefix,
+      int32_t trace_flags,
+      fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks);
 
   // Trace re-collection from dump logic
   // Given a dump path, verifies it and re-collects the data into trace
-  int64_t writeTrace(
-      const std::string& dump_path,
+  void writeTrace(
       const std::string& type,
+      const std::string& trace_folder,
+      const std::string& trace_prefix,
+      int32_t trace_flags,
+      std::shared_ptr<TraceCallbacks> callbacks,
       uint64_t timestamp = monotonicTime());
 
-  // For Testing
-  MmapBufferTraceWriter(
-      std::string trace_folder,
-      std::string trace_prefix,
-      int32_t trace_flags,
-      std::shared_ptr<TraceCallbacks> callbacks);
-
  private:
-  std::string trace_folder_;
-  std::string trace_prefix_;
-  int32_t trace_flags_;
-  std::shared_ptr<TraceCallbacks> callbacks_;
+  std::unique_ptr<BufferFileMapHolder> bufferMapHolder_;
+  std::string dump_path_;
+  int64_t trace_id_ = 0;
 };
 
 } // namespace writer

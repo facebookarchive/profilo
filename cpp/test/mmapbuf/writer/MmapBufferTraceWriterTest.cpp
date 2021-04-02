@@ -234,13 +234,19 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
-  MmapBufferTraceWriter traceWriter(
-      testFolder, testTracePrefix, 0, mockCallbacks);
+  MmapBufferTraceWriter traceWriter{};
 
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0));
   EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId));
 
-  traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
+  traceWriter.nativeInitAndVerify(dumpPath());
+  traceWriter.writeTrace(
+      "test",
+      testFolder,
+      testTracePrefix,
+      0,
+      mockCallbacks,
+      kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
 }
@@ -255,13 +261,19 @@ TEST_F(
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
-  MmapBufferTraceWriter traceWriter(
-      testFolder, testTracePrefix, 0, mockCallbacks);
+  MmapBufferTraceWriter traceWriter{};
 
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0));
   EXPECT_CALL(*mockCallbacks, onTraceEnd(kTraceId));
 
-  traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
+  traceWriter.nativeInitAndVerify(dumpPath());
+  traceWriter.writeTrace(
+      "test",
+      testFolder,
+      testTracePrefix,
+      0,
+      mockCallbacks,
+      kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
   verifyMemoryMappingEntries();
@@ -279,12 +291,18 @@ TEST_F(
   std::string testTracePrefix(kTracePrefix);
 
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
-  MmapBufferTraceWriter traceWriter(
-      testFolder, testTracePrefix, 0, mockCallbacks);
+  MmapBufferTraceWriter traceWriter{};
 
   EXPECT_CALL(*mockCallbacks, onTraceAbort(kTraceId, AbortReason::UNKNOWN));
 
-  traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
+  traceWriter.nativeInitAndVerify(dumpPath());
+  traceWriter.writeTrace(
+      "test",
+      testFolder,
+      testTracePrefix,
+      0,
+      mockCallbacks,
+      kTraceRecollectionTimestamp);
 }
 
 TEST_F(
@@ -296,12 +314,18 @@ TEST_F(
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
-  MmapBufferTraceWriter traceWriter(
-      testFolder, testTracePrefix, 0, mockCallbacks);
+  MmapBufferTraceWriter traceWriter{};
 
   bool caughtException = false;
   try {
-    traceWriter.writeTrace(dumpPath(), "test", kTraceRecollectionTimestamp);
+    traceWriter.nativeInitAndVerify(dumpPath());
+    traceWriter.writeTrace(
+        "test",
+        testFolder,
+        testTracePrefix,
+        0,
+        mockCallbacks,
+        kTraceRecollectionTimestamp);
   } catch (std::runtime_error& e) {
     ASSERT_STREQ(e.what(), "Unable to read the file-backed buffer.");
     caughtException = true;

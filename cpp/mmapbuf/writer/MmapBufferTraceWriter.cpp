@@ -126,51 +126,6 @@ void loggerWriteQplTriggerAnnotation(
       timestamp);
 }
 
-struct FileDescriptor {
-  int fd;
-
-  FileDescriptor(const std::string& dump_path) {
-    fd = open(dump_path.c_str(), O_RDONLY);
-    if (fd == -1) {
-      FBLOGE(
-          "Unable to open a dump file %s, errno: %s",
-          dump_path.c_str(),
-          std::strerror(errno));
-      throw std::runtime_error("Error while opening a dump file");
-    }
-  }
-
-  ~FileDescriptor() {
-    close(fd);
-  }
-};
-
-struct BufferFileMapHolder {
-  void* map_ptr;
-  size_t size;
-
-  BufferFileMapHolder(const std::string& dump_path) {
-    FileDescriptor fd(dump_path);
-    struct stat fileStat;
-    int res = fstat(fd.fd, &fileStat);
-    if (res != 0) {
-      throw std::runtime_error("Unable to read fstat from the buffer file");
-    }
-    size = (size_t)fileStat.st_size;
-    if (size == 0) {
-      throw std::runtime_error("Empty buffer file");
-    }
-    map_ptr = mmap(nullptr, (size_t)size, PROT_READ, MAP_PRIVATE, fd.fd, 0);
-    if (map_ptr == MAP_FAILED) {
-      throw std::runtime_error("Failed to map the buffer file");
-    }
-  }
-
-  ~BufferFileMapHolder() {
-    munmap(map_ptr, size);
-  }
-};
-
 //
 // Process entries from source buffer and write to the destination.
 // It's okay if not all entries were successfully copied.
@@ -223,29 +178,13 @@ void processMemoryMappingsFile(
 
 } // namespace
 
-MmapBufferTraceWriter::MmapBufferTraceWriter(
-    std::string trace_folder,
-    std::string trace_prefix,
-    int32_t trace_flags,
-    std::shared_ptr<TraceCallbacks> callbacks)
-    : trace_folder_(trace_folder),
-      trace_prefix_(trace_prefix),
-      trace_flags_(trace_flags),
-      callbacks_(callbacks) {}
+int64_t MmapBufferTraceWriter::nativeInitAndVerify(
+    const std::string& dump_path) {
+  dump_path_ = dump_path;
+  bufferMapHolder_ = std::make_unique<BufferFileMapHolder>(dump_path);
 
-int64_t MmapBufferTraceWriter::nativeWriteTrace(
-    const std::string& dump_path,
-    const std::string& type) {
-  return writeTrace(dump_path, type);
-}
-
-int64_t MmapBufferTraceWriter::writeTrace(
-    const std::string& dump_path,
-    const std::string& type,
-    uint64_t timestamp) {
-  BufferFileMapHolder bufferFileMap(dump_path);
   MmapBufferPrefix* mapBufferPrefix =
-      reinterpret_cast<MmapBufferPrefix*>(bufferFileMap.map_ptr);
+      reinterpret_cast<MmapBufferPrefix*>(bufferMapHolder_->map_ptr);
   if (mapBufferPrefix->staticHeader.magic != kMagic) {
     return 0;
   }
@@ -259,11 +198,42 @@ int64_t MmapBufferTraceWriter::writeTrace(
   }
 
   int64_t trace_id = mapBufferPrefix->header.traceId;
-  // No trace was active when process died, so the buffer is not useful.
-  if (mapBufferPrefix->header.traceId == 0) {
-    return 0;
+  trace_id_ = trace_id;
+  return trace_id;
+}
+
+void MmapBufferTraceWriter::nativeWriteTrace(
+    const std::string& type,
+    const std::string& trace_folder,
+    const std::string& trace_prefix,
+    int32_t trace_flags,
+    fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks) {
+  writeTrace(
+      type,
+      trace_folder,
+      trace_prefix,
+      trace_flags,
+      std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks));
+}
+
+void MmapBufferTraceWriter::writeTrace(
+    const std::string& type,
+    const std::string& trace_folder,
+    const std::string& trace_prefix,
+    int32_t trace_flags,
+    std::shared_ptr<TraceCallbacks> callbacks,
+    uint64_t timestamp) {
+  if (bufferMapHolder_.get() == nullptr) {
+    throw std::runtime_error(
+        "Not initialized. Method nativeInitAndVerify() should be called first.");
+  }
+  if (trace_id_ == 0) {
+    throw std::runtime_error(
+        "Buffer is not associated with a trace. Trace Id is 0.");
   }
 
+  MmapBufferPrefix* mapBufferPrefix =
+      reinterpret_cast<MmapBufferPrefix*>(bufferMapHolder_->map_ptr);
   int32_t qpl_marker_id =
       static_cast<int32_t>(mapBufferPrefix->header.longContext);
 
@@ -283,12 +253,12 @@ int64_t MmapBufferTraceWriter::writeTrace(
   // It's not technically backwards trace but that's what we use to denote Black
   // Box traces.
   loggerWrite(
-      logger, EntryType::TRACE_BACKWARDS, 0, trace_flags_, trace_id, timestamp);
+      logger, EntryType::TRACE_BACKWARDS, 0, trace_flags, trace_id_, timestamp);
 
   {
     // Copying entries from the saved buffer to the new one.
     TraceBuffer* historicBuffer = reinterpret_cast<TraceBuffer*>(
-        reinterpret_cast<char*>(bufferFileMap.map_ptr) +
+        reinterpret_cast<char*>(bufferMapHolder_->map_ptr) +
         sizeof(MmapBufferPrefix));
     bool ok = copyBufferEntries(*historicBuffer, ringBuffer);
     if (!ok) {
@@ -329,42 +299,32 @@ int64_t MmapBufferTraceWriter::writeTrace(
 
   const char* mapsFilename = mapBufferPrefix->header.memoryMapsFilename;
   if (mapsFilename[0] != '\0') {
-    auto lastSlashIdx = dump_path.rfind("/");
-    std::string mapsPath = dump_path.substr(0, lastSlashIdx + 1) + mapsFilename;
+    auto lastSlashIdx = dump_path_.rfind("/");
+    std::string mapsPath =
+        dump_path_.substr(0, lastSlashIdx + 1) + mapsFilename;
     processMemoryMappingsFile(logger, mapsPath, timestamp);
   }
 
-  loggerWrite(logger, EntryType::TRACE_END, 0, 0, trace_id, timestamp);
+  loggerWrite(logger, EntryType::TRACE_END, 0, 0, trace_id_, timestamp);
 
   TraceWriter writer(
-      std::move(trace_folder_),
-      std::move(trace_prefix_),
+      std::move(trace_folder),
+      std::move(trace_prefix),
       buffer,
-      callbacks_,
+      callbacks,
       calculateHeaders());
 
   try {
-    writer.processTrace(trace_id, startCursor);
+    writer.processTrace(trace_id_, startCursor);
   } catch (std::exception& e) {
     FBLOGE("Error during dump processing: %s", e.what());
-    callbacks_->onTraceAbort(trace_id, AbortReason::UNKNOWN);
+    callbacks->onTraceAbort(trace_id_, AbortReason::UNKNOWN);
   }
-
-  return trace_id;
 }
 
 fbjni::local_ref<MmapBufferTraceWriter::jhybriddata>
-MmapBufferTraceWriter::initHybrid(
-    fbjni::alias_ref<jclass>,
-    std::string trace_folder,
-    std::string trace_prefix,
-    int32_t trace_flags,
-    fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks) {
-  return makeCxxInstance(
-      trace_folder,
-      trace_prefix,
-      trace_flags,
-      std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks));
+MmapBufferTraceWriter::initHybrid(fbjni::alias_ref<jclass>) {
+  return makeCxxInstance();
 }
 
 void MmapBufferTraceWriter::registerNatives() {
@@ -372,6 +332,8 @@ void MmapBufferTraceWriter::registerNatives() {
       makeNativeMethod("initHybrid", MmapBufferTraceWriter::initHybrid),
       makeNativeMethod(
           "nativeWriteTrace", MmapBufferTraceWriter::nativeWriteTrace),
+      makeNativeMethod(
+          "nativeInitAndVerify", MmapBufferTraceWriter::nativeInitAndVerify),
   });
 }
 

@@ -56,7 +56,7 @@ public class MmapBufferFileHelper {
     return foundFiles[0];
   }
 
-  public void deleteOldBufferFiles(@Nullable FileDeletionBlacklist blacklist) {
+  public void deleteOldBufferFiles(@Nullable FileDeletionBlacklist blacklist) throws IOException {
     File mmapFolder = getFolderIfExists();
     if (mmapFolder == null) {
       return;
@@ -67,7 +67,7 @@ public class MmapBufferFileHelper {
     }
     List<String> blacklistFilenames = blacklist.getFilenames();
     for (File file : mmapFiles) {
-      if (blacklistFilenames.contains(file.getName())) {
+      if (blacklistFilenames.contains(file.getCanonicalPath())) {
         continue;
       }
       synchronized (DUMP_FILES_LOCK) {
