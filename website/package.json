@@ -11,7 +11,8 @@
     "classnames": "^2.2.6",
     "dot-prop": "5.1.1",
     "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "react-dom": "^16.10.2",
+    "y18n": "4.0.1"
   },
   "browserslist": {
     "production": [
