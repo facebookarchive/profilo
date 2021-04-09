@@ -143,36 +143,49 @@ void SignalHandler::AndroidAwareSigaction(
   // in bionic where sigaction`libc calls sigaction64`sigchain.
   // See commit 11623dd60dd0f531fbc1cbf108680ba850acaf2f in AOSP.
   //
-  auto libc = dlopen("libc.so", RTLD_LOCAL);
-  if (!libc) {
-    std::string error("Missing libc.so: ");
-    throw std::runtime_error(error + dlerror());
+  static struct {
+    int (*libc_sigaction64)(
+        int,
+        const struct sigaction64*,
+        struct sigaction64*) = nullptr;
+    int (*libc_sigemptyset64)(sigset64_t*) = nullptr;
+    int (*libc_sigismember64)(sigset64_t*, int) = nullptr;
+    int (*libc_sigaction)(int, const struct sigaction*, struct sigaction*) =
+        nullptr;
+    bool lookups_complete = false;
+  } signal_state;
+
+  if (!signal_state.lookups_complete) {
+    auto libc = dlopen("libc.so", RTLD_LOCAL);
+    if (!libc) {
+      std::string error("Missing libc.so: ");
+      throw std::runtime_error(error + dlerror());
+    }
+
+    signal_state.libc_sigaction64 =
+        reinterpret_cast<decltype(signal_state.libc_sigaction64)>(
+            dlsym(libc, "sigaction64"));
+
+    if (signal_state.libc_sigaction64) {
+      signal_state.libc_sigemptyset64 =
+          reinterpret_cast<decltype(signal_state.libc_sigemptyset64)>(
+              dlsym(libc, "sigemptyset64"));
+
+      signal_state.libc_sigismember64 =
+          reinterpret_cast<decltype(signal_state.libc_sigismember64)>(
+              dlsym(libc, "sigismember64"));
+    } else {
+      signal_state.libc_sigaction =
+          reinterpret_cast<decltype(signal_state.libc_sigaction)>(
+              dlsym(libc, "sigaction"));
+    }
+    signal_state.lookups_complete = true;
+
+    dlclose(libc);
   }
-
-  int (*libc_sigaction64)(int, const struct sigaction64*, struct sigaction64*) =
-      nullptr;
-  int (*libc_sigemptyset64)(sigset64_t*) = nullptr;
-  int (*libc_sigismember64)(sigset64_t*, int) = nullptr;
-  int (*libc_sigaction)(int, const struct sigaction*, struct sigaction*) =
-      nullptr;
-
-  libc_sigaction64 =
-      reinterpret_cast<decltype(libc_sigaction64)>(dlsym(libc, "sigaction64"));
-  if (libc_sigaction64) {
-    libc_sigemptyset64 = reinterpret_cast<decltype(libc_sigemptyset64)>(
-        dlsym(libc, "sigemptyset64"));
-
-    libc_sigismember64 = reinterpret_cast<decltype(libc_sigismember64)>(
-        dlsym(libc, "sigismember64"));
-  } else {
-    libc_sigaction =
-        reinterpret_cast<decltype(libc_sigaction)>(dlsym(libc, "sigaction"));
-  }
-
-  dlclose(libc);
 
   int result = 0;
-  if (libc_sigaction64) {
+  if (signal_state.libc_sigaction64) {
     //
     // sigaction64 is available.
     // Convert from struct sigaction to struct sigaction64 and back
@@ -185,9 +198,9 @@ void SignalHandler::AndroidAwareSigaction(
       .sa_sigaction = handler, .sa_flags = kSignalHandlerFlags,
     };
 
-    libc_sigemptyset64(&action64.sa_mask);
+    signal_state.libc_sigemptyset64(&action64.sa_mask);
     struct sigaction64 oldaction64;
-    result = libc_sigaction64(signum, &action64, &oldaction64);
+    result = signal_state.libc_sigaction64(signum, &action64, &oldaction64);
     struct sigaction oldaction {
       .sa_flags = oldaction64.sa_flags,
     };
@@ -200,7 +213,7 @@ void SignalHandler::AndroidAwareSigaction(
 
     sigemptyset(&oldaction.sa_mask);
     for (int i = 0; i < NSIG; i++) {
-      if (libc_sigismember64(&oldaction64.sa_mask, i)) {
+      if (signal_state.libc_sigismember64(&oldaction64.sa_mask, i)) {
         sigaddset(&oldaction.sa_mask, i);
       }
     }
@@ -210,7 +223,7 @@ void SignalHandler::AndroidAwareSigaction(
       .sa_sigaction = handler, .sa_flags = kSignalHandlerFlags,
     };
     sigemptyset(&action.sa_mask);
-    result = libc_sigaction(signum, &action, oldact);
+    result = signal_state.libc_sigaction(signum, &action, oldact);
   }
 
   if (result != 0) {
