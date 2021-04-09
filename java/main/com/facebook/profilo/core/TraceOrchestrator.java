@@ -401,12 +401,12 @@ public final class TraceOrchestrator
       providers = mNormalTraceProviders;
     }
 
-    mListenerManager.onTraceStart(context);
-
     for (BaseTraceProvider provider : providers) {
       provider.onEnable(context, this);
     }
     mListenerManager.onProvidersInitialized(context);
+
+    mListenerManager.onTraceStart(context);
 
     synchronized (mTraceIdToContext) {
       mTraceIdToContext.put(context.traceId, context);
