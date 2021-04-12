@@ -13,7 +13,6 @@
  */
 package com.facebook.file.zip;
 
-import android.util.Log;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,8 +23,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class ZipHelper {
-
-  private static final String TAG = ZipHelper.class.getSimpleName();
 
   public static final String ZIP_SUFFIX = ".zip";
   public static final String TMP_SUFFIX = ".tmp";
@@ -115,21 +112,17 @@ public class ZipHelper {
     if (!directory.isDirectory()) {
       return;
     }
-    try {
-      String[] fileNames = directory.list();
-      if (fileNames != null) {
-        for (String fileName : fileNames) {
-          File file = new File(directory, fileName);
-          if (file.isDirectory()) {
-            deleteDirectory(file);
-          } else {
-            file.delete();
-          }
+    String[] fileNames = directory.list();
+    if (fileNames != null) {
+      for (String fileName : fileNames) {
+        File file = new File(directory, fileName);
+        if (file.isDirectory()) {
+          deleteDirectory(file);
+        } else {
+          file.delete();
         }
       }
-      directory.delete();
-    } catch (Exception e) {
-      Log.e(TAG, "failed to delete directory", e);
     }
+    directory.delete();
   }
 }

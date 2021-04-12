@@ -535,7 +535,7 @@ public final class TraceOrchestrator
       if (uploadFile.renameTo(fileWithTimestamp)) {
         uploadFile = fileWithTimestamp;
       }
-      ZipHelper.deleteDirectory(trace.folder);
+      deleteDirectory(trace.folder);
     } else {
       File[] fileList = trace.folder.listFiles();
       if (fileList == null || fileList.length == 0) {
@@ -563,6 +563,14 @@ public final class TraceOrchestrator
         fStats.getTrimmedDueToCount(),
         fStats.getTrimmedDueToAge(),
         fStats.getAddedFilesToUpload());
+  }
+
+  private void deleteDirectory(File folder) {
+    try {
+      ZipHelper.deleteDirectory(folder);
+    } catch (Exception e) {
+      Log.e(TAG, "failed to delete directory", e);
+    }
   }
 
   @Override
@@ -612,7 +620,7 @@ public final class TraceOrchestrator
       }
 
       if (!uploadTrace) {
-        ZipHelper.deleteDirectory(traceFolder);
+        deleteDirectory(traceFolder);
         return;
       }
 
