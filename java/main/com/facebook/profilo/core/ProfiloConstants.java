@@ -28,6 +28,7 @@ public final class ProfiloConstants {
   public static final int ABORT_REASON_NEW_START = 5;
   public static final int ABORT_REASON_CONDITION_NOT_MET = 6;
   public static final int ABORT_REASON_WRITER_EXCEPTION = 8;
+  public static final int ABORT_REASON_LOGOUT = 9;
 
   // Things in the remote process can go wrong for the same reason as in the
   // main process. Thus, just mark if the reason is "remote" by using a single
@@ -70,6 +71,8 @@ public final class ProfiloConstants {
         return "condition_not_met";
       case ABORT_REASON_WRITER_EXCEPTION:
         return "writer_exception";
+      case ABORT_REASON_LOGOUT:
+        return "logout";
     }
     return "UNKNOWN REASON " + abortReason;
   }

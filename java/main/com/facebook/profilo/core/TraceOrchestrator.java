@@ -682,8 +682,16 @@ public final class TraceOrchestrator
    *
    * @return true if the cleanup succeeded, false otherwise
    */
-  public synchronized boolean clearConfigurationAndTraces(Context context) {
+  public synchronized boolean clearConfigurationAndTraces() {
     setConfigProvider(new DefaultConfigProvider());
+    TraceControl tc = TraceControl.get();
+    if (tc != null) {
+      // Abort all the currently running traces
+      for (TraceContext ctx : tc.getCurrentTraces()) {
+        tc.abortTraceWithReason(
+            ctx.controller, ctx.context, ctx.longContext, ProfiloConstants.ABORT_REASON_LOGOUT);
+      }
+    }
     return mFileManager.deleteAllFiles();
   }
 
