@@ -2,23 +2,47 @@ load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_librar
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_maybe_hidden_visibility", "profilo_path")
 load(":build_defs.bzl", "unwindc_tracer_library")
 
-unwindc_tracer_library("5.0.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "5.0.0",
+)
 
-unwindc_tracer_library("5.1.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "5.1.0",
+)
 
-unwindc_tracer_library("6.0.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "6.0.0",
+)
 
-unwindc_tracer_library("7.0.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "7.0.0",
+)
 
-unwindc_tracer_library("7.1.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "7.1.0",
+)
 
-unwindc_tracer_library("7.1.1")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "7.1.1",
+)
 
-unwindc_tracer_library("7.1.2")
+unwindc_tracer_library(version = "7.1.2")
 
-unwindc_tracer_library("8.0.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "8.0.0",
+)
 
-unwindc_tracer_library("8.1.0")
+unwindc_tracer_library(
+    allow_64bit = True,
+    version = "8.1.0",
+)
 
 unwindc_tracer_library(
     allow_64bit = True,
