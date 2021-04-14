@@ -37,13 +37,15 @@ class JMultiBufferLogger : public fbjni::HybridClass<JMultiBufferLogger> {
   static constexpr const char* kJavaDescriptor =
       "Lcom/facebook/profilo/logger/MultiBufferLogger;";
 
-  static void initHybrid(facebook::jni::alias_ref<jhybridobject>);
+  static jlong initHybrid(facebook::jni::alias_ref<jhybridobject>);
   static void registerNatives();
 
   void addBuffer(JBuffer* buffer);
   void removeBuffer(JBuffer* buffer);
 
-  jint writeStandardEntry(
+  static jint writeStandardEntry(
+      fbjni::alias_ref<jclass>,
+      jlong object,
       jint flags,
       jint type,
       jlong timestamp,
@@ -52,7 +54,13 @@ class JMultiBufferLogger : public fbjni::HybridClass<JMultiBufferLogger> {
       jint arg2,
       jlong arg3);
 
-  jint writeBytesEntry(jint flags, jint type, jint arg1, jstring arg2);
+  static jint writeBytesEntry(
+      fbjni::alias_ref<jclass>,
+      jlong object,
+      jint flags,
+      jint type,
+      jint arg1,
+      jstring arg2);
 
   MultiBufferLogger& nativeInstance();
 

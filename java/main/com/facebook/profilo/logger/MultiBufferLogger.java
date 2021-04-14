@@ -31,6 +31,7 @@ public final class MultiBufferLogger extends HybridClassBase {
 
   private volatile boolean mLoaded;
   private final AtomicInteger mBuffersCount;
+  private volatile long mNativePtr;
 
   public MultiBufferLogger() {
     mBuffersCount = new AtomicInteger(0);
@@ -49,7 +50,7 @@ public final class MultiBufferLogger extends HybridClassBase {
       }
 
       SoLoader.loadLibrary("profilo");
-      initHybrid();
+      mNativePtr = initHybrid();
       mLoaded = true;
     }
   }
@@ -78,7 +79,7 @@ public final class MultiBufferLogger extends HybridClassBase {
       return ProfiloConstants.NO_MATCH;
     }
     ensureLoaded();
-    return nativeWriteStandardEntry(flags, type, timestamp, tid, arg1, arg2, arg3);
+    return nativeWriteStandardEntry(mNativePtr, flags, type, timestamp, tid, arg1, arg2, arg3);
   }
 
   public int writeBytesEntry(int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */) {
@@ -86,10 +87,11 @@ public final class MultiBufferLogger extends HybridClassBase {
       return ProfiloConstants.NO_MATCH;
     }
     ensureLoaded();
-    return nativeWriteBytesEntry(flags, type, arg1, arg2);
+    return nativeWriteBytesEntry(mNativePtr, flags, type, arg1, arg2);
   }
 
-  private native int nativeWriteStandardEntry(
+  private static native int nativeWriteStandardEntry(
+      long ptr,
       int flags,
       int type,
       long timestamp,
@@ -98,10 +100,10 @@ public final class MultiBufferLogger extends HybridClassBase {
       int arg2 /* matchid */,
       long arg3 /* extra */);
 
-  private native int nativeWriteBytesEntry(
-      int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */);
+  private static native int nativeWriteBytesEntry(
+      long ptr, int flags, int type, int arg1 /* matchid */, String arg2 /* bytes */);
 
-  private native void initHybrid();
+  private native long initHybrid();
 
   private native void nativeAddBuffer(Buffer buffer);
 

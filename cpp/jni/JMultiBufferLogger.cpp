@@ -25,8 +25,9 @@ namespace logger {
 
 using namespace logger_jni;
 
-void JMultiBufferLogger::initHybrid(fbjni::alias_ref<jhybridobject> obj) {
+jlong JMultiBufferLogger::initHybrid(fbjni::alias_ref<jhybridobject> obj) {
   setCxxInstance(obj);
+  return reinterpret_cast<jlong>(obj->cthis());
 }
 
 void JMultiBufferLogger::addBuffer(JBuffer* buffer) {
@@ -42,6 +43,8 @@ MultiBufferLogger& JMultiBufferLogger::nativeInstance() {
 }
 
 jint JMultiBufferLogger::writeStandardEntry(
+    fbjni::alias_ref<jclass>,
+    jlong object,
     jint flags,
     jint type,
     jlong timestamp,
@@ -49,16 +52,20 @@ jint JMultiBufferLogger::writeStandardEntry(
     jint arg1,
     jint arg2,
     jlong arg3) {
+  auto* ptr = reinterpret_cast<JMultiBufferLogger*>(object);
   return writeStandardEntryFromJNI(
-      nativeInstance(), flags, type, timestamp, tid, arg1, arg2, arg3);
+      ptr->nativeInstance(), flags, type, timestamp, tid, arg1, arg2, arg3);
 }
 
 jint JMultiBufferLogger::writeBytesEntry(
+    fbjni::alias_ref<jclass>,
+    jlong object,
     jint flags,
     jint type,
     jint arg1,
     jstring arg2) {
-  return writeBytesEntryFromJNI(nativeInstance(), flags, type, arg1, arg2);
+  auto* ptr = reinterpret_cast<JMultiBufferLogger*>(object);
+  return writeBytesEntryFromJNI(ptr->nativeInstance(), flags, type, arg1, arg2);
 }
 
 void JMultiBufferLogger::registerNatives() {
