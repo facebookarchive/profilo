@@ -30,4 +30,13 @@ public final class Identifiers {
   public static final int ACTIVE_PROVIDERS = 8126464 | 50; // = 8126514
   public static final int APP_VERSION_CODE = 8126464 | 54; // = 8126518
   public static final int APP_VERSION_NAME = 8126464 | 55; // = 8126519
+  public static final int MEMORY_SUMMARY_TOTAL_SWAP = 9240576 | 1426; // = 9242002
+  public static final int MEMORY_SUMMARY_NATIVE_HEAP = 9240576 | 1456; // = 9242032
+  public static final int MEMORY_SUMMARY_JAVA_HEAP = 9240576 | 2117; // = 9242693
+  public static final int MEMORY_SUMMARY_PRIVATE_OTHER = 9240576 | 2476; // = 9243052
+  public static final int MEMORY_SUMMARY_GRAPHICS = 9240576 | 7041; // = 9247617
+  public static final int MEMORY_SUMMARY_STACK = 9240576 | 7964; // = 9248540
+  public static final int MEMORY_SUMMARY_CODE = 9240576 | 8228; // = 9248804
+  public static final int MEMORY_SUMMARY_TOTAL_PSS = 9240576 | 11155; // = 9251731
+  public static final int MEMORY_SUMMARY_SYSTEM = 9240576 | 13931; // = 9254507
 }

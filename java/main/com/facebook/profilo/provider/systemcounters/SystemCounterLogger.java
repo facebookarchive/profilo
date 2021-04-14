@@ -20,6 +20,7 @@ import com.facebook.profilo.core.ProfiloConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.MultiBufferLogger;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
@@ -44,6 +45,18 @@ public class SystemCounterLogger {
   private long mJavaFree;
   private long mJavaUsed;
   private long mJavaTotal;
+
+  // MemoryInfo stats
+  @Nullable private Debug.MemoryInfo mMemoryInfo;
+  private long mSummaryJavaHeap;
+  private long mSummaryNativeHeap;
+  private long mSummaryCode;
+  private long mSummaryStack;
+  private long mSummaryGraphics;
+  private long mSummaryPrivateOther;
+  private long mSummarySystem;
+  private long mSummaryTotalPss;
+  private long mSummaryTotalSwap;
 
   SystemCounterLogger(MultiBufferLogger logger) {
     mLogger = logger;
@@ -90,6 +103,8 @@ public class SystemCounterLogger {
             Identifiers.GLOBAL_BLOCKING_GC_TIME, blockingGcTime, mBlockingGcTime);
         mBlockingGcTime = blockingGcTime;
       }
+
+      logMemoryInfoCounters();
     }
     // Counters from runtime
     Runtime runtime = Runtime.getRuntime();
@@ -108,6 +123,81 @@ public class SystemCounterLogger {
     mJavaTotal = javaTotal;
     mJavaUsed = javaUsed;
     mJavaFree = javaFree;
+  }
+
+  private void logMemoryInfoCounters() {
+    if (mMemoryInfo == null) {
+      mMemoryInfo = new Debug.MemoryInfo();
+    }
+    Debug.getMemoryInfo(mMemoryInfo);
+
+    long javaHeap = getMemoryStat(mMemoryInfo, "summary.java-heap");
+    if (javaHeap != -1) {
+      logNonMonotonicProcessCounter(
+          Identifiers.MEMORY_SUMMARY_JAVA_HEAP, javaHeap, mSummaryJavaHeap);
+      mSummaryJavaHeap = javaHeap;
+    }
+
+    long nativeHeap = getMemoryStat(mMemoryInfo, "summary.native-heap");
+    if (nativeHeap != -1) {
+      logNonMonotonicProcessCounter(
+          Identifiers.MEMORY_SUMMARY_NATIVE_HEAP, nativeHeap, mSummaryNativeHeap);
+      mSummaryNativeHeap = nativeHeap;
+    }
+
+    long code = getMemoryStat(mMemoryInfo, "summary.code");
+    if (code != -1) {
+      logNonMonotonicProcessCounter(Identifiers.MEMORY_SUMMARY_CODE, code, mSummaryCode);
+      mSummaryCode = code;
+    }
+
+    long stack = getMemoryStat(mMemoryInfo, "summary.stack");
+    if (stack != -1) {
+      logNonMonotonicProcessCounter(Identifiers.MEMORY_SUMMARY_STACK, stack, mSummaryStack);
+      mSummaryStack = stack;
+    }
+
+    long graphics = getMemoryStat(mMemoryInfo, "summary.graphics");
+    if (graphics != -1) {
+      logNonMonotonicProcessCounter(
+          Identifiers.MEMORY_SUMMARY_GRAPHICS, graphics, mSummaryGraphics);
+      mSummaryGraphics = graphics;
+    }
+
+    long privateOther = getMemoryStat(mMemoryInfo, "summary.private-other");
+    if (privateOther != -1) {
+      logNonMonotonicProcessCounter(
+          Identifiers.MEMORY_SUMMARY_PRIVATE_OTHER, privateOther, mSummaryPrivateOther);
+      mSummaryPrivateOther = privateOther;
+    }
+
+    long system = getMemoryStat(mMemoryInfo, "summary.system");
+    if (system != -1) {
+      logNonMonotonicProcessCounter(Identifiers.MEMORY_SUMMARY_SYSTEM, system, mSummarySystem);
+      mSummarySystem = system;
+    }
+
+    long totalPss = getMemoryStat(mMemoryInfo, "summary.total-pss");
+    if (totalPss != -1) {
+      logNonMonotonicProcessCounter(
+          Identifiers.MEMORY_SUMMARY_TOTAL_PSS, totalPss, mSummaryTotalPss);
+      mSummaryTotalPss = totalPss;
+    }
+
+    long totalSwap = getMemoryStat(mMemoryInfo, "summary.total-swap");
+    if (totalSwap != -1) {
+      logNonMonotonicProcessCounter(
+          Identifiers.MEMORY_SUMMARY_TOTAL_SWAP, totalSwap, mSummaryTotalSwap);
+      mSummaryTotalSwap = totalSwap;
+    }
+  }
+
+  private static long getMemoryStat(Debug.MemoryInfo memoryInfo, String key) {
+    String result = memoryInfo.getMemoryStat(key);
+    if (result == null) {
+      return -1;
+    }
+    return Long.parseLong(result) * 1024; // convert to bytes
   }
 
   /**
@@ -150,5 +240,14 @@ public class SystemCounterLogger {
     mJavaMax = 0;
     mJavaTotal = 0;
     mJavaUsed = 0;
+    mSummaryJavaHeap = 0;
+    mSummaryNativeHeap = 0;
+    mSummaryCode = 0;
+    mSummaryStack = 0;
+    mSummaryGraphics = 0;
+    mSummaryPrivateOther = 0;
+    mSummarySystem = 0;
+    mSummaryTotalPss = 0;
+    mSummaryTotalSwap = 0;
   }
 }
