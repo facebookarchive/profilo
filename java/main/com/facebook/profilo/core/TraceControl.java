@@ -407,7 +407,8 @@ public final class TraceControl {
       buffers[idx] =
           mBufferManager.allocateBuffer(
               bufferSizes != null && idx < bufferSizes.length ? bufferSizes[idx] : systemBufferSize,
-              filebacked);
+              filebacked,
+              config.getID());
     }
     return buffers;
   }

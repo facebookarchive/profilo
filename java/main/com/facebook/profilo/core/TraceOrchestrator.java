@@ -201,13 +201,7 @@ public final class TraceOrchestrator
     File folder;
     synchronized (this) {
       folder = mFileManager.getFolder();
-
-      boolean useMmapBuffer =
-          mIsMainProcess
-              && initialConfig.optSystemConfigParamBool("system_config.mmap_buffer", false);
-      mMmapBufferManager =
-          new MmapBufferManager(initialConfig.getID(), mFileManager.getMmapBufferFolder(), context);
-
+      mMmapBufferManager = new MmapBufferManager(mFileManager.getMmapBufferFolder(), context);
       // process name is passed as the trace prefix
       TraceControl.initialize(
           controllers, this, initialConfig, mMmapBufferManager, folder, mProcessName, this);

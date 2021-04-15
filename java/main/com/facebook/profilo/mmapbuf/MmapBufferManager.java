@@ -35,13 +35,11 @@ public class MmapBufferManager {
   @DoNotStrip private final HybridData mHybridData;
   private final MmapBufferFileHelper mFileHelper;
   private final Context mContext;
-  private final long mConfigId;
 
   @DoNotStrip
   private static native HybridData initHybrid();
 
-  public MmapBufferManager(long configId, File folder, Context context) {
-    mConfigId = configId;
+  public MmapBufferManager(File folder, Context context) {
     mContext = context;
     mFileHelper = new MmapBufferFileHelper(folder);
     mHybridData = initHybrid();
@@ -65,14 +63,14 @@ public class MmapBufferManager {
   }
 
   @Nullable
-  public Buffer allocateBuffer(int size, boolean filebacked) {
+  public Buffer allocateBuffer(int size, boolean filebacked, long configId) {
     if (filebacked) {
       String fileName = MmapBufferFileHelper.getBufferFilename(UUID.randomUUID().toString());
       String mmapBufferPath = mFileHelper.ensureFilePath(fileName);
       if (mmapBufferPath == null) {
         return null;
       }
-      return nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), mConfigId);
+      return nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), configId);
     } else {
       return nativeAllocateBuffer(size);
     }
