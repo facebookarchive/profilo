@@ -100,8 +100,6 @@ fb_core_android_library(
         ":registry",
         profilo_path("java/main/com/facebook/profilo/mmapbuf:mmapbuf"),
         profilo_path("java/main/com/facebook/profilo/writer:writer"),
-        profilo_path("deps/androidinternals:os"),
-        profilo_path("deps/buildconstants:buildconstants"),
         profilo_path("deps/fbtrace:utils"),
         profilo_path("deps/jsr-305:jsr-305"),
     ],

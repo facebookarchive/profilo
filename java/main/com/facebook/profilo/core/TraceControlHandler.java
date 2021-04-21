@@ -17,9 +17,6 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
-import com.facebook.androidinternals.android.os.SystemPropertiesInternal;
-import com.facebook.common.build.BuildConstants;
 import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.BufferLogger;
@@ -64,9 +61,6 @@ public class TraceControlHandler extends Handler {
   private static final int MSG_CONDITIONAL_TRACE_STOP = 6;
   private static final int MSG_EVENT_QPL_ANNOTATION = 7;
 
-  // Set this system property to enable logs.
-  private static final String PROFILO_LOG_LEVEL_SYSTEM_PROPERTY = "com.facebook.profilo.log";
-
   @GuardedBy("this")
   private final @Nullable TraceControl.TraceControlListener mListener;
 
@@ -79,13 +73,6 @@ public class TraceControlHandler extends Handler {
   private final TraceConditionManager mTraceConditionManager;
 
   private final Random mRandom;
-
-  static class LogLevel {
-    // Lazy load system properties.
-    private static final boolean LOG_DEBUG_MESSAGE =
-        BuildConstants.isInternalBuild()
-            || "debug".equals(SystemPropertiesInternal.get(PROFILO_LOG_LEVEL_SYSTEM_PROPERTY));
-  }
 
   public TraceControlHandler(
       @Nullable TraceControl.TraceControlListener listener,
@@ -245,19 +232,11 @@ public class TraceControlHandler extends Handler {
   }
 
   protected static void timeoutTrace(long traceId) {
-    if (LogLevel.LOG_DEBUG_MESSAGE) {
-      Log.d(LOG_TAG, "Timing out trace " + traceId);
-    }
     TraceControl control = TraceControl.get();
     control.timeoutTrace(traceId);
   }
 
   protected void startTraceAsync(TraceContext context) {
-    if (LogLevel.LOG_DEBUG_MESSAGE) {
-      Log.d(
-          LOG_TAG,
-          "Started trace " + context.encodedTraceId + "  for controller " + context.controller);
-    }
 
     if ((context.flags & Trace.FLAG_MEMORY_ONLY) == 0) {
       // Normal trace, start the thread now.
@@ -366,9 +345,6 @@ public class TraceControlHandler extends Handler {
       sendMessage(stopMessage);
       mTraceContexts.remove(context.traceId);
     }
-    if (LogLevel.LOG_DEBUG_MESSAGE) {
-      Log.d(LOG_TAG, "Stopped trace " + context.encodedTraceId);
-    }
   }
 
   public synchronized void onTraceAbort(TraceContext context) {
@@ -376,17 +352,6 @@ public class TraceControlHandler extends Handler {
       Message abortMessage = obtainMessage(MSG_ABORT_TRACE, context);
       sendMessage(abortMessage);
       mTraceContexts.remove(context.traceId);
-    }
-    if (LogLevel.LOG_DEBUG_MESSAGE) {
-      int unpackedAbortReason = ProfiloConstants.unpackRemoteAbortReason(context.abortReason);
-      Log.d(
-          LOG_TAG,
-          "Aborted trace "
-              + context.encodedTraceId
-              + " for reason "
-              + unpackedAbortReason
-              + (ProfiloConstants.isRemoteAbort(context.abortReason) ? " (remote process) " : " ")
-              + ProfiloConstants.abortReasonName(unpackedAbortReason));
     }
   }
 }
