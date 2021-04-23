@@ -1,16 +1,5 @@
-/**
- * Copyright 2004-present, Facebook, Inc.
- *
- * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of the License at
- *
- * <p>http://www.apache.org/licenses/LICENSE-2.0
- *
- * <p>Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// (c) Facebook, Inc. and its affiliates. Confidential and proprietary.
+
 package com.facebook.file.zip;
 
 import java.io.BufferedOutputStream;
@@ -18,8 +7,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class ZipHelper {
@@ -48,8 +40,9 @@ public class ZipHelper {
     String filename = directory.getName() + suffix;
     // zip the file
     File zippedFile = new File(directory.getParent(), filename);
-    try {
-      zipDirectory(directory, zippedFile);
+    try (BufferedOutputStream bufferedOutputStream =
+        new BufferedOutputStream(new FileOutputStream(zippedFile), BUFFER_OUTPUT_STREAM)) {
+      zipDirectory(directory, bufferedOutputStream);
     } catch (IOException e) {
       // failed to zip file
       // delete and return
@@ -93,10 +86,8 @@ public class ZipHelper {
     }
   }
 
-  private static void zipDirectory(File directory, File outFile) throws IOException {
-    try (BufferedOutputStream outputStream =
-            new BufferedOutputStream(new FileOutputStream(outFile), BUFFER_OUTPUT_STREAM);
-        ZipOutputStream outZipStream = new ZipOutputStream(outputStream); ) {
+  public static void zipDirectory(File directory, OutputStream outputStream) throws IOException {
+    try (ZipOutputStream outZipStream = new ZipOutputStream(outputStream)) {
       addDirectoryToZip(directory, ".", outZipStream);
       outZipStream.flush();
       outZipStream.finish();
@@ -124,5 +115,45 @@ public class ZipHelper {
       }
     }
     directory.delete();
+  }
+
+  /**
+   * Extracts the data from the InputStream onto the directory
+   *
+   * @param inputStream
+   * @param extractDir
+   * @return
+   * @throws IOException
+   */
+  public static boolean extractZip(InputStream inputStream, File extractDir) throws IOException {
+    ZipInputStream zis = new ZipInputStream(inputStream);
+    ZipEntry entry = zis.getNextEntry();
+    if (entry == null) {
+      return false;
+    }
+    byte[] buffer = new byte[BUFFER_SIZE_BYTES];
+
+    while (entry != null) {
+      File newFile = new File(extractDir, entry.getName());
+      if (entry.isDirectory()) {
+        if (!newFile.isDirectory() && !newFile.mkdirs()) {
+          throw new IOException("Can't create directory");
+        }
+      } else {
+        File parent = newFile.getParentFile();
+        if (!parent.isDirectory() && !parent.mkdirs()) {
+          throw new IOException("Can't create parent directory");
+        }
+        // write file content
+        try (FileOutputStream fos = new FileOutputStream(newFile)) {
+          int len;
+          while ((len = zis.read(buffer)) > 0) {
+            fos.write(buffer, 0, len);
+          }
+        }
+      }
+      entry = zis.getNextEntry();
+    }
+    return true;
   }
 }
