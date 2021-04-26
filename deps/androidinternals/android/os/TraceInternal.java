@@ -19,6 +19,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Trace;
 import com.facebook.androidinternals.ReflectionHelper;
+import com.facebook.infer.annotation.Nullsafe;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,6 +30,7 @@ import javax.annotation.Nullable;
  * used directly; {@link com.facebook.systrace.Systrace} wraps this class and provides additional
  * functionality.
  */
+@Nullsafe(Nullsafe.Mode.LOCAL)
 public final class TraceInternal {
   public static final boolean ANDROID_OS_TRACE_SUPPORTED =
       Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;

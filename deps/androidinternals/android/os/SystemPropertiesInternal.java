@@ -15,10 +15,12 @@ package com.facebook.androidinternals.android.os;
 
 import android.os.Build;
 import com.facebook.androidinternals.ReflectionHelper;
+import com.facebook.infer.annotation.Nullsafe;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import javax.annotation.Nullable;
 
+@Nullsafe(Nullsafe.Mode.LOCAL)
 public final class SystemPropertiesInternal {
 
   /** android.os.SystemProperties#get(String) */
