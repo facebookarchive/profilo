@@ -399,7 +399,7 @@ public final class TraceControl {
     int bufferCount = traceConfigExtras.getIntParam("trace_config.buffers", 1);
     int systemBufferSize =
         config.optSystemConfigParamInt("system_config.buffer_size", DEFAULT_RING_BUFFER_SIZE);
-    boolean filebacked = config.optSystemConfigParamBool("system_config.mmap_buffer", false);
+    boolean filebacked = traceConfigExtras.getBoolParam("trace_config.mmap_buffer", false);
     int[] bufferSizes = traceConfigExtras.getIntArrayParam("trace_config.buffer_sizes");
 
     Buffer[] buffers = new Buffer[bufferCount];
