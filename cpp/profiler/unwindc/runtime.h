@@ -136,7 +136,7 @@ uintptr_t get_art_thread() {
 __attribute__((always_inline)) inline uint32_t CountShortyRefs(
     string_t shorty) {
   uint32_t result = 0;
-  for (size_t i = 0; i < shorty.length; i++) {
+  for (size_t i = 1; i < shorty.length; i++) {
     if (shorty.data[i] == 'L') {
       result++;
     }
