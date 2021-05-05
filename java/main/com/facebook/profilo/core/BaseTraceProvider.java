@@ -14,7 +14,9 @@
 package com.facebook.profilo.core;
 
 import android.annotation.SuppressLint;
+import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
+import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.soloader.SoLoader;
 import java.io.File;
@@ -80,8 +82,32 @@ public abstract class BaseTraceProvider {
     if (!mSolibInitialized) {
       synchronized (this) {
         if (!mSolibInitialized) {
-          SoLoader.loadLibrary(mSolib);
-          mSolibInitialized = true;
+          MultiBufferLogger logger = getLogger();
+          try {
+            int id =
+                logger.writeStandardEntry(
+                    Logger.FILL_TID | Logger.FILL_TIMESTAMP,
+                    EntryType.MARK_PUSH,
+                    ProfiloConstants.NONE,
+                    ProfiloConstants.NONE,
+                    ProfiloConstants.NONE,
+                    ProfiloConstants.NONE,
+                    ProfiloConstants.NONE);
+            logger.writeBytesEntry(
+                ProfiloConstants.NONE, EntryType.STRING_NAME, id, "ensureSoLibLoaded: " + mSolib);
+
+            SoLoader.loadLibrary(mSolib);
+            mSolibInitialized = true;
+          } finally {
+            logger.writeStandardEntry(
+                Logger.FILL_TID | Logger.FILL_TIMESTAMP,
+                EntryType.MARK_POP,
+                ProfiloConstants.NONE,
+                ProfiloConstants.NONE,
+                ProfiloConstants.NONE,
+                ProfiloConstants.NONE,
+                ProfiloConstants.NONE);
+          }
         }
       }
     }
@@ -110,8 +136,8 @@ public abstract class BaseTraceProvider {
     if ((context.enabledProviders & getSupportedProviders()) == 0) {
       return;
     }
-    ensureSolibLoaded();
     getLogger().addBuffer(context.mainBuffer);
+    ensureSolibLoaded();
     processStateChange(context);
     onTraceStarted(context, dataFileProvider);
   }
