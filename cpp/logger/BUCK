@@ -67,3 +67,31 @@ fb_xplat_cxx_library(
         profilo_path("cpp/mmapbuf:buffer"),
     ],
 )
+
+fb_xplat_cxx_library(
+    name = "block_logger",
+    srcs = [
+        "BlockLogger.cpp",
+    ],
+    header_namespace = "profilo/logger",
+    exported_headers = [
+        "BlockLogger.h",
+    ],
+    compiler_flags = [
+        "-fexceptions",
+        "-frtti",
+        "-std=gnu++14",
+        "-DLOG_TAG=\"Profilo\"",
+    ],
+    labels = ["supermodule:android/default/loom.core"],
+    preferred_linkage = "static",
+    soname = "libprofilo_block_logger.$(ext)",
+    tests = [
+    ],
+    visibility = [
+        profilo_path("..."),
+    ],
+    exported_deps = [
+        ":multi_buffer_logger",
+    ],
+)
