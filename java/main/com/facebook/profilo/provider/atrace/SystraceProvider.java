@@ -31,7 +31,7 @@ public final class SystraceProvider extends BaseTraceProvider {
 
   @Override
   protected void disable() {
-    Atrace.restoreSystrace();
+    Atrace.restoreSystrace(getLogger());
   }
 
   @Override

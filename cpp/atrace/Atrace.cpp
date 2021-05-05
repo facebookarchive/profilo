@@ -39,6 +39,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/TraceProviders.h>
 #include <profilo/jni/JMultiBufferLogger.h>
+#include <profilo/logger/BlockLogger.h>
 
 #include "Atrace.h"
 
@@ -55,7 +56,7 @@ std::atomic<uint64_t>* atrace_enabled_tags = nullptr;
 std::atomic<uint64_t> original_tags(UINT64_MAX);
 std::atomic<bool> systrace_installed;
 std::atomic<uint32_t> provider_mask;
-logger::JMultiBufferLogger* logger;
+logger::MultiBufferLogger* logger;
 bool first_enable = true;
 bool atrace_enabled;
 
@@ -133,8 +134,7 @@ void log_systrace(const void* buf, size_t count) {
   entry.timestamp = monotonicTime();
   entry.type = type;
 
-  auto& nativeLogger = logger->nativeInstance();
-  int32_t id = nativeLogger.write(entry);
+  int32_t id = logger->write(entry);
   if (type != EntryType::MARK_POP) {
     // Format is B|<pid>|<name>.
     // Skip "B|" trivially, find next '|' with memchr. We cannot use strchr
@@ -149,7 +149,7 @@ void log_systrace(const void* buf, size_t count) {
     name++; // skip '|' to the next character
     ssize_t len = msg + count - name;
     if (len > 0) {
-      nativeLogger.writeBytes(
+      logger->writeBytes(
           EntryType::STRING_NAME,
           id,
           (const uint8_t*)name,
@@ -237,6 +237,8 @@ std::unordered_set<std::string>& getSeenLibs() {
 }
 
 void hookLoadedLibs() {
+  logger::BlockLogger block(*logger, "hookLoadedLibs");
+
   auto sdk = build::Build::getAndroidSdk();
   if (sdk >= kSingleLibMinSdk) {
     auto& spec = getSingleLibFunctionSpec();
@@ -346,7 +348,9 @@ void installSystraceSnooper(int providerMask) {
   provider_mask = providerMask;
 }
 
-void enableSystrace(logger::JMultiBufferLogger* logger_instance) {
+void enableSystrace() {
+  logger::BlockLogger block(*logger, "enableSystrace");
+
   if (!systrace_installed) {
     return;
   }
@@ -361,7 +365,6 @@ void enableSystrace(logger::JMultiBufferLogger* logger_instance) {
     }
   }
   first_enable = false;
-  logger = logger_instance;
 
   auto prev = atrace_enabled_tags->exchange(UINT64_MAX);
   if (prev != UINT64_MAX) { // if we somehow call this twice in a row, don't
@@ -373,6 +376,8 @@ void enableSystrace(logger::JMultiBufferLogger* logger_instance) {
 }
 
 void restoreSystrace() {
+  logger::BlockLogger block(*logger, "restoreSystrace");
+
   atrace_enabled = false;
   if (!systrace_installed) {
     return;
@@ -390,10 +395,12 @@ void restoreSystrace() {
   }
 }
 
-bool installSystraceHook(int mask) {
+bool installSystraceHook(logger::JMultiBufferLogger* jlogger, int mask) {
+  logger = &jlogger->nativeInstance();
+  logger::BlockLogger block(*logger, "installSystraceHook");
+
   try {
     installSystraceSnooper(mask);
-
     return true;
   } catch (const std::runtime_error& e) {
     FBLOGW("could not install hooks: %s", e.what());
@@ -403,14 +410,15 @@ bool installSystraceHook(int mask) {
 
 } // namespace
 
-bool JNI_installSystraceHook(fbjni::alias_ref<jobject>, jint mask) {
-  return installSystraceHook(mask);
+bool JNI_installSystraceHook(
+    fbjni::alias_ref<jobject>,
+    logger::JMultiBufferLogger* logger,
+    jint mask) {
+  return installSystraceHook(logger, mask);
 }
 
-void JNI_enableSystraceNative(
-    fbjni::alias_ref<jobject>,
-    logger::JMultiBufferLogger* logger) {
-  enableSystrace(logger);
+void JNI_enableSystraceNative(fbjni::alias_ref<jobject>) {
+  enableSystrace();
 }
 
 void JNI_restoreSystraceNative(fbjni::alias_ref<jobject>) {

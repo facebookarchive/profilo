@@ -26,9 +26,9 @@ public final class Atrace {
   private static boolean sHasHook = false;
   private static boolean sHookFailed = false;
 
-  public static synchronized boolean hasHacks() {
+  public static synchronized boolean hasHacks(MultiBufferLogger logger) {
     if (!sHasHook && !sHookFailed) {
-      sHasHook = installSystraceHook(SystraceProvider.PROVIDER_ATRACE);
+      sHasHook = installSystraceHook(logger, SystraceProvider.PROVIDER_ATRACE);
 
       // Record that we failed, so we don't try again.
       sHookFailed = !sHasHook;
@@ -36,20 +36,18 @@ public final class Atrace {
     return sHasHook;
   }
 
-  private static native boolean installSystraceHook(int mask);
-
   public static void enableSystrace(MultiBufferLogger logger) {
-    if (!hasHacks()) {
+    if (!hasHacks(logger)) {
       return;
     }
 
-    enableSystraceNative(logger);
+    enableSystraceNative();
 
     SystraceReflector.updateSystraceTags();
   }
 
-  public static void restoreSystrace() {
-    if (!hasHacks()) {
+  public static void restoreSystrace(MultiBufferLogger logger) {
+    if (!hasHacks(logger)) {
       return;
     }
 
@@ -58,7 +56,9 @@ public final class Atrace {
     SystraceReflector.updateSystraceTags();
   }
 
-  private static native void enableSystraceNative(MultiBufferLogger logger);
+  private static native boolean installSystraceHook(MultiBufferLogger logger, int mask);
+
+  private static native void enableSystraceNative();
 
   private static native void restoreSystraceNative();
 
