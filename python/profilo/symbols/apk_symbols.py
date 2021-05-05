@@ -25,7 +25,7 @@ DEX_FILE_VERSION_MAX = 38
 
 
 def parse_dex_id(signature):
-    """Take first 4 bytes of the Dex signature as Dex Id """
+    """Take first 4 bytes of the Dex signature as Dex Id"""
     return struct.unpack("<I", signature[0:4])[0]
 
 
@@ -197,7 +197,7 @@ class Dex(object):
         return (idx << 32) | self.dex_id
 
     def get_methods_map(self):
-        """Returns a dictionary with all methods in the Dex file """
+        """Returns a dictionary with all methods in the Dex file"""
         methods_map = {}
         for method_idx, m in self.method_ids:
             class_name = parse_type_signature(
@@ -215,7 +215,7 @@ class Dex(object):
         return methods_map
 
     def get_classes_map(self):
-        """Returns a dictionary with all classes in the Dex file """
+        """Returns a dictionary with all classes in the Dex file"""
         classes_map = {}
         for class_idx, t in self.type_ids:
             class_name = parse_type_signature(self.bytes[t.descriptor_idx])
