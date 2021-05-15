@@ -1,4 +1,4 @@
-// @generated SignedSource<<194f5e1432299ac88cbb653af4724ef0>>
+// @generated SignedSource<<b7eff2c1a5e497eb7eea5b61ad2d8f5f>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -121,6 +121,8 @@ const char* to_string(EntryType type) {
     case EntryType::ION_MEMORY_MAPPED: return "ION_MEMORY_MAPPED";
     case EntryType::GPU_MEMORY_ALLOC: return "GPU_MEMORY_ALLOC";
     case EntryType::GPU_MEMORY_FREE: return "GPU_MEMORY_FREE";
+    case EntryType::THREAD_START: return "THREAD_START";
+    case EntryType::THREAD_FINISH: return "THREAD_FINISH";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

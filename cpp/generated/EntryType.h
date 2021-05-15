@@ -1,4 +1,4 @@
-// @generated SignedSource<<305cec077d42ebfe3a335e5246c03e75>>
+// @generated SignedSource<<a688ba6c4918a6c66ba16a8f17dc12d4>>
 
 #pragma once
 
@@ -118,6 +118,8 @@ enum class EntryType {
   ION_MEMORY_MAPPED = 109,
   GPU_MEMORY_ALLOC = 110,
   GPU_MEMORY_FREE = 111,
+  THREAD_START = 112,
+  THREAD_FINISH = 113,
 };
 
 
