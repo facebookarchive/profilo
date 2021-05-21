@@ -15,9 +15,9 @@
  */
 
 #include <fb/log.h>
-#include <perfevents/Session.h>
-#include <perfevents/detail/AttachmentStrategy.h>
-#include <perfevents/detail/make_unique.h>
+#include <profilo/perfevents/Session.h>
+#include <profilo/perfevents/detail/AttachmentStrategy.h>
+#include <profilo/perfevents/detail/make_unique.h>
 
 namespace facebook {
 namespace perfevents {

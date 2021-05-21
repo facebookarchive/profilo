@@ -18,9 +18,9 @@
 
 #include <cstring>
 
-#include <perfevents/Event.h>
-#include <perfevents/Records.h>
-#include <perfevents/detail/Reader.h>
+#include <profilo/perfevents/Event.h>
+#include <profilo/perfevents/Records.h>
+#include <profilo/perfevents/detail/Reader.h>
 
 namespace facebook {
 namespace perfevents {

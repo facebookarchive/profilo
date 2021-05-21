@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <perfevents/detail/AttachmentStrategy.h>
+#include <profilo/perfevents/detail/AttachmentStrategy.h>
 
 namespace facebook {
 namespace perfevents {

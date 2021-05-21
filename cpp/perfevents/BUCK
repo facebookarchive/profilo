@@ -4,7 +4,7 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 fb_xplat_cxx_library(
     name = "headers_linux",
-    header_namespace = "linux",
+    header_namespace = "profilo/perfevents/linux",
     exported_headers = subdir_glob([
         ("headers", "*.h"),
     ]),
@@ -14,7 +14,7 @@ fb_xplat_cxx_library(
 
 fb_xplat_cxx_library(
     name = "file_backed_mappings_list",
-    header_namespace = "perfevents",
+    header_namespace = "profilo/perfevents",
     exported_headers = [
         "detail/FileBackedMappingsList.h",
     ],
@@ -40,7 +40,7 @@ fb_xplat_cxx_library(
         "detail/Reader.cpp",
         "jni.cpp",
     ],
-    header_namespace = "perfevents",
+    header_namespace = "profilo/perfevents",
     exported_headers = glob([
         "*.h",
         "detail/*.h",

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <perfevents/detail/BufferParser.h>
+#include <profilo/perfevents/detail/BufferParser.h>
 
 namespace facebook {
 namespace perfevents {

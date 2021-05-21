@@ -16,11 +16,11 @@
 
 #pragma once
 
-#include <linux/perf_event.h>
+#include <profilo/perfevents/linux/perf_event.h>
 #include <unistd.h>
 #include <stdexcept>
 
-#include <perfevents/Event.h>
+#include <profilo/perfevents/Event.h>
 
 namespace facebook {
 namespace perfevents {

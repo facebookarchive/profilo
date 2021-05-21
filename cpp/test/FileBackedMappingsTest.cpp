@@ -15,7 +15,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <perfevents/detail/FileBackedMappingsList.h>
+#include <profilo/perfevents/detail/FileBackedMappingsList.h>
 
 namespace facebook {
 namespace profilo {

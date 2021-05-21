@@ -22,17 +22,17 @@
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
 #include <jni.h>
-#include <perfevents/Session.h>
-#include <perfevents/detail/ClockOffsetMeasurement.h>
-#include <perfevents/detail/FileBackedMappingsList.h>
 #include <profilo/LogEntry.h>
 #include <profilo/jni/JMultiBufferLogger.h>
+#include <profilo/perfevents/Session.h>
+#include <profilo/perfevents/detail/ClockOffsetMeasurement.h>
+#include <profilo/perfevents/detail/FileBackedMappingsList.h>
 #include <profilo/util/common.h>
 
 namespace fbjni = facebook::jni;
 
 const char* kPerfSessionType =
-    "com/facebook/profilo/provider/perfevents/PerfEventsSession";
+    "com/facebook/profilo/provider/profilo/perfevents/PerfEventsSession";
 
 namespace facebook {
 namespace perfevents {

@@ -24,7 +24,7 @@
 #include <thread>
 #include <vector>
 
-#include <perfevents/Session.h>
+#include <profilo/perfevents/Session.h>
 
 using namespace facebook::perfevents;
 

@@ -25,10 +25,10 @@
 #include <unordered_map>
 #include <vector>
 
-#include <perfevents/Event.h>
-#include <perfevents/Records.h>
-#include <perfevents/detail/BufferParser.h>
-#include <perfevents/detail/make_unique.h>
+#include <profilo/perfevents/Event.h>
+#include <profilo/perfevents/Records.h>
+#include <profilo/perfevents/detail/BufferParser.h>
+#include <profilo/perfevents/detail/make_unique.h>
 
 namespace facebook {
 namespace perfevents {

@@ -19,7 +19,7 @@
 #include <system_error>
 #include <vector>
 
-#include <linux/perf_event.h>
+#include <profilo/perfevents/linux/perf_event.h>
 #include <sys/mman.h>
 #include <sys/syscall.h>
 #include <unistd.h>

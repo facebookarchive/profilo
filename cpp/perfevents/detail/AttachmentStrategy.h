@@ -23,10 +23,10 @@
 #include <system_error>
 #include <vector>
 
-#include <perfevents/Event.h>
-#include <perfevents/Session.h>
-#include <perfevents/detail/RLimits.h>
-#include <perfevents/detail/make_unique.h>
+#include <profilo/perfevents/Event.h>
+#include <profilo/perfevents/Session.h>
+#include <profilo/perfevents/detail/RLimits.h>
+#include <profilo/perfevents/detail/make_unique.h>
 
 #include <profilo/util/ProcFsUtils.h>
 
