@@ -1,9 +1,11 @@
 load("@fbsource//tools/build_defs/android:robolectric4_test.bzl", "robolectric4_test")
+load("//fbandroid/libraries/profilo/java/test:JNI_DEPS.bzl", "JNI_DEPS")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 robolectric4_test(
     name = "core",
     contacts = ["oncall+loom@xmail.facebook.com"],
+    jni_deps = JNI_DEPS,
     deps = [
         "//fbandroid/java/com/facebook/testing/inject:inject",
         "//fbandroid/java/com/facebook/testing/util:util",

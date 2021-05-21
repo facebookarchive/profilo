@@ -10,6 +10,7 @@ fb_core_android_library(
     deps = [
         "//fbandroid/java/com/facebook/testing/powermock:powermock2",
         profilo_path("java/main/com/facebook/profilo/core:core"),
+        profilo_path("java/main/com/facebook/profilo/mmapbuf:mmapbuf"),
         "//fbandroid/third-party/java/junit:junit",
     ],
 )
