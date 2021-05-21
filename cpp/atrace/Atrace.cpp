@@ -33,8 +33,8 @@
 #include <fbjni/fbjni.h>
 #include <linker/sharedlibs.h>
 #include <plthooks/plthooks.h>
-#include <util/common.h>
-#include <util/hooks.h>
+#include <profilo/util/common.h>
+#include <profilo/util/hooks.h>
 
 #include <profilo/LogEntry.h>
 #include <profilo/TraceProviders.h>

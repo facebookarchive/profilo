@@ -20,10 +20,10 @@
 #include <profilo/mmapbuf/MmapBufferManager.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
 #include <profilo/mmapbuf/writer/MmapBufferTraceWriter.h>
+#include <profilo/util/common.h>
 #include <profilo/writer/DeltaEncodingVisitor.h>
 #include <profilo/writer/PrintEntryVisitor.h>
 #include <profilo/writer/TimestampTruncatingVisitor.h>
-#include <util/common.h>
 
 using namespace facebook::profilo::logger;
 using namespace facebook::profilo::entries;

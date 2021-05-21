@@ -16,9 +16,9 @@
 
 #include "ProcessCounters.h"
 
+#include <profilo/util/common.h>
 #include <sys/resource.h>
 #include <sys/time.h>
-#include <util/common.h>
 
 namespace facebook {
 namespace profilo {

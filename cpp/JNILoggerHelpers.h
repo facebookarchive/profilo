@@ -16,7 +16,7 @@
 
 #include <profilo/LogEntry.h>
 #include <profilo/entries/Entry.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 #include <cstdint>
 
 #ifdef __ANDROID__

@@ -35,8 +35,8 @@
 #include <counters/BaseStatFile.h>
 #include <counters/Counter.h>
 #include <profilo/MultiBufferLogger.h>
-#include <util/ProcFsUtils.h>
-#include <util/common.h>
+#include <profilo/util/ProcFsUtils.h>
+#include <profilo/util/common.h>
 
 using facebook::profilo::logger::MultiBufferLogger;
 

@@ -21,7 +21,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/jni/JMultiBufferLogger.h>
 #include <profilo/mappings/mappings.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 #include <sys/types.h>
 #include <unistd.h>

@@ -22,10 +22,10 @@
 #include <fb/log.h>
 #include <malloc.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/util/common.h>
 #include <sys/syscall.h>
 #include <sys/sysinfo.h>
 #include <unistd.h>
-#include <util/common.h>
 
 using facebook::profilo::logger::MultiBufferLogger;
 

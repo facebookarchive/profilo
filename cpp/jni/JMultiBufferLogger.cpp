@@ -17,7 +17,7 @@
 #include "JMultiBufferLogger.h"
 #include <linker/locks.h>
 #include <profilo/JNILoggerHelpers.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 namespace facebook {
 namespace profilo {

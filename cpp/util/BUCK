@@ -9,7 +9,7 @@ fb_xplat_cxx_library(
     headers = [
         "hooks.h",
     ],
-    header_namespace = "util",
+    header_namespace = "profilo/util",
     exported_headers = [
         "hooks.h",
     ],
@@ -37,7 +37,7 @@ fb_xplat_cxx_library(
         "ProcFsUtils.cpp",
         "common.cpp",
     ],
-    header_namespace = "util",
+    header_namespace = "profilo/util",
     exported_headers = [
         "ProcFsUtils.h",
         "common.h",

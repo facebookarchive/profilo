@@ -20,7 +20,7 @@
 #include <fstream>
 
 #include <counters/ProcFs.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 namespace fs = boost::filesystem;
 namespace test = folly::test;

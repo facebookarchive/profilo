@@ -27,7 +27,7 @@
 #include <perfevents/detail/FileBackedMappingsList.h>
 #include <profilo/LogEntry.h>
 #include <profilo/jni/JMultiBufferLogger.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 namespace fbjni = facebook::jni;
 

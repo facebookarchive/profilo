@@ -31,9 +31,9 @@
 #include <profilo/logger/buffer/RingBuffer.h>
 #include <profilo/mmapbuf/Buffer.h>
 #include <profilo/mmapbuf/header/MmapBufferHeader.h>
+#include <profilo/util/common.h>
 #include <profilo/writer/TraceWriter.h>
 #include <profilo/writer/trace_headers.h>
-#include <util/common.h>
 
 namespace facebook {
 namespace profilo {

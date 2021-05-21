@@ -17,7 +17,7 @@
 #include "SystemCounterThread.h"
 
 #include <profilo/logger/buffer/RingBuffer.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 #include <unordered_set>
 

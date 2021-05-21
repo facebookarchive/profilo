@@ -23,7 +23,7 @@
 #include <memory>
 
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 #include <zlib.h>
 

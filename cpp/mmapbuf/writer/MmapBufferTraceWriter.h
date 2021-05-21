@@ -23,7 +23,7 @@
 
 #include <profilo/Logger.h>
 #include <profilo/jni/NativeTraceWriterCallbacks.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 #include <profilo/mmapbuf/writer/BufferFileMapHolder.h>
 

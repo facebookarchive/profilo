@@ -29,8 +29,8 @@
 #include <random>
 #include <stdexcept>
 
-#include <util/ProcFsUtils.h>
-#include <util/common.h>
+#include <profilo/util/ProcFsUtils.h>
+#include <profilo/util/common.h>
 
 namespace facebook {
 namespace profilo {

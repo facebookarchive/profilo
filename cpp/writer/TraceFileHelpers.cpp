@@ -17,10 +17,10 @@
 #include "TraceFileHelpers.h"
 
 #include <errno.h>
+#include <profilo/util/common.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <util/common.h>
 #include <zlib.h>
 #include <zstr/zstr.hpp>
 #include <sstream>

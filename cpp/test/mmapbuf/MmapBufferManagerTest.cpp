@@ -27,7 +27,7 @@
 #include <profilo/logger/buffer/Packet.h>
 #include <profilo/logger/lfrb/LockFreeRingBuffer.h>
 #include <profilo/mmapbuf/MmapBufferManager.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 #include <zlib.h>
 #include "../../mmapbuf/MmapBufferManager.h"

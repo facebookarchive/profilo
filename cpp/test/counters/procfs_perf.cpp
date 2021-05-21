@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include <iostream>
 
-#include <util/ProcFs.h>
+#include <profilo/util/ProcFs.h>
 
 using namespace facebook::profilo;
 

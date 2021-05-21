@@ -21,7 +21,7 @@
 #include <profiler/ArtCompatibility.h>
 #include <profiler/BaseTracer.h>
 #include <profilo/jni/JMultiBufferLogger.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 #include <profiler/ArtUnwindcTracer_500.h>
 #include <profiler/ArtUnwindcTracer_510.h>

@@ -31,7 +31,7 @@
 #include <profiler/SignalHandler.h>
 #include <profilo/LogEntry.h>
 #include <profilo/test/TestSequencer.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 #include "../logger/MultiBufferLogger.h"
 
 namespace facebook {

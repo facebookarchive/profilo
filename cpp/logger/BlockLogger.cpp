@@ -15,7 +15,7 @@
  */
 
 #include <profilo/logger/BlockLogger.h>
-#include <util/common.h>
+#include <profilo/util/common.h>
 
 namespace facebook {
 namespace profilo {
