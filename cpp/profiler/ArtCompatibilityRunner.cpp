@@ -263,8 +263,6 @@ bool compareStackTraces(
       FBLOGE("No intersecting information between unwinder and Java side");
       return false;
     }
-
-    return true;
   }
   return true;
 }
