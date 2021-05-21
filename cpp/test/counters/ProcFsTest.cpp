@@ -19,7 +19,7 @@
 
 #include <fstream>
 
-#include <counters/ProcFs.h>
+#include <profilo/counters/ProcFs.h>
 #include <profilo/util/common.h>
 
 namespace fs = boost::filesystem;

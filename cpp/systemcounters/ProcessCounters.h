@@ -16,9 +16,9 @@
 
 #pragma once
 
-#include <counters/Counter.h>
-#include <counters/ProcFs.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/counters/Counter.h>
+#include <profilo/counters/ProcFs.h>
 #include <unistd.h>
 
 using facebook::profilo::logger::MultiBufferLogger;

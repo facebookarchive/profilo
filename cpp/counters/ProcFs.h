@@ -32,9 +32,9 @@
 #include <unordered_set>
 #include <vector>
 
-#include <counters/BaseStatFile.h>
-#include <counters/Counter.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/counters/BaseStatFile.h>
+#include <profilo/counters/Counter.h>
 #include <profilo/util/ProcFsUtils.h>
 #include <profilo/util/common.h>
 

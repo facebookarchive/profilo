@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <counters/BaseStatFile.h>
+#include <profilo/counters/BaseStatFile.h>
 
 #include <map>
 #include <memory>

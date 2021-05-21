@@ -17,8 +17,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <counters/Counter.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/counters/Counter.h>
 #include <vector>
 
 using facebook::profilo::logger::MultiBufferLogger;

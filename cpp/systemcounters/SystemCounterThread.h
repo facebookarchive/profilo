@@ -16,9 +16,9 @@
 
 #pragma once
 
-#include <counters/ProcFs.h>
 #include <fbjni/fbjni.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/counters/ProcFs.h>
 #include <profilo/jni/JMultiBufferLogger.h>
 
 #include "ProcessCounters.h"

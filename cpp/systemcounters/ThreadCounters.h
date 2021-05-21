@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include <counters/ProcFs.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/counters/ProcFs.h>
 #include <mutex>
 
 using facebook::profilo::logger::MultiBufferLogger;
