@@ -17,16 +17,11 @@
 #include <fb/xplat_init.h>
 #include <fbjni/fbjni.h>
 #include <jni.h>
-#include <sigmuxsetup/sigmuxsetup.h>
 
 #include "Atrace.h"
 
 using namespace facebook::profilo;
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
-  return facebook::xplat::initialize(vm, [] {
-    sigmuxsetup::EnsureSigmuxOverridesArtFaultHandler();
-
-    atrace::registerNatives();
-  });
+  return facebook::xplat::initialize(vm, [] { atrace::registerNatives(); });
 }
