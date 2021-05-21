@@ -18,20 +18,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.same;
-import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
+import static org.mockito.Mockito.when;
 
 import android.content.Context;
-import android.os.Process;
-import android.util.Log;
 import android.util.SparseArray;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.config.ConfigImpl;
@@ -39,58 +35,35 @@ import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
-import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.Buffer;
 import com.facebook.profilo.util.TestConfigProvider;
-import com.facebook.profilo.util.TraceEventsFakeRule;
-import com.facebook.soloader.SoLoader;
-import com.facebook.testing.powermock.PowerMockTest;
+import com.facebook.profilo.util.TraceContextRule;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import org.fest.util.Files;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.mockito.InOrder;
 import org.powermock.reflect.Whitebox;
 
 @RunWith(WithTestDefaultsRunner.class)
-@PrepareForTest({
-  Context.class,
-  FileManager.class,
-  Log.class,
-  Logger.class,
-  TraceControl.class,
-  TraceOrchestrator.class,
-  TraceEvents.class,
-  SoLoader.class,
-  SparseArray.class,
-  Process.class,
-})
-@Ignore
-@SuppressStaticInitializationFor({
-  "com.facebook.profilo.logger.Logger",
-  "com.facebook.profilo.core.TraceEvents",
-  "com.facebook.profilo.mmapbuf.Buffer"
-})
-public class TraceOrchestratorTest extends PowerMockTest {
+public class TraceOrchestratorTest {
 
   // These values are the inverse of each other, so we can do just one TraceEvents.isEnabled call
   private static final int DEFAULT_TRACING_PROVIDERS = 0xffffffff;
-  private static final int SECOND_TRACE_TRACING_PROVIDERS = 0x11011;
-  private static final int NORMAL_PROVIDER_SUPPORTED_PROVIDERS = 0x101;
-  private static final int NORMAL_PROVIDER_TRACING_PROVIDERS = 0x001;
-  private static final int SYNC_PROVIDER_SUPPORTED_PROVIDERS = 0x10;
-  private static final int SYNC_PROVIDER_TRACING_PROVIDERS = 0x10;
-  private static final int DEFAULT_PROCESS_ID = 1111;
+  private static final int SECOND_TRACE_TRACING_PROVIDERS = 0b11011;
+  private static final int NORMAL_PROVIDER_TRACING_PROVIDERS = 0b001;
+  private static final int NORMAL_PROVIDER_SUPPORTED_PROVIDERS = 0b101;
+  private static final int SYNC_PROVIDER_SUPPORTED_PROVIDERS = 0b10;
+  private static final int SYNC_PROVIDER_TRACING_PROVIDERS = 0b10;
   private static final String DEFAULT_TEMP_DIR = "temp_dir";
 
   private BackgroundUploadService mUploadService;
@@ -102,12 +75,13 @@ public class TraceOrchestratorTest extends PowerMockTest {
   private TraceContext mTraceContext;
   private TraceContext mSecondTraceContext;
 
-  @Rule public TraceEventsFakeRule mTraceEventsRule = new TraceEventsFakeRule();
   private BaseTraceProvider mTraceProvider;
   private BaseTraceProvider mBaseTraceProvider;
   private BaseTraceProvider mSyncBaseTraceProvider;
 
   private BaseTraceProvider[] mTraceProviders;
+
+  @Rule public TraceContextRule mTraceContextRule = new TraceContextRule(0);
 
   static class TestBaseProvider extends BaseTraceProvider {
 
@@ -152,21 +126,12 @@ public class TraceOrchestratorTest extends PowerMockTest {
 
   @Before
   public void setUp() throws Exception {
-    mockStatic(Log.class, Logger.class, TraceControl.class, Process.class);
-
-    mTraceControl = mock(TraceControl.class);
-    when(TraceControl.get()).thenReturn(mTraceControl);
-
-    mockStatic(SoLoader.class);
-    SoLoader.setInTestMode();
-
-    mockStatic(Process.class);
-    when(Process.myPid()).thenReturn(DEFAULT_PROCESS_ID);
-
     mContext = mock(Context.class);
     mFileManager = mock(FileManager.class);
     mUploadService = mock(BackgroundUploadService.class);
     mConfigProvider = new TestConfigProvider();
+
+    Buffer buffer = mTraceContextRule.newBuffer();
     mTraceContext =
         new TraceContext(
             0xFACEB00C, // traceId
@@ -180,10 +145,12 @@ public class TraceOrchestratorTest extends PowerMockTest {
             1, // flags
             0,
             TraceConfigExtras.EMPTY,
-            /*buffer*/ null,
-            new Buffer[] {},
+            buffer,
+            new Buffer[] {buffer},
             new File("."),
             "prefix-");
+
+    buffer = mTraceContextRule.newBuffer();
     mSecondTraceContext =
         new TraceContext(
             0xFACEB000, // traceId
@@ -197,15 +164,11 @@ public class TraceOrchestratorTest extends PowerMockTest {
             1, // flags
             0,
             TraceConfigExtras.EMPTY,
-            /*buffer*/ null,
-            new Buffer[] {},
+            buffer,
+            new Buffer[] {buffer},
             new File("."),
             "prefix-"); // mTraceConfigExtras
 
-    whenNew(SparseArray.class)
-        .withAnyArguments()
-        .thenReturn(mock(SparseArray.class, RETURNS_MOCKS));
-    whenNew(FileManager.class).withAnyArguments().thenReturn(mFileManager);
     mTraceProvider = mock(BaseTraceProvider.class);
     mBaseTraceProvider =
         spy(
@@ -220,6 +183,9 @@ public class TraceOrchestratorTest extends PowerMockTest {
         new BaseTraceProvider[] {mTraceProvider, mBaseTraceProvider, mSyncBaseTraceProvider};
     when(mFileManager.getAndResetStatistics())
         .thenReturn(mock(FileManager.FileManagerStatistics.class));
+
+    // This is gross but it beats using PowerMock to override the static .get() method
+    Whitebox.setInternalState(TraceControl.class, "sInstance", (Object) null);
     mOrchestrator =
         new TraceOrchestrator(
             mContext,
@@ -229,6 +195,14 @@ public class TraceOrchestratorTest extends PowerMockTest {
             true, // isMainProcess
             null); // Default trace location
     mOrchestrator.bind(mContext, new SparseArray<TraceController>(1));
+
+    mTraceControl = mock(TraceControl.class);
+    Whitebox.setInternalState(TraceControl.class, "sInstance", mTraceControl);
+
+    // Also gross but meh
+    Whitebox.setInternalState(mOrchestrator, "mFileManager", mFileManager);
+
+    TraceEvents.clearAllProviders();
   }
 
   @Test
@@ -339,9 +313,6 @@ public class TraceOrchestratorTest extends PowerMockTest {
   @Test
   public void testAbortedTraceCallAbortByID() throws IOException {
     final long traceId = 0xFACEB00C;
-    File tempDirectory = new File(DEFAULT_TEMP_DIR);
-    tempDirectory.mkdirs();
-    File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
     mOrchestrator.onTraceWriteStart(traceId, 0);
     mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
@@ -366,12 +337,26 @@ public class TraceOrchestratorTest extends PowerMockTest {
   public void testTraceUploadOnTimeout() throws Exception {
     mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(1)));
 
-    final long traceId = 0xFACEB00C;
-    File tempDirectory = new File(DEFAULT_TEMP_DIR);
-    tempDirectory.mkdirs();
-    File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0);
-    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
+    File folder = Files.newTemporaryFolder();
+    File fileA = File.createTempFile("tracetmp", "tmp", folder);
+    File fileB = File.createTempFile("tracetmp", "tmp", folder);
+
+    final long traceId = mTraceContext.traceId;
+    mTraceContext.abortReason = ProfiloConstants.ABORT_REASON_TIMEOUT;
+    mTraceContext.folder = folder;
+
+    try {
+      mOrchestrator.onTraceStartSync(mTraceContext);
+      mOrchestrator.onTraceStartAsync(mTraceContext);
+      mOrchestrator.onTraceAbort(mTraceContext);
+
+      mOrchestrator.onTraceWriteStart(traceId, 0);
+      mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
+    } finally {
+      fileA.delete();
+      fileB.delete();
+      folder.delete();
+    }
 
     verify(mFileManager).addFileToUploads(any(File.class), anyBoolean());
   }
@@ -392,69 +377,92 @@ public class TraceOrchestratorTest extends PowerMockTest {
   @Test
   public void testTraceMemoryOnlyTraceAddedToUploadsAsNotTrimmable() throws Exception {
     mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(1)));
-    final long traceId = 0xFACEB00C;
+    final long traceId = mTraceContext.traceId;
+    mTraceContext.flags = Trace.FLAG_MEMORY_ONLY;
+
     File tempDirectory = new File(DEFAULT_TEMP_DIR);
     tempDirectory.mkdirs();
     File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, Trace.FLAG_MEMORY_ONLY);
-    mOrchestrator.onTraceWriteEnd(traceId);
+    mTraceContext.folder = tempDirectory;
+    try {
+      mOrchestrator.onTraceStartSync(mTraceContext);
+      mOrchestrator.onTraceStartAsync(mTraceContext);
+      mOrchestrator.onTraceWriteStart(traceId, Trace.FLAG_MEMORY_ONLY);
+      mOrchestrator.onTraceStop(mTraceContext);
+      mOrchestrator.onTraceWriteEnd(traceId);
 
-    verify(mFileManager).addFileToUploads(any(File.class), eq(false));
+      verify(mFileManager).addFileToUploads(any(File.class), eq(false));
+    } finally {
+      traceFile.delete();
+      tempDirectory.delete();
+    }
   }
 
   @Test
-  public void testWriterCallbacksLifecycle() {
-    final long traceId = 0xFACEB00C;
-    mOrchestrator.onTraceWriteStart(traceId, 0);
-    mOrchestrator.onTraceWriteEnd(traceId);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0);
-    // Assert that onTraceWriteStart doesn't throw
-  }
+  public void testWriterCallbacksLifecycle() throws IOException {
+    final long traceId = mTraceContext.traceId;
+    File folder = Files.newTemporaryFolder();
+    File fileA = File.createTempFile("tracetmp", "tmp", folder);
+    mTraceContext.folder = folder;
 
-  @Test
-  public void testWriterCallbacksLifecycleOnTimeout() throws IOException {
-    File tempDirectory = new File(DEFAULT_TEMP_DIR);
-    tempDirectory.mkdirs();
-    mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
-    final long traceId = 0xFACEB00C;
-    File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0);
-    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0);
-    // Assert that onTraceWriteStart doesn't throw
+    try {
+      mOrchestrator.onTraceStartSync(mTraceContext);
+      mOrchestrator.onTraceStartAsync(mTraceContext);
+      mOrchestrator.onTraceStop(mTraceContext);
+
+      mOrchestrator.onTraceWriteStart(traceId, 0);
+      mOrchestrator.onTraceWriteEnd(traceId);
+
+      mTraceContext.traceId += 1;
+      mOrchestrator.onTraceStartSync(mTraceContext);
+      mOrchestrator.onTraceStartAsync(mTraceContext);
+      mOrchestrator.onTraceStop(mTraceContext);
+      mOrchestrator.onTraceWriteStart(mTraceContext.traceId, 0);
+      // Assert that onTraceWriteStart doesn't throw
+    } finally {
+      fileA.delete();
+      folder.delete();
+    }
   }
 
   @Test
   public void testWriterCallbacksLifecycleInSecondProcess() throws IOException {
     Whitebox.setInternalState(mOrchestrator, "mIsMainProcess", false);
-    File tempDirectory = new File(DEFAULT_TEMP_DIR);
-    tempDirectory.mkdirs();
-    mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
-    final long traceId = 0xFACEB00C;
-    File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0);
-    mOrchestrator.onTraceWriteEnd(traceId);
-    mOrchestrator.onTraceWriteStart(traceId + 1, 0);
-    // Assert that onTraceWriteStart doesn't throw
+    testWriterCallbacksLifecycle();
   }
 
   @Test
   public void testBaseTraceProviderChanges() {
     assertThatAllProvidersDisabled();
+
+    // First we start a trace that enables both Base and Sync provider.
+    // Then we start a trace that enables only Sync.
+    // Then we stop the first trace and expect Base to be restarted for a new provider mask.
+    // The we stop the second trace and expect both to be stopped.
+
     mOrchestrator.onTraceStartSync(mTraceContext);
-    verify(mSyncBaseTraceProvider).enable();
+    InOrder syncOrder = inOrder(mSyncBaseTraceProvider);
+    syncOrder.verify(mSyncBaseTraceProvider).enable();
+
     mOrchestrator.onTraceStartAsync(mTraceContext);
-    verify(mBaseTraceProvider).enable();
+    InOrder baseOrder = inOrder(mBaseTraceProvider);
+    baseOrder.verify(mBaseTraceProvider).enable();
+
     mOrchestrator.onTraceStartSync(mSecondTraceContext);
-    verify(mSyncBaseTraceProvider, times(1)).enable();
     mOrchestrator.onTraceStartAsync(mSecondTraceContext);
-    verify(mBaseTraceProvider, times(1)).enable();
+
     mOrchestrator.onTraceStop(mTraceContext);
-    verify(mBaseTraceProvider, times(1)).disable();
-    verify(mBaseTraceProvider, times(2)).enable();
+    baseOrder.verify(mBaseTraceProvider).disable();
+    baseOrder.verify(mBaseTraceProvider).enable();
     mOrchestrator.onTraceStop(mSecondTraceContext);
-    verify(mBaseTraceProvider, times(2)).disable();
-    verify(mSyncBaseTraceProvider, times(1)).disable();
+
+    baseOrder.verify(mBaseTraceProvider).disable();
+    baseOrder.verify(mBaseTraceProvider, never()).enable();
+    baseOrder.verify(mBaseTraceProvider, never()).disable();
+
+    syncOrder.verify(mSyncBaseTraceProvider).disable();
+    syncOrder.verify(mSyncBaseTraceProvider, never()).enable();
+    syncOrder.verify(mSyncBaseTraceProvider, never()).disable();
   }
 
   @Test
@@ -476,6 +484,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     verify(mSyncBaseTraceProvider).enable();
     mOrchestrator.onTraceStartAsync(mTraceContext);
     verify(mBaseTraceProvider).enable();
+    Buffer buffer = mTraceContextRule.newBuffer();
     TraceContext anotherContext =
         new TraceContext(
             0xFACEB001, // traceId
@@ -489,8 +498,8 @@ public class TraceOrchestratorTest extends PowerMockTest {
             1, // flags
             1,
             TraceConfigExtras.EMPTY,
-            /*buffer*/ null,
-            new Buffer[] {},
+            buffer,
+            new Buffer[] {buffer},
             new File("."),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStartSync(anotherContext);
@@ -511,6 +520,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
     mOrchestrator.addListener(listener);
 
     int enabledProvidersMask = 0x11111;
+    Buffer buffer = mTraceContextRule.newBuffer();
     TraceContext traceContext =
         new TraceContext(
             0xFACEB000, // traceId
@@ -524,8 +534,8 @@ public class TraceOrchestratorTest extends PowerMockTest {
             1,
             0,
             TraceConfigExtras.EMPTY,
-            /*buffer*/ null,
-            new Buffer[] {},
+            /*buffer*/ buffer,
+            new Buffer[] {buffer},
             new File("."),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
@@ -565,6 +575,7 @@ public class TraceOrchestratorTest extends PowerMockTest {
         });
 
     TraceEvents.enableProviders(enabledProvidersMask);
+    Buffer buffer = mTraceContextRule.newBuffer();
     TraceContext traceContext =
         new TraceContext(
             0xFACEB000, // traceId
@@ -578,8 +589,8 @@ public class TraceOrchestratorTest extends PowerMockTest {
             1,
             0,
             TraceConfigExtras.EMPTY,
-            /*buffer*/ null,
-            new Buffer[] {},
+            buffer,
+            new Buffer[] {buffer},
             new File("."),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);

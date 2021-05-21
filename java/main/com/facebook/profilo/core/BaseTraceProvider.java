@@ -159,7 +159,7 @@ public abstract class BaseTraceProvider {
     int providerMask = TraceEvents.enabledMask(getSupportedProviders());
 
     // Nothing changed - keep enabled
-    if (mSavedProviders != 0 && TraceEvents.isEnabled(mSavedProviders)) {
+    if (mSavedProviders != 0 && TraceEvents.enabledMask(mSavedProviders) == mSavedProviders) {
       return;
     }
     // If provider was tracing stop first to reset the state
