@@ -17,17 +17,17 @@
 #include "ArtCompatibility.h"
 #include "ArtCompatibilityRunner.h"
 
-#include "profiler/ArtUnwindcTracer_500.h"
-#include "profiler/ArtUnwindcTracer_510.h"
-#include "profiler/ArtUnwindcTracer_600.h"
-#include "profiler/ArtUnwindcTracer_700.h"
-#include "profiler/ArtUnwindcTracer_710.h"
-#include "profiler/ArtUnwindcTracer_711.h"
-#include "profiler/ArtUnwindcTracer_712.h"
-#include "profiler/ArtUnwindcTracer_800.h"
-#include "profiler/ArtUnwindcTracer_810.h"
-#include "profiler/ArtUnwindcTracer_900.h"
-#include "profiler/BaseTracer.h"
+#include "profilo/profiler/ArtUnwindcTracer_500.h"
+#include "profilo/profiler/ArtUnwindcTracer_510.h"
+#include "profilo/profiler/ArtUnwindcTracer_600.h"
+#include "profilo/profiler/ArtUnwindcTracer_700.h"
+#include "profilo/profiler/ArtUnwindcTracer_710.h"
+#include "profilo/profiler/ArtUnwindcTracer_711.h"
+#include "profilo/profiler/ArtUnwindcTracer_712.h"
+#include "profilo/profiler/ArtUnwindcTracer_800.h"
+#include "profilo/profiler/ArtUnwindcTracer_810.h"
+#include "profilo/profiler/ArtUnwindcTracer_900.h"
+#include "profilo/profiler/BaseTracer.h"
 
 #include <fb/log.h>
 #include <fbjni/fbjni.h>

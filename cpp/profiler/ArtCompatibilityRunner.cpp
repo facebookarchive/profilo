@@ -18,7 +18,7 @@
 
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
-#include <profiler/JavaBaseTracer.h>
+#include <profilo/profiler/JavaBaseTracer.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>

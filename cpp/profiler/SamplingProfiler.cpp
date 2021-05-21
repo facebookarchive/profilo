@@ -34,10 +34,10 @@
 #include <fb/log.h>
 #include <fbjni/fbjni.h>
 
-#include <profiler/ExternalTracer.h>
-#include <profiler/JavaBaseTracer.h>
-#include <profiler/Retcode.h>
 #include <profilo/ExternalApi.h>
+#include <profilo/profiler/ExternalTracer.h>
+#include <profilo/profiler/JavaBaseTracer.h>
+#include <profilo/profiler/Retcode.h>
 
 #include <profilo/LogEntry.h>
 #include <profilo/TraceProviders.h>

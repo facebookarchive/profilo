@@ -30,11 +30,11 @@
 #endif
 
 #include <fbjni/fbjni.h>
-#include <profiler/BaseTracer.h>
-#include <profiler/Constants.h>
-#include <profiler/SignalHandler.h>
 #include <profilo/ExternalApiGlue.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/profiler/BaseTracer.h>
+#include <profilo/profiler/Constants.h>
+#include <profilo/profiler/SignalHandler.h>
 
 namespace fbjni = facebook::jni;
 

@@ -17,7 +17,7 @@
 #include <algorithm>
 
 // Needed for MAX_STACK_DEPTH
-#include <profiler/Constants.h>
+#include <profilo/profiler/Constants.h>
 
 #include <profilo/writer/StackTraceInvertingVisitor.h>
 

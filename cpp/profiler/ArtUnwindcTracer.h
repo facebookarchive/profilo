@@ -19,7 +19,7 @@
 #include <unistd.h>
 
 #include <profilo/MultiBufferLogger.h>
-#include "profiler/JavaBaseTracer.h"
+#include "profilo/profiler/JavaBaseTracer.h"
 
 namespace facebook {
 namespace profilo {

@@ -14,7 +14,7 @@ def unwindc_tracer_library(version, allow_64bit = False):
             "ArtUnwindcTracer.h",
             "unwindc/runtime.h",
         ],
-        header_namespace = "profiler",
+        header_namespace = "profilo/profiler",
         exported_headers = {
             "ArtUnwindcTracer_{}.h".format(version_num): "ArtUnwindcTracer.h",
         },

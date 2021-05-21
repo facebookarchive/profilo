@@ -20,8 +20,8 @@
 
 #include <dalvik-subset/internals.h>
 
-#include <profiler/JavaBaseTracer.h>
 #include <profilo/MultiBufferLogger.h>
+#include <profilo/profiler/JavaBaseTracer.h>
 
 namespace facebook {
 namespace profilo {

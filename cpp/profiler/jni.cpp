@@ -18,27 +18,27 @@
 #include <fbjni/fbjni.h>
 #include <jni.h>
 
-#include <profiler/ArtCompatibility.h>
-#include <profiler/BaseTracer.h>
 #include <profilo/jni/JMultiBufferLogger.h>
+#include <profilo/profiler/ArtCompatibility.h>
+#include <profilo/profiler/BaseTracer.h>
 #include <profilo/util/common.h>
 
-#include <profiler/ArtUnwindcTracer_500.h>
-#include <profiler/ArtUnwindcTracer_510.h>
-#include <profiler/ArtUnwindcTracer_600.h>
-#include <profiler/ArtUnwindcTracer_700.h>
-#include <profiler/ArtUnwindcTracer_710.h>
-#include <profiler/ArtUnwindcTracer_711.h>
-#include <profiler/ArtUnwindcTracer_712.h>
-#include <profiler/ArtUnwindcTracer_800.h>
-#include <profiler/ArtUnwindcTracer_810.h>
-#include <profiler/ArtUnwindcTracer_900.h>
-#include <profiler/DalvikTracer.h>
-#include <profiler/ExternalTracerManager.h>
-#include <profiler/JSTracer.h>
+#include <profilo/profiler/ArtUnwindcTracer_500.h>
+#include <profilo/profiler/ArtUnwindcTracer_510.h>
+#include <profilo/profiler/ArtUnwindcTracer_600.h>
+#include <profilo/profiler/ArtUnwindcTracer_700.h>
+#include <profilo/profiler/ArtUnwindcTracer_710.h>
+#include <profilo/profiler/ArtUnwindcTracer_711.h>
+#include <profilo/profiler/ArtUnwindcTracer_712.h>
+#include <profilo/profiler/ArtUnwindcTracer_800.h>
+#include <profilo/profiler/ArtUnwindcTracer_810.h>
+#include <profilo/profiler/ArtUnwindcTracer_900.h>
+#include <profilo/profiler/DalvikTracer.h>
+#include <profilo/profiler/ExternalTracerManager.h>
+#include <profilo/profiler/JSTracer.h>
 
 #if HAS_NATIVE_TRACER
-#include <profiler/NativeTracer.h>
+#include <profilo/profiler/NativeTracer.h>
 #endif
 
 #include "SamplingProfiler.h"

@@ -51,7 +51,7 @@ unwindc_tracer_library(
 
 fb_xplat_cxx_library(
     name = "constants",
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "Constants.h",
     ],
@@ -73,7 +73,7 @@ fb_xplat_cxx_library(
         "ArtCompatibility.h",
         "ArtCompatibilityRunner.h",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "ArtCompatibility.h",
     ],
@@ -111,7 +111,7 @@ fb_xplat_cxx_library(
 
 fb_xplat_cxx_library(
     name = "base_tracer",
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "BaseTracer.h",
         "JavaBaseTracer.h",
@@ -133,7 +133,7 @@ fb_xplat_cxx_library(
     srcs = [
         "ExternalTracer.cpp",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "ExternalTracer.h",
     ],
@@ -153,7 +153,7 @@ fb_xplat_cxx_library(
     srcs = [
         "ExternalTracerManager.cpp",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "ExternalTracerManager.h",
     ],
@@ -173,7 +173,7 @@ fb_xplat_cxx_library(
     srcs = [
         "JSTracer.cpp",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "JSTracer.h",
     ],
@@ -197,7 +197,7 @@ fb_xplat_cxx_library(
     srcs = [
         "DalvikUtils.cpp",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "DalvikUtils.h",
     ],
@@ -216,7 +216,7 @@ fb_xplat_cxx_library(
     srcs = [
         "DalvikTracer.cpp",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "DalvikTracer.h",
     ],
@@ -248,7 +248,7 @@ fb_xplat_cxx_library(
     srcs = [
         "SignalHandler.cpp",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "SignalHandler.h",
     ],
@@ -281,7 +281,7 @@ fb_xplat_cxx_library(
     srcs = [
         "Retcode.cpp",
     ],
-    header_namespace = "profiler",
+    header_namespace = "profilo/profiler",
     exported_headers = [
         "Retcode.h",
     ],
@@ -303,7 +303,7 @@ PROFILER_SRCS = [
     "jni.cpp",
 ]
 
-PROFILER_HEADER_NAMESPACE = "profiler"
+PROFILER_HEADER_NAMESPACE = "profilo/profiler"
 
 PROFILER_EXPORTED_HEADERS = [
     "SamplingProfiler.h",

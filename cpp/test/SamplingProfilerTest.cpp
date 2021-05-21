@@ -27,9 +27,9 @@
 #include <thread>
 
 #include <phaser.h>
-#include <profiler/SamplingProfiler.h>
-#include <profiler/SignalHandler.h>
 #include <profilo/LogEntry.h>
+#include <profilo/profiler/SamplingProfiler.h>
+#include <profilo/profiler/SignalHandler.h>
 #include <profilo/test/TestSequencer.h>
 #include <profilo/util/common.h>
 #include "../logger/MultiBufferLogger.h"

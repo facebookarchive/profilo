@@ -15,7 +15,7 @@
  */
 #pragma once
 
-#include "profiler/JavaBaseTracer.h"
+#include "profilo/profiler/JavaBaseTracer.h"
 
 namespace facebook {
 namespace profilo {
