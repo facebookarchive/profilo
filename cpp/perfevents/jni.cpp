@@ -32,7 +32,7 @@
 namespace fbjni = facebook::jni;
 
 const char* kPerfSessionType =
-    "com/facebook/profilo/provider/profilo/perfevents/PerfEventsSession";
+    "com/facebook/profilo/provider/perfevents/PerfEventsSession";
 
 namespace facebook {
 namespace perfevents {
