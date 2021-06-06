@@ -35,7 +35,6 @@ profilo_cxx_test(
     ],
     labels = ["opt-in-sandcastle-sanitized-test"],
     deps = [
-        "//xplat/third-party/linker_lib:pthread",
         profilo_path("cpp/generated:cpp"),
         profilo_path("cpp/writer:print_visitor"),
     ],
