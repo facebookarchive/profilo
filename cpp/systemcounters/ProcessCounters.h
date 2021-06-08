@@ -92,14 +92,14 @@ class ProcessCounters {
 
   void logCounters();
 
+  void logExpensiveCounters();
+
   int32_t getAvailableCounters() {
     return extraAvailableCounters_;
   }
 
  private:
   void logProcessCounters(int64_t time);
-
-  void logMappingCounters(int64_t time);
 
   void logProcessSchedCounters(int64_t time);
 

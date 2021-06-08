@@ -46,6 +46,8 @@ class SystemCounterThread
 
   void logCounters();
 
+  void logExpensiveCounters();
+
   void logHighFrequencyThreadCounters();
 
   void logTraceAnnotations();

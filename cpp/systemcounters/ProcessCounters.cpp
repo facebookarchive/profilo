@@ -44,7 +44,6 @@ void ProcessCounters::logCounters() {
   auto time = monotonicTime();
 
   logProcessCounters(time);
-  logMappingCounters(time);
   logProcessSchedCounters(time);
   logProcessStatmCounters(time);
 }
@@ -59,7 +58,8 @@ void ProcessCounters::logProcessCounters(int64_t time) {
   stats_.minorFaults.record(rusageStats.ru_minflt, time);
 }
 
-void ProcessCounters::logMappingCounters(int64_t time) {
+void ProcessCounters::logExpensiveCounters() {
+  auto time = monotonicTime();
   if (!mappingAggregator_.refresh()) {
     return;
   }

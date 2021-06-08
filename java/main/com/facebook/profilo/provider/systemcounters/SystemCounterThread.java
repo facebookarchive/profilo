@@ -49,6 +49,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   private static final int MSG_SYSTEM_COUNTERS = 1;
   private static final int MSG_HIGH_FREQ_THREAD_COUNTERS = 2;
+  private static final int MSG_SYSTEM_COUNTERS_EXPENSIVE = 3;
 
   @DoNotStrip private HybridData mHybridData;
 
@@ -56,9 +57,12 @@ public final class SystemCounterThread extends BaseTraceProvider {
 
   public static final String SYSTEM_COUNTERS_SAMPLING_RATE_CONFIG_PARAM =
       "provider.system_counters.sampling_rate_ms";
+  public static final String SYSTEM_COUNTERS_EXPENSIVE_SAMPLING_RATE_CONFIG_PARAM =
+      "provider.system_counters.expensive_sampling_rate_ms";
   public static final String HIGH_FREQ_COUNTERS_SAMPLING_RATE_CONFIG_PARAM =
       "provider.high_freq_main_thread_counters.sampling_rate_ms";
   private static final int DEFAULT_COUNTER_PERIODIC_TIME_MS = 50;
+  private static final int DEFAULT_COUNTER_EXPENSIVE_TIME_MS = 1000;
   private static final int DEFAULT_HIGH_FREQ_COUNTERS_PERIODIC_TIME_MS = 7;
 
   @GuardedBy("this")
@@ -100,6 +104,8 @@ public final class SystemCounterThread extends BaseTraceProvider {
   private native HybridData initHybrid(MultiBufferLogger logger);
 
   native void logCounters();
+
+  native void logExpensiveCounters();
 
   native void logHighFrequencyThreadCounters();
 
@@ -155,6 +161,9 @@ public final class SystemCounterThread extends BaseTraceProvider {
           mCounterCollector.log(getLogger());
         }
         break;
+      case MSG_SYSTEM_COUNTERS_EXPENSIVE:
+        logExpensiveCounters();
+        break;
       case MSG_HIGH_FREQ_THREAD_COUNTERS:
         logHighFrequencyThreadCounters();
         break;
@@ -183,6 +192,16 @@ public final class SystemCounterThread extends BaseTraceProvider {
               : traceContext.mTraceConfigExtras.getIntParam(
                   SYSTEM_COUNTERS_SAMPLING_RATE_CONFIG_PARAM, DEFAULT_COUNTER_PERIODIC_TIME_MS);
       mHandler.obtainMessage(MSG_SYSTEM_COUNTERS, samplingRateMs, 0).sendToTarget();
+
+      int expensiveSamplingRateMs =
+          traceContext == null
+              ? DEFAULT_COUNTER_EXPENSIVE_TIME_MS
+              : traceContext.mTraceConfigExtras.getIntParam(
+                  SYSTEM_COUNTERS_EXPENSIVE_SAMPLING_RATE_CONFIG_PARAM,
+                  DEFAULT_COUNTER_EXPENSIVE_TIME_MS);
+      mHandler
+          .obtainMessage(MSG_SYSTEM_COUNTERS_EXPENSIVE, expensiveSamplingRateMs, 0)
+          .sendToTarget();
     }
     if (TraceEvents.isEnabled(PROVIDER_HIGH_FREQ_THREAD_COUNTERS)) {
       // Add Main Thread to the whitelist
@@ -205,6 +224,7 @@ public final class SystemCounterThread extends BaseTraceProvider {
       mSystemCounterLogger.logProcessCounters();
       if (mAllThreadsMode) {
         logCounters();
+        logExpensiveCounters();
       }
       if (mHighFrequencyMode) {
         logHighFrequencyThreadCounters();
