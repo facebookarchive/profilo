@@ -44,6 +44,7 @@ void ProcessCounters::logCounters() {
   auto time = monotonicTime();
 
   logProcessCounters(time);
+  logMappingCounters(time);
   logProcessSchedCounters(time);
   logProcessStatmCounters(time);
 }
@@ -56,6 +57,14 @@ void ProcessCounters::logProcessCounters(int64_t time) {
   stats_.kernelCpuTimeMs.record(timeval_to_millis(rusageStats.ru_stime), time);
   stats_.majorFaults.record(rusageStats.ru_majflt, time);
   stats_.minorFaults.record(rusageStats.ru_minflt, time);
+}
+
+void ProcessCounters::logMappingCounters(int64_t time) {
+  if (!mappingAggregator_.refresh()) {
+    return;
+  }
+  stats_.glDev.record(mappingAggregator_.getGLDevSize(), time);
+  stats_.dmabuf.record(mappingAggregator_.getDmabufSize(), time);
 }
 
 void ProcessCounters::logProcessSchedCounters(int64_t time) {

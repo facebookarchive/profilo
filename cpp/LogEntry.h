@@ -95,6 +95,9 @@ enum QuickLogConstants {
   DISK_LATENCY_NS = 9240576 | 100, // = 9240676
 
   SESSION_ID = 8126464 | 82, // = 8126546
+
+  MAPPING_DMABUF = 9248104,
+  MAPPING_GL_DEV = 9252052,
 };
 
 } // namespace profilo

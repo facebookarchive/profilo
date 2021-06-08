@@ -19,6 +19,7 @@
 #include <profilo/MultiBufferLogger.h>
 #include <profilo/counters/Counter.h>
 #include <profilo/counters/ProcFs.h>
+#include <profilo/systemcounters/MappingAggregator.h>
 #include <unistd.h>
 
 using facebook::profilo::logger::MultiBufferLogger;
@@ -38,6 +39,8 @@ struct ProcessStats {
   TraceCounter iowaitCount;
   TraceCounter memResident;
   TraceCounter memShared;
+  TraceCounter glDev;
+  TraceCounter dmabuf;
 };
 
 class ProcessCounters {
@@ -47,6 +50,7 @@ class ProcessCounters {
         schedStatsTracingDisabled_(false),
         extraAvailableCounters_(0),
         statmStats_(),
+        mappingAggregator_(),
         stats_(ProcessStats{
             .cpuTimeMs =
                 TraceCounter(logger, QuickLogConstants::PROC_CPU_TIME, pid),
@@ -80,6 +84,10 @@ class ProcessCounters {
                 pid),
             .memShared =
                 TraceCounter(logger, QuickLogConstants::PROC_STATM_SHARED, pid),
+            .glDev =
+                TraceCounter(logger, QuickLogConstants::MAPPING_GL_DEV, pid),
+            .dmabuf =
+                TraceCounter(logger, QuickLogConstants::MAPPING_DMABUF, pid),
         }) {}
 
   void logCounters();
@@ -91,6 +99,8 @@ class ProcessCounters {
  private:
   void logProcessCounters(int64_t time);
 
+  void logMappingCounters(int64_t time);
+
   void logProcessSchedCounters(int64_t time);
 
   void logProcessStatmCounters(int64_t time);
@@ -99,6 +109,7 @@ class ProcessCounters {
   bool schedStatsTracingDisabled_;
   int32_t extraAvailableCounters_;
   std::unique_ptr<ProcStatmFile> statmStats_;
+  MappingAggregator mappingAggregator_;
   ProcessStats stats_;
 };
 
