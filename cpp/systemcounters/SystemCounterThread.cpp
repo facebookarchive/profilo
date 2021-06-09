@@ -82,7 +82,8 @@ void SystemCounterThread::registerNatives() {
   registerHybrid({
       makeNativeMethod("initHybrid", SystemCounterThread::initHybrid),
       makeNativeMethod("logCounters", SystemCounterThread::logCounters),
-      makeNativeMethod("logExpensiveCounters", SystemCounterThread::logExpensiveCounters),
+      makeNativeMethod(
+          "logExpensiveCounters", SystemCounterThread::logExpensiveCounters),
       makeNativeMethod(
           "logHighFrequencyThreadCounters",
           SystemCounterThread::logHighFrequencyThreadCounters),
@@ -112,7 +113,6 @@ void SystemCounterThread::logCounters() {
   processCounters_.logCounters();
   systemCounters_.logCounters();
 }
-
 
 void SystemCounterThread::logExpensiveCounters() {
   processCounters_.logExpensiveCounters();
