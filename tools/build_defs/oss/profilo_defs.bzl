@@ -46,7 +46,7 @@ def profilo_oss_maven_library(
     """
     _ignore = scope
     remote_file_name = "{}-remote".format(name)
-    remote_file(
+    native.remote_file(
         name = remote_file_name,
         out = "{}-{}.{}".format(name, version, packaging),
         sha1 = sha1,
