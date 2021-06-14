@@ -43,15 +43,16 @@ namespace profilo {
 namespace artcompat {
 
 struct JavaFrame {
-  const char* class_descriptor;
-  const char* name;
+  std::string class_descriptor{""};
+  std::string name{""};
   std::set<int64_t> identifiers;
   int32_t identifier;
+};
 
-  // Sometimes we need to own the strings pointed to by the fields above.
-  // We can put them in here to transparently handle the case where we
-  // own or don't own the strings.
-  std::unique_ptr<std::vector<std::string>> owned_strings;
+struct CppUnwinderJavaFrame {
+  const char* class_descriptor;
+  const char* name;
+  int32_t identifier;
 };
 
 namespace {
@@ -117,16 +118,8 @@ std::vector<JavaFrame> getJavaStackTrace(
     std::replace(classname.begin(), classname.end(), '.', '/');
 
     JavaFrame frame{};
-    frame.owned_strings = std::make_unique<std::vector<std::string>>();
-    auto& strings = *frame.owned_strings;
-
-    strings.push_back("L" + classname + ";"); // convert to descriptor
-    auto& class_descriptor = strings.at(0);
-    frame.class_descriptor = class_descriptor.c_str();
-
-    strings.push_back(methodname);
-    auto& name = strings.at(1);
-    frame.name = name.c_str();
+    frame.class_descriptor = "L" + classname + ";";
+    frame.name = methodname;
 
     // On pre-Pie Android we can also verify the method idx by
     // extracting all possible overloads for the method in the
@@ -176,7 +169,7 @@ std::vector<JavaFrame> getJavaStackTrace(
 
 size_t getCppStackTrace(
     profiler::JavaBaseTracer* tracer,
-    std::array<JavaFrame, kStackSize>& result) {
+    std::array<CppUnwinderJavaFrame, kStackSize>& result) {
   uint16_t depth = 0;
 
   int64_t ints[kStackSize];
@@ -185,11 +178,11 @@ size_t getCppStackTrace(
   auto ret = tracer->collectJavaStack(
       nullptr, ints, method_names, class_descriptors, depth, kStackSize);
   for (size_t idx = 0; idx < depth; idx++) {
-    JavaFrame frame{};
-    frame.class_descriptor = class_descriptors[idx];
-    frame.name = method_names[idx];
-    frame.identifier = ints[idx] >> 32;
-    result[idx] = std::move(frame);
+    result[idx] = CppUnwinderJavaFrame{
+        .class_descriptor = class_descriptors[idx],
+        .name = method_names[idx],
+        .identifier = static_cast<int32_t>(ints[idx] >> 32),
+    };
   }
 
   if (ret != StackCollectionRetcode::SUCCESS) {
@@ -200,7 +193,7 @@ size_t getCppStackTrace(
 }
 
 bool compareStackTraces(
-    std::array<JavaFrame, kStackSize>& cppStack,
+    std::array<CppUnwinderJavaFrame, kStackSize>& cppStack,
     size_t cppStackSize,
     std::vector<JavaFrame>& javaStack) {
   size_t javaStackSize = javaStack.size();
@@ -221,7 +214,6 @@ bool compareStackTraces(
     auto& cpp_frame = cppStack[cppStackSize - i - 1];
     auto& java_frame = javaStack[javaStackSize - i - 1];
 
-    bool performed_check = false;
     if (java_frame.identifiers.size() != 0 && cpp_frame.identifier != 0) {
       int64_t cpp_identifier = cpp_frame.identifier;
 
@@ -232,35 +224,30 @@ bool compareStackTraces(
         FBLOGW("C++ identifier not in Java list");
         return false;
       }
+    } else {
+      FBLOGW("Failed to fetch method identifiers");
+      return false;
+    }
 
-      performed_check = true;
+    if (cpp_frame.class_descriptor == nullptr || cpp_frame.name == nullptr) {
+      FBLOGW("Cpp Unwind returned empty class or method symbol(s)");
+      return false;
     }
 
     // We want Class + Name to be extra sure.
-    if (java_frame.name != nullptr && cpp_frame.name != nullptr &&
-        java_frame.class_descriptor != nullptr &&
-        cpp_frame.class_descriptor != nullptr) {
-      if (strcmp(java_frame.class_descriptor, cpp_frame.class_descriptor) !=
-          0) {
-        FBLOGW(
-            "Class descriptors did not match Java:%s C++:%s",
-            java_frame.class_descriptor,
-            cpp_frame.class_descriptor);
-        return false;
-      }
-
-      if (strcmp(java_frame.name, cpp_frame.name) != 0) {
-        FBLOGW(
-            "Method names did not match Java:%s C++:%s",
-            java_frame.name,
-            cpp_frame.name);
-        return false;
-      }
-      performed_check = true;
+    if (java_frame.class_descriptor.compare(cpp_frame.class_descriptor) != 0) {
+      FBLOGW(
+          "Class descriptors did not match Java:%s C++:%s",
+          java_frame.class_descriptor.c_str(),
+          cpp_frame.class_descriptor);
+      return false;
     }
 
-    if (!performed_check) {
-      FBLOGE("No intersecting information between unwinder and Java side");
+    if (java_frame.name.compare(cpp_frame.name) != 0) {
+      FBLOGW(
+          "Method names did not match Java:%s C++:%s",
+          java_frame.name.c_str(),
+          cpp_frame.name);
       return false;
     }
   }
@@ -316,7 +303,7 @@ bool runJavaCompatibilityCheckInternal(
         try {
           tracer->startTracing();
 
-          std::array<JavaFrame, kStackSize> cppStack;
+          std::array<CppUnwinderJavaFrame, kStackSize> cppStack;
           auto cppStackSize = getCppStackTrace(tracer, cppStack);
 
           if (compareStackTraces(cppStack, cppStackSize, javaStack)) {
