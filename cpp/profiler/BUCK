@@ -321,8 +321,8 @@ PROFILER_COMPILER_FLAGS = [
     "-Wno-unknown-attributes",
     #"-DFBLOG_NDEBUG=0",  # verbose logging
     "-Wno-reorder-init-list",
-    "-Wno-unknown-warning-option",
     "-std=gnu++14",
+    "-Wno-unknown-warning-option",
 ] + profilo_maybe_hidden_visibility()
 
 PROFILER_SONAME = "libprofilo_stacktrace.$(ext)"
