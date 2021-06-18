@@ -16,6 +16,7 @@
 
 #include "MmapBufferManager.h"
 #include <errno.h>
+#include <unistd.h>
 #include <cstring>
 #include <memory>
 #include <stdexcept>
@@ -82,6 +83,7 @@ std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
   buffer->prefix->header.size = (size_t)buffer_size;
   buffer->prefix->header.versionCode = version_code;
   buffer->prefix->header.configId = config_id;
+  buffer->prefix->header.pid = getpid();
 
   {
     WriterLock lock(&buffers_lock_);
