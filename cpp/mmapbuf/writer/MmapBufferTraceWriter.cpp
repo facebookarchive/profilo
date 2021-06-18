@@ -312,7 +312,7 @@ void MmapBufferTraceWriter::writeTrace(
       std::move(trace_prefix),
       buffer,
       callbacks,
-      calculateHeaders());
+      calculateHeaders(mapBufferPrefix->header.pid));
 
   try {
     writer.processTrace(trace_id_, startCursor);

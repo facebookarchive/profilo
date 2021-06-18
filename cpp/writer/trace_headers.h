@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <unistd.h>
 #include <string>
 #include <vector>
 
@@ -23,7 +24,8 @@ namespace facebook {
 namespace profilo {
 namespace writer {
 
-std::vector<std::pair<std::string, std::string>> calculateHeaders();
+std::vector<std::pair<std::string, std::string>> calculateHeaders(
+    pid_t pid = getpid());
 
 } // namespace writer
 } // namespace profilo

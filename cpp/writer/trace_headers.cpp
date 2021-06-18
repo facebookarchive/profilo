@@ -18,7 +18,6 @@
 
 #include <errno.h>
 #include <sys/utsname.h>
-#include <unistd.h>
 #include <sstream>
 #include <string>
 #include <system_error>
@@ -30,13 +29,13 @@ namespace facebook {
 namespace profilo {
 namespace writer {
 
-std::vector<std::pair<std::string, std::string>> calculateHeaders() {
+std::vector<std::pair<std::string, std::string>> calculateHeaders(pid_t pid) {
   auto result = std::vector<std::pair<std::string, std::string>>();
   result.reserve(4);
 
   {
     std::stringstream ss;
-    ss << getpid();
+    ss << pid;
     result.push_back(std::make_pair("pid", ss.str()));
   }
 
