@@ -41,7 +41,7 @@ public class LoggerWorkerThread extends Thread {
     mBuffers = buffers;
     boolean needsCachedCallbacks = buffers.length > 1;
     mCallbacks = new CachingNativeTraceWriterCallbacks(needsCachedCallbacks, callbacks);
-    mMainTraceWriter = new NativeTraceWriter(buffers[0], folder, prefix, mCallbacks);
+    mMainTraceWriter = new NativeTraceWriter(buffers[0], folder, prefix + "-0", mCallbacks);
   }
 
   public NativeTraceWriter getTraceWriter() {
