@@ -108,7 +108,10 @@ void format_value(buffer<Char>& buf, const T& value,
 
 // Formats an object of type T that has an overloaded ostream operator<<.
 template <typename T, typename Char>
-struct fallback_formatter<T, Char, enable_if_t<is_streamable<T, Char>::value>>
+struct fallback_formatter<T, Char,
+  enable_if_t<
+    is_streamable<T, Char>::value &&
+    !std::is_constructible<std_string_view<Char>, T>::value>>
     : private formatter<basic_string_view<Char>, Char> {
   FMT_CONSTEXPR auto parse(basic_format_parse_context<Char>& ctx)
       -> decltype(ctx.begin()) {
