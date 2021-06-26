@@ -57,15 +57,11 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
   //
   std::shared_ptr<Buffer> allocateBufferFile(
       int32_t buffer_slots_size,
-      const std::string& path,
-      int32_t version_code,
-      int64_t config_id);
+      const std::string& path);
 
   fbjni::local_ref<JBuffer::javaobject> allocateBufferFileForJava(
       int32_t buffer_slots_size,
-      const std::string& path,
-      int32_t version_code,
-      int64_t config_id);
+      const std::string& path);
 
   bool deallocateBufferForJava(JBuffer* buffer);
   bool deallocateBuffer(std::shared_ptr<Buffer> buffer);
@@ -75,6 +71,8 @@ class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
   static void registerNatives();
 
  private:
+  void registerBuffer(std::shared_ptr<Buffer> buffer);
+
   pthread_rwlock_t buffers_lock_ = PTHREAD_RWLOCK_INITIALIZER;
   std::vector<std::shared_ptr<Buffer>> buffers_;
 

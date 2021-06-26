@@ -29,7 +29,7 @@ public class TraceContextRule implements MethodRule {
   }
 
   private final int mProviders;
-  private final MmapBufferManager mBufferManager = new MmapBufferManager(new File("."), null);
+  private final MmapBufferManager mBufferManager = new MmapBufferManager(new File("."));
   private ArrayList<Buffer> mBuffers = new ArrayList<>();
   private TraceContext mContext = null;
 
@@ -41,7 +41,7 @@ public class TraceContextRule implements MethodRule {
   }
 
   public Buffer newBuffer() {
-    Buffer buffer = mBufferManager.allocateBuffer(1000, false, 0);
+    Buffer buffer = mBufferManager.allocateBuffer(1000, false);
     mBuffers.add(buffer);
     return buffer;
   }

@@ -13,9 +13,6 @@
  */
 package com.facebook.profilo.mmapbuf;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import com.facebook.jni.HybridData;
 import com.facebook.jni.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
@@ -34,43 +31,24 @@ public class MmapBufferManager {
 
   @DoNotStrip private final HybridData mHybridData;
   private final MmapBufferFileHelper mFileHelper;
-  private final Context mContext;
 
   @DoNotStrip
   private static native HybridData initHybrid();
 
-  public MmapBufferManager(File folder, Context context) {
-    mContext = context;
+  public MmapBufferManager(File folder) {
     mFileHelper = new MmapBufferFileHelper(folder);
     mHybridData = initHybrid();
   }
 
-  private int getVersionCode() {
-    if (mContext == null) {
-      return 0;
-    }
-    PackageManager pm = mContext.getPackageManager();
-    if (pm == null) {
-      return 0;
-    }
-    PackageInfo pi;
-    try {
-      pi = pm.getPackageInfo(mContext.getPackageName(), 0);
-    } catch (PackageManager.NameNotFoundException | RuntimeException e) {
-      return 0;
-    }
-    return pi.versionCode;
-  }
-
   @Nullable
-  public Buffer allocateBuffer(int size, boolean filebacked, long configId) {
+  public Buffer allocateBuffer(int size, boolean filebacked) {
     if (filebacked) {
       String fileName = MmapBufferFileHelper.getBufferFilename(UUID.randomUUID().toString());
       String mmapBufferPath = mFileHelper.ensureFilePath(fileName);
       if (mmapBufferPath == null) {
         return null;
       }
-      return nativeAllocateBuffer(size, mmapBufferPath, getVersionCode(), configId);
+      return nativeAllocateBuffer(size, mmapBufferPath);
     } else {
       return nativeAllocateBuffer(size);
     }
@@ -86,7 +64,7 @@ public class MmapBufferManager {
 
   @DoNotStrip
   @Nullable
-  private native Buffer nativeAllocateBuffer(int size, String path, int buildId, long configId);
+  private native Buffer nativeAllocateBuffer(int size, String path);
 
   @DoNotStrip
   private native boolean nativeDeallocateBuffer(Buffer buffer);

@@ -44,22 +44,15 @@ std::shared_ptr<Buffer> MmapBufferManager::allocateBufferAnonymous(
     FBLOGE("%s", ex.what());
     return nullptr;
   }
-
-  {
-    WriterLock lock(&buffers_lock_);
-    buffers_.push_back(buffer);
-  }
-
+  registerBuffer(buffer);
   return buffer;
 }
 
 fbjni::local_ref<JBuffer::javaobject>
 MmapBufferManager::allocateBufferFileForJava(
     int32_t buffer_size,
-    const std::string& path,
-    int32_t version_code,
-    int64_t config_id) {
-  auto buffer = allocateBufferFile(buffer_size, path, version_code, config_id);
+    const std::string& path) {
+  auto buffer = allocateBufferFile(buffer_size, path);
   if (buffer == nullptr) {
     throw std::invalid_argument("Could not allocate file-backed buffer");
   }
@@ -68,9 +61,7 @@ MmapBufferManager::allocateBufferFileForJava(
 
 std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
     int32_t buffer_size,
-    const std::string& path,
-    int32_t version_code,
-    int64_t config_id) {
+    const std::string& path) {
   std::shared_ptr<Buffer> buffer = nullptr;
   try {
     buffer = std::make_shared<Buffer>(path, (size_t)buffer_size);
@@ -78,20 +69,19 @@ std::shared_ptr<Buffer> MmapBufferManager::allocateBufferFile(
     FBLOGE("%s", ex.what());
     return nullptr;
   }
+  registerBuffer(buffer);
+  // Pass the buffer to the global singleton
+  return buffer;
+}
 
+void MmapBufferManager::registerBuffer(std::shared_ptr<Buffer> buffer) {
   buffer->prefix->header.bufferVersion = RingBuffer::kVersion;
-  buffer->prefix->header.size = (size_t)buffer_size;
-  buffer->prefix->header.versionCode = version_code;
-  buffer->prefix->header.configId = config_id;
+  buffer->prefix->header.size = buffer->entryCount;
   buffer->prefix->header.pid = getpid();
-
   {
     WriterLock lock(&buffers_lock_);
     buffers_.push_back(buffer);
   }
-
-  // Pass the buffer to the global singleton
-  return buffer;
 }
 
 fbjni::local_ref<MmapBufferManager::jhybriddata> MmapBufferManager::initHybrid(

@@ -199,50 +199,6 @@ class LockFreeRingBuffer {
     return Cursor(ticket - backStep);
   }
 
-  /// Writing the buffer slots from tail to head to the specified FD.
-  ///
-  /// Warning: FOR BREAKPAD USE ONLY! NOT THREAD-SAFE!
-  /// The only intended use of this method is to save the buffer during
-  /// crash time. Use of any locks is unsafe during crash handling, thus
-  /// this code assumes no race conditions can occur.
-  ///
-  /// Returns true if all writes were successful and false otherwise.
-  bool dumpDataToFile(const int fd) {
-#ifdef __ANDROID__ // Workaround for test environment missing the function.
-    // Assuming that atomic load for int64_t is lock-free.
-    // If it's not the case - return.
-    if (!ticket_.is_lock_free()) {
-      return false;
-    }
-#endif
-    auto head = ticket_.load();
-    auto ticket = head < capacity_ ? 0 : head - capacity_;
-
-    static const auto dataSize = sizeof(T);
-
-    T dest;
-    while (ticket < head) {
-      auto& slot = slots_[idx(ticket)];
-      // Check if slot write if in finished state and is set to the next turn.
-      // If not it means the slot is in the middle of writing and we skip.
-      if (slot.tryRead(dest, turn(ticket))) {
-        auto ret = ::write(fd, reinterpret_cast<void*>(&slot.data), dataSize);
-        if (ret != dataSize) {
-          // Write failed, no point to continue the dump.
-          return false;
-        }
-      }
-      ++ticket;
-    }
-    return true;
-  }
-
-  // Returns the size in bytes required for storage of the buffer's dump
-  // produced by method dumpDataToFile(int)
-  uint64_t getDumpBytesCount() const {
-    return sizeof(T) * capacity_;
-  }
-
  private:
   const uint32_t capacity_;
   Atom<uint64_t> ticket_;

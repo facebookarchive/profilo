@@ -42,8 +42,6 @@ constexpr char kTracePrefix[] = "mmabbuf-test-trace-";
 constexpr int64_t kTraceId = 222;
 constexpr int32_t kQplId = 33444;
 constexpr int64_t kTraceRecollectionTimestamp = 1234567;
-constexpr int32_t kConfigId = 11;
-constexpr int32_t kBuildId = 17;
 
 static const std::array<std::string, 3> kMappings = {
     "libhwui.so:722580c000:586015DEC7C4DA055D33796D9D793508:186000:491000",
@@ -149,7 +147,7 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
       int records_count,
       int buffer_size,
       bool set_mappings_file = false) {
-    auto buffer = manager_.allocateBufferFile(buffer_size, dumpPath(), 1, 1);
+    auto buffer = manager_.allocateBufferFile(buffer_size, dumpPath());
     ASSERT_NE(buffer, nullptr) << "Unable to allocate the buffer";
     buffer->prefix->header.providers = 0;
     buffer->prefix->header.longContext = kQplId;

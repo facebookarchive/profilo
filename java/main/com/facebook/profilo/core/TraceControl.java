@@ -407,8 +407,7 @@ public final class TraceControl {
       buffers[idx] =
           mBufferManager.allocateBuffer(
               bufferSizes != null && idx < bufferSizes.length ? bufferSizes[idx] : systemBufferSize,
-              filebacked,
-              config.getID());
+              filebacked);
     }
     return buffers;
   }
@@ -444,7 +443,10 @@ public final class TraceControl {
 
     for (Buffer buffer : nextContext.buffers) {
       buffer.updateHeader(
-          nextContext.enabledProviders, nextContext.longContext, nextContext.traceId);
+          nextContext.enabledProviders,
+          nextContext.longContext,
+          nextContext.traceId,
+          nextContext.config.getID());
     }
 
     int timeout = getTimeoutFromContext(nextContext);

@@ -34,20 +34,6 @@ namespace profilo {
 namespace logger {
 namespace lfrb {
 
-class LockFreeRingBufferDumpTest : public ::testing::Test {
- protected:
-  LockFreeRingBufferDumpTest()
-      : ::testing::Test(), temp_dump_file_("test_dump") {
-    std::srand(std::time(nullptr));
-  }
-
-  int fd() {
-    return temp_dump_file_.fd();
-  }
-
-  test::TemporaryFile temp_dump_file_;
-};
-
 const int kPayloadSize = 64;
 
 struct __attribute__((packed)) TestPacket {
@@ -102,79 +88,6 @@ uint32_t writeRandomEntries(
     buf.write(packet);
   }
   return crc;
-}
-
-uint32_t readDumpCrc32(int fd, int records_count) {
-  TestPacket* bufferDump = reinterpret_cast<TestPacket*>(mmap(
-      nullptr,
-      sizeof(TestPacket) * records_count,
-      PROT_READ,
-      MAP_PRIVATE,
-      fd,
-      0));
-  auto crc = crc32(0, Z_NULL, 0);
-  for (int i = 0; i < records_count; ++i) {
-    crc = crc32(
-        crc,
-        reinterpret_cast<const unsigned char*>(bufferDump[i].payload),
-        kPayloadSize);
-  }
-  munmap(bufferDump, kPayloadSize);
-  return crc;
-}
-
-TEST_F(LockFreeRingBufferDumpTest, testEmptyBufDump) {
-  const auto kBufferSize = 10;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
-  int dumpFD = fd();
-  buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
-  struct stat dumpStat;
-  fstat(dumpFD, &dumpStat);
-
-  EXPECT_EQ(dumpStat.st_size, 0);
-}
-
-TEST_F(LockFreeRingBufferDumpTest, testDumpCorrectness) {
-  const auto kBufferSize = 7;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
-  auto crc = writeRandomEntries(*buf, kBufferSize, kBufferSize);
-  int dumpFD = fd();
-  buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
-  auto crc_after = readDumpCrc32(dumpFD, kBufferSize);
-
-  EXPECT_EQ(crc, crc_after);
-}
-
-TEST_F(LockFreeRingBufferDumpTest, testSmallBufDump) {
-  const auto kBufferSize = 10;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
-  const auto kRecords = 5;
-  auto crc = writeRandomEntries(*buf, kRecords, kBufferSize);
-  int dumpFD = fd();
-  buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
-  auto crc_after = readDumpCrc32(dumpFD, kRecords);
-
-  EXPECT_EQ(crc, crc_after);
-}
-
-TEST_F(LockFreeRingBufferDumpTest, testBufDumpAfterOverflow) {
-  const auto kBufferSize = 10;
-  auto* buf = LockFreeRingBufferTestAccessor::allocate(kBufferSize);
-  const auto kRecords = 25;
-  auto crc = writeRandomEntries(*buf, kRecords, kBufferSize);
-  int dumpFD = fd();
-  buf->dumpDataToFile(dumpFD);
-  LockFreeRingBufferTestAccessor::destroy(buf);
-
-  auto crc_after = readDumpCrc32(dumpFD, kBufferSize);
-
-  EXPECT_EQ(crc, crc_after);
 }
 
 TEST(LockFreeRingBufferTest, testAllocationCorrectness) {

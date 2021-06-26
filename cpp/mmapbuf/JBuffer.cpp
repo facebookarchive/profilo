@@ -27,7 +27,8 @@ JBuffer::JBuffer(std::weak_ptr<Buffer> buffer) : buffer_(std::move(buffer)) {}
 void JBuffer::updateHeader(
     int32_t providers,
     int64_t long_context,
-    int64_t trace_id) {
+    int64_t trace_id,
+    int64_t config_id) {
   auto buffer = buffer_.lock();
   if (buffer == nullptr) {
     return;
@@ -35,6 +36,7 @@ void JBuffer::updateHeader(
   buffer->prefix->header.providers = providers;
   buffer->prefix->header.longContext = long_context;
   buffer->prefix->header.traceId = trace_id;
+  buffer->prefix->header.configId = config_id;
 }
 
 void JBuffer::updateId(const std::string& id) {

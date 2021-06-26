@@ -36,7 +36,11 @@ class JBuffer final : public fbjni::HybridClass<JBuffer> {
 
   static void registerNatives();
 
-  void updateHeader(int32_t providers, int64_t long_context, int64_t trace_id);
+  void updateHeader(
+      int32_t providers,
+      int64_t long_context,
+      int64_t trace_id,
+      int64_t config_id);
 
   void updateId(const std::string& id);
 

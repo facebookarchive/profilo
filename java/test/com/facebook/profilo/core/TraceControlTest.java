@@ -140,7 +140,7 @@ public class TraceControlTest extends PowerMockTest {
 
     MmapBufferManager manager = mock(MmapBufferManager.class);
     mBuffer = mock(Buffer.class);
-    when(manager.allocateBuffer(anyInt(), anyBoolean(), anyLong())).thenReturn(mBuffer);
+    when(manager.allocateBuffer(anyInt(), anyBoolean())).thenReturn(mBuffer);
     mTraceControl =
         new TraceControl(
             mControllers,

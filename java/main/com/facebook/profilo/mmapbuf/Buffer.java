@@ -86,7 +86,8 @@ public class Buffer {
   }
 
   @DoNotStrip
-  public synchronized native void updateHeader(int providers, long longContext, long traceId);
+  public synchronized native void updateHeader(
+      int providers, long longContext, long traceId, long configId);
 
   @DoNotStrip
   private native void nativeUpdateId(String sessionId);
