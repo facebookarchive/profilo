@@ -240,6 +240,7 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   traceWriter.nativeInitAndVerify(dumpPath());
   traceWriter.writeTrace(
       "test",
+      true,
       testFolder,
       testTracePrefix,
       0,
@@ -267,6 +268,7 @@ TEST_F(
   traceWriter.nativeInitAndVerify(dumpPath());
   traceWriter.writeTrace(
       "test",
+      true,
       testFolder,
       testTracePrefix,
       0,
@@ -296,6 +298,7 @@ TEST_F(
   traceWriter.nativeInitAndVerify(dumpPath());
   traceWriter.writeTrace(
       "test",
+      true,
       testFolder,
       testTracePrefix,
       0,
@@ -319,6 +322,7 @@ TEST_F(
     traceWriter.nativeInitAndVerify(dumpPath());
     traceWriter.writeTrace(
         "test",
+        true,
         testFolder,
         testTracePrefix,
         0,

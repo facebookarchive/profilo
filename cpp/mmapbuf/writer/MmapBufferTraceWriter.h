@@ -50,6 +50,7 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
 
   void nativeWriteTrace(
       const std::string& type,
+      bool persistent,
       const std::string& trace_folder,
       const std::string& trace_prefix,
       int32_t trace_flags,
@@ -59,6 +60,7 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
   // Given a dump path, verifies it and re-collects the data into trace
   void writeTrace(
       const std::string& type,
+      bool persistent,
       const std::string& trace_folder,
       const std::string& trace_prefix,
       int32_t trace_flags,

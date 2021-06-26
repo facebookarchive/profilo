@@ -204,12 +204,14 @@ int64_t MmapBufferTraceWriter::nativeInitAndVerify(
 
 void MmapBufferTraceWriter::nativeWriteTrace(
     const std::string& type,
+    bool persistent,
     const std::string& trace_folder,
     const std::string& trace_prefix,
     int32_t trace_flags,
     fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks) {
   writeTrace(
       type,
+      persistent,
       trace_folder,
       trace_prefix,
       trace_flags,
@@ -218,6 +220,7 @@ void MmapBufferTraceWriter::nativeWriteTrace(
 
 void MmapBufferTraceWriter::writeTrace(
     const std::string& type,
+    bool persistent,
     const std::string& trace_folder,
     const std::string& trace_prefix,
     int32_t trace_flags,
@@ -294,8 +297,10 @@ void MmapBufferTraceWriter::writeTrace(
       std::string(mapBufferPrefix->header.sessionId));
   loggerWriteQplTriggerAnnotation(
       logger, qpl_marker_id, "type", type, timestamp);
-  loggerWriteQplTriggerAnnotation(
-      logger, qpl_marker_id, "collection_method", "persistent", timestamp);
+  if (persistent) {
+    loggerWriteQplTriggerAnnotation(
+        logger, qpl_marker_id, "collection_method", "persistent", timestamp);
+  }
 
   const char* mapsFilename = mapBufferPrefix->header.memoryMapsFilename;
   if (mapsFilename[0] != '\0') {

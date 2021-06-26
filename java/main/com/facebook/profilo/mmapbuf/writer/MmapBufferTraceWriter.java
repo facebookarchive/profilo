@@ -40,6 +40,7 @@ public class MmapBufferTraceWriter {
   @DoNotStrip
   public native void nativeWriteTrace(
       String tag,
+      boolean persistent,
       String traceFolder,
       String tracePrefix,
       int traceFlags,
