@@ -379,7 +379,7 @@ public final class TraceControl {
         new TraceContext(
             traceContext.traceId,
             traceContext.encodedTraceId,
-            null,
+            config,
             controller,
             traceController,
             traceContext.context,

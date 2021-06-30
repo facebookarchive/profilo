@@ -181,6 +181,8 @@ public class TraceControlTest extends PowerMockTest {
 
   @Test
   public void testStartWithExistingTraceContext() {
+    // Context from IPC is absent
+    mTraceContext.config = null;
     assertThat(mTraceControl.adoptContext(TRACE_CONTROLLER_ID, 0, mTraceContext)).isTrue();
     assertTracing();
 
@@ -194,6 +196,7 @@ public class TraceControlTest extends PowerMockTest {
     assertThat(currContext.longContext).isEqualTo(mTraceContext.longContext);
     assertThat(currContext.enabledProviders).isEqualTo(mTraceContext.enabledProviders);
     assertThat(currContext.mTraceConfigExtras).isEqualTo(mTraceContext.mTraceConfigExtras);
+    assertThat(currContext.config).isNotNull();
   }
 
   @Test
