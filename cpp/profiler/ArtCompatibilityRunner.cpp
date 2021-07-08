@@ -46,7 +46,6 @@ struct JavaFrame {
   std::string class_descriptor{""};
   std::string name{""};
   std::set<int64_t> identifiers;
-  int32_t identifier;
 };
 
 struct CppUnwinderJavaFrame {
@@ -124,42 +123,36 @@ std::vector<JavaFrame> getJavaStackTrace(
     // On pre-Pie Android we can also verify the method idx by
     // extracting all possible overloads for the method in the
     // stack trace and using reflection to collect their method idxs.
+    if (version < versions::ANDROID_9_0) {
+      auto cls = fbjni::findClassLocal(classname.c_str());
+      auto cls_methods = jlClass_getDeclaredMethods(cls);
+      auto cls_methods_size = cls_methods->size();
 
-    auto cls = fbjni::findClassLocal(classname.c_str());
-    auto cls_methods = jlClass_getDeclaredMethods(cls);
-    auto cls_methods_size = cls_methods->size();
-
-    std::multimap<std::string, uint32_t> methods_map{};
-    for (size_t meth_idx = 0; meth_idx < cls_methods_size; meth_idx++) {
-      auto method = cls_methods->getElement(meth_idx);
-      uint32_t dexMethodIndex;
-      if (version == versions::ANDROID_5) {
-        dexMethodIndex = getDexMethodIndex5(method);
-      } else if (
-          version == versions::ANDROID_6_0 ||
-          version == versions::ANDROID_7_0 ||
-          version == versions::ANDROID_8_0 ||
-          version == versions::ANDROID_8_1) {
-        dexMethodIndex = getDexMethodIndex678(method);
-      } else {
-        // Skip for OS 9
-        continue;
+      std::multimap<std::string, uint32_t> methods_map{};
+      for (size_t meth_idx = 0; meth_idx < cls_methods_size; meth_idx++) {
+        auto method = cls_methods->getElement(meth_idx);
+        uint32_t dexMethodIndex;
+        if (version == versions::ANDROID_5) {
+          dexMethodIndex = getDexMethodIndex5(method);
+        } else {
+          dexMethodIndex = getDexMethodIndex678(method);
+        }
+        methods_map.insert(std::make_pair(
+            jlrMethod_getName(method)->toStdString(), dexMethodIndex));
       }
-      methods_map.insert(std::make_pair(
-          jlrMethod_getName(method)->toStdString(), dexMethodIndex));
+
+      auto matches = methods_map.equal_range(methodname);
+      std::set<int64_t> overloads{};
+      std::transform(
+          matches.first,
+          matches.second,
+          std::inserter(overloads, overloads.begin()),
+          [](const std::pair<std::string, uint32_t>& pair) {
+            return pair.second;
+          });
+
+      frame.identifiers = std::move(overloads);
     }
-
-    auto matches = methods_map.equal_range(methodname);
-    std::set<int64_t> overloads{};
-    std::transform(
-        matches.first,
-        matches.second,
-        std::inserter(overloads, overloads.begin()),
-        [](const std::pair<std::string, uint32_t>& pair) {
-          return pair.second;
-        });
-
-    frame.identifiers = std::move(overloads);
 
     result.emplace_back(std::move(frame));
   }
@@ -214,6 +207,8 @@ bool compareStackTraces(
     auto& cpp_frame = cppStack[cppStackSize - i - 1];
     auto& java_frame = javaStack[javaStackSize - i - 1];
 
+    // If either of identifiers is not available the check will be limited to
+    // descriptors only.
     if (java_frame.identifiers.size() != 0 && cpp_frame.identifier != 0) {
       int64_t cpp_identifier = cpp_frame.identifier;
 
@@ -224,9 +219,6 @@ bool compareStackTraces(
         FBLOGW("C++ identifier not in Java list");
         return false;
       }
-    } else {
-      FBLOGW("Failed to fetch method identifiers");
-      return false;
     }
 
     if (cpp_frame.class_descriptor == nullptr || cpp_frame.name == nullptr) {
