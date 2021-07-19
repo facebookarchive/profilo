@@ -221,7 +221,7 @@ void* create_trampoline(HookId id) {
   trampolines_.emplace_back(id);
   return trampolines_.back().code();
 #else
-  throw std::runtime_error("unsupported architecture");
+  throw std::runtime_error("PLT hooks not supported on this architecture");
 #endif
 }
 
