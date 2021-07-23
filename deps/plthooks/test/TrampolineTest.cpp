@@ -114,7 +114,13 @@ TEST_F(TrampolineTest, testTrampoline) {
 
   trampoline_data->push_hook = &test_push_stack;
   trampoline_data->pop_hook = &test_pop_stack;
-  trampoline_data->id = 0xfaceb00c;
+  if (sizeof(HookId) == 4) {
+    trampoline_data->id = 0xfaceb00c;
+  } else if (sizeof(HookId) == 8) {
+    trampoline_data->id = 0xfaceb00cb0a710ad;
+  } else {
+    FAIL(); // HookId not 4 or 8 bytes
+  }
 
   auto trampoline_return = trampoline_code(10, 0.25, 20);
 
@@ -123,8 +129,16 @@ TEST_F(TrampolineTest, testTrampoline) {
   EXPECT_TRUE(hook_vals.called) << "hook not called";
   EXPECT_TRUE(pop_vals.called) << "pop_hook not called";
 
-  EXPECT_EQ(push_vals.id, 0xfaceb00c)
+  if (sizeof(HookId) == 4) {
+    EXPECT_EQ(push_vals.id, 0xfaceb00c)
       << "push_hook called with wrong hook id value";
+  } else if (sizeof(HookId) == 8) {
+    EXPECT_EQ(push_vals.id, 0xfaceb00cb0a710ad)
+      << "push_hook called with wrong hook id value";
+  } else {
+      FAIL(); // HookId not 4 or 8 bytes
+  }
+  
   EXPECT_EQ(hook_vals.a, 10) << "hook_a is wrong";
   EXPECT_EQ(hook_vals.b, 0.25) << "hook_b is wrong";
   EXPECT_EQ(hook_vals.c, 20) << "hook_c is wrong";

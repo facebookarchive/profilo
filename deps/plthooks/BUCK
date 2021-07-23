@@ -49,6 +49,10 @@ profilo_oss_cxx_library(
             "^android-arm64$",
             ["trampoline_arm64.c"],
         ),
+        (
+            "^android-x86_64$",
+            ["trampoline_x86_64.c"],
+        ),
     ],
     preferred_linkage = "static",
     preprocessor_flags = [
