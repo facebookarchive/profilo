@@ -142,6 +142,7 @@ class JStaticMethod<TYPE(Args...)> : public JMethodBase {                   \
   using JMethodBase::JMethodBase;                                           \
   JStaticMethod() noexcept {};                                              \
   JStaticMethod(const JStaticMethod& other) noexcept = default;             \
+  JStaticMethod& operator=(const JStaticMethod& other) noexcept = default;  \
                                                                             \
   TYPE operator()(alias_ref<jclass> cls, Args... args) const;               \
                                                                             \

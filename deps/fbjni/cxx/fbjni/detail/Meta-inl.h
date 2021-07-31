@@ -119,6 +119,7 @@ class JMethod<R(Args...)> : public JMethodBase {
   using JMethodBase::JMethodBase;
   JMethod() noexcept {};
   JMethod(const JMethod& other) noexcept = default;
+  JMethod& operator=(const JMethod& other) noexcept = default;
 
   /// Invoke a method and return a local reference wrapping the result
   local_ref<JniRet> operator()(alias_ref<jobject> self, Args... args) const;
