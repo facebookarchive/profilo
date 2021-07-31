@@ -216,10 +216,7 @@ public class TraceOrchestratorTest {
     mOrchestrator.setBackgroundUploadService(mUploadService);
     verify(mUploadService, times(1))
         .uploadInBackground(
-            same(tracesList), any(BackgroundUploadService.BackgroundUploadListener.class));
-
-    verify(mUploadService, times(1))
-        .uploadInBackgroundSkipChecks(
+            same(tracesList),
             same(tracesListSkipChecks),
             any(BackgroundUploadService.BackgroundUploadListener.class));
   }
@@ -240,10 +237,7 @@ public class TraceOrchestratorTest {
     Whitebox.invokeMethod(mOrchestrator, "triggerUpload");
     verify(mUploadService, times(1))
         .uploadInBackground(
-            same(tracesList), any(BackgroundUploadService.BackgroundUploadListener.class));
-
-    verify(mUploadService, times(1))
-        .uploadInBackgroundSkipChecks(
+            same(tracesList),
             same(tracesListSkipChecks),
             any(BackgroundUploadService.BackgroundUploadListener.class));
   }

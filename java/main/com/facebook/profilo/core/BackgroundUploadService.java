@@ -30,13 +30,14 @@ public interface BackgroundUploadService {
     public void onUploadFailed(File file, int reason);
   }
 
-  public void uploadInBackground(List<File> files, BackgroundUploadListener listener);
-
   /**
-   * This is a special upload call that ignores constraint checks. This should only be used for
-   * cases that really know what they're doing - such as manual uploads in developer builds.
+   * Schedules a file batch for upload
+   *
+   * @files - are for normal files which are subject for quota checks, etc.
+   * @priorityFiles - are scheduled first and all checks are skipped
    */
-  public void uploadInBackgroundSkipChecks(List<File> files, BackgroundUploadListener listener);
+  public void uploadInBackground(
+      List<File> files, List<File> priorityFiles, BackgroundUploadListener listener);
 
   public boolean canUpload();
 

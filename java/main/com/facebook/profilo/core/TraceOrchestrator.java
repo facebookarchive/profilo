@@ -666,9 +666,8 @@ public final class TraceOrchestrator
       return;
     }
 
-    backgroundUploadService.uploadInBackground(mFileManager.getTrimmableFilesToUpload(), this);
-    backgroundUploadService.uploadInBackgroundSkipChecks(
-        mFileManager.getUntrimmableFilesToUpload(), this);
+    backgroundUploadService.uploadInBackground(
+        mFileManager.getTrimmableFilesToUpload(), mFileManager.getUntrimmableFilesToUpload(), this);
   }
 
   /**
