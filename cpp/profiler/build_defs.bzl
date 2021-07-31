@@ -26,6 +26,9 @@ def unwindc_tracer_library(version, allow_64bit = False):
             "-Wno-self-assign",
             "-Wno-parentheses-equality",
             "-Wno-unused-variable",
+            # Remove this once llvm-13 is released: T95767731
+            "-Wno-unknown-warning-option",
+            "-Wno-unused-but-set-variable",
         ],
         exported_preprocessor_flags = [
             "-DANDROID_VERSION_{}".format(version_num),
