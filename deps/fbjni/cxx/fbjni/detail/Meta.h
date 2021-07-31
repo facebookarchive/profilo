@@ -91,6 +91,7 @@ class JMethod<TYPE(Args...)> : public JMethodBase {                             
   using JMethodBase::JMethodBase;                                                \
   JMethod() noexcept {};                                                         \
   JMethod(const JMethod& other) noexcept = default;                              \
+  JMethod& operator=(const JMethod& other) noexcept = default;                   \
                                                                                  \
   TYPE operator()(alias_ref<jobject> self, Args... args) const;                  \
                                                                                  \
