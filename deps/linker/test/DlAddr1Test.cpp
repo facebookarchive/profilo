@@ -50,6 +50,11 @@ TEST_F(DlAddr1Test, testDladdr1) {
   ASSERT_LT(0U, sym->st_size);
 }
 
+/**
+ *  This test requires that we are able to interpose dladdr() so we can simulate a nullptr return
+ *  in some of its fields. This only works if the dependency using dladdr is statically linked
+ *  into the same library as this CU.
+ */
 TEST_F(DlAddr1Test, testDladdr1NullTolerance) {
   null_dladdr_info_ = true;
   SCOPE_EXIT {
