@@ -95,6 +95,10 @@ sig_safe_op (void (*op)(void*), void* data)
     goto out;
   }
 
+  if (sigmux_init(SIGSEGV) || sigmux_init(SIGBUS)) {
+    goto out;
+  }
+
   registration = sigmux_register(&sigset, &fault_handler, &handler_data, 0);
   if (!registration) {
     goto out;
@@ -137,6 +141,10 @@ sig_safe_exec (void (*op)(void*), void* data)
   if (sigemptyset(&sigset) ||
       sigaddset(&sigset, SIGILL))
   {
+    goto out;
+  }
+
+  if (sigmux_init(SIGILL)) {
     goto out;
   }
 

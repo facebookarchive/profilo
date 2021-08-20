@@ -51,12 +51,6 @@ plthooks_initialize() {
     return 1;
   }
 
-  if (sigmux_init(SIGSEGV) ||
-      sigmux_init(SIGBUS))
-  {
-    return 1;
-  }
-
   return 0;
 }
 
