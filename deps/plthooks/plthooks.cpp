@@ -19,11 +19,15 @@
 #include <linker/log_assert.h>
 #include <plthooks/trampoline.h>
 #include <plthooks/plthooks.h>
+#include <cstdio>
 
 #include <errno.h>
+
 #include <sys/mman.h>
+#include <unistd.h>
 
 #include <abort_with_reason.h>
+#include <fb/Build.h>
 #include <cjni/log.h>
 #include <linker/linker.h>
 #include <linker/sharedlibs.h>
@@ -54,40 +58,71 @@ plthooks_initialize() {
   return 0;
 }
 
+int unsafe_patch_relocation_address_sig_safe_write(
+    prev_func* plt_got_entry,
+    hook_func new_value) {
+  int rc =
+      sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(new_value));
+
+  if (rc && errno == EFAULT) {
+    // if we need to mprotect, it must be done under lock - don't want to
+    // set +w, then have somebody else finish and set -w, before we're done
+    // with our write
+    static pthread_rwlock_t mprotect_mutex_ = PTHREAD_RWLOCK_INITIALIZER;
+    WriterLock wl(&mprotect_mutex_);
+
+    int pagesize = getpagesize();
+    void* page = PAGE_ALIGN(plt_got_entry, pagesize);
+
+    if (mprotect(page, pagesize, PROT_READ | PROT_WRITE)) {
+      return 5;
+    }
+
+    rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(new_value));
+
+    int old_errno = errno;
+    if (mprotect(page, pagesize, PROT_READ)) {
+      abort();
+    };
+    errno = old_errno;
+  }
+
+  return rc;
+}
+
+int unsafe_patch_relocation_address_proc_mem(
+    prev_func* plt_got_entry,
+    hook_func new_value) {
+  FILE* selfmem = fopen("/proc/self/mem", "r+");
+  if (!selfmem) {
+    return 1;
+  }
+  if(fseek(selfmem, reinterpret_cast<uintptr_t>(plt_got_entry), SEEK_SET)) {
+    fclose(selfmem);
+    return 2;
+  }
+  int result = fwrite(&new_value, sizeof(new_value), 1, selfmem);
+  fclose(selfmem);
+  if (result != 1) {
+    return 3;
+  }
+  return 0;
+}
+
 int unsafe_patch_relocation_address(
     prev_func* plt_got_entry,
     hook_func new_value) {
-  try {
-    int rc =
-        sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(new_value));
-
-    if (rc && errno == EFAULT) {
-      // if we need to mprotect, it must be done under lock - don't want to
-      // set +w, then have somebody else finish and set -w, before we're done
-      // with our write
-      static pthread_rwlock_t mprotect_mutex_ = PTHREAD_RWLOCK_INITIALIZER;
-      WriterLock wl(&mprotect_mutex_);
-
-      int pagesize = getpagesize();
-      void* page = PAGE_ALIGN(plt_got_entry, pagesize);
-
-      if (mprotect(page, pagesize, PROT_READ | PROT_WRITE)) {
-        return 5;
-      }
-
-      rc = sig_safe_write(plt_got_entry, reinterpret_cast<intptr_t>(new_value));
-
-      int old_errno = errno;
-      if (mprotect(page, pagesize, PROT_READ)) {
-        abort();
-      };
-      errno = old_errno;
+  // Writes to /proc/self/mem bypass read-only permissions on older Android (and stock Linux).
+  static constexpr auto ANDROID_SDK_M = 23;
+  if (facebook::build::Build::getAndroidSdk() <= ANDROID_SDK_M) {
+    int result = unsafe_patch_relocation_address_proc_mem(plt_got_entry, new_value);
+    if (result) {
+      LOGE("Unsuccessful /proc/self/mem write, falling back to sig safe write: %d", result);
+      return unsafe_patch_relocation_address_sig_safe_write(plt_got_entry, new_value);
     }
-
-    return rc;
-  } catch (std::runtime_error const&) {
-    return 6;
+    return 0;
   }
+  return unsafe_patch_relocation_address_sig_safe_write(plt_got_entry, new_value);
 }
 
 int
