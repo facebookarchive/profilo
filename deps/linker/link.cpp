@@ -38,17 +38,15 @@ int dladdr1(void* addr, Dl_info* info, void** extra_info, int flags) {
     return 0; // docs specify dlerror not set in this case, which makes it easy for us
   }
 
-  elfSharedLibData lib;
-  try {
-    lib = sharedLib(basename(info->dli_fname));
-  } catch (std::out_of_range& e) {
+  LibLookupResult lib = sharedLib(basename(info->dli_fname));
+  if (!lib.success) {
     return 0;
   }
 
   auto sym_info = const_cast<ElfW(Sym) const**>(reinterpret_cast<ElfW(Sym)**>(extra_info));
-  *sym_info = lib.find_symbol_by_name(info->dli_sname);
+  *sym_info = lib.data.find_symbol_by_name(info->dli_sname);
   if (*sym_info) {
-    if (lib.getLoadedAddress(*sym_info) != info->dli_saddr) {
+    if (lib.data.getLoadedAddress(*sym_info) != info->dli_saddr) {
       log_assert(
         "tried to resolve address 0x%x but dladdr returned \"%s\" (0x%x) while find_symbol_by_name returned %x",
         addr,

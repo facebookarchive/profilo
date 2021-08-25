@@ -59,19 +59,18 @@ get_relocations(symbol sym, reloc* relocs_out, size_t relocs_out_len) {
     return -1;
   }
 
-  try {
-    auto lib = sharedLib(info.dli_sname);
-    auto relocs = lib.get_relocations(sym);
-
-    if (relocs.size() > relocs_out_len) {
-      errno = ERANGE;
-      return -1;
-    }
-
-    memcpy(relocs_out, relocs.data(), relocs.size() * sizeof(reloc));
-    return relocs.size();
-  } catch (std::out_of_range& e) {
+  auto lib = sharedLib(info.dli_sname);
+  if (!lib.success) {
     errno = ENODATA;
     return -1;
   }
+  auto relocs = lib.data.get_relocations(sym);
+
+  if (relocs.size() > relocs_out_len) {
+    errno = ERANGE;
+    return -1;
+  }
+
+  memcpy(relocs_out, relocs.data(), relocs.size() * sizeof(reloc));
+  return relocs.size();
 }

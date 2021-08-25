@@ -93,15 +93,14 @@ bool allowHookingCb(char const* libname, char const* full_libname, void* data) {
     return false;
   }
 
-  try {
-    // Verify if the library contains atrace indicator symbol, otherwise we
-    // don't need to install hooks.
-    auto elfData = linker::sharedLib(libname);
-    ElfW(Sym) const* sym = elfData.find_symbol_by_name(kAtraceSymbol);
-    if (!sym) {
-      return false;
-    }
-  } catch (std::out_of_range& e) {
+  // Verify if the library contains atrace indicator symbol, otherwise we
+  // don't need to install hooks.
+  auto result = linker::sharedLib(libname);
+  if (!result.success) {
+    return false;
+  }
+  ElfW(Sym) const* sym = result.data.find_symbol_by_name(kAtraceSymbol);
+  if (!sym) {
     return false;
   }
 

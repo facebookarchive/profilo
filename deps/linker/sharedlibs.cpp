@@ -111,9 +111,9 @@ bool refresh_shared_lib_using_dl_iterate_phdr_if_can() {
 
 } // namespace (anonymous)
 
-elfSharedLibData sharedLib(char const* libname) {
+LibLookupResult sharedLib(char const* libname) {
   char const* libbasename = basename(libname);
-  auto lib = [&]{
+  auto result = [&]{
     // this lambda is to ensure that we only hold the lock for the lookup.
     // the boolean check outside this block transitively calls dladdr(3), which
     // would cause a lock inversion with refresh_shared_libs under Bionic
@@ -123,16 +123,16 @@ elfSharedLibData sharedLib(char const* libname) {
     // an out_of_range exception for a not-found key, it segfaults. so, do our own search and check.
     auto iter = sharedLibData().find(libbasename);
     if (iter == sharedLibData().end()) {
-      throw std::out_of_range(libname);
+      return LibLookupResult{.success = false};
     }
-    return iter->second;
+    return LibLookupResult{.success = true, .data = iter->second};
   }();
-  if (!lib) { // this is necessary to ensure our data is still valid - lib might have been unloaded
+  if (!result.success || !result.data) { // this is necessary to ensure our data is still valid - lib might have been unloaded
     WriterLock wl(&sharedLibsMutex_);
     sharedLibData().erase(libbasename);
-    throw std::out_of_range(libname);
+    return LibLookupResult{.success = false};
   }
-  return lib;
+  return result;
 }
 
 std::vector<std::pair<std::string, elfSharedLibData>> allSharedLibs() {

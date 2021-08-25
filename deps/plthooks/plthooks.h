@@ -87,16 +87,16 @@ typedef struct _plt_hook_spec {
       // no target lib name, so no one address to return
       return nullptr;
     }
-    try {
-      auto lib = facebook::linker::sharedLib(lib_name);
-      auto sym = lib.find_symbol_by_name(fn_name);
-      if (sym == nullptr) {
-        return nullptr;
-      }
-      fn_addr_ = lib.getLoadedAddress(sym);
-      return fn_addr_;
-    } catch (std::out_of_range& ex) {}
-    return nullptr;
+    auto result = facebook::linker::sharedLib(lib_name);
+    if (!result.success) {
+      return nullptr;
+    }
+    auto sym = result.data.find_symbol_by_name(fn_name);
+    if (sym == nullptr) {
+      return nullptr;
+    }
+    fn_addr_ = result.data.getLoadedAddress(sym);
+    return fn_addr_;
   }
 private:
   void* fn_addr_;

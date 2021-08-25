@@ -24,10 +24,15 @@
 namespace facebook {
 namespace linker {
 
+struct LibLookupResult {
+  bool success;
+  elfSharedLibData data;
+};
+
 /**
  * Looks up an elfSharedLibData by name.
  */
-elfSharedLibData sharedLib(char const*);
+LibLookupResult sharedLib(char const*);
 
 /**
  * Returns a vector of copies of all known elfSharedLibData objects at this moment.

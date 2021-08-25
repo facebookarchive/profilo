@@ -37,30 +37,41 @@ struct SharedLibsTest : public BaseTest {
 };
 
 TEST_F(SharedLibsTest, testLookupTarget) {
-  ASSERT_TRUE(sharedLib("libtarget.so")) << "not found";
+  auto result = sharedLib("libtarget.so");
+  ASSERT_TRUE(result.success) << "not found";
+  ASSERT_TRUE(result.data);
 }
 
 TEST_F(SharedLibsTest, testLookupSecond) {
-  ASSERT_TRUE(sharedLib("libtarget2.so"));
+  auto result = sharedLib("libtarget2.so");
+  ASSERT_TRUE(result.success) << "not found";
+  ASSERT_TRUE(result.data);
 }
 
 TEST_F(SharedLibsTest, testNotSameLib) {
-  ASSERT_NE(
-    sharedLib("libtarget.so"),
-    sharedLib("libtarget2.so"));
+  auto result1 = sharedLib("libtarget.so");
+  auto result2 = sharedLib("libtarget2.so");
+  ASSERT_TRUE(result1.success && result2.success);
+  ASSERT_NE(result1.data, result2.data);
 }
 
-TEST_F(SharedLibsTest, testBadSharedLibCallThrows) {
-  ASSERT_THROW(sharedLib("lkjlkjlkj"), std::out_of_range);
+TEST_F(SharedLibsTest, testBadSharedLibCallFails) {
+  auto result = sharedLib("lkjlkjlkj");
+  ASSERT_FALSE(result.success);
+  ASSERT_FALSE(result.data);
 }
 
-TEST_F(SharedLibsTest, testStaleSharedLibCallThrows) {
+TEST_F(SharedLibsTest, testStaleSharedLibCallFails) {
   libtarget.reset();
-  ASSERT_THROW(sharedLib("libtarget.so"), std::out_of_range);
+  auto result = sharedLib("libtarget.so");
+  ASSERT_FALSE(result.success);
+  ASSERT_FALSE(result.data);
 }
 
 TEST_F(SharedLibsTest, testStaleSharedLibDataIsFalse) {
-  auto lib = sharedLib("libtarget.so");
+  auto result = sharedLib("libtarget.so");
+  ASSERT_TRUE(result.success);
+  auto lib = result.data;
   ASSERT_TRUE(lib);
 
   libtarget.reset();

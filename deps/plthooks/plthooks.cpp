@@ -164,14 +164,14 @@ verify_got_entry_for_spec(prev_func* got_addr, plt_hook_spec* spec) {
     // only fail if that's not the case
     void* dladdr_sym_value = nullptr;
     if (info.dli_sname != nullptr) {
-      try {
-        auto target_lib = sharedLib(info.dli_fname);
-        auto sym = target_lib.find_symbol_by_name(info.dli_sname);
-        if (sym) {
-          dladdr_sym_value = target_lib.getLoadedAddress(sym);
-        }
-      } catch (std::out_of_range const&) {
+      auto target_result = sharedLib(info.dli_fname);
+      if (!target_result.success) {
         return false;
+      }
+      auto& target_lib = target_result.data;
+      auto sym = target_lib.find_symbol_by_name(info.dli_sname);
+      if (sym) {
+        dladdr_sym_value = target_lib.getLoadedAddress(sym);
       }
     }
     if (dladdr_sym_value != *got_addr) {
@@ -205,46 +205,49 @@ int unhook_plt_method(const char* libname, const char* name, hook_func hook) {
 int hook_single_lib(char const* libname, plt_hook_spec* specs, size_t num_specs) {
   int failures = 0;
 
-  try {
-    auto elfData = sharedLib(libname);
-    for (unsigned int specCnt = 0; specCnt < num_specs; ++specCnt) {
-      plt_hook_spec* spec = &specs[specCnt];
+  auto lookupResult = sharedLib(libname);
+  if (!lookupResult.success) {
+    return 0;
+  }
+  auto& elfData = lookupResult.data;
 
-      if (!spec->hook_fn || !spec->fn_name) {
-        // Invalid spec.
-        failures++;
-        continue;
+  for (unsigned int specCnt = 0; specCnt < num_specs; ++specCnt) {
+    plt_hook_spec* spec = &specs[specCnt];
+
+    if (!spec->hook_fn || !spec->fn_name) {
+      // Invalid spec.
+      failures++;
+      continue;
+    }
+
+    void* target_addr = spec->target_address();
+    std::vector<void**> plt_relocs;
+
+    if (target_addr == nullptr) {
+      ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec->fn_name);
+      if (!sym) {
+        continue; // Did not find symbol in the hash table, so go to next spec
+      }
+      plt_relocs = elfData.get_plt_relocations(sym);
+    } else {
+      plt_relocs = elfData.get_plt_relocations(target_addr);
+    }
+
+    for (prev_func* plt_got_entry : plt_relocs) {
+
+      // Run sanity checks on what we parsed as the GOT slot.
+      if (!verify_got_entry_for_spec(plt_got_entry, spec)) {
+         failures++;
+         continue;
       }
 
-      void* target_addr = spec->target_address();
-      std::vector<void**> plt_relocs;
-
-      if (target_addr == nullptr) {
-        ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec->fn_name);
-        if (!sym) {
-          continue; // Did not find symbol in the hash table, so go to next spec
-        }
-        plt_relocs = elfData.get_plt_relocations(sym);
+      if (patch_relocation_address_for_hook(plt_got_entry, spec) == 0) {
+        spec->hook_result++;
       } else {
-        plt_relocs = elfData.get_plt_relocations(target_addr);
-      }
-
-      for (prev_func* plt_got_entry : plt_relocs) {
-
-        // Run sanity checks on what we parsed as the GOT slot.
-        if (!verify_got_entry_for_spec(plt_got_entry, spec)) {
-           failures++;
-           continue;
-        }
-
-        if (patch_relocation_address_for_hook(plt_got_entry, spec) == 0) {
-          spec->hook_result++;
-        } else {
-          failures++;
-        }
+        failures++;
       }
     }
-  } catch (std::out_of_range& e) { /* no op */ }
+  }
 
   return failures;
 }
@@ -255,58 +258,59 @@ int unhook_single_lib(
     size_t num_specs) {
   int failures = 0;
 
-  try {
-    auto elfData = sharedLib(libname);
+  auto lookupResult = sharedLib(libname);
+  if (!lookupResult.success) {
+    return 0;
+  }
+  auto& elfData = lookupResult.data;
 
-    // Take the GOT lock to prevent other threads from modifying our state.
-    WriterLock lock(&g_got_modification_lock);
+  // Take the GOT lock to prevent other threads from modifying our state.
+  WriterLock lock(&g_got_modification_lock);
 
-    for (unsigned int specCnt = 0; specCnt < num_specs; ++specCnt) {
-      plt_hook_spec& spec = specs[specCnt];
+  for (unsigned int specCnt = 0; specCnt < num_specs; ++specCnt) {
+    plt_hook_spec& spec = specs[specCnt];
 
-      ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec.fn_name);
-      if (!sym) {
-        continue; // Did not find symbol in the hash table, so go to next spec
-      }
-      for (prev_func* plt_got_entry : elfData.get_plt_relocations(sym)) {
-        auto addr = reinterpret_cast<uintptr_t>(plt_got_entry);
-        // Remove the entry for this GOT address and this particular hook.
-        hooks::HookInfo info{
-            .got_address = addr,
-            .new_function = spec.hook_fn,
-        };
-        auto result = hooks::remove(info);
-        if (result == hooks::REMOVED_STILL_HOOKED) {
-          // There are other hooks at this slot, continue.
-          spec.hook_result++;
-          continue;
-        } else if (result == hooks::REMOVED_TRIVIAL) {
-          // Only one entry left at this slot, patch the original function
-          // to lower the overhead.
-          auto original = info.previous_function;
-          if (unsafe_patch_relocation_address(plt_got_entry, original) != 0) {
-            abortWithReason("Unable to unhook GOT slot");
-          }
-          // Restored the GOT slot, let's remove all knowledge about this
-          // hook.
-          hooks::HookInfo original_info{
-              .got_address = reinterpret_cast<uintptr_t>(plt_got_entry),
-              .new_function = original,
-          };
-          if (hooks::remove(original_info) != hooks::REMOVED_FULLY) {
-            abortWithReason("GOT slot modified while we were working on it");
-          }
-          spec.hook_result++;
-          continue;
-        } else if (result == hooks::UNKNOWN_HOOK) {
-          // Either unhooked or hooked but not with this hook.
-          continue;
-        } else {
-          failures++;
+    ElfW(Sym) const* sym = elfData.find_symbol_by_name(spec.fn_name);
+    if (!sym) {
+      continue; // Did not find symbol in the hash table, so go to next spec
+    }
+    for (prev_func* plt_got_entry : elfData.get_plt_relocations(sym)) {
+      auto addr = reinterpret_cast<uintptr_t>(plt_got_entry);
+      // Remove the entry for this GOT address and this particular hook.
+      hooks::HookInfo info{
+          .got_address = addr,
+          .new_function = spec.hook_fn,
+      };
+      auto result = hooks::remove(info);
+      if (result == hooks::REMOVED_STILL_HOOKED) {
+        // There are other hooks at this slot, continue.
+        spec.hook_result++;
+        continue;
+      } else if (result == hooks::REMOVED_TRIVIAL) {
+        // Only one entry left at this slot, patch the original function
+        // to lower the overhead.
+        auto original = info.previous_function;
+        if (unsafe_patch_relocation_address(plt_got_entry, original) != 0) {
+          abortWithReason("Unable to unhook GOT slot");
         }
+        // Restored the GOT slot, let's remove all knowledge about this
+        // hook.
+        hooks::HookInfo original_info{
+            .got_address = reinterpret_cast<uintptr_t>(plt_got_entry),
+            .new_function = original,
+        };
+        if (hooks::remove(original_info) != hooks::REMOVED_FULLY) {
+          abortWithReason("GOT slot modified while we were working on it");
+        }
+        spec.hook_result++;
+        continue;
+      } else if (result == hooks::UNKNOWN_HOOK) {
+        // Either unhooked or hooked but not with this hook.
+        continue;
+      } else {
+        failures++;
       }
     }
-  } catch (std::out_of_range& e) { /* no op */
   }
 
   return failures;

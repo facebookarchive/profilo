@@ -35,7 +35,9 @@ struct ElfSharedLibDataTest : public BaseTest {
   virtual void SetUp() {
     BaseTest::SetUp();
 
-    lib = sharedLib("libtarget.so");
+    auto result = sharedLib("libtarget.so");
+    ASSERT_TRUE(result.success);
+    lib = result.data;
     ASSERT_TRUE(lib);
     ASSERT_FALSE(lib.usesGnuHashTable());
   }
@@ -98,7 +100,9 @@ struct ElfSharedLibDataTestGnuHash : public BaseTest {
   virtual void SetUp() {
     BaseTest::SetUp();
 
-    lib = sharedLib("libgnu.so");
+    auto lookup = sharedLib("libgnu.so");
+    ASSERT_TRUE(lookup.success);
+    lib = lookup.data;
     ASSERT_TRUE(lib);
     ASSERT_TRUE(lib.usesGnuHashTable());
   }
