@@ -80,7 +80,7 @@ static uint32_t gnuhash(char const* name) {
 
 } // namespace (anonymous)
 
-// pltRelocations is explicitly set to nullptr as a sentinel to operator bool
+// parsed_state_.pltRelocations is explicitly set to nullptr as a sentinel to operator bool
 elfSharedLibData::elfSharedLibData() {}
 
 elfSharedLibData::elfSharedLibData(
@@ -93,11 +93,20 @@ elfSharedLibData::elfSharedLibData(
           .name = name,
           .phdrs = phdrs,
           .phnum = phnum,
-      }) {
+      }), parsed_state_{} {
 
+  parsed_state_.successful = parse_input();
+
+  if (!is_complete()) {
+    // Error, go to next library
+    throw input_parse_error("not all info found");
+  }
+}
+
+bool elfSharedLibData::parse_input() {
   ElfW(Dyn) const* dynamic_table = nullptr;
-  for (int i = 0; i < phnum; ++i) {
-    ElfW(Phdr) const* phdr = &phdrs[i];
+  for (int i = 0; i < data_.phnum; ++i) {
+    ElfW(Phdr) const* phdr = &data_.phdrs[i];
     if (phdr->p_type == PT_DYNAMIC) {
       dynamic_table = reinterpret_cast<ElfW(Dyn) const*>(data_.loadBias + phdr->p_vaddr);
       break;
@@ -111,96 +120,96 @@ elfSharedLibData::elfSharedLibData(
   for (ElfW(Dyn) const* entry = dynamic_table; entry && entry->d_tag != DT_NULL; ++entry) {
     switch (entry->d_tag) {
       case DT_PLTRELSZ:
-        pltRelocationsLen = entry->d_un.d_val / sizeof(Elf_Reloc);
+        parsed_state_.pltRelocationsLen = entry->d_un.d_val / sizeof(Elf_Reloc);
         break;
 
       case DT_JMPREL: // DT_PLTREL just declares the Rel/Rela type in use, not the table data
-        pltRelocations =
-          reinterpret_cast<Elf_Reloc const*>(data_.loadBias + entry->d_un.d_ptr);
+        parsed_state_.pltRelocations =
+            reinterpret_cast<Elf_Reloc const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
       case DT_RELSZ:
       case DT_RELASZ:
         // bionic's linker already handles sanity checking/blowing up if wrong Rel/Rela match
-        relocationsLen = entry->d_un.d_val / sizeof(Elf_Reloc);
+        parsed_state_.relocationsLen = entry->d_un.d_val / sizeof(Elf_Reloc);
         break;
 
       case DT_REL:
       case DT_RELA:
         // bionic's linker already handles sanity checking/blowing up if wrong Rel/Rela match
-        relocations =
-          reinterpret_cast<Elf_Reloc const*>(data_.loadBias + entry->d_un.d_ptr);
+        parsed_state_.relocations =
+            reinterpret_cast<Elf_Reloc const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
-      // TODO (t30088113): handle DT_ANDROID_REL[A][SZ]
+        // TODO (t30088113): handle DT_ANDROID_REL[A][SZ]
 
       case DT_SYMTAB:
-        dynSymbolsTable =
-          reinterpret_cast<ElfW(Sym) const*>(data_.loadBias + entry->d_un.d_ptr);
+        parsed_state_.dynSymbolsTable =
+            reinterpret_cast<ElfW(Sym) const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
       case DT_STRTAB:
-        dynStrsTable =
-          reinterpret_cast<char const*>(data_.loadBias + entry->d_un.d_ptr);
+        parsed_state_.dynStrsTable =
+            reinterpret_cast<char const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
       case DT_HASH:
-        elfHash_.numbuckets_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[0];
-        elfHash_.numchains_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[1];
-        elfHash_.buckets_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr + 8);
+        parsed_state_.elfHash.numbuckets = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[0];
+        parsed_state_.elfHash.numchains = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[1];
+        parsed_state_.elfHash.buckets = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr + 8);
         // chains_ is stored immediately after buckets_ and is the same type, so the index after
         // the last valid bucket value is the first valid chain value.
-        elfHash_.chains_ = &elfHash_.buckets_[elfHash_.numbuckets_];
+        parsed_state_.elfHash.chains = &parsed_state_.elfHash.buckets[parsed_state_.elfHash.numbuckets];
         break;
 
       case DT_GNU_HASH: // see http://www.linker-aliens.org/blogs/ali/entry/gnu_hash_elf_sections/
         // the original AOSP code uses several binary-math optimizations that differ from the "standard"
         // gnu hash implementation, and have been left in place with explanatory comments to avoid diverging
-        gnuHash_.numbuckets_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[0];
-        gnuHash_.symoffset_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[1];
-        gnuHash_.bloom_size_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[2];
-        gnuHash_.bloom_shift_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[3];
-        gnuHash_.bloom_filter_ = reinterpret_cast<ElfW(Addr) const*>(data_.loadBias + entry->d_un.d_ptr + 16);
-        gnuHash_.buckets_ = reinterpret_cast<uint32_t const*>(&gnuHash_.bloom_filter_[gnuHash_.bloom_size_]);
+        parsed_state_.gnuHash.numbuckets = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[0];
+        parsed_state_.gnuHash.symoffset = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[1];
+        parsed_state_.gnuHash.bloom_size = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[2];
+        parsed_state_.gnuHash.bloom_shift = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[3];
+        parsed_state_.gnuHash.bloom_filter = reinterpret_cast<ElfW(Addr) const*>(data_.loadBias + entry->d_un.d_ptr + 16);
+        parsed_state_.gnuHash.buckets = reinterpret_cast<uint32_t const*>(&parsed_state_.gnuHash.bloom_filter[parsed_state_.gnuHash.bloom_size]);
 
-        // chains_ is stored immediately after buckets_ and is the same type, so the index after
+        // chains is stored immediately after buckets and is the same type, so the index after
         // the last valid bucket value is the first valid chain value.
-        // However, note that we subtract symoffset_ (and thus actually start the chains_ array
-        // INSIDE the buckets_ array)! This is because the chains_ index for a symbol is negatively
-        // offset from its dynSymbolsTable index by symoffset_. Normally, once you find a match in
-        // chains_ you'd add symoffset_ and then you'd have your dynSymbolsTable index... but by
-        // "shifting" the array backwards we can make the chains_ indices line up exactly with
+        // However, note that we subtract symoffset (and thus actually start the chains array
+        // INSIDE the buckets array)! This is because the chains index for a symbol is negatively
+        // offset from its dynSymbolsTable index by symoffset. Normally, once you find a match in
+        // chains you'd add symoffset and then you'd have your dynSymbolsTable index... but by
+        // "shifting" the array backwards we can make the chains indices line up exactly with
         // dynSymbolsTable right from the start.
-        // We don't have to ever worry about indexing into invalid chains_ data, because the
-        // chain-start indices that live in buckets_ are indices into dynSymbolsTable and will thus
-        // also never be less than symoffset_.
-        gnuHash_.chains_ = gnuHash_.buckets_ + gnuHash_.numbuckets_ - gnuHash_.symoffset_;
+        // We don't have to ever worry about indexing into invalid chains data, because the
+        // chain-start indices that live in buckets are indices into dynSymbolsTable and will thus
+        // also never be less than symoffset.
+        parsed_state_.gnuHash.chains = parsed_state_.gnuHash.buckets + parsed_state_.gnuHash.numbuckets - parsed_state_.gnuHash.symoffset;
 
         // verify that bloom_size_ is a power of 2
-        if ((((uint32_t)(gnuHash_.bloom_size_ - 1)) & gnuHash_.bloom_size_) != 0) {
+        if ((((uint32_t)(parsed_state_.gnuHash.bloom_size - 1)) & parsed_state_.gnuHash.bloom_size) != 0) {
           // shouldn't be possible; the android linker has already performed this check
           throw input_parse_error("bloom_size_ not power of 2");
         }
         // since we know that bloom_size_ is a power of two, we can simplify modulus division later in
         // gnu_find_symbol_by_name by decrementing by 1 here and then using logical-AND instead of mod-div
         // in the lookup (0x100 - 1 == 0x0ff, 0x1c3 & 0x0ff == 0x0c3.. the "remainder")
-        gnuHash_.bloom_size_--;
+        parsed_state_.gnuHash.bloom_size--;
         break;
     }
   }
-
   if (!is_complete()) {
     // Error, go to next library
     throw input_parse_error("not all info found");
   }
+  return true;
 }
 
 ElfW(Sym) const* elfSharedLibData::find_symbol_by_name(char const* name) const {
   ElfW(Sym) const* sym = nullptr;
-  if (gnuHash_.numbuckets_ > 0) {
+  if (parsed_state_.gnuHash.numbuckets > 0) {
     sym = gnu_find_symbol_by_name(name);
   }
-  if (!sym && elfHash_.numbuckets_ > 0) {
+  if (!sym && parsed_state_.elfHash.numbuckets > 0) {
     sym = elf_find_symbol_by_name(name);
   }
 
@@ -212,16 +221,16 @@ ElfW(Sym) const* elfSharedLibData::find_symbol_by_name(char const* name) const {
   // entry in either the DT_JMPREL[A] or DT_REL[A] sections. Not entirely sure though.
 
   // note the !sym check in each loop: don't perform this work if we've already found it.
-  for (size_t i = 0; !sym && i < pltRelocationsLen; i++) {
-    size_t sym_idx = ELF_RELOC_SYM(pltRelocations[i].r_info);
-    if (strcmp(dynStrsTable + dynSymbolsTable[sym_idx].st_name, name) == 0) {
-      sym = &dynSymbolsTable[sym_idx];
+  for (size_t i = 0; !sym && i < parsed_state_.pltRelocationsLen; i++) {
+    size_t sym_idx = ELF_RELOC_SYM(parsed_state_.pltRelocations[i].r_info);
+    if (strcmp(parsed_state_.dynStrsTable + parsed_state_.dynSymbolsTable[sym_idx].st_name, name) == 0) {
+      sym = &parsed_state_.dynSymbolsTable[sym_idx];
     }
   }
-  for (size_t i = 0; !sym && i < relocationsLen; i++) {
-    size_t sym_idx = ELF_RELOC_SYM(relocations[i].r_info);
-    if (strcmp(dynStrsTable + dynSymbolsTable[sym_idx].st_name, name) == 0) {
-      sym = &dynSymbolsTable[sym_idx];
+  for (size_t i = 0; !sym && i < parsed_state_.relocationsLen; i++) {
+    size_t sym_idx = ELF_RELOC_SYM(parsed_state_.relocations[i].r_info);
+    if (strcmp(parsed_state_.dynStrsTable + parsed_state_.dynSymbolsTable[sym_idx].st_name, name) == 0) {
+      sym = &parsed_state_.dynSymbolsTable[sym_idx];
     }
   }
 
@@ -231,9 +240,9 @@ ElfW(Sym) const* elfSharedLibData::find_symbol_by_name(char const* name) const {
 ElfW(Sym) const* elfSharedLibData::elf_find_symbol_by_name(char const* name) const {
   uint32_t hash = elfhash(name);
 
-  for (uint32_t n = elfHash_.buckets_[hash % elfHash_.numbuckets_]; n != 0; n = elfHash_.chains_[n]) {
-    ElfW(Sym) const* s = dynSymbolsTable + n; // identical to &dynSymbolsTable[n]
-    if (strcmp(dynStrsTable + s->st_name, name) == 0) {
+  for (uint32_t n = parsed_state_.elfHash.buckets[hash % parsed_state_.elfHash.numbuckets]; n != 0; n = parsed_state_.elfHash.chains[n]) {
+    ElfW(Sym) const* s = parsed_state_.dynSymbolsTable + n; // identical to &parsed_state_.dynSymbolsTable[n]
+    if (strcmp(parsed_state_.dynStrsTable + s->st_name, name) == 0) {
       return s;
     }
   }
@@ -245,13 +254,13 @@ ElfW(Sym) const* elfSharedLibData::elf_find_symbol_by_name(char const* name) con
 // gnu hash implementation, and have been left in place with explanatory comments to avoid diverging
 ElfW(Sym) const* elfSharedLibData::gnu_find_symbol_by_name(char const* name) const {
   uint32_t hash = gnuhash(name);
-  uint32_t h2 = hash >> gnuHash_.bloom_shift_;
+  uint32_t h2 = hash >> parsed_state_.gnuHash.bloom_shift;
 
   // bloom_size_ has been decremented by 1 from its original value (which was guaranteed
   // to be a power of two), meaning that this is mathematically equivalent to modulus division:
   // 0x100 - 1 == 0x0ff, and 0x1c3 & 0x0ff = 0x0c3.. the "remainder"
-  uint32_t word_num = (hash / kBloomMaskBits) & gnuHash_.bloom_size_;
-  ElfW(Addr) bloom_word = gnuHash_.bloom_filter_[word_num];
+  uint32_t word_num = (hash / kBloomMaskBits) & parsed_state_.gnuHash.bloom_size;
+  ElfW(Addr) bloom_word = parsed_state_.gnuHash.bloom_filter[word_num];
 
   // test against bloom filter
   if ((1 & (bloom_word >> (hash % kBloomMaskBits)) & (bloom_word >> (h2 % kBloomMaskBits))) == 0) {
@@ -259,21 +268,21 @@ ElfW(Sym) const* elfSharedLibData::gnu_find_symbol_by_name(char const* name) con
   }
 
   // bloom test says "probably yes"...
-  uint32_t n = gnuHash_.buckets_[hash % gnuHash_.numbuckets_];
+  uint32_t n = parsed_state_.gnuHash.buckets[hash % parsed_state_.gnuHash.numbuckets];
 
   if (n == 0) {
     return nullptr;
   }
 
   do {
-    ElfW(Sym) const* s = dynSymbolsTable + n; // identical to &dynSymbolsTable[n]
+    ElfW(Sym) const* s = parsed_state_.dynSymbolsTable + n; // identical to &parsed_state_.dynSymbolsTable[n]
     // this XOR is mathematically equivalent to (hash1 | 1) == (hash2 | 1), but faster
     // basically, test for equality while ignoring LSB
-    if (((gnuHash_.chains_[n] ^ hash) >> 1) == 0 &&
-        strcmp(dynStrsTable + s->st_name, name) == 0) {
+    if (((parsed_state_.gnuHash.chains[n] ^ hash) >> 1) == 0 &&
+        strcmp(parsed_state_.dynStrsTable + s->st_name, name) == 0) {
       return s;
     }
-  } while ((gnuHash_.chains_[n++] & 1) == 0); // gnu hash chains use the LSB as an end-of-chain marker
+  } while ((parsed_state_.gnuHash.chains[n++] & 1) == 0); // gnu hash chains use the LSB as an end-of-chain marker
 
   return nullptr;
 }
@@ -281,8 +290,8 @@ ElfW(Sym) const* elfSharedLibData::gnu_find_symbol_by_name(char const* name) con
 std::vector<void**> elfSharedLibData::get_relocations(void *symbol) const {
   std::vector<void**> relocs;
 
-  for (size_t i = 0; i < relocationsLen; i++) {
-    auto const& relocation = relocations[i];
+  for (size_t i = 0; i < parsed_state_.relocationsLen; i++) {
+    auto const& relocation = parsed_state_.relocations[i];
     void** relocated = reinterpret_cast<void**>(data_.loadBias + relocation.r_offset);
     if (*relocated == symbol) {
       relocs.push_back(relocated);
@@ -296,16 +305,16 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_s
   // TODO: merge this and get_relocations into one helper-based implementation
   std::vector<void**> relocs;
 
-  for (unsigned int i = 0; i < pltRelocationsLen; i++) {
-    Elf_Reloc const& rel = pltRelocations[i];
+  for (unsigned int i = 0; i < parsed_state_.pltRelocationsLen; i++) {
+    Elf_Reloc const& rel = parsed_state_.pltRelocations[i];
 
-    // is this necessary? will there ever be a type of relocation in pltRelocations
+    // is this necessary? will there ever be a type of relocation in parsed_state_.pltRelocations
     // that points to symbol and we *don't* want to fix up?
     if (ELF_RELOC_TYPE(rel.r_info) != PLT_RELOCATION_TYPE) {
       continue;
     }
 
-    if (&dynSymbolsTable[ELF_RELOC_SYM(rel.r_info)] == elf_sym) {
+    if (&parsed_state_.dynSymbolsTable[ELF_RELOC_SYM(rel.r_info)] == elf_sym) {
       // Found the address of the relocation
       void** plt_got_entry = reinterpret_cast<void**>(data_.loadBias + rel.r_offset);
       relocs.push_back(plt_got_entry);
@@ -318,10 +327,10 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_s
 std::vector<void**> elfSharedLibData::get_plt_relocations(void const* addr) const {
   std::vector<void**> relocs;
 
-  for (unsigned int i = 0; i < pltRelocationsLen; i++) {
-    Elf_Reloc const& rel = pltRelocations[i];
+  for (unsigned int i = 0; i < parsed_state_.pltRelocationsLen; i++) {
+    Elf_Reloc const& rel = parsed_state_.pltRelocations[i];
 
-    // is this necessary? will there ever be a type of relocation in pltRelocations
+    // is this necessary? will there ever be a type of relocation in parsed_state_.pltRelocations
     // that points to symbol and we *don't* want to fix up?
     if (ELF_RELOC_TYPE(rel.r_info) != PLT_RELOCATION_TYPE) {
       continue;
@@ -336,10 +345,10 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(void const* addr) cons
 }
 
 bool elfSharedLibData::is_complete() const {
-  return pltRelocationsLen && pltRelocations &&
-         // relocationsLen && relocations &&     TODO (t30088113): re-enable when DT_ANDROID_REL is supported
-         dynSymbolsTable && dynStrsTable &&
-         (elfHash_.numbuckets_ > 0 || gnuHash_.numbuckets_ > 0);
+  return parsed_state_.pltRelocationsLen && parsed_state_.pltRelocations &&
+         // parsed_state_.relocationsLen && parsed_state_.relocations &&     TODO (t30088113): re-enable when DT_ANDROID_REL is supported
+         parsed_state_.dynSymbolsTable && parsed_state_.dynStrsTable &&
+         (parsed_state_.elfHash.numbuckets > 0 || parsed_state_.gnuHash.numbuckets > 0);
 }
 
 /* It can happen that, after caching a shared object's data in sharedLibData,
@@ -353,23 +362,23 @@ elfSharedLibData::operator bool() const {
     return false;
   }
 
-  // pltRelocations is somewhat special: the "bad" constructor explicitly sets
+  // parsed_state_.pltRelocations is somewhat special: the "bad" constructor explicitly sets
   // this to nullptr in order to mark the entire object as invalid. if this check
   // is removed, be sure to use some other form of sentinel.
-  if (!pltRelocations ||
-      !dladdr(pltRelocations, &info) ||
+  if (!parsed_state_.pltRelocations ||
+      !dladdr(parsed_state_.pltRelocations, &info) ||
       strcmp(info.dli_fname, data_.name) != 0) {
     return false;
   }
 
-  if (!dynSymbolsTable ||
-      !dladdr(dynSymbolsTable, &info) ||
+  if (!parsed_state_.dynSymbolsTable ||
+      !dladdr(parsed_state_.dynSymbolsTable, &info) ||
       strcmp(info.dli_fname, data_.name) != 0) {
     return false;
   }
 
-  if (!dynStrsTable ||
-      !dladdr(dynStrsTable, &info) ||
+  if (!parsed_state_.dynStrsTable ||
+      !dladdr(parsed_state_.dynStrsTable, &info) ||
       strcmp(info.dli_fname, data_.name) != 0) {
     return false;
   }

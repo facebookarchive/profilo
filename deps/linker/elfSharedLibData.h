@@ -84,7 +84,7 @@ public:
    * Returns whether or not we will use the GNU hash table instead of the ELF hash table
    */
   bool usesGnuHashTable() const {
-    return gnuHash_.numbuckets_ > 0;
+    return parsed_state_.gnuHash.numbuckets > 0;
   }
 
   /**
@@ -111,6 +111,7 @@ private:
   ElfW(Sym) const* gnu_find_symbol_by_name(char const*) const;
   std::vector<void**> get_relocations_internal(void*, Elf_Reloc const*, size_t) const;
   bool is_complete() const;
+  bool parse_input();
 
   struct {
     uintptr_t loadBias;
@@ -119,29 +120,33 @@ private:
     ElfW(Half) phnum;
   } data_;
 
-  Elf_Reloc const* pltRelocations {};
-  size_t pltRelocationsLen {};
-  Elf_Reloc const* relocations {};
-  size_t relocationsLen {};
-  ElfW(Sym) const* dynSymbolsTable {};
-  char const* dynStrsTable {};
-
   struct {
-    uint32_t numbuckets_ {};
-    uint32_t numchains_ {};
-    uint32_t const* buckets_ {};
-    uint32_t const* chains_ {};
-  } elfHash_;
+    bool successful;
 
-  struct {
-    uint32_t numbuckets_ {};
-    uint32_t symoffset_ {};
-    uint32_t bloom_size_ {};
-    uint32_t bloom_shift_ {};
-    ElfW(Addr) const* bloom_filter_ {};
-    uint32_t const* buckets_ {};
-    uint32_t const* chains_ {};
-  } gnuHash_;
+    Elf_Reloc const *pltRelocations;
+    size_t pltRelocationsLen;
+    Elf_Reloc const *relocations;
+    size_t relocationsLen;
+    ElfW(Sym) const *dynSymbolsTable;
+    char const *dynStrsTable;
+
+    struct {
+      uint32_t numbuckets;
+      uint32_t numchains;
+      uint32_t const *buckets;
+      uint32_t const *chains;
+    } elfHash;
+
+    struct {
+      uint32_t numbuckets;
+      uint32_t symoffset;
+      uint32_t bloom_size;
+      uint32_t bloom_shift;
+      ElfW(Addr) const *bloom_filter;
+      uint32_t const *buckets;
+      uint32_t const *chains;
+    } gnuHash;
+  } parsed_state_;
 
   static constexpr uint32_t kBloomMaskBits = sizeof(ElfW(Addr)) * 8;
 };
