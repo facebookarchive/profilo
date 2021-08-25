@@ -23,6 +23,9 @@
 #include <dlfcn.h>
 #include <unordered_map>
 #include <libgen.h>
+#include <link.h>
+#include "bionic_linker.h"
+
 #ifndef __ANDROID__
 char * basename(char const* path);
 #endif
@@ -40,21 +43,21 @@ static std::unordered_map<std::string, elfSharedLibData>& sharedLibData() {
   return sharedLibData_;
 }
 
-template <typename Arg>
-bool addSharedLib(char const* libname, Arg&& arg) {
+bool addSharedLib(ElfW(Addr) addr, const char* name, const ElfW(Phdr)* phdr, ElfW(Half) phnum) {
+  auto libbasename = basename(name);
   {
     ReaderLock rl(&sharedLibsMutex_);
     // the common path will be duplicate entries, so skip the weight of
     // elfSharedLibData construction and grabbing a writer lock, if possible
-    if (sharedLibData().find(basename(libname)) != sharedLibData().end()) {
+    if (sharedLibData().find(libbasename) != sharedLibData().end()) {
       return false;
     }
   }
 
   try {
-    elfSharedLibData data(std::forward<Arg>(arg));
+    elfSharedLibData data(addr, name, phdr, phnum);
     WriterLock wl(&sharedLibsMutex_);
-    return sharedLibData().insert(std::make_pair(basename(libname), std::move(data))).second;
+    return sharedLibData().insert(std::make_pair(libbasename, std::move(data))).second;
   } catch (input_parse_error&) {
     // elfSharedLibData ctor will throw if it is unable to parse input
     // just ignore it and don't add the library
@@ -98,7 +101,7 @@ bool refresh_shared_lib_using_dl_iterate_phdr_if_can() {
   dl_iterate_phdr(+[](dl_phdr_info* info, size_t, void*) {
     if (info->dlpi_name &&
           (ends_with(info->dlpi_name, ".so")  || starts_with(info->dlpi_name, "app_process"))) {
-      addSharedLib(info->dlpi_name, info);
+      addSharedLib(info->dlpi_addr, info->dlpi_name, info->dlpi_phdr, info->dlpi_phnum);
     }
     return 0;
   }, nullptr);
@@ -161,7 +164,8 @@ refresh_shared_libs() {
   }
 
 #ifndef __LP64__ /* prior to android L there were no 64-bit devices anyway */
-  if (facebook::build::getAndroidSdk() < ANDROID_L) {
+  auto androidSdk = facebook::build::getAndroidSdk();
+  if (androidSdk < ANDROID_L) {
     // For some reason this can crash a lot on dalvik so we are only going to try if we can't
     // use some other method
     soinfo* si = reinterpret_cast<soinfo*>(dlopen(nullptr, RTLD_LOCAL));
@@ -171,9 +175,15 @@ refresh_shared_libs() {
     }
 
     for (; si != nullptr; si = si->next) {
-      if (si->link_map.l_name &&
-            (ends_with(si->link_map.l_name, ".so") || starts_with(si->link_map.l_name, "app_process"))) {
-        addSharedLib(si->link_map.l_name, si);
+      auto name = si->link_map.l_name;
+      if (name && (ends_with(name, ".so") || starts_with(name, "app_process"))) {
+        ElfW(Addr) base = 0;
+        if (androidSdk >= 17) {
+          base = si->load_bias;
+        } else {
+          base = si->base;
+        }
+        addSharedLib(base, name, si->phdr, si->phnum);
       }
     }
 

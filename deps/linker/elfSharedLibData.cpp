@@ -83,16 +83,23 @@ static uint32_t gnuhash(char const* name) {
 // pltRelocations is explicitly set to nullptr as a sentinel to operator bool
 elfSharedLibData::elfSharedLibData() {}
 
-elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
+elfSharedLibData::elfSharedLibData(
+    ElfW(Addr) addr,
+    const char* name,
+    const ElfW(Phdr) * phdrs,
+    ElfW(Half) phnum)
+    : data_({
+          .loadBias = addr,
+          .name = name,
+          .phdrs = phdrs,
+          .phnum = phnum,
+      }) {
+
   ElfW(Dyn) const* dynamic_table = nullptr;
-
-  loadBias = info->dlpi_addr;
-  libName = info->dlpi_name;
-
-  for (int i = 0; i < info->dlpi_phnum; ++i) {
-    ElfW(Phdr) const* phdr = &info->dlpi_phdr[i];
+  for (int i = 0; i < phnum; ++i) {
+    ElfW(Phdr) const* phdr = &phdrs[i];
     if (phdr->p_type == PT_DYNAMIC) {
-      dynamic_table = reinterpret_cast<ElfW(Dyn) const*>(loadBias + phdr->p_vaddr);
+      dynamic_table = reinterpret_cast<ElfW(Dyn) const*>(data_.loadBias + phdr->p_vaddr);
       break;
     }
   }
@@ -109,7 +116,7 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
 
       case DT_JMPREL: // DT_PLTREL just declares the Rel/Rela type in use, not the table data
         pltRelocations =
-          reinterpret_cast<Elf_Reloc const*>(loadBias + entry->d_un.d_ptr);
+          reinterpret_cast<Elf_Reloc const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
       case DT_RELSZ:
@@ -122,25 +129,25 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
       case DT_RELA:
         // bionic's linker already handles sanity checking/blowing up if wrong Rel/Rela match
         relocations =
-          reinterpret_cast<Elf_Reloc const*>(loadBias + entry->d_un.d_ptr);
+          reinterpret_cast<Elf_Reloc const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
       // TODO (t30088113): handle DT_ANDROID_REL[A][SZ]
 
       case DT_SYMTAB:
         dynSymbolsTable =
-          reinterpret_cast<ElfW(Sym) const*>(loadBias + entry->d_un.d_ptr);
+          reinterpret_cast<ElfW(Sym) const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
       case DT_STRTAB:
         dynStrsTable =
-          reinterpret_cast<char const*>(loadBias + entry->d_un.d_ptr);
+          reinterpret_cast<char const*>(data_.loadBias + entry->d_un.d_ptr);
         break;
 
       case DT_HASH:
-        elfHash_.numbuckets_ = reinterpret_cast<uint32_t const*>(loadBias + entry->d_un.d_ptr)[0];
-        elfHash_.numchains_ = reinterpret_cast<uint32_t const*>(loadBias + entry->d_un.d_ptr)[1];
-        elfHash_.buckets_ = reinterpret_cast<uint32_t const*>(loadBias + entry->d_un.d_ptr + 8);
+        elfHash_.numbuckets_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[0];
+        elfHash_.numchains_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[1];
+        elfHash_.buckets_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr + 8);
         // chains_ is stored immediately after buckets_ and is the same type, so the index after
         // the last valid bucket value is the first valid chain value.
         elfHash_.chains_ = &elfHash_.buckets_[elfHash_.numbuckets_];
@@ -149,11 +156,11 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
       case DT_GNU_HASH: // see http://www.linker-aliens.org/blogs/ali/entry/gnu_hash_elf_sections/
         // the original AOSP code uses several binary-math optimizations that differ from the "standard"
         // gnu hash implementation, and have been left in place with explanatory comments to avoid diverging
-        gnuHash_.numbuckets_ = reinterpret_cast<uint32_t const*>(loadBias + entry->d_un.d_ptr)[0];
-        gnuHash_.symoffset_ = reinterpret_cast<uint32_t const*>(loadBias + entry->d_un.d_ptr)[1];
-        gnuHash_.bloom_size_ = reinterpret_cast<uint32_t const*>(loadBias + entry->d_un.d_ptr)[2];
-        gnuHash_.bloom_shift_ = reinterpret_cast<uint32_t const*>(loadBias + entry->d_un.d_ptr)[3];
-        gnuHash_.bloom_filter_ = reinterpret_cast<ElfW(Addr) const*>(loadBias + entry->d_un.d_ptr + 16);
+        gnuHash_.numbuckets_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[0];
+        gnuHash_.symoffset_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[1];
+        gnuHash_.bloom_size_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[2];
+        gnuHash_.bloom_shift_ = reinterpret_cast<uint32_t const*>(data_.loadBias + entry->d_un.d_ptr)[3];
+        gnuHash_.bloom_filter_ = reinterpret_cast<ElfW(Addr) const*>(data_.loadBias + entry->d_un.d_ptr + 16);
         gnuHash_.buckets_ = reinterpret_cast<uint32_t const*>(&gnuHash_.bloom_filter_[gnuHash_.bloom_size_]);
 
         // chains_ is stored immediately after buckets_ and is the same type, so the index after
@@ -180,10 +187,6 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
         gnuHash_.bloom_size_--;
         break;
     }
-
-    if (is_complete()) {
-      break;
-    }
   }
 
   if (!is_complete()) {
@@ -192,35 +195,14 @@ elfSharedLibData::elfSharedLibData(dl_phdr_info const* info) {
   }
 }
 
-#ifndef __LP64__
-elfSharedLibData::elfSharedLibData(soinfo const* si) {
-  pltRelocationsLen = si->plt_rel_count;
-  pltRelocations = si->plt_rel;
-  relocationsLen = si->rel_count;
-  relocations = si->rel;
-  dynSymbolsTable = si->symtab;
-  dynStrsTable = si->strtab;
-
-  elfHash_.numbuckets_ = si->nbucket;
-  elfHash_.numchains_ = si->nchain;
-  elfHash_.buckets_ = si->bucket;
-  elfHash_.chains_ = si->chain;
-
-  gnuHash_ = {};
-
-  if (facebook::build::getAndroidSdk() >= 17) {
-    loadBias = si->load_bias;
-  } else {
-    loadBias = si->base;
-  }
-
-  libName = si->name;
-}
-#endif
-
 ElfW(Sym) const* elfSharedLibData::find_symbol_by_name(char const* name) const {
-  auto sym = usesGnuHashTable() ? gnu_find_symbol_by_name(name)
-                                : elf_find_symbol_by_name(name);
+  ElfW(Sym) const* sym = nullptr;
+  if (gnuHash_.numbuckets_ > 0) {
+    sym = gnu_find_symbol_by_name(name);
+  }
+  if (!sym && elfHash_.numbuckets_ > 0) {
+    sym = elf_find_symbol_by_name(name);
+  }
 
   // the GNU hash table doesn't include entries for any STN_UNDEF symbols in the object,
   // and although the ELF hash table "should" according to the spec contain entries for
@@ -301,7 +283,7 @@ std::vector<void**> elfSharedLibData::get_relocations(void *symbol) const {
 
   for (size_t i = 0; i < relocationsLen; i++) {
     auto const& relocation = relocations[i];
-    void** relocated = reinterpret_cast<void**>(loadBias + relocation.r_offset);
+    void** relocated = reinterpret_cast<void**>(data_.loadBias + relocation.r_offset);
     if (*relocated == symbol) {
       relocs.push_back(relocated);
     }
@@ -325,7 +307,7 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_s
 
     if (&dynSymbolsTable[ELF_RELOC_SYM(rel.r_info)] == elf_sym) {
       // Found the address of the relocation
-      void** plt_got_entry = reinterpret_cast<void**>(loadBias + rel.r_offset);
+      void** plt_got_entry = reinterpret_cast<void**>(data_.loadBias + rel.r_offset);
       relocs.push_back(plt_got_entry);
     }
   }
@@ -344,7 +326,7 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(void const* addr) cons
     if (ELF_RELOC_TYPE(rel.r_info) != PLT_RELOCATION_TYPE) {
       continue;
     }
-    void** plt_got_entry = reinterpret_cast<void**>(loadBias + rel.r_offset);
+    void** plt_got_entry = reinterpret_cast<void**>(data_.loadBias + rel.r_offset);
     if (*plt_got_entry == addr) {
       relocs.push_back(plt_got_entry);
     }
@@ -376,19 +358,19 @@ elfSharedLibData::operator bool() const {
   // is removed, be sure to use some other form of sentinel.
   if (!pltRelocations ||
       !dladdr(pltRelocations, &info) ||
-      strcmp(info.dli_fname, libName) != 0) {
+      strcmp(info.dli_fname, data_.name) != 0) {
     return false;
   }
 
   if (!dynSymbolsTable ||
       !dladdr(dynSymbolsTable, &info) ||
-      strcmp(info.dli_fname, libName) != 0) {
+      strcmp(info.dli_fname, data_.name) != 0) {
     return false;
   }
 
   if (!dynStrsTable ||
       !dladdr(dynStrsTable, &info) ||
-      strcmp(info.dli_fname, libName) != 0) {
+      strcmp(info.dli_fname, data_.name) != 0) {
     return false;
   }
 

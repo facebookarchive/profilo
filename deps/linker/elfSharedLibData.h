@@ -43,10 +43,7 @@ public:
 
   elfSharedLibData();
   // throws input_parse_error if it fails to parse all the info it needs from dlpi
-  explicit elfSharedLibData(dl_phdr_info const* dlpi);
-#if !defined(__aarch64__)
-  explicit elfSharedLibData(soinfo const* si);
-#endif
+  explicit elfSharedLibData(ElfW(Addr) addr, const char* name, const ElfW(Phdr)* phdr, ElfW(Half) phnum);
 
   /**
    * Returns a pointer to the ElfW(Sym) for the given symbol name.
@@ -73,14 +70,14 @@ public:
    * Returns the loaded address of the shared library
    */
   uintptr_t getLoadBias() const {
-    return loadBias;
+    return data_.loadBias;
   }
 
   /**
    * Finds the actual in-memory address of the given symbol
    */
   void* getLoadedAddress(ElfW(Sym) const* sym) const {
-    return reinterpret_cast<void*>(loadBias + sym->st_value);
+    return reinterpret_cast<void*>(data_.loadBias + sym->st_value);
   };
 
   /**
@@ -97,7 +94,7 @@ public:
   operator bool() const;
 
   bool operator==(elfSharedLibData const& other) const {
-    return loadBias == other.loadBias;
+    return data_.loadBias == other.data_.loadBias;
   }
 
   bool operator!=(elfSharedLibData const& other) const {
@@ -105,7 +102,7 @@ public:
   }
 
   const char* getLibName() const {
-    return libName;
+    return data_.name;
   }
 
 private:
@@ -115,14 +112,19 @@ private:
   std::vector<void**> get_relocations_internal(void*, Elf_Reloc const*, size_t) const;
   bool is_complete() const;
 
-  uintptr_t loadBias {};
+  struct {
+    uintptr_t loadBias;
+    char const* name;
+    ElfW(Phdr) const* phdrs;
+    ElfW(Half) phnum;
+  } data_;
+
   Elf_Reloc const* pltRelocations {};
   size_t pltRelocationsLen {};
   Elf_Reloc const* relocations {};
   size_t relocationsLen {};
   ElfW(Sym) const* dynSymbolsTable {};
   char const* dynStrsTable {};
-  char const* libName {};
 
   struct {
     uint32_t numbuckets_ {};
