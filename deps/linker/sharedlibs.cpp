@@ -43,26 +43,21 @@ static std::unordered_map<std::string, elfSharedLibData>& sharedLibData() {
   return sharedLibData_;
 }
 
-bool addSharedLib(ElfW(Addr) addr, const char* name, const ElfW(Phdr)* phdr, ElfW(Half) phnum) {
+void addSharedLib(ElfW(Addr) addr, const char* name, const ElfW(Phdr)* phdr, ElfW(Half) phnum) {
   auto libbasename = basename(name);
   {
     ReaderLock rl(&sharedLibsMutex_);
     // the common path will be duplicate entries, so skip the weight of
     // elfSharedLibData construction and grabbing a writer lock, if possible
     if (sharedLibData().find(libbasename) != sharedLibData().end()) {
-      return false;
+      return;
     }
   }
 
-  try {
-    elfSharedLibData data(addr, name, phdr, phnum);
-    WriterLock wl(&sharedLibsMutex_);
-    return sharedLibData().insert(std::make_pair(libbasename, std::move(data))).second;
-  } catch (input_parse_error&) {
-    // elfSharedLibData ctor will throw if it is unable to parse input
-    // just ignore it and don't add the library
-    return false;
-  }
+  WriterLock wl(&sharedLibsMutex_);
+  sharedLibData().emplace(
+      libbasename,
+      elfSharedLibData(addr, libbasename, phdr, phnum));
 }
 
 bool ends_with(const char* str, const char* ending) {
@@ -127,7 +122,7 @@ LibLookupResult sharedLib(char const* libname) {
     }
     return LibLookupResult{.success = true, .data = iter->second};
   }();
-  if (!result.success || !result.data) { // this is necessary to ensure our data is still valid - lib might have been unloaded
+  if (!result.success || !result.data.valid()) { // this is necessary to ensure our data is still valid - lib might have been unloaded
     WriterLock wl(&sharedLibsMutex_);
     sharedLibData().erase(libbasename);
     return LibLookupResult{.success = false};

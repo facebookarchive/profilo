@@ -39,42 +39,43 @@ struct SharedLibsTest : public BaseTest {
 TEST_F(SharedLibsTest, testLookupTarget) {
   auto result = sharedLib("libtarget.so");
   ASSERT_TRUE(result.success) << "not found";
-  ASSERT_TRUE(result.data);
+  ASSERT_TRUE(result.data.valid());
 }
 
 TEST_F(SharedLibsTest, testLookupSecond) {
   auto result = sharedLib("libtarget2.so");
   ASSERT_TRUE(result.success) << "not found";
-  ASSERT_TRUE(result.data);
+  ASSERT_TRUE(result.data.valid());
 }
 
 TEST_F(SharedLibsTest, testNotSameLib) {
   auto result1 = sharedLib("libtarget.so");
   auto result2 = sharedLib("libtarget2.so");
   ASSERT_TRUE(result1.success && result2.success);
+  ASSERT_TRUE(result1.data.valid() && result2.data.valid());
   ASSERT_NE(result1.data, result2.data);
 }
 
 TEST_F(SharedLibsTest, testBadSharedLibCallFails) {
   auto result = sharedLib("lkjlkjlkj");
   ASSERT_FALSE(result.success);
-  ASSERT_FALSE(result.data);
+  ASSERT_FALSE(result.data.valid());
 }
 
 TEST_F(SharedLibsTest, testStaleSharedLibCallFails) {
   libtarget.reset();
   auto result = sharedLib("libtarget.so");
   ASSERT_FALSE(result.success);
-  ASSERT_FALSE(result.data);
+  ASSERT_FALSE(result.data.valid());
 }
 
-TEST_F(SharedLibsTest, testStaleSharedLibDataIsFalse) {
+TEST_F(SharedLibsTest, testStaleSharedLibDataIsNotValid) {
   auto result = sharedLib("libtarget.so");
   ASSERT_TRUE(result.success);
   auto lib = result.data;
-  ASSERT_TRUE(lib);
+  ASSERT_TRUE(lib.valid());
 
   libtarget.reset();
 
-  ASSERT_FALSE(lib);
+  ASSERT_FALSE(lib.valid());
 }

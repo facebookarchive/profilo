@@ -25,12 +25,6 @@
 namespace facebook {
 namespace linker {
 
-class input_parse_error : public virtual std::runtime_error {
-public:
-  input_parse_error(std::string what)
-    : std::runtime_error(what) {}
-};
-
 // Android uses RELA for aarch64 and x86_64. mips64 still uses REL.
 #if defined(__aarch64__) || defined(__x86_64__)
 typedef ElfW(Rela) Elf_Reloc;
@@ -42,29 +36,28 @@ class elfSharedLibData {
 public:
 
   elfSharedLibData();
-  // throws input_parse_error if it fails to parse all the info it needs from dlpi
   explicit elfSharedLibData(ElfW(Addr) addr, const char* name, const ElfW(Phdr)* phdr, ElfW(Half) phnum);
 
   /**
    * Returns a pointer to the ElfW(Sym) for the given symbol name.
    */
-  ElfW(Sym) const* find_symbol_by_name(char const* name) const;
+  ElfW(Sym) const* find_symbol_by_name(char const* name);
 
   /**
    * Returns a vector of all fixed-up memory addresses that point to symbol
    */
-  std::vector<void**> get_relocations(void* symbol) const;
+  std::vector<void**> get_relocations(void* symbol);
 
   /**
    * Returns a vector of all fixed-up PLT entries that point to the symbol represented
    * by elf_sym
    */
-  std::vector<void**> get_plt_relocations(ElfW(Sym) const* elf_sym) const;
+  std::vector<void**> get_plt_relocations(ElfW(Sym) const* elf_sym);
 
   /**
    * Returns a vector of all fixed-up PLT entries that point to the target address
    */
-  std::vector<void**> get_plt_relocations(void const* addr) const;
+  std::vector<void**> get_plt_relocations(void const* addr);
 
   /*
    * Returns the loaded address of the shared library
@@ -83,15 +76,13 @@ public:
   /**
    * Returns whether or not we will use the GNU hash table instead of the ELF hash table
    */
-  bool usesGnuHashTable() const {
-    return parsed_state_.gnuHash.numbuckets > 0;
-  }
+  bool usesGnuHashTable();
 
   /**
    * Checks validity of this structure, including whether or not its tables are still
-   * valid in our virtual memory.
+   * valid in our virtual memory. Not const as it can trigger lazy parsing.
    */
-  operator bool() const;
+  bool valid();
 
   bool operator==(elfSharedLibData const& other) const {
     return data_.loadBias == other.data_.loadBias;
@@ -102,10 +93,10 @@ public:
   }
 
   const char* getLibName() const {
-    return data_.name;
+    return data_.name.c_str();
   }
 
-private:
+public:
 
   ElfW(Sym) const* elf_find_symbol_by_name(char const*) const;
   ElfW(Sym) const* gnu_find_symbol_by_name(char const*) const;
@@ -115,13 +106,14 @@ private:
 
   struct {
     uintptr_t loadBias;
-    char const* name;
+    std::string name;
     ElfW(Phdr) const* phdrs;
     ElfW(Half) phnum;
   } data_;
 
   struct {
     bool successful;
+    bool attempted;
 
     Elf_Reloc const *pltRelocations;
     size_t pltRelocationsLen;

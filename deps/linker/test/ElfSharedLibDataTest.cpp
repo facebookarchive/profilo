@@ -38,7 +38,7 @@ struct ElfSharedLibDataTest : public BaseTest {
     auto result = sharedLib("libtarget.so");
     ASSERT_TRUE(result.success);
     lib = result.data;
-    ASSERT_TRUE(lib);
+    ASSERT_TRUE(lib.valid());
     ASSERT_FALSE(lib.usesGnuHashTable());
   }
 
@@ -103,7 +103,7 @@ struct ElfSharedLibDataTestGnuHash : public BaseTest {
     auto lookup = sharedLib("libgnu.so");
     ASSERT_TRUE(lookup.success);
     lib = lookup.data;
-    ASSERT_TRUE(lib);
+    ASSERT_TRUE(lib.valid());
     ASSERT_TRUE(lib.usesGnuHashTable());
   }
 

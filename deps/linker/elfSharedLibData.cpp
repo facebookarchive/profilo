@@ -19,11 +19,13 @@
 #include <linker/elfSharedLibData.h>
 
 #include <build/build.h>
+#include <sig_safe_write/sig_safe_write.h>
 
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <stdexcept>
 #include <string.h>
+#include <android/log.h>
 
 #define R_386_JUMP_SLOT                 7
 #define R_ARM_JUMP_SLOT                 22
@@ -77,33 +79,32 @@ static uint32_t gnuhash(char const* name) {
 
   return h;
 }
-
 } // namespace (anonymous)
 
-// parsed_state_.pltRelocations is explicitly set to nullptr as a sentinel to operator bool
-elfSharedLibData::elfSharedLibData() {}
+// data_ fields are explicitly set to nullptr/0 as a sentinel to valid
+elfSharedLibData::elfSharedLibData(): data_{}, parsed_state_{} {}
 
 elfSharedLibData::elfSharedLibData(
     ElfW(Addr) addr,
     const char* name,
     const ElfW(Phdr) * phdrs,
     ElfW(Half) phnum)
-    : data_({
+    : data_{
           .loadBias = addr,
-          .name = name,
+          .name = name == nullptr ? std::string() : name,
           .phdrs = phdrs,
           .phnum = phnum,
-      }), parsed_state_{} {
-
-  parsed_state_.successful = parse_input();
-
-  if (!is_complete()) {
-    // Error, go to next library
-    throw input_parse_error("not all info found");
-  }
+      }, parsed_state_{} {
 }
 
 bool elfSharedLibData::parse_input() {
+  if (parsed_state_.attempted) {
+    return parsed_state_.successful;
+  }
+
+  parsed_state_.attempted = true;
+  parsed_state_.successful = false;
+
   ElfW(Dyn) const* dynamic_table = nullptr;
   for (int i = 0; i < data_.phnum; ++i) {
     ElfW(Phdr) const* phdr = &data_.phdrs[i];
@@ -114,11 +115,16 @@ bool elfSharedLibData::parse_input() {
   }
 
   if (!dynamic_table) {
-    throw input_parse_error("dynamic_table == null");
+    return false;
   }
+
+  ElfW(Word) sonameOffset = 0;
 
   for (ElfW(Dyn) const* entry = dynamic_table; entry && entry->d_tag != DT_NULL; ++entry) {
     switch (entry->d_tag) {
+      case DT_SONAME:
+        sonameOffset = entry->d_un.d_val;
+        break;
       case DT_PLTRELSZ:
         parsed_state_.pltRelocationsLen = entry->d_un.d_val / sizeof(Elf_Reloc);
         break;
@@ -188,7 +194,8 @@ bool elfSharedLibData::parse_input() {
         // verify that bloom_size_ is a power of 2
         if ((((uint32_t)(parsed_state_.gnuHash.bloom_size - 1)) & parsed_state_.gnuHash.bloom_size) != 0) {
           // shouldn't be possible; the android linker has already performed this check
-          throw input_parse_error("bloom_size_ not power of 2");
+          __android_log_print(ANDROID_LOG_WARN, "elfSharedLibData", "bloom_size_ not power of 2");
+          return false;
         }
         // since we know that bloom_size_ is a power of two, we can simplify modulus division later in
         // gnu_find_symbol_by_name by decrementing by 1 here and then using logical-AND instead of mod-div
@@ -198,13 +205,32 @@ bool elfSharedLibData::parse_input() {
     }
   }
   if (!is_complete()) {
-    // Error, go to next library
-    throw input_parse_error("not all info found");
+    return false;
   }
+
+  // Verify the soname
+  auto parsedSoname = &parsed_state_.dynStrsTable[sonameOffset];
+  if (strcmp(parsedSoname, data_.name.c_str()) != 0) {
+    __android_log_print(ANDROID_LOG_WARN, "elfSharedLibData", "Name mismatch: %s vs %s", parsedSoname, data_.name.c_str());
+    return false;
+  }
+
+  parsed_state_.successful = true;
   return true;
 }
 
-ElfW(Sym) const* elfSharedLibData::find_symbol_by_name(char const* name) const {
+bool elfSharedLibData::usesGnuHashTable() {
+  if (!parsed_state_.attempted) {
+    throw std::invalid_argument("Check valid() first!");
+  }
+  return parsed_state_.gnuHash.numbuckets > 0;
+}
+
+ElfW(Sym) const* elfSharedLibData::find_symbol_by_name(char const* name) {
+  if (!parsed_state_.attempted) {
+    throw std::invalid_argument("Check valid() first!");
+  }
+
   ElfW(Sym) const* sym = nullptr;
   if (parsed_state_.gnuHash.numbuckets > 0) {
     sym = gnu_find_symbol_by_name(name);
@@ -287,7 +313,11 @@ ElfW(Sym) const* elfSharedLibData::gnu_find_symbol_by_name(char const* name) con
   return nullptr;
 }
 
-std::vector<void**> elfSharedLibData::get_relocations(void *symbol) const {
+std::vector<void**> elfSharedLibData::get_relocations(void *symbol) {
+  if (!parsed_state_.attempted) {
+    throw std::invalid_argument("Check valid() first!");
+  }
+
   std::vector<void**> relocs;
 
   for (size_t i = 0; i < parsed_state_.relocationsLen; i++) {
@@ -301,7 +331,11 @@ std::vector<void**> elfSharedLibData::get_relocations(void *symbol) const {
   return relocs;
 }
 
-std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_sym) const {
+std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_sym) {
+  if (!parsed_state_.attempted) {
+    throw std::invalid_argument("Check valid() first!");
+  }
+
   // TODO: merge this and get_relocations into one helper-based implementation
   std::vector<void**> relocs;
 
@@ -324,7 +358,11 @@ std::vector<void**> elfSharedLibData::get_plt_relocations(ElfW(Sym) const* elf_s
   return relocs;
 }
 
-std::vector<void**> elfSharedLibData::get_plt_relocations(void const* addr) const {
+std::vector<void**> elfSharedLibData::get_plt_relocations(void const* addr) {
+  if (!parsed_state_.attempted) {
+    throw std::invalid_argument("Check valid() first!");
+  }
+
   std::vector<void**> relocs;
 
   for (unsigned int i = 0; i < parsed_state_.pltRelocationsLen; i++) {
@@ -353,33 +391,41 @@ bool elfSharedLibData::is_complete() const {
 
 /* It can happen that, after caching a shared object's data in sharedLibData,
  * the library is unloaded, so references to memory in that address space
- * result in SIGSEGVs. Thus, check here that the addresses are still valid.
-*/
-elfSharedLibData::operator bool() const {
-  Dl_info info;
-
-  if (!is_complete()) {
+ * result in SIGSEGVs. Thus, check here that the base address is still valid via
+ * by reading from it and ensuring it holds the same bytes it did initially.
+ */
+bool elfSharedLibData::valid() {
+  if (data_.loadBias == 0 && data_.phdrs == nullptr &&
+      data_.phnum == 0) {
+    // Default constructed object
     return false;
   }
 
-  // parsed_state_.pltRelocations is somewhat special: the "bad" constructor explicitly sets
-  // this to nullptr in order to mark the entire object as invalid. if this check
-  // is removed, be sure to use some other form of sentinel.
-  if (!parsed_state_.pltRelocations ||
-      !dladdr(parsed_state_.pltRelocations, &info) ||
-      strcmp(info.dli_fname, data_.name) != 0) {
+  // Try and parse the library but fail safely if it's unmapped
+  struct parse_result {
+    elfSharedLibData* data;
+    bool result;
+  } state {
+    .data = this,
+    .result = false,
+  };
+
+  // Force a reparse.
+  parsed_state_.attempted = false;
+
+  if (sig_safe_op([](void* data){
+    parse_result* state = (parse_result*) data;
+    state->result = state->data->parse_input();
+  }, &state)) {
     return false;
   }
 
-  if (!parsed_state_.dynSymbolsTable ||
-      !dladdr(parsed_state_.dynSymbolsTable, &info) ||
-      strcmp(info.dli_fname, data_.name) != 0) {
+  if (!state.result) {
     return false;
   }
 
-  if (!parsed_state_.dynStrsTable ||
-      !dladdr(parsed_state_.dynStrsTable, &info) ||
-      strcmp(info.dli_fname, data_.name) != 0) {
+  // Parse the inputs if necessary.
+  if (!parse_input()) {
     return false;
   }
 
