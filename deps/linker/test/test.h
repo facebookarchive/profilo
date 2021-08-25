@@ -18,11 +18,50 @@
 
 #include <linker/linker.h>
 #include <gtest/gtest.h>
-#include <fb/Build.h>
+#include <dlfcn.h>
+#include <stdexcept>
 
 namespace facebook { namespace linker {
   void clearSharedLibs(); // testing only
 } } // namespace facebook::linker
+
+// RAII dlopen handle
+struct LibraryHandle {
+  explicit LibraryHandle(const char* name):
+    handle(dlopen(name, RTLD_NOW|RTLD_LOCAL)) {
+    if (handle == nullptr) {
+      std::string error("Could not load ");
+      std::string dlerr(dlerror());
+      throw std::invalid_argument(error + name + dlerr);
+    }
+  }
+
+  LibraryHandle(const LibraryHandle&) = delete;
+  LibraryHandle& operator=(const LibraryHandle&) = delete;
+
+  LibraryHandle(LibraryHandle&& other) {
+    handle = other.handle;
+    other.handle = nullptr;
+  }
+
+  ~LibraryHandle() {
+    if (handle != nullptr) {
+      dlclose(handle);
+    }
+  }
+
+  template <typename T>
+  T* get_symbol(char const* name) const {
+    auto result = (T*) dlsym(handle, name);
+    if (result == nullptr) {
+      throw std::invalid_argument(std::string("Could not find symbol: ") + name);
+    }
+    return result;
+  }
+
+private:
+  void* handle = nullptr;
+};
 
 struct BaseTest : public testing::Test {
   virtual void SetUp() {
@@ -35,4 +74,4 @@ struct BaseTest : public testing::Test {
   }
 };
 
-#define LIBDIR(lib) (lib)
+std::unique_ptr<LibraryHandle> loadLibrary(const char* name);

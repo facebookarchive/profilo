@@ -19,13 +19,9 @@
 #include <dlfcn.h>
 #include <link.h>
 #include <gtest/gtest.h>
-#include <time.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdexcept>
-
-#include <fb/Build.h>
-#include <cppdistract/dso.h>
 
 #include <linker/sharedlibs.h>
 #include <linkertestdata/var.h>
@@ -34,7 +30,7 @@ using namespace facebook::linker;
 
 struct ElfSharedLibDataTest : public BaseTest {
   ElfSharedLibDataTest()
-    : libtarget(LIBDIR("libtarget.so")) { }
+    : libtarget(loadLibrary("libtarget.so")) { }
 
   virtual void SetUp() {
     BaseTest::SetUp();
@@ -44,12 +40,12 @@ struct ElfSharedLibDataTest : public BaseTest {
     ASSERT_FALSE(lib.usesGnuHashTable());
   }
 
-  facebook::cppdistract::dso const libtarget;
+  std::unique_ptr<LibraryHandle> libtarget;
   elfSharedLibData lib;
 };
 
 TEST_F(ElfSharedLibDataTest, testElfLookupDefined) {
-  auto call_clock = libtarget.get_symbol<int()>("call_clock");
+  auto call_clock = libtarget->get_symbol<int()>("call_clock");
   ASSERT_NE(nullptr, call_clock);
 
   auto sym = lib.find_symbol_by_name("call_clock");
@@ -97,7 +93,7 @@ TEST_F(ElfSharedLibDataTest, testGetDynamicSymbolRelocation) {
 
 struct ElfSharedLibDataTestGnuHash : public BaseTest {
   ElfSharedLibDataTestGnuHash()
-    : libgnu(LIBDIR("libgnu.so")) { }
+    : libgnu(loadLibrary("libgnu.so")) { }
 
   virtual void SetUp() {
     BaseTest::SetUp();
@@ -107,12 +103,12 @@ struct ElfSharedLibDataTestGnuHash : public BaseTest {
     ASSERT_TRUE(lib.usesGnuHashTable());
   }
 
-  facebook::cppdistract::dso const libgnu;
+  std::unique_ptr<LibraryHandle> libgnu;
   elfSharedLibData lib;
 };
 
 TEST_F(ElfSharedLibDataTestGnuHash, testGnuLookupDefined) {
-  auto call_clock = libgnu.get_symbol<int()>("call_clock");
+  auto call_clock = libgnu->get_symbol<int()>("call_clock");
   ASSERT_NE(nullptr, call_clock);
 
   auto sym = lib.find_symbol_by_name("call_clock");

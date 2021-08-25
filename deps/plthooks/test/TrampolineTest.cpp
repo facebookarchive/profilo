@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#include <plthooktests/test.h>
 
 #include <errno.h>
 #include <gtest/gtest.h>
+#include <linker/test/test.h>
 #include <plthooks/hooks.h>
 #include <plthooks/trampoline.h>
 #include <sys/mman.h>

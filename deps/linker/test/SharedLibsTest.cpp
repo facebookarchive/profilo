@@ -22,22 +22,18 @@
 #include <stdio.h>
 #include <stdexcept>
 #include <memory>
-
-#include <cppdistract/dso.h>
-
 #include <linker/sharedlibs.h>
-
 #include <linkertests/test.h>
 
 using namespace facebook::linker;
 
 struct SharedLibsTest : public BaseTest {
   SharedLibsTest()
-    : libtarget(std::make_unique<facebook::cppdistract::dso>(LIBDIR("libtarget.so"))),
-      libgnu(LIBDIR("libgnu.so")) { }
+    : libtarget(loadLibrary("libtarget.so")),
+      libtarget2(loadLibrary("libtarget2.so")) { }
 
-  std::unique_ptr<facebook::cppdistract::dso> libtarget;
-  facebook::cppdistract::dso const libgnu;
+  std::unique_ptr<LibraryHandle> libtarget;
+  std::unique_ptr<LibraryHandle> libtarget2;
 };
 
 TEST_F(SharedLibsTest, testLookupTarget) {
@@ -45,13 +41,13 @@ TEST_F(SharedLibsTest, testLookupTarget) {
 }
 
 TEST_F(SharedLibsTest, testLookupSecond) {
-  ASSERT_TRUE(sharedLib("libgnu.so"));
+  ASSERT_TRUE(sharedLib("libtarget2.so"));
 }
 
 TEST_F(SharedLibsTest, testNotSameLib) {
   ASSERT_NE(
     sharedLib("libtarget.so"),
-    sharedLib("libgnu.so"));
+    sharedLib("libtarget2.so"));
 }
 
 TEST_F(SharedLibsTest, testBadSharedLibCallThrows) {

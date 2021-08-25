@@ -18,14 +18,12 @@
 #include <algorithm>
 #include <memory>
 
-#include <cppdistract/dso.h>
-
 #include <plthooks/plthooks.h>
 #include <plthooks/trampoline.h>
 
 #include <plthooktestdata/meaningoflife.h>
 #include <plthooktestdata/target.h>
-#include <plthooktests/test.h>
+#include <linker/test/test.h>
 
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
 
@@ -40,7 +38,7 @@ static clock_t hook_clock() {
 
 struct OneHookTest : public BaseTest {
   OneHookTest(char const* method_name, void* hook)
-    : libtarget(LIBDIR("libtarget.so")),
+    : libtarget(loadLibrary("libtarget.so")),
       method_name(method_name),
       hook(hook) { }
 
@@ -53,7 +51,7 @@ struct OneHookTest : public BaseTest {
     ASSERT_EQ(0, unhook_plt_method("libtarget.so", method_name, hook));
   }
 
-  facebook::cppdistract::dso const libtarget;
+  std::unique_ptr<LibraryHandle>  libtarget;
   char const* const method_name;
   void* const hook;
 };
@@ -63,16 +61,16 @@ struct CallClockHookTest : public OneHookTest {
 };
 
 TEST_F(CallClockHookTest, testHook) {
-  auto call_clock = libtarget.get_symbol<int()>("call_clock");
+  auto call_clock = libtarget->get_symbol<int()>("call_clock");
   ASSERT_EQ(0xface, call_clock());
 }
 
 struct TwoHookTest : public CallClockHookTest {
   TwoHookTest()
       : CallClockHookTest(),
-        libsecond_hook(LIBDIR("libsecond_hook.so")),
-        perform_hook(libsecond_hook.get_symbol<int()>("perform_hook")),
-        cleanup(libsecond_hook.get_symbol<int()>("cleanup")) {}
+        libsecond_hook(loadLibrary("libsecond_hook.so")),
+        perform_hook(libsecond_hook->get_symbol<int()>("perform_hook")),
+        cleanup(libsecond_hook->get_symbol<int()>("cleanup")) {}
 
   virtual void SetUp() {
     OneHookTest::SetUp();
@@ -84,24 +82,24 @@ struct TwoHookTest : public CallClockHookTest {
     OneHookTest::TearDown();
   }
 
-  facebook::cppdistract::dso const libsecond_hook;
+  std::unique_ptr<LibraryHandle> libsecond_hook;
   int (*const perform_hook)();
   int (*const cleanup)();
 };
 
 TEST_F(TwoHookTest, testDoubleHook) {
-  auto call_clock = libtarget.get_symbol<int()>("call_clock");
+  auto call_clock = libtarget->get_symbol<int()>("call_clock");
   ASSERT_EQ(0xfaceb00c, call_clock());
 }
 
 struct TargetedHooksTest : public BaseTest {
   TargetedHooksTest()
       : BaseTest(),
-        libtarget(LIBDIR("libtarget.so")),
-        libownclock(LIBDIR("libownclock.so")) {}
+        libtarget(loadLibrary("libtarget.so")),
+        libownclock(loadLibrary("libownclock.so")) {}
 
-  facebook::cppdistract::dso const libtarget;
-  facebook::cppdistract::dso const libownclock;
+  std::unique_ptr<LibraryHandle> libtarget;
+  std::unique_ptr<LibraryHandle> libownclock;
 };
 
 TEST_F(TargetedHooksTest, testNonTargetedLibSymbolsAreIgnored) {
@@ -114,20 +112,20 @@ TEST_F(TargetedHooksTest, testNonTargetedLibSymbolsAreIgnored) {
     plt_hook_spec spec("libc.so", "clock", (void*)hook_clock);
     // Verify that the linker did the right thing and linked against our own
     // clock() implementation.
-    ASSERT_EQ(1, libownclock.get_symbol<clock_t()>("call_clock")());
+    ASSERT_EQ(1, libownclock->get_symbol<clock_t()>("call_clock")());
 
     ASSERT_EQ(0, hook_single_lib("libownclock.so", &spec, 1));
     ASSERT_EQ(0, spec.hook_result);
 
     // Since the hook did not succeed, we expect the result to be unhooked.
-    ASSERT_EQ(1, libownclock.get_symbol<clock_t()>("call_clock")());
+    ASSERT_EQ(1, libownclock->get_symbol<clock_t()>("call_clock")());
   }
 
   {
     plt_hook_spec spec("libc.so", "clock", (void*)hook_clock);
     ASSERT_EQ(0, hook_single_lib("libtarget.so", &spec, 1));
     ASSERT_EQ(1, spec.hook_result);
-    ASSERT_EQ(0xface, libtarget.get_symbol<clock_t()>("call_clock")());
+    ASSERT_EQ(0xface, libtarget->get_symbol<clock_t()>("call_clock")());
     ASSERT_EQ(0, unhook_single_lib("libtarget.so", &spec, 1));
   }
 }
@@ -148,7 +146,7 @@ struct HookUnhookTest : public BaseTest {
     void* fn;
   };
 
-  HookUnhookTest() : libtarget(LIBDIR("libtarget.so")) {}
+  HookUnhookTest() : libtarget(loadLibrary("libtarget.so")) {}
 
   virtual ~HookUnhookTest() {}
 
@@ -172,7 +170,7 @@ struct HookUnhookTest : public BaseTest {
   static int kTwo;
   static int kThree;
 
-  facebook::cppdistract::dso const libtarget;
+  std::unique_ptr<LibraryHandle> libtarget;
 };
 
 int HookUnhookTest::kOne = 11;
@@ -180,7 +178,7 @@ int HookUnhookTest::kTwo = 13;
 int HookUnhookTest::kThree = 17;
 
 TEST_F(HookUnhookTest, testProperStackHookUnhook) {
-  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  auto call_clock = libtarget->get_symbol<clock_t()>("call_clock");
   {
     Hook fst{"clock", (void*) &clock1};
     EXPECT_EQ(call_clock(), kOne);
@@ -201,7 +199,7 @@ TEST_F(HookUnhookTest, testProperStackHookUnhook) {
 TEST_F(HookUnhookTest, testUnhookAllWithUnhookedLib) {
   // This test ensures that unhook_all_libs does not trip up on
   // libraries with symbols that match the hook spec but are not hooked.
-  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  auto call_clock = libtarget->get_symbol<clock_t()>("call_clock");
 
   plt_hook_spec spec("clock", (void*)&clock1);
 
@@ -216,7 +214,7 @@ TEST_F(HookUnhookTest, testUnhookAllWithUnhookedLib) {
   EXPECT_EQ(call_clock(), kOne);
 
   // Load a second library that has a PLT slot for clock()
-  facebook::cppdistract::dso other_lib(LIBDIR("libmeaningoflife.so"));
+  auto other_lib = loadLibrary("libmeaningoflife.so");
 
   spec.hook_result = 0; // reset after the hook_all operation
   EXPECT_EQ(unhook_all_libs(&spec, 1), 0) << "unhook_all failed";
@@ -227,7 +225,7 @@ TEST_F(HookUnhookTest, testUnhookWithMissingHookDoesNotFail) {
   // This test ensures that unhook_single_lib does not fail when the
   // the spec matches an existing hooked slot but the hook function is not
   // registered for that slot.
-  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  auto call_clock = libtarget->get_symbol<clock_t()>("call_clock");
 
   plt_hook_spec spec("clock", (void*)&clock1);
 
@@ -249,7 +247,7 @@ TEST_F(HookUnhookTest, testUnhookWithMissingHookDoesNotFail) {
 
 TEST_F(HookUnhookTest, testOutOfOrderHookUnhook) {
   // Test out of order unhooking.
-  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  auto call_clock = libtarget->get_symbol<clock_t()>("call_clock");
   auto fst = std::make_unique<Hook>("clock", (void*) &clock1);
   auto snd = std::make_unique<Hook>("clock", (void*) &clock2);
   auto trd = std::make_unique<Hook>("clock", (void*) &clock3);
@@ -268,7 +266,7 @@ TEST_F(HookUnhookTest, testOutOfOrderHookUnhook) {
 
 TEST_F(HookUnhookTest, testOutOfOrderHookUnhook2) {
   // Test out of order unhooking and hooking sequences.
-  auto call_clock = libtarget.get_symbol<clock_t()>("call_clock");
+  auto call_clock = libtarget->get_symbol<clock_t()>("call_clock");
   auto fst = std::make_unique<Hook>("clock", (void*) &clock1);
   auto snd = std::make_unique<Hook>("clock", (void*) &clock2);
 
@@ -307,7 +305,7 @@ struct Nice1Test : public OneHookTest {
 };
 
 TEST_F(Nice1Test, nice1Test) {
-  auto call_nice1 = libtarget.get_symbol<double(int)>("call_nice1");
+  auto call_nice1 = libtarget->get_symbol<double(int)>("call_nice1");
   ASSERT_EQ(-1764.0, call_nice1(7));
 }
 
@@ -320,7 +318,7 @@ struct Nice2Test : public OneHookTest {
 };
 
 TEST_F(Nice2Test, nice2Test) {
-  auto call_nice2 = libtarget.get_symbol<int(int, double)>("call_nice2");
+  auto call_nice2 = libtarget->get_symbol<int(int, double)>("call_nice2");
   ASSERT_EQ(1764.0, call_nice2(70, 4.2));
 }
 
@@ -367,7 +365,7 @@ struct Evil1Test : public OneHookTest {
 };
 
 TEST_F(Evil1Test, evil1Test) {
-  auto call_evil1 = libtarget.get_symbol<void(struct large, int, void(*)(struct large*, int, void*), void*)>("call_evil1");
+  auto call_evil1 = libtarget->get_symbol<void(struct large, int, void(*)(struct large*, int, void*), void*)>("call_evil1");
   struct large param = {
     .a = kDouble1,
     .b = kInt1,
@@ -425,7 +423,7 @@ struct Evil2Test : public OneHookTest {
 };
 
 TEST_F(Evil2Test, evil2Test) {
-  auto call_evil2 = libtarget.get_symbol<void*(int, struct large, void(*)(struct large*, int, void*), void*)>("call_evil2");
+  auto call_evil2 = libtarget->get_symbol<void*(int, struct large, void(*)(struct large*, int, void*), void*)>("call_evil2");
   struct large param = {
     .a = kDouble1,
     .b = kInt1,
@@ -485,7 +483,7 @@ struct Evil3Test : public OneHookTest {
 
 TEST_F(Evil3Test, evil3Test) {
   auto call_evil3 =
-    libtarget.get_symbol<struct large(int, int, int, struct large, void(*)(struct large*, int, void*), void*)>("call_evil3");
+    libtarget->get_symbol<struct large(int, int, int, struct large, void(*)(struct large*, int, void*), void*)>("call_evil3");
   struct large param = {
     .a = kDouble1,
     .b = kInt1,
@@ -549,13 +547,13 @@ template <int Ret>
 struct AliasTest : public OneHookTest {
   AliasTest(char const* method_name)
     : OneHookTest(method_name, (void*)(+[] { return Ret; })),
-      libmeaningoflife(LIBDIR("libmeaningoflife.so")),
-      foo(libmeaningoflife.get_symbol<int()>("foo")),
-      bar(libmeaningoflife.get_symbol<int()>("bar")) {}
+      libmeaningoflife(loadLibrary("libmeaningoflife.so")),
+      foo(libmeaningoflife->get_symbol<int()>("foo")),
+      bar(libmeaningoflife->get_symbol<int()>("bar")) {}
 
   static constexpr int kExpectedValue = Ret;
 
-  facebook::cppdistract::dso const libmeaningoflife;
+  std::unique_ptr<LibraryHandle> libmeaningoflife;
   int (*foo)();
   int (*bar)();
 };
@@ -565,7 +563,7 @@ struct AliasFooTest : public AliasTest<69> {
 };
 
 TEST_F(AliasFooTest, aliasFooTest) {
-  ASSERT_EQ(kExpectedValue + bar(), libtarget.get_symbol<int()>("add_foo_and_bar")());
+  ASSERT_EQ(kExpectedValue + bar(), libtarget->get_symbol<int()>("add_foo_and_bar")());
 }
 
 struct AliasBarTest : public AliasTest<101> {
@@ -573,13 +571,13 @@ struct AliasBarTest : public AliasTest<101> {
 };
 
 TEST_F(AliasBarTest, aliasBarTest) {
-  ASSERT_EQ(kExpectedValue + foo(), libtarget.get_symbol<int()>("add_foo_and_bar")());
+  ASSERT_EQ(kExpectedValue + foo(), libtarget->get_symbol<int()>("add_foo_and_bar")());
 }
 
 struct NoChainingTest : public BaseTest {
-  NoChainingTest() : libtarget(LIBDIR("libtarget.so")) {}
+  NoChainingTest() : libtarget(loadLibrary("libtarget.so")) {}
 
-  facebook::cppdistract::dso const libtarget;
+  std::unique_ptr<LibraryHandle> libtarget;
 
   // Can't use hook_clock because CALL_PREV will abort in a no-chaining hook.
   static clock_t beef_clock() {
@@ -600,7 +598,7 @@ TEST_F(NoChainingTest, testHook) {
   auto failures = hook_single_lib("libtarget.so", &spec, 1);
   ASSERT_EQ(0, failures);
   ASSERT_EQ(1, spec.hook_result);
-  auto call_clock = libtarget.get_symbol<int()>("call_clock");
+  auto call_clock = libtarget->get_symbol<int()>("call_clock");
   ASSERT_EQ(0xbeef, call_clock());
 }
 
@@ -646,19 +644,23 @@ TEST_F(NoChainingTest, testNoChainingHookAfterRegularHookAndUnhook) {
 
 TEST_F(NoChainingTest, unwindingTest) {
   auto call_unwind_backtrace =
-      libtarget.get_symbol<bool(unsigned*)>("call_unwind_backtrace");
+      libtarget->get_symbol<bool(unsigned*)>("call_unwind_backtrace");
   unsigned num_frames_original;
   bool success = call_unwind_backtrace(&num_frames_original);
   ASSERT_TRUE(success);
 
+  std::string target_symbol;
+
+  // Determine dynamically which symbol to use, preferring the wrapped one, if it exists.
+  try {
+    static constexpr char kWrappedUnwindBacktrace[] = "__wrap__Unwind_Backtrace";
+    libtarget->get_symbol<bool(unsigned*)>(kWrappedUnwindBacktrace);
+    target_symbol = kWrappedUnwindBacktrace;
+  } catch (...) {
+    target_symbol = "_Unwind_Backtrace";
+  }
   plt_hook_spec spec(
-#if defined(_LIBCPP_VERSION) && defined(__arm__)
-      // We use linker wrapping for the unwinder symbols to prevent clashes with
-      // the libgcc unwinder.
-      "__wrap__Unwind_Backtrace",
-#else
-      "_Unwind_Backtrace",
-#endif
+      target_symbol.c_str(),
       (hook_func)&NoChainingTest::unwind_backtrace_wrapper);
   auto failures = hook_single_lib("libtarget.so", &spec, 1);
   ASSERT_EQ(0, failures);
@@ -697,7 +699,7 @@ TEST_F(NoChainingTest, unwindingTest) {
 #else
 
 TEST(UnsupportedArch, unsupportedArch) {
-  facebook::cppdistract::dso const libtarget(LIBDIR("libtarget.so"));
+  auto libtarget = loadLibrary("libtarget.so");
   ASSERT_EQ(1, hook_plt_method("libtarget.so", "call_clock", (void*)(+[]() -> clock_t { return 0; })));
 }
 
