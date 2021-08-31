@@ -23,7 +23,7 @@ import com.facebook.profilo.config.ConfigImpl;
 import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.testing.powermock.PowerMockTest;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;

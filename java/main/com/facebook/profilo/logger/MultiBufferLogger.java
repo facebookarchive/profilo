@@ -15,7 +15,7 @@ package com.facebook.profilo.logger;
 
 import com.facebook.jni.HybridClassBase;
 import com.facebook.profilo.core.ProfiloConstants;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.proguard.annotations.DoNotStripAny;
 import com.facebook.soloader.SoLoader;
 import java.util.concurrent.atomic.AtomicInteger;

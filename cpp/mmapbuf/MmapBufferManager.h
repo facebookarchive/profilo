@@ -38,7 +38,7 @@ namespace mmapbuf {
 class MmapBufferManager : public fbjni::HybridClass<MmapBufferManager> {
  public:
   constexpr static auto kJavaDescriptor =
-      "Lcom/facebook/profilo/mmapbuf/MmapBufferManager;";
+      "Lcom/facebook/profilo/mmapbuf/core/MmapBufferManager;";
 
   static fbjni::local_ref<MmapBufferManager::jhybriddata> initHybrid(
       fbjni::alias_ref<jclass>);

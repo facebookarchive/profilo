@@ -17,7 +17,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.facebook.profilo.config.Config;
 import com.facebook.profilo.logger.LoggerWorkerThread;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 import java.io.File;
 import javax.annotation.Nullable;
 

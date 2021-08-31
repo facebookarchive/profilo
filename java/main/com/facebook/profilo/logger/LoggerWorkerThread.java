@@ -15,7 +15,7 @@ package com.facebook.profilo.logger;
 
 import android.os.Process;
 import com.facebook.profilo.core.ProfiloConstants;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.profilo.writer.NativeTraceWriter;
 import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 

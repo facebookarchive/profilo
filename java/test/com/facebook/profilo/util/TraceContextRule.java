@@ -14,8 +14,8 @@
 package com.facebook.profilo.util;
 
 import com.facebook.profilo.ipc.TraceContext;
-import com.facebook.profilo.mmapbuf.Buffer;
-import com.facebook.profilo.mmapbuf.MmapBufferManager;
+import com.facebook.profilo.mmapbuf.core.Buffer;
+import com.facebook.profilo.mmapbuf.core.MmapBufferManager;
 import java.io.File;
 import java.util.ArrayList;
 import org.junit.rules.MethodRule;

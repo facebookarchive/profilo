@@ -14,7 +14,7 @@
 package com.facebook.profilo.writer;
 
 import com.facebook.jni.HybridData;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.soloader.SoLoader;
 import javax.annotation.Nullable;

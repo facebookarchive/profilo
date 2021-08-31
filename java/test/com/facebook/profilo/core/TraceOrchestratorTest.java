@@ -36,7 +36,7 @@ import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.FileManager;
 import com.facebook.profilo.logger.Trace;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.profilo.util.TestConfigProvider;
 import com.facebook.profilo.util.TraceContextRule;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;

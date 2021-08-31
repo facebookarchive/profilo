@@ -2,7 +2,7 @@ load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 fb_core_android_library(
-    name = "mmapbuf",
+    name = "core",
     srcs = [
         "Buffer.java",
         "MmapBufferManager.java",

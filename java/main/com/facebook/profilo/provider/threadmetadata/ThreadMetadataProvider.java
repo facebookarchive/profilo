@@ -15,7 +15,7 @@ package com.facebook.profilo.provider.threadmetadata;
 
 import com.facebook.profilo.core.MetadataTraceProvider;
 import com.facebook.profilo.ipc.TraceContext;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 
 public final class ThreadMetadataProvider extends MetadataTraceProvider {
 

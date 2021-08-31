@@ -32,7 +32,7 @@ namespace mmapbuf {
 class JBuffer final : public fbjni::HybridClass<JBuffer> {
  public:
   constexpr static auto kJavaDescriptor =
-      "Lcom/facebook/profilo/mmapbuf/Buffer;";
+      "Lcom/facebook/profilo/mmapbuf/core/Buffer;";
 
   static void registerNatives();
 

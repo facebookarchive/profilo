@@ -29,6 +29,6 @@ fb_core_android_library(
     exported_deps = [
         profilo_path("cpp/generated:java"),
         profilo_path("deps/fbjni:fbjni-java"),
-        profilo_path("java/main/com/facebook/profilo/mmapbuf:mmapbuf"),
+        profilo_path("java/main/com/facebook/profilo/mmapbuf/core:core"),
     ],
 )

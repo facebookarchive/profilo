@@ -15,7 +15,7 @@ fb_core_android_library(
     ],
     deps = [
         profilo_path("cpp:profilo"),
-        profilo_path("java/main/com/facebook/profilo/mmapbuf:mmapbuf"),
+        profilo_path("java/main/com/facebook/profilo/mmapbuf/core:core"),
         profilo_path("deps/fbjni:fbjni-java"),
         profilo_path("deps/jsr-305:jsr-305"),
         profilo_path("deps/proguard:annotations"),

@@ -17,7 +17,7 @@ import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.BufferLogger;
 import com.facebook.profilo.logger.Logger;
-import com.facebook.profilo.mmapbuf.Buffer;
+import com.facebook.profilo.mmapbuf.core.Buffer;
 import java.util.Set;
 
 class CoreTraceListener extends DefaultTraceOrchestratorListener {
