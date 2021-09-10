@@ -1,8 +1,9 @@
 aliases:
-  - &filter-only-master
+  - &filter-only-main
     branches:
       only:
         - master
+        - main
 
   - &restore-cache
     restore_cache:
@@ -121,10 +122,10 @@ workflows:
     jobs:
       - build-website
       - deploy-website:
-          filters: *filter-only-master
+          filters: *filter-only-main
           requires:
             - build-website
   build_and_test:
     jobs:
       - build-and-test:
-          filters: *filter-only-master
+          filters: *filter-only-main
