@@ -90,9 +90,9 @@ public final class StackFrameThread extends BaseTraceProvider {
    *
    * @return <code>true</code> if initProfiler was successful and <code>false</code> otherwise.
    */
-  private synchronized boolean initProfiler() {
+  private synchronized boolean initProfiler(boolean nativeTracerUnwindDexFrames) {
     try {
-      return CPUProfiler.init(mContext, getLogger());
+      return CPUProfiler.init(mContext, getLogger(), nativeTracerUnwindDexFrames);
     } catch (Exception ex) {
       Log.e(LOG_TAG, ex.getMessage(), ex);
       return false;
@@ -100,8 +100,11 @@ public final class StackFrameThread extends BaseTraceProvider {
   }
 
   private synchronized boolean enableInternal(
-      int sampleRateMs, int threadDetectIntervalMs, int enabledProviders) {
-    if (!initProfiler()) {
+      int sampleRateMs,
+      int threadDetectIntervalMs,
+      int enabledProviders,
+      boolean nativeTracerUnwindDexFrames) {
+    if (!initProfiler(nativeTracerUnwindDexFrames)) {
       return false;
     }
 
@@ -172,7 +175,9 @@ public final class StackFrameThread extends BaseTraceProvider {
                 ProfiloConstants.CPU_SAMPLING_RATE_CONFIG_PARAM, 0),
             context.mTraceConfigExtras.getIntParam(
                 ProfiloConstants.PROVIDER_PARAM_STACK_TRACE_THREAD_DETECT_INTERVAL_MS, 0),
-            context.enabledProviders);
+            context.enabledProviders,
+            context.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_DEX_FRAMES, false));
     if (!enabled) {
       return;
     }

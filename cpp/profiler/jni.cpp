@@ -62,7 +62,8 @@ int32_t getSystemClockTickIntervalMs(facebook::jni::alias_ref<jobject>) {
 
 std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
     MultiBufferLogger& logger,
-    uint32_t available_tracers) {
+    uint32_t available_tracers,
+    bool native_tracer_unwind_dex_frames) {
   std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers;
   if (available_tracers & tracers::DALVIK) {
     tracers[tracers::DALVIK] = std::make_shared<DalvikTracer>();
@@ -70,7 +71,8 @@ std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
 
 #if HAS_NATIVE_TRACER
   if (available_tracers & tracers::NATIVE) {
-    tracers[tracers::NATIVE] = std::make_shared<NativeTracer>(logger);
+    tracers[tracers::NATIVE] =
+        std::make_shared<NativeTracer>(logger, native_tracer_unwind_dex_frames);
   }
 #endif
 
@@ -132,13 +134,15 @@ std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
 static jboolean nativeInitialize(
     fbjni::alias_ref<jobject>,
     JMultiBufferLogger* jlogger,
-    jint arg) {
-  auto available_tracers = static_cast<uint32_t>(arg);
+    jint tracers,
+    jboolean native_tracer_unwind_dex_frames) {
+  auto available_tracers = static_cast<uint32_t>(tracers);
   auto& logger = jlogger->nativeInstance();
   return SamplingProfiler::getInstance().initialize(
       logger,
       available_tracers,
-      makeAvailableTracers(logger, available_tracers));
+      makeAvailableTracers(
+          logger, available_tracers, native_tracer_unwind_dex_frames));
 }
 
 static void nativeLoggerLoop(fbjni::alias_ref<jobject>) {
