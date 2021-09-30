@@ -23,6 +23,7 @@ public interface BackgroundUploadService {
   int UPLOAD_FAILURE_NO_CONNECTION = 2;
   int UPLOAD_FAILURE_NO_BYTES_REMAINING = 3;
   int UPLOAD_FAILURE_DROP = 4;
+  int UPLOAD_FAILURE_REQUEST_FAILED_WITH_EXCEPTION = 5;
 
   public static interface BackgroundUploadListener {
     public void onUploadSuccessful(File file);
