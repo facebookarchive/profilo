@@ -147,7 +147,7 @@ public class TraceOrchestratorTest {
             TraceConfigExtras.EMPTY,
             buffer,
             new Buffer[] {buffer},
-            new File("."),
+            new File("_none_"),
             "prefix-");
 
     buffer = mTraceContextRule.newBuffer();
@@ -166,7 +166,7 @@ public class TraceOrchestratorTest {
             TraceConfigExtras.EMPTY,
             buffer,
             new Buffer[] {buffer},
-            new File("."),
+            new File("_none_"),
             "prefix-"); // mTraceConfigExtras
 
     mTraceProvider = mock(BaseTraceProvider.class);
@@ -306,25 +306,25 @@ public class TraceOrchestratorTest {
 
   @Test
   public void testAbortedTraceCallAbortByID() throws IOException {
-    final long traceId = 0xFACEB00C;
-    mOrchestrator.onTraceWriteStart(traceId, 0);
-    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
+    mOrchestrator.onTraceWriteStart(mTraceContext);
+    mOrchestrator.onTraceWriteAbort(
+        mTraceContext, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mTraceControl)
         .cleanupTraceContextByID(
-            eq(traceId), eq(ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED));
+            eq(mTraceContext.traceId), eq(ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED));
   }
 
   @Test
   public void testAbortedNonexistentTraceCallAbortByID() throws IOException {
     /* This can happen if we never saw the trace start event and thus opened a real file. */
-    final long traceId = 0xFACEB00C;
-    mOrchestrator.onTraceWriteStart(traceId, 0);
-    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
+    mOrchestrator.onTraceWriteStart(mTraceContext);
+    mOrchestrator.onTraceWriteAbort(
+        mTraceContext, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mTraceControl)
         .cleanupTraceContextByID(
-            eq(traceId), eq(ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED));
+            eq(mTraceContext.traceId), eq(ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED));
   }
 
   @Test
@@ -344,8 +344,8 @@ public class TraceOrchestratorTest {
       mOrchestrator.onTraceStartAsync(mTraceContext);
       mOrchestrator.onTraceAbort(mTraceContext);
 
-      mOrchestrator.onTraceWriteStart(traceId, 0);
-      mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_TIMEOUT);
+      mOrchestrator.onTraceWriteStart(mTraceContext);
+      mOrchestrator.onTraceWriteAbort(mTraceContext, ProfiloConstants.ABORT_REASON_TIMEOUT);
     } finally {
       fileA.delete();
       fileB.delete();
@@ -357,13 +357,10 @@ public class TraceOrchestratorTest {
 
   @Test
   public void testTraceIsDiscardedOnTimeout() throws Exception {
-    File tempDirectory = new File(DEFAULT_TEMP_DIR);
-    tempDirectory.mkdirs();
     mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(0)));
-    final long traceId = 0xFACEB00C;
-    File traceFile = File.createTempFile("tmp", "tmp", tempDirectory);
-    mOrchestrator.onTraceWriteStart(traceId, 0);
-    mOrchestrator.onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
+    mOrchestrator.onTraceWriteStart(mTraceContext);
+    mOrchestrator.onTraceWriteAbort(
+        mTraceContext, ProfiloConstants.ABORT_REASON_CONTROLLER_INITIATED);
 
     verify(mFileManager, never()).addFileToUploads(any(File.class), anyBoolean());
   }
@@ -381,9 +378,9 @@ public class TraceOrchestratorTest {
     try {
       mOrchestrator.onTraceStartSync(mTraceContext);
       mOrchestrator.onTraceStartAsync(mTraceContext);
-      mOrchestrator.onTraceWriteStart(traceId, Trace.FLAG_MEMORY_ONLY);
+      mOrchestrator.onTraceWriteStart(mTraceContext);
       mOrchestrator.onTraceStop(mTraceContext);
-      mOrchestrator.onTraceWriteEnd(traceId);
+      mOrchestrator.onTraceWriteEnd(mTraceContext);
 
       verify(mFileManager).addFileToUploads(any(File.class), eq(false));
     } finally {
@@ -404,14 +401,14 @@ public class TraceOrchestratorTest {
       mOrchestrator.onTraceStartAsync(mTraceContext);
       mOrchestrator.onTraceStop(mTraceContext);
 
-      mOrchestrator.onTraceWriteStart(traceId, 0);
-      mOrchestrator.onTraceWriteEnd(traceId);
+      mOrchestrator.onTraceWriteStart(mTraceContext);
+      mOrchestrator.onTraceWriteEnd(mTraceContext);
 
       mTraceContext.traceId += 1;
       mOrchestrator.onTraceStartSync(mTraceContext);
       mOrchestrator.onTraceStartAsync(mTraceContext);
       mOrchestrator.onTraceStop(mTraceContext);
-      mOrchestrator.onTraceWriteStart(mTraceContext.traceId, 0);
+      mOrchestrator.onTraceWriteStart(mTraceContext);
       // Assert that onTraceWriteStart doesn't throw
     } finally {
       fileA.delete();
@@ -494,7 +491,7 @@ public class TraceOrchestratorTest {
             TraceConfigExtras.EMPTY,
             buffer,
             new Buffer[] {buffer},
-            new File("."),
+            new File("_none_"),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStartSync(anotherContext);
     mOrchestrator.onTraceStartAsync(anotherContext);
@@ -530,7 +527,7 @@ public class TraceOrchestratorTest {
             TraceConfigExtras.EMPTY,
             /*buffer*/ buffer,
             new Buffer[] {buffer},
-            new File("."),
+            new File("_none_"),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 
@@ -585,7 +582,7 @@ public class TraceOrchestratorTest {
             TraceConfigExtras.EMPTY,
             buffer,
             new Buffer[] {buffer},
-            new File("."),
+            new File("_none_"),
             "prefix-"); // mTraceConfigExtras
     mOrchestrator.onTraceStop(traceContext);
 

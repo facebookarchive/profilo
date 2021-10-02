@@ -33,6 +33,10 @@ LISTENER = [
     "TraceOrchestratorListener.java",
 ]
 
+TRACE_WRITER_LISTENTER = [
+    "TraceWriterListener.java",
+]
+
 UPLOAD = [
     "BackgroundUploadService.java",
 ]
@@ -97,6 +101,7 @@ fb_core_android_library(
     ],
     deps = [
         ":constants",
+        ":listener",
         ":registry",
         profilo_path("java/main/com/facebook/profilo/mmapbuf/core:core"),
         profilo_path("java/main/com/facebook/profilo/writer:writer"),
@@ -123,10 +128,25 @@ fb_core_android_library(
     ],
     exported_deps = [
         ":upload",
+        ":writer_listener",
         profilo_path("aidl:aidl"),
         profilo_path("java/main/com/facebook/profilo/config:config"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
-        profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
+    ],
+)
+
+fb_core_android_library(
+    name = "writer_listener",
+    srcs = TRACE_WRITER_LISTENTER,
+    labels = ["supermodule:android/default/loom.core"],
+    visibility = [
+        profilo_path("..."),
+    ],
+    deps = [
+        profilo_path("deps/jsr-305:jsr-305"),
+    ],
+    exported_deps = [
+        profilo_path("aidl:aidl"),
     ],
 )
 
@@ -149,7 +169,7 @@ fb_core_android_library(
     name = "core",
     srcs = glob(
         ["*.java"],
-        exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY + LISTENER + UPLOAD,
+        exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY + LISTENER + TRACE_WRITER_LISTENTER + UPLOAD,
     ),
     labels = ["supermodule:android/default/loom.core"],
     tests = [
@@ -184,8 +204,8 @@ fb_core_android_library(
         ":listener",
         ":registry",
         ":upload",
+        ":writer_listener",
         profilo_path("java/main/com/facebook/profilo/config:config"),
-        profilo_path("java/main/com/facebook/profilo/writer:writer_callbacks"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),
         profilo_path("java/main/com/facebook/profilo/mmapbuf/core:core"),
     ],

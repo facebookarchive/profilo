@@ -19,7 +19,7 @@ import java.io.File;
 public abstract class DefaultTraceOrchestratorListener implements TraceOrchestratorListener {
 
   @Override
-  public void onTraceFlushed(File trace, long traceId) {}
+  public void onTraceFlushed(TraceContext trace) {}
 
   @Override
   public void onTraceFlushedDoFileAnalytics(
@@ -53,14 +53,14 @@ public abstract class DefaultTraceOrchestratorListener implements TraceOrchestra
   public void onTraceAbort(TraceContext context) {}
 
   @Override
-  public void onTraceWriteException(long traceId, Throwable t) {}
+  public void onTraceWriteException(TraceContext traceContext, Throwable t) {}
 
   @Override
-  public void onTraceWriteStart(long traceId, int flags) {}
+  public void onTraceWriteStart(TraceContext traceContext) {}
 
   @Override
-  public void onTraceWriteEnd(long traceId) {}
+  public void onTraceWriteEnd(TraceContext traceContext) {}
 
   @Override
-  public void onTraceWriteAbort(long traceId, int abortReason) {}
+  public void onTraceWriteAbort(TraceContext traceContext, int abortReason) {}
 }

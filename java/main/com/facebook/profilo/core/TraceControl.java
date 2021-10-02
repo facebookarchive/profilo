@@ -27,7 +27,6 @@ import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.profilo.mmapbuf.core.MmapBufferManager;
 import com.facebook.profilo.writer.NativeTraceWriter;
-import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -105,7 +104,7 @@ public final class TraceControl {
       MmapBufferManager bufferManager,
       File folder,
       String processName,
-      NativeTraceWriterCallbacks callbacks) {
+      TraceWriterListener callbacks) {
 
     // Use double-checked locking to avoid using AtomicReference and thus increasing the
     // overhead of each read by adding a virtual call to it.
@@ -142,7 +141,7 @@ public final class TraceControl {
   private final MmapBufferManager mBufferManager;
   private final File mFolder;
   private final String mProcessName;
-  private final NativeTraceWriterCallbacks mCallbacks;
+  private final TraceWriterListener mCallbacks;
   private final AtomicInteger mCurrentTracesMask;
   @Nullable private final TraceControlListener mListener;
   @Nullable private TraceControlHandler mTraceControlHandler;
@@ -155,7 +154,7 @@ public final class TraceControl {
       MmapBufferManager bufferManager,
       File folder,
       String processName,
-      NativeTraceWriterCallbacks callbacks) {
+      TraceWriterListener callbacks) {
     mControllers = controllers;
     mCurrentConfig = new AtomicReference<>(config);
     mBufferManager = bufferManager;

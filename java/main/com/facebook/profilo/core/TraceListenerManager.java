@@ -64,10 +64,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceFlushed(File trace, long traceId) {
+  public void onTraceFlushed(TraceContext trace) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceFlushed(trace, traceId);
+      iterator.next().onTraceFlushed(trace);
     }
   }
 
@@ -100,34 +100,34 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceWriteStart(long traceId, int flags) {
+  public void onTraceWriteStart(TraceContext trace) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteStart(traceId, flags);
+      iterator.next().onTraceWriteStart(trace);
     }
   }
 
   @Override
-  public void onTraceWriteEnd(long traceId) {
+  public void onTraceWriteEnd(TraceContext trace) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteEnd(traceId);
+      iterator.next().onTraceWriteEnd(trace);
     }
   }
 
   @Override
-  public void onTraceWriteAbort(long traceId, int abortReason) {
+  public void onTraceWriteAbort(TraceContext trace, int abortReason) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteAbort(traceId, abortReason);
+      iterator.next().onTraceWriteAbort(trace, abortReason);
     }
   }
 
   @Override
-  public void onTraceWriteException(long traceId, Throwable t) {
+  public void onTraceWriteException(TraceContext trace, Throwable t) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceWriteException(traceId, t);
+      iterator.next().onTraceWriteException(trace, t);
     }
   }
 

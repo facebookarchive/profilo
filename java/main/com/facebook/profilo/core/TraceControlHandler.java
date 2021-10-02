@@ -64,7 +64,7 @@ public class TraceControlHandler extends Handler {
   @GuardedBy("this")
   private final @Nullable TraceControl.TraceControlListener mListener;
 
-  private final NativeTraceWriterCallbacks mCallbacks;
+  private final TraceWriterListener mCallbacks;
 
   @GuardedBy("this")
   private final HashSet<Long> mTraceContexts;
@@ -77,7 +77,7 @@ public class TraceControlHandler extends Handler {
   public TraceControlHandler(
       @Nullable TraceControl.TraceControlListener listener,
       Looper looper,
-      NativeTraceWriterCallbacks callbacks) {
+      TraceWriterListener callbacks) {
     super(looper);
     mListener = listener;
     mCallbacks = callbacks;
@@ -289,7 +289,7 @@ public class TraceControlHandler extends Handler {
     sendMessage(stopMessage);
   }
 
-  public synchronized boolean onTraceStart(TraceContext context, final int timeoutMillis) {
+  public synchronized boolean onTraceStart(final TraceContext context, final int timeoutMillis) {
     boolean traceRegistered = mTraceConditionManager.registerTrace(context);
 
     if (!traceRegistered) {
@@ -306,7 +306,27 @@ public class TraceControlHandler extends Handler {
               context.folder.getCanonicalPath(),
               context.prefix,
               context.buffers,
-              mCallbacks);
+              new NativeTraceWriterCallbacks() {
+                @Override
+                public void onTraceWriteStart(long traceId, int flags) {
+                  mCallbacks.onTraceWriteStart(context);
+                }
+
+                @Override
+                public void onTraceWriteEnd(long traceId) {
+                  mCallbacks.onTraceWriteEnd(context);
+                }
+
+                @Override
+                public void onTraceWriteAbort(long traceId, int abortReason) {
+                  mCallbacks.onTraceWriteAbort(context, abortReason);
+                }
+
+                @Override
+                public void onTraceWriteException(long traceId, Throwable t) {
+                  mCallbacks.onTraceWriteException(context, t);
+                }
+              });
     } catch (IOException e) {
       throw new IllegalArgumentException(
           "Could not get canonical path of trace directory " + context.folder, e);

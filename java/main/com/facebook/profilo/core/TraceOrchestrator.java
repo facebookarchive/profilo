@@ -31,14 +31,12 @@ import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.profilo.mmapbuf.core.MmapBufferManager;
 import com.facebook.profilo.writer.NativeTraceWriter;
-import com.facebook.profilo.writer.NativeTraceWriterCallbacks;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
@@ -49,15 +47,13 @@ import javax.annotation.concurrent.GuardedBy;
 
 @SuppressLint({"BadMethodUse-java.lang.Thread.start"})
 public final class TraceOrchestrator
-    implements NativeTraceWriterCallbacks,
+    implements TraceWriterListener,
         ConfigProvider.ConfigUpdateListener,
         TraceControl.TraceControlListener,
         BackgroundUploadService.BackgroundUploadListener,
         BaseTraceProvider.ExtraDataFileProvider {
 
   public static final String EXTRA_DATA_FOLDER_NAME = "extra";
-
-  static final String CHECKSUM_DELIM = "-cs-";
 
   public interface ProfiloBridgeFactory {
     @Nullable
@@ -70,9 +66,6 @@ public final class TraceOrchestrator
   public static final String MAIN_PROCESS_NAME = "main";
 
   private static final String TAG = "Profilo/TraceOrchestrator";
-
-  @GuardedBy("mTraceIdToContext")
-  private final HashMap<Long, TraceContext> mTraceIdToContext;
 
   // This field is expected to be infrequently accessed (just once for the Dummy -> DI dependency
   // shift, ideally), so using AtomicReference (and suffering the virtual get() call) is acceptable.
@@ -168,7 +161,6 @@ public final class TraceOrchestrator
     mListenerManager = new TraceListenerManager();
     mProcessName = processName;
     mIsMainProcess = isMainProcess;
-    mTraceIdToContext = new HashMap<>();
 
     ArrayList<BaseTraceProvider> syncProviderList = new ArrayList<>();
     ArrayList<BaseTraceProvider> normalProviderList = new ArrayList<>();
@@ -401,10 +393,6 @@ public final class TraceOrchestrator
     mListenerManager.onProvidersInitialized(context);
 
     mListenerManager.onTraceStart(context);
-
-    synchronized (mTraceIdToContext) {
-      mTraceIdToContext.put(context.traceId, context);
-    }
   }
 
   @Override
@@ -475,29 +463,14 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onTraceWriteStart(long traceId, int flags) {
-    mListenerManager.onTraceWriteStart(traceId, flags);
-  }
-
-  public void registerExternalContext(TraceContext traceContext) {
-    synchronized (mTraceIdToContext) {
-      mTraceIdToContext.put(traceContext.traceId, traceContext);
-    }
+  public void onTraceWriteStart(TraceContext trace) {
+    mListenerManager.onTraceWriteStart(trace);
   }
 
   @Override
-  public void onTraceWriteEnd(long traceId) {
-    TraceContext trace;
-    synchronized (mTraceIdToContext) {
-      trace = mTraceIdToContext.get(traceId);
-      if (trace == null) {
-        throw new IllegalStateException(
-            "onTraceWriteEnd can't be called without onTraceWriteStart");
-      }
-    }
+  public void onTraceWriteEnd(TraceContext trace) {
     try {
-      mListenerManager.onTraceWriteEnd(traceId);
-
+      mListenerManager.onTraceWriteEnd(trace);
       File traceFolder = trace.folder;
       if (!traceFolder.exists()) {
         return;
@@ -510,7 +483,7 @@ public final class TraceOrchestrator
 
       handleZipAndUpload(trace);
     } finally {
-      handleTraceWriteCompleted(traceId);
+      handleTraceWriteCompleted(trace);
     }
   }
 
@@ -550,7 +523,7 @@ public final class TraceOrchestrator
       fStats = mFileManager.getAndResetStatistics();
     }
 
-    mListenerManager.onTraceFlushed(trace.folder, trace.traceId);
+    mListenerManager.onTraceFlushed(trace);
     // This is as good a time to do some analytics as any.
     mListenerManager.onTraceFlushedDoFileAnalytics(
         fStats.getTotalErrors(),
@@ -568,20 +541,16 @@ public final class TraceOrchestrator
   }
 
   @Override
-  public void onTraceWriteAbort(long traceId, int abortReason) {
-    TraceContext trace;
-    synchronized (mTraceIdToContext) {
-      trace = mTraceIdToContext.get(traceId);
-    }
+  public void onTraceWriteAbort(TraceContext trace, int abortReason) {
     try {
-      mListenerManager.onTraceWriteAbort(traceId, abortReason);
+      mListenerManager.onTraceWriteAbort(trace, abortReason);
 
       Log.w(TAG, "Trace is aborted with code: " + ProfiloConstants.abortReasonName(abortReason));
       TraceControl traceControl = TraceControl.get();
       if (traceControl == null) {
         throw new IllegalStateException("No TraceControl when cleaning up aborted trace");
       }
-      traceControl.cleanupTraceContextByID(traceId, abortReason);
+      traceControl.cleanupTraceContextByID(trace.traceId, abortReason);
 
       if (trace == null) {
         // Primarily covers the case where a trace threw an exception before onTraceStartAsync even
@@ -620,30 +589,24 @@ public final class TraceOrchestrator
 
       handleZipAndUpload(trace);
     } finally {
-      handleTraceWriteCompleted(traceId);
+      handleTraceWriteCompleted(trace);
     }
   }
 
   /** Common logic for aborts and normal ends coming from the trace writer thread. */
-  private void handleTraceWriteCompleted(long traceId) {
-    @Nullable TraceContext context;
-    synchronized (mTraceIdToContext) {
-      context = mTraceIdToContext.remove(traceId);
-    }
-    if (context != null) {
-      for (Buffer buffer : context.buffers) {
-        if (!mMmapBufferManager.deallocateBuffer(buffer)) {
-          Log.e(TAG, "Could not release memory for buffer for trace: " + context.encodedTraceId);
-        }
+  private void handleTraceWriteCompleted(TraceContext trace) {
+    for (Buffer buffer : trace.buffers) {
+      if (!mMmapBufferManager.deallocateBuffer(buffer)) {
+        Log.e(TAG, "Could not release memory for buffer for trace: " + trace.encodedTraceId);
       }
     }
   }
 
   @Override
-  public void onTraceWriteException(long traceId, Throwable t) {
+  public void onTraceWriteException(TraceContext trace, Throwable t) {
     Log.e(TAG, "Write exception", t);
-    mListenerManager.onTraceWriteException(traceId, t);
-    onTraceWriteAbort(traceId, ProfiloConstants.ABORT_REASON_WRITER_EXCEPTION);
+    mListenerManager.onTraceWriteException(trace, t);
+    onTraceWriteAbort(trace, ProfiloConstants.ABORT_REASON_WRITER_EXCEPTION);
   }
 
   @Override
