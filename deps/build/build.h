@@ -7,4 +7,5 @@ int getAndroidSdk();
 bool isArt();
 bool isDalvik();
 
-} } // namespace facebook::build
+} // namespace build
+} // namespace facebook

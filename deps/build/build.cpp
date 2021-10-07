@@ -13,9 +13,9 @@ namespace build {
 int getAndroidSdk() {
 #ifdef __ANDROID__
   static auto android_sdk = ([] {
-     char sdk_version_str[PROP_VALUE_MAX];
-     __system_property_get("ro.build.version.sdk", sdk_version_str);
-     return atoi(sdk_version_str);
+    char sdk_version_str[PROP_VALUE_MAX];
+    __system_property_get("ro.build.version.sdk", sdk_version_str);
+    return atoi(sdk_version_str);
   })();
 
   return android_sdk;
@@ -49,5 +49,5 @@ bool isDalvik() {
   return !isArt();
 }
 
-} // build
-} // facebook
+} // namespace build
+} // namespace facebook

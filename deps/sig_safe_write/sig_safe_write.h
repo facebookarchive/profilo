@@ -32,8 +32,7 @@ extern "C" {
  * If successful, returns 0. In case of error returns non-zero
  * value and sets errno appropriately.
  */
-int
-sig_safe_op(void (*op)(void* data), void* data);
+int sig_safe_op(void (*op)(void* data), void* data);
 
 /**
  * SIGILL safe op. Performs the specified op, but first registers sigmux based
@@ -44,8 +43,7 @@ sig_safe_op(void (*op)(void* data), void* data);
  * If successful, returns 0. In case of error returns non-zero
  * value and sets errno appropriately.
  */
-int
-sig_safe_exec(void (*op)(void* data), void* data);
+int sig_safe_exec(void (*op)(void* data), void* data);
 
 /**
  * Like sig_safe_op but specifically for memory writes.
@@ -55,8 +53,7 @@ sig_safe_exec(void (*op)(void* data), void* data);
  * If successful, returns 0. In case of error returns non-zero
  * value and sets errno appropriately.
  */
-int
-sig_safe_write(void* destination, intptr_t value);
+int sig_safe_write(void* destination, intptr_t value);
 
 #ifdef __cplusplus
 }

@@ -80,23 +80,23 @@ struct Field;
 typedef struct Field Field;
 
 union JValue {
-  u1      z;
-  s1      b;
-  u2      c;
-  s2      s;
-  s4      i;
-  s8      j;
-  float   f;
-  double  d;
+  u1 z;
+  s1 b;
+  u2 c;
+  s2 s;
+  s4 i;
+  s8 j;
+  float f;
+  double d;
   Object* l;
 };
 typedef union JValue JValue;
 
 typedef void (*DalvikBridgeFunc)(
-  const uint32_t* args,
-  JValue* pResult,
-  const Method* method,
-  Thread* self);
+    const uint32_t* args,
+    JValue* pResult,
+    const Method* method,
+    Thread* self);
 
 struct Object {
   ClassObject* clazz;
@@ -104,44 +104,44 @@ struct Object {
 };
 
 typedef enum ClassStatus {
-    CLASS_ERROR         = -1,
+  CLASS_ERROR = -1,
 
-    CLASS_NOTREADY      = 0,
-    CLASS_IDX           = 1,    /* loaded, DEX idx in super or ifaces */
-    CLASS_LOADED        = 2,    /* DEX idx values resolved */
-    CLASS_RESOLVED      = 3,    /* part of linking */
-    CLASS_VERIFYING     = 4,    /* in the process of being verified */
-    CLASS_VERIFIED      = 5,    /* logically part of linking; done pre-init */
-    CLASS_INITIALIZING  = 6,    /* class init in progress */
-    CLASS_INITIALIZED   = 7,    /* ready to go */
+  CLASS_NOTREADY = 0,
+  CLASS_IDX = 1, /* loaded, DEX idx in super or ifaces */
+  CLASS_LOADED = 2, /* DEX idx values resolved */
+  CLASS_RESOLVED = 3, /* part of linking */
+  CLASS_VERIFYING = 4, /* in the process of being verified */
+  CLASS_VERIFIED = 5, /* logically part of linking; done pre-init */
+  CLASS_INITIALIZING = 6, /* class init in progress */
+  CLASS_INITIALIZED = 7, /* ready to go */
 } ClassStatus;
 
 enum ThreadStatus {
-  THREAD_UNDEFINED    = -1,
+  THREAD_UNDEFINED = -1,
 
-  THREAD_ZOMBIE       = 0,
-  THREAD_RUNNING      = 1,
-  THREAD_TIMED_WAIT   = 2,
-  THREAD_MONITOR      = 3,
-  THREAD_WAIT         = 4,
+  THREAD_ZOMBIE = 0,
+  THREAD_RUNNING = 1,
+  THREAD_TIMED_WAIT = 2,
+  THREAD_MONITOR = 3,
+  THREAD_WAIT = 4,
   THREAD_INITIALIZING = 5,
-  THREAD_STARTING     = 6,
-  THREAD_NATIVE       = 7,
-  THREAD_VMWAIT       = 8,
-  THREAD_SUSPENDED    = 9,
+  THREAD_STARTING = 6,
+  THREAD_NATIVE = 7,
+  THREAD_VMWAIT = 8,
+  THREAD_SUSPENDED = 9,
 };
 
 typedef enum PrimitiveType {
-    PRIM_NOT        = 0,
-    PRIM_VOID       = 1,
-    PRIM_BOOLEAN    = 2,
-    PRIM_BYTE       = 3,
-    PRIM_SHORT      = 4,
-    PRIM_CHAR       = 5,
-    PRIM_INT        = 6,
-    PRIM_LONG       = 7,
-    PRIM_FLOAT      = 8,
-    PRIM_DOUBLE     = 9,
+  PRIM_NOT = 0,
+  PRIM_VOID = 1,
+  PRIM_BOOLEAN = 2,
+  PRIM_BYTE = 3,
+  PRIM_SHORT = 4,
+  PRIM_CHAR = 5,
+  PRIM_INT = 6,
+  PRIM_LONG = 7,
+  PRIM_FLOAT = 8,
+  PRIM_DOUBLE = 9,
 } PrimitiveType;
 
 struct DvmDex {
@@ -163,18 +163,18 @@ struct DexClassLookup {
 
 struct DexFile {
   const DexOptHeader* pOptHeader;
-  const DexHeader*    pHeader;
-  const DexStringId*  pStringIds;
-  const DexTypeId*    pTypeIds;
-  const DexFieldId*   pFieldIds;
-  const DexMethodId*  pMethodIds;
-  const DexProtoId*   pProtoIds;
-  const DexClassDef*  pClassDefs;
-  const DexLink*      pLinkData;
+  const DexHeader* pHeader;
+  const DexStringId* pStringIds;
+  const DexTypeId* pTypeIds;
+  const DexFieldId* pFieldIds;
+  const DexMethodId* pMethodIds;
+  const DexProtoId* pProtoIds;
+  const DexClassDef* pClassDefs;
+  const DexLink* pLinkData;
   const DexClassLookup* pClassLookup;
-  const void*         pRegisterMapPool;
-  const u1*           baseAddr;
-  int                 overhead;
+  const void* pRegisterMapPool;
+  const u1* baseAddr;
+  int overhead;
 };
 
 struct __attribute__((packed)) DexFileHeader {
@@ -339,8 +339,8 @@ struct Thread {
 };
 
 struct StackSaveArea {
-  u4*         prevFrame;
-  const u2*   savedPc;
+  u4* prevFrame;
+  const u2* savedPc;
   const Method* method;
 };
 
@@ -348,55 +348,54 @@ struct StackSaveArea {
 // and beyond.  Dalvik is in maintenance mode now that Art is under
 // heavy development.
 
-#define DEX_OPT_MAGIC   "dey\n"
-#define DEX_OPT_MAGIC_VERS  "036\0"
+#define DEX_OPT_MAGIC "dey\n"
+#define DEX_OPT_MAGIC_VERS "036\0"
 
 /*
  * 160-bit SHA-1 digest.
  */
-enum { kSHA1DigestLen = 20,
-       kSHA1DigestOutputLen = kSHA1DigestLen*2 +1 };
+enum { kSHA1DigestLen = 20, kSHA1DigestOutputLen = kSHA1DigestLen * 2 + 1 };
 
 typedef struct DexOptHeader {
-  uint8_t  magic[8];           /* includes version number */
+  uint8_t magic[8]; /* includes version number */
 
-  uint32_t  dexOffset;          /* file offset of DEX header */
-  uint32_t  dexLength;
-  uint32_t  depsOffset;         /* offset of optimized DEX dependency table */
-  uint32_t  depsLength;
-  uint32_t  optOffset;          /* file offset of optimized data tables */
-  uint32_t  optLength;
+  uint32_t dexOffset; /* file offset of DEX header */
+  uint32_t dexLength;
+  uint32_t depsOffset; /* offset of optimized DEX dependency table */
+  uint32_t depsLength;
+  uint32_t optOffset; /* file offset of optimized data tables */
+  uint32_t optLength;
 
-  uint32_t  flags;              /* some info flags */
-  uint32_t  checksum;           /* adler32 checksum covering deps/opt */
+  uint32_t flags; /* some info flags */
+  uint32_t checksum; /* adler32 checksum covering deps/opt */
 
   /* pad for 64-bit alignment if necessary */
 } DexOptHeader;
 
 typedef struct DexHeader {
-  uint8_t  magic[8];           /* includes version number */
-  uint32_t  checksum;           /* adler32 checksum */
-  uint8_t  signature[kSHA1DigestLen]; /* SHA-1 hash */
-  uint32_t  fileSize;           /* length of entire file */
-  uint32_t  headerSize;         /* offset to start of next section */
-  uint32_t  endianTag;
-  uint32_t  linkSize;
-  uint32_t  linkOff;
-  uint32_t  mapOff;
-  uint32_t  stringIdsSize;
-  uint32_t  stringIdsOff;
-  uint32_t  typeIdsSize;
-  uint32_t  typeIdsOff;
-  uint32_t  protoIdsSize;
-  uint32_t  protoIdsOff;
-  uint32_t  fieldIdsSize;
-  uint32_t  fieldIdsOff;
-  uint32_t  methodIdsSize;
-  uint32_t  methodIdsOff;
-  uint32_t  classDefsSize;
-  uint32_t  classDefsOff;
-  uint32_t  dataSize;
-  uint32_t  dataOff;
+  uint8_t magic[8]; /* includes version number */
+  uint32_t checksum; /* adler32 checksum */
+  uint8_t signature[kSHA1DigestLen]; /* SHA-1 hash */
+  uint32_t fileSize; /* length of entire file */
+  uint32_t headerSize; /* offset to start of next section */
+  uint32_t endianTag;
+  uint32_t linkSize;
+  uint32_t linkOff;
+  uint32_t mapOff;
+  uint32_t stringIdsSize;
+  uint32_t stringIdsOff;
+  uint32_t typeIdsSize;
+  uint32_t typeIdsOff;
+  uint32_t protoIdsSize;
+  uint32_t protoIdsOff;
+  uint32_t fieldIdsSize;
+  uint32_t fieldIdsOff;
+  uint32_t methodIdsSize;
+  uint32_t methodIdsOff;
+  uint32_t classDefsSize;
+  uint32_t classDefsOff;
+  uint32_t dataSize;
+  uint32_t dataOff;
 } DexHeader;
 
 typedef struct DexDep {
@@ -413,7 +412,6 @@ typedef struct DexDeps {
   char deps[0];
 } DexDeps;
 
-
 struct SymbolSpec {
   const char* name[2];
   void* value;
@@ -424,12 +422,8 @@ void* open_libdvm();
 void* open_libart();
 void* open_libc();
 
-void ensure_symbols(
-  void* lib,
-  const struct SymbolSpec* ss,
-  unsigned nr_ss);
+void ensure_symbols(void* lib, const struct SymbolSpec* ss, unsigned nr_ss);
 
 #ifdef __cplusplus
 } // extern C
 #endif
-

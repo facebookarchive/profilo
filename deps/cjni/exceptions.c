@@ -20,12 +20,7 @@
 
 #include "exceptions.h"
 
-bool throw_exception(
-    JNIEnv* env,
-    const char* name,
-    const char* fmt,
-    ...)
-{
+bool throw_exception(JNIEnv* env, const char* name, const char* fmt, ...) {
   if ((*env)->ExceptionCheck(env)) {
     return false;
   }

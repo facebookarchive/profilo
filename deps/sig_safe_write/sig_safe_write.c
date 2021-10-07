@@ -33,9 +33,7 @@ struct fault_handler_data {
  * Returns an integer uniquely identifying current thread.
  * This function is async-signal-safe.
  */
-static int
-as_safe_gettid()
-{
+static int as_safe_gettid() {
   return syscall(__NR_gettid);
 }
 
@@ -43,12 +41,10 @@ as_safe_gettid()
  * Signal handler that jumps out of the handler after determining the signal is
  * caused by executing predetermined code on predetermined thread.
  */
-static enum sigmux_action
-fault_handler(
-  struct sigmux_siginfo* siginfo,
-  void* handler_data)
-{
-  struct fault_handler_data* data = (struct fault_handler_data*) handler_data;
+static enum sigmux_action fault_handler(
+    struct sigmux_siginfo* siginfo,
+    void* handler_data) {
+  struct fault_handler_data* data = (struct fault_handler_data*)handler_data;
   siginfo_t* info = siginfo->info;
 
   if (__atomic_load_n(&data->tid, __ATOMIC_SEQ_CST) != as_safe_gettid()) {
@@ -77,9 +73,7 @@ fault_handler(
   return SIGMUX_CONTINUE_EXECUTION;
 }
 
-int
-sig_safe_op (void (*op)(void*), void* data)
-{
+int sig_safe_op(void (*op)(void*), void* data) {
   struct fault_handler_data handler_data = {};
   struct sigmux_registration* registration = NULL;
   int result = 1;
@@ -88,10 +82,8 @@ sig_safe_op (void (*op)(void*), void* data)
   __atomic_store_n(&handler_data.check_sigill, 0, __ATOMIC_SEQ_CST);
 
   sigset_t sigset;
-  if (sigemptyset(&sigset) ||
-      sigaddset(&sigset, SIGSEGV) ||
-      sigaddset(&sigset, SIGBUS))
-  {
+  if (sigemptyset(&sigset) || sigaddset(&sigset, SIGSEGV) ||
+      sigaddset(&sigset, SIGBUS)) {
     goto out;
   }
 
@@ -127,9 +119,7 @@ out:
   return result;
 }
 
-int
-sig_safe_exec (void (*op)(void*), void* data)
-{
+int sig_safe_exec(void (*op)(void*), void* data) {
   struct fault_handler_data handler_data = {};
   struct sigmux_registration* registration = NULL;
   int result = 1;
@@ -138,9 +128,7 @@ sig_safe_exec (void (*op)(void*), void* data)
   __atomic_store_n(&handler_data.check_sigill, 1, __ATOMIC_SEQ_CST);
 
   sigset_t sigset;
-  if (sigemptyset(&sigset) ||
-      sigaddset(&sigset, SIGILL))
-  {
+  if (sigemptyset(&sigset) || sigaddset(&sigset, SIGILL)) {
     goto out;
   }
 
@@ -181,23 +169,17 @@ struct write_params {
   intptr_t value;
 };
 
-static void
-sig_safe_write_op(void* data)
-{
-  struct write_params* params = (struct write_params*) data;
+static void sig_safe_write_op(void* data) {
+  struct write_params* params = (struct write_params*)data;
 
   __atomic_store_n(
-    (intptr_t*)params->destination,
-    params->value,
-    __ATOMIC_SEQ_CST);
+      (intptr_t*)params->destination, params->value, __ATOMIC_SEQ_CST);
 }
 
-int
-sig_safe_write(void* destination, intptr_t value)
-{
+int sig_safe_write(void* destination, intptr_t value) {
   struct write_params params = {
-    .destination = destination,
-    .value = value,
+      .destination = destination,
+      .value = value,
   };
 
   return sig_safe_op(&sig_safe_write_op, &params);
