@@ -1,4 +1,3 @@
-
 /**
  * Copyright 2004-present, Facebook, Inc.
  *
