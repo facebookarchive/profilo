@@ -19,7 +19,12 @@ import java.io.File;
 public abstract class DefaultTraceOrchestratorListener implements TraceOrchestratorListener {
 
   @Override
-  public void onTraceFlushed(TraceContext trace) {}
+  public boolean canUploadFlushedTrace(TraceContext trace, File traceFile) {
+    return true;
+  }
+
+  @Override
+  public void onTraceScheduledForUpload(TraceContext trace) {}
 
   @Override
   public void onTraceFlushedDoFileAnalytics(

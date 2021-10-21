@@ -1,9 +1,17 @@
 load("@fbsource//tools/build_defs/android:robolectric4_test.bzl", "robolectric4_test")
 load("//fbandroid/libraries/profilo/java/test:JNI_DEPS.bzl", "JNI_DEPS")
+load("//tools/build_defs/android:fb_core_android_library.bzl", "fb_core_android_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
+
+UTIL_CLASSES = ["TraceOrchestratorTestHelper.java"]
 
 robolectric4_test(
     name = "core",
+    srcs = glob(
+        ["*.java"],
+        exclude = UTIL_CLASSES,
+    ),
+    autoglob = False,
     contacts = ["oncall+loom@xmail.facebook.com"],
     jni_deps = JNI_DEPS,
     deps = [
@@ -22,5 +30,16 @@ robolectric4_test(
         "//fbandroid/third-party/java/fest:fest_android",
         "//fbandroid/third-party/java/guava:guava",
         "//fbandroid/third-party/java/junit:junit",
+    ],
+)
+
+fb_core_android_library(
+    name = "util",
+    srcs = UTIL_CLASSES,
+    visibility = [
+        "PUBLIC",
+    ],
+    deps = [
+        profilo_path("java/main/com/facebook/profilo/core:core"),
     ],
 )

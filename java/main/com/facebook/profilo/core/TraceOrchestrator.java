@@ -403,7 +403,6 @@ public final class TraceOrchestrator
       normalProviders = mNormalTraceProviders;
       syncProviders = mSyncTraceProviders;
     }
-
     if (mIsMainProcess) {
       BufferLogger.writeStandardEntry(
           context.mainBuffer,
@@ -514,6 +513,12 @@ public final class TraceOrchestrator
       return;
     }
 
+    boolean canUpload = mListenerManager.canUploadFlushedTrace(trace, uploadFile);
+    if (!canUpload) {
+      Log.d(TAG, "Not allowed to upload.");
+      return;
+    }
+
     FileManager.FileManagerStatistics fStats;
     synchronized (this) {
       // Manual traces are untrimmable, everything else can be cleaned up
@@ -523,7 +528,7 @@ public final class TraceOrchestrator
       fStats = mFileManager.getAndResetStatistics();
     }
 
-    mListenerManager.onTraceFlushed(trace);
+    mListenerManager.onTraceScheduledForUpload(trace);
     // This is as good a time to do some analytics as any.
     mListenerManager.onTraceFlushedDoFileAnalytics(
         fStats.getTotalErrors(),

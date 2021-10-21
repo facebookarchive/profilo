@@ -64,11 +64,23 @@ import java.util.concurrent.CopyOnWriteArrayList;
   }
 
   @Override
-  public void onTraceFlushed(TraceContext trace) {
+  public void onTraceScheduledForUpload(TraceContext trace) {
     Iterator<TraceOrchestratorListener> iterator = getIterator();
     while (iterator.hasNext()) {
-      iterator.next().onTraceFlushed(trace);
+      iterator.next().onTraceScheduledForUpload(trace);
     }
+  }
+
+  @Override
+  public boolean canUploadFlushedTrace(TraceContext trace, File traceFile) {
+    Iterator<TraceOrchestratorListener> iterator = getIterator();
+    // Upload will return false if ANY listener denies upload
+    while (iterator.hasNext()) {
+      if (!iterator.next().canUploadFlushedTrace(trace, traceFile)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override

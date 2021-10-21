@@ -592,6 +592,15 @@ public class TraceOrchestratorTest {
     assertThat(tracingProviders & enabledProvidersMask).isEqualTo(enabledProvidersMask);
   }
 
+  @Test
+  public void testCanUploadFlushedTraceListener() {
+    TraceOrchestratorListener listener = mock(TraceOrchestratorListener.class);
+    when(listener.canUploadFlushedTrace(eq(mTraceContext), any(File.class))).thenReturn(false);
+    mOrchestrator.addListener(listener);
+    mOrchestrator.onTraceWriteEnd(mTraceContext);
+    verify(listener, never()).onTraceScheduledForUpload(mTraceContext);
+  }
+
   private static void verifyProvidersDisabled(BaseTraceProvider... providers) {
     for (BaseTraceProvider provider : providers) {
       verify(provider)

@@ -14,6 +14,7 @@
 package com.facebook.profilo.core;
 
 import com.facebook.profilo.ipc.TraceContext;
+import java.io.File;
 
 public interface TraceOrchestratorListener
     extends TraceWriterListener, BackgroundUploadService.BackgroundUploadListener {
@@ -24,7 +25,9 @@ public interface TraceOrchestratorListener
 
   void onTraceAbort(TraceContext context);
 
-  void onTraceFlushed(TraceContext trace);
+  boolean canUploadFlushedTrace(TraceContext trace, File traceFile);
+
+  void onTraceScheduledForUpload(TraceContext trace);
 
   void onTraceFlushedDoFileAnalytics(
       int totalErrors, int trimmedFromCount, int trimmedFromAge, int filesAddedToUpload);
