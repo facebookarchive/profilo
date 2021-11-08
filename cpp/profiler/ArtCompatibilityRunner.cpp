@@ -31,8 +31,9 @@
 #include <sstream>
 #include <string>
 #include <system_error>
-#include <thread>
 #include <vector>
+
+#include <time.h>
 
 #include <forkjail/ForkJail.h>
 
@@ -246,6 +247,12 @@ bool compareStackTraces(
   return true;
 }
 
+uint64_t now() {
+  struct timespec ts {};
+  clock_gettime(CLOCK_MONOTONIC, &ts);
+  return ((uint64_t)ts.tv_sec) * 1'000'000'000 + ts.tv_nsec;
+}
+
 //
 // We collect two stack traces, from the same JNI function (and therefore VM
 // frame) - one from Java, using normal VM APIs and one using our
@@ -267,6 +274,7 @@ bool compareStackTraces(
 bool runJavaCompatibilityCheckInternal(
     versions::AndroidVersion version,
     profiler::JavaBaseTracer* tracer) {
+  auto begin = now();
   constexpr int kExitCodeSuccess = 100;
   constexpr int kExitCodeFailure = 150;
   constexpr int kTimeoutSec = 1;
@@ -280,16 +288,19 @@ bool runJavaCompatibilityCheckInternal(
   // We must collect the Java stack trace before we fork because of internal
   // allocation locks within art.
   //
+  auto beginJava = now();
   std::vector<JavaFrame> javaStack;
   try {
     javaStack = getJavaStackTrace(version, jlThread);
   } catch (...) {
     return false;
   }
+  auto endJava = now();
 
   // Performs initialization in the parent, before we fork.
   tracer->prepare();
 
+  auto beginCpp = now();
   forkjail::ForkJail jail(
       [&javaStack, tracer] {
         try {
@@ -332,6 +343,14 @@ bool runJavaCompatibilityCheckInternal(
         WEXITSTATUS(status) == kExitCodeSuccess ? "success" : "failure",
         WIFSIGNALED(status),
         WTERMSIG(status));
+
+    auto end = now();
+    FBLOGD(
+        "Art compat check finished in %" PRIu64 " ms, java: %" PRIu64
+        " ms, cpp: %" PRIu64 " ms",
+        (end - begin) / 1'000'000,
+        (endJava - beginJava) / 1'000'000,
+        (end - beginCpp) / 1'000'000);
 
     if (!WIFEXITED(status) || WEXITSTATUS(status) != kExitCodeSuccess) {
       return false;
