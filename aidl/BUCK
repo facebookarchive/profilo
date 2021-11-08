@@ -26,10 +26,12 @@ fb_native.gen_aidl(
     name = "IProfiloMultiProcessTraceService",
     aidl = "java/com/facebook/profilo/ipc/IProfiloMultiProcessTraceService.aidl",
     import_path = profilo_import_path("aidl/java/"),
+    aidl_srcs = glob(["**/*.aidl"]),
 )
 
 fb_native.gen_aidl(
     name = "IProfiloMultiProcessTraceListener",
     aidl = "java/com/facebook/profilo/ipc/IProfiloMultiProcessTraceListener.aidl",
     import_path = profilo_import_path("aidl/java/"),
+    aidl_srcs = glob(["**/*.aidl"]),
 )
