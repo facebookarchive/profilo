@@ -46,7 +46,6 @@ namespace artcompat {
 struct JavaFrame {
   std::string class_descriptor{""};
   std::string name{""};
-  std::set<int64_t> identifiers;
 };
 
 struct CppUnwinderJavaFrame {
@@ -61,25 +60,6 @@ static const int kStackSize = 128;
 
 fbjni::local_ref<jclass> getThreadClass() {
   return fbjni::findClassLocal("java/lang/Thread");
-}
-
-uint32_t getDexMethodIndex5(fbjni::alias_ref<jobject> method) {
-  auto jlrMethod_class = fbjni::findClassLocal("java/lang/reflect/Method");
-  auto jlrArtMethod_class =
-      fbjni::findClassLocal("java/lang/reflect/ArtMethod");
-  auto jlrMethod_getArtMethod = jlrMethod_class->getMethod<jobject()>(
-      "getArtMethod", "()Ljava/lang/reflect/ArtMethod;");
-  auto jlrArtMethod_dexMethodIndex =
-      jlrArtMethod_class->getField<jint>("dexMethodIndex");
-  auto artMethod = jlrMethod_getArtMethod(method);
-  return (uint32_t)artMethod->getFieldValue(jlrArtMethod_dexMethodIndex);
-}
-
-uint32_t getDexMethodIndex678(fbjni::alias_ref<jobject> method) {
-  auto jlrMethod_class = fbjni::findClassLocal("java/lang/reflect/Method");
-  auto jlrMethod_dexMethodIndex =
-      jlrMethod_class->getField<jint>("dexMethodIndex");
-  return (uint32_t)method->getFieldValue(jlrMethod_dexMethodIndex);
 }
 
 std::vector<JavaFrame> getJavaStackTrace(
@@ -97,13 +77,6 @@ std::vector<JavaFrame> getJavaStackTrace(
   auto jlStackTraceElement_getMethodName =
       jlStackTraceElement_class->getMethod<jstring()>("getMethodName");
 
-  auto jlClass_class = fbjni::findClassLocal("java/lang/Class");
-  auto jlClass_getDeclaredMethods =
-      jlClass_class->getMethod<fbjni::jtypeArray<jobject>()>(
-          "getDeclaredMethods", "()[Ljava/lang/reflect/Method;");
-
-  auto jlrMethod_class = fbjni::findClassLocal("java/lang/reflect/Method");
-  auto jlrMethod_getName = jlrMethod_class->getMethod<jstring()>("getName");
 
   auto stacktrace = jlThread_getStackTrace(thread);
   auto stacktrace_len = stacktrace->size();
@@ -120,40 +93,6 @@ std::vector<JavaFrame> getJavaStackTrace(
     JavaFrame frame{};
     frame.class_descriptor = "L" + classname + ";";
     frame.name = methodname;
-
-    // On pre-Pie Android we can also verify the method idx by
-    // extracting all possible overloads for the method in the
-    // stack trace and using reflection to collect their method idxs.
-    if (version < versions::ANDROID_9_0) {
-      auto cls = fbjni::findClassLocal(classname.c_str());
-      auto cls_methods = jlClass_getDeclaredMethods(cls);
-      auto cls_methods_size = cls_methods->size();
-
-      std::multimap<std::string, uint32_t> methods_map{};
-      for (size_t meth_idx = 0; meth_idx < cls_methods_size; meth_idx++) {
-        auto method = cls_methods->getElement(meth_idx);
-        uint32_t dexMethodIndex;
-        if (version == versions::ANDROID_5) {
-          dexMethodIndex = getDexMethodIndex5(method);
-        } else {
-          dexMethodIndex = getDexMethodIndex678(method);
-        }
-        methods_map.insert(std::make_pair(
-            jlrMethod_getName(method)->toStdString(), dexMethodIndex));
-      }
-
-      auto matches = methods_map.equal_range(methodname);
-      std::set<int64_t> overloads{};
-      std::transform(
-          matches.first,
-          matches.second,
-          std::inserter(overloads, overloads.begin()),
-          [](const std::pair<std::string, uint32_t>& pair) {
-            return pair.second;
-          });
-
-      frame.identifiers = std::move(overloads);
-    }
 
     result.emplace_back(std::move(frame));
   }
@@ -208,19 +147,6 @@ bool compareStackTraces(
     auto& cpp_frame = cppStack[cppStackSize - i - 1];
     auto& java_frame = javaStack[javaStackSize - i - 1];
 
-    // If either of identifiers is not available the check will be limited to
-    // descriptors only.
-    if (java_frame.identifiers.size() != 0 && cpp_frame.identifier != 0) {
-      int64_t cpp_identifier = cpp_frame.identifier;
-
-      // Ensure that the C++ identifier is in the list of
-      // possibilities from Java.
-      if (java_frame.identifiers.find(cpp_identifier) ==
-          java_frame.identifiers.end()) {
-        FBLOGW("C++ identifier not in Java list");
-        return false;
-      }
-    }
 
     if (cpp_frame.class_descriptor == nullptr || cpp_frame.name == nullptr) {
       FBLOGW("Cpp Unwind returned empty class or method symbol(s)");
