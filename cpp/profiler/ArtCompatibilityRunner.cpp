@@ -77,7 +77,6 @@ std::vector<JavaFrame> getJavaStackTrace(
   auto jlStackTraceElement_getMethodName =
       jlStackTraceElement_class->getMethod<jstring()>("getMethodName");
 
-
   auto stacktrace = jlThread_getStackTrace(thread);
   auto stacktrace_len = stacktrace->size();
 
@@ -146,7 +145,6 @@ bool compareStackTraces(
   for (size_t i = 0; i < cppStackSize; i++) {
     auto& cpp_frame = cppStack[cppStackSize - i - 1];
     auto& java_frame = javaStack[javaStackSize - i - 1];
-
 
     if (cpp_frame.class_descriptor == nullptr || cpp_frame.name == nullptr) {
       FBLOGW("Cpp Unwind returned empty class or method symbol(s)");
