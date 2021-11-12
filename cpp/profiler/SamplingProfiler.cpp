@@ -62,15 +62,10 @@ SamplingProfiler& SamplingProfiler::getInstance() {
 }
 
 void SamplingProfiler::FaultHandler(
+    SignalHandler::HandlerScope scope,
     int signum,
     siginfo_t* siginfo,
     void* ucontext) {
-  auto scope = SignalHandler::EnterHandler(signum);
-  if (!scope.IsEnabled()) {
-    scope.CallPreviousHandler(signum, siginfo, ucontext);
-    return;
-  }
-
   ProfileState& state = ((SamplingProfiler*)scope.GetData())->state_;
 
   uint64_t tid = threadID();
@@ -139,14 +134,10 @@ bool getSlotIndex(ProfileState& state_, uint64_t tid, uint32_t& outSlot) {
 }
 
 void SamplingProfiler::UnwindStackHandler(
+    SignalHandler::HandlerScope scope,
     int signum,
     siginfo_t* siginfo,
     void* ucontext) {
-  auto scope = SignalHandler::EnterHandler(signum);
-  if (!scope.IsEnabled()) {
-    return;
-  }
-
   SamplingProfiler& profiler = *(SamplingProfiler*)scope.GetData();
   ProfileState& state = profiler.state_;
 

@@ -29,22 +29,90 @@ namespace profiler {
 
 std::atomic<SignalHandler*>
     SignalHandler::globalRegisteredSignalHandlers[NSIG]{};
+std::once_flag SignalHandler::globalPhaserInit{};
+phaser_t SignalHandler::globalPhaser{};
+
+void SignalHandler::UniversalHandler(
+    int signum,
+    siginfo_t* siginfo,
+    void* ucontext) {
+  // Sequencing:
+  // We enter the global phaser first, then we enter the local phaser,
+  // then we exit the global phaser, and then we exit the local phaser.
+
+  auto phase = phaser_enter(&globalPhaser);
+  HandlerScope scope = SignalHandler::EnterHandler(signum);
+  phaser_exit(&globalPhaser, phase);
+
+  if (!scope.IsEnabled()) {
+    scope.CallPreviousHandler(signum, siginfo, ucontext);
+    return;
+  }
+
+  scope.handler_.handler_(std::move(scope), signum, siginfo, ucontext);
+}
 
 SignalHandler& SignalHandler::Initialize(int signum, HandlerPtr handler) {
+  if (handler == nullptr) {
+    throw std::invalid_argument(
+        "null HandlerPtr is not allowed, use Disable() instead");
+  }
+  // Initialize on first use
+  std::call_once(globalPhaserInit, [] {
+    if (phaser_init(&globalPhaser)) {
+      throw std::logic_error("Could not initialize global phaser");
+    }
+  });
+
   while (true) {
     auto* lookup = globalRegisteredSignalHandlers[signum].load();
-    if (lookup) {
-      if (lookup->handler_ != handler) {
-        throw std::logic_error(
-            "SignalHandler::Initialize called with more than one handler!");
-      }
-      return *lookup;
+    auto* instance = new SignalHandler(signum, handler);
+
+    if (lookup != nullptr) {
+      // Propagate the "original" sigaction to our new handler.
+      instance->old_sigaction_ = lookup->old_sigaction_;
     }
 
-    // Lookup is null, let's try and instantiate the one and only SignalHandler
-    auto* instance = new SignalHandler(signum, handler);
     if (globalRegisteredSignalHandlers[signum].compare_exchange_strong(
             lookup, instance)) {
+      if (lookup == nullptr) {
+        // No previous SignalHandler instance, must take over the signal.
+        SignalHandler::AndroidAwareSigaction(
+            signum, SignalHandler::UniversalHandler, &instance->old_sigaction_);
+      } else {
+        // Have a previous SignalHandler instance, we must wait for users to
+        // finish first.
+        //
+        // Sequencing:
+        //
+        // Reads:
+        // Global phaser [     ]
+        // Atomic load     []
+        // Local phaser       [    ]
+        //              ^    ^ ^
+        //              1    2 3
+        //
+        // After we've replaced the value in the global list, concurrent users
+        // fall in one of 3 cases:
+        // 1. They've read the new value (nothing to do)
+        // 2. They've read the old value but have not entered the old instance's
+        // phaser yet
+        // 3. They've read the old value and have entered the old instance's
+        // phaser
+        //
+
+        phaser_drain(&globalPhaser);
+        // After this point, no concurrent users that saw the old value can be
+        // in the global phaser without also being in the old instance's local
+        // phaser.
+
+        phaser_drain(&lookup->phaser_);
+        // After this point, no concurrent user can have a reference to the old
+        // instance, so it is safe to delete it.
+
+        delete lookup;
+      }
+
       return *instance;
     } else {
       // Someone beat us to it, try again by re-reading lookup and
@@ -60,7 +128,6 @@ SignalHandler::SignalHandler(int signum, HandlerPtr handler)
       handler_(handler),
       data_(nullptr),
       phaser_(),
-      initialized_(false),
       enabled_(false),
       old_sigaction_() {
   if (phaser_init(&phaser_)) {
@@ -73,11 +140,6 @@ SignalHandler::~SignalHandler() {
 }
 
 void SignalHandler::Enable() {
-  if (!initialized_) {
-    // Must take over the signal first.
-    AndroidAwareSigaction(signum_, handler_, &old_sigaction_);
-    initialized_ = true;
-  }
   enabled_.store(true, std::memory_order_relaxed);
 }
 
@@ -99,10 +161,6 @@ void SignalHandler::CallPreviousHandler(
     int signum,
     siginfo_t* info,
     void* ucontext) {
-  if (!initialized_) {
-    return;
-  }
-
   sigset_t oldsigs;
   // Actually calls sigchain's sigprocmask wrapper but that's okay.
   // The sigchain wrapper only really cares about not masking signals
@@ -128,7 +186,7 @@ void SignalHandler::CallPreviousHandler(
 
 void SignalHandler::AndroidAwareSigaction(
     int signum,
-    HandlerPtr handler,
+    SigactionPtr handler,
     struct sigaction* oldact) {
 #ifdef __ANDROID__
   //

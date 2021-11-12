@@ -173,8 +173,9 @@ class SamplingProfiler {
   void maybeSignalReader();
   void flushStackTraces(std::unordered_set<uint64_t>& loggedFramesSet);
 
-  static void FaultHandler(int, siginfo_t*, void*);
-  static void UnwindStackHandler(int, siginfo_t*, void*);
+  static void FaultHandler(SignalHandler::HandlerScope, int, siginfo_t*, void*);
+  static void
+  UnwindStackHandler(SignalHandler::HandlerScope, int, siginfo_t*, void*);
 
   friend class SamplingProfilerTestAccessor;
 };

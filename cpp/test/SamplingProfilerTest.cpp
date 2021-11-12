@@ -83,7 +83,7 @@ class SignalHandlerTestAccessor {
  public:
   static void AndroidAwareSigaction(
       int signum,
-      SignalHandler::HandlerPtr handler,
+      SignalHandler::SigactionPtr handler,
       struct sigaction* oldact) {
     SignalHandler::AndroidAwareSigaction(signum, handler, oldact);
   }

@@ -20,6 +20,7 @@
 #include <setjmp.h>
 #include <signal.h>
 #include <atomic>
+#include <mutex>
 
 namespace facebook {
 namespace profilo {
@@ -48,8 +49,6 @@ namespace profiler {
 //
 class SignalHandler {
  public:
-  using HandlerPtr = void (*)(int, siginfo_t*, void*);
-
   //
   // Enable processing of signals by this SignalHandler.
   // Installs the signal handler, if not yet installed.
@@ -72,9 +71,6 @@ class SignalHandler {
    private:
     explicit HandlerScope(SignalHandler& handler) : handler_(handler) {
       enabled_ = false;
-      if (!handler_.initialized_) {
-        return;
-      }
       if (!handler_.enabled_.load(std::memory_order_relaxed)) {
         return;
       }
@@ -141,6 +137,7 @@ class SignalHandler {
       handler_.CallPreviousHandler(signum, info, ucontext);
     }
   };
+  using HandlerPtr = void (*)(HandlerScope, int, siginfo_t*, void*);
 
   static SignalHandler& Initialize(int signum, HandlerPtr handler);
 
@@ -150,6 +147,8 @@ class SignalHandler {
   static SignalHandler::HandlerScope EnterHandler(int signum);
 
  private:
+  using SigactionPtr = void (*)(int, siginfo_t*, void*);
+
   friend class SignalHandler::HandlerScope;
   friend class SignalHandlerTestAccessor;
 
@@ -164,6 +163,8 @@ class SignalHandler {
   // global storage to facilitate looking up a SignalHandler instance from
   // within a signal handler context
   static std::atomic<SignalHandler*> globalRegisteredSignalHandlers[NSIG];
+  static phaser_t globalPhaser;
+  static std::once_flag globalPhaserInit;
 
   int signum_;
   HandlerPtr handler_;
@@ -171,15 +172,16 @@ class SignalHandler {
 
   phaser_t phaser_;
 
-  bool initialized_;
   std::atomic<bool> enabled_;
 
   struct sigaction old_sigaction_;
 
   static void AndroidAwareSigaction(
       int signum,
-      HandlerPtr handler,
+      SigactionPtr handler,
       struct sigaction* oldact);
+
+  static void UniversalHandler(int signum, siginfo_t* siginfo, void* ucontext);
 
   void CallPreviousHandler(int signum, siginfo_t*, void*);
 };
