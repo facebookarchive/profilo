@@ -1,10 +1,7 @@
 load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-APP_SPECIFIC_IS_ASSET_FLAG = {
-    "default": True,
-    "instagram": True,
-}
+APP_SPECIFIC_IS_ASSET_FLAG = {}
 
 fb_xplat_cxx_library(
     name = "external_api",
@@ -15,7 +12,10 @@ fb_xplat_cxx_library(
     exported_headers = [
         "ExternalApi.h",
     ],
-    can_be_asset = APP_SPECIFIC_IS_ASSET_FLAG.get(read_config("fbandroid", "app_mode", "default")),
+    can_be_asset = APP_SPECIFIC_IS_ASSET_FLAG.get(
+        read_config("fbandroid", "app_mode"),
+        True,
+    ),
     force_static = True,
     labels = ["supermodule:android/default/loom.core"],
     link_style = "shared",
@@ -51,7 +51,10 @@ fb_xplat_cxx_library(
     exported_headers = [
         "ExternalApiGlue.h",
     ],
-    can_be_asset = APP_SPECIFIC_IS_ASSET_FLAG.get(read_config("fbandroid", "app_mode", "default")),
+    can_be_asset = APP_SPECIFIC_IS_ASSET_FLAG.get(
+        read_config("fbandroid", "app_mode"),
+        True,
+    ),
     labels = ["supermodule:android/default/loom.core"],
     link_style = "shared",
     soname = "libprofiloextapi.$(ext)",
