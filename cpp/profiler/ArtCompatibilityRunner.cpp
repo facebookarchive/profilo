@@ -24,23 +24,24 @@
 #include <unistd.h>
 #include <algorithm>
 #include <array>
-#include <chrono>
-#include <ios>
-#include <map>
+#include <mutex>
 #include <set>
-#include <sstream>
 #include <string>
 #include <system_error>
 #include <vector>
 
 #include <time.h>
 
-#include <forkjail/ForkJail.h>
+#include <profilo/profiler/SignalHandler.h>
+#include <profilo/util/common.h>
 
 namespace fbjni = facebook::jni;
 
 namespace facebook {
 namespace profilo {
+
+using profiler::SignalHandler;
+
 namespace artcompat {
 
 struct JavaFrame {
@@ -177,6 +178,32 @@ uint64_t now() {
   return ((uint64_t)ts.tv_sec) * 1'000'000'000 + ts.tv_nsec;
 }
 
+namespace {
+
+struct SignalState {
+  sigjmp_buf sigJmpBuf;
+  std::atomic_bool inSection;
+  uint64_t tid;
+};
+// Signal handler to safely bail out. This is inspired by how the
+// SamplingProfiler signal handling works, but is way simpler.
+
+void JumpToSafetySignalHandler(
+    SignalHandler::HandlerScope scope,
+    int signum,
+    siginfo_t* siginfo,
+    void* ucontext) {
+  SignalState& state = *(SignalState*)scope.GetData();
+
+  if (state.tid == threadID() && state.inSection.load()) {
+    scope.siglongjmp(state.sigJmpBuf, 1);
+  }
+
+  scope.CallPreviousHandler(signum, siginfo, ucontext);
+}
+
+} // namespace
+
 //
 // We collect two stack traces, from the same JNI function (and therefore VM
 // frame) - one from Java, using normal VM APIs and one using our
@@ -198,20 +225,20 @@ uint64_t now() {
 bool runJavaCompatibilityCheckInternal(
     versions::AndroidVersion version,
     profiler::JavaBaseTracer* tracer) {
+  // Because we only have one instance of the signal handling state,
+  // we wrap everything in a lock to serialize all callers and simplify the
+  // logic.
+  static std::mutex exclusiveRunLock;
+  std::lock_guard<std::mutex> lg{exclusiveRunLock};
+
   auto begin = now();
-  constexpr int kExitCodeSuccess = 100;
-  constexpr int kExitCodeFailure = 150;
-  constexpr int kTimeoutSec = 1;
 
   auto jlThread_class = getThreadClass();
   auto jlThread_currentThread = jlThread_class->getStaticMethod<jobject()>(
       "currentThread", "()Ljava/lang/Thread;");
   auto jlThread = jlThread_currentThread(jlThread_class);
 
-  //
-  // We must collect the Java stack trace before we fork because of internal
-  // allocation locks within art.
-  //
+  // Collect the Java stack trace
   auto beginJava = now();
   std::vector<JavaFrame> javaStack;
   try {
@@ -221,52 +248,49 @@ bool runJavaCompatibilityCheckInternal(
   }
   auto endJava = now();
 
-  // Performs initialization in the parent, before we fork.
-  tracer->prepare();
-
-  auto beginCpp = now();
-  forkjail::ForkJail jail(
-      [&javaStack, tracer] {
-        try {
-          tracer->startTracing();
-
-          std::array<CppUnwinderJavaFrame, kStackSize> cppStack;
-          auto cppStackSize = getCppStackTrace(tracer, cppStack);
-
-          if (compareStackTraces(cppStack, cppStackSize, javaStack)) {
-            FBLOGV("compareStackTraces returned true");
-            forkjail::ForkJail::real_exit(kExitCodeSuccess);
-          }
-
-          FBLOGV("compareStackTraces returned false");
-        } catch (...) {
-          FBLOGV("Ignored exception");
-          // intentionally ignored
-        }
-
-        forkjail::ForkJail::real_exit(kExitCodeFailure);
-      },
-      kTimeoutSec);
-
+  // Collect our tracer's stack trace
   try {
-    auto child = jail.forkAndRun();
-    // Child process would never reach here. Only the parent continues.
-    // Wait for the child to exit.
-    int status = 0;
+    tracer->prepare();
+    auto beginCpp = now();
 
-    do {
-      if (waitpid(child, &status, 0) != child) {
-        throw std::system_error(errno, std::system_category(), "waitpid");
-      }
-    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    tracer->startTracing();
 
-    FBLOGD(
-        "Cpp stack child exited: %i status: %i (%s) signalled: %i signal: %i",
-        WIFEXITED(status),
-        WEXITSTATUS(status),
-        WEXITSTATUS(status) == kExitCodeSuccess ? "success" : "failure",
-        WIFSIGNALED(status),
-        WTERMSIG(status));
+    bool cppSuccess = false;
+    size_t cppStackSize = 0;
+    std::array<CppUnwinderJavaFrame, kStackSize> cppStack;
+
+    // Sets up signal handlers for SIGSEGV and SIGBUS. Uses SignalHandler, so
+    // cannot be run concurrently with SamplingProfiler's usage (but that's
+    // okay, compatibility checks gate the SamplingProfiler usage).
+    //
+    // Ultimately, we do need to use the exact same safety mechanism as the
+    // profiler to work around the exact same bugs in Android's signal handling.
+    static SignalState state{};
+    auto& handlerSegv =
+        SignalHandler::Initialize(SIGSEGV, JumpToSafetySignalHandler);
+    handlerSegv.SetData(&state);
+    handlerSegv.Enable();
+
+    auto& handlerBus =
+        SignalHandler::Initialize(SIGBUS, JumpToSafetySignalHandler);
+    handlerBus.SetData(&state);
+    handlerBus.Enable();
+
+    if (sigsetjmp(state.sigJmpBuf, 1) == 0) {
+      state.tid = threadID();
+      state.inSection.store(true);
+      cppStackSize = getCppStackTrace(tracer, cppStack);
+      state.inSection.store(false);
+
+      cppSuccess = true;
+    } else {
+      // Long jump from signal handler
+      state.inSection.store(false);
+      cppSuccess = false;
+    }
+
+    handlerSegv.Disable();
+    handlerBus.Disable();
 
     auto end = now();
     FBLOGD(
@@ -276,10 +300,16 @@ bool runJavaCompatibilityCheckInternal(
         (endJava - beginJava) / 1'000'000,
         (end - beginCpp) / 1'000'000);
 
-    if (!WIFEXITED(status) || WEXITSTATUS(status) != kExitCodeSuccess) {
+    if (!cppSuccess) {
+      FBLOGE("getCppStackTrace signalled");
       return false;
     }
 
+    if (!compareStackTraces(cppStack, cppStackSize, javaStack)) {
+      FBLOGE("compareStackTraces returned false");
+      return false;
+    }
+    FBLOGI("Compatibility check succeeded");
     return true;
   } catch (std::system_error& ex) {
     FBLOGE("Caught system error: %s", ex.what());

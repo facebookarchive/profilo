@@ -92,6 +92,7 @@ fb_xplat_cxx_library(
     soname = "libprofilo_stacktrace_artcompat.so",
     deps = [
         ":base_tracer",
+        ":signal_handler",
         ":unwindc-tracer-5.0.0",
         ":unwindc-tracer-5.1.0",
         ":unwindc-tracer-6.0.0",
@@ -104,8 +105,8 @@ fb_xplat_cxx_library(
         ":unwindc-tracer-9.0.0",
         profilo_path("deps/fb:fb"),
         profilo_path("deps/fbjni:fbjni"),
-        profilo_path("deps/forkjail:forkjail"),
         profilo_path("cpp/logger/buffer:buffer"),
+        profilo_path("cpp/util:util"),
     ],
 )
 
