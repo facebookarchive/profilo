@@ -48,6 +48,7 @@ public class TraceContextTest {
   private static final TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
   private static final TreeMap<String, int[]> intArrayExtraParams = new TreeMap<>();
   private static final TreeMap<String, ArrayList<String>> stringArrayExtraParams = new TreeMap<>();
+  private static final TreeMap<String, String> stringExtraParams = new TreeMap<>();
   private static final TraceConfigExtras PROVIDER_EXTRAS;
 
   static {
@@ -55,6 +56,7 @@ public class TraceContextTest {
     TreeMap<String, Boolean> boolExtraParams = new TreeMap<>();
     TreeMap<String, int[]> intArrayExtraParams = new TreeMap<>();
     TreeMap<String, ArrayList<String>> stringArrayExtraParams = new TreeMap<>();
+    TreeMap<String, String> stringExtraParams = new TreeMap<>();
     intExtraParams.put("int_param_1", 2);
     boolExtraParams.put("bool_param_1", true);
     boolExtraParams.put("bool_param_2", false);
@@ -63,9 +65,14 @@ public class TraceContextTest {
     stringList.add("foo");
     stringList.add("bar");
     stringArrayExtraParams.put("string_arr_param_1", stringList);
+    stringExtraParams.put("string_param_1", "foo/bar");
     PROVIDER_EXTRAS =
         new TraceConfigExtras(
-            intExtraParams, boolExtraParams, intArrayExtraParams, stringArrayExtraParams);
+            intExtraParams,
+            boolExtraParams,
+            intArrayExtraParams,
+            stringArrayExtraParams,
+            stringExtraParams);
   }
 
   private TraceContext mContext;
@@ -111,6 +118,7 @@ public class TraceContextTest {
     verifyProviderBooleanExtras(mContext.mTraceConfigExtras, boolExtraParams);
     verifyProviderIntArrayExtras(mContext.mTraceConfigExtras, intArrayExtraParams);
     verifyProviderStringArrayExtras(mContext.mTraceConfigExtras, stringArrayExtraParams);
+    verifyProviderStringExtras(mContext.mTraceConfigExtras, stringExtraParams);
   }
 
   @Test
@@ -131,6 +139,8 @@ public class TraceContextTest {
     verifyProviderIntExtras(createdFromParcel.mTraceConfigExtras, intExtraParams);
     verifyProviderBooleanExtras(createdFromParcel.mTraceConfigExtras, boolExtraParams);
     verifyProviderIntArrayExtras(createdFromParcel.mTraceConfigExtras, intArrayExtraParams);
+    verifyProviderStringArrayExtras(mContext.mTraceConfigExtras, stringArrayExtraParams);
+    verifyProviderStringExtras(mContext.mTraceConfigExtras, stringExtraParams);
   }
 
   static void verifyProviderIntExtras(
@@ -161,5 +171,10 @@ public class TraceContextTest {
       TraceConfigExtras testExtras, TreeMap<String, ArrayList<String>> stringArrayParams) {
     assertThat(testExtras.getStringArrayParam("string_arr_param_1"))
         .isEqualTo(new String[] {"foo", "bar"});
+  }
+
+  static void verifyProviderStringExtras(
+      TraceConfigExtras testExtras, TreeMap<String, String> stringParams) {
+    assertThat(testExtras.getStringParam("string_param_1", null)).isEqualTo("foo/bar");
   }
 }

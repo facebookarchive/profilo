@@ -45,7 +45,7 @@ public class ExternalController extends TraceController {
     TreeMap<String, Integer> extraIntMap = new TreeMap<>();
     extraIntMap.put(
         CPU_SAMPLING_RATE_CONFIG_PARAM, getConfigFromContext(context).cpuSamplingRateMs);
-    return new TraceConfigExtras(extraIntMap, null, null, null);
+    return new TraceConfigExtras(extraIntMap, null, null, null, null);
   }
 
   private Config getConfigFromContext(Object context) {

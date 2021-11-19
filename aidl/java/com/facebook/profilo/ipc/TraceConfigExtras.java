@@ -16,12 +16,13 @@ import javax.annotation.Nullable;
 // The granularity of these extras applies to everything within the trace
 // config, which means that they apply to all the providers.
 public final class TraceConfigExtras implements Parcelable {
-  public static final TraceConfigExtras EMPTY = new TraceConfigExtras(null, null, null, null);
+  public static final TraceConfigExtras EMPTY = new TraceConfigExtras(null, null, null, null, null);
 
   private final @Nullable TreeMap<String, Integer> mIntParams;
   private final @Nullable TreeMap<String, Boolean> mBoolParams;
   private final @Nullable TreeMap<String, int[]> mIntArrayParams;
   private final @Nullable TreeMap<String, ArrayList<String>> mStringArrayParams;
+  private final @Nullable TreeMap<String, String> mStringParams;
 
   private final @Nullable Config mConfig;
   private final int mTraceConfigIdx;
@@ -73,6 +74,17 @@ public final class TraceConfigExtras implements Parcelable {
     } else {
       mStringArrayParams = null;
     }
+
+    Bundle stringParamsBundle = in.readBundle(getClass().getClassLoader());
+    Set<String> stringParamKeys = stringParamsBundle.keySet();
+    if (!stringParamKeys.isEmpty()) {
+      mStringParams = new TreeMap<>();
+      for (String key : stringParamKeys) {
+        mStringParams.put(key, new String(stringParamsBundle.getCharArray(key)));
+      }
+    } else {
+      mStringParams = null;
+    }
   }
 
   public TraceConfigExtras(Config config, int traceConfigIdx) {
@@ -82,6 +94,7 @@ public final class TraceConfigExtras implements Parcelable {
     mIntArrayParams = null;
     mBoolParams = null;
     mStringArrayParams = null;
+    mStringParams = null;
   }
 
   @Override
@@ -90,6 +103,7 @@ public final class TraceConfigExtras implements Parcelable {
     TreeMap<String, Boolean> boolParams = mBoolParams;
     TreeMap<String, int[]> intArrayParams = mIntArrayParams;
     TreeMap<String, ArrayList<String>> stringArrayParams = mStringArrayParams;
+    TreeMap<String, String> stringParams = mStringParams;
 
     if (mTraceConfigIdx >= 0 && mConfig != null) {
       ConfigParams params = mConfig.getTraceConfigParams(mTraceConfigIdx);
@@ -126,17 +140,26 @@ public final class TraceConfigExtras implements Parcelable {
       }
     }
     dest.writeBundle(stringArrayParamsBundle);
+    Bundle stringParamsBundle = new Bundle();
+    if (stringParams != null) {
+      for (TreeMap.Entry<String, String> entry : stringParams.entrySet()) {
+        stringParamsBundle.putCharArray(entry.getKey(), entry.getValue().toCharArray());
+      }
+    }
+    dest.writeBundle(stringParamsBundle);
   }
 
   public TraceConfigExtras(
       @Nullable TreeMap<String, Integer> intParams,
       @Nullable TreeMap<String, Boolean> boolParams,
       @Nullable TreeMap<String, int[]> intArrayParams,
-      @Nullable TreeMap<String, ArrayList<String>> stringArrayParams) {
+      @Nullable TreeMap<String, ArrayList<String>> stringArrayParams,
+      @Nullable TreeMap<String, String> stringParams) {
     mIntParams = intParams;
     mBoolParams = boolParams;
     mIntArrayParams = intArrayParams;
     mStringArrayParams = stringArrayParams;
+    mStringParams = stringParams;
     mConfig = null;
     mTraceConfigIdx = -1;
   }
@@ -188,6 +211,18 @@ public final class TraceConfigExtras implements Parcelable {
     }
     String[] returnArray = new String[stringArrayList.size()];
     return stringArrayList.toArray(returnArray);
+  }
+
+  @Nullable
+  public String getStringParam(String key, @Nullable String defaultVal) {
+    if (mConfig != null) {
+      return mConfig.optTraceConfigParamString(mTraceConfigIdx, key, defaultVal);
+    }
+    if (mStringParams == null) {
+      return defaultVal;
+    }
+    String string = mStringParams.get(key);
+    return string != null ? string : defaultVal;
   }
 
   public static final Creator<TraceConfigExtras> CREATOR =
