@@ -40,6 +40,7 @@ public final class ProfiloConstants {
       "provider.stack_trace.cpu_sampling_rate_ms";
   public static final String SYSTEM_CONFIG_TIMED_OUT_UPLOAD_SAMPLE_RATE =
       "system_config.timed_out_upload_sample_rate";
+  public static final String TIME_SOURCE_PARAM = "provider.stack_trace.time_source";
   public static final String TRACE_CONFIG_COINFLIP_SAMPLE_RATE =
       "trace_config.coinflip_sample_rate";
 

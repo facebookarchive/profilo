@@ -31,6 +31,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
+#include <vector>
 
 namespace facebook {
 namespace profilo {
@@ -41,6 +42,7 @@ struct Whitelist;
 struct TimerManagerState {
   int threadDetectIntervalMs;
   int samplingRateMs;
+  bool cpuClockModeEnabled;
   bool wallClockModeEnabled;
 
   // whitelist is optional; use null for "all threads"
@@ -49,7 +51,7 @@ struct TimerManagerState {
   std::thread threadDetectThread;
   sem_t threadDetectSem;
   std::atomic_bool isThreadDetectLoopDone;
-  std::unordered_map<pid_t, ThreadTimer> threadTimers;
+  std::unordered_map<pid_t, std::vector<ThreadTimer>> threadTimers;
 };
 
 class TimerManager {
@@ -57,6 +59,7 @@ class TimerManager {
   explicit TimerManager(
       int threadDetectIntervalMs,
       int samplingRateMs,
+      bool cpuClockModeEnabled,
       bool wallClockModeEnabled,
       std::shared_ptr<Whitelist> whitelist);
   ~TimerManager() = default;

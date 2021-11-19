@@ -67,6 +67,7 @@ struct StackSlot {
   int64_t time;
   sigjmp_buf sig_jmp_buf;
   uint32_t profilerType;
+  ThreadTimer::Type timerType;
   int64_t frames[MAX_STACK_DEPTH]; // frame pointer addresses
   char const* method_names[MAX_STACK_DEPTH];
   char const* class_descriptors[MAX_STACK_DEPTH];
@@ -106,6 +107,7 @@ struct ProfileState {
   std::atomic_bool isLoggerLoopDone;
 
   // Config parameters
+  bool cpuClockModeEnabled;
   bool wallClockModeEnabled;
   int threadDetectIntervalMs;
   int samplingRateMs;
@@ -146,6 +148,7 @@ class SamplingProfiler {
       int requested_providers,
       int sampling_rate_ms,
       int thread_detect_interval_ms,
+      bool cpu_clock_mode_enabled,
       bool wall_clock_mode_enabled);
 
   void addToWhitelist(int targetThread);

@@ -96,15 +96,20 @@ void TimerManager::updateThreadTimers() {
       continue;
     }
     try {
-      bool ok =
-          state_.threadTimers
-              .emplace(
-                  tid,
-                  ThreadTimer(
-                      tid, state_.samplingRateMs, state_.wallClockModeEnabled))
-              .second;
-      if (!ok) {
-        FBLOGE("state_.threadTimers.insert failed");
+      std::vector<ThreadTimer> timers;
+      if (state_.cpuClockModeEnabled) {
+        timers.emplace_back(ThreadTimer(
+            tid, state_.samplingRateMs, ThreadTimer::Type::CpuTime));
+      }
+      if (state_.wallClockModeEnabled) {
+        timers.emplace_back(ThreadTimer(
+            tid, state_.samplingRateMs, ThreadTimer::Type::WallTime));
+      }
+      if (timers.size() > 0) {
+        bool ok = state_.threadTimers.emplace(tid, std::move(timers)).second;
+        if (!ok) {
+          FBLOGE("state_.threadTimers.insert failed");
+        }
       }
     } catch (const std::system_error& e) {
       // thread may have ended
@@ -153,10 +158,12 @@ void TimerManager::threadDetectLoop() {
 TimerManager::TimerManager(
     int threadDetectIntervalMs,
     int samplingRateMs,
+    bool cpuClockModeEnabled,
     bool wallClockModeEnabled,
     std::shared_ptr<Whitelist> whitelist) {
   state_.threadDetectIntervalMs = threadDetectIntervalMs;
   state_.samplingRateMs = samplingRateMs;
+  state_.cpuClockModeEnabled = cpuClockModeEnabled;
   state_.wallClockModeEnabled = wallClockModeEnabled;
   state_.whitelist = whitelist;
 

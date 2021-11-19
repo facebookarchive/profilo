@@ -22,6 +22,7 @@
 #include <fb/log.h>
 #include <profilo/util/common.h>
 #include <random>
+#include <stdexcept>
 #include <system_error>
 
 namespace facebook {
@@ -76,7 +77,9 @@ bool createThreadTimer(
   sigev.sigev_notify = SIGEV_THREAD_ID;
   sigev.sigev_signo = SIGPROF;
   sigev._sigev_un._tid = ktid; /* ID of kernel thread to signal */
-  sigev.sigev_value.sival_ptr = nullptr;
+  sigev.sigev_value.sival_int = ThreadTimer::encodeType(
+      wallClockModeEnabled ? ThreadTimer::Type::WallTime
+                           : ThreadTimer::Type::CpuTime);
   if (timer_create(clockid, &sigev, timerId) != 0) {
     return false;
   }
@@ -136,14 +139,9 @@ itimerval getInitialItimerval(int samplingRateMs) {
   return tv;
 }
 
-ThreadTimer::ThreadTimer(
-    int32_t tid,
-    int samplingRateMs,
-    bool wallClockModeEnabled)
-    : tid_(tid),
-      samplingRateMs_(samplingRateMs),
-      wallClockModeEnabled_(wallClockModeEnabled) {
-  if (!createThreadTimer(tid_, &timerId_, wallClockModeEnabled_)) {
+ThreadTimer::ThreadTimer(int32_t tid, int samplingRateMs, Type timerType)
+    : tid_(tid), samplingRateMs_(samplingRateMs), timerType_(timerType) {
+  if (!createThreadTimer(tid_, &timerId_, timerType == Type::WallTime)) {
     // e.g. tid died
     throw std::system_error(errno, std::system_category(), "createThreadTimer");
   }
@@ -159,6 +157,23 @@ ThreadTimer::~ThreadTimer() {
     return;
   }
   deleteThreadTimer(timerId_);
+}
+
+long ThreadTimer::typeSeed = 0;
+
+ThreadTimer::Type ThreadTimer::decodeType(long salted) {
+  auto type = static_cast<Type>(salted ^ typeSeed);
+  if (type != Type::CpuTime && type != Type::WallTime) {
+    throw std::runtime_error("invalid timer type");
+  }
+  return type;
+}
+
+long ThreadTimer::encodeType(Type type) {
+  while (typeSeed == 0) {
+    typeSeed = rand();
+  }
+  return static_cast<long>(type) ^ typeSeed;
 }
 
 } // namespace profiler

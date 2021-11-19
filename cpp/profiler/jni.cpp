@@ -158,11 +158,13 @@ static jboolean nativeStartProfiling(
     jint requested_tracers,
     jint sampling_rate_ms,
     jint thread_detect_interval_ms,
+    jboolean cpu_clock_mode,
     jboolean wall_clock_mode) {
   return SamplingProfiler::getInstance().startProfiling(
       requested_tracers,
       sampling_rate_ms,
       thread_detect_interval_ms,
+      cpu_clock_mode,
       wall_clock_mode);
 }
 

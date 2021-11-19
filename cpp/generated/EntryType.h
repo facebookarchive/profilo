@@ -1,4 +1,4 @@
-// @generated SignedSource<<a688ba6c4918a6c66ba16a8f17dc12d4>>
+// @generated SignedSource<<f0679634001e78402be9dd5db5850900>>
 
 #pragma once
 
@@ -120,6 +120,8 @@ enum class EntryType {
   GPU_MEMORY_FREE = 111,
   THREAD_START = 112,
   THREAD_FINISH = 113,
+  CPU_STACK_SAMPLE = 114,
+  WALL_STACK_SAMPLE = 115,
 };
 
 

@@ -38,6 +38,7 @@
 #include <profilo/profiler/ExternalTracer.h>
 #include <profilo/profiler/JavaBaseTracer.h>
 #include <profilo/profiler/Retcode.h>
+#include <profilo/profiler/ThreadTimer.h>
 
 #include <profilo/LogEntry.h>
 #include <profilo/TraceProviders.h>
@@ -192,6 +193,8 @@ void SamplingProfiler::UnwindStackHandler(
         state.errStackOverflows.fetch_add(1);
       }
 
+      slot.timerType = ThreadTimer::decodeType(siginfo->si_value.sival_int);
+
       // Ignore TRACER_DISABLED errors for now and free the slot.
       // TODO T42938550
       if (StackCollectionRetcode::TRACER_DISABLED == ret) {
@@ -288,6 +291,20 @@ void SamplingProfiler::unregisterSignalHandlers() {
   signal_handlers_.sigsegv->Disable();
 }
 
+static int32_t
+logTimerType(StackSlot& slot, int32_t tid, MultiBufferLogger& logger) {
+  auto type = slot.timerType == ThreadTimer::Type::CpuTime
+      ? EntryType::CPU_STACK_SAMPLE
+      : EntryType::WALL_STACK_SAMPLE;
+  auto id = logger.write(StandardEntry{
+      .type = type,
+      .timestamp = slot.time,
+      .tid = tid,
+  });
+
+  return id;
+}
+
 void SamplingProfiler::flushStackTraces(
     std::unordered_set<uint64_t>& loggedFramesSet) {
   int processedCount = 0;
@@ -307,6 +324,8 @@ void SamplingProfiler::flushStackTraces(
     if (slot.time > state_.profileStartTime) {
       auto& tracer = state_.tracersMap[slot.profilerType];
       auto tid = slotStateCombo >> 16;
+
+      logTimerType(slot, tid, logger);
 
       if (StackCollectionRetcode::SUCCESS == slotState) {
         tracer->flushStack(logger, slot.frames, slot.depth, tid, slot.time);
@@ -429,6 +448,7 @@ bool SamplingProfiler::startProfilingTimers() {
   state_.timerManager.reset(new TimerManager(
       state_.threadDetectIntervalMs,
       state_.samplingRateMs,
+      state_.cpuClockModeEnabled,
       state_.wallClockModeEnabled,
       state_.wallClockModeEnabled ? state_.whitelist : nullptr));
   state_.timerManager->start();
@@ -445,6 +465,7 @@ bool SamplingProfiler::startProfiling(
     int requested_tracers,
     int sampling_rate_ms,
     int thread_detect_interval_ms,
+    bool cpu_clock_mode_enabled,
     bool wall_clock_mode_enabled) {
   if (state_.isProfiling) {
     throw std::logic_error("startProfiling called while already profiling");
@@ -467,6 +488,7 @@ bool SamplingProfiler::startProfiling(
   }
 
   state_.samplingRateMs = sampling_rate_ms;
+  state_.cpuClockModeEnabled = cpu_clock_mode_enabled;
   state_.wallClockModeEnabled = wall_clock_mode_enabled;
   state_.threadDetectIntervalMs = thread_detect_interval_ms;
 

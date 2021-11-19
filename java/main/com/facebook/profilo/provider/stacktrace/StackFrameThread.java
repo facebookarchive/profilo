@@ -27,6 +27,7 @@ import com.facebook.profilo.ipc.TraceContext;
 import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.MultiBufferLogger;
 import com.facebook.proguard.annotations.DoNotStrip;
+import java.util.Locale;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -38,6 +39,13 @@ public final class StackFrameThread extends BaseTraceProvider {
       ProvidersRegistry.newProvider("native_stack_trace");
 
   private static final String LOG_TAG = "StackFrameThread";
+
+  private enum TimeSource {
+    NONE,
+    WALL,
+    CPU,
+    BOTH
+  };
 
   @GuardedBy("this")
   private @Nullable Thread mProfilerThread;
@@ -103,7 +111,8 @@ public final class StackFrameThread extends BaseTraceProvider {
       int sampleRateMs,
       int threadDetectIntervalMs,
       int enabledProviders,
-      boolean nativeTracerUnwindDexFrames) {
+      boolean nativeTracerUnwindDexFrames,
+      TimeSource timeSource) {
     if (!initProfiler(nativeTracerUnwindDexFrames)) {
       return false;
     }
@@ -119,13 +128,29 @@ public final class StackFrameThread extends BaseTraceProvider {
     // stack profiling of main thread on-demand.
 
     boolean wallClockModeEnabled = false;
+    boolean cpuClockModeEnabled = false;
     if ((enabledProviders & PROVIDER_WALL_TIME_STACK_TRACE) != 0) {
       wallClockModeEnabled = true;
     } else {
-      if (mSystemClockTimeIntervalMs == -1) {
-        mSystemClockTimeIntervalMs = nativeSystemClockTickIntervalMs();
+      switch (timeSource) {
+        case BOTH:
+          wallClockModeEnabled = true;
+          cpuClockModeEnabled = true;
+          break;
+        case WALL:
+          wallClockModeEnabled = true;
+          break;
+        case NONE:
+        case CPU:
+          cpuClockModeEnabled = true;
+          break;
       }
-      sampleRateMs = Math.max(sampleRateMs, mSystemClockTimeIntervalMs);
+      if (cpuClockModeEnabled) {
+        if (mSystemClockTimeIntervalMs == -1) {
+          mSystemClockTimeIntervalMs = nativeSystemClockTickIntervalMs();
+        }
+        sampleRateMs = Math.max(sampleRateMs, mSystemClockTimeIntervalMs);
+      }
     }
     // For now, we'll just keep an eye on the main thread. Eventually we
     // might want to pass a list of all the interesting threads.
@@ -134,6 +159,7 @@ public final class StackFrameThread extends BaseTraceProvider {
             providersToTracers(enabledProviders),
             sampleRateMs,
             threadDetectIntervalMs,
+            cpuClockModeEnabled,
             wallClockModeEnabled);
     if (!started) {
       return false;
@@ -153,6 +179,21 @@ public final class StackFrameThread extends BaseTraceProvider {
     return mEnabled;
   }
 
+  private TimeSource parseTimeSourceParam(@Nullable String param) {
+    if (param == null || param.length() == 0) {
+      return TimeSource.NONE;
+    }
+
+    try {
+      TimeSource timeSource = TimeSource.valueOf(param.toUpperCase(Locale.US));
+      return timeSource;
+    } catch (IllegalArgumentException ex) {
+      Log.e(LOG_TAG, ex.getMessage(), ex);
+    }
+
+    return TimeSource.NONE;
+  }
+
   @Override
   @SuppressLint({
     "BadMethodUse-java.lang.Thread.start",
@@ -169,6 +210,9 @@ public final class StackFrameThread extends BaseTraceProvider {
       return;
     }
 
+    TimeSource timeSource =
+        parseTimeSourceParam(
+            context.mTraceConfigExtras.getStringParam(ProfiloConstants.TIME_SOURCE_PARAM, null));
     boolean enabled =
         enableInternal(
             context.mTraceConfigExtras.getIntParam(
@@ -177,7 +221,8 @@ public final class StackFrameThread extends BaseTraceProvider {
                 ProfiloConstants.PROVIDER_PARAM_STACK_TRACE_THREAD_DETECT_INTERVAL_MS, 0),
             context.enabledProviders,
             context.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_DEX_FRAMES, false));
+                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_DEX_FRAMES, false),
+            timeSource);
     if (!enabled) {
       return;
     }
@@ -201,7 +246,7 @@ public final class StackFrameThread extends BaseTraceProvider {
 
   @Override
   protected void onTraceEnded(TraceContext context, ExtraDataFileProvider dataFileProvider) {
-    if ((context.enabledProviders & PROVIDER_STACK_FRAME) != 0) {
+    if ((context.enabledProviders & (PROVIDER_STACK_FRAME | PROVIDER_WALL_TIME_STACK_TRACE)) != 0) {
       logAnnotation(
           "provider.stack_trace.art_compatibility",
           Boolean.toString(ArtCompatibility.isCompatible(mContext)));

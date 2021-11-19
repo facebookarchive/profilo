@@ -31,10 +31,12 @@ static const timer_t INVALID_TIMER_ID =
 
 class ThreadTimer {
  public:
-  explicit ThreadTimer(
-      int32_t tid,
-      int samplingRateMs,
-      bool wallClockModeEnabled);
+  enum class Type {
+    CpuTime = 1,
+    WallTime,
+  };
+
+  explicit ThreadTimer(int32_t tid, int samplingRateMs, Type timerType);
   ~ThreadTimer();
 
   ThreadTimer(const ThreadTimer&) = delete;
@@ -42,14 +44,19 @@ class ThreadTimer {
   ThreadTimer(ThreadTimer&& other) noexcept // move constructor
       : tid_(other.tid_),
         samplingRateMs_(other.samplingRateMs_),
-        wallClockModeEnabled_(other.wallClockModeEnabled_),
+        timerType_(other.timerType_),
         timerId_(std::exchange(other.timerId_, INVALID_TIMER_ID)) {}
+
+  static Type decodeType(long salted);
+
+  static long encodeType(Type type);
 
  private:
   int32_t tid_;
   int samplingRateMs_;
-  bool wallClockModeEnabled_;
+  Type timerType_;
   timer_t timerId_;
+  static long typeSeed;
 };
 
 } // namespace profiler

@@ -45,6 +45,7 @@ constexpr auto kHalfHourInMilliseconds = 1800 * 1000;
 constexpr auto kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
 constexpr auto kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
 constexpr bool kDefaultUseWallClockSetting = false;
+constexpr bool kDefaultUseCpuClockSetting = true;
 
 /* Scopes all access to private data from the SamplingProfiler instance*/
 class SamplingProfilerTestAccessor {
@@ -168,6 +169,12 @@ class SamplingProfilerTest : public ::testing::Test {
     ASSERT_EQ(sigaction(SIGPROF, &act, nullptr), 0);
   }
 
+  static void KickWallTimer(pthread_t thread) {
+    sigval val;
+    val.sival_int = ThreadTimer::encodeType(ThreadTimer::Type::WallTime);
+    pthread_sigqueue(thread, SIGPROF, val);
+  }
+
   virtual void SetUp() {
     auto tracer_map =
         std::unordered_map<int32_t, std::shared_ptr<BaseTracer>>();
@@ -199,7 +206,9 @@ class SamplingProfilerTest : public ::testing::Test {
       std::function<bool(StackSlot const&)> slot_predicate,
       int expected_count = 1);
 
-  void runSampleCountTest(bool use_wall_time_profiling);
+  void runSampleCountTest(
+      bool enable_cpu_time_sampling,
+      bool enable_wall_time_sampling);
 
   void runThreadDetectTest(bool use_wall_time_profiling);
 
@@ -221,6 +230,28 @@ class SamplingProfilerTest : public ::testing::Test {
         << "Mandatory wait for signal handler to complete";
 
     ASSERT_TRUE(access.isProfiling());
+  }
+
+  int getNumSamplesTimerType(ThreadTimer::Type timerType) {
+    int cnt = access.countSlotsWithPredicate([timerType](auto const& slot) {
+      return slot.state == StackSlotState::FREE && slot.timerType == timerType;
+    });
+
+    return cnt;
+  }
+
+  int getNumSamplesNotTimerType(ThreadTimer::Type timerType) {
+    int cnt = access.countSlotsWithPredicate([timerType](auto const& slot) {
+      return slot.state == StackSlotState::FREE && slot.timerType != timerType;
+    });
+
+    return cnt;
+  }
+
+  void assertSamplesTimerType(ThreadTimer::Type timerType) {
+    ASSERT_TRUE(
+        getNumSamplesTimerType(timerType) > 0 &&
+        getNumSamplesNotTimerType(timerType) == 0);
   }
 
   SamplingProfiler profiler;
@@ -263,6 +294,7 @@ void SamplingProfilerTest::runLoggingTest(
       kTestTracer,
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
+      kDefaultUseCpuClockSetting,
       kDefaultUseWallClockSetting));
 
   std::thread worker_thread([&] {
@@ -283,7 +315,7 @@ void SamplingProfilerTest::runLoggingTest(
   sequencer.advance(START_WORKER_THREAD);
 
   sequencer.waitFor(SEND_PROFILING_SIGNAL);
-  pthread_kill(worker_thread.native_handle(), SIGPROF);
+  KickWallTimer(worker_thread.native_handle());
   sequencer.advance(START_TRACER);
 
   sequencer.waitFor(STOP_PROFILING);
@@ -340,6 +372,7 @@ void assertSamplesWithinTolerance(
 }
 
 void SamplingProfilerTest::runSampleCountTest(
+    bool enable_cpu_time_sampling,
     bool enable_wall_time_sampling) { // true->wall, false->CPU
   // This test runs two worker threads for different durations of time
   // to confirm the right number of signals are received for each thread.
@@ -430,6 +463,7 @@ void SamplingProfilerTest::runSampleCountTest(
       kTestTracer,
       sample_interval_ms,
       thread_detect_interval_ms,
+      enable_cpu_time_sampling,
       enable_wall_time_sampling));
   struct timespec start_time, end_time;
   ASSERT_FALSE(clock_gettime(CLOCK_MONOTONIC, &start_time));
@@ -460,12 +494,30 @@ void SamplingProfilerTest::runSampleCountTest(
             kMicrosecondsInMillisecond
         : thread_cpu_ms[worker];
   }
-  assertSamplesWithinTolerance(
-      sample_interval_ms,
-      0, // thread detect is @start - don't consider thread_detect_interval_ms
-      allowed_lost_samples,
-      expected_times_ms,
-      signal_cnt);
+
+  if (enable_cpu_time_sampling && enable_wall_time_sampling) {
+    assertSamplesWithinTolerance(
+        sample_interval_ms,
+        0, // thread detect is @start - don't consider thread_detect_interval_ms
+        allowed_lost_samples,
+        std::vector<int>{
+            expected_times_ms[0] + thread_cpu_ms[0],
+            expected_times_ms[1] + thread_cpu_ms[1]},
+        signal_cnt);
+    ASSERT_TRUE(getNumSamplesTimerType(ThreadTimer::Type::CpuTime) > 0);
+    ASSERT_TRUE(getNumSamplesTimerType(ThreadTimer::Type::WallTime) > 0);
+  } else {
+    assertSamplesWithinTolerance(
+        sample_interval_ms,
+        0, // thread detect is @start - don't consider thread_detect_interval_ms
+        allowed_lost_samples,
+        expected_times_ms,
+        signal_cnt);
+
+    assertSamplesTimerType(
+        enable_wall_time_sampling ? ThreadTimer::Type::WallTime
+                                  : ThreadTimer::Type::CpuTime);
+  }
 } // namespace profiler
 
 void SamplingProfilerTest::runThreadDetectTest(
@@ -518,6 +570,7 @@ void SamplingProfilerTest::runThreadDetectTest(
       kTestTracer,
       sample_interval_ms,
       thread_detect_interval_ms,
+      !enable_wall_time_sampling,
       enable_wall_time_sampling));
   sequencer.advance(RUN_WORKERS);
 
@@ -573,6 +626,10 @@ void SamplingProfilerTest::runThreadDetectTest(
       allowed_lost_samples,
       expected_times_ms,
       signal_cnt);
+
+  assertSamplesTimerType(
+      enable_wall_time_sampling ? ThreadTimer::Type::WallTime
+                                : ThreadTimer::Type::CpuTime);
 }
 
 TEST_F(SamplingProfilerTest, errorLoggingFaultDuringTracing) {
@@ -692,6 +749,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
         kTestTracer,
         kDefaultSampleIntervalMs,
         kDefaultThreadDetectIntervalMs,
+        kDefaultUseCpuClockSetting,
         kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
 
@@ -754,7 +812,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
   sequencer.advance(SEND_PROFILING_SIGNAL);
 
   sequencer.waitFor(SEND_PROFILING_SIGNAL);
-  pthread_kill(worker_thread.native_handle(), SIGPROF);
+  KickWallTimer(worker_thread.native_handle());
   sequencer.advance(START_FAULT_HANDLER);
 
   sequencer.waitFor(INSPECT_PRE_STOP);
@@ -809,6 +867,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
         kTestTracer,
         kDefaultSampleIntervalMs,
         kDefaultThreadDetectIntervalMs,
+        kDefaultUseCpuClockSetting,
         kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
 
@@ -837,7 +896,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
   sequencer.advance(START_PROFILING);
 
   sequencer.waitFor(SEND_PROFILING_SIGNAL);
-  pthread_kill(worker_thread.native_handle(), SIGPROF);
+  KickWallTimer(worker_thread.native_handle());
   sequencer.advance(START_TRACER_CALL);
 
   sequencer.waitFor(INSPECT_PRE_STOP);
@@ -896,6 +955,7 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
       kTestTracer,
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
+      kDefaultUseCpuClockSetting,
       kDefaultUseWallClockSetting));
 
   // Target thread that will receive the profiling signal.
@@ -1011,15 +1071,15 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
   sequencer.advance(START_WORKER_THREAD);
 
   sequencer.waitFor(SEND_PROFILING_SIGNAL);
-  pthread_kill(worker_thread.native_handle(), SIGPROF);
+  KickWallTimer(worker_thread.native_handle());
   sequencer.advance(TRACER_CALL_1);
 
   sequencer.waitFor(SEND_PROFILING_SIGNAL2);
-  pthread_kill(worker_thread.native_handle(), SIGPROF);
+  KickWallTimer(worker_thread.native_handle());
   sequencer.advance(TRACER_CALL_2);
 
   sequencer.waitFor(SEND_PROFILING_SIGNAL3);
-  pthread_kill(worker_thread.native_handle(), SIGPROF);
+  KickWallTimer(worker_thread.native_handle());
   sequencer.advance(TRACER_CALL_3);
 
   sequencer.waitAndAdvance(STOP_PROFILING, END_WORKER_THREAD);
@@ -1059,19 +1119,24 @@ TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
       kTestTracer,
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
+      kDefaultUseCpuClockSetting,
       kDefaultUseWallClockSetting));
   profiler.stopProfiling();
 
   // No death!
-  pthread_kill(pthread_self(), SIGPROF);
+  KickWallTimer(pthread_self());
 }
 
 TEST_F(SamplingProfilerTest, verifyCpuSampleCounts) {
-  runSampleCountTest(false);
+  runSampleCountTest(true, false);
 }
 
 TEST_F(SamplingProfilerTest, verifyWallSampleCounts) {
-  runSampleCountTest(true);
+  runSampleCountTest(false, true);
+}
+
+TEST_F(SamplingProfilerTest, verifyCpuWallBothSamples) {
+  runSampleCountTest(true, true);
 }
 
 TEST_F(SamplingProfilerTest, verifyCpuThreadDetect) {

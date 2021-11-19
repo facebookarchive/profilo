@@ -1,4 +1,4 @@
-// @generated SignedSource<<b7eff2c1a5e497eb7eea5b61ad2d8f5f>>
+// @generated SignedSource<<390e60e658a65e09e8228eae35f255b4>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -123,6 +123,8 @@ const char* to_string(EntryType type) {
     case EntryType::GPU_MEMORY_FREE: return "GPU_MEMORY_FREE";
     case EntryType::THREAD_START: return "THREAD_START";
     case EntryType::THREAD_FINISH: return "THREAD_FINISH";
+    case EntryType::CPU_STACK_SAMPLE: return "CPU_STACK_SAMPLE";
+    case EntryType::WALL_STACK_SAMPLE: return "WALL_STACK_SAMPLE";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }

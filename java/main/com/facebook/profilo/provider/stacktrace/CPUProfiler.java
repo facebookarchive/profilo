@@ -130,13 +130,21 @@ public class CPUProfiler {
       int requestedTracers,
       int samplingRateMs,
       int threadDetectIntervalMs,
+      boolean cpuClockModeEnabled,
       boolean wallClockModeEnabled) {
+    if (!cpuClockModeEnabled && !wallClockModeEnabled) {
+      return false;
+    }
     // We always trace the main thread.
     StackTraceWhitelist.add(Process.myPid());
 
     return sInitialized
         && nativeStartProfiling(
-            requestedTracers, samplingRateMs, threadDetectIntervalMs, wallClockModeEnabled);
+            requestedTracers,
+            samplingRateMs,
+            threadDetectIntervalMs,
+            cpuClockModeEnabled,
+            wallClockModeEnabled);
   }
 
   public static void loggerLoop() {
@@ -160,7 +168,11 @@ public class CPUProfiler {
 
   @DoNotStrip
   private static native boolean nativeStartProfiling(
-      int providers, int samplingRateMs, int threadDetectIntervalMs, boolean wallClockModeEnabled);
+      int providers,
+      int samplingRateMs,
+      int threadDetectIntervalMs,
+      boolean cpuClockModeEnabled,
+      boolean wallClockModeEnabled);
 
   @DoNotStrip
   private static native void nativeStopProfiling();
