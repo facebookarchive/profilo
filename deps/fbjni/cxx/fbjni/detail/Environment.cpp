@@ -180,6 +180,18 @@ inline JNIEnv* cachedOrNull() {
 
 namespace detail {
 
+JNIEnv* cachedWithAttachmentState(bool& isAttaching) {
+  isAttaching = false;
+  detail::TLData* pdata = getTLData(getTLKey());
+  if (!pdata) {
+    return nullptr;
+  }
+  if (!pdata->env && !pdata->attached) {
+    isAttaching = true;
+  }
+  return pdata->env;
+}
+
 // This will return a cached env if there is one, or get one from JNI
 // if the thread has already been attached some other way.  If it
 // returns nullptr, then the thread has never been registered, or the

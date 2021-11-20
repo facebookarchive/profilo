@@ -48,6 +48,10 @@ namespace detail {
 // shouldn't be using this.
 JNIEnv* currentOrNull();
 
+// This will return the cached JNIEnv* and the current state of
+// attaching the thread
+JNIEnv* cachedWithAttachmentState(bool& isAttaching);
+
 /**
  * If there's thread-local data, it's a pointer to one of these.  The
  * instance is a member of JniEnvCacher or ThreadScope, and lives on
