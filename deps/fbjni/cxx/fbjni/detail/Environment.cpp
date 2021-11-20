@@ -277,9 +277,11 @@ ThreadScope::ThreadScope()
   FBJNI_ASSERT(pdata == nullptr);
   setTLData(key, &data_);
 
+  data_.env = nullptr;
+  data_.attached = false;
+
   attachCurrentThread();
 
-  data_.env = nullptr;
   data_.attached = true;
 
   thisAttached_ = true;
