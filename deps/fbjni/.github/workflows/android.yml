@@ -15,9 +15,7 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: |
-        source scripts/android-setup.sh && installAndroidSDK
         ./gradlew assembleDebug
     - name: Run tests
       run: |
-        source scripts/android-setup.sh && installAndroidSDK && installsdk 'cmake;3.10.2.4988404'
         scripts/run-host-tests.sh
