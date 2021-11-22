@@ -22,9 +22,9 @@ jobs:
     - name: Update gradle.properties
       run: echo -e "signing.secretKeyRingFile=/tmp/secring.gpg\nsigning.keyId=${{ secrets.SIGNING_KEY_ID }}\nsigning.password=${{ secrets.SIGNING_PASSWORD }}\nmavenCentralPassword=${{ secrets.SONATYPE_NEXUS_PASSWORD }}\nmavenCentralUsername=${{ secrets.SONATYPE_NEXUS_USERNAME }}" >> gradle.properties
     - name: Upload Android Archives
-      run: ./gradlew assembleRelease uploadArchives --info
+      run: ./gradlew assembleRelease publish --info
     - name: Upload Java-Only Archives
-      run: ./gradlew -b host.gradle assemble uploadArchives --info
+      run: ./gradlew -b host.gradle assemble publish --info
     - name: Release and close
       run: ./gradlew closeAndReleaseRepository
     - name: Clean secrets
