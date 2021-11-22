@@ -38,9 +38,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
-    ndkVersion '21.1.6352462'
+    compileSdkVersion 31
+    ndkVersion '23.1.7779620'
 
     externalNativeBuild {
         cmake {
