@@ -26,9 +26,16 @@ namespace facebook {
 namespace profilo {
 
 int64_t monotonicTime();
+
 int32_t threadID();
+
 // Returns 0 if value was not found, and 1 if value <= 1, actual value otherwise
 int32_t systemClockTickIntervalMs();
+
+// Determines the kernel jiffy value and returns it's value in microseconds.
+// Returns -1 if unable to determine the actual value.
+int32_t cpuClockResolutionMicros();
+
 std::string get_system_property(const char* key);
 
 // Given a path, create the directory specified by it, along with all

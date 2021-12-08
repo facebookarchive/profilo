@@ -56,8 +56,8 @@ const char* StackTraceWhitelist =
 
 namespace {
 
-int32_t getSystemClockTickIntervalMs(facebook::jni::alias_ref<jobject>) {
-  return systemClockTickIntervalMs();
+int32_t getCpuClockResolutionMicros(facebook::jni::alias_ref<jobject>) {
+  return cpuClockResolutionMicros();
 }
 
 std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
@@ -197,8 +197,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
         StackFrameThreadType,
         {
             makeNativeMethod(
-                "nativeSystemClockTickIntervalMs",
-                getSystemClockTickIntervalMs),
+                "nativeCpuClockResolutionMicros", getCpuClockResolutionMicros),
         });
     fbjni::registerNatives(
         StackTraceWhitelist,

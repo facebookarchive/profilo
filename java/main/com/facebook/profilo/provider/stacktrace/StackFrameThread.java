@@ -145,12 +145,6 @@ public final class StackFrameThread extends BaseTraceProvider {
           cpuClockModeEnabled = true;
           break;
       }
-      if (cpuClockModeEnabled) {
-        if (mSystemClockTimeIntervalMs == -1) {
-          mSystemClockTimeIntervalMs = nativeSystemClockTickIntervalMs();
-        }
-        sampleRateMs = Math.max(sampleRateMs, mSystemClockTimeIntervalMs);
-      }
     }
     // For now, we'll just keep an eye on the main thread. Eventually we
     // might want to pass a list of all the interesting threads.
@@ -255,6 +249,11 @@ public final class StackFrameThread extends BaseTraceProvider {
           Integer.toBinaryString(
               providersToTracers(context.enabledProviders) & CPUProfiler.getAvailableTracers()));
     }
+    if ((context.enabledProviders & getSupportedProviders()) != 0) {
+      logAnnotation(
+          "provider.stack_trace.cpu_timer_res_us",
+          Integer.toString(nativeCpuClockResolutionMicros()));
+    }
   }
 
   private void logAnnotation(String key, String value) {
@@ -320,5 +319,5 @@ public final class StackFrameThread extends BaseTraceProvider {
   }
 
   @DoNotStrip
-  private static native int nativeSystemClockTickIntervalMs();
+  private static native int nativeCpuClockResolutionMicros();
 }

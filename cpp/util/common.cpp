@@ -20,6 +20,7 @@
 #include <fb/log.h>
 #include <pthread.h>
 #include <sys/stat.h>
+#include <time.h>
 #include <algorithm>
 #include <chrono>
 #include <sstream>
@@ -109,6 +110,17 @@ int32_t systemClockTickIntervalMs() {
 #else
 #error "Do not have systemClockTickIntervalMs implementation for this platform"
 #endif
+
+int32_t cpuClockResolutionMicros() {
+  timespec clock_res_timespec;
+  // It was empirically determined that this clock resolution is equal to actual
+  // size of kernel jiffy.
+  auto res = clock_getres(CLOCK_REALTIME_COARSE, &clock_res_timespec);
+  if (res != 0) {
+    return -1;
+  }
+  return clock_res_timespec.tv_nsec / 1000;
+}
 
 #if defined(ANDROID)
 #include <sys/system_properties.h>
