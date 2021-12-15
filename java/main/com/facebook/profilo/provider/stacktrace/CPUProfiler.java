@@ -108,14 +108,22 @@ public class CPUProfiler {
   }
 
   public static synchronized boolean init(
-      Context context, MultiBufferLogger logger, boolean nativeTracerUnwindDexFrames)
+      Context context,
+      MultiBufferLogger logger,
+      boolean nativeTracerUnwindDexFrames,
+      int nativeTracerUnwinderThreadPriority)
       throws Exception {
     if (sInitialized) {
       return true;
     }
 
     sAvailableTracers = calculateTracers(context);
-    sInitialized = nativeInitialize(logger, sAvailableTracers, nativeTracerUnwindDexFrames);
+    sInitialized =
+        nativeInitialize(
+            logger,
+            sAvailableTracers,
+            nativeTracerUnwindDexFrames,
+            nativeTracerUnwinderThreadPriority);
     return sInitialized;
   }
 
@@ -164,7 +172,10 @@ public class CPUProfiler {
   /** Note: Init correctness is guaranteed for Main Thread only at this point. */
   @DoNotStrip
   private static native boolean nativeInitialize(
-      MultiBufferLogger logger, int availableTracers, boolean nativeTracerUnwindDexFrames);
+      MultiBufferLogger logger,
+      int availableTracers,
+      boolean nativeTracerUnwindDexFrames,
+      int nativeTracerUnwinderThreadPriority);
 
   @DoNotStrip
   private static native boolean nativeStartProfiling(

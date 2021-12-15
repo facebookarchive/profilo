@@ -98,9 +98,11 @@ public final class StackFrameThread extends BaseTraceProvider {
    *
    * @return <code>true</code> if initProfiler was successful and <code>false</code> otherwise.
    */
-  private synchronized boolean initProfiler(boolean nativeTracerUnwindDexFrames) {
+  private synchronized boolean initProfiler(
+      boolean nativeTracerUnwindDexFrames, int nativeTracerUnwinderThreadPriority) {
     try {
-      return CPUProfiler.init(mContext, getLogger(), nativeTracerUnwindDexFrames);
+      return CPUProfiler.init(
+          mContext, getLogger(), nativeTracerUnwindDexFrames, nativeTracerUnwinderThreadPriority);
     } catch (Exception ex) {
       Log.e(LOG_TAG, ex.getMessage(), ex);
       return false;
@@ -112,8 +114,9 @@ public final class StackFrameThread extends BaseTraceProvider {
       int threadDetectIntervalMs,
       int enabledProviders,
       boolean nativeTracerUnwindDexFrames,
+      int nativeTracerUnwinderThreadPriority,
       TimeSource timeSource) {
-    if (!initProfiler(nativeTracerUnwindDexFrames)) {
+    if (!initProfiler(nativeTracerUnwindDexFrames, nativeTracerUnwinderThreadPriority)) {
       return false;
     }
 
@@ -216,6 +219,9 @@ public final class StackFrameThread extends BaseTraceProvider {
             context.enabledProviders,
             context.mTraceConfigExtras.getBoolParam(
                 ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_DEX_FRAMES, false),
+            context.mTraceConfigExtras.getIntParam(
+                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_THREAD_PRIORITY,
+                ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT),
             timeSource);
     if (!enabled) {
       return;

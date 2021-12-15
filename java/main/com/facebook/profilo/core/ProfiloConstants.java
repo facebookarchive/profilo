@@ -90,6 +90,8 @@ public final class ProfiloConstants {
       "provider.stack_trace.thread_detect_interval_ms";
   public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_DEX_FRAMES =
       "provider.native_stack_trace.unwind_dex_frames";
+  public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_THREAD_PRIORITY =
+      "provider.native_stack_trace.unwinder_thread_pri";
 
   // Keys to query conditions in a config
   public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";
