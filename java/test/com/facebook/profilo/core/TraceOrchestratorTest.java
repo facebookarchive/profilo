@@ -210,8 +210,8 @@ public class TraceOrchestratorTest {
     List<File> tracesList = new ArrayList<>();
     List<File> tracesListSkipChecks = new ArrayList<>();
 
-    when(mFileManager.getTrimmableFilesToUpload()).thenReturn(tracesList);
-    when(mFileManager.getUntrimmableFilesToUpload()).thenReturn(tracesListSkipChecks);
+    when(mFileManager.getDefaultFilesToUpload()).thenReturn(tracesList);
+    when(mFileManager.getPriorityFilesToUpload()).thenReturn(tracesListSkipChecks);
 
     mOrchestrator.setBackgroundUploadService(mUploadService);
     verify(mUploadService, times(1))
@@ -226,8 +226,8 @@ public class TraceOrchestratorTest {
     List<File> tracesList = new ArrayList<>();
     List<File> tracesListSkipChecks = new ArrayList<>();
 
-    when(mFileManager.getTrimmableFilesToUpload()).thenReturn(tracesList);
-    when(mFileManager.getUntrimmableFilesToUpload()).thenReturn(tracesListSkipChecks);
+    when(mFileManager.getDefaultFilesToUpload()).thenReturn(tracesList);
+    when(mFileManager.getPriorityFilesToUpload()).thenReturn(tracesListSkipChecks);
 
     TraceOrchestrator.ProfiloBridgeFactory profiloBridgeFactory =
         mock(TraceOrchestrator.ProfiloBridgeFactory.class);
@@ -366,7 +366,7 @@ public class TraceOrchestratorTest {
   }
 
   @Test
-  public void testTraceMemoryOnlyTraceAddedToUploadsAsNotTrimmable() throws Exception {
+  public void testTraceMemoryOnlyTraceAddedToUploadsAsPriorityFile() throws Exception {
     mOrchestrator.setConfigProvider(new TestConfigProvider(buildConfigWithTimedOutSampleRate(1)));
     final long traceId = mTraceContext.traceId;
     mTraceContext.flags = Trace.FLAG_MEMORY_ONLY;
@@ -382,7 +382,7 @@ public class TraceOrchestratorTest {
       mOrchestrator.onTraceStop(mTraceContext);
       mOrchestrator.onTraceWriteEnd(mTraceContext);
 
-      verify(mFileManager).addFileToUploads(any(File.class), eq(false));
+      verify(mFileManager).addFileToUploads(any(File.class), eq(true));
     } finally {
       traceFile.delete();
       tempDirectory.delete();

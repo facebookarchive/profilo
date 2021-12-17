@@ -75,29 +75,29 @@ public class FileManager {
   static final String LOG_SUFFIX = ".log";
   static final String ZIP_SUFFIX = ".zip";
   public static final String TMP_SUFFIX = ".tmp";
-  public static final String UNTRIMMABLE_PREFIX = "override-";
+  public static final String PRIORITY_TRACE_PREFIX = "override-";
   private int mMaxArchivedTraces = 0;
   private long mMaxScheduledTracesAgeMillis = 0;
 
   // Visible for testing
   FileManagerStatistics mFileManagerStatistics = new FileManagerStatistics();
 
-  public static final FilenameFilter TRIMMABLE_FILES_FILTER =
+  public static final FilenameFilter DEFAULT_FILES_FILTER =
       new FilenameFilter() {
         @Override
         public boolean accept(File dir, String filename) {
-          return !filename.startsWith(UNTRIMMABLE_PREFIX)
+          return !filename.startsWith(PRIORITY_TRACE_PREFIX)
               && (filename.endsWith(LOG_SUFFIX)
                   || filename.endsWith(ZIP_SUFFIX)
                   || filename.endsWith(TMP_SUFFIX));
         }
       };
 
-  public static final FilenameFilter UNTRIMMABLE_FILES_FILTER =
+  public static final FilenameFilter PRIORITY_FILES_FILTER =
       new FilenameFilter() {
         @Override
         public boolean accept(File dir, String filename) {
-          return filename.startsWith(UNTRIMMABLE_PREFIX) && filename.endsWith(LOG_SUFFIX);
+          return filename.startsWith(PRIORITY_TRACE_PREFIX) && filename.endsWith(LOG_SUFFIX);
         }
       };
 
@@ -139,17 +139,17 @@ public class FileManager {
    * Schedules a file for upload.
    *
    * @param file file to schedule for upload
-   * @param trimmable true if the file should be subject to automatic cleanup
+   * @param priority true if the file should be prioritized to upload first and with quota exempts
    */
-  public void addFileToUploads(File file, boolean trimmable) {
+  public void addFileToUploads(File file, boolean priority) {
     String filename = file.getName();
     int index = filename.lastIndexOf('.');
     if (index != -1) {
       filename = filename.substring(0, index);
     }
     filename += LOG_SUFFIX;
-    if (!trimmable) {
-      filename = UNTRIMMABLE_PREFIX + filename;
+    if (priority) {
+      filename = PRIORITY_TRACE_PREFIX + filename;
     }
 
     File uploadFolder = getUploadFolder();
@@ -162,9 +162,14 @@ public class FileManager {
         mFileManagerStatistics.errorsMove++;
       }
 
-      trimFolderByAge(uploadFolder, mBaseFolder, mMaxScheduledTracesAgeMillis);
+      trimFolderByAge(
+          uploadFolder,
+          mBaseFolder,
+          mMaxScheduledTracesAgeMillis,
+          DEFAULT_FILES_FILTER,
+          PRIORITY_FILES_FILTER);
       trimFolderByFileCount(
-          mBaseFolder, mMaxArchivedTraces, TRIMMABLE_FILES_FILTER, UNTRIMMABLE_FILES_FILTER);
+          mBaseFolder, mMaxArchivedTraces, DEFAULT_FILES_FILTER, PRIORITY_FILES_FILTER);
     } else {
       mFileManagerStatistics.errorsCreatingUploadDir++;
     }
@@ -174,15 +179,15 @@ public class FileManager {
     File newPath = new File(mBaseFolder, file.getName());
     if (moveOrDelete(file, newPath)) {
       trimFolderByFileCount(
-          mBaseFolder, mMaxArchivedTraces, TRIMMABLE_FILES_FILTER, UNTRIMMABLE_FILES_FILTER);
+          mBaseFolder, mMaxArchivedTraces, DEFAULT_FILES_FILTER, PRIORITY_FILES_FILTER);
     }
   }
 
-  public List<File> getTrimmableFilesToUpload() {
+  public List<File> getDefaultFilesToUpload() {
     File uploadFolder = getUploadFolder();
-    trimFolderByAge(uploadFolder, mBaseFolder, mMaxScheduledTracesAgeMillis);
+    trimFolderByAge(uploadFolder, mBaseFolder, mMaxScheduledTracesAgeMillis, DEFAULT_FILES_FILTER);
 
-    List<File> files = getFiles(uploadFolder, TRIMMABLE_FILES_FILTER);
+    List<File> files = getFiles(uploadFolder, DEFAULT_FILES_FILTER);
     // Order by name == order by date due to naming convention
     Collections.sort(
         files,
@@ -196,9 +201,11 @@ public class FileManager {
     return files;
   }
 
-  public List<File> getUntrimmableFilesToUpload() {
-    List<File> files = getFiles(getUploadFolder(), UNTRIMMABLE_FILES_FILTER);
+  public List<File> getPriorityFilesToUpload() {
+    File uploadFolder = getUploadFolder();
+    trimFolderByAge(uploadFolder, mBaseFolder, mMaxScheduledTracesAgeMillis, PRIORITY_FILES_FILTER);
 
+    List<File> files = getFiles(uploadFolder, PRIORITY_FILES_FILTER);
     // Order by name == order by date due to naming convention
     Collections.sort(
         files,
@@ -226,10 +233,10 @@ public class FileManager {
   public Iterable<File> getAllFiles() {
     List<File> allFiles = new ArrayList<>();
 
-    allFiles.addAll(getFiles(getUploadFolder(), UNTRIMMABLE_FILES_FILTER));
-    allFiles.addAll(getFiles(getUploadFolder(), TRIMMABLE_FILES_FILTER));
-    allFiles.addAll(getFiles(getFolder(), UNTRIMMABLE_FILES_FILTER));
-    allFiles.addAll(getFiles(getFolder(), TRIMMABLE_FILES_FILTER));
+    allFiles.addAll(getFiles(getUploadFolder(), PRIORITY_FILES_FILTER));
+    allFiles.addAll(getFiles(getUploadFolder(), DEFAULT_FILES_FILTER));
+    allFiles.addAll(getFiles(getFolder(), PRIORITY_FILES_FILTER));
+    allFiles.addAll(getFiles(getFolder(), DEFAULT_FILES_FILTER));
     allFiles.addAll(getAllFiles(getCrashDumpFolder()));
     return allFiles;
   }
@@ -299,15 +306,22 @@ public class FileManager {
     }
   }
 
-  private void trimFolderByAge(File source, File destination, long maxAgeMs) {
-
+  private void trimFolderByAge(
+      File source, File destination, long maxAgeMs, FilenameFilter... filters) {
+    if (filters.length == 0) {
+      return;
+    }
     if (!source.exists() && !source.isDirectory()) {
       return;
     }
 
-    long minTime = System.currentTimeMillis() - maxAgeMs;
+    ArrayList<File> files = new ArrayList<>();
+    for (FilenameFilter filter : filters) {
+      files.addAll(getFiles(source, filter));
+    }
 
-    for (File file : getFiles(source, TRIMMABLE_FILES_FILTER)) {
+    long minTime = System.currentTimeMillis() - maxAgeMs;
+    for (File file : files) {
       if (file.lastModified() < minTime) {
         if (moveOrDelete(file, new File(destination, file.getName()))) {
           mFileManagerStatistics.trimmedDueToAge++;

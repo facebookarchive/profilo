@@ -521,9 +521,8 @@ public final class TraceOrchestrator
 
     FileManager.FileManagerStatistics fStats;
     synchronized (this) {
-      // Manual traces are untrimmable, everything else can be cleaned up
-      boolean trimmable = (trace.flags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) == 0;
-      mFileManager.addFileToUploads(uploadFile, trimmable);
+      boolean priority = (trace.flags & (Trace.FLAG_MANUAL | Trace.FLAG_MEMORY_ONLY)) != 0;
+      mFileManager.addFileToUploads(uploadFile, priority);
       triggerUpload();
       fStats = mFileManager.getAndResetStatistics();
     }
@@ -635,7 +634,7 @@ public final class TraceOrchestrator
     }
 
     backgroundUploadService.uploadInBackground(
-        mFileManager.getTrimmableFilesToUpload(), mFileManager.getUntrimmableFilesToUpload(), this);
+        mFileManager.getDefaultFilesToUpload(), mFileManager.getPriorityFilesToUpload(), this);
   }
 
   /**

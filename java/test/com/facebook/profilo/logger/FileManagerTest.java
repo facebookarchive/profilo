@@ -161,22 +161,22 @@ public class FileManagerTest {
 
   @Test
   public void testDeleteAllRemovesTrimmableFilesScheduledForUpload() throws Exception {
-    mFileManager.addFileToUploads(mTempFile, true);
-    mFileManager.deleteAllFiles();
-    assertNoFilesInFolder(mFolder);
-  }
-
-  @Test
-  public void testDeleteAllRemovesUntrimmableFilesScheduledForUpload() throws Exception {
     mFileManager.addFileToUploads(mTempFile, false);
     mFileManager.deleteAllFiles();
     assertNoFilesInFolder(mFolder);
   }
 
   @Test
-  public void testDeleteAllRemovesTrimmableFilesAlreadyUploaded() throws Exception {
+  public void testDeleteAllRemovesUntrimmableFilesScheduledForUpload() throws Exception {
     mFileManager.addFileToUploads(mTempFile, true);
-    for (File f : mFileManager.getTrimmableFilesToUpload()) {
+    mFileManager.deleteAllFiles();
+    assertNoFilesInFolder(mFolder);
+  }
+
+  @Test
+  public void testDeleteAllRemovesTrimmableFilesAlreadyUploaded() throws Exception {
+    mFileManager.addFileToUploads(mTempFile, false);
+    for (File f : mFileManager.getDefaultFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
 
@@ -187,8 +187,8 @@ public class FileManagerTest {
 
   @Test
   public void testDeleteAllRemovesUntrimmableFilesAlreadyUploaded() throws Exception {
-    mFileManager.addFileToUploads(mTempFile, false);
-    for (File f : mFileManager.getUntrimmableFilesToUpload()) {
+    mFileManager.addFileToUploads(mTempFile, true);
+    for (File f : mFileManager.getPriorityFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
     assertThat(getFilesInFolderNoDirs(mFolder)).isNotEmpty();
@@ -203,7 +203,7 @@ public class FileManagerTest {
     File uploadDir = new File(mFolder, FileManager.UPLOAD_FOLDER);
     assertThat(uploadDir.createNewFile()).overridingErrorMessage("Failed to setup test").isTrue();
 
-    mFileManager.addFileToUploads(mTempFile, true);
+    mFileManager.addFileToUploads(mTempFile, false);
     assertThat(mFileManager.mFileManagerStatistics.errorsCreatingUploadDir).isEqualTo(1);
 
     assertThat(uploadDir.delete()).overridingErrorMessage("Failed to cleanup after test").isTrue();
@@ -215,7 +215,7 @@ public class FileManagerTest {
   @Test
   public void testErrorsDeleteUpdatesCorrectly() throws Exception {
     assertThat(mFileManager.mFileManagerStatistics.errorsDelete).isEqualTo(0);
-    mFileManager.addFileToUploads(mTempFile, true);
+    mFileManager.addFileToUploads(mTempFile, false);
 
     // Make files undeletable by converting to a non-empty dir of same name
     for (File f : mFileManager.getAllFiles()) {
@@ -239,7 +239,7 @@ public class FileManagerTest {
     assertThat(mTempFile.delete())
         .overridingErrorMessage("Unable to delete file to setup test")
         .isTrue();
-    mFileManager.addFileToUploads(mTempFile, true);
+    mFileManager.addFileToUploads(mTempFile, false);
     assertThat(mFileManager.mFileManagerStatistics.errorsMove).isEqualTo(1);
 
     mFileManager.deleteAllFiles();
@@ -249,7 +249,7 @@ public class FileManagerTest {
   @Test
   public void testAddedFilesToUploadUpdatesCorrectly() throws Exception {
     assertThat(mFileManager.mFileManagerStatistics.getAddedFilesToUpload()).isEqualTo(0);
-    mFileManager.addFileToUploads(mTempFile, true);
+    mFileManager.addFileToUploads(mTempFile, false);
     assertThat(mFileManager.mFileManagerStatistics.getAddedFilesToUpload()).isEqualTo(1);
 
     mFileManager.deleteAllFiles();
@@ -269,15 +269,15 @@ public class FileManagerTest {
       File f = File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, mFolder);
       Files.touch(f);
       // Add both trimmable and untrimmable files.
-      mFileManager.addFileToUploads(f, i % 2 == 0);
+      mFileManager.addFileToUploads(f, i % 2 != 0);
     }
 
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToCount).isEqualTo(0);
     // Upload all the pending files
-    for (File f : mFileManager.getTrimmableFilesToUpload()) {
+    for (File f : mFileManager.getDefaultFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
-    for (File f : mFileManager.getUntrimmableFilesToUpload()) {
+    for (File f : mFileManager.getPriorityFilesToUpload()) {
       mFileManager.handleSuccessfulUpload(f);
     }
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToCount).isEqualTo(1);
@@ -286,12 +286,11 @@ public class FileManagerTest {
     assertNoFilesInFolder(mFolder);
   }
 
-  @Test
-  public void testTrimmedDueToAgeUpdatesCorrectly() throws Exception {
+  private void testTrimmedDueToAgeUpdatesCorrectly(boolean priority) throws Exception {
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToAge).isEqualTo(0);
 
     mTempFile.setLastModified(0); // last modified in 1970 :-)
-    mFileManager.addFileToUploads(mTempFile, true);
+    mFileManager.addFileToUploads(mTempFile, priority);
 
     // Adding this old file will trigger a trim due to age
     assertThat(mFileManager.mFileManagerStatistics.trimmedDueToAge).isEqualTo(1);
@@ -301,9 +300,19 @@ public class FileManagerTest {
   }
 
   @Test
+  public void testTrimmedDueToAgeUpdatesCorrectlyForDefaultTrace() throws Exception {
+    testTrimmedDueToAgeUpdatesCorrectly(false);
+  }
+
+  @Test
+  public void testTrimmedDueToAgeUpdatesCorrectlyForPriorityTrace() throws Exception {
+    testTrimmedDueToAgeUpdatesCorrectly(true);
+  }
+
+  @Test
   public void testErrorsTrimmingUpdatesCorrectly() throws Exception {
-    mFileManager.addFileToUploads(mTempFile, true);
-    for (File f : mFileManager.getTrimmableFilesToUpload()) {
+    mFileManager.addFileToUploads(mTempFile, false);
+    for (File f : mFileManager.getDefaultFilesToUpload()) {
       f.setLastModified(0); // last modified in 1970
     }
 
@@ -314,7 +323,7 @@ public class FileManagerTest {
             mFolder, filename.substring(0, filename.lastIndexOf('.')) + FileManager.LOG_SUFFIX);
     assertThat(other.mkdir()).overridingErrorMessage("Failed to create directory").isTrue();
     assertThat(mFileManager.mFileManagerStatistics.errorsTrimming).isEqualTo(0);
-    mFileManager.getTrimmableFilesToUpload(); // trigger an age-based trim
+    mFileManager.getDefaultFilesToUpload(); // trigger an age-based trim
     assertThat(mFileManager.mFileManagerStatistics.errorsTrimming).isEqualTo(1);
     deleteDir(other);
     mFileManager.deleteAllFiles();
