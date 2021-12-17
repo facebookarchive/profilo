@@ -111,6 +111,7 @@ int32_t systemClockTickIntervalMs() {
 #error "Do not have systemClockTickIntervalMs implementation for this platform"
 #endif
 
+#if defined(__linux__) || defined(ANDROID)
 int32_t cpuClockResolutionMicros() {
   timespec clock_res_timespec;
   // It was empirically determined that this clock resolution is equal to actual
@@ -121,6 +122,11 @@ int32_t cpuClockResolutionMicros() {
   }
   return clock_res_timespec.tv_nsec / 1000;
 }
+#else
+int32_t cpuClockResolutionMicros() {
+  return 10000;
+}
+#endif
 
 #if defined(ANDROID)
 #include <sys/system_properties.h>
