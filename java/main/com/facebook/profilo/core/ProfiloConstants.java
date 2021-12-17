@@ -92,6 +92,9 @@ public final class ProfiloConstants {
       "provider.native_stack_trace.unwind_dex_frames";
   public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_THREAD_PRIORITY =
       "provider.native_stack_trace.unwinder_thread_pri";
+  public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE =
+      "provider.native_stack_trace.unwinder_queue_size";
+  public static final int PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE_DEFAULT = 256;
 
   // Keys to query conditions in a config
   public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";

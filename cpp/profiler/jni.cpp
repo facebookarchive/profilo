@@ -64,7 +64,8 @@ std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
     MultiBufferLogger& logger,
     uint32_t available_tracers,
     bool native_tracer_unwind_dex_frames,
-    int32_t native_tracer_unwind_thread_pri) {
+    int32_t native_tracer_unwind_thread_pri,
+    size_t native_tracer_unwind_queue_size) {
   std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> tracers;
   if (available_tracers & tracers::DALVIK) {
     tracers[tracers::DALVIK] = std::make_shared<DalvikTracer>();
@@ -75,7 +76,8 @@ std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
     tracers[tracers::NATIVE] = std::make_shared<NativeTracer>(
         logger,
         native_tracer_unwind_dex_frames,
-        native_tracer_unwind_thread_pri);
+        native_tracer_unwind_thread_pri,
+        native_tracer_unwind_queue_size);
   }
 #endif
 
@@ -139,7 +141,8 @@ static jboolean nativeInitialize(
     JMultiBufferLogger* jlogger,
     jint tracers,
     jboolean native_tracer_unwind_dex_frames,
-    jint native_tracer_unwind_thread_pri) {
+    jint native_tracer_unwind_thread_pri,
+    jint native_tracer_unwind_queue_size) {
   auto available_tracers = static_cast<uint32_t>(tracers);
   auto& logger = jlogger->nativeInstance();
   return SamplingProfiler::getInstance().initialize(
@@ -149,7 +152,8 @@ static jboolean nativeInitialize(
           logger,
           available_tracers,
           native_tracer_unwind_dex_frames,
-          native_tracer_unwind_thread_pri));
+          native_tracer_unwind_thread_pri,
+          static_cast<size_t>(native_tracer_unwind_queue_size)));
 }
 
 static void nativeLoggerLoop(fbjni::alias_ref<jobject>) {
