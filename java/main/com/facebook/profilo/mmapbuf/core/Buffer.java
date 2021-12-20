@@ -50,19 +50,25 @@ public class Buffer {
     if (!isFileBacked()) {
       return null;
     }
-    String memoryMappingFilename = getMemoryMappingFilename();
-    if (memoryMappingFilename != null) {
-      return memoryMappingFilename;
-    }
-
-    String fileName = MmapBufferFileHelper.getMemoryMappingFilename(UUID.randomUUID().toString());
-    MmapBufferFileHelper helper = new MmapBufferFileHelper(getBufferContainingFolder());
-    String filePath = helper.ensureFilePath(fileName);
+    String filePath = getCurrentMemoryMappingFilePath();
     if (filePath == null) {
-      return null;
+      MmapBufferFileHelper helper = new MmapBufferFileHelper(getBufferContainingFolder());
+      String fileName = MmapBufferFileHelper.getMemoryMappingFilename(UUID.randomUUID().toString());
+      updateMemoryMappingFilename(fileName);
+      filePath = helper.ensureFilePath(fileName);
     }
 
-    updateMemoryMappingFilename(fileName);
+    return filePath;
+  }
+
+  @Nullable
+  public synchronized String getCurrentMemoryMappingFilePath() {
+    MmapBufferFileHelper helper = new MmapBufferFileHelper(getBufferContainingFolder());
+    String memoryMappingFilename = getMemoryMappingFilename();
+    String filePath = null;
+    if (memoryMappingFilename != null) {
+      filePath = helper.ensureFilePath(memoryMappingFilename);
+    }
     return filePath;
   }
 
