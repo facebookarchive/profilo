@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 public class PackageInfoProvider extends MetadataTraceProvider {
 
   @Nullable private String mVersionName;
+  @Nullable private String mInstaller;
   private int mVersionCode;
   private final Context mContext;
 
@@ -40,13 +41,19 @@ public class PackageInfoProvider extends MetadataTraceProvider {
     PackageInfo pi;
     try {
       pi = pm.getPackageInfo(mContext.getPackageName(), 0);
+      mVersionName = pi.versionName;
+      mVersionCode = pi.versionCode;
     } catch (PackageManager.NameNotFoundException e) {
       return;
     } catch (RuntimeException e) {
       return;
     }
-    mVersionName = pi.versionName;
-    mVersionCode = pi.versionCode;
+
+    try {
+      mInstaller = pm.getInstallerPackageName(mContext.getPackageName());
+    } catch (RuntimeException e) {
+      mInstaller = "<exception>";
+    }
   }
 
   @Override
@@ -67,15 +74,13 @@ public class PackageInfoProvider extends MetadataTraceProvider {
             Identifiers.APP_VERSION_NAME,
             ProfiloConstants.NO_MATCH,
             (long) 0);
-    if ("App version" != null) {
-      returnedMatchID =
-          BufferLogger.writeBytesEntry(
-              context.mainBuffer,
-              ProfiloConstants.NONE,
-              EntryType.STRING_KEY,
-              returnedMatchID,
-              "App version");
-    }
+    returnedMatchID =
+        BufferLogger.writeBytesEntry(
+            context.mainBuffer,
+            ProfiloConstants.NONE,
+            EntryType.STRING_KEY,
+            returnedMatchID,
+            "App version");
     BufferLogger.writeBytesEntry(
         context.mainBuffer,
         ProfiloConstants.NONE,
@@ -92,5 +97,29 @@ public class PackageInfoProvider extends MetadataTraceProvider {
         Identifiers.APP_VERSION_CODE,
         ProfiloConstants.NONE,
         (long) mVersionCode);
+
+    returnedMatchID =
+        BufferLogger.writeStandardEntry(
+            context.mainBuffer,
+            Logger.FILL_TIMESTAMP | Logger.FILL_TID,
+            EntryType.TRACE_ANNOTATION,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE,
+            ProfiloConstants.NONE);
+    returnedMatchID =
+        BufferLogger.writeBytesEntry(
+            context.mainBuffer,
+            ProfiloConstants.NONE,
+            EntryType.STRING_KEY,
+            returnedMatchID,
+            "Installer");
+    BufferLogger.writeBytesEntry(
+        context.mainBuffer,
+        ProfiloConstants.NONE,
+        EntryType.STRING_VALUE,
+        returnedMatchID,
+        mInstaller != null ? mInstaller : "null");
   }
 }
