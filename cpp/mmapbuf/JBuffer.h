@@ -46,11 +46,11 @@ class JBuffer final : public fbjni::HybridClass<JBuffer> {
 
   void updateFilePath(const std::string& file_path);
 
-  void updateMemoryMappingFilename(const std::string& maps_file_path);
+  void updateMemoryMappingFilePath(const std::string& maps_file_path);
 
   fbjni::local_ref<fbjni::JString> getFilePath();
 
-  fbjni::local_ref<fbjni::JString> getMemoryMappingFileName();
+  fbjni::local_ref<fbjni::JString> getMemoryMappingFilePath();
 
   static fbjni::local_ref<jhybridobject> makeJBuffer(
       std::weak_ptr<Buffer> ptr) {

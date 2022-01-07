@@ -26,7 +26,7 @@ namespace mmapbuf {
 namespace header {
 
 constexpr static uint64_t kMagic = 0x306c3166307270; // pr0f1l0
-constexpr static uint64_t kVersion = 7;
+constexpr static uint64_t kVersion = 8;
 
 //
 // Static header for primary buffer verification.
@@ -47,7 +47,7 @@ struct __attribute__((packed)) MmapStaticHeader {
 //
 struct __attribute__((packed)) alignas(8) MmapBufferHeader {
   constexpr static auto kSessionIdLength = 40;
-  constexpr static auto kMemoryMapsFilenameLength = 64;
+  constexpr static auto kMemoryMapsFilePathLength = 512;
   uint16_t bufferVersion;
   int64_t configId;
   int32_t versionCode;
@@ -58,7 +58,7 @@ struct __attribute__((packed)) alignas(8) MmapBufferHeader {
   int64_t traceId;
   pid_t pid;
   char sessionId[kSessionIdLength];
-  char memoryMapsFilename[kMemoryMapsFilenameLength];
+  char memoryMapsFilePath[kMemoryMapsFilePathLength];
 };
 
 //

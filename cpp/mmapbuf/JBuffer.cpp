@@ -59,7 +59,7 @@ void JBuffer::updateFilePath(const std::string& file_path) {
   buffer->rename(file_path);
 }
 
-void JBuffer::updateMemoryMappingFilename(const std::string& maps_file_path) {
+void JBuffer::updateMemoryMappingFilePath(const std::string& maps_file_path) {
   auto buffer = buffer_.lock();
   if (buffer == nullptr) {
     return;
@@ -67,9 +67,9 @@ void JBuffer::updateMemoryMappingFilename(const std::string& maps_file_path) {
   // Compare and if session id has not changed exit
   auto sz = std::min(
       maps_file_path.size(),
-      (size_t)header::MmapBufferHeader::kMemoryMapsFilenameLength - 1);
-  maps_file_path.copy(buffer->prefix->header.memoryMapsFilename, sz);
-  buffer->prefix->header.memoryMapsFilename[sz] = 0;
+      (size_t)header::MmapBufferHeader::kMemoryMapsFilePathLength - 1);
+  maps_file_path.copy(buffer->prefix->header.memoryMapsFilePath, sz);
+  buffer->prefix->header.memoryMapsFilePath[sz] = 0;
 }
 
 fbjni::local_ref<fbjni::JString> JBuffer::getFilePath() {
@@ -80,13 +80,13 @@ fbjni::local_ref<fbjni::JString> JBuffer::getFilePath() {
   return fbjni::make_jstring(buffer->path);
 }
 
-fbjni::local_ref<fbjni::JString> JBuffer::getMemoryMappingFileName() {
+fbjni::local_ref<fbjni::JString> JBuffer::getMemoryMappingFilePath() {
   auto buffer = buffer_.lock();
   if (buffer == nullptr) {
     return nullptr;
   }
   auto memoryMappingFile =
-      std::string{buffer->prefix->header.memoryMapsFilename};
+      std::string{buffer->prefix->header.memoryMapsFilePath};
   if (memoryMappingFile.empty()) {
     return nullptr;
   }
@@ -99,9 +99,9 @@ void JBuffer::registerNatives() {
       makeNativeMethod("nativeUpdateId", JBuffer::updateId),
       makeNativeMethod("updateFilePath", JBuffer::updateFilePath),
       makeNativeMethod(
-          "updateMemoryMappingFilename", JBuffer::updateMemoryMappingFilename),
+          "updateMemoryMappingFilePath", JBuffer::updateMemoryMappingFilePath),
       makeNativeMethod(
-          "getMemoryMappingFilename", JBuffer::getMemoryMappingFileName),
+          "getMemoryMappingFilePath", JBuffer::getMemoryMappingFilePath),
       makeNativeMethod("getFilePath", JBuffer::getFilePath),
   });
 }

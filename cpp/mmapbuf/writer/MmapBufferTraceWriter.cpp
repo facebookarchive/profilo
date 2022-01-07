@@ -148,7 +148,7 @@ bool copyBufferEntries(TraceBuffer& source, TraceBuffer& dest) {
 
 void processMemoryMappingsFile(
     Logger& logger,
-    std::string& file_path,
+    const char* file_path,
     int64_t timestamp) {
   std::ifstream mappingsFile(file_path);
   if (!mappingsFile.is_open()) {
@@ -302,12 +302,9 @@ void MmapBufferTraceWriter::writeTrace(
         logger, qpl_marker_id, "collection_method", "persistent", timestamp);
   }
 
-  const char* mapsFilename = mapBufferPrefix->header.memoryMapsFilename;
-  if (mapsFilename[0] != '\0') {
-    auto lastSlashIdx = dump_path_.rfind("/");
-    std::string mapsPath =
-        dump_path_.substr(0, lastSlashIdx + 1) + mapsFilename;
-    processMemoryMappingsFile(logger, mapsPath, timestamp);
+  const char* mapsFilePath = mapBufferPrefix->header.memoryMapsFilePath;
+  if (mapsFilePath[0] != '\0') {
+    processMemoryMappingsFile(logger, mapsFilePath, timestamp);
   }
 
   loggerWrite(logger, EntryType::TRACE_END, 0, 0, trace_id_, timestamp);

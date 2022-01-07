@@ -153,11 +153,11 @@ class MmapBufferTraceWriterTest : public ::testing::Test {
     buffer->prefix->header.longContext = kQplId;
     buffer->prefix->header.traceId = kTraceId;
     if (set_mappings_file) {
-      auto path = temp_mappings_file_.path().filename().generic_string();
+      auto path = temp_mappings_file_.path().generic_string();
       auto sz = std::min(
-          path.size(), sizeof(buffer->prefix->header.memoryMapsFilename) - 1);
-      ::memcpy(buffer->prefix->header.memoryMapsFilename, path.c_str(), sz);
-      buffer->prefix->header.memoryMapsFilename[sz] = 0;
+          path.size(), sizeof(buffer->prefix->header.memoryMapsFilePath) - 1);
+      ::memcpy(buffer->prefix->header.memoryMapsFilePath, path.c_str(), sz);
+      buffer->prefix->header.memoryMapsFilePath[sz] = 0;
     }
     writeRandomEntries(buffer->ringBuffer(), records_count);
     int msync_res = msync(buffer->prefix, buffer->totalByteSize, MS_SYNC);
