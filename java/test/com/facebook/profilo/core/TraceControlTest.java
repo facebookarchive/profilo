@@ -20,64 +20,44 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.ArgumentMatchers.same;
-import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
 
 import android.util.SparseArray;
 import com.facebook.fbtrace.utils.FbTraceId;
 import com.facebook.profilo.config.ConfigImpl;
 import com.facebook.profilo.config.ConfigParams;
 import com.facebook.profilo.config.ConfigTraceConfig;
-import com.facebook.profilo.entries.EntryType;
 import com.facebook.profilo.ipc.TraceConfigExtras;
 import com.facebook.profilo.ipc.TraceContext;
-import com.facebook.profilo.logger.BufferLogger;
-import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
-import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.profilo.mmapbuf.core.MmapBufferManager;
 import com.facebook.profilo.util.TestConfigProvider;
-import com.facebook.profilo.writer.NativeTraceWriter;
-import com.facebook.testing.powermock.PowerMockTest;
+import com.facebook.profilo.util.TraceContextRule;
 import com.facebook.testing.robolectric.v4.WithTestDefaultsRunner;
 import java.io.File;
+import java.io.IOException;
 import java.util.TreeMap;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.reflect.Whitebox;
 
 @RunWith(WithTestDefaultsRunner.class)
-@PrepareForTest({
-  Logger.class,
-  TraceControl.class,
-  ProvidersRegistry.class,
-})
-@SuppressStaticInitializationFor({
-  "com.facebook.profilo.logger.BufferLogger",
-  "com.facebook.profilo.mmapbuf.Buffer",
-  "com.facebook.profilo.mmapbuf.MmapBufferManager",
-})
-@Ignore
-public class TraceControlTest extends PowerMockTest {
+public class TraceControlTest {
 
   private static final int TRACE_CONTROLLER_ID = 100;
   private static final long TEST_TRACE_ID = 10000l;
 
-  private static final int PROVIDER_TEST = ProvidersRegistry.newProvider("test");
+  public static final String PROVIDER_NAME = "test";
+  private static final int PROVIDER_TEST = ProvidersRegistry.newProvider(PROVIDER_NAME);
   private static final String TEST_INT_PARAM_KEY = "TEST_KEY";
   private static final int TEST_INT_PARAM_VALUE = 0x100;
 
@@ -89,13 +69,11 @@ public class TraceControlTest extends PowerMockTest {
   private TraceContext mTraceContext;
   private final ConfigTraceConfig mTraceConfig = new ConfigTraceConfig();
   private final ConfigImpl mConfig = new ConfigImpl(0, new ConfigParams(), mTraceConfig);
-  private Buffer mBuffer;
+
+  @Rule public TraceContextRule mTraceContextRule = new TraceContextRule(PROVIDER_TEST);
 
   @Before
-  public void setUp() throws Exception {
-    mockStatic(BufferLogger.class);
-    mockStatic(ProvidersRegistry.class);
-
+  public void setUp() throws IOException {
     mNonconfigurableController = mock(TraceController.class);
 
     when(mNonconfigurableController.isConfigurable()).thenReturn(false);
@@ -130,17 +108,19 @@ public class TraceControlTest extends PowerMockTest {
     mTraceConfig.params = new ConfigParams();
     mTraceConfig.params.intParams = new TreeMap<>();
     mTraceConfig.params.intParams.put(TEST_INT_PARAM_KEY, TEST_INT_PARAM_VALUE);
-    mTraceConfig.enabledProviders = new String[] {"test_provider"};
-
-    when(ProvidersRegistry.getBitMaskFor(anyString())).thenReturn(1);
-    when(ProvidersRegistry.getBitMaskFor(any(Iterable.class))).thenReturn(1);
+    mTraceConfig.enabledProviders = new String[] {PROVIDER_NAME};
 
     mControllers = mock(SparseArray.class);
     setController(mNonconfigurableController);
 
+    mTraceContext = mTraceContextRule.getContext();
+    mTraceContext.traceId = TEST_TRACE_ID;
+    mTraceContext.encodedTraceId = FbTraceId.encode(TEST_TRACE_ID);
+    mTraceContext.controller = 1111;
+    mTraceContext.mTraceConfigExtras = new TraceConfigExtras(mConfig, 0);
+
     MmapBufferManager manager = mock(MmapBufferManager.class);
-    mBuffer = mock(Buffer.class);
-    when(manager.allocateBuffer(anyInt(), anyBoolean())).thenReturn(mBuffer);
+    when(manager.allocateBuffer(anyInt(), anyBoolean())).thenReturn(mTraceContext.mainBuffer);
     mTraceControl =
         new TraceControl(
             mControllers,
@@ -152,25 +132,8 @@ public class TraceControlTest extends PowerMockTest {
             null);
 
     mTraceControlHandler = mock(TraceControlHandler.class);
+    when(mTraceControlHandler.onTraceStart(any(TraceContext.class), anyInt())).thenReturn(true);
     Whitebox.setInternalState(mTraceControl, "mTraceControlHandler", mTraceControlHandler);
-
-    mTraceContext =
-        new TraceContext(
-            TEST_TRACE_ID,
-            FbTraceId.encode(TEST_TRACE_ID),
-            mConfig,
-            1111,
-            new Object(),
-            new Object(),
-            1,
-            PROVIDER_TEST,
-            1,
-            222,
-            TraceConfigExtras.EMPTY,
-            /*buffer*/ null,
-            new Buffer[] {},
-            new File("."),
-            "prefix-");
   }
 
   private void setController(TraceController controller) {
@@ -212,9 +175,7 @@ public class TraceControlTest extends PowerMockTest {
     assertNotTracing();
 
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, new Object(), 0)).isTrue();
-    /*
     assertTracing();
-    */
   }
 
   @Test(expected = RuntimeException.class)
@@ -344,17 +305,6 @@ public class TraceControlTest extends PowerMockTest {
     int flags = 0xFACEB00C & ~Trace.FLAG_MEMORY_ONLY; // MEMORY_ONLY trace is special
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, flags, new Object(), 0)).isTrue();
 
-    verifyStatic(BufferLogger.class);
-    long traceId = anyLong();
-    BufferLogger.writeAndWakeupTraceWriter(
-        any(NativeTraceWriter.class),
-        same(mBuffer),
-        traceId,
-        EntryType.TRACE_START,
-        anyInt(),
-        eq(flags),
-        traceId);
-
     verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), anyInt());
   }
 
@@ -362,27 +312,6 @@ public class TraceControlTest extends PowerMockTest {
   public void testStartBlackBoxRecordingTrace() {
     int flags = Trace.FLAG_MEMORY_ONLY;
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, flags, new Object(), 0)).isTrue();
-
-    verifyStatic(BufferLogger.class, times(1));
-    long traceId = anyLong();
-    BufferLogger.writeAndWakeupTraceWriter(
-        any(NativeTraceWriter.class),
-        same(mBuffer),
-        traceId,
-        EntryType.TRACE_START,
-        anyInt(),
-        eq(flags),
-        traceId);
-    verifyStatic(BufferLogger.class, never());
-    long traceId1 = anyLong();
-    BufferLogger.writeAndWakeupTraceWriter(
-        any(NativeTraceWriter.class),
-        same(mBuffer),
-        traceId1,
-        EntryType.TRACE_BACKWARDS,
-        0,
-        eq(flags),
-        traceId1);
 
     verify(mTraceControlHandler).onTraceStart(any(TraceContext.class), eq(Integer.MAX_VALUE));
     assertMemoryOnlyTracing();
@@ -432,28 +361,7 @@ public class TraceControlTest extends PowerMockTest {
     assertThat(mTraceControl.startTrace(TRACE_CONTROLLER_ID, 0, context, 0)).isTrue();
     mTraceControl.abortTrace(TRACE_CONTROLLER_ID, context, 0);
 
-    verifyStatic(BufferLogger.class);
-    BufferLogger.writeStandardEntry(
-        same(mBuffer),
-        anyInt(),
-        EntryType.TRACE_ABORT,
-        anyInt(),
-        anyInt(),
-        anyInt(),
-        anyInt(),
-        anyLong());
-
     verify(mTraceControlHandler).onTraceAbort(any(TraceContext.class));
-  }
-
-  @Test
-  public void testConfigChangeOutsideTraceWritesNothing() {
-    TestConfigProvider provider = new TestConfigProvider();
-    mTraceControl.setConfig(provider.getFullConfig());
-
-    verifyStatic(BufferLogger.class, never());
-    BufferLogger.writeStandardEntry(
-        any(Buffer.class), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyInt(), anyLong());
   }
 
   @Test
@@ -478,16 +386,6 @@ public class TraceControlTest extends PowerMockTest {
     assertNotTracing();
 
     verify(mTraceControlHandler).onTraceAbort(any(TraceContext.class));
-    verifyStatic(BufferLogger.class, never());
-    BufferLogger.writeStandardEntry(
-        any(Buffer.class),
-        anyInt(),
-        EntryType.TRACE_ABORT,
-        anyInt(),
-        anyInt(),
-        anyInt(),
-        anyInt(),
-        anyLong());
   }
 
   @Test
