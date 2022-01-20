@@ -222,7 +222,6 @@ void SamplingProfiler::UnwindStackHandler(
       if (nextSlotState != StackSlotState::FREE) {
         profiler.maybeSignalReader();
       }
-      continue;
     } else {
       // We came from the longjmp in sigcatch_handler.
       // Something must have crashed.
@@ -235,7 +234,7 @@ void SamplingProfiler::UnwindStackHandler(
         abortWithReason(
             "Invariant violation - BUSY_WITH_METADATA to SIGNAL_INTERRUPT failed");
       }
-      break;
+      profiler.maybeSignalReader();
     }
   }
 }
