@@ -3,9 +3,9 @@ load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_oss_xplat_cxx_library")
 
 profilo_oss_xplat_cxx_library(
     name = "fmt",
-    srcs = glob([
-        "src/*.cc",
-    ]),
+    srcs = [
+        "src/format.cc",
+    ],
     header_namespace = "",
     exported_headers = subdir_glob([
         ("include", "fmt/*.h"),
