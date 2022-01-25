@@ -3352,6 +3352,20 @@ template <> struct formatter<bytes> {
   detail::dynamic_format_specs<char> specs_;
 };
 
+/**
+  \rst
+  Converts ``e`` to the underlying type.
+  **Example**::
+    enum class color { red, green, blue };
+    auto s = fmt::format("{}", fmt::underlying(color::red));
+  \endrst
+ */
+template <typename Enum>
+constexpr auto underlying(Enum e) noexcept ->
+    typename std::underlying_type<Enum>::type {
+  return static_cast<typename std::underlying_type<Enum>::type>(e);
+}
+
 template <typename It, typename Sentinel, typename Char>
 struct arg_join : detail::view {
   It begin;
