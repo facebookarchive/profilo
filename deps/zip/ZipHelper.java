@@ -15,7 +15,6 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class ZipHelper {
-
   public static final String ZIP_SUFFIX = ".zip";
   public static final String TMP_SUFFIX = ".tmp";
 
@@ -135,6 +134,9 @@ public class ZipHelper {
 
     while (entry != null) {
       File newFile = new File(extractDir, entry.getName());
+      if (!newFile.getCanonicalPath().startsWith(extractDir.getName())) {
+        throw new IOException("Invalid entry name");
+      }
       if (entry.isDirectory()) {
         if (!newFile.isDirectory() && !newFile.mkdirs()) {
           throw new IOException("Can't create directory");
