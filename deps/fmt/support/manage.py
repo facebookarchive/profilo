@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 """Manage site and releases.
 
@@ -163,13 +163,6 @@ def update_site(env):
                 if version.startswith('7.'):
                     b.data = b.data.replace(', std::size_t', ', size_t')
                     b.data = b.data.replace('join(It, It', 'join(It, Sentinel')
-                if version.startswith('7.1.'):
-                    b.data = b.data.replace(', std::size_t', ', size_t')
-                    b.data = b.data.replace('join(It, It', 'join(It, Sentinel')
-                    b.data = b.data.replace(
-                        'fmt::format_to(OutputIt, const S&, Args&&...)',
-                        'fmt::format_to(OutputIt, const S&, Args&&...) -> ' +
-                        'typename std::enable_if<enable, OutputIt>::type')
                 b.data = b.data.replace('aa long', 'a long')
                 b.data = b.data.replace('serveral', 'several')
                 if version.startswith('6.2.'):
@@ -240,7 +233,7 @@ def release(args):
     # Update the version in the changelog.
     title_len = 0
     for line in fileinput.input(changelog_path, inplace=True):
-        if line.startswith(version + ' - TBD'):
+        if line.decode('utf-8').startswith(version + ' - TBD'):
             line = version + ' - ' + datetime.date.today().isoformat()
             title_len = len(line)
             line += '\n'
@@ -270,9 +263,9 @@ def release(args):
 
     # Create a release on GitHub.
     fmt_repo.push('origin', 'release')
-    auth_headers = {'Authorization': 'token ' + os.getenv('FMT_TOKEN')}
+    params = {'access_token': os.getenv('FMT_TOKEN')}
     r = requests.post('https://api.github.com/repos/fmtlib/fmt/releases',
-                      headers=auth_headers,
+                      params=params,
                       data=json.dumps({'tag_name': version,
                                        'target_commitish': 'release',
                                        'body': changes, 'draft': True}))
@@ -283,8 +276,8 @@ def release(args):
     package = 'fmt-{}.zip'.format(version)
     r = requests.post(
         '{}/{}/assets?name={}'.format(uploads_url, id, package),
-        headers={'Content-Type': 'application/zip'} | auth_headers,
-        data=open('build/fmt/' + package, 'rb'))
+        headers={'Content-Type': 'application/zip'},
+        params=params, data=open('build/fmt/' + package, 'rb'))
     if r.status_code != 201:
         raise Exception('Failed to upload an asset ' + str(r))
 

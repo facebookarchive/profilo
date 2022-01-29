@@ -65,7 +65,7 @@ class Translator(nodes.NodeVisitor):
         self.write('\n\n')
 
     def visit_paragraph(self, node):
-        self.write('\n\n')
+        pass
 
     def depart_paragraph(self, node):
         pass

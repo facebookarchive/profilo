@@ -11,7 +11,24 @@
 
 using fmt::file;
 
-output_redirect::output_redirect(FILE* f) : file_(f) {
+void OutputRedirect::flush() {
+#  if EOF != -1
+#    error "FMT_RETRY assumes return value of -1 indicating failure"
+#  endif
+  int result = 0;
+  FMT_RETRY(result, fflush(file_));
+  if (result != 0) throw fmt::system_error(errno, "cannot flush stream");
+}
+
+void OutputRedirect::restore() {
+  if (original_.descriptor() == -1) return;  // Already restored.
+  flush();
+  // Restore the original file.
+  original_.dup2(FMT_POSIX(fileno(file_)));
+  original_.close();
+}
+
+OutputRedirect::OutputRedirect(FILE* f) : file_(f) {
   flush();
   int fd = FMT_POSIX(fileno(f));
   // Create a file object referring to the original file.
@@ -23,7 +40,7 @@ output_redirect::output_redirect(FILE* f) : file_(f) {
   write_end.dup2(fd);
 }
 
-output_redirect::~output_redirect() FMT_NOEXCEPT {
+OutputRedirect::~OutputRedirect() FMT_NOEXCEPT {
   try {
     restore();
   } catch (const std::exception& e) {
@@ -31,23 +48,7 @@ output_redirect::~output_redirect() FMT_NOEXCEPT {
   }
 }
 
-void output_redirect::flush() {
-  int result = 0;
-  do {
-    result = fflush(file_);
-  } while (result == EOF && errno == EINTR);
-  if (result != 0) throw fmt::system_error(errno, "cannot flush stream");
-}
-
-void output_redirect::restore() {
-  if (original_.descriptor() == -1) return;  // Already restored.
-  flush();
-  // Restore the original file.
-  original_.dup2(FMT_POSIX(fileno(file_)));
-  original_.close();
-}
-
-std::string output_redirect::restore_and_read() {
+std::string OutputRedirect::restore_and_read() {
   // Restore output.
   restore();
 
@@ -78,3 +79,9 @@ std::string read(file& f, size_t count) {
 }
 
 #endif  // FMT_USE_FCNTL
+
+std::string format_system_error(int error_code, fmt::string_view message) {
+  fmt::memory_buffer out;
+  format_system_error(out, error_code, message);
+  return to_string(out);
+}

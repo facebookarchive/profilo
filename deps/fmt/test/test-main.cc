@@ -7,7 +7,7 @@
 
 #include <cstdlib>
 
-#include "gtest/gtest.h"
+#include "gtest.h"
 
 #ifdef _WIN32
 #  include <windows.h>
@@ -35,7 +35,6 @@ int main(int argc, char** argv) {
   _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
   try {
     testing::InitGoogleTest(&argc, argv);
-    testing::FLAGS_gtest_death_test_style = "threadsafe";
     return RUN_ALL_TESTS();
   } catch (...) {
     // Catch all exceptions to make Coverity happy.

@@ -11,25 +11,25 @@
 
 #include <climits>
 
-#include "gmock/gmock.h"
+#include "gmock.h"
 #include "gtest-extra.h"
 
-TEST(scan_test, read_text) {
-  auto s = fmt::string_view("foo");
+TEST(ScanTest, ReadText) {
+  fmt::string_view s = "foo";
   auto end = fmt::scan(s, "foo");
   EXPECT_EQ(end, s.end());
   EXPECT_THROW_MSG(fmt::scan("fob", "foo"), fmt::format_error, "invalid input");
 }
 
-TEST(scan_test, read_int) {
-  auto n = int();
+TEST(ScanTest, ReadInt) {
+  int n = 0;
   fmt::scan("42", "{}", n);
   EXPECT_EQ(n, 42);
   fmt::scan("-42", "{}", n);
   EXPECT_EQ(n, -42);
 }
 
-TEST(scan_test, read_longlong) {
+TEST(ScanTest, ReadLongLong) {
   long long n = 0;
   fmt::scan("42", "{}", n);
   EXPECT_EQ(n, 42);
@@ -37,15 +37,15 @@ TEST(scan_test, read_longlong) {
   EXPECT_EQ(n, -42);
 }
 
-TEST(scan_test, read_uint) {
-  auto n = unsigned();
+TEST(ScanTest, ReadUInt) {
+  unsigned n = 0;
   fmt::scan("42", "{}", n);
   EXPECT_EQ(n, 42);
   EXPECT_THROW_MSG(fmt::scan("-42", "{}", n), fmt::format_error,
                    "invalid input");
 }
 
-TEST(scan_test, read_ulonglong) {
+TEST(ScanTest, ReadULongLong) {
   unsigned long long n = 0;
   fmt::scan("42", "{}", n);
   EXPECT_EQ(n, 42);
@@ -53,14 +53,14 @@ TEST(scan_test, read_ulonglong) {
                    "invalid input");
 }
 
-TEST(scan_test, read_string) {
-  auto s = std::string();
+TEST(ScanTest, ReadString) {
+  std::string s;
   fmt::scan("foo", "{}", s);
   EXPECT_EQ(s, "foo");
 }
 
-TEST(scan_test, read_string_view) {
-  auto s = fmt::string_view();
+TEST(ScanTest, ReadStringView) {
+  fmt::string_view s;
   fmt::scan("foo", "{}", s);
   EXPECT_EQ(s, "foo");
 }
@@ -90,8 +90,8 @@ template <> struct scanner<tm> {
 };
 }  // namespace fmt
 
-TEST(scan_test, read_custom) {
-  auto input = "Date: 1985-10-25";
+TEST(ScanTest, ReadCustom) {
+  const char* input = "Date: 1985-10-25";
   auto t = tm();
   fmt::scan(input, "Date: {0:%Y-%m-%d}", t);
   EXPECT_EQ(t.tm_year, 85);
@@ -100,16 +100,16 @@ TEST(scan_test, read_custom) {
 }
 #endif
 
-TEST(scan_test, invalid_format) {
+TEST(ScanTest, InvalidFormat) {
   EXPECT_THROW_MSG(fmt::scan("", "{}"), fmt::format_error,
                    "argument index out of range");
   EXPECT_THROW_MSG(fmt::scan("", "{"), fmt::format_error,
                    "invalid format string");
 }
 
-TEST(scan_test, example) {
-  auto key = std::string();
-  auto value = int();
+TEST(ScanTest, Example) {
+  std::string key;
+  int value;
   fmt::scan("answer = 42", "{} = {}", key, value);
   EXPECT_EQ(key, "answer");
   EXPECT_EQ(value, 42);
