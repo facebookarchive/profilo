@@ -13,7 +13,6 @@
  */
 package com.facebook.profilo.core;
 
-import com.facebook.profilo.config.Config;
 import java.io.File;
 import java.util.List;
 
@@ -41,6 +40,4 @@ public interface BackgroundUploadService {
       List<File> files, List<File> priorityFiles, BackgroundUploadListener listener);
 
   public boolean canUpload();
-
-  public void updateConstraints(Config config);
 }

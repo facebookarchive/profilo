@@ -254,9 +254,6 @@ public final class TraceOrchestrator
       return;
     }
     mBackgroundUploadService = uploadService;
-    if (mBackgroundUploadService != null && mConfig != null) {
-      mBackgroundUploadService.updateConstraints(mConfig);
-    }
     if (triggerUpload) {
       triggerUpload();
     }
@@ -311,12 +308,6 @@ public final class TraceOrchestrator
           "Performing config change before TraceControl has been initialized");
     }
     traceControl.setConfig(newConfig);
-
-    BackgroundUploadService backgroundUploadService = getUploadService(true /* triggerUpload */);
-
-    if (backgroundUploadService != null) {
-      backgroundUploadService.updateConstraints(newConfig);
-    }
   }
 
   /**
