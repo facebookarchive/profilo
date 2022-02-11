@@ -64,13 +64,13 @@ EntryType errorToTraceEntry(StackCollectionRetcode error) {
 }
 } // namespace
 
-void StackCollectionEntryConverter::logRetcode(
+int32_t StackCollectionEntryConverter::logRetcode(
     MultiBufferLogger& logger,
     uint32_t retcode,
     int32_t tid,
     int64_t time,
     uint32_t profiler_type) {
-  logger.write(StandardEntry{
+  return logger.write(StandardEntry{
       .type = errorToTraceEntry(static_cast<StackCollectionRetcode>(retcode)),
       .timestamp = time,
       .tid = tid,

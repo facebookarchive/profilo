@@ -27,7 +27,7 @@ using logger::MultiBufferLogger;
 
 class StackCollectionEntryConverter {
  public:
-  static void logRetcode(
+  static int32_t logRetcode(
       MultiBufferLogger& logger,
       uint32_t retcode,
       int32_t tid,
