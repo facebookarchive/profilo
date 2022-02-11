@@ -101,14 +101,16 @@ public final class StackFrameThread extends BaseTraceProvider {
   private synchronized boolean initProfiler(
       boolean nativeTracerUnwindDexFrames,
       int nativeTracerUnwinderThreadPriority,
-      int nativeTracerUnwinderQueueSize) {
+      int nativeTracerUnwinderQueueSize,
+      boolean nativeTracerLogPartialStacks) {
     try {
       return CPUProfiler.init(
           mContext,
           getLogger(),
           nativeTracerUnwindDexFrames,
           nativeTracerUnwinderThreadPriority,
-          nativeTracerUnwinderQueueSize);
+          nativeTracerUnwinderQueueSize,
+          nativeTracerLogPartialStacks);
     } catch (Exception ex) {
       Log.e(LOG_TAG, ex.getMessage(), ex);
       return false;
@@ -122,11 +124,13 @@ public final class StackFrameThread extends BaseTraceProvider {
       boolean nativeTracerUnwindDexFrames,
       int nativeTracerUnwinderThreadPriority,
       int nativeTracerUnwinderQueueSize,
-      TimeSource timeSource) {
+      TimeSource timeSource,
+      boolean nativeTracerLogPartialStacks) {
     if (!initProfiler(
         nativeTracerUnwindDexFrames,
         nativeTracerUnwinderThreadPriority,
-        nativeTracerUnwinderQueueSize)) {
+        nativeTracerUnwinderQueueSize,
+        nativeTracerLogPartialStacks)) {
       return false;
     }
 
@@ -235,7 +239,9 @@ public final class StackFrameThread extends BaseTraceProvider {
             context.mTraceConfigExtras.getIntParam(
                 ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE,
                 ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE_DEFAULT),
-            timeSource);
+            timeSource,
+            context.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_LOG_PARTIAL_STACKS, false));
     if (!enabled) {
       return;
     }

@@ -112,7 +112,8 @@ public class CPUProfiler {
       MultiBufferLogger logger,
       boolean nativeTracerUnwindDexFrames,
       int nativeTracerUnwinderThreadPriority,
-      int nativeTracerUnwinderQueueSize)
+      int nativeTracerUnwinderQueueSize,
+      boolean nativeTracerLogPartialStacks)
       throws Exception {
     if (sInitialized) {
       return true;
@@ -125,7 +126,8 @@ public class CPUProfiler {
             sAvailableTracers,
             nativeTracerUnwindDexFrames,
             nativeTracerUnwinderThreadPriority,
-            nativeTracerUnwinderQueueSize);
+            nativeTracerUnwinderQueueSize,
+            nativeTracerLogPartialStacks);
     return sInitialized;
   }
 
@@ -178,7 +180,8 @@ public class CPUProfiler {
       int availableTracers,
       boolean nativeTracerUnwindDexFrames,
       int nativeTracerUnwinderThreadPriority,
-      int nativeTracerUnwinderQueueSize);
+      int nativeTracerUnwinderQueueSize,
+      boolean nativeTracerLogPartialStacks);
 
   @DoNotStrip
   private static native boolean nativeStartProfiling(

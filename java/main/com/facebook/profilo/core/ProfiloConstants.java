@@ -95,6 +95,8 @@ public final class ProfiloConstants {
   public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE =
       "provider.native_stack_trace.unwinder_queue_size";
   public static final int PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE_DEFAULT = 256;
+  public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_LOG_PARTIAL_STACKS =
+      "provider.native_stack_trace.log_partial_stacks";
 
   // Keys to query conditions in a config
   public static final String TRACE_CONFIG_DURATION_CONDITION = "trace_config.duration_condition";
