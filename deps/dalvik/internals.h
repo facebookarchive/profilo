@@ -422,7 +422,15 @@ void* open_libdvm();
 void* open_libart();
 void* open_libc();
 
-void ensure_symbols(void* lib, const struct SymbolSpec* ss, unsigned nr_ss);
+/**
+ * Finds requested symbols from the given shared library
+ *
+ * Throws runtime error if a required symbol was not found.
+ */
+void ensure_symbols(
+    void* lib,
+    const struct SymbolSpec* symbols,
+    unsigned num_symbols);
 
 #ifdef __cplusplus
 } // extern C
