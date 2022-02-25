@@ -123,8 +123,11 @@ public:
    return newObjectCxxArgs(3, "three", true);
   }
 
-  static void mapException(const std::exception& ex) {
-    if (dynamic_cast<const TestException*>(&ex) != 0) {
+  static void mapException(std::exception_ptr ex) {
+    try {
+      std::rethrow_exception(ex);
+    }
+    catch (const TestException &ex) {
       throwNewJavaException("java/lang/ArrayStoreException", "");
     }
   }

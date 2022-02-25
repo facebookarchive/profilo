@@ -119,8 +119,8 @@ struct MethodWrapper {
       // this will get the right type for the registered method.
       auto cobj = static_cast<C*>(ref->cthis());
       return (cobj->*method)(std::forward<Args>(args)...);
-    } catch (const std::exception& ex) {
-      C::mapException(ex);
+    } catch (...) {
+      C::mapException(std::current_exception());
       throw;
     }
   }

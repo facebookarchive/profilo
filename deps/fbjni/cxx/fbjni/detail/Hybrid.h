@@ -258,14 +258,12 @@ public:
     return JavaPart::newInstance(std::move(args)...);
   }
 
-  // If a hybrid class throws an exception which derives from
-  // std::exception, it will be passed to mapException on the hybrid
-  // class, or nearest ancestor.  This allows boilerplate exception
-  // translation code (for example, calling throwNewJavaException on a
-  // particular java class) to be hoisted to a common function.  If
-  // mapException returns, then the std::exception will be translated
-  // to Java.
-  static void mapException(const std::exception& ex) {
+  // If a hybrid class throws an exception, it will be passed to mapException
+  // on the hybrid class, or nearest ancestor. This allows boilerplate exception
+  // translation code (for example, calling throwNewJavaException on a particular
+  // java class) to be hoisted to a common function.  If mapException returns,
+  // then the std::exception will be translated to Java.
+  static void mapException(std::exception_ptr ex) {
     (void)ex;
   }
 };
