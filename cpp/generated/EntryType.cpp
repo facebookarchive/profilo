@@ -1,4 +1,4 @@
-// @generated SignedSource<<390e60e658a65e09e8228eae35f255b4>>
+// @generated SignedSource<<884d58f3557768478d1eb759f0bfc4ba>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -52,6 +52,7 @@ const char* to_string(EntryType type) {
     case EntryType::TRACE_START: return "TRACE_START";
     case EntryType::TRACE_BACKWARDS: return "TRACE_BACKWARDS";
     case EntryType::TRACE_TIMEOUT: return "TRACE_TIMEOUT";
+    case EntryType::TRACE_TRIGGER: return "TRACE_TRIGGER";
     case EntryType::BLACKBOX_TRACE_START: return "BLACKBOX_TRACE_START";
     case EntryType::COUNTER: return "COUNTER";
     case EntryType::STACK_FRAME: return "STACK_FRAME";

@@ -1,4 +1,4 @@
-// @generated SignedSource<<5e4debd0d0a6279e0d17129e294db714>>
+// @generated SignedSource<<6e7a15b5b6fc92e87cabe8628bfac979>>
 
 package com.facebook.profilo.entries;
 
@@ -47,79 +47,80 @@ public class EntryType {
   public static final int TRACE_START = 40;
   public static final int TRACE_BACKWARDS = 41;
   public static final int TRACE_TIMEOUT = 42;
-  public static final int BLACKBOX_TRACE_START = 43;
-  public static final int COUNTER = 44;
-  public static final int STACK_FRAME = 45;
-  public static final int QPL_START = 46;
-  public static final int QPL_END = 47;
-  public static final int QPL_CANCEL = 48;
-  public static final int QPL_NOTE = 49;
-  public static final int QPL_POINT = 50;
-  public static final int QPL_EVENT = 51;
-  public static final int TRACE_ANNOTATION = 52;
-  public static final int WAIT_START = 53;
-  public static final int WAIT_END = 54;
-  public static final int WAIT_SIGNAL = 55;
-  public static final int STRING_KEY = 56;
-  public static final int STRING_VALUE = 57;
-  public static final int QPL_TAG = 58;
-  public static final int QPL_ANNOTATION = 59;
-  public static final int TRACE_THREAD_NAME = 60;
-  public static final int TRACE_PRE_END = 61;
-  public static final int TRACE_THREAD_PRI = 62;
-  public static final int MINOR_FAULT = 63;
-  public static final int MAJOR_FAULT = 64;
-  public static final int PERFEVENTS_LOST = 65;
-  public static final int CLASS_LOAD = 66;
-  public static final int JAVASCRIPT_STACK_FRAME = 67;
-  public static final int MESSAGE_START = 68;
-  public static final int MESSAGE_END = 69;
-  public static final int CLASS_VALUE = 70;
-  public static final int HTTP2_REQUEST_INITIATED = 71;
-  public static final int HTTP2_FRAME_HEADER = 72;
-  public static final int HTTP2_WINDOW_UPDATE = 73;
-  public static final int HTTP2_PRIORITY = 74;
-  public static final int HTTP2_EGRESS_FRAME_HEADER = 75;
-  public static final int PROCESS_LIST = 76;
-  public static final int IO_START = 77;
-  public static final int IO_END = 78;
-  public static final int CPU_COUNTER = 79;
-  public static final int CLASS_LOAD_START = 80;
-  public static final int CLASS_LOAD_END = 81;
-  public static final int CLASS_LOAD_FAILED = 82;
-  public static final int STRING_NAME = 83;
-  public static final int JAVA_FRAME_NAME = 84;
-  public static final int BINDER_START = 85;
-  public static final int BINDER_END = 86;
-  public static final int MEMORY_ALLOCATION = 87;
-  public static final int MEMORY_DEALLOCATION = 88;
-  public static final int STKERR_EMPTYSTACK = 89;
-  public static final int STKERR_STACKOVERFLOW = 90;
-  public static final int STKERR_NOSTACKFORTHREAD = 91;
-  public static final int STKERR_SIGNALINTERRUPT = 92;
-  public static final int STKERR_NESTEDUNWIND = 93;
-  public static final int STKERR_PARTIALSTACK = 94;
-  public static final int STKERR_STACKCOPYFAILED = 95;
-  public static final int STKERR_QUEUEOVERFLOW = 96;
-  public static final int MAPPING = 97;
-  public static final int LOGGER_PRIORITY = 98;
-  public static final int CONDITIONAL_UPLOAD_RATE = 99;
-  public static final int NATIVE_ALLOC = 100;
-  public static final int NATIVE_FREE = 101;
-  public static final int NATIVE_ALLOC_FAILURE = 102;
-  public static final int NATIVE_STACK_FRAME = 103;
-  public static final int NATIVE_FRAME_NAME = 104;
-  public static final int MEMORY_MAPPED = 105;
-  public static final int MEMORY_UNMAPPED = 106;
-  public static final int ION_MEMORY_ALLOC = 107;
-  public static final int ION_MEMORY_FREE = 108;
-  public static final int ION_MEMORY_MAPPED = 109;
-  public static final int GPU_MEMORY_ALLOC = 110;
-  public static final int GPU_MEMORY_FREE = 111;
-  public static final int THREAD_START = 112;
-  public static final int THREAD_FINISH = 113;
-  public static final int CPU_STACK_SAMPLE = 114;
-  public static final int WALL_STACK_SAMPLE = 115;
+  public static final int TRACE_TRIGGER = 43;
+  public static final int BLACKBOX_TRACE_START = 44;
+  public static final int COUNTER = 45;
+  public static final int STACK_FRAME = 46;
+  public static final int QPL_START = 47;
+  public static final int QPL_END = 48;
+  public static final int QPL_CANCEL = 49;
+  public static final int QPL_NOTE = 50;
+  public static final int QPL_POINT = 51;
+  public static final int QPL_EVENT = 52;
+  public static final int TRACE_ANNOTATION = 53;
+  public static final int WAIT_START = 54;
+  public static final int WAIT_END = 55;
+  public static final int WAIT_SIGNAL = 56;
+  public static final int STRING_KEY = 57;
+  public static final int STRING_VALUE = 58;
+  public static final int QPL_TAG = 59;
+  public static final int QPL_ANNOTATION = 60;
+  public static final int TRACE_THREAD_NAME = 61;
+  public static final int TRACE_PRE_END = 62;
+  public static final int TRACE_THREAD_PRI = 63;
+  public static final int MINOR_FAULT = 64;
+  public static final int MAJOR_FAULT = 65;
+  public static final int PERFEVENTS_LOST = 66;
+  public static final int CLASS_LOAD = 67;
+  public static final int JAVASCRIPT_STACK_FRAME = 68;
+  public static final int MESSAGE_START = 69;
+  public static final int MESSAGE_END = 70;
+  public static final int CLASS_VALUE = 71;
+  public static final int HTTP2_REQUEST_INITIATED = 72;
+  public static final int HTTP2_FRAME_HEADER = 73;
+  public static final int HTTP2_WINDOW_UPDATE = 74;
+  public static final int HTTP2_PRIORITY = 75;
+  public static final int HTTP2_EGRESS_FRAME_HEADER = 76;
+  public static final int PROCESS_LIST = 77;
+  public static final int IO_START = 78;
+  public static final int IO_END = 79;
+  public static final int CPU_COUNTER = 80;
+  public static final int CLASS_LOAD_START = 81;
+  public static final int CLASS_LOAD_END = 82;
+  public static final int CLASS_LOAD_FAILED = 83;
+  public static final int STRING_NAME = 84;
+  public static final int JAVA_FRAME_NAME = 85;
+  public static final int BINDER_START = 86;
+  public static final int BINDER_END = 87;
+  public static final int MEMORY_ALLOCATION = 88;
+  public static final int MEMORY_DEALLOCATION = 89;
+  public static final int STKERR_EMPTYSTACK = 90;
+  public static final int STKERR_STACKOVERFLOW = 91;
+  public static final int STKERR_NOSTACKFORTHREAD = 92;
+  public static final int STKERR_SIGNALINTERRUPT = 93;
+  public static final int STKERR_NESTEDUNWIND = 94;
+  public static final int STKERR_PARTIALSTACK = 95;
+  public static final int STKERR_STACKCOPYFAILED = 96;
+  public static final int STKERR_QUEUEOVERFLOW = 97;
+  public static final int MAPPING = 98;
+  public static final int LOGGER_PRIORITY = 99;
+  public static final int CONDITIONAL_UPLOAD_RATE = 100;
+  public static final int NATIVE_ALLOC = 101;
+  public static final int NATIVE_FREE = 102;
+  public static final int NATIVE_ALLOC_FAILURE = 103;
+  public static final int NATIVE_STACK_FRAME = 104;
+  public static final int NATIVE_FRAME_NAME = 105;
+  public static final int MEMORY_MAPPED = 106;
+  public static final int MEMORY_UNMAPPED = 107;
+  public static final int ION_MEMORY_ALLOC = 108;
+  public static final int ION_MEMORY_FREE = 109;
+  public static final int ION_MEMORY_MAPPED = 110;
+  public static final int GPU_MEMORY_ALLOC = 111;
+  public static final int GPU_MEMORY_FREE = 112;
+  public static final int THREAD_START = 113;
+  public static final int THREAD_FINISH = 114;
+  public static final int CPU_STACK_SAMPLE = 115;
+  public static final int WALL_STACK_SAMPLE = 116;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -165,6 +166,7 @@ public class EntryType {
     "TRACE_START",
     "TRACE_BACKWARDS",
     "TRACE_TIMEOUT",
+    "TRACE_TRIGGER",
     "BLACKBOX_TRACE_START",
     "COUNTER",
     "STACK_FRAME",
