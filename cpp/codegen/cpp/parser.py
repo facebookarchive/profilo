@@ -82,7 +82,9 @@ public:
 
     def _generate_entry_visitor_methods(self):
         template = "virtual void visit(const %%TYPE%%& entry) = 0;"
-        methods = [template.replace("%%TYPE%%", x) for x in self.unique_types.keys()]
+        methods = [
+            template.replace("%%TYPE%%", x) for x in list(self.unique_types.keys())
+        ]
 
         return "\n".join(methods)
 
@@ -109,7 +111,7 @@ case %%ID%%: {
             case_template.replace("%%ID%%", str(x.type_id)).replace(
                 "%%TYPE%%", x.typename
             )
-            for x in self.unique_types.values()
+            for x in list(self.unique_types.values())
         ]
         cases = "\n".join(cases)
         cases = Codegen.indent(cases)

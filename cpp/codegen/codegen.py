@@ -26,11 +26,9 @@ from collections import namedtuple
 SIGNED_SOURCE = "".join(["@", "generated", " ", "SignedSource", "<<>>"])
 
 
-class Language(object):
+class Language(object, metaclass=abc.ABCMeta):
     CPP = 1
     JAVA = 2
-
-    __metaclass__ = abc.ABCMeta
 
     @staticmethod
     def is_valid(num):
@@ -70,9 +68,7 @@ class EntryDescription(namedtuple("EntryDescription", ["id", "name", "memory_for
             raise ValueError("memory_format must be a MemoryDescription")
 
 
-class Codegen(object):
-    __metaclass__ = abc.ABCMeta
-
+class Codegen(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def generate(self):
         pass

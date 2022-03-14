@@ -62,7 +62,11 @@ class CodegenProgram(object):
 
     def __init__(self, lang, mode, entries):
         known_codegen = set(
-            [y for x in CodegenProgram.SUPPORTED_CODEGEN.values() for y in x.keys()]
+            [
+                y
+                for x in list(CodegenProgram.SUPPORTED_CODEGEN.values())
+                for y in list(x.keys())
+            ]
         )
 
         if mode not in known_codegen:

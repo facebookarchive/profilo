@@ -22,17 +22,13 @@ from __future__ import unicode_literals
 import abc
 
 
-class Type(object):
-    __metaclass__ = abc.ABCMeta
-
+class Type(object, metaclass=abc.ABCMeta):
     @abc.abstractproperty
     def constant_size(self):
         pass
 
 
-class PrimitiveType(Type):
-    __metaclass__ = abc.ABCMeta
-
+class PrimitiveType(Type, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def __init__(self, size):
         super(PrimitiveType, self).__init__()
@@ -72,9 +68,7 @@ class PointerType(PrimitiveType):
         self.pointed_to_type = pointed_to_type
 
 
-class CompoundType(Type):
-    __metaclass__ = abc.ABCMeta
-
+class CompoundType(Type, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def __init__(self, members):
         super(CompoundType, self).__init__()
@@ -83,7 +77,7 @@ class CompoundType(Type):
 
     @property
     def constant_size(self):
-        return sum([member.constant_size for member in self.members.values()])
+        return sum([member.constant_size for member in list(self.members.values())])
 
 
 class DynamicArrayType(CompoundType):
@@ -101,9 +95,7 @@ class DynamicArrayType(CompoundType):
         self.member_type = member_type
 
 
-class Types(object):
-    __metaclass__ = abc.ABCMeta
-
+class Types(object, metaclass=abc.ABCMeta):
     int8 = IntegerType(size=1, signed=True)
     int16 = IntegerType(size=2, signed=True)
     int32 = IntegerType(size=4, signed=True)

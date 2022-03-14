@@ -68,7 +68,7 @@ uint8_t peek_type(const void* src, size_t len);
     def _generate_entries_structs(self):
 
         structs = [
-            self._generate_entry_struct(fmt) for fmt in self.unique_types.values()
+            self._generate_entry_struct(fmt) for fmt in list(self.unique_types.values())
         ]
 
         structs = "\n".join(structs)
@@ -148,7 +148,7 @@ uint8_t peek_type(const void* src, size_t len) {
     def _generate_entries_code(self):
 
         structs = [
-            self._generate_entry_struct(fmt) for fmt in self.unique_types.values()
+            self._generate_entry_struct(fmt) for fmt in list(self.unique_types.values())
         ]
 
         structs = "\n".join(structs)

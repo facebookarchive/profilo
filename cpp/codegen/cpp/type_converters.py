@@ -30,9 +30,7 @@ from ..types import IntegerType
 from ..types import PointerType
 
 
-class CppTypeConverter(object):
-    __metaclass__ = abc.ABCMeta
-
+class CppTypeConverter(object, metaclass=abc.ABCMeta):
     def __init__(self, abstract_type):
         self.abstract_type = abstract_type
 
@@ -61,9 +59,7 @@ class CppTypeConverter(object):
         )
 
 
-class PrimitiveTypeConverter(CppTypeConverter):
-    __metaclass__ = abc.ABCMeta
-
+class PrimitiveTypeConverter(CppTypeConverter, metaclass=abc.ABCMeta):
     def generate_pack_code(self, from_expression, to_expression, offset_expr):
         return """
 std::memcpy(({to}) + {offset}, &({from_}), sizeof(({from_})));
@@ -222,7 +218,7 @@ class CompoundTypeConverter(CppTypeConverter):
 }} {name};"""
 
         field_declarations = []
-        for field_name, field_type in self.abstract_type.members.items():
+        for field_name, field_type in list(self.abstract_type.members.items()):
             decl = CONVERTERS[field_type.__class__](field_type).generate_declaration(
                 field_name
             )

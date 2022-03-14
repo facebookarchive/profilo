@@ -10,7 +10,6 @@ fb_python_library(
 fb_python_binary(
     name = "codegen",
     main_module = "profilo.codegen",
-    platform = "py2",
     deps = [
         ":codegen-lib",
     ],
