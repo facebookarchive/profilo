@@ -1,4 +1,4 @@
-// @generated SignedSource<<6ae2e8fe64e0eb182f0fe5b46ecbee9b>>
+// @generated SignedSource<<47b507d34af7c299b94129bf5fdda282>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -16,7 +16,6 @@ const char* to_string(EntryType type) {
     case EntryType::UI_UPDATE_END: return "UI_UPDATE_END";
     case EntryType::NET_ADDED: return "NET_ADDED";
     case EntryType::NET_CANCEL: return "NET_CANCEL";
-    case EntryType::NET_CHANGEPRI: return "NET_CHANGEPRI";
     case EntryType::NET_ERROR: return "NET_ERROR";
     case EntryType::NET_END: return "NET_END";
     case EntryType::NET_RESPONSE: return "NET_RESPONSE";

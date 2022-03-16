@@ -33,7 +33,6 @@ NAMES = [
     "UI_UPDATE_END",
     "NET_ADDED",
     "NET_CANCEL",
-    "NET_CHANGEPRI",
     "NET_ERROR",
     "NET_END",
     "NET_RESPONSE",
