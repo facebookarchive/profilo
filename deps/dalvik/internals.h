@@ -420,6 +420,7 @@ struct SymbolSpec {
 
 void* open_libdvm();
 void* open_libart();
+void* open_libdexfile();
 void* open_libc();
 
 /**
