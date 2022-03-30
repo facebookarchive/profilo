@@ -16,7 +16,7 @@
 
 #include <linker/link.h>
 #include <linker/sharedlibs.h>
-#include <linker/log_assert.h>
+#include <linker/log.h>
 
 #include <errno.h>
 #include <stdexcept>
@@ -47,12 +47,13 @@ int dladdr1(void* addr, Dl_info* info, void** extra_info, int flags) {
   *sym_info = lib.data.find_symbol_by_name(info->dli_sname);
   if (*sym_info) {
     if (lib.data.getLoadedAddress(*sym_info) != info->dli_saddr) {
-      log_assert(
+      log(
         "tried to resolve address 0x%x but dladdr returned \"%s\" (0x%x) while find_symbol_by_name returned %x",
         addr,
         info->dli_sname,
         info->dli_saddr,
         (*sym_info)->st_value);
+      return 0;
     }
     return 1;
   }
