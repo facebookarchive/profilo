@@ -75,7 +75,7 @@ namespace fixedstring {
 // it's testing for fails. In this way, precondition violations are reported
 // at compile-time instead of at runtime.
 [[noreturn]] inline void assertOutOfBounds() {
-  assert(!"Array index out of bounds in SimpleFixedString");
+  assert(!(bool)"Array index out of bounds in SimpleFixedString");
   throw std::out_of_range(
       "Array index out of bounds in SimpleFixedString");
 }
@@ -92,7 +92,7 @@ constexpr std::size_t checkOverflowOrNpos(std::size_t i, std::size_t max) {
 
 // Intentionally NOT constexpr. See note above for assertOutOfBounds
 [[noreturn]] inline void assertNotNullTerminated() noexcept {
-  assert(!"Non-null terminated string used to initialize a SimpleFixedString");
+  assert(!(bool)"Non-null terminated string used to initialize a SimpleFixedString");
   std::terminate(); // Fail hard, fail fast.
 }
 
