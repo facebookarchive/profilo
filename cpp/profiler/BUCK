@@ -60,6 +60,7 @@ fb_xplat_cxx_library(
         profilo_path("cpp/writer/..."),
         profilo_path("cpp/test/..."),
         profilo_path("facebook/cpp/profiler/..."),
+        profilo_path("facebook/cpp/unwinder/..."),
     ],
 )
 
