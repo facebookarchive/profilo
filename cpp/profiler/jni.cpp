@@ -174,13 +174,15 @@ static jboolean nativeStartProfiling(
     jint sampling_rate_ms,
     jint thread_detect_interval_ms,
     jboolean cpu_clock_mode,
-    jboolean wall_clock_mode) {
+    jboolean wall_clock_mode,
+    jboolean new_prof_signal) {
   return SamplingProfiler::getInstance().startProfiling(
       requested_tracers,
       sampling_rate_ms,
       thread_detect_interval_ms,
       cpu_clock_mode,
-      wall_clock_mode);
+      wall_clock_mode,
+      new_prof_signal);
 }
 
 static void nativeResetFrameworkNamesSet(fbjni::alias_ref<jobject>) {

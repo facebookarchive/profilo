@@ -99,11 +99,17 @@ void TimerManager::updateThreadTimers() {
       std::vector<ThreadTimer> timers;
       if (state_.cpuClockModeEnabled) {
         timers.emplace_back(ThreadTimer(
-            tid, state_.samplingRateMs, ThreadTimer::Type::CpuTime));
+            tid,
+            state_.samplingRateMs,
+            ThreadTimer::Type::CpuTime,
+            state_.newProfSignal));
       }
       if (state_.wallClockModeEnabled) {
         timers.emplace_back(ThreadTimer(
-            tid, state_.samplingRateMs, ThreadTimer::Type::WallTime));
+            tid,
+            state_.samplingRateMs,
+            ThreadTimer::Type::WallTime,
+            state_.newProfSignal));
       }
       if (timers.size() > 0) {
         bool ok = state_.threadTimers.emplace(tid, std::move(timers)).second;
@@ -160,12 +166,14 @@ TimerManager::TimerManager(
     int samplingRateMs,
     bool cpuClockModeEnabled,
     bool wallClockModeEnabled,
-    std::shared_ptr<Whitelist> whitelist) {
+    std::shared_ptr<Whitelist> whitelist,
+    bool newProfSignal) {
   state_.threadDetectIntervalMs = threadDetectIntervalMs;
   state_.samplingRateMs = samplingRateMs;
   state_.cpuClockModeEnabled = cpuClockModeEnabled;
   state_.wallClockModeEnabled = wallClockModeEnabled;
   state_.whitelist = whitelist;
+  state_.newProfSignal = newProfSignal;
 
   state_.isThreadDetectLoopDone.store(false);
   if (sem_init(&state_.threadDetectSem, 0, 0)) {

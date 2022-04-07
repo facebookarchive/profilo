@@ -30,6 +30,7 @@
 #include <profilo/LogEntry.h>
 #include <profilo/profiler/SamplingProfiler.h>
 #include <profilo/profiler/SignalHandler.h>
+#include <profilo/profiler/ThreadTimer.h>
 #include <profilo/test/TestSequencer.h>
 #include <profilo/util/common.h>
 #include "../logger/MultiBufferLogger.h"
@@ -46,6 +47,7 @@ constexpr auto kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
 constexpr auto kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
 constexpr bool kDefaultUseWallClockSetting = false;
 constexpr bool kDefaultUseCpuClockSetting = true;
+constexpr bool kDefaultUseNewProfSignal = true;
 
 /* Scopes all access to private data from the SamplingProfiler instance*/
 class SamplingProfilerTestAccessor {
@@ -166,13 +168,13 @@ class SamplingProfilerTest : public ::testing::Test {
   static void SetUpTestCase() {
     struct sigaction act {};
     act.sa_handler = SIG_DFL;
-    ASSERT_EQ(sigaction(SIGPROF, &act, nullptr), 0);
+    ASSERT_EQ(sigaction(PROFILER_SIGNAL, &act, nullptr), 0);
   }
 
   static void KickWallTimer(pthread_t thread) {
     sigval val;
     val.sival_int = ThreadTimer::encodeType(ThreadTimer::Type::WallTime);
-    pthread_sigqueue(thread, SIGPROF, val);
+    pthread_sigqueue(thread, PROFILER_SIGNAL, val);
   }
 
   virtual void SetUp() {
@@ -224,7 +226,7 @@ class SamplingProfilerTest : public ::testing::Test {
     // Otherwise, we'd have to encode the order in which stopProfiling calls
     // SignalHandler::Disable here as well.
     bool sigsegv = SignalHandlerTestAccessor::isPhaserDraining(SIGSEGV);
-    bool sigprof = SignalHandlerTestAccessor::isPhaserDraining(SIGPROF);
+    bool sigprof = SignalHandlerTestAccessor::isPhaserDraining(PROFILER_SIGNAL);
 
     ASSERT_TRUE(sigsegv || sigprof)
         << "Mandatory wait for signal handler to complete";
@@ -295,7 +297,8 @@ void SamplingProfilerTest::runLoggingTest(
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseCpuClockSetting,
-      kDefaultUseWallClockSetting));
+      kDefaultUseWallClockSetting,
+      kDefaultUseNewProfSignal));
 
   std::thread worker_thread([&] {
     sequencer.waitAndAdvance(START_WORKER_THREAD, SEND_PROFILING_SIGNAL);
@@ -464,7 +467,8 @@ void SamplingProfilerTest::runSampleCountTest(
       sample_interval_ms,
       thread_detect_interval_ms,
       enable_cpu_time_sampling,
-      enable_wall_time_sampling));
+      enable_wall_time_sampling,
+      kDefaultUseNewProfSignal));
   struct timespec start_time, end_time;
   ASSERT_FALSE(clock_gettime(CLOCK_MONOTONIC, &start_time));
 
@@ -571,7 +575,8 @@ void SamplingProfilerTest::runThreadDetectTest(
       sample_interval_ms,
       thread_detect_interval_ms,
       !enable_wall_time_sampling,
-      enable_wall_time_sampling));
+      enable_wall_time_sampling,
+      kDefaultUseNewProfSignal));
   sequencer.advance(RUN_WORKERS);
 
   // FBLOGV("------> main thread is %d", threadID());
@@ -750,7 +755,8 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
         kDefaultSampleIntervalMs,
         kDefaultThreadDetectIntervalMs,
         kDefaultUseCpuClockSetting,
-        kDefaultUseWallClockSetting));
+        kDefaultUseWallClockSetting,
+        kDefaultUseNewProfSignal));
     sequencer.advance(START_WORKER_THREAD);
 
     sequencer.waitAndAdvance(STOP_PROFILING, INSPECT_MIDDLE_OF_STOP);
@@ -868,7 +874,8 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
         kDefaultSampleIntervalMs,
         kDefaultThreadDetectIntervalMs,
         kDefaultUseCpuClockSetting,
-        kDefaultUseWallClockSetting));
+        kDefaultUseWallClockSetting,
+        kDefaultUseNewProfSignal));
     sequencer.advance(START_WORKER_THREAD);
 
     sequencer.waitAndAdvance(STOP_PROFILING, INSPECT_MIDDLE_OF_STOP);
@@ -956,7 +963,8 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseCpuClockSetting,
-      kDefaultUseWallClockSetting));
+      kDefaultUseWallClockSetting,
+      kDefaultUseNewProfSignal));
 
   // Target thread that will receive the profiling signal.
   std::thread worker_thread([&] {
@@ -1107,8 +1115,9 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
 }
 
 TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
-  // This test ensures that a pending SIGPROF at the time of stopProfiling, when
-  // delivered after stopProfiling, does not take down the process.
+  // This test ensures that a pending PROFILER_SIGNAL at the time of
+  // stopProfiling, when delivered after stopProfiling, does not take down the
+  // process.
   //
   // While we can't really manipulate the pending and delivered state at that
   // granularity, we observe that from the point of view of SamplingProfiler,
@@ -1120,7 +1129,8 @@ TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseCpuClockSetting,
-      kDefaultUseWallClockSetting));
+      kDefaultUseWallClockSetting,
+      kDefaultUseNewProfSignal));
   profiler.stopProfiling();
 
   // No death!

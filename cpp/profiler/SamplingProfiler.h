@@ -111,6 +111,7 @@ struct ProfileState {
   bool wallClockModeEnabled;
   int threadDetectIntervalMs;
   int samplingRateMs;
+  bool newProfSignal;
 
   // When in "wall clock mode", we can optionally whitelist additional threads
   // to profile as well.
@@ -149,7 +150,8 @@ class SamplingProfiler {
       int sampling_rate_ms,
       int thread_detect_interval_ms,
       bool cpu_clock_mode_enabled,
-      bool wall_clock_mode_enabled);
+      bool wall_clock_mode_enabled,
+      bool new_prof_signal);
 
   void addToWhitelist(int targetThread);
 

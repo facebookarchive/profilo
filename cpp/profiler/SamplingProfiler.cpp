@@ -35,6 +35,7 @@
 #include <fbjni/fbjni.h>
 
 #include <profilo/ExternalApi.h>
+#include <profilo/profiler/Constants.h>
 #include <profilo/profiler/ExternalTracer.h>
 #include <profilo/profiler/JavaBaseTracer.h>
 #include <profilo/profiler/Retcode.h>
@@ -241,13 +242,14 @@ void SamplingProfiler::UnwindStackHandler(
 
 void SamplingProfiler::registerSignalHandlers() {
   //
-  // Register a handler for SIGPROF.
+  // Register a handler for Sampling Profiler Signal.
   //
   // Also, register a handler for SIGSEGV and SIGBUS, so that we can safely
-  // jump away in the case of a crash in our SIGPROF handler.
+  // jump away in the case of a crash in our PROFILER_SIGNAL signal handler.
   //
-  signal_handlers_.sigprof =
-      &SignalHandler::Initialize(SIGPROF, UnwindStackHandler);
+  signal_handlers_.sigprof = &SignalHandler::Initialize(
+      state_.newProfSignal ? PROFILER_SIGNAL : PROFILER_SIGNAL_SIGPROF,
+      UnwindStackHandler);
   signal_handlers_.sigsegv = &SignalHandler::Initialize(SIGSEGV, FaultHandler);
   signal_handlers_.sigbus = &SignalHandler::Initialize(SIGBUS, FaultHandler);
 
@@ -449,7 +451,8 @@ bool SamplingProfiler::startProfilingTimers() {
       state_.samplingRateMs,
       state_.cpuClockModeEnabled,
       state_.wallClockModeEnabled,
-      state_.wallClockModeEnabled ? state_.whitelist : nullptr));
+      state_.wallClockModeEnabled ? state_.whitelist : nullptr,
+      state_.newProfSignal));
   state_.timerManager->start();
   return true;
 }
@@ -465,11 +468,13 @@ bool SamplingProfiler::startProfiling(
     int sampling_rate_ms,
     int thread_detect_interval_ms,
     bool cpu_clock_mode_enabled,
-    bool wall_clock_mode_enabled) {
+    bool wall_clock_mode_enabled,
+    bool new_prof_signal) {
   if (state_.isProfiling) {
     throw std::logic_error("startProfiling called while already profiling");
   }
   state_.isProfiling = true;
+  state_.newProfSignal = new_prof_signal;
   FBLOGV("Start profiling");
 
   registerSignalHandlers();
