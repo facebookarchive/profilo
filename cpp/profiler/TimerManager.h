@@ -40,12 +40,10 @@ namespace profiler {
 struct Whitelist;
 
 struct TimerManagerState {
-  // Config params
   int threadDetectIntervalMs;
   int samplingRateMs;
   bool cpuClockModeEnabled;
   bool wallClockModeEnabled;
-  bool newProfSignal;
 
   // whitelist is optional; use null for "all threads"
   std::shared_ptr<Whitelist> whitelist;
@@ -63,8 +61,7 @@ class TimerManager {
       int samplingRateMs,
       bool cpuClockModeEnabled,
       bool wallClockModeEnabled,
-      std::shared_ptr<Whitelist> whitelist,
-      bool newProfSignal);
+      std::shared_ptr<Whitelist> whitelist);
   ~TimerManager() = default;
   void start(); // potentially blocks
   void stop(); // potentially blocks

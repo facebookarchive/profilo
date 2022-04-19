@@ -69,13 +69,12 @@ clockid_t getCpuClockIdFromTid(pid_t tid) {
 bool createThreadTimer(
     pid_t ktid,
     timer_t* timerId,
-    bool wallClockModeEnabled,
-    bool newProfSignal) {
+    bool wallClockModeEnabled) {
   clockid_t clockid =
       wallClockModeEnabled ? CLOCK_MONOTONIC : getCpuClockIdFromTid(ktid);
   struct sigevent sigev;
   sigev.sigev_notify = SIGEV_THREAD_ID;
-  sigev.sigev_signo = newProfSignal ? PROFILER_SIGNAL : PROFILER_SIGNAL_SIGPROF;
+  sigev.sigev_signo = PROFILER_SIGNAL;
   sigev._sigev_un._tid = ktid; /* ID of kernel thread to signal */
   sigev.sigev_value.sival_int = ThreadTimer::encodeType(
       wallClockModeEnabled ? ThreadTimer::Type::WallTime
@@ -139,14 +138,9 @@ itimerval getInitialItimerval(int samplingRateMs) {
   return tv;
 }
 
-ThreadTimer::ThreadTimer(
-    int32_t tid,
-    int samplingRateMs,
-    Type timerType,
-    bool newProfSignal)
+ThreadTimer::ThreadTimer(int32_t tid, int samplingRateMs, Type timerType)
     : tid_(tid), samplingRateMs_(samplingRateMs), timerType_(timerType) {
-  if (!createThreadTimer(
-          tid_, &timerId_, timerType == Type::WallTime, newProfSignal)) {
+  if (!createThreadTimer(tid_, &timerId_, timerType == Type::WallTime)) {
     // e.g. tid died
     throw std::system_error(errno, std::system_category(), "createThreadTimer");
   }

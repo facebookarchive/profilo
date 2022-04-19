@@ -143,8 +143,7 @@ public class CPUProfiler {
       int samplingRateMs,
       int threadDetectIntervalMs,
       boolean cpuClockModeEnabled,
-      boolean wallClockModeEnabled,
-      boolean useNewProfilingSignal) {
+      boolean wallClockModeEnabled) {
     if (!cpuClockModeEnabled && !wallClockModeEnabled) {
       return false;
     }
@@ -157,8 +156,7 @@ public class CPUProfiler {
             samplingRateMs,
             threadDetectIntervalMs,
             cpuClockModeEnabled,
-            wallClockModeEnabled,
-            useNewProfilingSignal);
+            wallClockModeEnabled);
   }
 
   public static void loggerLoop() {
@@ -191,8 +189,7 @@ public class CPUProfiler {
       int samplingRateMs,
       int threadDetectIntervalMs,
       boolean cpuClockModeEnabled,
-      boolean wallClockModeEnabled,
-      boolean useNewProfilingSignal);
+      boolean wallClockModeEnabled);
 
   @DoNotStrip
   private static native void nativeStopProfiling();

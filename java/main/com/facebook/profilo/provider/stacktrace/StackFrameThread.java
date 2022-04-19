@@ -125,8 +125,7 @@ public final class StackFrameThread extends BaseTraceProvider {
       int nativeTracerUnwinderThreadPriority,
       int nativeTracerUnwinderQueueSize,
       TimeSource timeSource,
-      boolean nativeTracerLogPartialStacks,
-      boolean useNewProfilingSignal) {
+      boolean nativeTracerLogPartialStacks) {
     if (!initProfiler(
         nativeTracerUnwindDexFrames,
         nativeTracerUnwinderThreadPriority,
@@ -172,8 +171,7 @@ public final class StackFrameThread extends BaseTraceProvider {
             sampleRateMs,
             threadDetectIntervalMs,
             cpuClockModeEnabled,
-            wallClockModeEnabled,
-            useNewProfilingSignal);
+            wallClockModeEnabled);
     if (!started) {
       return false;
     }
@@ -243,9 +241,7 @@ public final class StackFrameThread extends BaseTraceProvider {
                 ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE_DEFAULT),
             timeSource,
             context.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_LOG_PARTIAL_STACKS, false),
-            context.mTraceConfigExtras.getBoolParam(
-                ProfiloConstants.PROVIDER_PARAM_STACK_TRACE_NEW_PROF_SIGNAL, false));
+                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_LOG_PARTIAL_STACKS, false));
     if (!enabled) {
       return;
     }

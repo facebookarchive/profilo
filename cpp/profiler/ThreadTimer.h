@@ -26,7 +26,6 @@
  * Profiling real time signal number.
  */
 #define PROFILER_SIGNAL SIGURG
-#define PROFILER_SIGNAL_SIGPROF SIGPROF
 
 namespace facebook {
 namespace profilo {
@@ -43,11 +42,7 @@ class ThreadTimer {
     WallTime,
   };
 
-  explicit ThreadTimer(
-      int32_t tid,
-      int samplingRateMs,
-      Type timerType,
-      bool newProfSignal);
+  explicit ThreadTimer(int32_t tid, int samplingRateMs, Type timerType);
   ~ThreadTimer();
 
   ThreadTimer(const ThreadTimer&) = delete;

@@ -47,7 +47,6 @@ constexpr auto kDefaultSampleIntervalMs = kHalfHourInMilliseconds;
 constexpr auto kDefaultThreadDetectIntervalMs = kHalfHourInMilliseconds;
 constexpr bool kDefaultUseWallClockSetting = false;
 constexpr bool kDefaultUseCpuClockSetting = true;
-constexpr bool kDefaultUseNewProfSignal = true;
 
 /* Scopes all access to private data from the SamplingProfiler instance*/
 class SamplingProfilerTestAccessor {
@@ -297,8 +296,7 @@ void SamplingProfilerTest::runLoggingTest(
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseCpuClockSetting,
-      kDefaultUseWallClockSetting,
-      kDefaultUseNewProfSignal));
+      kDefaultUseWallClockSetting));
 
   std::thread worker_thread([&] {
     sequencer.waitAndAdvance(START_WORKER_THREAD, SEND_PROFILING_SIGNAL);
@@ -467,8 +465,7 @@ void SamplingProfilerTest::runSampleCountTest(
       sample_interval_ms,
       thread_detect_interval_ms,
       enable_cpu_time_sampling,
-      enable_wall_time_sampling,
-      kDefaultUseNewProfSignal));
+      enable_wall_time_sampling));
   struct timespec start_time, end_time;
   ASSERT_FALSE(clock_gettime(CLOCK_MONOTONIC, &start_time));
 
@@ -575,8 +572,7 @@ void SamplingProfilerTest::runThreadDetectTest(
       sample_interval_ms,
       thread_detect_interval_ms,
       !enable_wall_time_sampling,
-      enable_wall_time_sampling,
-      kDefaultUseNewProfSignal));
+      enable_wall_time_sampling));
   sequencer.advance(RUN_WORKERS);
 
   // FBLOGV("------> main thread is %d", threadID());
@@ -755,8 +751,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileHandlingFault) {
         kDefaultSampleIntervalMs,
         kDefaultThreadDetectIntervalMs,
         kDefaultUseCpuClockSetting,
-        kDefaultUseWallClockSetting,
-        kDefaultUseNewProfSignal));
+        kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
 
     sequencer.waitAndAdvance(STOP_PROFILING, INSPECT_MIDDLE_OF_STOP);
@@ -874,8 +869,7 @@ TEST_F(SamplingProfilerTest, stopProfilingWhileExecutingTracer) {
         kDefaultSampleIntervalMs,
         kDefaultThreadDetectIntervalMs,
         kDefaultUseCpuClockSetting,
-        kDefaultUseWallClockSetting,
-        kDefaultUseNewProfSignal));
+        kDefaultUseWallClockSetting));
     sequencer.advance(START_WORKER_THREAD);
 
     sequencer.waitAndAdvance(STOP_PROFILING, INSPECT_MIDDLE_OF_STOP);
@@ -963,8 +957,7 @@ TEST_F(SamplingProfilerTest, nestedFaultingTracersUnstackProperly) {
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseCpuClockSetting,
-      kDefaultUseWallClockSetting,
-      kDefaultUseNewProfSignal));
+      kDefaultUseWallClockSetting));
 
   // Target thread that will receive the profiling signal.
   std::thread worker_thread([&] {
@@ -1129,8 +1122,7 @@ TEST_F(SamplingProfilerTest, profilingSignalIsIgnoredAfterStop) {
       kDefaultSampleIntervalMs,
       kDefaultThreadDetectIntervalMs,
       kDefaultUseCpuClockSetting,
-      kDefaultUseWallClockSetting,
-      kDefaultUseNewProfSignal));
+      kDefaultUseWallClockSetting));
   profiler.stopProfiling();
 
   // No death!
