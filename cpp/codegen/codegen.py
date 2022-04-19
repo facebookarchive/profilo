@@ -39,7 +39,7 @@ class MemoryDescription(namedtuple("MemoryDescription", ["fields", "typename"]))
     TYPE_ID = 1
 
     def __init__(self, **kwargs):
-        super(MemoryDescription, self).__init__(self, **kwargs)
+        super().__init__()
 
         if self.fields is None:
             raise ValueError("fields is required")
@@ -53,7 +53,7 @@ class MemoryDescription(namedtuple("MemoryDescription", ["fields", "typename"]))
 
 class EntryDescription(namedtuple("EntryDescription", ["id", "name", "memory_format"])):
     def __init__(self, **kwargs):
-        super(EntryDescription, self).__init__(self, **kwargs)
+        super().__init__()
 
         if self.id is None:
             raise ValueError("id is required")

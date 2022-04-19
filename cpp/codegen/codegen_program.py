@@ -103,7 +103,7 @@ class CodegenProgram(object):
             in_text_pattern, CodegenProgram.SIGNED_SOURCE_TOKEN
         )
 
-        digest = hashlib.md5(fixed_token_text).hexdigest()
+        digest = hashlib.md5(fixed_token_text.encode("utf-8")).hexdigest()
 
         actual_hash = CodegenProgram.SIGNED_SOURCE_REPLACE_PATTERN.format(digest)
 
