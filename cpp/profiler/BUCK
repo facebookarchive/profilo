@@ -1,4 +1,4 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_maybe_hidden_visibility", "profilo_path")
 load(":build_defs.bzl", "unwindc_tracer_library")
 
@@ -49,7 +49,7 @@ unwindc_tracer_library(
     version = "9.0.0",
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "constants",
     header_namespace = "profilo/profiler",
     exported_headers = [
@@ -64,7 +64,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "artcompat",
     srcs = [
         "ArtCompatibility.cpp",
@@ -111,7 +111,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "base_tracer",
     header_namespace = "profilo/profiler",
     exported_headers = [
@@ -130,7 +130,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "external_tracer",
     srcs = [
         "ExternalTracer.cpp",
@@ -150,7 +150,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "external_tracer_manager",
     srcs = [
         "ExternalTracerManager.cpp",
@@ -170,7 +170,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "js_tracer",
     srcs = [
         "JSTracer.cpp",
@@ -194,7 +194,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "tracer_utils",
     srcs = [
         "DalvikUtils.cpp",
@@ -213,7 +213,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "dalvik_tracer",
     srcs = [
         "DalvikTracer.cpp",
@@ -245,7 +245,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "signal_handler",
     srcs = [
         "SignalHandler.cpp",
@@ -278,7 +278,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "retcode",
     srcs = [
         "Retcode.cpp",
@@ -374,7 +374,7 @@ PROFILER_EXPORTED_DEPS = [
     profilo_path("deps/fbjni:fbjni"),
 ]
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "profiler",
     srcs = PROFILER_SRCS,
     header_namespace = PROFILER_HEADER_NAMESPACE,
@@ -394,7 +394,7 @@ fb_xplat_cxx_library(
     exported_deps = PROFILER_EXPORTED_DEPS,
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "profiler_no_native_tracer",
     srcs = PROFILER_SRCS,
     header_namespace = PROFILER_HEADER_NAMESPACE,

@@ -1,4 +1,4 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_cxx_test", "profilo_path")
 
 profilo_cxx_test(
@@ -144,7 +144,7 @@ profilo_cxx_test(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "test_sequencer",
     srcs = [
         "TestSequencer.cpp",

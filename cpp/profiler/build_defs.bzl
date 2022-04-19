@@ -1,11 +1,11 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 def unwindc_tracer_library(version, allow_64bit = False):
     version_num = version.replace(".", "")
     android_version = "android_{}".format(version_num)
 
-    fb_xplat_cxx_library(
+    fb_xplat_android_cxx_library(
         name = "unwindc-tracer-{}".format(version),
         srcs = [
             "ArtUnwindcTracer.cpp",

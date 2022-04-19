@@ -1,8 +1,8 @@
 load("//tools/build_defs:glob_defs.bzl", "subdir_glob")
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "headers_linux",
     header_namespace = "profilo/perfevents/linux",
     exported_headers = subdir_glob([
@@ -12,7 +12,7 @@ fb_xplat_cxx_library(
     visibility = ["PUBLIC"],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "file_backed_mappings_list",
     header_namespace = "profilo/perfevents",
     exported_headers = [
@@ -27,7 +27,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "perfevents",
     srcs = [
         "Event.cpp",

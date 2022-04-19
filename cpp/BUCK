@@ -1,7 +1,7 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "providers",
     srcs = [
         "TraceProviders.cpp",
@@ -32,7 +32,7 @@ fb_xplat_cxx_library(
 
 CONSTS_EXPORTED_HEADERS = ["LogEntry.h"]
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "constants",
     headers = glob(
         ["*.h"],
@@ -56,7 +56,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "jni_logger_helpers",
     srcs = [
         "JNILoggerHelpers.cpp",
@@ -90,7 +90,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "profilo",
     srcs = [
         "JNIOnLoad.cpp",

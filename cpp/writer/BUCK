@@ -1,7 +1,7 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "print_visitor",
     srcs = [
         "PrintEntryVisitor.cpp",
@@ -30,7 +30,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "delta_visitor",
     srcs = [
         "DeltaEncodingVisitor.cpp",
@@ -60,7 +60,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "timestamp_truncating_visitor",
     srcs = [
         "TimestampTruncatingVisitor.cpp",
@@ -85,7 +85,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "stack_visitor",
     srcs = [
         "StackTraceInvertingVisitor.cpp",
@@ -112,7 +112,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "packet_reassembler",
     srcs = [
         "PacketReassembler.cpp",
@@ -136,7 +136,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "writer",
     srcs = [
         "TraceLifecycleVisitor.cpp",
@@ -186,7 +186,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "trace_backwards",
     srcs = [
         "trace_backwards.cpp",
@@ -212,7 +212,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "trace_headers",
     srcs = [
         "trace_headers.cpp",
@@ -237,7 +237,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "trace_file_helpers",
     srcs = [
         "TraceFileHelpers.cpp",

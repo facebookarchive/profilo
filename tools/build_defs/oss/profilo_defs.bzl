@@ -1,6 +1,6 @@
 """Provides OSS compatibile macros."""
 
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 
 def profilo_path(dep):
     return "//" + dep
@@ -69,7 +69,7 @@ def profilo_oss_maven_library(
         )
 
 def profilo_oss_xplat_cxx_library(**kwargs):
-    fb_xplat_cxx_library(**kwargs)
+    fb_xplat_android_cxx_library(**kwargs)
 
 def profilo_maybe_hidden_visibility():
     return ["-fvisibility=hidden"]

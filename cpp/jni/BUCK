@@ -1,7 +1,7 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "jni",
     srcs = [
         "NativeTraceWriter.cpp",
@@ -33,7 +33,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "jmulti_buffer_logger",
     srcs = [
         "JMultiBufferLogger.cpp",
@@ -66,7 +66,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "writer_callbacks",
     srcs = [
         "NativeTraceWriterCallbacks.cpp",

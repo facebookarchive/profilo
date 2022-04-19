@@ -1,9 +1,9 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 APP_SPECIFIC_IS_ASSET_FLAG = {}
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "external_api",
     srcs = [
         "ExternalApi.cpp",
@@ -28,7 +28,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "external_api_header",
     header_namespace = "profilo",
     exported_headers = ["ExternalApi.h"],
@@ -42,7 +42,7 @@ fb_xplat_cxx_library(
     ],
 )
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "external_api_glue",
     srcs = [
         "ExternalApiGlue.cpp",

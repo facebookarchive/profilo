@@ -1,4 +1,4 @@
-load("//tools/build_defs/android:fb_xplat_cxx_library.bzl", "fb_xplat_cxx_library")
+load("//tools/build_defs/android:fb_xplat_android_cxx_library.bzl", "fb_xplat_android_cxx_library")
 load("//tools/build_defs/oss:profilo_defs.bzl", "profilo_path")
 
 SYSTEM_COUNTERS_EXPORTED_HEADERS = [
@@ -7,7 +7,7 @@ SYSTEM_COUNTERS_EXPORTED_HEADERS = [
     "ThreadCounters.h",
 ]
 
-fb_xplat_cxx_library(
+fb_xplat_android_cxx_library(
     name = "systemcounters",
     srcs = glob(["*.cpp"]),
     headers = glob(
