@@ -1,4 +1,4 @@
-// @generated SignedSource<<05d36557ebeeeaae647d8614fa811587>>
+// @generated SignedSource<<7236a3f095a4bf72f4e8d2d9f6a53eca>>
 
 #pragma once
 
@@ -123,6 +123,7 @@ enum class EntryType {
   CPU_STACK_SAMPLE = 114,
   WALL_STACK_SAMPLE = 115,
   MEMORY_MAPPING_FAILURE = 116,
+  THREAD_NAMING = 117,
 };
 
 

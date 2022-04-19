@@ -1,4 +1,4 @@
-// @generated SignedSource<<47b507d34af7c299b94129bf5fdda282>>
+// @generated SignedSource<<0505a44b95e5066c7c5d35014e9b40b3>>
 
 #include <stdexcept>
 #include <profilo/entries/EntryType.h>
@@ -126,6 +126,7 @@ const char* to_string(EntryType type) {
     case EntryType::CPU_STACK_SAMPLE: return "CPU_STACK_SAMPLE";
     case EntryType::WALL_STACK_SAMPLE: return "WALL_STACK_SAMPLE";
     case EntryType::MEMORY_MAPPING_FAILURE: return "MEMORY_MAPPING_FAILURE";
+    case EntryType::THREAD_NAMING: return "THREAD_NAMING";
     default: throw std::invalid_argument("Unknown entry type");
   }
 }
