@@ -17,6 +17,10 @@
 #pragma once
 
 #include <inttypes.h>
+#ifndef _XOPEN_SOURCE
+#define _XOPEN_SOURCE 500
+#endif
+#include <stddef.h>
 #include <ucontext.h>
 
 #ifdef __cplusplus
