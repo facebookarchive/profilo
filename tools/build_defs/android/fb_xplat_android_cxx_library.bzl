@@ -1,6 +1,6 @@
 """Provides OSS compatibility layer with internal FB macros."""
 
-def fb_xplat_cxx_library(name, **kwargs):
+def fb_xplat_android_cxx_library(name, **kwargs):
     """Compatibility adapter for internal FB cxx_library macros."""
 
     # Prune values specific to fb code
