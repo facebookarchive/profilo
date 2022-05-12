@@ -39,6 +39,7 @@ typedef enum {
   PARTIAL_STACK = 8,
   STACK_COPY_FAILED = 9,
   UNWINDER_QUEUE_OVERFLOW = 10,
+  INVALID_MAP = 11,
   MAXVAL,
 } StackCollectionRetcode;
 

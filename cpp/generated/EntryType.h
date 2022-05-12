@@ -1,4 +1,4 @@
-// @generated SignedSource<<7236a3f095a4bf72f4e8d2d9f6a53eca>>
+// @generated SignedSource<<1959b2ffeb1868d427c23292272a02c5>>
 
 #pragma once
 
@@ -124,6 +124,7 @@ enum class EntryType {
   WALL_STACK_SAMPLE = 115,
   MEMORY_MAPPING_FAILURE = 116,
   THREAD_NAMING = 117,
+  STKERR_INVALID_MAP = 118,
 };
 
 

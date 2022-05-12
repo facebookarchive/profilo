@@ -53,6 +53,9 @@ EntryType errorToTraceEntry(StackCollectionRetcode error) {
     case StackCollectionRetcode::PARTIAL_STACK:
       return EntryType::STKERR_PARTIALSTACK;
 
+    case StackCollectionRetcode::INVALID_MAP:
+      return EntryType::STKERR_INVALID_MAP;
+
     case StackCollectionRetcode::TRACER_DISABLED:
     case StackCollectionRetcode::SUCCESS:
     case StackCollectionRetcode::IGNORE:

@@ -1,4 +1,4 @@
-// @generated SignedSource<<319fcc2ef82797d610083c835ff46a9d>>
+// @generated SignedSource<<b59ea2208f5b4fdce3e6fcdb16da08a4>>
 
 package com.facebook.profilo.entries;
 
@@ -122,6 +122,7 @@ public class EntryType {
   public static final int WALL_STACK_SAMPLE = 115;
   public static final int MEMORY_MAPPING_FAILURE = 116;
   public static final int THREAD_NAMING = 117;
+  public static final int STKERR_INVALID_MAP = 118;
 
   public static final String[] NAMES = {
     "UNKNOWN_TYPE",
@@ -242,5 +243,6 @@ public class EntryType {
     "WALL_STACK_SAMPLE",
     "MEMORY_MAPPING_FAILURE",
     "THREAD_NAMING",
+    "STKERR_INVALID_MAP",
   };
 }
