@@ -44,5 +44,6 @@ public class MmapBufferTraceWriter {
       String traceFolder,
       String tracePrefix,
       int traceFlags,
-      NativeTraceWriterCallbacks mCallbacks);
+      NativeTraceWriterCallbacks mCallbacks,
+      String[] extraAnnotations);
 }

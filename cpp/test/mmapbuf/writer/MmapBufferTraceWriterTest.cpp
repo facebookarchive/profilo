@@ -13,6 +13,7 @@
 #include <fstream>
 #include <ostream>
 #include <sstream>
+#include <utility>
 #include <vector>
 
 #include <profilo/entries/Entry.h>
@@ -232,6 +233,8 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
+  std::vector<std::pair<std::string, std::string>> extraAnnotations{};
+
   MmapBufferTraceWriter traceWriter{};
 
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0));
@@ -245,6 +248,7 @@ TEST_F(MmapBufferTraceWriterTest, testDumpWriteAndRecollectEndToEnd) {
       testTracePrefix,
       0,
       mockCallbacks,
+      extraAnnotations,
       kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
@@ -260,6 +264,8 @@ TEST_F(
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
+  std::vector<std::pair<std::string, std::string>> extraAnnotations{};
+
   MmapBufferTraceWriter traceWriter{};
 
   EXPECT_CALL(*mockCallbacks, onTraceStart(kTraceId, 0));
@@ -273,6 +279,7 @@ TEST_F(
       testTracePrefix,
       0,
       mockCallbacks,
+      extraAnnotations,
       kTraceRecollectionTimestamp);
 
   verifyLogEntriesFromTraceFile();
@@ -289,8 +296,9 @@ TEST_F(
   // exception.
   std::string testFolder("/dev/null");
   std::string testTracePrefix(kTracePrefix);
-
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
+  std::vector<std::pair<std::string, std::string>> extraAnnotations{};
+
   MmapBufferTraceWriter traceWriter{};
 
   EXPECT_CALL(*mockCallbacks, onTraceAbort(kTraceId, AbortReason::UNKNOWN));
@@ -303,6 +311,7 @@ TEST_F(
       testTracePrefix,
       0,
       mockCallbacks,
+      extraAnnotations,
       kTraceRecollectionTimestamp);
 }
 
@@ -315,6 +324,8 @@ TEST_F(
   std::string testFolder(traceFolderPath());
   std::string testTracePrefix(kTracePrefix);
   auto mockCallbacks = std::make_shared<::testing::NiceMock<MockCallbacks>>();
+  std::vector<std::pair<std::string, std::string>> extraAnnotations{};
+
   MmapBufferTraceWriter traceWriter{};
 
   bool caughtException = false;
@@ -327,6 +338,7 @@ TEST_F(
         testTracePrefix,
         0,
         mockCallbacks,
+        extraAnnotations,
         kTraceRecollectionTimestamp);
   } catch (std::runtime_error& e) {
     ASSERT_STREQ(e.what(), "Unable to read the file-backed buffer.");

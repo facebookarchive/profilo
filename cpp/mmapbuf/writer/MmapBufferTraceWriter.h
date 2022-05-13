@@ -54,7 +54,8 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
       const std::string& trace_folder,
       const std::string& trace_prefix,
       int32_t trace_flags,
-      fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks);
+      fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks,
+      fbjni::alias_ref<fbjni::JArrayClass<jstring>> extraAnnotations);
 
   // Trace re-collection from dump logic
   // Given a dump path, verifies it and re-collects the data into trace
@@ -65,6 +66,7 @@ class MmapBufferTraceWriter : public fbjni::HybridClass<MmapBufferTraceWriter> {
       const std::string& trace_prefix,
       int32_t trace_flags,
       std::shared_ptr<TraceCallbacks> callbacks,
+      const std::vector<std::pair<std::string, std::string>>& extraAnnotations,
       uint64_t timestamp = monotonicTime());
 
  private:

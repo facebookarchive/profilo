@@ -26,6 +26,8 @@
 #include <fstream>
 #include <memory>
 #include <stdexcept>
+#include <utility>
+#include <vector>
 
 #include <profilo/entries/EntryType.h>
 #include <profilo/logger/buffer/RingBuffer.h>
@@ -208,14 +210,25 @@ void MmapBufferTraceWriter::nativeWriteTrace(
     const std::string& trace_folder,
     const std::string& trace_prefix,
     int32_t trace_flags,
-    fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks) {
+    fbjni::alias_ref<JNativeTraceWriterCallbacks> callbacks,
+    fbjni::alias_ref<fbjni::JArrayClass<jstring>> extraAnnotations) {
+  std::vector<std::pair<std::string, std::string>> parsedAnnotations;
+  auto extrasSize = extraAnnotations->size();
+  for (size_t i = 0; i < extrasSize; i += 2) {
+    parsedAnnotations.emplace_back(
+        extraAnnotations->getElement(i)->toStdString(),
+        i + 1 < extrasSize ? extraAnnotations->getElement(i + 1)->toStdString()
+                           : "null");
+  }
+
   writeTrace(
       type,
       persistent,
       trace_folder,
       trace_prefix,
       trace_flags,
-      std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks));
+      std::make_shared<NativeTraceWriterCallbacksProxy>(callbacks),
+      parsedAnnotations);
 }
 
 void MmapBufferTraceWriter::writeTrace(
@@ -225,6 +238,7 @@ void MmapBufferTraceWriter::writeTrace(
     const std::string& trace_prefix,
     int32_t trace_flags,
     std::shared_ptr<TraceCallbacks> callbacks,
+    const std::vector<std::pair<std::string, std::string>>& extraAnnotations,
     uint64_t timestamp) {
   if (bufferMapHolder_.get() == nullptr) {
     throw std::runtime_error(
@@ -300,6 +314,10 @@ void MmapBufferTraceWriter::writeTrace(
   if (persistent) {
     loggerWriteQplTriggerAnnotation(
         logger, qpl_marker_id, "collection_method", "persistent", timestamp);
+  }
+  for (auto extra : extraAnnotations) {
+    loggerWriteQplTriggerAnnotation(
+        logger, qpl_marker_id, extra.first, extra.second, timestamp);
   }
 
   const char* mapsFilePath = mapBufferPrefix->header.memoryMapsFilePath;
