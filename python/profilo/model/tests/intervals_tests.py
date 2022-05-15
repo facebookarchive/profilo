@@ -17,7 +17,7 @@ limitations under the License.
 
 import unittest
 
-from ..intervals import IntervalTree, Interval
+from ..intervals import Interval, IntervalTree
 
 
 class IntervalTests(unittest.TestCase):

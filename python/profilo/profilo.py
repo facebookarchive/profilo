@@ -17,7 +17,7 @@ limitations under the License.
 
 import argparse
 
-from .device.device import pull_last_trace, pull_all_traces, pull_n_traces
+from .device.device import pull_all_traces, pull_last_trace, pull_n_traces
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Profilo commandline utility!")

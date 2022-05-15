@@ -14,18 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import hashlib
 import re
 
 from .codegen import Language
-from .cpp import entry_types as cpp_entry_types  # noqa: E402
-from .cpp import entry_structs as cpp_entry_structs  # noqa: E402
-from .cpp import parser as cpp_parser  # noqa: E402
+from .cpp import (  # noqa: E402  # noqa: E402  # noqa: E402
+    entry_structs as cpp_entry_structs,
+    entry_types as cpp_entry_types,
+    parser as cpp_parser,
+)
 from .java import entry_types as java_entry_types  # noqa: E402
 
 

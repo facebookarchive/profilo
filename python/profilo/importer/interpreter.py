@@ -17,9 +17,9 @@ limitations under the License.
 
 from functools import cmp_to_key
 
-from ..model.build import Trace, StackTrace
+from ..model.build import StackTrace, Trace
 from .constants import COUNTER_NAMES
-from .trace_file import StandardEntry, BytesEntry
+from .trace_file import BytesEntry, StandardEntry
 
 
 def entry_compare(x, y):

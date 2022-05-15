@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import abc
 
 from ..codegen import Codegen
-from ..types import ArrayType
-from ..types import CompoundType
-from ..types import DynamicArrayType
-from ..types import EntryTypeEnum
-from ..types import IntegerType
-from ..types import PointerType
+from ..types import (
+    ArrayType,
+    CompoundType,
+    DynamicArrayType,
+    EntryTypeEnum,
+    IntegerType,
+    PointerType,
+)
 
 
 class CppTypeConverter(object, metaclass=abc.ABCMeta):

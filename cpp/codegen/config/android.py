@@ -14,16 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function, unicode_literals
 
-from ..codegen import EntryDescription
-from ..codegen import MemoryDescription
-from ..types import Types
-from ..types import DynamicArrayType
-from ..types import EntryTypeEnum
+from ..codegen import EntryDescription, MemoryDescription
+from ..types import DynamicArrayType, EntryTypeEnum, Types
 
 NAMES = [
     "UNKNOWN_TYPE",

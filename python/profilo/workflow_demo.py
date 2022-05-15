@@ -17,8 +17,7 @@ limitations under the License.
 
 import argparse
 import zipfile
-from collections import defaultdict
-from collections import namedtuple
+from collections import defaultdict, namedtuple
 
 import numpy as np
 import pandas as pd
