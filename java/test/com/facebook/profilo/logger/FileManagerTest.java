@@ -45,7 +45,6 @@ public class FileManagerTest {
     mTempFile = File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, mFolder);
     Files.touch(mTempFile);
 
-    when(mContext.getCacheDir()).thenReturn(mFolder);
     when(mContext.getFilesDir()).thenReturn(mFolder);
     mFileManager = new FileManager(mContext, mFolder);
     mFileManager.setTrimThreshold(Integer.MAX_VALUE);
@@ -74,70 +73,7 @@ public class FileManagerTest {
   }
 
   @Test
-  public void testFileManagerInitWithMigration() throws IOException {
-    File cacheFolder = Files.createTempDir();
-    File cacheProfiloFolder = new File(cacheFolder, FileManager.PROFILO_FOLDER);
-    cacheProfiloFolder.mkdirs();
-    File fakeTraceFile =
-        File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, cacheProfiloFolder);
-
-    File filesFolder = Files.createTempDir();
-    File filesProfiloFolder = new File(filesFolder, FileManager.PROFILO_FOLDER);
-    filesProfiloFolder.mkdirs();
-
-    when(mContext.getCacheDir()).thenReturn(cacheFolder);
-    when(mContext.getFilesDir()).thenReturn(filesFolder);
-
-    try {
-      FileManager fileManager = new FileManager(mContext, null);
-      assertThat(fileManager.getFolder().getParentFile().getAbsolutePath())
-          .isEqualTo(filesFolder.getAbsolutePath());
-      assertThat(cacheProfiloFolder.exists()).isFalse();
-      assertThat(fileManager.getFolder().list().length).isEqualTo(1);
-      assertThat(fileManager.getFolder().list()[0]).isEqualTo(fakeTraceFile.getName());
-    } finally {
-      // Cleanup
-      deleteDir(cacheFolder);
-      deleteDir(filesFolder);
-    }
-  }
-
-  @Test
-  public void testFileManagerInitIgnoreMigrationIfNonEmptyTarget() throws IOException {
-    File cacheFolder = Files.createTempDir();
-    File cacheProfiloFolder = new File(cacheFolder, FileManager.PROFILO_FOLDER);
-    cacheProfiloFolder.mkdirs();
-    File fakeCacheTraceFile =
-        File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, cacheProfiloFolder);
-
-    File filesFolder = Files.createTempDir();
-    File filesProfiloFolder = new File(filesFolder, FileManager.PROFILO_FOLDER);
-    filesProfiloFolder.mkdirs();
-    File fakeFilesTraceFile =
-        File.createTempFile("fake-trace-", FileManager.TMP_SUFFIX, filesProfiloFolder);
-
-    when(mContext.getCacheDir()).thenReturn(cacheFolder);
-    when(mContext.getFilesDir()).thenReturn(filesFolder);
-
-    try {
-      FileManager fileManager = new FileManager(mContext, null);
-      assertThat(fileManager.getFolder().getParentFile().getAbsolutePath())
-          .isEqualTo(filesFolder.getAbsolutePath());
-      // Assert that migration was ignored
-      assertThat(cacheProfiloFolder.exists()).isTrue();
-      assertThat(fileManager.getFolder().list().length).isEqualTo(1);
-      assertThat(fileManager.getFolder().list()[0]).isEqualTo(fakeFilesTraceFile.getName());
-    } finally {
-      deleteDir(cacheFolder);
-      deleteDir(filesFolder);
-    }
-  }
-
-  @Test
   public void testNormalFileManagerInitFromFilesFolder() {
-    File cacheFolder = new File("/dev/null/void");
-    when(mContext.getCacheDir()).thenReturn(cacheFolder);
-
     FileManager fileManager = new FileManager(mContext, null);
     assertThat(fileManager.getFolder().getParentFile().getAbsolutePath())
         .isEqualTo(mFolder.getAbsolutePath());
@@ -157,6 +93,25 @@ public class FileManagerTest {
     Files.touch(dumpFile);
     mFileManager.deleteAllFiles();
     assertNoFilesInFolder(mFolder);
+  }
+
+  @Test
+  public void testDeleteAllRemovesConfiguration() throws Exception {
+    File confiFile = new File(mFolder, "ProfiloInitFileConfig.json");
+    assertThat(confiFile.createNewFile()).isTrue();
+    mFileManager.deleteAllFiles();
+    assertNoFilesInFolder(mFolder);
+  }
+
+  @Test
+  public void testDeleteAllRemovesMmapBuffers() throws Exception {
+    File mmapFolder = mFileManager.getMmapBufferFolder();
+    if (!mmapFolder.exists()) {
+      mmapFolder.mkdirs();
+    }
+    File.createTempFile("mmap_buffer", "buff", mFileManager.getMmapBufferFolder());
+    mFileManager.deleteAllFiles();
+    assertNoFilesInFolder(mmapFolder);
   }
 
   @Test
@@ -207,26 +162,6 @@ public class FileManagerTest {
     assertThat(mFileManager.mFileManagerStatistics.errorsCreatingUploadDir).isEqualTo(1);
 
     assertThat(uploadDir.delete()).overridingErrorMessage("Failed to cleanup after test").isTrue();
-
-    mFileManager.deleteAllFiles();
-    assertNoFilesInFolder(mFolder);
-  }
-
-  @Test
-  public void testErrorsDeleteUpdatesCorrectly() throws Exception {
-    assertThat(mFileManager.mFileManagerStatistics.errorsDelete).isEqualTo(0);
-    mFileManager.addFileToUploads(mTempFile, false);
-
-    // Make files undeletable by converting to a non-empty dir of same name
-    for (File f : mFileManager.getAllFiles()) {
-      makeUndeletable(f);
-    }
-    mFileManager.deleteAllFiles();
-    assertThat(mFileManager.mFileManagerStatistics.errorsDelete).isEqualTo(1);
-
-    for (File f : mFileManager.getAllFiles()) {
-      deleteDir(f);
-    }
 
     mFileManager.deleteAllFiles();
     assertNoFilesInFolder(mFolder);
@@ -359,15 +294,6 @@ public class FileManagerTest {
             return pathname.isFile();
           }
         });
-  }
-
-  // Make a file undeletable by making it a non-empty directory.
-  private static void makeUndeletable(File f) throws IOException {
-    if (!f.delete()) {
-      return; // Nothing to do
-    }
-    f.mkdir();
-    File.createTempFile("foo", null, f);
   }
 
   // Deletes a File that we made "undeletable" above

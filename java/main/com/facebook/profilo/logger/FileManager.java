@@ -15,6 +15,7 @@ package com.facebook.profilo.logger;
 
 import android.content.Context;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,11 +114,6 @@ public class FileManager {
     } else {
       // If unable to create the custom folder or not provided, fallback to default
       mBaseFolder = new File(context.getFilesDir(), PROFILO_FOLDER);
-      // Check if we need to migrate the old folder cache/profilo to files/profilo
-      File oldProfiloFolder = new File(context.getCacheDir(), PROFILO_FOLDER);
-      if (oldProfiloFolder.exists()) {
-        oldProfiloFolder.renameTo(mBaseFolder);
-      }
       if (!mBaseFolder.exists() && !mBaseFolder.mkdirs()) {
         throw new IllegalStateException("Unable to initialize Profilo folder");
       }
@@ -232,12 +228,10 @@ public class FileManager {
 
   public Iterable<File> getAllFiles() {
     List<File> allFiles = new ArrayList<>();
-
-    allFiles.addAll(getFiles(getUploadFolder(), PRIORITY_FILES_FILTER));
-    allFiles.addAll(getFiles(getUploadFolder(), DEFAULT_FILES_FILTER));
-    allFiles.addAll(getFiles(getFolder(), PRIORITY_FILES_FILTER));
-    allFiles.addAll(getFiles(getFolder(), DEFAULT_FILES_FILTER));
+    allFiles.addAll(getAllFiles(getFolder()));
+    allFiles.addAll(getAllFiles(getUploadFolder()));
     allFiles.addAll(getAllFiles(getCrashDumpFolder()));
+    allFiles.addAll(getAllFiles(getMmapBufferFolder()));
     return allFiles;
   }
 
@@ -333,7 +327,14 @@ public class FileManager {
   }
 
   private List<File> getAllFiles(File folder) {
-    File[] files = folder.listFiles();
+    File[] files =
+        folder.listFiles(
+            new FileFilter() {
+              @Override
+              public boolean accept(File file) {
+                return file.isFile();
+              }
+            });
     if (files == null) {
       return Collections.EMPTY_LIST;
     }
