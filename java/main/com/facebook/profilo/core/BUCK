@@ -6,6 +6,10 @@ CONSTANTS = [
     "ProfiloConstants.java",
 ]
 
+UTIL = [
+    "TraceIdSanitizer.java",
+]
+
 EVENTS = [
     "TraceEvents.java",
 ]
@@ -33,7 +37,7 @@ LISTENER = [
     "TraceOrchestratorListener.java",
 ]
 
-TRACE_WRITER_LISTENTER = [
+TRACE_WRITER_LISTENER = [
     "TraceWriterListener.java",
 ]
 
@@ -64,6 +68,18 @@ fb_core_android_library(
     deps = [
         profilo_path("deps/fbtrace:utils"),
         profilo_path("deps/jsr-305:jsr-305"),
+    ],
+)
+
+fb_core_android_library(
+    name = "util",
+    srcs = UTIL,
+    labels = ["supermodule:android/default/loom.core"],
+    tests = [
+        "//fbandroid/libraries/profilo/java/test/com/facebook/profilo/core:core",
+    ],
+    visibility = [
+        "PUBLIC",
     ],
 )
 
@@ -103,6 +119,7 @@ fb_core_android_library(
         ":constants",
         ":listener",
         ":registry",
+        ":util",
         profilo_path("java/main/com/facebook/profilo/mmapbuf/core:core"),
         profilo_path("java/main/com/facebook/profilo/writer:writer"),
         profilo_path("deps/fbtrace:utils"),
@@ -137,7 +154,7 @@ fb_core_android_library(
 
 fb_core_android_library(
     name = "writer_listener",
-    srcs = TRACE_WRITER_LISTENTER,
+    srcs = TRACE_WRITER_LISTENER,
     labels = ["supermodule:android/default/loom.core"],
     visibility = [
         profilo_path("..."),
@@ -169,7 +186,7 @@ fb_core_android_library(
     name = "core",
     srcs = glob(
         ["*.java"],
-        exclude = CONSTANTS + EVENTS + CONTROL + REGISTRY + LISTENER + TRACE_WRITER_LISTENTER + UPLOAD,
+        exclude = CONSTANTS + UTIL + EVENTS + CONTROL + REGISTRY + LISTENER + TRACE_WRITER_LISTENER + UPLOAD,
     ),
     labels = ["supermodule:android/default/loom.core"],
     tests = [
@@ -204,6 +221,7 @@ fb_core_android_library(
         ":listener",
         ":registry",
         ":upload",
+        ":util",
         ":writer_listener",
         profilo_path("java/main/com/facebook/profilo/config:config"),
         profilo_path("java/main/com/facebook/profilo/logger:logger"),

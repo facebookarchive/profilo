@@ -25,10 +25,6 @@ public final class NativeTraceWriter {
     SoLoader.loadLibrary("profilo");
   }
 
-  public static String getSanitizedTraceFolderName(String trace_id) {
-    return trace_id.replaceAll("[^a-zA-Z0-9\\-_.]", "_");
-  }
-
   @DoNotStrip private HybridData mHybridData;
 
   public NativeTraceWriter(

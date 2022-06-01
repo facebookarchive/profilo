@@ -26,7 +26,6 @@ import com.facebook.profilo.logger.Logger;
 import com.facebook.profilo.logger.Trace;
 import com.facebook.profilo.mmapbuf.core.Buffer;
 import com.facebook.profilo.mmapbuf.core.MmapBufferManager;
-import com.facebook.profilo.writer.NativeTraceWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -289,7 +288,7 @@ public final class TraceControl {
   }
 
   public File getTraceFolder(String trace_id) {
-    return new File(mFolder, NativeTraceWriter.getSanitizedTraceFolderName(trace_id));
+    return new File(mFolder, TraceIdSanitizer.sanitizeTraceId(trace_id));
   }
 
   public boolean startTrace(int controller, int flags, @Nullable Object context, long longContext) {
