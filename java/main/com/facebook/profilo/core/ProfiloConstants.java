@@ -43,6 +43,9 @@ public final class ProfiloConstants {
   public static final String TIME_SOURCE_PARAM = "provider.stack_trace.time_source";
   public static final String TRACE_CONFIG_COINFLIP_SAMPLE_RATE =
       "trace_config.coinflip_sample_rate";
+  public static final String TRACE_CONFIG_TRACE_CONFIG_ID_SWITCH =
+      "trace_config.trace_config_id_switch";
+  public static final String TRACE_CONFIG_ID = "trace_config.id";
 
   public static int packRemoteAbortReason(int abortReason) {
     return (abortReason | REMOTE_PROCESS_BIT);

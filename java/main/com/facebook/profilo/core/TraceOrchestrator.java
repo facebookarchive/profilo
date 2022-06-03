@@ -13,6 +13,9 @@
  */
 package com.facebook.profilo.core;
 
+import static com.facebook.profilo.core.ProfiloConstants.TRACE_CONFIG_ID;
+import static com.facebook.profilo.core.ProfiloConstants.TRACE_CONFIG_TRACE_CONFIG_ID_SWITCH;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Process;
@@ -394,6 +397,18 @@ public final class TraceOrchestrator
       syncProviders = mSyncTraceProviders;
     }
     if (mIsMainProcess) {
+      boolean useTraceConfigId =
+          context.mTraceConfigExtras.getBoolParam(TRACE_CONFIG_TRACE_CONFIG_ID_SWITCH, false);
+      long configId = 0;
+      if (useTraceConfigId) {
+        String configIdStr = context.mTraceConfigExtras.getStringParam(TRACE_CONFIG_ID, null);
+        if (configIdStr != null) {
+          configId = Long.parseLong(configIdStr);
+        }
+      }
+      if (configId == 0 && context.config != null) {
+        configId = context.config.getID();
+      }
       BufferLogger.writeStandardEntry(
           context.mainBuffer,
           Logger.FILL_TIMESTAMP | Logger.FILL_TID,
@@ -402,7 +417,7 @@ public final class TraceOrchestrator
           ProfiloConstants.NONE,
           Identifiers.CONFIG_ID,
           ProfiloConstants.NONE,
-          context.config == null ? 0 : context.config.getID());
+          configId);
     }
 
     int tracingProviders = 0;
