@@ -601,6 +601,30 @@ public class TraceOrchestratorTest {
     verify(listener, never()).onTraceScheduledForUpload(mTraceContext);
   }
 
+  @Test
+  public void testTraceFolderDeletedOnTraceAbort() throws Exception {
+    File traceFolder = Files.newTemporaryFolder();
+    File.createTempFile("tracetmp", "tmp", traceFolder);
+    File.createTempFile("tracetmp", "tmp", traceFolder);
+
+    mTraceContext.folder = traceFolder;
+    mOrchestrator.onTraceWriteAbort(mTraceContext, ProfiloConstants.ABORT_REASON_TIMEOUT);
+
+    assertThat(traceFolder.exists()).isFalse();
+  }
+
+  @Test
+  public void testTraceFolderDeleteOnTraceCollection() throws Exception {
+    File traceFolder = new File(DEFAULT_TEMP_DIR);
+    traceFolder.mkdirs();
+    File.createTempFile("tmp", "tmp", traceFolder);
+
+    mTraceContext.folder = traceFolder;
+    mOrchestrator.onTraceWriteEnd(mTraceContext);
+
+    assertThat(traceFolder.exists()).isFalse();
+  }
+
   private static void verifyProvidersDisabled(BaseTraceProvider... providers) {
     for (BaseTraceProvider provider : providers) {
       verify(provider)

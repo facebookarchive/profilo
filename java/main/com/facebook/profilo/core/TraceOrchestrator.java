@@ -486,6 +486,7 @@ public final class TraceOrchestrator
       }
 
       handleZipAndUpload(trace);
+      deleteDirectory(trace.folder);
     } finally {
       handleTraceWriteCompleted(trace);
     }
@@ -591,12 +592,10 @@ public final class TraceOrchestrator
         uploadTrace = sampleRate != 0 && mRandom.nextInt(sampleRate) == 0;
       }
 
-      if (!uploadTrace) {
-        deleteDirectory(traceFolder);
-        return;
+      if (uploadTrace) {
+        handleZipAndUpload(trace);
       }
-
-      handleZipAndUpload(trace);
+      deleteDirectory(traceFolder);
     } finally {
       handleTraceWriteCompleted(trace);
     }
