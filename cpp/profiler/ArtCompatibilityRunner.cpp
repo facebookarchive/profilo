@@ -314,6 +314,9 @@ bool runJavaCompatibilityCheckInternal(
   } catch (std::system_error& ex) {
     FBLOGE("Caught system error: %s", ex.what());
     return false;
+  } catch (std::runtime_error& ex) {
+    FBLOGE("Caught runtime error: %s", ex.what());
+    return false;
   }
 }
 
