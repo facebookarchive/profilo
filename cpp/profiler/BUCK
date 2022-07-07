@@ -86,6 +86,7 @@ fb_xplat_android_cxx_library(
         "-DLOG_TAG=\"Profilo/ArtCompatibility\"",
         "-Wno-reorder-init-list",
         "-Wno-unknown-warning-option",
+        "-Wno-unused-variable",
         #"-DFBLOG_NDEBUG=0",  # verbose logging
     ],
     force_static = True,
