@@ -24,6 +24,7 @@ fb_core_android_library(
 robolectric4_test(
     name = "logger",
     contacts = ["oncall+loom@xmail.facebook.com"],
+    language = "JAVA",
     deps = [
         ":utils",
         profilo_path("deps/jsr-305:jsr-305"),

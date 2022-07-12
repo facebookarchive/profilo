@@ -14,6 +14,7 @@ robolectric4_test(
     autoglob = False,
     contacts = ["oncall+loom@xmail.facebook.com"],
     jni_deps = JNI_DEPS,
+    language = "JAVA",
     deps = [
         "//fbandroid/java/com/facebook/testing/inject:inject",
         "//fbandroid/java/com/facebook/testing/util:util",
