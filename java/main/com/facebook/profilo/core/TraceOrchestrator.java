@@ -493,9 +493,9 @@ public final class TraceOrchestrator
   }
 
   private void handleZipAndUpload(TraceContext trace) {
-    File uploadFile;
+    File uploadFile = null;
     if (ZipHelper.shouldZipDirectory(trace.folder)) {
-      uploadFile =
+      File traceFile =
           ZipHelper.getCompressedFile(trace.folder, ZipHelper.ZIP_SUFFIX + ZipHelper.TMP_SUFFIX);
 
       // Add a timestamp to the file so that the FileManager's trimming rules
@@ -503,19 +503,24 @@ public final class TraceOrchestrator
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss", Locale.US);
       String timestamp = dateFormat.format(new Date());
       File fileWithTimestamp =
-          new File(uploadFile.getParentFile(), timestamp + "-" + uploadFile.getName());
-      if (uploadFile.renameTo(fileWithTimestamp)) {
+          new File(traceFile.getParentFile(), timestamp + "-" + traceFile.getName());
+      if (traceFile.renameTo(fileWithTimestamp)) {
         uploadFile = fileWithTimestamp;
       }
-      deleteDirectory(trace.folder);
     } else {
       File[] fileList = trace.folder.listFiles();
       if (fileList == null || fileList.length == 0) {
         return;
       }
-      uploadFile = fileList[0];
+      File traceFile = fileList[0];
+      // Move the trace file up to the base folder
+      File targetTraceFile = new File(trace.folder.getParentFile(), traceFile.getName());
+      if (traceFile.renameTo(targetTraceFile)) {
+        uploadFile = targetTraceFile;
+      }
     }
     if (uploadFile == null) {
+      // Unable to prepare trace file for processing
       return;
     }
 
