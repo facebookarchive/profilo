@@ -64,6 +64,7 @@ std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
     MultiBufferLogger& logger,
     uint32_t available_tracers,
     bool native_tracer_unwind_dex_frames,
+    bool native_tracer_unwind_jit_frames,
     int32_t native_tracer_unwind_thread_pri,
     size_t native_tracer_unwind_queue_size,
     bool native_tracer_log_partial_stacks) {
@@ -77,6 +78,7 @@ std::unordered_map<int32_t, std::shared_ptr<BaseTracer>> makeAvailableTracers(
     tracers[tracers::NATIVE] = std::make_shared<NativeTracer>(
         logger,
         native_tracer_unwind_dex_frames,
+        native_tracer_unwind_jit_frames,
         native_tracer_unwind_thread_pri,
         native_tracer_unwind_queue_size,
         native_tracer_log_partial_stacks);
@@ -143,6 +145,7 @@ static jboolean nativeInitialize(
     JMultiBufferLogger* jlogger,
     jint tracers,
     jboolean native_tracer_unwind_dex_frames,
+    jboolean native_tracer_unwind_jit_frames,
     jint native_tracer_unwind_thread_pri,
     jint native_tracer_unwind_queue_size,
     jboolean native_tracer_log_partial_stacks) {
@@ -155,6 +158,7 @@ static jboolean nativeInitialize(
           logger,
           available_tracers,
           native_tracer_unwind_dex_frames,
+          native_tracer_unwind_jit_frames,
           native_tracer_unwind_thread_pri,
           static_cast<size_t>(native_tracer_unwind_queue_size),
           native_tracer_log_partial_stacks));

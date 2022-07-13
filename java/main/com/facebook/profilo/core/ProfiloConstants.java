@@ -93,6 +93,8 @@ public final class ProfiloConstants {
       "provider.stack_trace.thread_detect_interval_ms";
   public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_DEX_FRAMES =
       "provider.native_stack_trace.unwind_dex_frames";
+  public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_JIT_FRAMES =
+      "provider.native_stack_trace.unwind_jit_frames";
   public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_THREAD_PRIORITY =
       "provider.native_stack_trace.unwinder_thread_pri";
   public static final String PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_QUEUE_SIZE =

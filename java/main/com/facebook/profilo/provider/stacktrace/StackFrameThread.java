@@ -100,6 +100,7 @@ public final class StackFrameThread extends BaseTraceProvider {
    */
   private synchronized boolean initProfiler(
       boolean nativeTracerUnwindDexFrames,
+      boolean nativeTracerUnwindJitFrames,
       int nativeTracerUnwinderThreadPriority,
       int nativeTracerUnwinderQueueSize,
       boolean nativeTracerLogPartialStacks) {
@@ -108,6 +109,7 @@ public final class StackFrameThread extends BaseTraceProvider {
           mContext,
           getLogger(),
           nativeTracerUnwindDexFrames,
+          nativeTracerUnwindJitFrames,
           nativeTracerUnwinderThreadPriority,
           nativeTracerUnwinderQueueSize,
           nativeTracerLogPartialStacks);
@@ -122,12 +124,14 @@ public final class StackFrameThread extends BaseTraceProvider {
       int threadDetectIntervalMs,
       int enabledProviders,
       boolean nativeTracerUnwindDexFrames,
+      boolean nativeTracerUnwindJitFrames,
       int nativeTracerUnwinderThreadPriority,
       int nativeTracerUnwinderQueueSize,
       TimeSource timeSource,
       boolean nativeTracerLogPartialStacks) {
     if (!initProfiler(
         nativeTracerUnwindDexFrames,
+        nativeTracerUnwindJitFrames,
         nativeTracerUnwinderThreadPriority,
         nativeTracerUnwinderQueueSize,
         nativeTracerLogPartialStacks)) {
@@ -233,6 +237,8 @@ public final class StackFrameThread extends BaseTraceProvider {
             context.enabledProviders,
             context.mTraceConfigExtras.getBoolParam(
                 ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_DEX_FRAMES, false),
+            context.mTraceConfigExtras.getBoolParam(
+                ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWIND_JIT_FRAMES, true),
             context.mTraceConfigExtras.getIntParam(
                 ProfiloConstants.PROVIDER_PARAM_NATIVE_STACK_TRACE_UNWINDER_THREAD_PRIORITY,
                 ProfiloConstants.TRACE_CONFIG_PARAM_LOGGER_PRIORITY_DEFAULT),

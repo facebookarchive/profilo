@@ -111,6 +111,7 @@ public class CPUProfiler {
       Context context,
       MultiBufferLogger logger,
       boolean nativeTracerUnwindDexFrames,
+      boolean nativeTracerUnwindJitFrames,
       int nativeTracerUnwinderThreadPriority,
       int nativeTracerUnwinderQueueSize,
       boolean nativeTracerLogPartialStacks)
@@ -125,6 +126,7 @@ public class CPUProfiler {
             logger,
             sAvailableTracers,
             nativeTracerUnwindDexFrames,
+            nativeTracerUnwindJitFrames,
             nativeTracerUnwinderThreadPriority,
             nativeTracerUnwinderQueueSize,
             nativeTracerLogPartialStacks);
@@ -179,6 +181,7 @@ public class CPUProfiler {
       MultiBufferLogger logger,
       int availableTracers,
       boolean nativeTracerUnwindDexFrames,
+      boolean nativeTracerUnwindJitFrames,
       int nativeTracerUnwinderThreadPriority,
       int nativeTracerUnwinderQueueSize,
       boolean nativeTracerLogPartialStacks);
