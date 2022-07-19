@@ -25,7 +25,7 @@
 
 #include <jni.h>
 
-#ifdef FBJNI_DEBUG_REFS
+#if defined(FBJNI_DEBUG_REFS) || defined(FBJNI_DEBUG_LOG_REFS)
 # ifdef __ANDROID__
 #  include <android/log.h>
 # else
