@@ -86,7 +86,7 @@ android {
 
 dependencies {
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation 'com.facebook.soloader:nativeloader:0.10.3'
+    implementation 'com.facebook.soloader:nativeloader:0.10.4'
 }
 
 apply from: rootProject.file('gradle/release.gradle')
