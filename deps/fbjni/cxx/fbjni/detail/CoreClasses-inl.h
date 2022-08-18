@@ -411,7 +411,7 @@ inline void JArrayClass<T>::setElement(size_t idx, T value) {
 template<typename T>
 inline local_ref<T> JArrayClass<T>::getElement(size_t idx) {
   const auto env = Environment::current();
-  auto rawElement = env->GetObjectArrayElement(this->self(), idx);
+  auto rawElement = env->GetObjectArrayElement(this->self(), static_cast<jsize>(idx));
   return adopt_local(static_cast<JniType<T>>(rawElement));
 }
 
