@@ -64,6 +64,7 @@ public class HybridData {
     return mDestructor.mNativePointer != 0;
   }
 
+  @DoNotStrip
   public static class Destructor extends DestructorThread.Destructor {
 
     // Private C++ instance
