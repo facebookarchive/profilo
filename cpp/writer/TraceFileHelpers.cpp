@@ -69,17 +69,29 @@ std::string getTraceFilename(
   return filename.str();
 }
 
+//
+// Replaces all non-allowlisted symbols with underscore "_".
+// Symboles "+" and "/" used in base64 encoded Trace Id are
+// replaced with "_p_" and "_s_" respectively.
+//
 std::string sanitize(std::string input) {
+  std::stringstream sanitized_input;
   for (size_t idx = 0; idx < input.size(); ++idx) {
     char ch = input[idx];
     bool is_valid = (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') ||
         (ch >= '0' && ch <= '9') || ch == '-' || ch == '_' || ch == '.';
 
-    if (!is_valid) {
-      input[idx] = '_';
+    if (ch == '+') {
+      sanitized_input << "_p_";
+    } else if (ch == '/') {
+      sanitized_input << "_s_";
+    } else if (!is_valid) {
+      sanitized_input << '_';
+    } else {
+      sanitized_input << ch;
     }
   }
-  return input;
+  return sanitized_input.str();
 }
 } // namespace
 
