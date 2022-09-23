@@ -82,7 +82,7 @@ fb_xplat_android_cxx_library(
     compiler_flags = [
         "-fexceptions",
         "-frtti",
-        "-std=gnu++14",
+        "-std=gnu++17",
         "-DLOG_TAG=\"Profilo/ArtCompatibility\"",
         "-Wno-reorder-init-list",
         "-Wno-unknown-warning-option",
@@ -226,7 +226,7 @@ fb_xplat_android_cxx_library(
     compiler_flags = [
         "-fexceptions",
         "-frtti",
-        "-std=gnu++14",
+        "-std=gnu++17",
         "-Wno-reorder-init-list",
         "-Wno-unknown-warning-option",
     ],
@@ -258,7 +258,7 @@ fb_xplat_android_cxx_library(
     compiler_flags = [
         "-fexceptions",
         "-frtti",
-        "-std=gnu++14",
+        "-std=gnu++17",
         "-Wno-reorder-init-list",
         "-Wno-unknown-warning-option",
     ],
@@ -324,7 +324,7 @@ PROFILER_COMPILER_FLAGS = [
     "-Wno-unknown-attributes",
     #"-DFBLOG_NDEBUG=0",  # verbose logging
     "-Wno-reorder-init-list",
-    "-std=gnu++14",
+    "-std=gnu++17",
     "-Wno-unknown-warning-option",
 ] + profilo_maybe_hidden_visibility()
 
