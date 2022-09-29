@@ -34,7 +34,7 @@ def unwindc_tracer_library(version, allow_64bit = False):
             "-DANDROID_VERSION_{}".format(version_num),
         ],
         force_static = True,
-        labels = ["supermodule:android/default/loom.core"],
+        labels = [],
         platform_headers = [
             ("^android-x86$", {
                 "unwindc/unwinder.h": "unwindc/{}/x86/unwinder.h".format(android_version),

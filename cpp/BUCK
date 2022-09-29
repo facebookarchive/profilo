@@ -18,7 +18,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     tests = [
         profilo_path("cpp/test:providers"),
     ],
@@ -47,7 +47,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],
@@ -73,7 +73,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-O3",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preferred_linkage = "static",
     soname = "libprofilo_jni_helpers.$(ext)",
     visibility = [
@@ -107,7 +107,7 @@ fb_xplat_android_cxx_library(
         "-DLOG_TAG=\"Profilo\"",
         "-std=gnu++14",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo.$(ext)",
     visibility = [
         profilo_path("..."),

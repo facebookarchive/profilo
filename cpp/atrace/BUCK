@@ -18,7 +18,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/atrace\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_atrace.$(ext)",
     visibility = [
         profilo_path("..."),

@@ -17,7 +17,7 @@ fb_xplat_android_cxx_library(
         "-frtti",
         "-std=gnu++14",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_threadmetadata.$(ext)",
     visibility = [
         profilo_path("java/main/com/facebook/profilo/provider/threadmetadata:"),

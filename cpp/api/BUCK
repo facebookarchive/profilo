@@ -17,7 +17,7 @@ fb_xplat_android_cxx_library(
         True,
     ),
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     link_style = "shared",
     preferred_linkage = "static",
     visibility = [
@@ -33,7 +33,7 @@ fb_xplat_android_cxx_library(
     header_namespace = "profilo",
     exported_headers = ["ExternalApi.h"],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],
@@ -55,7 +55,7 @@ fb_xplat_android_cxx_library(
         read_config("fbandroid", "app_mode"),
         True,
     ),
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     link_style = "shared",
     soname = "libprofiloextapi.$(ext)",
     visibility = [

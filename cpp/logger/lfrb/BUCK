@@ -15,7 +15,7 @@ fb_xplat_android_cxx_library(
         "-frtti",
         "-std=gnu++14",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preferred_linkage = "static",
     visibility = [
         profilo_path("..."),

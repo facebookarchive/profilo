@@ -22,7 +22,7 @@ fb_xplat_android_cxx_library(
         "-frtti",
         "-std=gnu++14",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_systemcounters.$(ext)",
     visibility = [
         profilo_path("cpp/test/systemcounters/..."),

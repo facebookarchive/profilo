@@ -22,7 +22,7 @@ fb_xplat_android_cxx_library(
         "-DLOG_TAG=\"Profilo/counters\"",
         "-O3",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_counters.$(ext)",
     tests = [
         profilo_path("cpp/test/counters:counter"),

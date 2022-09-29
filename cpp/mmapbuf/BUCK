@@ -18,7 +18,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Mmap\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_mmapbuf.$(ext)",
     visibility = [
         profilo_path("..."),
@@ -52,7 +52,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Buffer\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_mmapbuf_buffer.$(ext)",
     visibility = [
         profilo_path("..."),
@@ -82,7 +82,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Buffer\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_mmapbuf_buffer_jni.$(ext)",
     visibility = [
         profilo_path("..."),

@@ -16,7 +16,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preferred_linkage = "static",
     visibility = [
         profilo_path("..."),
@@ -48,7 +48,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Logger\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_jmulti_buffer_logger.$(ext)",
     visibility = [
         profilo_path("..."),
@@ -81,7 +81,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Writer\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preferred_linkage = "static",
     visibility = [
         profilo_path("..."),

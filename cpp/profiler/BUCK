@@ -55,7 +55,7 @@ fb_xplat_android_cxx_library(
     exported_headers = [
         "Constants.h",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("cpp/writer/..."),
         profilo_path("cpp/test/..."),
@@ -90,7 +90,7 @@ fb_xplat_android_cxx_library(
         #"-DFBLOG_NDEBUG=0",  # verbose logging
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_stacktrace_artcompat.so",
     deps = [
         ":base_tracer",
@@ -119,7 +119,7 @@ fb_xplat_android_cxx_library(
         "BaseTracer.h",
         "JavaBaseTracer.h",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "PUBLIC",
     ],
@@ -141,7 +141,7 @@ fb_xplat_android_cxx_library(
         "ExternalTracer.h",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "PUBLIC",
     ],
@@ -161,7 +161,7 @@ fb_xplat_android_cxx_library(
         "ExternalTracerManager.h",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "PUBLIC",
     ],
@@ -181,7 +181,7 @@ fb_xplat_android_cxx_library(
         "JSTracer.h",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preprocessor_flags = [
         "-DLOG_TAG=\"Profilo/JS\"",
     ],
@@ -205,7 +205,7 @@ fb_xplat_android_cxx_library(
         "DalvikUtils.h",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "PUBLIC",
     ],
@@ -231,7 +231,7 @@ fb_xplat_android_cxx_library(
         "-Wno-unknown-warning-option",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preprocessor_flags = [
         "-DLOG_TAG=\"Profilo/Dalvik\"",
     ],
@@ -263,7 +263,7 @@ fb_xplat_android_cxx_library(
         "-Wno-unknown-warning-option",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preprocessor_flags = [
         "-DLOG_TAG=\"Profilo/Signal\"",
     ],
@@ -289,7 +289,7 @@ fb_xplat_android_cxx_library(
         "Retcode.h",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "PUBLIC",
     ],
@@ -382,7 +382,7 @@ fb_xplat_android_cxx_library(
     exported_headers = PROFILER_EXPORTED_HEADERS,
     allow_jni_merging = PROFILER_ALLOW_JNI_MERGING,
     compiler_flags = PROFILER_COMPILER_FLAGS,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = PROFILER_SONAME,
     supported_platforms_regex = PROFILER_SUPPORTED_PLATFORMS_REGEX,
     tests = PROFILER_TESTS,
@@ -402,7 +402,7 @@ fb_xplat_android_cxx_library(
     exported_headers = PROFILER_EXPORTED_HEADERS,
     allow_jni_merging = PROFILER_ALLOW_JNI_MERGING,
     compiler_flags = PROFILER_COMPILER_FLAGS,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = PROFILER_SONAME,
     supported_platforms_regex = PROFILER_SUPPORTED_PLATFORMS_REGEX,
     tests = PROFILER_TESTS,

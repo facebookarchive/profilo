@@ -13,7 +13,7 @@ STACKTRACE_BASE_DEPS = [
 fb_core_android_library(
     name = "stacktrace",
     srcs = glob(["*.java"]),
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [profilo_path("...")],
     deps = STACKTRACE_BASE_DEPS + [
         profilo_path("cpp/profiler:profiler"),
@@ -23,7 +23,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "stacktrace_no_native_tracer",
     srcs = glob(["*.java"]),
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [profilo_path("...")],
     deps = STACKTRACE_BASE_DEPS + [
         profilo_path("cpp/profiler:profiler_no_native_tracer"),

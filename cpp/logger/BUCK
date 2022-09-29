@@ -19,7 +19,7 @@ fb_xplat_android_cxx_library(
         "-O3",
         "-DLOG_TAG=\"Profilo\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_logger.$(ext)",
     tests = [
         profilo_path("cpp/test:packet_logger"),
@@ -52,7 +52,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_multi_buffer_logger.$(ext)",
     tests = [
         profilo_path("cpp/test/logger:multi_buffer_logger_test"),
@@ -83,7 +83,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     preferred_linkage = "static",
     soname = "libprofilo_block_logger.$(ext)",
     tests = [

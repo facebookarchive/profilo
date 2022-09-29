@@ -48,7 +48,7 @@ UPLOAD = [
 fb_core_android_library(
     name = "registry",
     srcs = REGISTRY,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "PUBLIC",
     ],
@@ -61,7 +61,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "constants",
     srcs = CONSTANTS,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "PUBLIC",
     ],
@@ -74,7 +74,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "util",
     srcs = UTIL,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     tests = [
         "//fbandroid/libraries/profilo/java/test/com/facebook/profilo/core:core",
     ],
@@ -86,7 +86,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "events",
     srcs = EVENTS,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         "//fbandroid/javatests/com/facebook/profilo/...",
         profilo_path("..."),
@@ -105,7 +105,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "control",
     srcs = CONTROL,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     required_for_source_only_abi = True,
     visibility = [
         profilo_path("..."),
@@ -136,7 +136,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "listener",
     srcs = LISTENER,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],
@@ -155,7 +155,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "writer_listener",
     srcs = TRACE_WRITER_LISTENER,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],
@@ -170,7 +170,7 @@ fb_core_android_library(
 fb_core_android_library(
     name = "upload",
     srcs = UPLOAD,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],
@@ -188,7 +188,7 @@ fb_core_android_library(
         ["*.java"],
         exclude = CONSTANTS + UTIL + EVENTS + CONTROL + REGISTRY + LISTENER + TRACE_WRITER_LISTENER + UPLOAD,
     ),
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     tests = [
         profilo_path("java/test/com/facebook/profilo/core:core"),
     ],

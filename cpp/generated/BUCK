@@ -12,7 +12,7 @@ fb_xplat_android_cxx_library(
         "-ffunction-sections",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],
@@ -21,7 +21,7 @@ fb_xplat_android_cxx_library(
 profilo_oss_java_library(
     name = "java",
     srcs = glob(["*.java"]),
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],

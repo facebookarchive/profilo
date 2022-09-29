@@ -8,7 +8,7 @@ fb_core_android_library(
         ":IProfiloMultiProcessTraceService",
         ":IProfiloMultiProcessTraceListener",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],

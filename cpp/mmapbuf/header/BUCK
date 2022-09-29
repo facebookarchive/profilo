@@ -13,7 +13,7 @@ fb_xplat_android_cxx_library(
         "-std=gnu++14",
         "-DLOG_TAG=\"Profilo/Mmap\"",
     ],
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     soname = "libprofilo_mmapbuf_rdr.$(ext)",
     visibility = [
         profilo_path("..."),
@@ -38,7 +38,7 @@ fb_xplat_android_cxx_library(
         "-DLOG_TAG=\"Profilo/Mmap\"",
     ],
     force_static = True,
-    labels = ["supermodule:android/default/loom.core"],
+    labels = [],
     visibility = [
         profilo_path("..."),
     ],
