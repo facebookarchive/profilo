@@ -42,7 +42,8 @@ public class ArtCompatibility {
   }
 
   public static boolean isCompatible(Context context) {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP
+        || Build.VERSION.SDK_INT > 28 /* Build.VERSION_CODES.P */) {
       return false;
     }
 
