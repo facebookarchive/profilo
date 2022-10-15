@@ -160,7 +160,6 @@ fb_xplat_android_cxx_library(
     exported_headers = [
         "ExternalTracerManager.h",
     ],
-    force_static = True,
     labels = [],
     visibility = [
         "PUBLIC",
