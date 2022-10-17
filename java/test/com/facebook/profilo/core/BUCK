@@ -28,7 +28,6 @@ robolectric4_test(
         "//fbandroid/third-party/java/assertj:assertj-android",
         "//fbandroid/third-party/java/assertj:assertj-core",
         "//fbandroid/third-party/java/fest:fest",
-        "//fbandroid/third-party/java/fest:fest_android",
         "//fbandroid/third-party/java/guava:guava",
         "//fbandroid/third-party/java/junit:junit",
     ],
