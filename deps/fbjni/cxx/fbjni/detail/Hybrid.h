@@ -310,7 +310,7 @@ inline T* HybridClass<T, B>::JavaPart::cthis() const {
 
   // I'd like to use dynamic_cast here, but -fno-rtti is the default.
   return static_cast<T*>(result);
-};
+}
 
 template <typename T, typename B>
 constexpr auto /* detail::SimpleFixedString<_> */ HybridClass<T, B>::JavaPart::get_instantiated_java_descriptor() {

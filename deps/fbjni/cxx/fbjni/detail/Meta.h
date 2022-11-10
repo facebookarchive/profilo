@@ -89,24 +89,24 @@ class JMethod<TYPE(Args...)> : public JMethodBase {                             
       "TYPE must be primitive or void");                                         \
                                                                                  \
   using JMethodBase::JMethodBase;                                                \
-  JMethod() noexcept {};                                                         \
+  JMethod() noexcept {}                                                          \
   JMethod(const JMethod& other) noexcept = default;                              \
   JMethod& operator=(const JMethod& other) noexcept = default;                   \
                                                                                  \
   TYPE operator()(alias_ref<jobject> self, Args... args) const;                  \
                                                                                  \
   friend class JClass;                                                           \
-}
+};
 
-DEFINE_PRIMITIVE_METHOD_CLASS(void);
-DEFINE_PRIMITIVE_METHOD_CLASS(jboolean);
-DEFINE_PRIMITIVE_METHOD_CLASS(jbyte);
-DEFINE_PRIMITIVE_METHOD_CLASS(jchar);
-DEFINE_PRIMITIVE_METHOD_CLASS(jshort);
-DEFINE_PRIMITIVE_METHOD_CLASS(jint);
-DEFINE_PRIMITIVE_METHOD_CLASS(jlong);
-DEFINE_PRIMITIVE_METHOD_CLASS(jfloat);
-DEFINE_PRIMITIVE_METHOD_CLASS(jdouble);
+DEFINE_PRIMITIVE_METHOD_CLASS(void)
+DEFINE_PRIMITIVE_METHOD_CLASS(jboolean)
+DEFINE_PRIMITIVE_METHOD_CLASS(jbyte)
+DEFINE_PRIMITIVE_METHOD_CLASS(jchar)
+DEFINE_PRIMITIVE_METHOD_CLASS(jshort)
+DEFINE_PRIMITIVE_METHOD_CLASS(jint)
+DEFINE_PRIMITIVE_METHOD_CLASS(jlong)
+DEFINE_PRIMITIVE_METHOD_CLASS(jfloat)
+DEFINE_PRIMITIVE_METHOD_CLASS(jdouble)
 
 #pragma pop_macro("DEFINE_PRIMITIVE_METHOD_CLASS")
 /// @endcond
@@ -140,24 +140,24 @@ class JStaticMethod<TYPE(Args...)> : public JMethodBase {                   \
                                                                             \
  public:                                                                    \
   using JMethodBase::JMethodBase;                                           \
-  JStaticMethod() noexcept {};                                              \
+  JStaticMethod() noexcept {}                                               \
   JStaticMethod(const JStaticMethod& other) noexcept = default;             \
   JStaticMethod& operator=(const JStaticMethod& other) noexcept = default;  \
                                                                             \
   TYPE operator()(alias_ref<jclass> cls, Args... args) const;               \
                                                                             \
   friend class JClass;                                                      \
-}
+};
 
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(void);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jboolean);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jbyte);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jchar);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jshort);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jint);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jlong);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jfloat);
-DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jdouble);
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(void)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jboolean)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jbyte)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jchar)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jshort)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jint)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jlong)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jfloat)
+DEFINE_PRIMITIVE_STATIC_METHOD_CLASS(jdouble)
 
 #pragma pop_macro("DEFINE_PRIMITIVE_STATIC_METHOD_CLASS")
 /// @endcond
@@ -181,23 +181,23 @@ class JNonvirtualMethod<TYPE(Args...)> : public JMethodBase {               \
                                                                             \
  public:                                                                    \
   using JMethodBase::JMethodBase;                                           \
-  JNonvirtualMethod() noexcept {};                                          \
+  JNonvirtualMethod() noexcept {}                                           \
   JNonvirtualMethod(const JNonvirtualMethod& other) noexcept = default;     \
                                                                             \
   TYPE operator()(alias_ref<jobject> self, alias_ref<jclass> cls, Args... args) const; \
                                                                             \
   friend class JClass;                                                      \
-}
+};
 
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(void);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jboolean);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jbyte);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jchar);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jshort);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jint);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jlong);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jfloat);
-DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jdouble);
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(void)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jboolean)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jbyte)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jchar)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jshort)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jint)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jlong)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jfloat)
+DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS(jdouble)
 
 #pragma pop_macro("DEFINE_PRIMITIVE_NON_VIRTUAL_METHOD_CLASS")
 /// @endcond

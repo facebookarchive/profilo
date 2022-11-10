@@ -117,7 +117,7 @@ class JMethod<R(Args...)> : public JMethodBase {
       IsPlainJniReference<JniRet>() || detail::IsJavaClassType<JniRet>(),
       "Return type must be a JNI reference or JavaClass type.");
   using JMethodBase::JMethodBase;
-  JMethod() noexcept {};
+  JMethod() noexcept {}
   JMethod(const JMethod& other) noexcept = default;
   JMethod& operator=(const JMethod& other) noexcept = default;
 
@@ -182,7 +182,7 @@ class JStaticMethod<R(Args...)> : public JMethodBase {
       IsPlainJniReference<JniRet>() || detail::IsJavaClassType<JniRet>(),
       "Return type must be a JNI reference or JavaClass type.");
   using JMethodBase::JMethodBase;
-  JStaticMethod() noexcept {};
+  JStaticMethod() noexcept {}
   JStaticMethod(const JStaticMethod& other) noexcept = default;
 
   /// Invoke a method and return a local reference wrapping the result
@@ -246,7 +246,7 @@ class JNonvirtualMethod<R(Args...)> : public JMethodBase {
       IsPlainJniReference<JniRet>() || detail::IsJavaClassType<JniRet>(),
       "Return type must be a JNI reference or JavaClass type.");
   using JMethodBase::JMethodBase;
-  JNonvirtualMethod() noexcept {};
+  JNonvirtualMethod() noexcept {}
   JNonvirtualMethod(const JNonvirtualMethod& other) noexcept = default;
 
   /// Invoke a method and return a local reference wrapping the result

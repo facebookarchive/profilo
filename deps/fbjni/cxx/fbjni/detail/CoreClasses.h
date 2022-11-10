@@ -617,18 +617,18 @@ struct RefReprType<jtype> { \
 }; \
 }
 
-PlainJniRefMap(JArrayBoolean, jbooleanArray);
-PlainJniRefMap(JArrayByte, jbyteArray);
-PlainJniRefMap(JArrayChar, jcharArray);
-PlainJniRefMap(JArrayShort, jshortArray);
-PlainJniRefMap(JArrayInt, jintArray);
-PlainJniRefMap(JArrayLong, jlongArray);
-PlainJniRefMap(JArrayFloat, jfloatArray);
-PlainJniRefMap(JArrayDouble, jdoubleArray);
-PlainJniRefMap(JObject, jobject);
-PlainJniRefMap(JClass, jclass);
-PlainJniRefMap(JString, jstring);
-PlainJniRefMap(JThrowable, jthrowable);
+PlainJniRefMap(JArrayBoolean, jbooleanArray)
+PlainJniRefMap(JArrayByte, jbyteArray)
+PlainJniRefMap(JArrayChar, jcharArray)
+PlainJniRefMap(JArrayShort, jshortArray)
+PlainJniRefMap(JArrayInt, jintArray)
+PlainJniRefMap(JArrayLong, jlongArray)
+PlainJniRefMap(JArrayFloat, jfloatArray)
+PlainJniRefMap(JArrayDouble, jdoubleArray)
+PlainJniRefMap(JObject, jobject)
+PlainJniRefMap(JClass, jclass)
+PlainJniRefMap(JString, jstring)
+PlainJniRefMap(JThrowable, jthrowable)
 
 #pragma pop_macro("PlainJniRefMap")
 
