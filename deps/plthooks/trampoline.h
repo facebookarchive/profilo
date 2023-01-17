@@ -57,6 +57,8 @@ constexpr inline size_t trampoline_data_size() {
 
 } // namespace trampoline
 
+int32_t protect_trampoline(void *code);
+int32_t unprotect_trampoline(void *code);
 void* create_trampoline(HookId hook);
 
 } } // namespace facebook::plthooks

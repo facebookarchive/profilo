@@ -28,6 +28,7 @@
 #include <sstream>
 #include <system_error>
 #include <vector>
+#include <random>
 
 #include <abort_with_reason.h>
 
@@ -44,11 +45,35 @@ namespace plthooks {
 
 namespace {
 
+// Global lock to prevent writing to a protected trampoline page
+static pthread_rwlock_t g_trampoline_write_lock = PTHREAD_RWLOCK_INITIALIZER;
+
+#if (__aarch64__ || __x86_64__) && (__linux__ || ANDROID || __ANDROID__ )
+#define PLTHOOK_64_BIT 1
+// kMaxPageAddress is about half the address space. We & by
+// this address to ensure we don't fragment the upper half
+#define kMaxPageAddress 0x3FFFFFFFF000
+// kMinPageAddress is the minimum page address
+#define kMinPageAddress 0x100000000
+#endif
+
+static constexpr size_t kPageSize = 4096;
+static constexpr size_t kPagesPerBlock = 1;
+static constexpr size_t kSize = kPageSize * kPagesPerBlock;
+
+#define PAGE_ALIGN(ptr) (void*) (((uintptr_t) (ptr)) & ~((kPageSize) - 1))
+
+#define ROUND_UP_PAGE(n) \
+    (((uintptr_t)n + kPageSize - 1) &~ (kPageSize - 1))
+
+#define ROUND_DOWN_PAGE(n) \
+    (ROUND_UP_PAGE((uintptr_t)n) - kPageSize)
+
 class allocator_block {
  public:
   allocator_block()
       : map_(mmap(
-            nullptr,
+            rand_page(),
             kSize,
             PROT_READ | PROT_WRITE | PROT_EXEC,
             MAP_PRIVATE | MAP_ANONYMOUS,
@@ -57,7 +82,6 @@ class allocator_block {
     if (map_ == MAP_FAILED) {
       throw std::system_error(errno, std::system_category());
     }
-
 #ifdef ANDROID
     // Older Linux kernels may not have the PR_SET_VMA call implementation.
     // That's okay we just ignore errors if this call fails.
@@ -77,6 +101,18 @@ class allocator_block {
   allocator_block& operator=(allocator_block const&) = delete;
   allocator_block& operator=(allocator_block&&) = delete;
 
+  void* rand_page() {
+#if PLTHOOK_64_BIT
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    static std::uniform_int_distribution<uint64_t> rand_{kMinPageAddress, kMaxPageAddress};
+    uint64_t p = rand_(gen);
+    return (void*) (ROUND_DOWN_PAGE(p) & kMaxPageAddress);
+#else
+    return nullptr;
+#endif
+  }
+
   size_t remaining() const {
     return kSize - (top_ - reinterpret_cast<uint8_t* const>(map_));
   }
@@ -91,10 +127,6 @@ class allocator_block {
   }
 
  private:
-  static constexpr size_t kPageSize = 4096;
-  static constexpr size_t kPagesPerBlock = 1;
-  static constexpr size_t kSize = kPageSize * kPagesPerBlock;
-
   void* const map_;
   uint8_t* top_;
 };
@@ -182,6 +214,9 @@ class trampoline {
             reinterpret_cast<uintptr_t>(trampoline_template_pointer())),
         code_(allocate(code_size_ + trampoline_data_size())) {
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
+    WriterLock lock(&g_trampoline_write_lock);
+    unprotect_trampoline(code_);
+
     std::memcpy(code_, trampoline_template_pointer(), code_size_);
 
     void** data = reinterpret_cast<void**>(
@@ -192,6 +227,7 @@ class trampoline {
     *data++ = reinterpret_cast<void*>(id);
 
      __builtin___clear_cache((char*) code_, (char*) code_ + code_size_ + trampoline_data_size());
+     protect_trampoline(code_);
 #endif
   }
 
@@ -211,6 +247,16 @@ class trampoline {
 };
 
 } // namespace trampoline
+
+int32_t protect_trampoline(void *code) {
+  code = PAGE_ALIGN(code);
+  return mprotect(code, kSize, PROT_READ|PROT_EXEC);
+}
+
+int32_t unprotect_trampoline(void *code) {
+  code = PAGE_ALIGN(code);
+  return mprotect(code, kSize, PROT_READ|PROT_WRITE|PROT_EXEC);
+}
 
 void* create_trampoline(HookId id) {
 #ifdef LINKER_TRAMPOLINE_SUPPORTED_ARCH
