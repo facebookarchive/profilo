@@ -651,7 +651,7 @@ public final class TraceOrchestrator
    *
    * @return true if the cleanup succeeded, false otherwise
    */
-  public synchronized boolean clearConfigurationAndTraces() {
+  public boolean clearConfigurationAndTraces() {
     setConfigProvider(new DefaultConfigProvider());
     TraceControl tc = TraceControl.get();
     if (tc != null) {
@@ -661,7 +661,9 @@ public final class TraceOrchestrator
             ctx.controller, ctx.context, ctx.longContext, ProfiloConstants.ABORT_REASON_LOGOUT);
       }
     }
-    return mFileManager.deleteAllFiles();
+    synchronized (this) {
+      return mFileManager.deleteAllFiles();
+    }
   }
 
   /** Returns all known trace files. Only use for crash reporting. */
