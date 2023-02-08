@@ -1,3 +1,5 @@
+load("@fbsource//tools/build_defs:lazy.bzl", "lazy")
+
 """Provides OSS compatibility layer with internal FB macros."""
 
 def fb_xplat_android_cxx_library(name, **kwargs):
@@ -13,7 +15,7 @@ def fb_xplat_android_cxx_library(name, **kwargs):
 
     # Add standard if none selected
     compiler_flags = kwargs.get("compiler_flags", [])
-    has_std = any([opt.startswith("-std") for opt in compiler_flags])
+    has_std = lazy.is_any(lambda opt: opt.startswith("-std"), compiler_flags)
     if not has_std:
         compiler_flags.append("-std=c++14")
     kwargs["compiler_flags"] = compiler_flags
