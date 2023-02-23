@@ -90,9 +90,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            sudo add-apt-repository ppa:longsleep/golang-backports --yes
             sudo apt update --yes
             sudo apt-get install docker-ce docker-ce-cli containerd.io --yes
-            sudo apt install golang --yes
+            sudo apt install golang-go --yes
       - run:
           name: Build application Docker image
           command: |
@@ -108,7 +109,7 @@ jobs:
           command: |
             export GOPATH="$HOME/go"
             PATH="$GOPATH/bin:$PATH"
-            go get -u github.com/tcnksm/ghr
+            go install github.com/tcnksm/ghr@latest
             TAG_NAME="release-$(git rev-parse --short ${CIRCLE_SHA1})"
             set -x;
             ghr -t "${KEVIN_GITHUB_TOKEN}" -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete $TAG_NAME out/
