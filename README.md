@@ -1,5 +1,11 @@
 # Profilo: an Android performance library
 
+## Status
+
+**THIS PROJECT IS CURRENTLY IN MAINTENANCE MODE. It will not receive any feature updates, only critical security bug patches. On May 1st, 2023, the repo will be fully archived.**
+
+--------------------
+
 ## Introduction
 Profilo is an Android library for collecting performance *traces* from production builds of an app.
 
