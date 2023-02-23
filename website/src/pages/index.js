@@ -34,20 +34,6 @@ const features = [
   }
 ];
 
-function SocialBanner() {
-  return (
-    <div className="SocialBannerWrapper">
-      <div className="SocialBanner">
-        Support Ukraine 🇺🇦{' '}
-        <a href="https://opensource.fb.com/support-ukraine">
-          Help Provide Humanitarian Aid to Ukraine
-        </a>
-        .
-      </div>
-    </div>
-  );
-}
-
 const Index = () => {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
@@ -57,7 +43,6 @@ const Index = () => {
       title={`${siteConfig.title} - ${siteConfig.tagline}`}
       description={siteConfig.tagline}
     >
-      <SocialBanner />
       <header className={classnames("hero hero--primary", styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
