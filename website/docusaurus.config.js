@@ -35,11 +35,31 @@ module.exports = {
     },
     footer: {
       style: "dark",
+      links: [
+        {
+          title: 'Legal',
+          items: [
+            {
+              label: 'Privacy',
+              href: 'https://opensource.fb.com/legal/privacy/',
+              target: '_blank',
+              rel: 'noreferrer noopener',
+            },
+            {
+              label: 'Terms',
+              href: 'https://opensource.fb.com/legal/terms/',
+              target: '_blank',
+              rel: 'noreferrer noopener',
+            },
+          ],
+        },
+      ],
       logo: {
-        alt: "Facebook Open Source Logo",
-        src: "https://docusaurus.io/img/oss_logo.png"
+        alt: 'Meta Open Source Logo',
+        src: 'https://docusaurus.io/img/meta_opensource_logo_negative.svg',
+        href: 'https://opensource.fb.com',
       },
-      copyright: `Copyright \u00A9 ${new Date().getFullYear()} Facebook, Inc. Built with Docusaurus.`
+      copyright: `Copyright \u00A9 ${new Date().getFullYear()} Meta Platforms, Inc. Built with Docusaurus.`
     }
   },
   presets: [
