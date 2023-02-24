@@ -62,6 +62,19 @@ const Index = () => {
         </div>
       </header>
       <main>
+        <div className={styles.deprecationBanner}>
+          <div className="container">
+            <div className="row">
+              <div className="col col--8 col--offset-2">
+                <div className="margin-vert--xl text--center">
+                  <h2>
+                    The Profilo project is in maintenance mode. It will not receive any feature updates, only critical security bug patches.
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {features && features.length && (
           <section className={styles.features}>
             <div className="container">

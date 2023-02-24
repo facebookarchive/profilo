@@ -35,3 +35,7 @@
   padding: 2rem 0;
   width: 100%;
 }
+
+.deprecationBanner {
+  background-color: var(--ifm-color-emphasis-alpha-20);
+}
